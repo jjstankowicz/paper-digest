@@ -66297,5 +66297,1606 @@
         "result": "Partially refuted; PR enhances CSCs but lacks interaction with mutant ERs, suggesting indirect mechanism"
       }
     ]
+  },
+  "hf:2604.05015": {
+    "category": "Benchmark",
+    "task": "Comprehensive video understanding evaluation with hierarchical complexity",
+    "key_results": "Gemini-3-Pro significantly underperforms human experts; clear bottleneck where visual aggregation/temporal modeling errors propagate to reasoning tasks",
+    "comments": "Group-based non-linear evaluation is a thoughtful alternative to per-question accuracy, but the reliance on human annotation (3,300 hours) limits scalability.",
+    "model_io": [
+      {
+        "model": "Video MLLMs (Gemini-3-Pro, etc.)",
+        "inputs": [
+          "video frames",
+          "text questions"
+        ],
+        "outputs": [
+          "answers with reasoning traces"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Thinking-based reasoning improves with textual cues (subtitles)",
+        "result": "Confirmed; performance degrades in purely visual settings"
+      },
+      {
+        "hypothesis": "Errors propagate hierarchically from low-level visual tasks",
+        "result": "Confirmed; bottleneck identified in visual aggregation and temporal modeling"
+      }
+    ]
+  },
+  "hf:2604.06132": {
+    "category": "Benchmark",
+    "task": "Trustworthy evaluation of autonomous agents via trajectory-aware grading",
+    "key_results": "Trajectory-opaque evaluation misses 44% of safety violations and 13% of robustness failures; Pass^3 drops up to 24% under error injection",
+    "comments": "The three-channel evidence collection (traces, logs, snapshots) is thorough, but limited to 300 tasks across 9 categories may constrain generalization.",
+    "model_io": [
+      {
+        "model": "Frontier LLM agents (14 models tested)",
+        "inputs": [
+          "task specification",
+          "environment state"
+        ],
+        "outputs": [
+          "action sequences",
+          "execution artifacts"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Trajectory-aware grading catches safety/robustness failures better than outcome-only metrics",
+        "result": "Confirmed; 44% and 13% improvements in violation detection"
+      },
+      {
+        "hypothesis": "Multimodal performance varies significantly by modality",
+        "result": "Confirmed; video performance lags document and image modalities"
+      }
+    ]
+  },
+  "hf:2604.04949": {
+    "category": "Agents/RL",
+    "task": "Learning retrieval ranking from LLM agent search trajectories",
+    "key_results": "LRAT consistently improves evidence recall and task success across diverse agent architectures; retriever trained on agent data outperforms human-centric training",
+    "comments": "Framing retrieval as agent-first rather than human-first is intuitive, but the paper lacks direct comparison with standard human click data in controlled settings.",
+    "model_io": [
+      {
+        "model": "Retrieval models + search agents",
+        "inputs": [
+          "user query",
+          "agent trajectory history"
+        ],
+        "outputs": [
+          "ranked documents",
+          "relevance scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Agent trajectories contain better supervision signals than human click logs for agentic search",
+        "result": "Supported; LRAT achieves consistent improvements in recall and task success"
+      },
+      {
+        "hypothesis": "Behavioral signals (browsing, rejections, reasoning) predict document utility",
+        "result": "Supported; these signals guide effective supervision mining"
+      }
+    ]
+  },
+  "hf:2604.03922": {
+    "category": "LLM/Reasoning",
+    "task": "Ranking LLM-generated code using test vote consistency without ground truth",
+    "key_results": "ACES achieves state-of-the-art Pass@k; leave-one-out AUC provably approximates oracle test quality",
+    "comments": "Elegant theoretical insight that test quality need not be determined\u2014only ranked\u2014but assumes sufficient average test quality for ACES-C.",
+    "model_io": [
+      {
+        "model": "Code generation LLM + test executor",
+        "inputs": [
+          "problem statement",
+          "generated code candidates",
+          "generated test suite"
+        ],
+        "outputs": [
+          "ranked code solutions",
+          "test consistency scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Test votes should rank codes, not count votes equally",
+        "result": "Confirmed; ranking by discriminative power outperforms vote counting"
+      },
+      {
+        "hypothesis": "LOO-AUC agreement correlates with test separation ability",
+        "result": "Confirmed; mathematical proof provided"
+      }
+    ]
+  },
+  "hf:2604.04934": {
+    "category": "Vision",
+    "task": "Virtual try-on with pose-driven animation via unified triplet supervision",
+    "key_results": "Single-stage unified process eliminates identity drift and garment distortion; supports zero-shot garment interpolation",
+    "comments": "Unified synthesis is appealing, but large-scale synthetic triplet data generation may not transfer well to diverse real-world fabrics and body types.",
+    "model_io": [
+      {
+        "model": "Video diffusion transformer with dual module architecture",
+        "inputs": [
+          "human image",
+          "garment images",
+          "pose guidance video"
+        ],
+        "outputs": [
+          "garment-transferred animation video"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Unified one-stage pipeline preserves identity better than two-stage approaches",
+        "result": "Supported; coherent synthesis with identity preservation across garments"
+      },
+      {
+        "hypothesis": "Dual module architecture stabilizes training while preserving pretrained quality",
+        "result": "Supported; improved accuracy and pose adherence demonstrated"
+      }
+    ]
+  },
+  "hf:2604.05404": {
+    "category": "LLM/Reasoning",
+    "task": "Measuring real-world inference latency in tool-integrated reasoning via hardware-aware metric",
+    "key_results": "PTE metric aligns significantly better with wall-clock latency than token counts; four inefficiency patterns identified; higher PTE costs correlate with lower correctness",
+    "comments": "PTE is pragmatic for industrial deployment, but assumes hardware stability and may not generalize across heterogeneous accelerators.",
+    "model_io": [
+      {
+        "model": "LLM with tool-calling interface",
+        "inputs": [
+          "reasoning problem",
+          "available tools"
+        ],
+        "outputs": [
+          "reasoning trace",
+          "tool calls",
+          "final answer"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "KV-cache eviction and long tool responses dominate latency, not token counts",
+        "result": "Confirmed; PTE captures these effects; better latency correlation than tokens"
+      },
+      {
+        "hypothesis": "Higher tool usage does not guarantee higher answer quality",
+        "result": "Confirmed; higher PTE costs correlate with lower correctness"
+      }
+    ]
+  },
+  "hf:2604.01591": {
+    "category": "LLM/Reasoning",
+    "task": "Joint optimization of reasoning and self-refinement in LLMs via policy optimization",
+    "key_results": "ThinkTwice improves AIME by 5pp (before refinement) and 11.5pp (after) on Qwen3-4B; implicit rectify-then-fortify curriculum emerges",
+    "comments": "Clever pairing of reasoning and refinement training, but the curriculum learning effect is implicit rather than explicitly controlled.",
+    "model_io": [
+      {
+        "model": "GRPO-based LLM with two-phase training",
+        "inputs": [
+          "reasoning problem"
+        ],
+        "outputs": [
+          "initial solution",
+          "refined solution"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Joint training of reasoning and refinement outperforms single-phase optimization",
+        "result": "Confirmed; substantial gains on mathematical benchmarks"
+      },
+      {
+        "hypothesis": "Refinement acts as error correction early, then preserves correctness later",
+        "result": "Confirmed; implicit rectify-then-fortify curriculum observed"
+      }
+    ]
+  },
+  "hf:2604.06170": {
+    "category": "Agents/RL",
+    "task": "Multi-agent research paper discovery and analysis via knowledge graphs",
+    "key_results": "Consistent improvements with stronger agent models on retrieval and review generation; fully reproducible outputs across multiple formats",
+    "comments": "Multi-agent orchestration for literature review is well-motivated, but evaluation metrics (hit rate, MRR, Recall@K) are standard and may not capture synthesis quality.",
+    "model_io": [
+      {
+        "model": "Multi-agent LLM system with tool integration",
+        "inputs": [
+          "user intent",
+          "paper databases",
+          "analysis queries"
+        ],
+        "outputs": [
+          "ranked papers",
+          "knowledge graphs",
+          "review summaries",
+          "structured outputs (JSON, CSV, BibTeX, Markdown, HTML)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-agent orchestration improves discovery and synthesis over single-agent baselines",
+        "result": "Supported; consistent improvements with stronger models"
+      },
+      {
+        "hypothesis": "Knowledge graph representation enables better question answering",
+        "result": "Supported; graph-aware QA demonstrated"
+      }
+    ]
+  },
+  "hf:2604.04323": {
+    "category": "Benchmark",
+    "task": "Evaluating LLM skill usage performance in realistic settings with skill retrieval",
+    "key_results": "Performance gains from skills degrade as settings become realistic; query-specific refinement recovers lost performance; pass rate on Terminal-Bench improves from 57.7% to 65.5%",
+    "comments": "Honest evaluation of skill utility degradation in realistic retrieval scenarios is valuable, but 34k real-world skills may not be representative of actual skill repositories.",
+    "model_io": [
+      {
+        "model": "LLM agent with skill retrieval module",
+        "inputs": [
+          "task description",
+          "skill collection (34k skills)"
+        ],
+        "outputs": [
+          "skill-augmented action plan",
+          "task solution"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Skills provide benefits only under idealized hand-curated conditions",
+        "result": "Confirmed; performance degrades in realistic retrieval scenarios"
+      },
+      {
+        "hypothesis": "Query-specific skill refinement recovers lost performance",
+        "result": "Confirmed; refinement substantially improves pass rates"
+      }
+    ]
+  },
+  "hf:2604.05091": {
+    "category": "Systems",
+    "task": "Memory-centric full-precision training of 100B+ LLMs on single GPU",
+    "key_results": "MegaTrain trains 120B parameters on H200 with 1.5TB host memory; 1.84\u00d7 throughput vs. DeepSpeed ZeRO-3; enables 7B with 512k context on GH200",
+    "comments": "Novel CPU-GPU memory hierarchy strategy is elegant, but reliance on large host memory (1.5TB) limits applicability to standard HPC setups.",
+    "model_io": [
+      {
+        "model": "GPU-CPU streaming compute engine",
+        "inputs": [
+          "model parameters",
+          "training data"
+        ],
+        "outputs": [
+          "updated weights",
+          "gradients"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Streaming parameters from host memory is more efficient than ZeRO-3 CPU offloading",
+        "result": "Confirmed; 1.84\u00d7 throughput improvement on 14B models"
+      },
+      {
+        "hypothesis": "Pipelined double-buffering overlaps prefetch, compute, and offload",
+        "result": "Supported; enables continuous GPU execution"
+      }
+    ]
+  },
+  "hf:2604.04215": {
+    "category": "LLM/Reasoning",
+    "task": "Open framework for post-training and evaluating diffusion language models",
+    "key_results": "DARE unifies SFT, PEFT, preference optimization, and dLLM-specific RL across masked and block diffusion models; broad algorithmic coverage",
+    "comments": "Fragmented dLLM ecosystem is real, but DARE's contribution is primarily engineering/implementation rather than algorithmic novelty.",
+    "model_io": [
+      {
+        "model": "Diffusion LLMs (LLaDA, Dream, SDAR, LLaDA2.x)",
+        "inputs": [
+          "training data",
+          "reward signals"
+        ],
+        "outputs": [
+          "aligned dLLM checkpoints",
+          "evaluation metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Unified framework enables reproducible comparison across dLLM algorithms",
+        "result": "Supported; DARE provides consistent evaluation stack"
+      }
+    ]
+  },
+  "hf:2604.06169": {
+    "category": "LLM/Reasoning",
+    "task": "Test-time training for LLMs via fast-weight updates to MLP projection matrices",
+    "key_results": "In-Place TTT enables 4B model to achieve superior performance on 128k-context tasks; outperforms competitive TTT baselines when pretrained from scratch",
+    "comments": "Principled NTP-aligned objective is sound, but the restriction to MLP projection matrices limits flexibility compared to general fast-weight schemes.",
+    "model_io": [
+      {
+        "model": "LLM with adaptable MLP final projection (fast weights)",
+        "inputs": [
+          "test context",
+          "test queries"
+        ],
+        "outputs": [
+          "next-token predictions",
+          "updated fast weights"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "MLP projection matrices serve as effective fast weights for LLMs",
+        "result": "Confirmed; in-place enhancement without retraining works"
+      },
+      {
+        "hypothesis": "NTP-aligned objective outperforms generic reconstruction for TTT",
+        "result": "Supported; superior performance on context-dependent tasks"
+      }
+    ]
+  },
+  "hf:2604.05117": {
+    "category": "Vision",
+    "task": "Curating visually grounded post-training data for improved video understanding in VLMs",
+    "key_results": "VidGround improves performance by up to 6.2pp using only 69.1% of original data; 40-60% of long-video questions answerable from text alone",
+    "comments": "Data quality over quantity is intuitive, but manual curation of 'visual grounding' may not scale; the 40-60% text-bias finding is striking.",
+    "model_io": [
+      {
+        "model": "Vision-language model with RL-based post-training",
+        "inputs": [
+          "video",
+          "question",
+          "answer"
+        ],
+        "outputs": [
+          "confidence score",
+          "updated VLM weights"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Filtering out text-only-answerable questions improves video understanding",
+        "result": "Confirmed; 6.2pp improvement with 69.1% of original data"
+      },
+      {
+        "hypothesis": "Data quality is a major bottleneck for video VLMs",
+        "result": "Supported; simple data curation outperforms complex algorithms"
+      }
+    ]
+  },
+  "hf:2603.24652": {
+    "category": "LLM/Reasoning",
+    "task": "Understanding when network pruning works via representation hierarchy analysis",
+    "key_results": "Pruning fails in generative tasks due to nonlinear logit-to-probability amplification; embedding and logit spaces robust but probability instability propagates",
+    "comments": "Representation-hierarchy lens is insightful, but the analysis is largely post-hoc diagnostic rather than prescriptive for designing better pruning.",
+    "model_io": [
+      {
+        "model": "Language model with pruning applied",
+        "inputs": [
+          "text input"
+        ],
+        "outputs": [
+          "token probabilities",
+          "next-token predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Embedding and logit spaces are robust to pruning; probability space is fragile",
+        "result": "Confirmed; nonlinear softmax amplifies deviations"
+      },
+      {
+        "hypothesis": "Generative tasks fail due to error accumulation across time steps",
+        "result": "Confirmed; probability deviations accumulate during decoding"
+      }
+    ]
+  },
+  "hf:2604.06168": {
+    "category": "Vision",
+    "task": "Robot policy learning via multiview video generation and pixel-grounded action images",
+    "key_results": "Achieves strongest zero-shot success rates on RLBench; improves video-action joint generation; supports zero-shot policy without separate policy head",
+    "comments": "Unified world action model is elegant, but pixel-grounded action representation may struggle with complex multi-step tasks requiring abstract planning.",
+    "model_io": [
+      {
+        "model": "Video diffusion transformer with action-image generation",
+        "inputs": [
+          "initial state image",
+          "target goal image",
+          "7-DoF action trajectory"
+        ],
+        "outputs": [
+          "predicted next state",
+          "multi-view action videos"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Pixel-grounded action images outperform low-dimensional action tokens",
+        "result": "Confirmed; stronger zero-shot success and joint generation quality"
+      },
+      {
+        "hypothesis": "Video backbone can act as zero-shot policy without separate action module",
+        "result": "Confirmed; unified model supports multiple tasks without policy head"
+      }
+    ]
+  },
+  "hf:2604.05081": {
+    "category": "Medical",
+    "task": "Multimodal medical understanding with high-dimensional imaging, pathology, and EHR integration",
+    "key_results": "MedGemma 1.5 4B: 11% gain in 3D MRI, 47% F1 gain in pathology, 35% IOU gain in anatomical localization, 5% MedQA accuracy, 22% EHRQA improvement",
+    "comments": "Impressive breadth of medical modalities, but 4B scale may limit complex reasoning; gains are modality-specific rather than unified cross-modal improvement.",
+    "model_io": [
+      {
+        "model": "Multimodal LLM (MedGemma 1.5 4B)",
+        "inputs": [
+          "medical images (CT/MRI/WSI/CXR)",
+          "lab reports",
+          "EHR documents",
+          "questions"
+        ],
+        "outputs": [
+          "diagnoses",
+          "anatomical localization",
+          "information extraction",
+          "reasoning"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "3D volume slicing and WSI sampling enable efficient high-dimensional imaging",
+        "result": "Confirmed; 11% MRI, 3% CT improvements"
+      },
+      {
+        "hypothesis": "Long-context support improves multi-timepoint and longitudinal analysis",
+        "result": "Confirmed; 4% macro accuracy on multi-timepoint CXR"
+      }
+    ]
+  },
+  "hf:2604.06156": {
+    "category": "Vision",
+    "task": "Reasoning-enhanced multimodal embedding with adaptive selective reasoning",
+    "key_results": "MMEmb-R1 achieves 71.2 on MMEB-V2 with 4B parameters (SOTA); selectively invokes reasoning via RL, reducing latency and overhead",
+    "comments": "Pair-aware reasoning selection via counterfactual intervention is clever, but limited to embedding tasks; generalization to other multimodal tasks unclear.",
+    "model_io": [
+      {
+        "model": "MLLM with value verifier and adaptive reasoning selector",
+        "inputs": [
+          "query",
+          "candidate targets",
+          "query-target pairs"
+        ],
+        "outputs": [
+          "embedding vectors",
+          "similarity scores",
+          "reasoning traces (selective)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Reasoning is not universally beneficial; selective invocation via RL improves efficiency",
+        "result": "Confirmed; significantly reduced reasoning overhead and latency"
+      },
+      {
+        "hypothesis": "Pair-aware selection prevents shortcut reasoning behavior",
+        "result": "Supported; counterfactual intervention aligns reasoning with contrastive supervision"
+      }
+    ]
+  },
+  "hf:2604.02648": {
+    "category": "Benchmark",
+    "task": "Evaluating LLMs as autonomous bug-detection agents in game environments",
+    "key_results": "Best model (Claude-4.6-Opus thinking) identifies only 48.39% of bugs; autonomous bug discovery remains highly challenging",
+    "comments": "Game domain is creative for QA benchmarking, but 124 bugs across 30 games is relatively small; dynamic environment interaction limits scalability.",
+    "model_io": [
+      {
+        "model": "LLM agent with interactive game environment and ReAct loop",
+        "inputs": [
+          "game state",
+          "game mechanics description",
+          "environment observations"
+        ],
+        "outputs": [
+          "bug hypotheses",
+          "test actions",
+          "bug detection results"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Autonomous bug discovery in complex runtime environments remains hard for LLMs",
+        "result": "Confirmed; best model at 48.39% success; substantial gap from human performance"
+      },
+      {
+        "hypothesis": "Memory and multi-round exploration improve bug detection",
+        "result": "Supported; baseline agent equipped with memory and ReAct loop"
+      }
+    ]
+  },
+  "hf:2604.04074": {
+    "category": "LLM/Reasoning",
+    "task": "Evidence-grounded peer review with literature positioning and execution-based claim verification",
+    "key_results": "FactReview reproduces results and verifies claims; CompGCN case study shows partial support (88.4% vs. 92.6% baselines reported)",
+    "comments": "Evidence-grounding peer review is valuable, but execution-based verification requires code availability and bounded budgets; limited to reproducible empirical claims.",
+    "model_io": [
+      {
+        "model": "Multi-component review system: claim extractor + literature retriever + code executor + review generator",
+        "inputs": [
+          "manuscript",
+          "related papers",
+          "released code (optional)"
+        ],
+        "outputs": [
+          "review",
+          "evidence report",
+          "claim labels (Supported/Partially/Inconclusive/Conflict)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LLM-generated reviews benefit from evidence beyond manuscript text",
+        "result": "Supported; literature and code execution improve grounding"
+      },
+      {
+        "hypothesis": "Execution-based verification reveals gaps between reported and reproduced results",
+        "result": "Confirmed; CompGCN MUTAG claim only partially supported"
+      }
+    ]
+  },
+  "hf:2604.05963": {
+    "category": "LLM/Reasoning",
+    "task": "Precise code repair via minimal edits and edit-aware reward optimization",
+    "key_results": "PRepair improves repair precision (fix_1@1) by up to 31.4%; reduces over-editing while maintaining correctness",
+    "comments": "Over-editing quantification is novel, but the precise repair definition may conflict with necessary refactoring; speculative editing integration is practical.",
+    "model_io": [
+      {
+        "model": "LLM with EA-GRPO training and controlled bug injection",
+        "inputs": [
+          "buggy code",
+          "bug reports"
+        ],
+        "outputs": [
+          "minimal repair edits",
+          "fixed code"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Over-editing hinders bug localization and wastes edits",
+        "result": "Confirmed; quantified impact; 31.4% precision improvement"
+      },
+      {
+        "hypothesis": "Edit-aware rewards encourage minimal yet correct repairs",
+        "result": "Supported; EA-GRPO outperforms standard reward"
+      }
+    ]
+  },
+  "hf:2604.05533": {
+    "category": "Agents/RL",
+    "task": "Experience transfer for multimodal LLM agents via multi-dimensional knowledge decomposition",
+    "key_results": "Echo achieves 1.3x\u20131.7x speed-up on object-unlocking tasks; exhibits burst-like chain-unlocking after acquiring transferable experience",
+    "comments": "Five-dimensional decomposition is principled, but transfer in Minecraft may not generalize to diverse environments; ICAL retrieval scalability unclear.",
+    "model_io": [
+      {
+        "model": "Multimodal LLM agent with memory framework (Echo)",
+        "inputs": [
+          "task",
+          "prior experience (structured across 5 dimensions)",
+          "environment state"
+        ],
+        "outputs": [
+          "action sequence",
+          "task solution",
+          "updated memory"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Explicit knowledge decomposition enables better transfer across tasks",
+        "result": "Confirmed; 1.3x\u20131.7x speed-up on object-unlocking"
+      },
+      {
+        "hypothesis": "Agents exhibit burst-like learning after acquiring transferable experience",
+        "result": "Confirmed; chain-unlocking phenomenon observed"
+      }
+    ]
+  },
+  "hf:2604.05939": {
+    "category": "Agents/RL",
+    "task": "Value-driven LLM agent behavior modeling via context-value-action architecture",
+    "key_results": "CVA outperforms baselines on CVABench (1.1M real-world traces); mitigates value polarization while improving behavioral fidelity",
+    "comments": "Grounding in Stimulus-Organism-Response and human values theory is novel, but the Value Verifier requires authentic human data; 'LLM-as-judge' bias critique is insightful.",
+    "model_io": [
+      {
+        "model": "Context-Value-Action (CVA) architecture with value verifier",
+        "inputs": [
+          "context",
+          "value activation signals",
+          "behavioral traces"
+        ],
+        "outputs": [
+          "action",
+          "value-aligned behavior"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Decoupling action from cognitive reasoning via value verification improves fidelity",
+        "result": "Confirmed; superior behavioral fidelity over prompt-driven reasoning"
+      },
+      {
+        "hypothesis": "Reasoning intensity increases value polarization and reduces diversity",
+        "result": "Confirmed; counter-intuitive phenomenon revealed via empirical evaluation"
+      }
+    ]
+  },
+  "hf:2604.06079": {
+    "category": "Vision",
+    "task": "Scientific graphics synthesis via TikZ code generation with self-consistency RL",
+    "key_results": "SciTikZer-8B outperforms Gemini-2.5-Pro and Qwen3-VL-235B; dual self-consistency RL with round-trip verification reduces degenerate code",
+    "comments": "Execution-centric data engine and dual self-consistency RL are thoughtful, but TikZ domain specificity limits generalization to other code-generation graphics tasks.",
+    "model_io": [
+      {
+        "model": "Vision-language model (8B) with dual self-consistency RL optimizer",
+        "inputs": [
+          "scientific diagram image"
+        ],
+        "outputs": [
+          "TikZ code",
+          "executable code with visual fidelity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "High-quality execution-centric data improves code-graphics alignment",
+        "result": "Confirmed; SciTikZ-230K outperforms prior corpora"
+      },
+      {
+        "hypothesis": "Dual self-consistency RL penalizes degenerate code and boosts round-trip verification",
+        "result": "Confirmed; state-of-the-art performance achieved"
+      }
+    ]
+  },
+  "hf:2604.03619": {
+    "category": "Medical",
+    "task": "Long-range spatiotemporal dynamics modeling in fMRI via tokenized autoencoder",
+    "key_results": "TABLeT outperforms voxel-based models on UKB, HCP, ADHD-200; substantial gains in computational and memory efficiency; self-supervised pretraining improves downstream tasks",
+    "comments": "Using pre-trained 2D autoencoders for 3D fMRI compression is practical, but token quality from natural-image encoders on brain data is not inherently guaranteed.",
+    "model_io": [
+      {
+        "model": "TABLeT: 2D autoencoder + transformer encoder with self-supervised masked token modeling",
+        "inputs": [
+          "fMRI volume (3D)"
+        ],
+        "outputs": [
+          "compressed tokens",
+          "long-range temporal predictions",
+          "downstream task outputs"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Pre-trained 2D autoencoders compactly tokenize fMRI volumes for long-sequence modeling",
+        "result": "Confirmed; outperforms voxel-based on benchmarks; improved efficiency"
+      },
+      {
+        "hypothesis": "Self-supervised masked token modeling improves downstream task performance",
+        "result": "Confirmed; pretraining boosts multiple tasks"
+      }
+    ]
+  },
+  "nature:10.1038/s41594-026-01784-w": {
+    "category": "Protein Dynamics",
+    "task": "Elucidate molecular determinants of substrate specificity in sugar transporters",
+    "key_results": "Only transported sugars generate STD NMR signals; TM7b helix is key determinant of occluded-state formation; substrate-induced transition-state intermediate, not initial binding, determines specificity",
+    "comments": "The two-step mechanism (binding vs. occluded-state formation) elegantly explains specificity, though the generalizability to all GLUT family members requires further validation.",
+    "model_io": [
+      {
+        "model": "XylE bacterial transporter (WT and engineered variants)",
+        "inputs": [
+          "xylose",
+          "glucose",
+          "STD NMR spectroscopy"
+        ],
+        "outputs": [
+          "STD NMR signals",
+          "transporter conformational states (outward/inward/occluded)"
+        ]
+      },
+      {
+        "model": "Molecular dynamics simulations",
+        "inputs": [
+          "XylE structure",
+          "sugar substrates",
+          "transporter mutations"
+        ],
+        "outputs": [
+          "transition-state intermediates",
+          "occluded-state geometry"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Substrate specificity is determined by initial binding affinity",
+        "result": "Rejected; glucose and xylose bind similarly, but only xylose is transported"
+      },
+      {
+        "hypothesis": "Formation of occluded-state intermediate, not initial binding, determines substrate specificity",
+        "result": "Confirmed; STD signals abolished when transporter locked in outward/inward states; TM7b mutations enable glucose transport"
+      }
+    ]
+  },
+  "nature:10.1038/s42003-026-10004-6": {
+    "category": "Mechanobiology",
+    "task": "Quantify elastin-collagen interaction and its relationship to tissue stiffening in lung cancer",
+    "key_results": "Resemblance metric (RM) increases with tumorigenesis and shows superior sensitivity for lung cancer identification; tissue stiffness correlates more strongly with inter-channel RM than with individual fiber morphologies",
+    "comments": "The resemblance metric is a clever approach to capture fiber interaction, though validation on larger patient cohorts would strengthen translational claims.",
+    "model_io": [
+      {
+        "model": "Multiphoton microscopy + nanoindentation",
+        "inputs": [
+          "lung tissue samples (ex vivo)",
+          "mouse lung tumor model (in vivo)"
+        ],
+        "outputs": [
+          "elastin fiber images",
+          "collagen fiber images",
+          "tissue stiffness measurements",
+          "resemblance metric (RM)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Elastin-collagen interplay (quantified by RM) correlates with tissue mechanical properties during tumorigenesis",
+        "result": "Strong correlation found; RM exhibits greater stiffness correlation than individual fiber metrics"
+      },
+      {
+        "hypothesis": "RM-based imaging can identify tumor boundaries in vivo",
+        "result": "Demonstrated in mouse model harboring human lung cancer"
+      }
+    ]
+  },
+  "nature:10.1038/s41419-026-08706-0": {
+    "category": "Cell Division/Cycle",
+    "task": "Determine IRS2's role in mitotic stress protection via PLK1 interaction",
+    "key_results": "IRS2-deficient cells show reduced centrosome separation and shortened mitotic arrest; PLK1-binding deficiency reduces tumor cell viability under mitotic stress",
+    "comments": "The finding that tyrosine phosphorylation of IRS2 is not required for its mitotic function distinguishes this role from its canonical signaling adapter function.",
+    "model_io": [
+      {
+        "model": "mammalian cell culture with IRS2 WT, knockout, and mutant variants",
+        "inputs": [
+          "mitotic stress",
+          "CDK1 activity"
+        ],
+        "outputs": [
+          "centrosome separation",
+          "mitotic arrest duration",
+          "tumor cell viability"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "IRS2 tyrosine phosphorylation is required for mitotic regulation",
+        "result": "False; non-phosphorylatable IRS2 mutant displays normal mitotic function"
+      },
+      {
+        "hypothesis": "IRS2 protects cells from mitotic stress via PLK1 interaction",
+        "result": "Confirmed; IRS2 loss or PLK1-binding deficiency impairs mitotic survival"
+      }
+    ]
+  },
+  "nature:10.1038/s41419-026-08719-9": {
+    "category": "Cell Signaling",
+    "task": "Identify exosomal miRNA drivers of pancreatic cancer metastasis and vascular disruption",
+    "key_results": "miR-92a-3p associated with metastatic phenotype; exosomal miR-92a-3p promotes lung metastasis by increasing vascular permeability via DAB2IP-PI3K-AKT axis",
+    "comments": "The study bridges circulating exosomal biomarkers with mechanistic insights in endothelial cells, providing a clear therapeutic target.",
+    "model_io": [
+      {
+        "model": "patient-derived exosomes and pancreatic cancer cell lines",
+        "inputs": [
+          "exosomal miR-92a-3p",
+          "endothelial cells"
+        ],
+        "outputs": [
+          "vascular permeability",
+          "junction protein expression",
+          "eNOS activation"
+        ]
+      },
+      {
+        "model": "in vivo lung metastasis model",
+        "inputs": [
+          "cancer cells with miR-92a-3p manipulation"
+        ],
+        "outputs": [
+          "lung metastatic burden"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Exosomal miR-92a-3p facilitates metastasis by disrupting vascular integrity",
+        "result": "Confirmed; miR-92a-3p inhibits DAB2IP and activates PI3K-AKT in endothelial cells"
+      }
+    ]
+  },
+  "nature:10.1038/s41420-026-03095-x": {
+    "category": "Other",
+    "task": "Elucidate HERC2 E3 ligase substrates and link their dysregulation to neurodevelopmental disease",
+    "key_results": "HERC2 ubiquitylates 11 proteasome 19S regulatory particle subunits; patient fibroblasts with c.1781C>T show impaired 19S assembly and aberrant proteasome activity",
+    "comments": "The comprehensive proteomics approach identifies proteasome dysfunction as a primary consequence of HERC2 loss, offering mechanistic insight into an Angelman-like syndrome.",
+    "model_io": [
+      {
+        "model": "quantitative proteomics with biotinylated ubiquitin in HERC2 WT and catalytic-dead cells",
+        "inputs": [
+          "HERC2 variants",
+          "ubiquitin"
+        ],
+        "outputs": [
+          "ubiquitylated substrate identification",
+          "proteasomal subunit levels"
+        ]
+      },
+      {
+        "model": "patient-derived fibroblasts (c.1781C>T)",
+        "inputs": [
+          "HERC2 hypomorphic mutation"
+        ],
+        "outputs": [
+          "19S assembly",
+          "proteasome activity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "HERC2 ubiquitylates unassembled proteasomal subunits for degradation",
+        "result": "Confirmed; chaperone-mediated recognition and proteasomal targeting demonstrated"
+      }
+    ]
+  },
+  "nature:10.1038/s41594-026-01787-7": {
+    "category": "Cytoskeleton",
+    "task": "Determine tubulin nucleotide state and conformational landscape in neuronal axons in situ",
+    "key_results": "Axonal microtubules adopt expanded GTP-like lattice despite being GDP-bound at 2.7-\u00c5 cryo-EM resolution; compacted conformation in undifferentiated iPS cells, expanded in differentiated neurons",
+    "comments": "This structure resolves a critical question about microtubule stability in neurons and implicates lattice expansion as part of neuronal differentiation, with implications for motor protein recruitment.",
+    "model_io": [
+      {
+        "model": "cryo-electron microscopy of human cortical neuron axons (iPSC-derived)",
+        "inputs": [
+          "axonal microtubules"
+        ],
+        "outputs": [
+          "atomic-resolution structure",
+          "tubulin nucleotide state",
+          "lattice spacing"
+        ]
+      },
+      {
+        "model": "cryo-electron tomography and power spectrum analysis",
+        "inputs": [
+          "microtubules from differentiated vs. undifferentiated iPS cells"
+        ],
+        "outputs": [
+          "lattice conformation (expanded vs. compacted)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Axonal microtubules maintain GTP-like expanded conformation to enhance stability",
+        "result": "Confirmed; in situ structure shows expansion despite GDP binding; conformation is neuronal differentiation-dependent"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-40044-1": {
+    "category": "Other",
+    "task": "Develop deep learning model for multi-class segmentation of skin cancer histological slides",
+    "key_results": "MSF-VMDNet achieves MIoU 95.37% and Dice 95.11% on skin cancer histology; generalizes to dermoscopy, cell nucleus, and other pathology images",
+    "comments": "The dual-encoder architecture leveraging both frequency-domain attention and state-space models for long-range dependencies represents a solid technical contribution with strong generalization.",
+    "model_io": [
+      {
+        "model": "MSF-VMDNet (U-Net + Vision Mamba dual encoders)",
+        "inputs": [
+          "whole-slide skin cancer histological images"
+        ],
+        "outputs": [
+          "10-class semantic segmentation map"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-44946-y": {
+    "category": "Cell Signaling",
+    "task": "Develop high-throughput platform for simultaneous intracellular protein and transcriptome profiling in single immune cells",
+    "key_results": "CIPHER-seq enables five-layer analysis; matches commercial protocols in immune recovery while reducing mitochondrial stress; resolves cytokine induction and metabolic remodeling in PBMCs",
+    "comments": "Addressing the disconnect between single-cell RNA and protein abundance, particularly for intracellular cytokines, is a significant methodological advance.",
+    "model_io": [
+      {
+        "model": "CIPHER-seq platform applied to stimulated PBMCs",
+        "inputs": [
+          "immune cells",
+          "cytokine stimulation"
+        ],
+        "outputs": [
+          "intracellular protein quantification",
+          "transcriptome",
+          "metabolic markers"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s42003-026-09983-3": {
+    "category": "Cell Signaling",
+    "task": "Determine circPBX1 mechanism in metabolic memory-associated erectile dysfunction via miRNA regulation",
+    "key_results": "circPBX1 sponges miR-195-5p to relieve YAP1 inhibition; in vivo circPBX1 delivery restores cavernous structure and erectile function in diabetic rats",
+    "comments": "The circRNA-miRNA-mRNA regulatory axis addresses a clinically important complication persisting despite glycemic control, with clear translational potential.",
+    "model_io": [
+      {
+        "model": "rat penile cavernous endothelial cells under glucose metabolism memory",
+        "inputs": [
+          "circPBX1 manipulation"
+        ],
+        "outputs": [
+          "cell viability",
+          "migration",
+          "angiogenic capacity"
+        ]
+      },
+      {
+        "model": "diabetic rat model with in vivo circPBX1 delivery",
+        "inputs": [
+          "circPBX1"
+        ],
+        "outputs": [
+          "erectile function",
+          "cavernous structure",
+          "VEGF expression"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "circPBX1 antagonizes miR-195-5p to promote YAP1-mediated angiogenesis",
+        "result": "Confirmed; miR-195-5p mimic recapitulates circPBX1 knockdown phenotype"
+      }
+    ]
+  },
+  "nature:10.1038/s12276-025-01583-1": {
+    "category": "Other",
+    "task": "Survey of language models in biology and chemistry",
+    "key_results": "Comprehensive review of molecular representation strategies, model architectures (transformers, encoders, decoders), and applications spanning protein design, genomics, molecular property prediction, and retrosynthesis",
+    "comments": "A broad survey synthesizing the state-of-the-art; lacks novel empirical validation but provides valuable perspective on agentic AI systems in biomedicine.",
+    "model_io": [
+      {
+        "model": "Bio/chemical language models",
+        "inputs": [
+          "protein sequences",
+          "nucleotide sequences",
+          "single-cell data",
+          "chemical strings (SMILES)",
+          "graph encodings",
+          "3D point clouds"
+        ],
+        "outputs": [
+          "molecular properties",
+          "protein structures",
+          "optimized sequences",
+          "reaction predictions"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s12276-026-01637-y": {
+    "category": "Genomics",
+    "task": "Integrated mRNA vaccine design via multiple codon optimization strategies",
+    "key_results": "VaxLab incorporates four codon optimization algorithms; influenza hemagglutinin variants show up to 9.5-fold differences in protein expression, with most achieving \u22652.9-fold improvement over wild-type; design workflow completes in <5 min per variant",
+    "comments": "The integration of multiple optimization approaches (usage-based, secondary structure, deep generative models) with predictive metrics and sequence validation is comprehensive; clinical efficacy validation is pending.",
+    "model_io": [
+      {
+        "model": "VaxLab platform (four codon optimization algorithms + generative models)",
+        "inputs": [
+          "antigen coding sequences",
+          "optional: 5'/3' UTR designs"
+        ],
+        "outputs": [
+          "optimized mRNA sequences",
+          "predictive metrics (stability, expression, manufacturability)",
+          "DNA synthesis-compatible formats"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-strategy mRNA sequence optimization informed by RNA regulatory mechanisms improves protein expression in mammalian cells",
+        "result": "Optimized influenza hemagglutinin variants achieved up to 9.5-fold higher protein expression; >80% achieved \u22652.9-fold improvement"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-71057-z": {
+    "category": "Evolutionary Biology",
+    "task": "Scalable Bayesian population phylogenomics via virtual dimension reduction",
+    "key_results": "VDRoP (Virtual Dimension Reduction allowing Parallelisation) reduces MCMC runtime 3\u20138 fold and improves mixing efficiency up to 50 fold; applied to Adansonia, Anopheles, and Heliconius datasets",
+    "comments": "Achieving parallel computation without sacrificing analytical integration or requiring conjugate priors is a significant methodological advance for population-scale genomic inference.",
+    "model_io": [
+      {
+        "model": "VDRoP algorithm (BPP framework)",
+        "inputs": [
+          "sampled genomes",
+          "multispecies coalescent model parameters"
+        ],
+        "outputs": [
+          "phylogenetic tree",
+          "ancestral/contemporary population sizes",
+          "historical gene flow estimates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Virtual dimension reduction can improve MCMC mixing and enable parallelisation in population phylogenomics without sacrificing accuracy",
+        "result": "VDRoP achieved 3\u20138 fold runtime reduction and up to 50 fold improvement in mixing efficiency on empirical genomic datasets"
+      }
+    ]
+  },
+  "nature:10.1038/s41540-026-00704-4": {
+    "category": "Genomics",
+    "task": "Data-driven reduction of genome-scale metabolic models for bioprocess simulation",
+    "key_results": "Bayesian flux estimation-driven reduction produced a single reduced model feasible across 12 fed-batch CHO cultures; accurately reproduced extracellular fluxes while preserving broad metabolic functionality from exo-metabolomics data alone",
+    "comments": "The integration of uncertainty quantification via Bayesian methods is methodologically sound; applicability beyond CHO cells requires validation.",
+    "model_io": [
+      {
+        "model": "Bayesian flux estimation + GEM reduction pipeline",
+        "inputs": [
+          "time-course exo-metabolomics data",
+          "genome-scale metabolic model",
+          "fed-batch culture conditions"
+        ],
+        "outputs": [
+          "reduced compact GEM",
+          "flux predictions",
+          "digital twin model"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Uncertainty-aware reduction of GEMs using exo-metabolomics preserves metabolic functionality suitable for dynamic bioprocess simulation",
+        "result": "Reduced model remained feasible across all conditions and accurately reproduced extracellular fluxes while maintaining broad metabolic coverage"
+      }
+    ]
+  },
+  "nature:10.1038/s41587-026-03087-3": {
+    "category": "Genomics",
+    "task": "High-throughput protein variant activity profiling",
+    "key_results": "Generated sequence\u2013activity datasets for cytosine deaminase, uracil glycosylase inhibitor, aminoacyl-tRNA synthetase, and Cas9; discovered Cas9 variants with expanded PAM recognition and tRNA synthetase variants for noncanonical amino acids",
+    "comments": "Integrating experimental data with pretrained protein language models provides a scalable pathway to activity landscape construction; the method's generality across protein families is impressive.",
+    "model_io": [
+      {
+        "model": "Sequence Display platform + pretrained protein language models",
+        "inputs": [
+          "protein sequences",
+          "variant libraries"
+        ],
+        "outputs": [
+          "activity landscapes",
+          "variant-specific predictions",
+          "optimized protein variants"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Fine-grained variant-specific activity landscapes can be constructed by integrating Sequence Display datasets with pretrained protein language models",
+        "result": "Successfully mapped activity landscapes for multiple proteins and evolved variants with enhanced or altered function"
+      }
+    ]
+  },
+  "nature:10.1038/s41596-026-01356-8": {
+    "category": "Structural Prediction",
+    "task": "Automated RNA 3D structure prediction from sequence",
+    "key_results": "End-to-end neural network achieves state-of-the-art accuracy for RNA structure prediction; median runtime ~1 hour for ~200 nucleotide sequences; high-confidence predictions align well with experimental structures",
+    "comments": "The open-source standalone package and flexible input options (MSA, secondary structure) enhance utility; web server integration facilitates broader adoption.",
+    "model_io": [
+      {
+        "model": "trRosettaRNA (deep neural network)",
+        "inputs": [
+          "RNA nucleotide sequence",
+          "optional: multiple sequence alignments",
+          "optional: secondary structure"
+        ],
+        "outputs": [
+          "3D RNA structure",
+          "confidence scores",
+          "structural violations resolved via energy optimization"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Deep learning can accurately predict RNA 3D structures from sequence alone without experimental constraints",
+        "result": "Successful structure prediction for Rfam families lacking known 3D structures, validated against experimental observations"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-02462-3": {
+    "category": "Statistical Methods",
+    "task": "ECG-based left-ventricular ejection fraction estimation",
+    "key_results": "ECG-only CNN model: MAE 7.71%, RMSE 10.36%; personalized models: MAE 5.98% (ECG-only), 6.75% (hybrid); LV systolic dysfunction (LVEF\u226440%): AUC 0.88, sensitivity 0.92, NPV 0.98",
+    "comments": "Personalization yields substantial improvements (~25% reduction in MAE), highlighting the value of individual-specific models for cardiac function assessment.",
+    "model_io": [
+      {
+        "model": "Convolutional and probabilistic neural networks",
+        "inputs": [
+          "ECG data",
+          "optional: structured clinical features"
+        ],
+        "outputs": [
+          "LVEF estimate",
+          "uncertainty quantification",
+          "LV systolic dysfunction classification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Personalized neural network models can estimate LVEF from ECG with better accuracy than population-level models",
+        "result": "Personalized models reduced MAE from 7.71% to 5.98% (ECG-only) compared to population models"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-02598-2": {
+    "category": "Other",
+    "task": "Noninvasive blood biomarker prediction from bulbar conjunctiva videos",
+    "key_results": "Video-to-Vessels reduces video dimensionality ~200-fold; VesselNet achieves hemoglobin anemia ROC-AUC of 82.8%, Spearman \u03c1=0.47 for hemoglobin, \u03c1=0.46 for RBC count; local stabilization and segmentation-denoising contribute 19\u201338% of performance",
+    "comments": "Coupling representation learning with ocular imaging for noninvasive monitoring is innovative, though the moderate correlation coefficients (\u03c1<0.5) suggest clinical validation on larger cohorts is needed.",
+    "model_io": [
+      {
+        "model": "Video-to-Vessels + VesselNet",
+        "inputs": [
+          "bulbar conjunctiva capillary videos (high magnification)"
+        ],
+        "outputs": [
+          "vessel spatiotemporal representations",
+          "blood biomarker predictions (hemoglobin, RBC count)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Hemodynamic information from capillary videos can predict systemic blood biomarkers via representation learning",
+        "result": "Achieved moderate correlation for hemoglobin (\u03c1=0.47) and RBC count (\u03c1=0.46) with laboratory standards"
+      }
+    ]
+  },
+  "nature:10.1038/s43856-026-01573-y": {
+    "category": "Other",
+    "task": "Retinal age prediction from fundus photographs as biomarker of biological ageing",
+    "key_results": "High-accuracy retinal age prediction via deep learning multitask learning reveals associations with systemic disease",
+    "comments": "Abstract is incomplete; insufficient detail on model architecture, validation metrics, or specific disease associations to assess impact.",
+    "model_io": [],
+    "hypotheses": []
+  },
+  "nature:10.1038/s44433-026-00007-8": {
+    "category": "Genomics",
+    "task": "Full-genome recovery and molecular epidemiology of canine distemper virus",
+    "key_results": "Multiplex NGS panel achieves >97% CDV genome coverage with average depth >1200\u00d7; whole-genome phylogenetics resolves three lineages with higher resolution than H gene trees; detects intra-host variants and reveals previously undetected sub-lineage structure",
+    "comments": "Cost-effective approach bypasses virus isolation, enabling scalable surveillance; the detection of intra-host variants adds epidemiological depth.",
+    "model_io": [
+      {
+        "model": "Multiplex PCR + Illumina NGS + phylogenetic inference",
+        "inputs": [
+          "clinical samples (high and low viral loads)",
+          "reference CDV genomes"
+        ],
+        "outputs": [
+          "full-length CDV genomes",
+          "phylogenetic trees",
+          "intra-host variant calls",
+          "lineage classification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Whole-genome phylogenetics provides higher phylogenetic resolution and reveals sub-lineage structure compared to single-gene (H gene) trees",
+        "result": "Whole-genome analysis resolved three major lineages with previously undetected sub-lineage structure and intra-host variants"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-71239-9": {
+    "category": "Analysis",
+    "task": "Generalize equilibrium statistical physics to nonequilibrium network flows",
+    "key_results": "Derives generalized Maxwell-Onsager relations, generalized Einstein relation, and 'third Kirchhoff's law' for stochastic transport",
+    "comments": "Ambitious theoretical framework bridging path entropy and dynamical forces, but lacks experimental validation of predictions.",
+    "model_io": [],
+    "hypotheses": [
+      {
+        "hypothesis": "Path entropy and dynamic observables (node probabilities, edge traffics, cycle fluxes) provide principled foundations for nonequilibrium dynamics",
+        "result": "Supported by theoretical derivations of conjugate relations and fluctuation-response laws"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-71283-5": {
+    "category": "ML Theory",
+    "task": "Discover topological quantum order using quantum circuit complexity",
+    "key_results": "Nielsen's quantum circuit complexity serves as intrinsic informational distance enabling interpretable topological order manifold learning; two theorems connect circuit complexity to Fisher complexity and entanglement",
+    "comments": "Theoretically elegant but limited to small multiqubit experiments; scalability to larger systems unclear.",
+    "model_io": [
+      {
+        "model": "Kernel methods based on quantum circuit complexity",
+        "inputs": [
+          "quantum many-body states"
+        ],
+        "outputs": [
+          "topological order classification",
+          "manifold representations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Nielsen's quantum circuit complexity provides interpretable distance for unsupervised learning of topological phases",
+        "result": "Supported by two theorems and numerical multiqubit experiments showing superior performance"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-39523-2": {
+    "category": "Topology/Geometry",
+    "task": "MRI distortion correction using geometric function theory and Poisson series",
+    "key_results": "Coefficient bounds, inverse function estimates, and Fekete-Szeg\u00f6 inequalities derived for Sakaguchi-type functions; correction operator improves MSE, PSNR, SSIM on real MRI data",
+    "comments": "Novel application of analytic function subclasses to imaging; theoretical results well-developed but lack comparison to standard MRI distortion correction methods.",
+    "model_io": [
+      {
+        "model": "Analytic correction operator based on geometric function theory",
+        "inputs": [
+          "distorted MRI scans"
+        ],
+        "outputs": [
+          "corrected MRI images",
+          "image quality metrics (MSE, PSNR, SSIM)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Sakaguchi-type function subclasses enable effective MRI distortion correction via analytic operators",
+        "result": "Supported by numerical experiments showing significant improvement in image quality metrics"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-40161-x": {
+    "category": "Statistics/Probability",
+    "task": "Estimate population variance using auxiliary information in survey sampling",
+    "key_results": "Proposed simulation-based estimator achieves higher efficiency than conventional variance estimators and auxiliary variable methods; efficiency gains greatest when correlation is strong",
+    "comments": "Incremental improvement to classical survey methodology with solid empirical validation, but limited novelty in theoretical contribution.",
+    "model_io": [
+      {
+        "model": "Simulation-based variance estimator",
+        "inputs": [
+          "survey samples",
+          "auxiliary variables"
+        ],
+        "outputs": [
+          "population variance estimates",
+          "MSE and relative efficiency metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Auxiliary information improves variance estimation efficiency, especially under strong correlation",
+        "result": "Confirmed via simulation and real datasets; new estimator consistently superior in MSE"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-42705-7": {
+    "category": "ML Theory",
+    "task": "Identify adversarial persuasion attacks in multi-agent LLM debate systems",
+    "key_results": "Single adversarial agent reduces system accuracy by 10\u201340% and increases incorrect consensus by >30%; Best-of-N and RAG inadvertently amplify attacks",
+    "comments": "Critical security vulnerability in LLM multi-agent systems; finding that more agents/rounds do not mitigate persuasion is concerning for scalability.",
+    "model_io": [
+      {
+        "model": "Multi-agent LLM debate system with adversarial agent",
+        "inputs": [
+          "reasoning tasks",
+          "adversarial arguments",
+          "retrieval-augmented context"
+        ],
+        "outputs": [
+          "group consensus",
+          "accuracy metrics",
+          "persuasion effectiveness scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Adversarial LLM agents can manipulate multi-agent systems via coherent misleading arguments without classical attacks",
+        "result": "Confirmed\u201410\u201340% accuracy loss and >30% increase in incorrect consensus"
+      },
+      {
+        "hypothesis": "Inference-time defenses (Best-of-N, RAG) mitigate adversarial persuasion",
+        "result": "False\u2014these techniques unintentionally amplify attacks by increasing perceived credibility"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-43480-1": {
+    "category": "Statistics/Probability",
+    "task": "Analyze relationship between big data applications and firm price markups",
+    "key_results": "Big data applications significantly enhance firm markups; product innovation and production efficiency are key mechanisms; heterogeneous effects across organizational and technological dimensions",
+    "comments": "Econometric study lacks quantitative markup elasticity estimates; causal identification relies on assumptions not fully justified.",
+    "model_io": [],
+    "hypotheses": [
+      {
+        "hypothesis": "Big data applications increase firm markups through product innovation and efficiency gains",
+        "result": "Confirmed via mechanism analysis on micro-level firm data"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-02612-7": {
+    "category": "ML Theory",
+    "task": "AI agent for generating economically substitutable prescriptions",
+    "key_results": "Achieved medication cost reduction of 14.40%\u201340.14% while maintaining therapeutic non-inferiority; tested on 1,559 prescriptions",
+    "comments": "Practical healthcare application with significant cost savings, but lacks comparative analysis against existing prescription optimization methods.",
+    "model_io": [
+      {
+        "model": "EcoRxAgent",
+        "inputs": [
+          "original prescriptions",
+          "drug candidate databases",
+          "cost and safety data"
+        ],
+        "outputs": [
+          "economically substitutable prescription sets",
+          "cost reduction metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "AI agents can generate therapeutically equivalent prescriptions with lower cost via systematic drug-candidate retrieval and cost-effectiveness analysis",
+        "result": "Confirmed\u201414.40%\u201340.14% cost reduction achieved with non-inferior therapeutic outcomes"
+      }
+    ]
+  },
+  "nature:10.1038/s44387-026-00090-6": {
+    "category": "Algorithms",
+    "task": "Real-time anomaly detection in multivariate time series using reservoir states",
+    "key_results": "MD-RS outperforms state-of-the-art in real-time detection using Mahalanobis distance on fixed random recurrent networks; mixed slow/fast neurons enhance flexibility",
+    "comments": "Fixed random weights reduce training cost significantly; Mahalanobis distance provides temporal stability superior to reconstruction error approaches.",
+    "model_io": [
+      {
+        "model": "Mahalanobis Distance of Reservoir States (MD-RS)",
+        "inputs": [
+          "multivariate time series",
+          "normal reference data"
+        ],
+        "outputs": [
+          "anomaly scores",
+          "anomaly classifications",
+          "confidence metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Mahalanobis distance on fixed reservoir states provides temporally stable anomaly scoring superior to reconstruction error",
+        "result": "Confirmed on univariate and multivariate datasets; outperforms state-of-the-art in real-time capability"
+      }
+    ]
+  },
+  "nature:10.1038/s44387-026-00095-1": {
+    "category": "ML Theory",
+    "task": "Formalize explainable AI problem definitions and evaluation criteria",
+    "key_results": "Current XAI methods systematically attribute importance to features independent of prediction targets, limiting diagnostic utility",
+    "comments": "The critique that XAI lacks formal problem specification is incisive, though the paper proposes direction rather than concrete formalizations.",
+    "model_io": [],
+    "hypotheses": [
+      {
+        "hypothesis": "Current XAI methods reliably answer questions about ML models and their predictions",
+        "result": "False\u2014methods cannot reliably attribute importance without spurious correlations to independent features"
+      }
+    ]
+  },
+  "nature:10.1038/s41377-026-02220-w": {
+    "category": "Optics/Photonics",
+    "task": "Red OLED with ultra-low efficiency roll-off using selenium-embedded MR-TADF emitter",
+    "key_results": "Record RISC rate of 7.5\u00d710\u2075 s\u207b\u00b9; EQE_max 34.7%, maintained at 31.0% (1000 cd m\u207b\u00b2) and 25.6% (10,000 cd m\u207b\u00b2); achieves CIE (0.70, 0.30) pure-red emission as sensitizer",
+    "comments": "Outstanding practical advance addressing persistent roll-off problem in red OLEDs; selenium embedding strategy is elegant alternative to noble-metal sensitizers.",
+    "model_io": [
+      {
+        "model": "Selenium-embedded MR-TADF (tFSeBN) OLED",
+        "inputs": [
+          "current density",
+          "doping concentration"
+        ],
+        "outputs": [
+          "external quantum efficiency",
+          "luminance",
+          "chromaticity coordinates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Selenium embedding accelerates RISC in red MR framework",
+        "result": "Achieves record RISC rate and maintains high EQE across operational luminance range"
+      }
+    ]
+  },
+  "nature:10.1038/s41377-026-02257-x": {
+    "category": "Optics/Photonics",
+    "task": "High-precision metrology of strongly curved X-ray mirrors using speckle-based curvature imaging",
+    "key_results": "Measures surface curvature with radius 10 m to 100 mm; successfully applied to deterministic figuring, stress monitoring, and deformable mirror characterization",
+    "comments": "Practical innovation for synchrotron/FEL facilities, though absolute curvature accuracy specifications and comparison to interferometric methods not detailed.",
+    "model_io": [
+      {
+        "model": "Laser Speckle-based Curvature Optical Metrology (SCOM)",
+        "inputs": [
+          "laser speckle patterns",
+          "curved mirror surface"
+        ],
+        "outputs": [
+          "2D curvature maps",
+          "surface height profiles"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Digital image correlation can extract curvature from speckle patterns as wavefront markers",
+        "result": "Successfully demonstrates metrology of strongly curved surfaces avoiding high-fringe-density interferometric limitations"
+      }
+    ]
+  },
+  "nature:10.1038/s41378-026-01225-0": {
+    "category": "Applied Physics",
+    "task": "Scalable nanowire assembly via optical-electric field manipulation for deterministic patterning",
+    "key_results": "38% increase in capture success, 50% reduction in laser power, 39% increase in translation speed; demonstrates parallel control of seven nanowires and successful bacterial manipulation with sub-micron resolution patterning",
+    "comments": "Impressive nanomanufacturing results, though long-term assembly stability and yield for complex 3D structures need demonstration.",
+    "model_io": [
+      {
+        "model": "Optical Electro-aligning Manipulation (OEM) system",
+        "inputs": [
+          "AC electric field",
+          "holographic optical tweezers",
+          "nanowires/bacteria"
+        ],
+        "outputs": [
+          "aligned nanowire trajectories",
+          "patterned micro-structures",
+          "NEMS devices"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "AC electric fields convert stochastic nanowire motion to deterministic pre-aligned trajectories",
+        "result": "Dramatically improves capture success and reduces laser power requirements"
+      }
+    ]
+  },
+  "nature:10.1038/s41535-026-00879-3": {
+    "category": "Condensed Matter",
+    "task": "Identify multiple topological states in distorted square-net semimetal LaAgAs2",
+    "key_results": "Cis-trans chain distortion transforms square-net Dirac bands into quasi-1D trivial bands; multiple topological states identified including Z2 surface state and bulk Dirac state",
+    "comments": "Comprehensive experimental-theoretical study elegantly demonstrates structure-topology correlation, providing design principles for rational topological material engineering.",
+    "model_io": [
+      {
+        "model": "Single-crystal XRD, ARPES, quantum oscillations + DFT",
+        "inputs": [
+          "LaAgAs2 crystal",
+          "photon/magnetic field probes"
+        ],
+        "outputs": [
+          "Fermi surface topology",
+          "band structure",
+          "topological invariants"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Cis-trans distortion from square net affects topological properties",
+        "result": "Transforms Dirac bands into quasi-1D trivial bands while creating multiple topological surface/bulk states"
+      }
+    ]
+  },
+  "nature:10.1038/s41566-025-01824-9": {
+    "category": "Optics/Photonics",
+    "task": "Ultrafast widefield imaging of chiroptical responses with femtosecond temporal resolution",
+    "key_results": "Achieves ~100-fs temporal and submicrometre spatial resolution over 50\u00d750 \u00b5m\u00b2 field of view; maps spin relaxation and multisite spin diffusion in organic-inorganic perovskites",
+    "comments": "Innovative holographic approach enabling unprecedented spatiotemporal resolution for transient circular dichroism, though throughput and long-term sample damage require assessment.",
+    "model_io": [
+      {
+        "model": "Multiplexed off-axis holography with femtosecond pulses",
+        "inputs": [
+          "orthogonal probe polarizations",
+          "pump-probe optical geometry"
+        ],
+        "outputs": [
+          "complex-valued chiroptical images",
+          "optical rotation/CD",
+          "transient absorption/phase"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Polarization encoding in Fourier space enables complete chiroptical characterization at all pixels",
+        "result": "Reconstructs transient complex-valued images with full polarimetric information over wide field of view"
+      }
+    ]
+  },
+  "nature:10.1038/s42005-026-02617-4": {
+    "category": "Condensed Matter",
+    "task": "Optical detection of interfacial orbital Rashba-Edelstein effect in magnetic heterostructures",
+    "key_results": "Current-induced orbital angular momentum exceeds spin contribution by factor of three in Co/Pt bilayer; produces strong optical signal via quadratic magneto-optical Voigt effect",
+    "comments": "First-principles prediction of optical detection is promising, but experimental verification of the three-fold orbital enhancement is still pending.",
+    "model_io": [
+      {
+        "model": "DFT + linear-response + magneto-optical modeling",
+        "inputs": [
+          "Co/Pt bilayer structure",
+          "applied current"
+        ],
+        "outputs": [
+          "orbital angular momentum",
+          "Voigt effect signal",
+          "proximity-induced moments"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Platinum nominally nonmagnetic layer contributes strongly via proximity and current-induced moments",
+        "result": "Atom-resolved calculations confirm significant magnetic contribution despite nominal nonmagnetic character"
+      }
+    ]
+  },
+  "nature:10.1038/s44287-026-00281-y": {
+    "category": "Optics/Photonics",
+    "task": "Design topological photonic-crystal lasers for robust electrically pumped semiconductor sources",
+    "key_results": "Surveys design toolkits including Chern/valley Hall lattices, topological crystalline insulators, Dirac-vortex cavities, and bound states in continuum; identifies route to ultrawide free spectral range single-mode lasing",
+    "comments": "Comprehensive review synthesizing diverse topological concepts, but practical demonstration of all proposed approaches in monolithic electrical pumping remains limited.",
+    "model_io": [],
+    "hypotheses": [
+      {
+        "hypothesis": "Topological edge/corner modes improve robustness against perturbations in microfabricated lasers",
+        "result": "Multiple design toolkits enable compact sources with enhanced performance"
+      },
+      {
+        "hypothesis": "Non-Hermitian band topology and nonlinear gain dynamics can further enhance laser performance",
+        "result": "Identified as promising future research directions"
+      }
+    ]
   }
 }
