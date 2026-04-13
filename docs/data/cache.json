@@ -82372,5 +82372,975 @@
         "result": "Confirmed; substrate specificity determines acetate vs lactate utilization preference"
       }
     ]
+  },
+  "hf:2604.08567": {
+    "category": "Agents/RL",
+    "task": "Multi-user LLM agent coordination with conflicting objectives",
+    "key_results": "Frontier LLMs fail to maintain stable prioritization under conflicts, exhibit increasing privacy violations over multi-turn interactions, and suffer efficiency bottlenecks in coordination tasks",
+    "comments": "First systematic study of a practically important but under-explored setting; reveals fundamental gaps in current LLM design for collaborative settings.",
+    "model_io": [
+      {
+        "model": "frontier LLMs (GPT-4, Claude, etc.)",
+        "inputs": [
+          "multi-user instructions with conflicting objectives",
+          "privacy-sensitive information",
+          "coordination queries"
+        ],
+        "outputs": [
+          "agent decisions",
+          "responses to users"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LLMs can maintain stable prioritization across conflicting user objectives",
+        "result": "Failed - systematic prioritization instability observed"
+      },
+      {
+        "hypothesis": "LLMs preserve privacy in multi-turn multi-user interactions",
+        "result": "Failed - increasing privacy violations over interaction length"
+      },
+      {
+        "hypothesis": "LLMs coordinate efficiently across multiple users",
+        "result": "Failed - efficiency bottlenecks in iterative information gathering"
+      }
+    ]
+  },
+  "hf:2604.09527": {
+    "category": "Vision",
+    "task": "Long-horizon open-set future scene dynamics prediction",
+    "key_results": "Orders-of-magnitude higher sampling speed than dense simulators while matching or surpassing accuracy; enables sampling thousands of diverse futures from single image",
+    "comments": "Sparse trajectory representation is elegantly efficient; the OWM benchmark for evaluating prediction under real-world uncertainty is a useful contribution.",
+    "model_io": [
+      {
+        "model": "autoregressive diffusion model over sparse point trajectories",
+        "inputs": [
+          "single image",
+          "optional motion constraints"
+        ],
+        "outputs": [
+          "thousands of diverse future trajectory distributions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Sparse trajectory prediction enables faster rollout than dense video prediction",
+        "result": "Confirmed - orders-of-magnitude speedup achieved"
+      },
+      {
+        "hypothesis": "Sparse representation maintains accuracy compared to dense simulators",
+        "result": "Confirmed - matches or surpasses dense simulator performance"
+      }
+    ]
+  },
+  "hf:2604.08801": {
+    "category": "LLM/Reasoning",
+    "task": "Efficient prompt optimization for system prompts",
+    "key_results": "Training on 2 user prompts from AIME yields system prompt generalizing to other reasoning benchmarks; p1 substantially improves over full-dataset training",
+    "comments": "Theoretical decomposition of reward variance is insightful; counterintuitive finding that more user prompts can hurt optimization challenges conventional scaling intuitions.",
+    "model_io": [
+      {
+        "model": "language model with system prompt optimization",
+        "inputs": [
+          "user prompts (filtered subset)",
+          "candidate system prompts"
+        ],
+        "outputs": [
+          "optimized system prompt"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Larger user prompt sets improve system prompt optimization",
+        "result": "Rejected - variance among prompts can be reduced by scaling, hurting optimization"
+      },
+      {
+        "hypothesis": "Filtering user prompts by variance across system prompts improves optimization",
+        "result": "Confirmed - p1 filtering substantially improves optimization"
+      }
+    ]
+  },
+  "hf:2604.09482": {
+    "category": "Medical",
+    "task": "Knowledge-intensive medical reasoning with step-wise rewards",
+    "key_results": "80.8% accuracy on MedQA with Qwen-4B (new SOTA at 4B scale); generalizes across 0.5B-8B model scales with up to 25.7% improvement without retraining",
+    "comments": "Elegant decoupling of frozen policy from domain-specific reward module enables practical deployment; online step-wise rewards are superior to post-hoc scoring.",
+    "model_io": [
+      {
+        "model": "Process Reward Agent (search-based decoder + retrieval-augmented reward model)",
+        "inputs": [
+          "medical query",
+          "candidate reasoning trajectories",
+          "external knowledge sources"
+        ],
+        "outputs": [
+          "ranked/pruned trajectories",
+          "medical reasoning answer"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Online step-wise rewards outperform post-hoc trajectory scoring",
+        "result": "Confirmed - enables search-based decoding and trajectory pruning"
+      },
+      {
+        "hypothesis": "PRA generalizes across model scales without retraining",
+        "result": "Confirmed - improves frozen policies from 0.5B to 8B parameters"
+      }
+    ]
+  },
+  "hf:2604.09130": {
+    "category": "Molecular",
+    "task": "SE(3)-equivariant 3D atomistic modeling for molecular systems",
+    "key_results": "State-of-the-art on OC20, OMat24, and Matbench Discovery; 1.75\u00d7 speedup; accurate energy-conserving simulations with higher-order derivative modeling",
+    "comments": "SwiGLU-S\u00b2 activation design balances expressivity with strict equivariance preservation; DeNS auxiliary task effectively improves generalization.",
+    "model_io": [
+      {
+        "model": "EquiformerV3 (SE(3)-equivariant graph attention Transformer)",
+        "inputs": [
+          "3D atomic structures",
+          "chemical composition"
+        ],
+        "outputs": [
+          "potential energy surfaces",
+          "atomic forces",
+          "higher-order derivatives"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "SwiGLU-S\u00b2 activations improve many-body interaction modeling while preserving equivariance",
+        "result": "Confirmed - enables energy-conserving simulations and higher-order derivatives"
+      },
+      {
+        "hypothesis": "Smooth-cutoff attention improves modeling of potential energy surfaces",
+        "result": "Confirmed - SOTA results across multiple benchmarks"
+      }
+    ]
+  },
+  "hf:2604.01848": {
+    "category": "Vision",
+    "task": "Evaluating geometric invariance and equivariance in Vision-Language Models",
+    "key_results": "VLMs systematically fail under basic geometric transformations (rotation, scaling); performance drops sharply as semantic content becomes sparse across symbolic, natural, and abstract domains",
+    "comments": "Reveals critical gap between semantic understanding and spatial reasoning; suggests VLMs lack fundamental geometric grounding despite strong semantic capabilities.",
+    "model_io": [
+      {
+        "model": "state-of-the-art VLMs (architecture-agnostic)",
+        "inputs": [
+          "geometrically transformed images (rotations, scaling)",
+          "object identity queries"
+        ],
+        "outputs": [
+          "object recognition/description"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "VLMs maintain robust spatial invariance under geometric transformations",
+        "result": "Rejected - systematic failures across rotations, scaling, and identity transformations"
+      },
+      {
+        "hypothesis": "Semantic understanding correlates with geometric reasoning capability",
+        "result": "Rejected - strong semantic performance coexists with weak spatial invariance"
+      }
+    ]
+  },
+  "nature:10.1038/s42003-026-10044-y": {
+    "category": "Neural Biophysics",
+    "task": "Model astrocyte-mediated control of synaptic plasticity in recurrent circuits",
+    "key_results": "Astrocyte modulation stabilizes recurrent circuit dynamics and expands parameter space supporting stimulus-driven activity by 2-3 fold; higher-order interactions robustly prevent self-sustained activity from suppressing external input responses",
+    "comments": "The minimal three-neuron ring is elegant but may underestimate complexity of real synaptic regulation; astrocyte effects shown primarily as stabilizing rather than amplifying gain.",
+    "model_io": [
+      {
+        "model": "Higher-order tripartite synapse model",
+        "inputs": [
+          "External stimulation",
+          "Presynaptic neuron activity",
+          "Astrocyte gliotransmission"
+        ],
+        "outputs": [
+          "Neurotransmitter release probability",
+          "Postsynaptic response",
+          "Circuit activity pattern"
+        ]
+      },
+      {
+        "model": "Directed ring recurrent circuit (3 excitatory neurons)",
+        "inputs": [
+          "Synaptic efficacy",
+          "Astrocyte modulation parameters"
+        ],
+        "outputs": [
+          "Stimulus-driven vs. self-sustained activity ratio",
+          "Parameter stability region"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Astrocyte higher-order interactions reshape effective connectivity to stabilize stimulus responsiveness",
+        "result": "Confirmed: astrocyte modulation robustly prevents circuit self-sustained activity dominance"
+      },
+      {
+        "hypothesis": "Higher-order mechanisms compete with node-driven short-term plasticity",
+        "result": "Supported: astrocyte modulation and presynaptic facilitation jointly control neurotransmitter release"
+      }
+    ]
+  },
+  "nature:10.1038/s42005-026-02619-2": {
+    "category": "Mechanobiology",
+    "task": "Elucidate cell sorting mechanism driven by contact-induced changes in cell motility persistence",
+    "key_results": "Contact-induced differential persistence alone drives cell segregation; sorting is maximized at optimal persistence state duration; mechanism operates synergistically with other motility-based mechanisms under crowding",
+    "comments": "Novel mechanistic insight using minimal physical principles, but heterotypic persistence requires molecular basis not yet identified; generalizability to diverse cell types needs validation.",
+    "model_io": [
+      {
+        "model": "HEK293 cell co-culture sorting system",
+        "inputs": [
+          "Cell type (genetically modified variants)",
+          "Cell-cell contact events",
+          "External migration cues"
+        ],
+        "outputs": [
+          "Cell segregation patterns",
+          "Spatial organization by type"
+        ]
+      },
+      {
+        "model": "Theoretical/numerical sorting model with differential persistence",
+        "inputs": [
+          "Persistence duration",
+          "Contact-induced persistence increase",
+          "Cell density",
+          "Self-propulsion speed"
+        ],
+        "outputs": [
+          "Segregation degree",
+          "Symmetry breaking in segregation dynamics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Heterotypic contact induces temporary persistence increase in one cell type",
+        "result": "Confirmed experimentally and in silico"
+      },
+      {
+        "hypothesis": "Differential persistence alone is sufficient to drive sorting",
+        "result": "Confirmed: persistence-based mechanism breaks segregation symmetry independent of speed differences"
+      },
+      {
+        "hypothesis": "Optimal persistence duration maximizes sorting efficiency",
+        "result": "Confirmed: non-monotonic relationship between persistence duration and sorting degree"
+      }
+    ]
+  },
+  "nature:10.1038/s41419-026-08745-7": {
+    "category": "Epigenetics",
+    "task": "Define SUMO-ubiquitin crosstalk mechanism controlling PPARG stability in bladder cancer",
+    "key_results": "TRIM28 catalyzes PPARG SUMOylation at Lys94, impairing STUB1 ubiquitination and promoting protein stabilization; PPARG upregulates cholesterol biosynthetic genes including DHCR7/DHCR24",
+    "comments": "The TRIM28-PPARG SUMOylation-ubiquitination axis elegantly explains metabolic remodeling in BLCA, though the specificity of this crosstalk to bladder cancer versus other tumor types remains unclear.",
+    "model_io": [
+      {
+        "model": "BLCA cell lines with TRIM28 depletion/overexpression",
+        "inputs": [
+          "TRIM28",
+          "PPARG",
+          "SUMO",
+          "ubiquitin",
+          "STUB1"
+        ],
+        "outputs": [
+          "PPARG SUMOylation",
+          "PPARG ubiquitination",
+          "PPARG protein stability",
+          "cholesterol biosynthetic gene expression",
+          "cell proliferation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "TRIM28 acts as SUMO E3 ligase to SUMOylate PPARG at Lys94",
+        "result": "Confirmed; SUMOylation impairs STUB1 recognition and reduces proteasomal degradation"
+      },
+      {
+        "hypothesis": "PPARG stabilization drives cholesterol metabolism reprogramming",
+        "result": "Confirmed; stabilized PPARG transcriptionally activates DHCR7 and DHCR24"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-45693-w": {
+    "category": "Apoptosis/Cell Death",
+    "task": "Determine selective cytotoxicity mechanism of yttrium oxide nanoparticles in cervical cancer cells",
+    "key_results": "Y2O3-NPs showed IC50 of 52.22 \u00b5g/mL in HeLa cells versus 264.10 \u00b5g/mL in normal HFB4 cells (selectivity index 5.06); ROS overproduction, mitochondrial depolarization, DNA damage, and p53/ND3 upregulation observed",
+    "comments": "The selectivity toward cancer cells is promising, but the mechanistic basis for differential nanoparticle uptake or ROS generation between HeLa and HFB4 cells remains unexplored, limiting therapeutic optimization.",
+    "model_io": [
+      {
+        "model": "HeLa cervical cancer cells and HFB4 normal melanocytes exposed to Y2O3-NPs",
+        "inputs": [
+          "yttrium oxide nanoparticles (Y2O3-NPs)"
+        ],
+        "outputs": [
+          "cell viability (MTT)",
+          "ROS generation",
+          "mitochondrial membrane potential",
+          "DNA damage (Comet assay)",
+          "apoptotic morphology",
+          "p53/Bcl-2/ND3 expression"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Y2O3-NPs induce selective cytotoxicity toward HeLa cells through ROS-mediated mechanisms",
+        "result": "Confirmed; high selectivity index (5.06) achieved; ROS overproduction, mitochondrial depolarization, and DNA damage observed in HeLa cells"
+      },
+      {
+        "hypothesis": "Cytotoxicity proceeds via mitochondrial-mediated apoptosis",
+        "result": "Confirmed; apoptotic gene expression (p53 upregulation, Bcl-2 expression) and mitochondrial dysfunction (ND3 upregulation, depolarization) documented"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-43951-5": {
+    "category": "Structural Prediction",
+    "task": "Detect and classify coronary artery disease in CCTA images using Region-Guided Mask R-CNN and Haralick-ResNet fusion",
+    "key_results": "Region-Guided Mask R-CNN with Haralick-ResNet Fusion + DeepConvNet achieves 98.3% accuracy for CAD detection; hybrid approach combines region growing and instance segmentation; Haralick features capture texture to handle subtle arterial variations",
+    "comments": "Strong integrated pipeline combining classical texture features and deep learning; however, validation metrics are limited to accuracy (no AUC, sensitivity, specificity, DSC reported) and clinical generalization across CCTA protocols unclear.",
+    "model_io": [
+      {
+        "model": "Region-Guided Mask R-CNN (RG-Mask R-CNN)",
+        "inputs": [
+          "CCTA images"
+        ],
+        "outputs": [
+          "coronary artery segmentation masks"
+        ]
+      },
+      {
+        "model": "Haralick-ResNet Fusion (HRF)",
+        "inputs": [
+          "coronary artery ROIs"
+        ],
+        "outputs": [
+          "texture features (Haralick)",
+          "high-level features (ResNet)"
+        ]
+      },
+      {
+        "model": "DeepConvNet classifier",
+        "inputs": [
+          "fused features"
+        ],
+        "outputs": [
+          "CAD classification",
+          "98.3% accuracy"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Hybrid region growing + Mask R-CNN improves coronary artery segmentation in noisy CCTA",
+        "result": "RG-Mask R-CNN reduces structural complexity and provides better segmentation accuracy than standard approaches"
+      },
+      {
+        "hypothesis": "Haralick texture + ResNet features enhance CAD classification",
+        "result": "HRF captures texture variations and handles subtle differentiations, achieving 98.3% CAD detection accuracy"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-44109-z": {
+    "category": "Structural Prediction",
+    "task": "Structure-guided optimization of N-sulfonylpiperidine VEGFR-2 inhibitors as multi-target anticancer agents",
+    "key_results": "Compound 16 shows promising cytotoxicity across three cell lines, superior to lead A and vinblastine; dual VEGFR-2 and EGFR inhibitor with moderate topoisomerase II activity; induces G0/G1 arrest and early apoptosis in MCF-7; molecular docking shows favorable binding (key H-bonds, hydrophobic contacts) in VEGFR-2 active site",
+    "comments": "Rational structure-based design with multi-target validation; however, quantitative IC\u2085\u2080 values and in vivo efficacy data are absent from the abstract.",
+    "model_io": [
+      {
+        "model": "N-sulfonylpiperidine library design and synthesis",
+        "inputs": [
+          "lead compound A scaffold",
+          "modifications (group repositioning, aromatic diversification, linker replacement)"
+        ],
+        "outputs": [
+          "derivatives 1\u201330"
+        ]
+      },
+      {
+        "model": "Cytotoxicity screening",
+        "inputs": [
+          "synthesized compounds",
+          "three cancer cell lines"
+        ],
+        "outputs": [
+          "relative cell viability",
+          "compound 16 potency vs. A and vinblastine"
+        ]
+      },
+      {
+        "model": "Enzyme inhibition assays",
+        "inputs": [
+          "compound 16"
+        ],
+        "outputs": [
+          "VEGFR-2 inhibition",
+          "EGFR inhibition",
+          "topoisomerase II inhibition (moderate)"
+        ]
+      },
+      {
+        "model": "Cell cycle and apoptosis analysis",
+        "inputs": [
+          "compound 16",
+          "MCF-7 cells"
+        ],
+        "outputs": [
+          "G0/G1 arrest",
+          "early apoptosis induction"
+        ]
+      },
+      {
+        "model": "Molecular docking",
+        "inputs": [
+          "compound 16",
+          "VEGFR-2 active site"
+        ],
+        "outputs": [
+          "binding pose",
+          "H-bonding and hydrophobic contacts"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Scaffold optimization enhances multi-target anticancer potency",
+        "result": "Compound 16 exhibited superior cytotoxic activities vs. lead A and vinblastine; acts as dual VEGFR-2/EGFR inhibitor with moderate topoisomerase II activity"
+      },
+      {
+        "hypothesis": "Compound 16 binding mode in VEGFR-2 supports dual-target inhibition",
+        "result": "Molecular docking revealed favorable binding orientations with key H-bonds and hydrophobic contacts in VEGFR-2 active site"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-48214-x": {
+    "category": "Statistical Methods",
+    "task": "Explainable XGBoost model for predicting mechanical ventilation need in Alzheimer's patients with pneumonia",
+    "key_results": "XGBoost outperformed 4 other ML algorithms; training AUC 0.849, validation AUC 0.744, F1-score 0.507, balanced accuracy 0.776; SHAP identified COPD, temperature, gender as top predictors; nomogram with 7 variables achieved validation AUC 0.780, Cohen's \u03ba 0.363",
+    "comments": "Well-designed interpretable ML pipeline with SHAP analysis and nomogram validation; real clinical utility for ICU triage in cognitively impaired populations.",
+    "model_io": [
+      {
+        "model": "XGBoost classifier",
+        "inputs": [
+          "MIMIC-IV clinical variables (N=793 AD+pneumonia patients)",
+          "LASSO/multivariate logistic regression-filtered features"
+        ],
+        "outputs": [
+          "mechanical ventilation prediction",
+          "AUC (train 0.849, val 0.744)",
+          "F1-score 0.507"
+        ]
+      },
+      {
+        "model": "SHAP interpretability analysis",
+        "inputs": [
+          "XGBoost model"
+        ],
+        "outputs": [
+          "feature importance ranking (COPD, temperature, gender top 3)"
+        ]
+      },
+      {
+        "model": "Clinical nomogram",
+        "inputs": [
+          "7 key variables (Gender, AKI, COPD, OASIS, Temperature, PLT, antibiotic use)"
+        ],
+        "outputs": [
+          "NomoScore, risk stratification quartiles",
+          "validation AUC 0.780",
+          "Cohen's \u03ba 0.363"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Machine learning improves MV prediction in AD patients with pneumonia vs. conventional scoring",
+        "result": "XGBoost model achieved validation AUC 0.780 and demonstrated superior net benefit over conventional scoring in decision curve analysis"
+      },
+      {
+        "hypothesis": "COPD, temperature, and gender are dominant predictors of MV need",
+        "result": "SHAP analysis identified these as most influential; nomogram incorporating 7 variables achieved robust discrimination and calibration"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-48243-6": {
+    "category": "Network Biology",
+    "task": "Network pharmacology and phytosomal delivery optimization for Camellia sinensis in estrogen receptor-positive breast cancer",
+    "key_results": "36 overlapping ERPBC targets; 8 hub genes identified; Theacitrin C\u2013CTNNB1 and Plathymenin\u2013ESR1 show strong binding (validated by MD simulation); phytosome IC\u2085\u2080=445.55 \u00b5g/mL in MCF-7, 84.31% viability in L929 at 1000 \u00b5g/mL",
+    "comments": "Integrates network pharmacology, docking, MD, and formulation development; however, lacks in vivo xenograft or mechanistic validation of hub gene modulation.",
+    "model_io": [
+      {
+        "model": "HR-LCMS/MS profiling",
+        "inputs": [
+          "Camellia sinensis ethanolic leaf extract"
+        ],
+        "outputs": [
+          "11 abundant phytocompounds"
+        ]
+      },
+      {
+        "model": "Network pharmacology analysis",
+        "inputs": [
+          "11 phytocompounds",
+          "ERPBC target database"
+        ],
+        "outputs": [
+          "36 overlapping targets",
+          "8 hub genes"
+        ]
+      },
+      {
+        "model": "Molecular docking + 200 ns MD",
+        "inputs": [
+          "Theacitrin C",
+          "Plathymenin",
+          "CTNNB1",
+          "ESR1"
+        ],
+        "outputs": [
+          "binding affinity",
+          "dynamic stability"
+        ]
+      },
+      {
+        "model": "Phytosome formulation",
+        "inputs": [
+          "extract",
+          "phospholipid"
+        ],
+        "outputs": [
+          "particle size (519 nm)",
+          "zeta potential (-23.0 \u00b1 1.1 mV)",
+          "morphology"
+        ]
+      },
+      {
+        "model": "MTT cytotoxicity assay",
+        "inputs": [
+          "phytosome",
+          "MCF-7 and L929 cells"
+        ],
+        "outputs": [
+          "IC\u2085\u2080 (445.55 \u00b5g/mL MCF-7)",
+          "viability (84.31% L929)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Camellia sinensis phytochemicals modulate CTNNB1 and ESR1 networks in ERPBC",
+        "result": "Theacitrin C and Plathymenin showed strong, dynamically stable binding to target proteins"
+      },
+      {
+        "hypothesis": "Phytosomal formulation enhances selective cytotoxicity in MCF-7 cells",
+        "result": "Phytosome demonstrated dose-dependent cytotoxicity (IC\u2085\u2080 445.55 \u00b5g/mL) and high biocompatibility to L929 (84.31% viability)"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-48475-6": {
+    "category": "Structural Prediction",
+    "task": "Automated retinal blood vessel segmentation from fundus images using U-Net CNN",
+    "key_results": "Modified U-Net with advanced image-processing techniques achieves promising segmentation results for retinal vessels in DRIVE and CHASEDB1 benchmark datasets",
+    "comments": "The abstract lacks specific quantitative metrics (sensitivity, specificity, DSC) and does not clearly state the performance improvements over baselines.",
+    "model_io": [
+      {
+        "model": "Modified U-Net CNN",
+        "inputs": [
+          "colour fundus images (DRIVE, CHASEDB1)"
+        ],
+        "outputs": [
+          "retinal blood vessel segmentation masks"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Modified U-Net architecture improves retinal vessel segmentation accuracy",
+        "result": "Demonstrates promising segmentation results on benchmark datasets; intended for early diabetic retinopathy, glaucoma, and hypertensive retinopathy screening"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-02636-z": {
+    "category": "Statistical Methods",
+    "task": "Automate quality monitoring of hospital discharge summaries using large language models",
+    "key_results": "LLM models achieved F1 scores of 87\u201395% across targeted text fields; automated processing enabled real-time evaluation of 107,000 summaries and revealed trends undetectable by traditional sampling",
+    "comments": "Demonstrates practical clinical utility of LLMs for QI audit; however, generalization to other clinical documents and institutions not discussed.",
+    "model_io": [
+      {
+        "model": "Large language model (trained)",
+        "inputs": [
+          "discharge summary text",
+          "clinician-graded quality labels (n=1,876)"
+        ],
+        "outputs": [
+          "F1 score (87\u201395%)",
+          "quality classification per text field"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LLMs can accurately identify 'perfect' discharge summary content",
+        "result": "Models achieved F1 scores of 87\u201395% on held-out validation and scaled to 107,000 summaries"
+      },
+      {
+        "hypothesis": "Automated monitoring reveals trends missed by manual sampling",
+        "result": "Real-time evaluation of full dataset identified previously undetectable trends in summary quality"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-40871-2": {
+    "category": "Algorithms",
+    "task": "Hybrid rule-based intrusion detection for SCADA cyber-physical systems",
+    "key_results": "ZuraNet: 99.60% accuracy, >99% precision, >99.35% detection rate; GRiQ-Net: residual + query-based operations; low processing times enable real-time SCADA deployment",
+    "comments": "Combines deep learning with rule-based interpretability; comprehensive evaluation on 5 benchmark datasets (ToN-IoT, RT-IoT 2022, CICIDS2017, CIRA-CIC-DoHBrw-2020, ICS-SCADA); reduced false positives critical for SCADA safety.",
+    "model_io": [
+      {
+        "model": "ZuraNet + GRiQ-Net (hybrid rule-based deep learning IDS)",
+        "inputs": [
+          "SCADA network traffic",
+          "network flow features"
+        ],
+        "outputs": [
+          "anomaly detection",
+          "attack classification",
+          "intrusion alerts"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Hybrid rule-based deep learning outperforms conventional IDS for SCADA intrusion detection with reduced false positives",
+        "result": "99.60% accuracy, >99% precision; effective real-time anomaly detection across benchmark datasets"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-42899-w": {
+    "category": "Algorithms",
+    "task": "Real-time hazard detection in smart transportation via edge computing",
+    "key_results": "95% hazard-identification precision; 0.2-0.3s alert latency (vs 0.8-1.5s baseline); 27-30 tasks/s throughput",
+    "comments": "Combines ensemble ML with cellular automata and MDP; SUMO simulation validates distributed V2X architecture but lacks deployment on real infrastructure.",
+    "model_io": [
+      {
+        "model": "Random Forest + Gradient Boost + Probabilistic Cellular Automata + MDP",
+        "inputs": [
+          "traffic speed",
+          "density",
+          "environmental conditions"
+        ],
+        "outputs": [
+          "hazard predictions",
+          "alert dissemination"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Distributed edge architecture reduces latency vs centralized systems",
+        "result": "Achieved 0.2-0.3s latency reduction"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-45653-4": {
+    "category": "ML Theory",
+    "task": "Arabic fake news detection with transformer embeddings and class weighting",
+    "key_results": "F1-score 96.19%, accuracy 95.52%, precision 95.48%, recall 96.90% on 7,474-article dataset",
+    "comments": "CAMeLBERT embeddings outperform AraBERT/AraELECTRA; class weighting superior to SMOTE/resampling; study includes LIME/SHAP interpretability but cross-domain generalization not yet tested.",
+    "model_io": [
+      {
+        "model": "Neural Network with CAMeLBERT embeddings + class weighting",
+        "inputs": [
+          "Arabic news articles (7,474 validated texts)"
+        ],
+        "outputs": [
+          "binary fake/real classification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "CAMeLBERT embeddings with class weighting improve Arabic fake news detection",
+        "result": "F1 96.19% achieved; superior to other transformer variants"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-45762-0": {
+    "category": "Statistics/Probability",
+    "task": "Multi-attribute decision-making for typhoon evacuation under fuzzy uncertainty",
+    "key_results": "Recommended strategy for Jiangxi Province Typhoon Maria: alertness (preparedness); hybrid intuitionistic fuzzy method superior to other approaches",
+    "comments": "Addresses realistic fuzzy uncertainty in emergency management; single case study on Jiangxi Province limits generalizability; no quantitative comparison metrics provided.",
+    "model_io": [
+      {
+        "model": "Hybrid Intuitionistic Fuzzy Multi-Criteria Decision-Making",
+        "inputs": [
+          "seven evacuation criteria (wind speed, rainfall, geography, etc.)",
+          "five response alternatives"
+        ],
+        "outputs": [
+          "ranked evacuation necessity strategies"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Intuitionistic fuzzy conditions better capture expert hesitation in emergency decisions",
+        "result": "Hybrid method determined alertness as optimal strategy for case study region"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-46430-z": {
+    "category": "Algorithms",
+    "task": "Entropy-guided hybrid phishing detection for digital communication",
+    "key_results": "UCI Phishing Website: 95.8% accuracy; CIC-Phishing Email: 94.3% accuracy; 0.214s average inference latency; 40-50% feature dimensionality reduction; >85% feature stability",
+    "comments": "Combines EBNF, EG-GWO, SpinalNet; robust cross-dataset generalization; balances precision/efficiency for real-time deployment; designed for resource-constrained environments.",
+    "model_io": [
+      {
+        "model": "CyberSafe-EG-GWO (EBNF + EG-GWO + SpinalNet)",
+        "inputs": [
+          "phishing website/email features (statistical, contextual, semantic embeddings)"
+        ],
+        "outputs": [
+          "phishing/legitimate classification",
+          "threat scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Entropy-guided feature selection with adaptive interaction improves phishing detection accuracy and efficiency",
+        "result": "95.8% accuracy (websites), 94.3% (emails); 0.214s latency; 40-50% dimensionality reduction"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-46735-z": {
+    "category": "Topology/Geometry",
+    "task": "Quasi-periodic flat-band model with hyperuniform particle density",
+    "key_results": "Constructed tight-binding model with quasi-periodic nature and macroscopic degenerate zero-energy modes; particle density exhibits class-I hyperuniformity regardless of parameter; extended-to-localized transition parallels AAH model",
+    "comments": "Extends Aubry\u2013Andr\u00e9\u2013Harper paradigm to flat-band systems; sublattice-dependent density patterns observed; hyperuniformity analysis suggests universal order in disordered systems.",
+    "model_io": [
+      {
+        "model": "Quasi-periodic tight-binding model (AAH counterpart with flat-band modes)",
+        "inputs": [
+          "lattice geometry",
+          "model parameters",
+          "disorder strength"
+        ],
+        "outputs": [
+          "zero-energy eigenstate density distributions",
+          "hyperuniformity metrics",
+          "localization transitions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Quasi-periodic flat-band systems exhibit class-I hyperuniform particle distributions independent of parameter",
+        "result": "Confirmed via density analysis; mimics extended-to-localized transition of AAH model"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-47818-7": {
+    "category": "Other",
+    "task": "Data-driven intelligent academic evaluation system with IR and Solr indexing",
+    "key_results": "Professional title evaluation cycle shortened ~70%; statistical accuracy 98%; second-level response time for millions of records; supports custom schemes and batch reporting",
+    "comments": "Practical institutional system deployed; significant efficiency gains documented but results are largely operational (latency, accuracy) rather than scientific contributions; data quality dependence and scalability limits acknowledged.",
+    "model_io": [
+      {
+        "model": "Java Web hierarchical architecture (Spring Boot + Redis + Solr)",
+        "inputs": [
+          "institutional repository data",
+          "multi-source heterogeneous academic records"
+        ],
+        "outputs": [
+          "professional title evaluations",
+          "structured evaluation reports",
+          "batch export data"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Automated data fusion with Solr indexing reduces manual evaluation workload",
+        "result": "70% cycle time reduction; 98% accuracy; supports millions of records with 2nd-level response"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-47975-9": {
+    "category": "ML Theory",
+    "task": "Digital twin-assisted stage lift fault diagnosis via lightweight multi-scale CNN",
+    "key_results": "L-MSBA-Net achieves 97.12% accuracy under ideal conditions; robust noisy environment performance; real-time diagnostic capability; virtual fault injection alleviates abnormal data scarcity",
+    "comments": "Digital twin (SolidWorks + ANSYS FEA) generates synthetic fault training data; integrates virtual modeling with lightweight deep learning; addresses practical challenge of limited real fault samples.",
+    "model_io": [
+      {
+        "model": "Digital Twin (geometric + FEA) + L-MSBA-Net lightweight CNN",
+        "inputs": [
+          "virtual fault models (unbalanced loads, overloads)",
+          "real sensor vibration/load data"
+        ],
+        "outputs": [
+          "fault diagnosis labels",
+          "fault type classification",
+          "prognostic indicators"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Virtual fault injection via digital twin enables robust fault diagnosis CNN training despite real fault data scarcity",
+        "result": "L-MSBA-Net: 97.12% accuracy (ideal); robust noisy performance; supports real-time stage equipment monitoring"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-48113-1": {
+    "category": "Other",
+    "task": "Single-camera 2D gait analysis with inverse-dynamics joint torque/power estimation",
+    "key_results": "Normalized RMS difference <2% for joint torque, <5% for joint power vs reference dataset; qualitatively consistent waveform patterns preserved",
+    "comments": "Accessible framework using open-source tools, but planar kinematic inputs and simplified GRF assumptions limit magnitude accuracy; intended for trend-level analysis not precise biomechanical quantification.",
+    "model_io": [
+      {
+        "model": "Marker-based 2D tracking + inverse-dynamics (MATLAB Simscape Multibody)",
+        "inputs": [
+          "RGB video frames",
+          "joint trajectories"
+        ],
+        "outputs": [
+          "joint angles",
+          "angular velocities",
+          "joint torque profiles",
+          "power waveforms"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "2D video-derived kinematics preserve qualitative torque/power patterns despite planar simplification",
+        "result": "Temporal patterns remained consistent; magnitudes differed due to GRF assumptions"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-48248-1": {
+    "category": "ML Theory",
+    "task": "Transformer-based super-resolution for degraded underground coal mine images",
+    "key_results": "\u00d72 SR: PSNR/SSIM 32.07/0.9688 on coal mine dataset (+0.59 dB, +0.0036 vs prior best); \u00d74 SR: 28.10/0.8836 (+0.24 dB, +0.0013)",
+    "comments": "Hierarchical architecture with BAIM and DGFN effectively fuses local/global features; demonstrates strong performance on both specialized and public datasets; computational efficiency for edge deployment not discussed.",
+    "model_io": [
+      {
+        "model": "Hierarchical transformer-CNN with BAIM, DGFN, SE-weighted LCB",
+        "inputs": [
+          "degraded coal mine images (low-resolution, blurred)"
+        ],
+        "outputs": [
+          "super-resolved images (\u00d72 and \u00d74 upscaling)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Adaptive interaction mechanisms fusing local/global features improve SR for harsh coal mine imagery",
+        "result": "Outperformed SOTA on both specialized and benchmark datasets"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-025-33522-5": {
+    "category": "Applied Physics",
+    "task": "Assess DK and DKM shell elements in finite-element limit analysis for plastic collapse prediction",
+    "key_results": "DK and DKM elements show lower discretization error than strict upper-bound formulations despite non-guaranteed bounds; quadrangle > triangle element efficiency; convergence orders estimated under mesh distortion",
+    "comments": "Practical engineering study filling methodological gap, but lack of true lower-bound comparisons and industrial application benchmarks limits impact assessment.",
+    "model_io": [
+      {
+        "model": "FE-based limit analysis with DK/DKM shell elements",
+        "inputs": [
+          "shell geometry",
+          "material properties",
+          "mesh density/quality"
+        ],
+        "outputs": [
+          "collapse load",
+          "discretization error",
+          "convergence order"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "DK/DKM elements exhibit acceptable accuracy despite non-strict upper bounds",
+        "result": "Confirmed; lower discretization error than upper-bound elements observed"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-45062-7": {
+    "category": "Applied Physics",
+    "task": "Analyze nonlinear time-delayed Mathieu oscillator stability via non-perturbative approach",
+    "key_results": "Non-perturbative method handles small and large amplitudes without parameter constraints; van der Pol and Rayleigh oscillators show opposite damping/frequency effects; stability decreases with natural/excitation frequency, increases with damping",
+    "comments": "Comprehensive nonlinear analysis with practical guidance for delay-controlled systems, though novel theoretical contributions beyond existing perturbation methods remain incremental.",
+    "model_io": [
+      {
+        "model": "time-delayed nonlinear Mathieu oscillator (van der Pol and Rayleigh variants)",
+        "inputs": [
+          "nonlinear damping coefficient",
+          "excitation amplitude",
+          "time delay",
+          "natural frequency"
+        ],
+        "outputs": [
+          "stability regions",
+          "bifurcation boundaries",
+          "Lyapunov exponents",
+          "phase portraits"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Non-perturbative approach accurately predicts wide-amplitude oscillations",
+        "result": "Confirmed; strong agreement with numerical simulations over broad parameter range"
+      },
+      {
+        "hypothesis": "Van der Pol and Rayleigh oscillators exhibit opposite stability trends",
+        "result": "Confirmed; contrasting frequency and damping effects demonstrated"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-46556-0": {
+    "category": "Astrophysics/Cosmology",
+    "task": "Study photon propagation, shadows, and lensing in RN-AdS spacetimes with quintessence and plasma",
+    "key_results": "Stronger dispersion and negative cosmological curvature enhance photon bending and magnification; plasma renormalization of Einstein angle determined; consistency with M87* and Sgr A* VLBI windows demonstrated",
+    "comments": "Comprehensive nonlinear analysis combining multiple exotic physics (charge, curvature, quintessence, plasma), but physical feasibility of plasma profiles and observational parameter degeneracies not fully resolved.",
+    "model_io": [
+      {
+        "model": "RN-AdS spacetime with Kiselev quintessence + plasma",
+        "inputs": [
+          "black hole charge",
+          "cosmological constant",
+          "quintessence parameter",
+          "plasma density profile"
+        ],
+        "outputs": [
+          "photon sphere",
+          "black hole shadow",
+          "weak lensing Einstein angle",
+          "magnification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Plasma dispersion and quintessence enhance photon bending near M87* and Sgr A*",
+        "result": "Confirmed; parameter trends consistent with VLBI observations"
+      }
+    ]
   }
 }
