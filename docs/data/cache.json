@@ -86526,5 +86526,892 @@
         "result": "Confirmed; high agreement and precision with excellent user acceptance"
       }
     ]
+  },
+  "hf:2604.08706": {
+    "category": "Agents/RL",
+    "task": "Reduce computation cost in LLM post-training via experience replay",
+    "key_results": "Well-designed replay buffers reduce inference compute without degrading performance; in some cases improve final model performance while preserving policy entropy",
+    "comments": "Challenges the conventional wisdom that on-policy data is essential for LLM RL, though the practical magnitude of compute savings versus performance trade-offs could be clearer.",
+    "model_io": [
+      {
+        "model": "LLM with RL post-training",
+        "inputs": [
+          "replay buffer (stale rollouts)",
+          "fresh on-policy samples"
+        ],
+        "outputs": [
+          "trained LLM policy"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Strict on-policy sampling is suboptimal when generation is expensive",
+        "result": "Confirmed; replay buffers reduce inference compute without performance degradation"
+      },
+      {
+        "hypothesis": "Replay buffers can improve final model performance",
+        "result": "Confirmed in some cases"
+      }
+    ]
+  },
+  "hf:2604.05336": {
+    "category": "Agents/RL",
+    "task": "Improve agentic LLM capabilities via capability-targeted training",
+    "key_results": "+14.1 points on \u03c4\u00b2-bench (customer service), +7 perfect scores on ToolSandbox; outperforms baselines by +7.4 and +4 perfect scores respectively; +9.2 and +7.4 point improvements over GRPO and GEPA",
+    "comments": "Novel approach of contrasting failures to identify capability deficits is intuitive, but scalability to truly novel capabilities not shown.",
+    "model_io": [
+      {
+        "model": "LLM with LoRA adapter routing",
+        "inputs": [
+          "failed trajectories",
+          "successful trajectories"
+        ],
+        "outputs": [
+          "capability-targeted synthetic environments",
+          "trained adapters"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Automatically identifying lacking capabilities from trajectory contrasts improves agent performance",
+        "result": "Confirmed; TRACE outperforms baselines on both benchmarks"
+      },
+      {
+        "hypothesis": "TRACE scales more efficiently than general RL approaches given same rollout budget",
+        "result": "Confirmed; superior scaling compared to GRPO and GEPA"
+      }
+    ]
+  },
+  "hf:2604.10539": {
+    "category": "Systems",
+    "task": "Reduce memory footprint of KV cache for long-sequence LLM inference",
+    "key_results": "Maintains 99% accuracy with 256-token budget; uses only 25% of KV cache token budget compared to offloading baselines while achieving competitive or superior latency",
+    "comments": "Semantic clustering integration is well-motivated, but the 256-token budget appears quite restrictive for many real applications.",
+    "model_io": [
+      {
+        "model": "LLM with IceCache KV management and PagedAttention",
+        "inputs": [
+          "long sequences",
+          "CPU/GPU memory constraints"
+        ],
+        "outputs": [
+          "attended output",
+          "managed KV cache"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Semantic token clustering enables more efficient KV cache offloading than prior methods",
+        "result": "Confirmed; achieves 99% accuracy on LongBench with significant token budget reduction"
+      },
+      {
+        "hypothesis": "Hierarchical dynamic data structure improves memory bandwidth utilization",
+        "result": "Confirmed indirectly; competitive/superior latency versus baselines"
+      }
+    ]
+  },
+  "hf:2604.06710": {
+    "category": "Benchmark",
+    "task": "Evaluate AI system continuity across time and contexts",
+    "key_results": "Reference implementation progresses 58% (legacy) to 100% isolated mode; 96% at 250-story cumulative scale with zero cross-contamination across 1,835 verification questions",
+    "comments": "Rigorous methodology for a neglected problem; however, the gap between 100% isolated and 96% cumulative performance suggests real limitations in multi-narrative handling.",
+    "model_io": [
+      {
+        "model": "AI system with memory/continuity components (RAG, vector DB, context window, profiles)",
+        "inputs": [
+          "narrative test corpus (250 stories)",
+          "verification questions"
+        ],
+        "outputs": [
+          "contextually correct facts",
+          "continuity metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "A formal framework can measure genuine continuity without LLM-in-the-loop evaluation",
+        "result": "Confirmed; ATANT provides 10-checkpoint methodology and achieves measurable results"
+      },
+      {
+        "hypothesis": "Current memory components achieve perfect continuity in isolated mode but degrade at scale",
+        "result": "Confirmed; 100% isolated vs 96% cumulative at 250 stories"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-71717-0": {
+    "category": "Protein Dynamics",
+    "task": "Directed evolution of optogenetic allosteric protein switches via phage-assisted in vivo selection",
+    "key_results": "AraC-based light-controlled switches achieve ~1000-fold dynamic range; linker \u03b1-helix extension enhances conformational coupling between LOV2 sensor and AraC effector; adaptive trajectories identified via long-read sequencing",
+    "comments": "Powerful framework combining selection and sequencing, but the generalizability to other protein scaffolds and the mechanistic role of context-dependent residue interactions warrant further investigation.",
+    "model_io": [
+      {
+        "model": "Phage-assisted evolution (retron-based recombineering with opposing selection)",
+        "inputs": [
+          "AraC transcription factor",
+          "LOV2 photoreceptor domain",
+          "point mutations, insertions, deletions"
+        ],
+        "outputs": [
+          "optogenetic switch variants",
+          "activity and switchability metrics"
+        ]
+      },
+      {
+        "model": "Long-read sequencing and mutational analysis",
+        "inputs": [
+          "variant pools across selection cycles"
+        ],
+        "outputs": [
+          "adaptive trajectories",
+          "linker mutation identities",
+          "context-dependent residue interactions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Linker mutations promoting \u03b1-helix extension enhance allosteric coupling in engineered AraC switches",
+        "result": "Confirmed\u2014variants converge across independent evolution pools with consistent functional relevance"
+      },
+      {
+        "hypothesis": "Phage-assisted selection can generate near-binary optogenetic switches with wide dynamic range",
+        "result": "Confirmed\u2014~1000-fold dynamic range achieved"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-71934-7": {
+    "category": "Structural Biology",
+    "task": "High-resolution structure determination of small protein\u2013ligand complexes at cryo-EM size limit",
+    "key_results": "Maltose-binding protein\u2013maltose complex (40.8 kDa) resolved at 2.4 \u00c5; PLK1 kinase domain\u2013onvansertib (31.6 kDa) resolved at 3.4 \u00c5, below theoretical 38 kDa limit",
+    "comments": "Demonstrates feasibility below the canonical size threshold but requires optimal sample preparation (gold grids, detergent) and may not generalize to all small proteins.",
+    "model_io": [
+      {
+        "model": "Cryo-EM (single-particle reconstruction)",
+        "inputs": [
+          "frozen-hydrated protein\u2013ligand complexes",
+          "electron micrographs"
+        ],
+        "outputs": [
+          "3D density maps at 2.4\u20133.4 \u00c5 resolution",
+          "ligand and water coordinates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Cryo-EM can determine structures of proteins below the 38 kDa theoretical limit with improved grid supports and minimal fiducial markers",
+        "result": "Confirmed for maltose-binding protein and PLK1 kinase domain"
+      }
+    ]
+  },
+  "nature:10.1038/s42003-026-09899-y": {
+    "category": "Single Molecule",
+    "task": "Automated classification of multi-stage molecular events in single-molecule tracks",
+    "key_results": "Trains on hundreds of tracks in minutes; discovers relationships absent from training data; handles photometric, mobility, and spatial features simultaneously",
+    "comments": "Addresses the critical gap between brief snapshot observations and extended temporal trajectories, though generalization beyond annotated behaviors remains untested.",
+    "model_io": [
+      {
+        "model": "DeepTRACE (recurrent neural network with context learning)",
+        "inputs": [
+          "subcellular location",
+          "mobility",
+          "photometric properties",
+          "natural-language labels"
+        ],
+        "outputs": [
+          "sequences of molecular events",
+          "behavioral state classification",
+          "discovered relationships"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Machine learning can identify multi-stage molecular progressions from small annotated datasets without expert feature engineering",
+        "result": "Confirmed\u2014model generalizes rapidly and enables user-tailored analysis of complex processes"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-71761-w": {
+    "category": "Organelles",
+    "task": "Define TMEM65 role in mitochondrial Na+/Ca2+ exchange and neuronal disease pathogenesis",
+    "key_results": "TMEM65 acts as essential mitochondrial Na+/Ca2+ exchanger; its loss causes growth retardation and seizures (~3 weeks); skeletal muscle-specific knockout produces adult myopathy with elevated mitochondrial Ca2+; MCU knockout rescues lethality, extending lifespan >1 year",
+    "comments": "Elegant genetic rescue demonstrates mitochondrial Ca2+ overload as central disease mechanism; identifies Ca2+ as tractable therapeutic target for TMEM65-associated pathology.",
+    "model_io": [
+      {
+        "model": "Conditional Tmem65 knockout mice (whole-body, nervous system-specific, skeletal muscle-specific)",
+        "inputs": [
+          "Tmem65 ablation",
+          "MCU knockout (co-ablation)"
+        ],
+        "outputs": [
+          "mitochondrial Ca2+",
+          "Na+-dependent Ca2+ export",
+          "growth rate",
+          "seizure phenotype",
+          "myopathy",
+          "lifespan"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "TMEM65 is essential for neuronal function and survival",
+        "result": "Confirmed; Tmem65 knockout causes seizures and early death"
+      },
+      {
+        "hypothesis": "TMEM65 mediates Na+-dependent mitochondrial Ca2+ export",
+        "result": "Confirmed; loss impairs Ca2+ efflux and causes Ca2+ overload"
+      },
+      {
+        "hypothesis": "Mitochondrial Ca2+ overload is the primary disease mechanism",
+        "result": "Confirmed; MCU knockout blocks Ca2+ entry and rescues early lethality"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-71990-z": {
+    "category": "Cytoskeleton",
+    "task": "Define macrophage-secreted RNAseT2 signaling in muscle stem cell fusion",
+    "key_results": "RNAseT2 binds SLK to activate N-WASP via Paxillin phosphorylation, enabling actin bundling and MuSC fusion; in vivo RNAseT2 overexpression increases myofiber fusion in mouse and zebrafish",
+    "comments": "Reveals an unexpected non-enzymatic function of a conserved ribonuclease as a secreted paracrine signal for cytoskeletal reorganization.",
+    "model_io": [
+      {
+        "model": "Muscle stem cells (MuSCs) with restorative macrophages",
+        "inputs": [
+          "RNAseT2",
+          "mannose receptor",
+          "SLK",
+          "Paxillin",
+          "N-WASP"
+        ],
+        "outputs": [
+          "actin bundles",
+          "cell fusion",
+          "myofiber formation"
+        ]
+      },
+      {
+        "model": "Mouse and zebrafish muscle regeneration models",
+        "inputs": [
+          "RNAseT2 overexpression",
+          "RNAseT2-deficient macrophages"
+        ],
+        "outputs": [
+          "myofiber size",
+          "fusion index",
+          "regeneration efficiency"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Macrophage-derived RNAseT2 enters MuSCs via mannose receptor and stimulates fusion",
+        "result": "Confirmed; RNAseT2 uptake dependent on mannose receptor; promotes actin bundling"
+      },
+      {
+        "hypothesis": "RNAseT2-SLK-N-WASP axis mediates actin bundling necessary for fusion",
+        "result": "Confirmed; SLK phosphorylates Paxillin to activate N-WASP and enable bundling"
+      }
+    ]
+  },
+  "nature:10.1038/s42003-026-09954-8": {
+    "category": "Cell Signaling",
+    "task": "Elucidate cholesterol synthase effects on CRC metastasis and stemness",
+    "key_results": "FDFT1/SQLE suppression enhances metastasis via PDIA4/ACLY or SYVN1/SCD1 axis; tryptophan augments these pathways; ACLY/SCD1 inhibitors block metastatic phenotype",
+    "comments": "Links lipid metabolism to cancer stemness through unexpectedly promoting metastasis when synthases are suppressed, suggesting complex feedback regulation.",
+    "model_io": [
+      {
+        "model": "CRC cells (in vitro) and mouse xenografts",
+        "inputs": [
+          "FDFT1",
+          "SQLE",
+          "tryptophan",
+          "ACLY inhibitor",
+          "SCD1 inhibitor"
+        ],
+        "outputs": [
+          "metastasis",
+          "stemness markers",
+          "ER stress",
+          "PDIA4/ACLY or SYVN1/SCD1 complex"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "FDFT1/SQLE suppression impairs ER stress and destabilizes PDIA4/SYVN1, promoting metastasis",
+        "result": "Confirmed; loss of synthases enhances metastasis through degradation of ER-resident proteins"
+      },
+      {
+        "hypothesis": "Tryptophan augments PDIA4-ACLY and SYVN1-SCD1 association to drive phenotype",
+        "result": "Confirmed; tryptophan enhances co-complex assembly and metastatic capacity"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-71744-x": {
+    "category": "Single Cell",
+    "task": "Multi-omics data integration, generation, and modality translation",
+    "key_results": "scDiffusion-X generates realistic multi-omics data preserving cellular heterogeneity; enables accurate modality translation with uncertainty quantification; infers cell-type-specific gene regulatory networks",
+    "comments": "Dual-Cross-Attention mechanism offers interpretability advantage, though scalability to very large datasets and runtime performance metrics are not detailed.",
+    "model_io": [
+      {
+        "model": "scDiffusion-X (latent diffusion with Dual-Cross-Attention)",
+        "inputs": [
+          "multi-omics profiles (e.g., scRNA-seq, scATAC-seq, protein)"
+        ],
+        "outputs": [
+          "generated multi-omics data",
+          "translated modality predictions",
+          "cell-type-specific GRNs"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "DCA module can adaptively capture relationships between molecular modalities",
+        "result": "Demonstrated superior performance in benchmarking; enabled discovery of regulatory networks"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-71955-2": {
+    "category": "Structural Prediction",
+    "task": "Model biochemical reactions using kinetic Monte Carlo and graph neural networks",
+    "key_results": "KIMMDY handles dynamic systems with competing reactions on second timescale or slower; validated against experimental data; applied to radical reactions, nucleophilic substitutions, photodimerization",
+    "comments": "Addresses a long-standing computational bottleneck in molecular simulation; flexibility to integrate physics-based or heuristic rate models is valuable but validation limited to selected reaction types.",
+    "model_io": [
+      {
+        "model": "KIMMDY (biomolecular reaction emulator with kinetic Monte Carlo and GNN)",
+        "inputs": [
+          "molecular structures (proteins, DNA)",
+          "conformational ensembles"
+        ],
+        "outputs": [
+          "reaction rate predictions",
+          "reaction trajectories",
+          "reaction cascades"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Graph neural networks can predict reaction rates across conformational ensembles",
+        "result": "Validated against experimental data for radical reactions, substitutions, and photodimerization"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-025-29497-y": {
+    "category": "Algorithms",
+    "task": "Smart irrigation optimization via IoT and feedforward learning",
+    "key_results": "99% accuracy, 98.6% precision/recall, 99% F1-score, 2.6-sec response time; remote monitoring + water conservation insights",
+    "comments": "IoT data pipeline (NodeMCU sensors) + FFLM + cloud storage practical; response time and accuracy metrics impressive; sustainability impact demonstrated.",
+    "model_io": [
+      {
+        "model": "AIS framework: IoT (NodeMCU + soil sensors) + data cleaning + FFLM prediction + motor control",
+        "inputs": [
+          "soil moisture/temperature/humidity (IoT sensors)"
+        ],
+        "outputs": [
+          "irrigation schedule",
+          "motor activation signal",
+          "water conservation recommendations",
+          "cloud-stored data (ThingSpeak)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "IoT + FFLM enables efficient remote irrigation control with minimal latency",
+        "result": "99% accuracy, 2.6-sec response; farmers gain water conservation insights via remote monitoring"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-42594-w": {
+    "category": "Algorithms",
+    "task": "Dynamic EV charging load management via similarity-based predictive scheduling",
+    "key_results": "PAR reduced (peak-to-average); 35% reduction in charging pile occupancy; SoC error <0.1%; processing time seconds",
+    "comments": "Three-layer approach (prediction, optimization, repair) is practical; genetic algorithm optimization standard; real-world deployment in parking lots validates approach.",
+    "model_io": [
+      {
+        "model": "Multi-stage framework: historical similarity prediction + genetic-algorithm optimization + repair mechanism",
+        "inputs": [
+          "historical charging profiles",
+          "user departure constraints",
+          "desired SoC"
+        ],
+        "outputs": [
+          "charging schedule",
+          "load profile smoothed",
+          "final SoC (error <0.1%)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Similarity-based prediction + dynamic optimization + repair ensures user constraints and grid stability",
+        "result": "PAR reduction via peak-shaving; 35% pile occupancy reduction; transformer ramp-rate limits enforced"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-46161-1": {
+    "category": "Other",
+    "task": "Dynamics and control of 3-echelon chaotic supply chain system",
+    "key_results": "Largest Lyapunov exponent 1.8336 (higher than Anne model); two stable + one unstable equilibrium; offset boosting control regulates attractors",
+    "comments": "Rare feature of two stable equilibria; Lyapunov and bifurcation analysis standard; practical supply chain impact of control schemes not demonstrated.",
+    "model_io": [
+      {
+        "model": "3-echelon supply chain ODE with sinusoidal nonlinearity + 1D/2D offset boosting control",
+        "inputs": [
+          "initial conditions",
+          "system parameters"
+        ],
+        "outputs": [
+          "attractor position",
+          "time series"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Sinusoidal nonlinearity produces chaotic behavior with multistability",
+        "result": "Verified by Lyapunov exponent and Kaplan-Yorke dimension; bifurcation and attractor plots confirm multistability"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-46425-w": {
+    "category": "ML Theory",
+    "task": "Explainable weak fault diagnosis in marine diesel engines via decoupled attention",
+    "key_results": "99.71% accuracy (standard), 95% (high-noise); DPFD and CRIME improve by >2.2%; Fusion-CAM outperforms Grad-CAM++",
+    "comments": "CRIME optimization and DPFD feature decoupling are well-integrated; Fusion-CAM provides interpretability; real-ship validation is strong.",
+    "model_io": [
+      {
+        "model": "CDAF: CRIME optimizer + dual-path feature decoupling + channel-spatial attention + Fusion-CAM",
+        "inputs": [
+          "thermal parameters from marine diesel engine"
+        ],
+        "outputs": [
+          "fault state label",
+          "feature importance map (Fusion-CAM)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Physically-informed dual-path decoupling isolates weak drifts in high-noise settings",
+        "result": "DPFD enhanced accuracy by >2.2%; real-ship 99.71%, high-noise 95%"
+      },
+      {
+        "hypothesis": "Fusion-CAM better visualizes critical parameter contributions than Grad-CAM++",
+        "result": "Occlusion tests confirm Fusion-CAM superiority; trend-guided path dominates average path weight"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-46589-5": {
+    "category": "Other",
+    "task": "Color image denoising via fuzzy metric-like space and peer group",
+    "key_results": "Outlier removal using fuzzy metric-like space redefinition of peer group; preserves fine features while removing impulsive noise",
+    "comments": "Fuzzy metric-like framework is theoretical; switching mechanism between detection and filtering is practical but limited quantitative results.",
+    "model_io": [
+      {
+        "model": "Fuzzy metric-like space (FMLS) peer group + noisy pixel detection + Enhanced Average Filtering Technique (switching)",
+        "inputs": [
+          "color image corrupted by impulsive noise"
+        ],
+        "outputs": [
+          "denoised color image"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "FMLS-based peer group enables accurate corrupted pixel detection and effective denoising",
+        "result": "Filtering preserves fine features while removing heavy impulsive noise; switching mechanism adaptively applied"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-46750-0": {
+    "category": "Algorithms",
+    "task": "Long-term symbolic music generation via skeleton-texture decoupling",
+    "key_results": "Structural error reduced from 0.58 to 0.22; chord accuracy 96%; sequences up to 1000 tokens",
+    "comments": "Explicit skeleton guidance addresses a real limitation of implicit models; cross-attention mechanism is intuitive for long-range dependency.",
+    "model_io": [
+      {
+        "model": "CAST: MusicBERT (skeleton extraction) + MuseFormer (texture generation with cross-attention)",
+        "inputs": [
+          "music token sequences"
+        ],
+        "outputs": [
+          "macro-harmonic skeleton",
+          "full symbolic music sequence (up to 1000 tokens)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Explicit macro-harmonic skeleton guidance prevents logical collapse in long sequences",
+        "result": "Structural error reduced 62%; chord accuracy improved; mechanism analysis shows functional backtracking patterns"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-47175-5": {
+    "category": "ML Theory",
+    "task": "Cold-start recommendation via federated learning with attention",
+    "key_results": "nDCG@20 up to 16.8% better than SOTA in cold-start scenarios; privacy preserved via FedAvg; NVFlare deployment scalable",
+    "comments": "Attention mechanism and federated averaging are standard; privacy-utility trade-off not explicitly quantified.",
+    "model_io": [
+      {
+        "model": "CRAFT: attention mechanism + local personalized models + Federated Averaging (FedAvg) + NVFlare deployment",
+        "inputs": [
+          "user-item interactions",
+          "item metadata (sparse)",
+          "user-item history"
+        ],
+        "outputs": [
+          "recommendation list (cold-start items)",
+          "nDCG@20 ranking metric"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Attention on user-item patterns + federated aggregation improves cold-start personalization",
+        "result": "16.8% nDCG@20 improvement over baselines on 3 datasets (MovieLens 1M, Amazon, CiteULike)"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-47432-7": {
+    "category": "Algorithms",
+    "task": "Energy-efficient packet aggregation for wireless sensor networks",
+    "key_results": "IEEDP method reduces packet loss and energy consumption via concatenation packet aggregation and disparate path routing",
+    "comments": "Focus on packet aggregation and energy efficiency is sound; limited quantitative results or comparisons to prior methods provided.",
+    "model_io": [
+      {
+        "model": "IEEDP: node position monitoring + disparate path assignment + Concatenation Packet Aggregation",
+        "inputs": [
+          "sensor node positions",
+          "residual energy levels",
+          "packet queues"
+        ],
+        "outputs": [
+          "routing path",
+          "aggregated packets",
+          "network lifetime"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Disparate path routing and concatenation packet aggregation reduce loss and energy consumption",
+        "result": "Method achieves lossless transmission in aggregation period; increased network lifetime via energy preservation"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-47788-w": {
+    "category": "Other",
+    "task": "Smart art communication assessment via q-rung orthopair fuzzy MCDM",
+    "key_results": "Gamified and AI-adaptive platforms ranked highest; qROF-CURLI framework resolves uncertainty in expert judgments",
+    "comments": "MCDM under fuzziness is well-established; CURLI rank aggregation interesting but sensitivity to weighting unclear.",
+    "model_io": [
+      {
+        "model": "qROF-CURLI: q-rung orthopair fuzzy set aggregation + CURLI rank integration",
+        "inputs": [
+          "expert linguistic assessments on 9 criteria for 15 art communication platforms"
+        ],
+        "outputs": [
+          "final aggregated ranking of platforms",
+          "unbiased overall score"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "q-rung orthopair fuzzy sets + CURLI aggregation produce stable, reliable rankings under uncertainty",
+        "result": "Sensitivity analysis and benchmarking confirm stability; gamified AI-adaptive platforms ranked best"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-48053-w": {
+    "category": "Statistics/Probability",
+    "task": "Meta-analysis of AI-human scoring differences in English language assessments",
+    "key_results": "No statistically significant overall difference; small effect size; extreme heterogeneity indicates moderators (AI type, rater count, agreement index, CEFR level, year)",
+    "comments": "Comprehensive meta-analysis (21 studies, 401K participants); heterogeneity suggests context-dependent performance; AI as diagnostic tool (not replacement) recommended.",
+    "model_io": [
+      {
+        "model": "Meta-analytic synthesis with moderator analysis",
+        "inputs": [
+          "AI scoring outputs",
+          "human rater scores",
+          "study covariates (AI type, rater count, CEFR, year)"
+        ],
+        "outputs": [
+          "effect size estimate",
+          "heterogeneity Q",
+          "moderation analysis results"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "AI-human scoring differences vary significantly by AI system, rater count, agreement metric, and learner proficiency",
+        "result": "Overall no significant difference masks high heterogeneity; moderators identified for 5 factors"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-48182-2": {
+    "category": "Algorithms",
+    "task": "Student performance prediction via spatial-temporal graph aggregation",
+    "key_results": "USTGA outperforms baselines on educational dataset; reduces multiple error metrics; scalable for early-warning dashboards",
+    "comments": "Unified spatial-temporal graph design is intuitive; attention-guided aggregation and stacked layers add depth; limited to single educational institution.",
+    "model_io": [
+      {
+        "model": "USTGA: unified spatial-temporal graph + attention-guided aggregation + stacked refinement layers",
+        "inputs": [
+          "student academic data (spatial similarity, temporal sequences)"
+        ],
+        "outputs": [
+          "student performance predictions",
+          "alert signals for interventions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Unified graph with spatial relations actively modulating temporal propagation captures fine-grained dependencies",
+        "result": "USTGA consistently outperforms baselines; multi-scale refinement enhances robustness"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-48452-z": {
+    "category": "ML Theory",
+    "task": "Fusion learning for multi-source flight parameter analysis",
+    "key_results": "F1 and PR-AUC outperform LSTM/TCN baselines; dynamic hypergraph reduces spurious correlations via dual-stream encoding",
+    "comments": "Strong engineering application but limited novelty in individual components; contrastive learning for robustness is well-motivated.",
+    "model_io": [
+      {
+        "model": "Dual-stream gated multi-scale encoder + dynamic hypergraph + supervised contrastive learning",
+        "inputs": [
+          "flight parameter time-series",
+          "channel labels"
+        ],
+        "outputs": [
+          "state recognition labels",
+          "similar segment indices",
+          "predicted flight state"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Dynamic hypergraph modeling captures cross-channel collaboration better than static structures",
+        "result": "Ablation confirmed critical contribution; entropy changes reveal structural reconstruction during collaborative events"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-48460-z": {
+    "category": "Algorithms",
+    "task": "Building energy optimization via GAN-physics simulation coupling",
+    "key_results": "6.8% MAPE energy prediction; 23.7% average consumption reduction vs. code-compliant; 42-56 non-dominated Pareto solutions; 8-12% improvement over sequential methods",
+    "comments": "Physics-informed discriminator embedding constraints is elegant; bidirectional GAN-EnergyPlus coupling novel; multi-building typology validation strong.",
+    "model_io": [
+      {
+        "model": "Conditional GAN + EnergyPlus physics engine + physics-informed discriminator",
+        "inputs": [
+          "building spatial configurations",
+          "thermodynamic parameters"
+        ],
+        "outputs": [
+          "energy consumption prediction",
+          "Pareto front (spatial config vs. energy)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Physics-informed GAN coupling enables joint optimization of spatial design and energy prediction",
+        "result": "Superior to sequential approaches; 23.7% reduction in consumption; Pareto fronts with 42-56 solutions across typologies"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-48743-5": {
+    "category": "ML Theory",
+    "task": "Context-aware fire classification via vision-language models",
+    "key_results": "High accuracy with low computational overhead; distinguishes no fire, controlled fire, dangerous fire; reduced false alarms vs. binary classification",
+    "comments": "Vision-language reasoning for nuanced fire classification is novel; ConFire dataset custom-built; efficiency gains over large VLMs significant.",
+    "model_io": [
+      {
+        "model": "Visual encoder + Vision Language Model (caption/embedding generation) + Language Model (semantic classification)",
+        "inputs": [
+          "indoor environment images"
+        ],
+        "outputs": [
+          "fire class (none, controlled, dangerous)",
+          "semantic reasoning text"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "VLM-based semantic reasoning distinguishes contextually distinct fire events better than binary classification",
+        "result": "High accuracy with low computational cost; three-category classification reduces false alarms on ConFire dataset"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-48889-2": {
+    "category": "Analysis",
+    "task": "Optical soliton solutions to stochastic nonlinear Schr\u00f6dinger equation",
+    "key_results": "Novel solitary kink-type, wave, and singular solitons derived; Lindblad master equation governs stochastic evolution",
+    "comments": "Theoretical framework solid; physical relevance to fiber communications plausible but not experimentally validated.",
+    "model_io": [
+      {
+        "model": "Nonlinear conformable Schr\u00f6dinger equation + multiplicative white noise + unified method solver",
+        "inputs": [
+          "conformable derivative order",
+          "noise strength",
+          "temporal parameter"
+        ],
+        "outputs": [
+          "soliton solution class",
+          "dynamic characteristics plots"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Stochastic noise enhances understanding of non-linear optical processes via Lindblad dynamics",
+        "result": "Framework captures real-world fiber scenarios; soliton stability and error minimization insights derived"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-49017-w": {
+    "category": "Other",
+    "task": "Trigonometric leveling for elevation measurement in complex terrain",
+    "key_results": "Accuracy meets second-order leveling requirements when vertical angle <30\u00b0, sight distance difference <0.5 m, total distance <600 m",
+    "comments": "Practical surveying method validation; operational efficiency gains demonstrated; scope limited to specified geometric constraints.",
+    "model_io": [
+      {
+        "model": "High-precision total station trigonometric leveling (intermediate setup approach)",
+        "inputs": [
+          "distance measurements",
+          "vertical angle observations (multiple sets)"
+        ],
+        "outputs": [
+          "elevation differences between control points"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Trigonometric leveling with intermediate setup meets second-order accuracy in complex terrain",
+        "result": "Verified across 7 control points under geometric constraints; improved efficiency and cost over traditional leveling"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-46510-0": {
+    "category": "Astrophysics/Cosmology",
+    "task": "Multi-satellite detection and analysis of Pi2 magnetic pulsations across ionosphere-magnetosphere",
+    "key_results": "Pi2 event (12:40\u201312:56 UT, Jan 12, 2019) observed simultaneously by CSES-01, Swarm, RBSP, Arase; high-frequency (m ~\u22121.7) and low-frequency (|m|~0.3) components; duskside cavity resonance characteristics identified",
+    "comments": "Unique multi-mission coordination reveals waveguide and cavity modes; penetration speeds exceed average Alfv\u00e9n speed, supporting sunward propagation.",
+    "model_io": [
+      {
+        "model": "Magnetosphere-ionosphere system during Pi2 pulsation event",
+        "inputs": [
+          "CSES-01, Swarm A/C, RBSP A/B, Arase satellite magnetic field data",
+          "ground magnetometer (KAK)"
+        ],
+        "outputs": [
+          "compressional oscillations",
+          "azimuthal wavenumber",
+          "phase speed",
+          "cavity resonance mode"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "High-frequency Pi2 propagates via waveguide; low-frequency exhibits cavity resonance",
+        "result": "Confirmed; duskside signatures show cavity behavior; propagation speeds support distinct mechanisms"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-47176-4": {
+    "category": "Condensed Matter",
+    "task": "First-principles study of hydrogen-related defects at amorphous SiO2/Si interface with electrostatic corrections",
+    "key_results": "Electrostatic corrections shift charge transition levels by up to 0.44 eV; formation energies span 1.71\u20135.23 eV; spatial position within suboxide layer controls thermodynamic stability",
+    "comments": "Inclusion of electrostatic corrections via Poisson\u2013DFT coupling is rigorous; results clarify interfacial defect behavior critical for device reliability.",
+    "model_io": [
+      {
+        "model": "Amorphous SiO2/Si(100) interface with hydrogen-related defects (DFT + Poisson)",
+        "inputs": [
+          "defect site position",
+          "charge state"
+        ],
+        "outputs": [
+          "charge transition level",
+          "formation energy",
+          "electronic properties"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Electrostatic corrections are essential for accurate charge transition levels at buried interfaces",
+        "result": "Confirmed; corrections cause substantial shifts, enabling reliable defect characterization"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-48568-2": {
+    "category": "Applied Physics",
+    "task": "Characterizing Pr3+-doped borotellurite glasses for LED and laser optical applications",
+    "key_results": "Thermal stability: Tg 409\u2013461 \u00b0C, Tc 511\u2013572 \u00b0C; emission at 488 nm (3P0\u21923H4) and 605 nm (3P1\u21923H5); orange CCT <4000 K (warm), blue >4000 K (cool); refractive index 2.356\u20132.368; energy gap 3.110\u20133.154 eV",
+    "comments": "Comprehensive optical and thermal characterization; warm-and-cool CCT tunability attractive for RGB displays.",
+    "model_io": [
+      {
+        "model": "Pr3+-doped alkali zinc boro-tellurite glass (0\u20132 mol% Pr6O11)",
+        "inputs": [
+          "Pr3+ dopant concentration",
+          "excitation wavelength (444 nm)"
+        ],
+        "outputs": [
+          "emission spectra (488, 605 nm)",
+          "thermal stability",
+          "refractive index",
+          "bandgap"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Pr3+ doping tunes luminescence and optical properties for LED/laser use",
+        "result": "Confirmed; warm and cool CCT ranges achieved with good thermal stability"
+      }
+    ]
+  },
+  "nature:10.1038/s42005-026-02578-8": {
+    "category": "Quantum",
+    "task": "Tuning s-wave interactions in dipolar fermionic mixtures using microwave fields",
+    "key_results": "Universal s-wave resonance accessible without compromising microwave shielding; universal description of tunable interaction developed from field parameters",
+    "comments": "Removes experimental constraint that previously existed with p-wave interactions, opening practical routes to strongly-interacting dipolar spin mixtures.",
+    "model_io": [
+      {
+        "model": "Fermionic dipolar spin mixture (microwave-shielded molecules)",
+        "inputs": [
+          "microwave field parameters",
+          "spin state"
+        ],
+        "outputs": [
+          "s-wave scattering length",
+          "tetratomic bound states"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Universal s-wave resonance is accessible without compromising shielding",
+        "result": "Confirmed; enables stable, tunable interaction in dipolar fermion mixtures"
+      }
+    ]
   }
 }
