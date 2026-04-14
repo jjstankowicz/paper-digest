@@ -86009,5 +86009,522 @@
         "result": "confirmed; surrogate achieves high accuracy on micromechanics, wave propagation, microstructure evolution"
       }
     ]
+  },
+  "hf:2604.10688": {
+    "category": "LLM/Reasoning",
+    "task": "Token-level credit assignment in on-policy RL for reasoning alignment",
+    "key_results": "11.42% average relative improvement in Avg@32 and 7.30% in Pass@32 over baselines on six reasoning benchmarks",
+    "comments": "Adaptive weighting based on signal quality is intuitive, but the group-level normalization mechanism could benefit from clearer ablation studies.",
+    "model_io": [
+      {
+        "model": "Large Language Model (student) + Teacher Model",
+        "inputs": [
+          "reasoning prompts",
+          "on-policy rollouts"
+        ],
+        "outputs": [
+          "token-level predictions",
+          "KL distillation targets"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Uniform KL supervision ignores signal quality differences in rollouts",
+        "result": "Confirmed; adaptive weighting by correctness improves performance"
+      },
+      {
+        "hypothesis": "Incorrect trajectories benefit from teacher-perplexity weighting while correct ones benefit from student-perplexity weighting",
+        "result": "Confirmed; dual-path framework outperforms single supervision approach"
+      }
+    ]
+  },
+  "hf:2604.11753": {
+    "category": "Agents/RL",
+    "task": "Parallel test-time scaling and aggregation for long-horizon agentic tasks",
+    "key_results": "Up to 5.3% absolute improvement on average and 10.3% on deep research tasks compared to existing aggregation methods",
+    "comments": "The insight that concatenating trajectories exceeds context is valuable; treating aggregation as an agentic task is creative but may introduce additional failure modes.",
+    "model_io": [
+      {
+        "model": "Aggregation Agent with tools for trajectory inspection",
+        "inputs": [
+          "multiple parallel agentic trajectories",
+          "task context"
+        ],
+        "outputs": [
+          "synthesized final response"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Aggregating only final answers discards valuable trajectory information",
+        "result": "Confirmed; agentic aggregation outperforms answer-only aggregation"
+      },
+      {
+        "hypothesis": "Lightweight tools enable efficient synthesis without exceeding context limits",
+        "result": "Confirmed; aggregation cost bounded by single rollout"
+      }
+    ]
+  },
+  "hf:2604.11737": {
+    "category": "Vision",
+    "task": "Efficient long-term motion generation from video understanding",
+    "key_results": "64x temporal compression in motion embedding; outperforms state-of-the-art video models and task-specific approaches",
+    "comments": "Operating on learned motion embeddings rather than pixel space is pragmatic, but the evaluation against 'specialized approaches' lacks specificity.",
+    "model_io": [
+      {
+        "model": "Motion Embedding Encoder + Conditional Flow-Matching Model",
+        "inputs": [
+          "video trajectories from trackers",
+          "text prompts or spatial pokes"
+        ],
+        "outputs": [
+          "motion latent distributions",
+          "long-term motion sequences"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Compressing motion into low-dimensional embeddings enables efficient generation",
+        "result": "Confirmed; 64x compression allows orders-of-magnitude efficiency gains"
+      },
+      {
+        "hypothesis": "Conditional flow matching on motion latents produces better distributions than full video synthesis",
+        "result": "Confirmed; outperforms video models on motion quality metrics"
+      }
+    ]
+  },
+  "hf:2604.11004": {
+    "category": "Vision",
+    "task": "Region-level comparative image assessment with structured graph representation",
+    "key_results": "MLLMs fail on region-level degradations even with explicit region cues; training on PandaSet improves region-wise understanding",
+    "comments": "The distortion graph representation is novel and interpretable, but PandaBench performance baselines appear weak, limiting insight into achievable performance.",
+    "model_io": [
+      {
+        "model": "Panda (MLLM-based architecture for graph generation)",
+        "inputs": [
+          "paired images",
+          "region annotations"
+        ],
+        "outputs": [
+          "distortion graphs with type, severity, comparison, and quality scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "MLLMs lack fine-grained region-level degradation understanding",
+        "result": "Confirmed; state-of-the-art MLLMs fail on PandaBench"
+      },
+      {
+        "hypothesis": "Explicit region cues and structured graph training improve degradation understanding",
+        "result": "Confirmed; training on PandaSet elicits better region-wise distortion understanding"
+      }
+    ]
+  },
+  "hf:2604.04385": {
+    "category": "LLM/Reasoning",
+    "task": "Localizing and controlling policy routing circuits in alignment-trained LMs",
+    "key_results": "Identified gate-amplifier routing motif across twelve 2B-72B models; modulating detection signal controls policy from refusal to harmful guidance",
+    "comments": "Mechanistic interpretation is rigorous, but the finding that same safety capability is gated rather than removed raises critical questions about alignment robustness.",
+    "model_io": [
+      {
+        "model": "Alignment-trained Language Model with attention layers",
+        "inputs": [
+          "safety prompts",
+          "adversarial prompts"
+        ],
+        "outputs": [
+          "policy decisions (refusal/evasion/factual)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Policy routing is implemented via intermediate attention gate reading content and triggering amplifier heads",
+        "result": "Confirmed; interchange testing identifies causal gate necessity (p<0.001)"
+      },
+      {
+        "hypothesis": "Gate signal modulation continuously controls policy output",
+        "result": "Confirmed; can turn refusal into harmful guidance via signal manipulation"
+      },
+      {
+        "hypothesis": "Policy commitment is early; gate operates before deeper layers finish processing",
+        "result": "Confirmed; cipher substitution collapses gate necessity 70-99%"
+      }
+    ]
+  },
+  "hf:2604.10039": {
+    "category": "Vision",
+    "task": "Understanding failure modes in VLM object counting via mechanistic analysis",
+    "key_results": "Count-relevant visual evidence degrades in language layers; Modality Attention Share intervention improves counting by enforcing visual attention budget",
+    "comments": "The mechanistic analysis is thorough, but the lightweight MAS intervention shows limited gains and its generalization beyond counting remains unclear.",
+    "model_io": [
+      {
+        "model": "Vision-Language Model with attention analysis and component probing",
+        "inputs": [
+          "images with objects",
+          "count queries"
+        ],
+        "outputs": [
+          "count predictions",
+          "attention weights across modalities"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Counting failures stem from visual evidence degradation in later language layers",
+        "result": "Confirmed; count-relevant information strongest in projection stage, weakens in language layers"
+      },
+      {
+        "hypothesis": "Models underuse visual evidence due to text prior bias during reasoning",
+        "result": "Confirmed; enforcing visual attention budget improves performance"
+      }
+    ]
+  },
+  "nature:10.1038/s41416-026-03371-8": {
+    "category": "Cell Signaling",
+    "task": "Investigate cuproplasia blockage as a mechanism to suppress tumor-associated neutrophil infiltration in pancreatic cancer",
+    "key_results": "Not specified in abstract",
+    "comments": "Abstract is incomplete and only provides biological context (PDAC features aberrant copper metabolism) without reporting experimental results.",
+    "model_io": [],
+    "hypotheses": [
+      {
+        "hypothesis": "Blockage of intracellular cuproplasia reduces TAN infiltration through the TRAF6/STAT3/CCL2 pathway",
+        "result": "Unknown\u2014study aims to investigate this relationship"
+      }
+    ]
+  },
+  "nature:10.1038/s41419-026-08712-2": {
+    "category": "Epigenetics",
+    "task": "Elucidate ANP32E-driven glycolytic reprogramming in lung adenocarcinoma via epigenetic-metabolic crosstalk",
+    "key_results": "ANP32E overexpression correlates with poor prognosis; ANP32E upregulates KDM3B to enhance EGFR transcription, activating PI3K/Akt and GSK3\u03b2 inactivation; PGG compound inhibits the ANP32E/KDM3B/EGFR axis and suppresses tumor growth in vivo",
+    "comments": "The dual mechanism of ANP32E-mediated and GSK3\u03b2-phosphorylation-mediated GSK3\u03b2 inactivation elegantly explains how epigenetic and signaling changes converge on glycolysis.",
+    "model_io": [
+      {
+        "model": "LUAD cell lines (A549, H1975) with ANP32E knockdown/overexpression",
+        "inputs": [
+          "ANP32E shRNA or expression vector"
+        ],
+        "outputs": [
+          "proliferation rate",
+          "migration",
+          "glycolysis rate",
+          "EGFR transcription",
+          "H3K9me2 marks at EGFR promoter",
+          "GSK3\u03b2 phosphorylation",
+          "PI3K/Akt phosphorylation"
+        ]
+      },
+      {
+        "model": "Xenograft tumor models",
+        "inputs": [
+          "ANP32E-modified cells"
+        ],
+        "outputs": [
+          "tumor growth rate",
+          "histology"
+        ]
+      },
+      {
+        "model": "High-throughput screening and PGG validation",
+        "inputs": [
+          "PGG compound"
+        ],
+        "outputs": [
+          "ANP32E-KDM3B interaction inhibition",
+          "EGFR expression",
+          "tumor growth suppression"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "ANP32E drives LUAD progression through upregulation of KDM3B-mediated EGFR transcription",
+        "result": "Supported\u2014ANP32E knockdown suppresses EGFR and glycolysis; KDM3B silencing abrogates ANP32E effects"
+      },
+      {
+        "hypothesis": "ANP32E-driven glycolysis requires both GSK3\u03b2 inactivation via PI3K/Akt and direct ANP32E-mediated GSK3\u03b2 suppression",
+        "result": "Supported\u2014dual inactivation liberates oncogenic glycolysis"
+      }
+    ]
+  },
+  "nature:10.1038/s41420-026-03094-y": {
+    "category": "Development",
+    "task": "Evaluate synaptic maturity and functionality of differentiated SH-SY5Y cells",
+    "key_results": "Differentiated SH-SY5Y cells lack morphologically and functionally complete synapses despite expressing synaptic markers; high-throughput EM revealed absence of synaptic structures",
+    "comments": "The finding that immunostaining and functional assays diverge highlights the critical importance of ultrastructural validation when assessing neuronal differentiation protocols.",
+    "model_io": [
+      {
+        "model": "SH-SY5Y cell differentiation protocols (retinoic acid + BDNF \u00b1 additional neurotrophic factors)",
+        "inputs": [
+          "retinoic acid",
+          "BDNF",
+          "neurotrophic factors"
+        ],
+        "outputs": [
+          "synaptic markers (immunostaining)",
+          "synaptic vesicle-like vesicles (SVLVs)",
+          "electrophysiology recordings",
+          "exocytosis activity"
+        ]
+      },
+      {
+        "model": "Electron microscopy (EM, cryo-EM, cryo-ET)",
+        "inputs": [
+          "differentiated SH-SY5Y cells"
+        ],
+        "outputs": [
+          "synaptic ultrastructure",
+          "SVLV morphology",
+          "presence/absence of synaptic contacts"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Differentiated SH-SY5Y cells form functional synapses under standard protocols",
+        "result": "Rejected\u2014no morphologically or functionally complete synapses detected"
+      },
+      {
+        "hypothesis": "Additional neurotrophic factors enhance synaptogenesis",
+        "result": "Partial support\u2014promoted presynaptic-like compartments but with abnormal SVLV morphology (pleomorphic, lacking connectors)"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-71967-y": {
+    "category": "Proteomics",
+    "task": "Assess germline structural variant impact on cancer proteome",
+    "key_results": "6% of patients carry rare/singleton SVs disrupting cancer susceptibility genes; 24% of SV-associated non-coding cis-regulatory changes visible at protein level",
+    "comments": "Integration of genomics and MS proteomics is valuable; ancestry-specific SV effects hint at population stratification concerns.",
+    "model_io": [
+      {
+        "model": "SV-protein association pipeline",
+        "inputs": [
+          "germline structural variants",
+          "mass spectrometry proteomics"
+        ],
+        "outputs": [
+          "SV-protein associations",
+          "differential expression calls"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Germline SVs alter protein expression through cis-regulatory mechanisms",
+        "result": "Confirmed; ~24% of mRNA-level associations also visible at protein level"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-46263-w": {
+    "category": "Statistical Methods",
+    "task": "Robust Bayesian regression for asymmetric, positive biomedical data",
+    "key_results": "Log-symmetric distributions capture skewness and heavy tails; MCMC-based inference; DIC, WAIC, PSIS-LOO model selection compared",
+    "comments": "Methodologically sound; comprehensive model comparison framework; applications demonstrate flexibility but limited to physiological/diagnostic data.",
+    "model_io": [
+      {
+        "model": "Robust Bayesian regression with log-symmetric priors",
+        "inputs": [
+          "continuous positive asymmetric biomedical measurements"
+        ],
+        "outputs": [
+          "posterior parameter estimates",
+          "uncertainty intervals",
+          "model comparisons (DIC, WAIC, PSIS-LOO)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Log-symmetric distributions with careful prior specification enable robust inference for skewed biomedical data",
+        "result": "Confirmed; extensive simulation and real dataset applications demonstrate resilience to outliers"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-47456-z": {
+    "category": "Network Biology",
+    "task": "Identify m7G-related immune genes and construct gastric cancer prognostic risk model",
+    "key_results": "6 prognostic genes (ELANE, ASCL2, APOA1, GRP, CD36, MUC15); risk model stratifies patients with significant survival difference; 130 compounds with differential drug sensitivity",
+    "comments": "Integrates epigenetic modification (m7G), immune biology, and survival; mechanistic validation via pathway analysis strong; external cohort validation would strengthen claims.",
+    "model_io": [
+      {
+        "model": "Consensus clustering + LASSO + Cox regression risk model",
+        "inputs": [
+          "RNA-seq (tumor samples)",
+          "m7G-related genes",
+          "immune gene annotations"
+        ],
+        "outputs": [
+          "6-gene risk signature",
+          "patient risk stratification",
+          "survival predictions",
+          "drug sensitivity profiles"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "m7G-related immune genes drive gastric cancer prognosis and identify treatment-responsive subgroups",
+        "result": "Confirmed; 6-gene model predicts survival; TMB, TIDE, immune infiltration differ by risk group"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-48225-8": {
+    "category": "Statistical Methods",
+    "task": "Develop directionally sensitive biomarker (FFA) for multi-fiber white matter characterization",
+    "key_results": "FFA shows enhanced sensitivity in differentiating fiber crossings from parallel bundles (p << 0.01); improved contrast in multi-fiber voxels",
+    "comments": "Finsler geometry framework is novel; preliminary findings promising but sample size small and clinical validation pending; limitations discussed transparently.",
+    "model_io": [
+      {
+        "model": "Finsler fractional anisotropy (FFA) descriptor",
+        "inputs": [
+          "HARDI diffusion data"
+        ],
+        "outputs": [
+          "FFA maps",
+          "fiber crossing detection",
+          "white matter characterization"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "FFA captures directional sensitivity in multi-fiber white matter better than traditional scalar measures",
+        "result": "Supported; enhanced contrast in crossing fibers; larger clinical cohorts required for validation"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-48265-0": {
+    "category": "Genomics",
+    "task": "Characterize chloroplast RNA splicing and ribosome maturation (CRM) gene family across Pyrus pangenome",
+    "key_results": "25 PyCRM pan-genes (9 core, 15 variable, 1 species-specific); 4 conserved subfamilies; differential expression under cold, drought, disease stress",
+    "comments": "Pangenome-wide survey provides evolutionary context; functional roles in stress inferred from promoter analysis and expression; experimental validation of specific genes needed.",
+    "model_io": [
+      {
+        "model": "Pangenome annotation and comparative genomics pipeline",
+        "inputs": [
+          "8 Pyrus genome assemblies",
+          "RNA-seq under stress conditions"
+        ],
+        "outputs": [
+          "CRM gene annotations",
+          "ortholog groups",
+          "expression profiles"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "CRM genes are involved in plant stress responses and show functional diversification",
+        "result": "Confirmed; stress-specific expression changes and purifying/positive selection patterns detected"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-48613-0": {
+    "category": "Single Cell",
+    "task": "Build snRNA-seq aging clock for Drosophila head and identify sex-biased aging",
+    "key_results": "TimeFlies deep learning classifier identifies aging signatures; lncRNA roX1/roX2 (X dosage compensation regulators) top clock genes; sex-specific clocks show different aging pathways",
+    "comments": "Integration of explainability methods (lncRNA enrichment) with experimental validation (survival assay) is strong; sex-specific aging mechanistic insights novel.",
+    "model_io": [
+      {
+        "model": "TimeFlies (deep learning snRNA-seq aging clock)",
+        "inputs": [
+          "single-cell snRNA-seq profiles (genome-wide gene expression)"
+        ],
+        "outputs": [
+          "predicted donor age",
+          "clock marker genes",
+          "cell-type-specific aging signatures"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "lncRNA:roX1 and roX2 (X dosage compensation) are key aging drivers",
+        "result": "Confirmed; downregulation of dosage compensation impairs survival in vivo"
+      },
+      {
+        "hypothesis": "Different pathways drive aging in males vs females",
+        "result": "Confirmed; sex-specific clock predictions and explanations diverge significantly"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-48885-6": {
+    "category": "Other",
+    "task": "Heterogeneous domain adaptation for image classification via contrastive and adversarial alignment",
+    "key_results": "PCAA achieves feature- and class-level distribution alignment; competitive performance on multiple datasets",
+    "comments": "Combines adversarial network + prototype contrastive learning; principled approach to heterogeneous domain gap; experimental validation adequate but datasets standard.",
+    "model_io": [
+      {
+        "model": "PCAA (Prototype Contrastive and Adversarial Alignment)",
+        "inputs": [
+          "source domain images (labeled)",
+          "target domain images (unlabeled)"
+        ],
+        "outputs": [
+          "target domain class predictions",
+          "aligned feature space"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Prototype contrastive learning + adversarial alignment reduce heterogeneous domain adaptation gap",
+        "result": "Confirmed; effective feature- and class-level distribution matching on real-world datasets"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-48893-6": {
+    "category": "Other",
+    "task": "Screen for horizontal strabismus from smartphone facial images using landmark detection",
+    "key_results": "Random Forest classifier: accuracy 0.95, sensitivity 0.96, specificity 0.94, PPV 0.97, NPV 0.92",
+    "comments": "Biometric ratios from RT-DETR landmarks are interpretable, but IOU 0.62 is modest; validation on smartphone images in uncontrolled settings remains incomplete.",
+    "model_io": [
+      {
+        "model": "Two-stage system: RT-DETR + Random Forest classifier",
+        "inputs": [
+          "smartphone facial images (3 gaze directions)"
+        ],
+        "outputs": [
+          "strabismus vs orthotropia classification",
+          "biometric ratios"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Geometric biometric ratios from ocular landmarks enable high-accuracy strabismus screening",
+        "result": "Confirmed in controlled setting; generalization to uncontrolled environments requires further validation"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-48931-3": {
+    "category": "Other",
+    "task": "Measure eyelid position objectively for blepharoptosis diagnosis using AI eye-tracking",
+    "key_results": "MRD1 measurement mean difference +0.29 mm vs clinical assessment; test-retest repeatability \u00b10.27 mm; 98% user comfort",
+    "comments": "High agreement with gold-standard manual measurement and excellent repeatability; small sample (N=101) and limited to controlled setting.",
+    "model_io": [
+      {
+        "model": "BulbiCAM (CNN-based eye-tracking with VR)",
+        "inputs": [
+          "high-speed infrared video"
+        ],
+        "outputs": [
+          "eyelid margin positions (MRD1, MRD2)",
+          "pupil center",
+          "corneal glint"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "AI-enabled VR eye-tracking provides objective, repeatable eyelid position measurements comparable to clinical assessment",
+        "result": "Confirmed; high agreement and precision with excellent user acceptance"
+      }
+    ]
   }
 }
