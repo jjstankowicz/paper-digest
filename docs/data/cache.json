@@ -114129,5 +114129,493 @@
     "comments": "Review emphasizes multidisciplinary integration but lacks quantitative metrics or predictive models for failure prevention.",
     "model_io": [],
     "hypotheses": []
+  },
+  "hf:2604.15093": {
+    "category": "Agents/RL",
+    "task": "Mobile task automation with vision-language models",
+    "key_results": "Fine-tuned Qwen2.5-VL and Qwen3-VL achieve 51.7% and 64.7% on AndroidWorld respectively, surpassing existing open-data approaches",
+    "comments": "The policy-switching strategy for error-recovery data collection is a principled contribution, though the gap to closed proprietary systems (~70%) remains notable.",
+    "model_io": [
+      {
+        "model": "Qwen2.5-VL, Qwen3-VL (vision-language models)",
+        "inputs": [
+          "mobile screen observations",
+          "task instructions"
+        ],
+        "outputs": [
+          "action sequences",
+          "trajectories"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Policy-switching between learner and expert models captures essential error-recovery data missing in standard imitation learning",
+        "result": "Confirmed through competitive benchmarking across AndroidWorld, AITW, and Mind2Web"
+      },
+      {
+        "hypothesis": "Synthetic instructions avoid benchmark overfitting through broad functionality coverage",
+        "result": "Verified via transparency analysis of overlap between synthetic instructions and test sets"
+      }
+    ]
+  },
+  "hf:2604.20329": {
+    "category": "Vision",
+    "task": "Unified vision understanding and generation via image generation pretraining",
+    "key_results": "Vision Banana achieves SOTA on segmentation, metric depth estimation, and 2D/3D understanding tasks while maintaining image generation capabilities",
+    "comments": "The reframing of perception as image generation is elegant, but the claim of paradigm shift is speculative without broader architectural validation.",
+    "model_io": [
+      {
+        "model": "Vision Banana (instruction-tuned Nano Banana Pro)",
+        "inputs": [
+          "vision task specifications (text)",
+          "training data mixture"
+        ],
+        "outputs": [
+          "RGB image predictions",
+          "segmentation masks",
+          "depth maps"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Image generation pretraining develops general visual representations comparable to or exceeding domain-specialist models",
+        "result": "Confirmed: Vision Banana matches SAM-3 on segmentation and Depth Anything series on depth estimation"
+      },
+      {
+        "hypothesis": "Lightweight instruction-tuning preserves base model generation capabilities while enabling understanding tasks",
+        "result": "Confirmed through maintained generation performance alongside task improvements"
+      }
+    ]
+  },
+  "hf:2604.17073": {
+    "category": "LLM/Reasoning",
+    "task": "Calibrated abstention and clarification for unanswerable queries",
+    "key_results": "Abstain-R1 (3B) achieves competitive unanswerable-query behavior with DeepSeek-R1 while improving abstention and post-refusal clarification",
+    "comments": "The verifiable RL approach is principled, but evaluation is limited to abstention-specific benchmarks; broader reasoning performance preservation needs verification.",
+    "model_io": [
+      {
+        "model": "Abstain-R1 (3B language model with RL fine-tuning)",
+        "inputs": [
+          "query text",
+          "context information"
+        ],
+        "outputs": [
+          "answer or abstention + clarification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Clarification-aware RLVR rewards jointly optimize abstention and semantically aligned post-refusal clarification without sacrificing answerability performance",
+        "result": "Confirmed on Abstain-Test, Abstain-QA, and SelfAware benchmarks"
+      },
+      {
+        "hypothesis": "Calibrated abstention and clarification can be learned through verifiable rewards rather than emerging from scale alone",
+        "result": "Confirmed: 3B model matches larger systems including DeepSeek-R1"
+      }
+    ]
+  },
+  "hf:2604.18780": {
+    "category": "Systems",
+    "task": "Memory-efficient exact segment-level inference for long sequences",
+    "key_results": "Flash-SemiCRF reduces memory by factor proportional to segment length \u00d7 label count while enabling inference on 100,000+ position sequences previously intractable",
+    "comments": "The streaming forward-backward algorithm with checkpoint-boundary normalization is technically solid, though evaluation focuses on memory metrics rather than downstream task performance.",
+    "model_io": [
+      {
+        "model": "Flash-SemiCRF (fused Triton kernel for semi-CRF inference)",
+        "inputs": [
+          "sequence data",
+          "segment-level features",
+          "edge potentials"
+        ],
+        "outputs": [
+          "segment labels",
+          "gradients",
+          "uncertainty estimates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "On-the-fly edge potential evaluation via prefix-sum lookup eliminates materialization bottleneck",
+        "result": "Confirmed through memory footprint reduction proportional to product of segment and label count"
+      },
+      {
+        "hypothesis": "Streaming forward-backward with checkpoint normalization preserves exact gradients while maintaining sublinear working memory",
+        "result": "Confirmed through theoretical design and implementation"
+      }
+    ]
+  },
+  "hf:2604.20720": {
+    "category": "LLM/Reasoning",
+    "task": "Multilingual LLM adaptation with continual learning",
+    "key_results": "COMPASS outperforms baseline methods on Global-MMLU, MMLU-ProX, and OneRuler across three model architectures (Phi-4-Mini, Llama-3.1-8B, Qwen2.5-7B)",
+    "comments": "The distribution-aware semantic sampling strategy is well-motivated, but quantitative improvements over baselines and computational overhead are not explicitly reported.",
+    "model_io": [
+      {
+        "model": "COMPASS (language-specific adapters via PEFT)",
+        "inputs": [
+          "multilingual auxiliary data",
+          "target language usage distribution"
+        ],
+        "outputs": [
+          "language-specific adapter parameters"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Distribution-aware sampling of auxiliary multilingual data maximizes positive cross-lingual transfer while minimizing negative interference",
+        "result": "Confirmed across multiple benchmark evaluations and model architectures"
+      },
+      {
+        "hypothesis": "Continual learning with distribution shift monitoring (COMPASS-ECDA) prevents model staleness while preserving existing knowledge",
+        "result": "Claimed but not explicitly validated with temporal distribution shift experiments"
+      }
+    ]
+  },
+  "hf:2604.16659": {
+    "category": "LLM/Reasoning",
+    "task": "Safety alignment degradation in audio LLMs during benign fine-tuning",
+    "key_results": "Benign audio fine-tuning elevates Jailbreak Success Rate from single digits to 87.12%; proposed defenses reduce JSR to near-zero",
+    "comments": "The mechanistic analysis decomposing vulnerability across semantic, acoustic, and mixed axes is novel for audio, and architecture-conditioned patterns are insightful.",
+    "model_io": [
+      {
+        "model": "Audio LLMs (three SOTA models evaluated)",
+        "inputs": [
+          "benign audio samples",
+          "harmful content embeddings",
+          "textual prompts"
+        ],
+        "outputs": [
+          "safety decisions",
+          "jailbreak susceptibility metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Benign audio fine-tuning vulnerability is determined by architecture-specific encoder and projector transformations, not universal proximity",
+        "result": "Confirmed: vulnerability axis and relative risk vary by model architecture"
+      },
+      {
+        "hypothesis": "Filtering training data by embedding distance and textual system prompts defend against fine-tuning safety degradation without architectural modification",
+        "result": "Confirmed: both defenses reduce JSR to near-zero"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-72257-3": {
+    "category": "Neural Biophysics",
+    "task": "Identify primary HCN channel isoform driving neuronal pacemaking",
+    "key_results": "HCN1 channels activate/deactivate significantly during pacemaker depolarization cycles (femtosiemens resolution); HCN2 and HCN4 activation is barely resolvable and too slow; simulations suggest HCN1 triggers initial depolarization",
+    "comments": "Single-channel resolution with dynamic clamp is technically impressive, but functional validation in isolated pacemaker neurons or in vivo would strengthen the conclusion.",
+    "model_io": [
+      {
+        "model": "Single HCN channels (mHCN1, mHCN2, mHCN4) recorded during neuronal action potential clamp",
+        "inputs": [
+          "voltage clamp waveforms mimicking pacemaker depolarization",
+          "HCN channel isoforms"
+        ],
+        "outputs": [
+          "open probability",
+          "gating kinetics",
+          "single-channel conductance"
+        ]
+      },
+      {
+        "model": "Computational pacemaker model",
+        "inputs": [
+          "HCN channel gating parameters"
+        ],
+        "outputs": [
+          "depolarization trajectory",
+          "role assignment for each HCN isoform"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "All HCN isoforms contribute equally to pacemaker current",
+        "result": "Rejected: only HCN1 exhibits relevant kinetics during pacemaker cycle"
+      },
+      {
+        "hypothesis": "HCN1 functions as a trigger channel for initial depolarization",
+        "result": "Supported by simulations showing HCN1 initiates depolarization before other conductances dominate"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-71975-y": {
+    "category": "Cell Signaling",
+    "task": "Develop phosphatidylserine-everted erythrocyte membrane vesicles to enhance efferocytosis and vascular graft remodeling",
+    "key_results": "PS-everted RBC membrane vesicles incorporated into small-diameter vascular grafts markedly enhance endothelialization, suppress calcification, and improve long-term patency in rabbit carotid replacement; superior performance demonstrated in canine model versus clinically used expanded polytetrafluoroethylene grafts",
+    "comments": "The paradigm shift from passive immune evasion to active immune-mediated tissue regeneration via efferocytosis is compelling, though translation from preclinical animal models to clinical outcomes remains pending.",
+    "model_io": [
+      {
+        "model": "PS-everted RBC membrane vesicle-functionalized vascular graft",
+        "inputs": [
+          "phosphatidylserine-everted RBC vesicles",
+          "vascular graft scaffold"
+        ],
+        "outputs": [
+          "endothelialization rate",
+          "calcification suppression",
+          "graft patency",
+          "immune cell infiltration"
+        ]
+      },
+      {
+        "model": "Rabbit carotid artery replacement model",
+        "inputs": [
+          "engineered vs. control grafts"
+        ],
+        "outputs": [
+          "long-term patency",
+          "endothelial coverage"
+        ]
+      },
+      {
+        "model": "Canine vascular graft model",
+        "inputs": [
+          "PS-everted RBC vesicle graft",
+          "expanded polytetrafluoroethylene control"
+        ],
+        "outputs": [
+          "graft performance metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "PS-everted RBC membrane vesicles trigger efferocytosis to promote immune-mediated tissue regeneration",
+        "result": "Confirmed; enhanced endothelialization and long-term patency in both rabbit and canine models"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-71928-5": {
+    "category": "Statistical Methods",
+    "task": "Autonomous clinical diagnosis via agentic LLM with slow-thinking reasoning",
+    "key_results": "DxDirector-7B outperforms larger medical/general LLMs on rare disease and complex cases; reduces physician intervention while maintaining safety; demonstrates autonomous diagnostic reasoning",
+    "comments": "Novel application of agent-based LLMs to full diagnostic workflow; safety/accountability framework for high-risk cases is critical but underspecified.",
+    "model_io": [
+      {
+        "model": "DxDirector-7B (agentic LLM)",
+        "inputs": [
+          "patient complaints",
+          "clinical test results",
+          "case context"
+        ],
+        "outputs": [
+          "diagnostic strategies",
+          "physician intervention requests",
+          "diagnostic accuracy predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Agentic LLM with slow-thinking can autonomously drive full diagnostic process matching or exceeding human performance",
+        "result": "Superior diagnostic accuracy vs. larger models; reduced physician workload with maintained safety framework"
+      }
+    ]
+  },
+  "nature:10.1038/s41596-026-01364-8": {
+    "category": "Single Cell",
+    "task": "Identify therapeutic targets via pretrained foundation model on single-cell transcriptomes",
+    "key_results": "Geneformer trained on >100M single-cell transcriptomes; pipeline completes in <2 days on standard GPU; in silico perturbation ranks candidate targets",
+    "comments": "Demonstrates practical application of large-scale pretraining for target discovery with limited cohort data.",
+    "model_io": [
+      {
+        "model": "Geneformer (foundational AI)",
+        "inputs": [
+          "tokenized gene expression (rank value encodings)",
+          "raw counts from single-cell transcriptomes"
+        ],
+        "outputs": [
+          "zero-shot embeddings",
+          "fine-tuned context-specific representations",
+          "rank-ordered perturbation predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Pretraining on large transcriptomic corpus enables context-aware network predictions with limited downstream data",
+        "result": "Zero-shot and fine-tuned models achieve interpretable cell-state discrimination and target prioritization"
+      }
+    ]
+  },
+  "nature:10.1038/s41597-026-07221-3": {
+    "category": "Other",
+    "task": "Construct standardized dataset of approved digital therapeutics devices",
+    "key_results": "507 DTx devices identified across US, China, Germany, Belgium; 18 product characteristics extracted",
+    "comments": "Important infrastructure work for regulatory analysis, though lacks mechanistic or predictive modeling components.",
+    "model_io": [],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41467-026-72304-z": {
+    "category": "ML Theory",
+    "task": "Understanding generalization and hallucination mechanisms in deep learning for imaging through scattering media",
+    "key_results": "Physics-guided framework identifies that generalization is bounded by capacity for distinct inverse mappings; hallucinations occur when capacity exceeded; residual ballistic light stabilizes predictions",
+    "comments": "Novel physics-informed mechanistic analysis bridging interpretability with model design; insights are elegant but limited to scattering media model system.",
+    "model_io": [
+      {
+        "model": "Deep neural network for inverse scattering",
+        "inputs": [
+          "light transmission matrices (T) with variability"
+        ],
+        "outputs": [
+          "reconstructed images",
+          "hallucination artifacts"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Network generalization capacity is bounded by ability to learn distinct inverse mappings",
+        "result": "Confirmed through controlled transmission matrix variations"
+      },
+      {
+        "hypothesis": "Hallucinations emerge when inverse mapping capacity is exceeded",
+        "result": "Confirmed; suppressed by training on diverse physical mappings"
+      }
+    ]
+  },
+  "nature:10.1038/s41597-026-07144-z": {
+    "category": "Other",
+    "task": "Motion artifact correction in clinical brain MRI",
+    "key_results": "Dataset of 22 subjects with paired motion-free and motion-corrupted scans across 6 clinical MRI sequences; includes raw k-space data and external motion tracking",
+    "comments": "Small sample size (n=22) limits generalizability, but BIDS-compliance and raw k-space availability enhance utility for method development.",
+    "model_io": [
+      {
+        "model": "Clinical MRI acquisition protocol",
+        "inputs": [
+          "brain volume",
+          "motion tracking data"
+        ],
+        "outputs": [
+          "BIDS-compliant MRI images",
+          "k-space data",
+          "motion transforms"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-42872-7": {
+    "category": "Other",
+    "task": "Quantitative analysis of melodic and harmonic evolution in Western music",
+    "key_results": "Analysis of ~20,000 MIDI pieces across 6 genres and 4 centuries; network analysis reveals trend toward increased similarity and reduced complexity across genres over time",
+    "comments": "Network-based music representation is innovative but MIDI transcription may not capture all acoustic nuances of original compositions.",
+    "model_io": [
+      {
+        "model": "Weighted directed network representation",
+        "inputs": [
+          "MIDI transcriptions of musical pieces"
+        ],
+        "outputs": [
+          "topological properties",
+          "melodic/harmonic metrics",
+          "temporal trends"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Different genres have distinct topological and musical properties",
+        "result": "Confirmed across 6 macro-genres"
+      },
+      {
+        "hypothesis": "Musical structure becomes less complex over time",
+        "result": "Confirmed; systematic increase in similarity and reduction in melodic/harmonic complexity"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10547-y": {
+    "category": "Condensed Matter",
+    "task": "Investigating magnetic-field-induced re-entrant superconductivity in Eu-doped nickelates",
+    "key_results": "Field-induced re-entrant superconducting phase observed in Sm0.95\u2212xCa0.05EuxNiO2 at over-doped regime; zero-resistance transport and diamagnetic screening confirm superconductivity robust across broad temperature, field, and orientation ranges",
+    "comments": "Rare-earth magnetism enhancing superconductivity in high-Tc materials remains paradigm-shifting, though deviations from compensation model at highest doping suggest more complex underlying physics.",
+    "model_io": [
+      {
+        "model": "Sm0.95\u2212xCa0.05EuxNiO2 infinite-layer nickelate",
+        "inputs": [
+          "magnetic field",
+          "temperature",
+          "doping level x"
+        ],
+        "outputs": [
+          "electrical resistance",
+          "diamagnetic susceptibility",
+          "Hall transport",
+          "magnetoresistance"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Eu-derived exchange field compensates applied field to enable superconductivity",
+        "result": "Partial agreement at moderate doping; pronounced deviations at highest-doping levels"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-43463-2": {
+    "category": "Applied Physics",
+    "task": "Engineering thermoelectric performance in copper-doped armchair graphene nanoribbons via defects and doping",
+    "key_results": "Vacancy defects reduce bandgap and phononic thermal conductance; single-atom Cu doping optimizes electrical conductance and Seebeck coefficient yielding peak ZT > 1.5 at room temperature; power factor significantly improved under optimized conditions",
+    "comments": "Extended H\u00fcckel + NEGF approach is computationally efficient, though accurate phonon scattering and many-body effects remain neglected; experimental validation on nanoscale devices is crucial.",
+    "model_io": [
+      {
+        "model": "Armchair graphene nanoribbon (AGNR) with vacancy defects and Cu dopants",
+        "inputs": [
+          "defect type/concentration",
+          "Cu doping level and position",
+          "temperature"
+        ],
+        "outputs": [
+          "electrical conductance",
+          "Seebeck coefficient",
+          "thermal conductance",
+          "ZT figure of merit"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Vacancy defects reduce thermal conductance and create favorable band structure for thermoelectric enhancement",
+        "result": "Confirmed; bandgap reduced and phononic thermal conductance lowered"
+      },
+      {
+        "hypothesis": "Single-atom Cu doping optimizes Seebeck and power factor, yielding ZT > 1.5",
+        "result": "Confirmed; peak ZT > 1.5 achieved; high doping concentration reduces performance"
+      }
+    ]
+  },
+  "nature:10.1038/s42005-026-02620-9": {
+    "category": "High Energy/Particle",
+    "task": "Model-independent test of DAMA/LIBRA dark matter signal using dual-readout NaI detectors",
+    "key_results": "COSINUS employs cryogenic NaI crystals with simultaneous phonon and scintillation readout enabling event-by-event particle identification; planned data-taking with eight modules (COSINUS-1\u03c0 Run1) in 2026 avoids key systematic uncertainties in scintillation-only searches",
+    "comments": "Dual-channel approach is methodologically elegant for systematic-uncertainty mitigation, though actual competitive sensitivity will depend on achieved background levels and detector efficiency.",
+    "model_io": [
+      {
+        "model": "COSINUS cryogenic NaI detector array (8 modules)",
+        "inputs": [
+          "dark matter particles",
+          "background radiation"
+        ],
+        "outputs": [
+          "phonon signal (remoTES)",
+          "scintillation light signal",
+          "particle identification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Dual-readout enables model-independent cross-check of DAMA/LIBRA annual modulation signal",
+        "result": "Planned experiment; results pending 2026+ data acquisition"
+      }
+    ]
   }
 }
