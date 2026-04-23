@@ -114617,5 +114617,301 @@
         "result": "Planned experiment; results pending 2026+ data acquisition"
       }
     ]
+  },
+  "hf:2604.16680": {
+    "category": "Vision",
+    "task": "3D point cloud registration via multi-view image generation",
+    "key_results": "Zero-shot cross-domain generalization on 3DMatch, ScanNet, and Waymo; first generative registration framework successfully operating on real outdoor LiDAR data without imagery",
+    "comments": "Novel training-free approach cleverly leverages existing foundation models, though dependency on pre-trained World Foundation Model and VFMs may limit applicability if those models fail on certain geometries.",
+    "model_io": [
+      {
+        "model": "World Foundation Model (generative)",
+        "inputs": [
+          "3D point clouds (source and target)"
+        ],
+        "outputs": [
+          "multi-view RGB images"
+        ]
+      },
+      {
+        "model": "Vision Foundation Model (correspondence matcher)",
+        "inputs": [
+          "generated RGB views"
+        ],
+        "outputs": [
+          "dense pixel correspondences"
+        ]
+      },
+      {
+        "model": "Probabilistic fusion module",
+        "inputs": [
+          "generated-RGB correspondence posterior",
+          "geometric correspondence posterior"
+        ],
+        "outputs": [
+          "fused 3D correspondences",
+          "calibrated confidence scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Transferring registration to image domain via generative priors improves cross-modality generalization",
+        "result": "Confirmed: superior zero-shot performance on indoor and outdoor benchmarks across modalities"
+      },
+      {
+        "hypothesis": "Probabilistic fusion without learning preserves inductive biases of both modalities",
+        "result": "Confirmed: calibrated confidence obtained without fine-tuning"
+      }
+    ]
+  },
+  "hf:2604.19835": {
+    "category": "Systems",
+    "task": "Efficient scaling of Mixture-of-Experts models via expert upcycling",
+    "key_results": "Upcycled 7B\u219213B model matches baseline on validation loss while saving 32% GPU hours; utility-based expert selection triples gap closure in limited CPT budgets",
+    "comments": "Practical and well-motivated approach reducing training cost, though gains are most significant when CPT budget is constrained; theoretical framework provides useful decomposition but empirical improvements are incremental.",
+    "model_io": [
+      {
+        "model": "MoE upycling operator",
+        "inputs": [
+          "trained E-expert model checkpoint"
+        ],
+        "outputs": [
+          "mE-expert model with duplicated experts and extended router"
+        ]
+      },
+      {
+        "model": "Continued pre-training (CPT)",
+        "inputs": [
+          "upcycled model",
+          "training data"
+        ],
+        "outputs": [
+          "specialized mE-expert model"
+        ]
+      },
+      {
+        "model": "Utility-based expert selection",
+        "inputs": [
+          "gradient-based importance scores"
+        ],
+        "outputs": [
+          "non-uniform expert duplication guidance"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Expert duplication provides warm initialization that accelerates convergence versus random init",
+        "result": "Confirmed: upcycled model starts substantially lower loss and matches baseline with 32% fewer GPU hours"
+      },
+      {
+        "hypothesis": "Utility-based selection outperforms uniform duplication in limited CPT regimes",
+        "result": "Confirmed: more than tripling gap closure versus uniform approach"
+      },
+      {
+        "hypothesis": "Scaling laws hold for upcycled MoEs under fixed per-token computation",
+        "result": "Confirmed across 7B-13B experiments with consistent validation loss matching"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-71361-8": {
+    "category": "Structural Biology",
+    "task": "Identify molecular determinants of ligand selectivity in catecholamine GPCRs",
+    "key_results": "Four residue positions in \u03b22-adrenergic and seven in D1 dopaminergic receptors control selectivity; swapping these residues exchanges pharmacological profiles; selectivity mechanisms involve regions outside orthosteric binding site",
+    "comments": "Cryo-EM validation of computational predictions reveals that GPCR selectivity is a concerted, multi-site phenomenon beyond simple binding pocket complementarity.",
+    "model_io": [
+      {
+        "model": "\u03b22-adrenergic and D1 dopaminergic receptors with targeted mutations",
+        "inputs": [
+          "adrenaline/noradrenaline",
+          "dopamine",
+          "mutated receptor variants"
+        ],
+        "outputs": [
+          "pharmacological profile",
+          "binding selectivity",
+          "cryo-EM structures",
+          "computational models"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Ligand selectivity is encoded by residues directly contacting ligands in the orthosteric site",
+        "result": "Partially confirmed but incomplete: selectivity also requires regions outside the binding pocket; multiple mechanisms operate concertedly"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-72093-5": {
+    "category": "Computational Biophysics",
+    "task": "Predict nanobody-GPCR binding using AlphaFold-Multimer without experimental screening",
+    "key_results": "AF-M outputs discriminate interacting from non-interacting nanobody-MRGPRX2 pairs; prospective virtual screen identified high-affinity nanobodies confirmed in signaling and functional cellular assays",
+    "comments": "Proof-of-concept for computational antibody discovery, though validation was limited to one GPCR target and modest nanobody panel size.",
+    "model_io": [
+      {
+        "model": "AlphaFold-Multimer structural prediction pipeline",
+        "inputs": [
+          "nanobody sequences",
+          "MRGPRX2 GPCR structure",
+          "previously reported nanobody-GPCR structures"
+        ],
+        "outputs": [
+          "predicted nanobody-MRGPRX2 complexes",
+          "binding scores",
+          "discrimination metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "AlphaFold-Multimer outputs can prospectively identify functional nanobody binders without experimental screening",
+        "result": "Confirmed: in silico screen identified nanobodies with experimentally validated high affinity and cellular activity"
+      }
+    ]
+  },
+  "nature:10.1038/s42005-026-02643-2": {
+    "category": "Computational Biophysics",
+    "task": "Link microscopic stochasticity in phage-bacteria infection to emergent spatial patterns",
+    "key_results": "Front roughness controlled by product of burst size and adsorption rate; rare migration events of infected cells before lysis seed new infection centers; roughness suppressed by increased local population size or reduced latent period variability",
+    "comments": "Demonstrates how stochastic single-cell events propagate to population-level spatial structure, bridging scales in microbial ecology.",
+    "model_io": [
+      {
+        "model": "Discrete stochastic lattice-based phage-bacteria co-propagation model",
+        "inputs": [
+          "bacteria and phage populations (integers)",
+          "nutrients and attractants (real-valued fields)",
+          "growth, chemotaxis, infection, and lysis rules"
+        ],
+        "outputs": [
+          "spatial infection fronts",
+          "front roughness",
+          "heterogeneous density patterns"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Irregular infection fronts arise from rare stochastic events at single-cell level rather than deterministic dynamics",
+        "result": "Confirmed: simulations show infected bacteria migrating ahead of front seed new infection centers; roughness emerges from microscopic variability"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-02619-0": {
+    "category": "Statistical Methods",
+    "task": "Evaluate effect of LLM-generated explanation formats on radiologist diagnostic accuracy",
+    "key_results": "Chain-of-thought explanations improve accuracy 12.2% vs. control (P=0.001), 7.2% vs. standard output (P=0.040), 9.7% vs. differential diagnosis (P=0.004); benefit consistent across case difficulty and physician experience",
+    "comments": "Rigorous RCT with 2020 assessments demonstrates explanation format significantly impacts clinical decision-making; controlled vignette setting may not generalize to real clinical workflows.",
+    "model_io": [
+      {
+        "model": "LLM diagnostic support systems",
+        "inputs": [
+          "radiological images",
+          "patient cases"
+        ],
+        "outputs": [
+          "diagnosis predictions",
+          "chain-of-thought reasoning",
+          "differential diagnoses"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Detailed reasoning explanations improve physician ability to identify and correct LLM errors",
+        "result": "Chain-of-thought format yields highest diagnostic accuracy; improves error detection vs. standard output"
+      }
+    ]
+  },
+  "nature:10.1038/s44182-026-00088-x": {
+    "category": "Evolutionary Biology",
+    "task": "Synthesize biological principles guiding underwater soft robot design",
+    "key_results": "Four design principles distilled: locomotion, compliant morphologies, distributed sensing, adaptive control; bidirectional biology-robotics loop for mechanism validation",
+    "comments": "Position paper proposing conceptual framework; limited experimental data on specific robotic implementations or quantitative comparisons to biological systems.",
+    "model_io": [],
+    "hypotheses": [
+      {
+        "hypothesis": "Robots can serve as physical models to probe mechanisms difficult to isolate in living animals",
+        "result": "Bidirectional loop enables mechanistic insights; biouniversal design strategy proposed"
+      }
+    ]
+  },
+  "nature:10.1038/s44387-026-00105-2": {
+    "category": "ML Theory",
+    "task": "Learn unbiased causal effect estimates for high-dimensional structured treatments via contrastive representation learning",
+    "key_results": "Contrastive approach provably identifies causal factors and discards non-causal factors; achieves unbiased causal effect estimation on synthetic and real-world datasets",
+    "comments": "Theoretical guarantees are strong, but practical applicability to very high-dimensional treatments (e.g., video) remains to be fully demonstrated.",
+    "model_io": [
+      {
+        "model": "Contrastive representation learning framework for structured treatments",
+        "inputs": [
+          "High-dimensional treatments (text, video, audio)",
+          "Outcomes"
+        ],
+        "outputs": [
+          "Treatment representations",
+          "Causal effect estimates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Blindly leveraging shared structure across treatments can lead to biased causal estimates",
+        "result": "Confirmed; contrastive learning mitigates this bias by identifying causal factors"
+      }
+    ]
+  },
+  "nature:10.1038/s44387-026-00107-0": {
+    "category": "Other",
+    "task": "Review convergence of machine learning and data assimilation in Earth system science",
+    "key_results": "ML accelerates DA via surrogate modeling; DA provides uncertainty quantification and physical constraints; hybrid DA-ML systems emerging; challenges remain in generalization, consistency, and reproducibility",
+    "comments": "Timely perspective on synergies between fields; identifies key challenges but limited discussion of specific solutions or implementation best practices.",
+    "model_io": [
+      {
+        "model": "Hybrid DA-ML system",
+        "inputs": [
+          "Observations",
+          "Numerical Earth system models"
+        ],
+        "outputs": [
+          "State estimates",
+          "Forecasts",
+          "Uncertainty quantification",
+          "Physical constraints"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41467-026-71961-4": {
+    "category": "Multi-scale Modeling",
+    "task": "Identify brain attractor states and state-transition dynamics in depression",
+    "key_results": "Depressed individuals show reduced transitions between visual-attentional and limbic-default mode configurations; anhedonia correlates with increased frequency but shorter dwell time in salience-dominated states; energetic asymmetries trap brain dynamics between source and sink attractors",
+    "comments": "The energy landscape framework elegantly captures depression as a dynamical systems problem, though causal relationships between structural connectivity changes and altered transition probabilities remain to be established.",
+    "model_io": [
+      {
+        "model": "resting-state fMRI + diffusion-weighted structural connectivity integration",
+        "inputs": [
+          "resting-state BOLD signals",
+          "structural connectome"
+        ],
+        "outputs": [
+          "whole-brain coactivation patterns",
+          "state-transition frequencies",
+          "transition energy costs",
+          "attractor landscape geometry"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Anhedonia is associated with altered visitation patterns to salience-dominated configurations",
+        "result": "More frequent, shorter-lived visits to salience state in anhedonic individuals"
+      },
+      {
+        "hypothesis": "Cognitive rigidity in depression reflects constrained state-transition dynamics",
+        "result": "Reduced transitions between visual-attentional and limbic-default modes; preference for energetically costly trajectories despite structural alternatives"
+      }
+    ]
   }
 }
