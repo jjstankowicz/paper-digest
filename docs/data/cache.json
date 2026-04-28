@@ -128798,5 +128798,601 @@
         "result": "Confirmed; method suitable for bacterial systems where ATAC-seq is inappropriate"
       }
     ]
+  },
+  "hf:2604.21681": {
+    "category": "Vision",
+    "task": "Human-centric dense prediction and understanding at high resolution",
+    "key_results": "Pose +4 mAP, body-part segmentation +24.3 mIoU, normal estimation 45.6% lower angular error over predecessor; extends to pointmap and albedo estimation",
+    "comments": "Strong multi-task gains via unified pretraining (masked reconstruction + self-distilled contrastive learning) on 1B curated images, though 4K windowed attention requires careful implementation.",
+    "model_io": [
+      {
+        "model": "Sapiens2 (hierarchical transformer, 0.4-5B params)",
+        "inputs": [
+          "high-resolution human images (1K native, 4K with hierarchy)"
+        ],
+        "outputs": [
+          "pose keypoints",
+          "body-part segmentation",
+          "surface normals",
+          "pointmaps",
+          "albedo maps"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Unified pretraining (masked reconstruction + self-distilled contrastive) generalizes better than task-specific objectives",
+        "result": "Confirmed via improvements across diverse downstream tasks"
+      },
+      {
+        "hypothesis": "Windowed attention over 2K resolution pretraining improves 4K reasoning",
+        "result": "Adopted in 4K models; improvements validated but not quantified separately"
+      }
+    ]
+  },
+  "hf:2604.15574": {
+    "category": "LLM/Reasoning",
+    "task": "Mitigating hallucinations induced by supervised fine-tuning",
+    "key_results": "Self-distillation-based SFT reduces hallucinations while maintaining task performance; interference among overlapping semantic representations identified as primary driver",
+    "comments": "Continual learning techniques (self-distillation, parameter freezing) are effective but the mechanism analysis relies on three competing hypotheses where only interference is conclusively validated.",
+    "model_io": [
+      {
+        "model": "LLM with self-distillation regularization",
+        "inputs": [
+          "pre-trained model weights",
+          "fine-tuning data with new facts"
+        ],
+        "outputs": [
+          "fine-tuned model with reduced hallucinations",
+          "output-distribution alignment to pre-training"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "SFT-induced hallucinations stem from capacity limitations",
+        "result": "Not the primary driver; rejected"
+      },
+      {
+        "hypothesis": "SFT-induced hallucinations stem from behavior cloning",
+        "result": "Not the primary driver; rejected"
+      },
+      {
+        "hypothesis": "SFT-induced hallucinations stem from localized interference in overlapping semantic representations",
+        "result": "Confirmed as main mechanism; self-distillation mitigates via regularization"
+      }
+    ]
+  },
+  "hf:2604.24040": {
+    "category": "Systems",
+    "task": "Making tabular retrieval robust to serialization format variation",
+    "key_results": "Centroid averaging outperforms individual formats in pairwise comparisons across MPNet, BGE-M3, ReasonIR, SPLADE; lightweight adapter improves robustness for dense retrievers",
+    "comments": "Identifies serialization sensitivity as a substantial yet overlooked source of variance; gains are modest and model-dependent, especially for sparse lexical retrievers.",
+    "model_io": [
+      {
+        "model": "Transformer-based table retriever (frozen encoder + residual bottleneck adapter)",
+        "inputs": [
+          "table in multiple serializations (CSV, TSV, HTML, Markdown, DDL)",
+          "canonical centroid representation"
+        ],
+        "outputs": [
+          "table embeddings",
+          "retrieval rankings"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Semantically equivalent serializations produce substantially different embeddings",
+        "result": "Confirmed across multiple benchmarks and retriever families"
+      },
+      {
+        "hypothesis": "Centroid averaging suppresses format-specific variation and recovers shared semantic content",
+        "result": "Confirmed; centroid outranks individual formats in aggregate comparisons"
+      },
+      {
+        "hypothesis": "Lightweight adapter can map single-serialization embeddings toward centroid targets while preserving variance",
+        "result": "Partially confirmed; gains vary by model and weaker for sparse retrievers"
+      }
+    ]
+  },
+  "hf:2604.24170": {
+    "category": "Medical",
+    "task": "Decomposing epistemic and aleatoric uncertainty in interpretable concept predictions",
+    "key_results": "Epistemic uncertainty positively associated with prediction errors; aleatoric uncertainty closely tracks annotator disagreement; enables prescriptive routing decisions",
+    "comments": "CREDENCE's decomposition via credal sets and dedicated ambiguity heads is conceptually sound but evaluation is primarily correlational rather than causal or predictive.",
+    "model_io": [
+      {
+        "model": "Credal Concept Bottleneck Model (ensemble of diverse concept heads)",
+        "inputs": [
+          "input data",
+          "annotator disagreement labels (when available)"
+        ],
+        "outputs": [
+          "concept credal predictions (probability intervals)",
+          "epistemic uncertainty",
+          "aleatoric uncertainty"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Disagreement across diverse concept heads captures epistemic uncertainty",
+        "result": "Confirmed; epistemic uncertainty correlates with prediction errors"
+      },
+      {
+        "hypothesis": "Dedicated ambiguity output matches annotator disagreement",
+        "result": "Confirmed; aleatoric uncertainty tracks annotator disagreement"
+      },
+      {
+        "hypothesis": "Decomposed signals support prescriptive actions (automation, data collection, human review)",
+        "result": "Proposed as actionable framework; not empirically validated against baselines"
+      }
+    ]
+  },
+  "hf:2604.23600": {
+    "category": "LLM/Reasoning",
+    "task": "Understanding how personality traits interact with gender bias in persona-conditioned LLM narratives",
+    "key_results": "Personality traits significantly modulate gender bias; Dark Triad traits associated with higher gender-stereotypical representations than HEXACO traits across 6 LLMs and 23,400 stories",
+    "comments": "Controlled study identifies context-dependent bias mechanisms, but findings vary substantially across models and languages, limiting generalizability of causal claims.",
+    "model_io": [
+      {
+        "model": "Six state-of-the-art LLMs (persona-conditioned)",
+        "inputs": [
+          "persona (gender, occupational role, personality traits from HEXACO/Dark Triad)",
+          "task context (e.g., lesson plan, report)"
+        ],
+        "outputs": [
+          "generated story",
+          "gender-stereotypical representations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Personality traits are associated with the magnitude and direction of gender bias",
+        "result": "Confirmed; Dark Triad traits correlate with higher stereotypicality than HEXACO"
+      },
+      {
+        "hypothesis": "Gender bias in LLMs is context-dependent rather than static",
+        "result": "Confirmed; bias varies by persona, task, model, and language"
+      },
+      {
+        "hypothesis": "Persona-conditioned systems introduce uneven representational harms",
+        "result": "Supported empirically; suggests risk for reinforcing stereotypes in production systems"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-49778-4": {
+    "category": "Organelles",
+    "task": "Characterize unique proteolytic processing of F1-ATPase subunit \u03b1 in Trypanosoma brucei and its functional implications",
+    "key_results": "T. brucei subunit \u03b1 undergoes octapeptide excision generating functional N- and C-terminal polypeptides; yeast \u03b1 expressed in T. brucei was not processed; recognition sequence in octapeptide is necessary; cleavage occurs in cytosol before mitochondrial import; C-terminal polypeptide contains internal mitochondrial targeting signal",
+    "comments": "Reveals unusual proteolytic processing unique to euglenozoans, suggesting distinct ATP synthase assembly requirements in trypanosomatid parasites.",
+    "model_io": [
+      {
+        "model": "T. brucei procyclic forms; cybrid cells with variable mtDNA; yeast and T. brucei hybrid proteins",
+        "inputs": [
+          "Wild-type subunit \u03b1",
+          "Yeast subunit \u03b1",
+          "Linker substitution variants",
+          "Cytosolic and mitochondrial lysates"
+        ],
+        "outputs": [
+          "Proteolytic cleavage",
+          "Octapeptide processing",
+          "Mitochondrial localization",
+          "ATP synthase assembly",
+          "ATP synthesis capacity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "T. brucei \u03b1 proteolysis requires specific recognition sequence in octapeptide",
+        "result": "Confirmed; linker substitution renders protein cleavage-resistant"
+      },
+      {
+        "hypothesis": "Proteolysis occurs in cytosol prior to mitochondrial import",
+        "result": "Confirmed; increased proteolysis in cytosolic vs mitochondrial lysates"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-50275-x": {
+    "category": "Cell Signaling",
+    "task": "Identify LRRC59 role in cervical cancer progression and its molecular mechanism",
+    "key_results": "LRRC59 knockdown suppressed proliferation, invasion, migration; promoted apoptosis; reduced \u03b2-catenin, c-Myc, cyclin D1; Wnt agonist partially reversed effects; LRRC59 regulates YBX1 expression",
+    "comments": "Establishes LRRC59 as a YBX1-dependent regulator of Wnt signaling, offering a multi-target therapeutic strategy.",
+    "model_io": [
+      {
+        "model": "Cervical cancer cell lines; xenograft tumors in mice; TCGA database analysis",
+        "inputs": [
+          "LRRC59 knockdown",
+          "SKL2001 (Wnt agonist)",
+          "YBX1 expression"
+        ],
+        "outputs": [
+          "Cell proliferation",
+          "Migration/invasion",
+          "Apoptosis",
+          "\u03b2-catenin levels",
+          "c-Myc expression",
+          "Cyclin D1"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LRRC59 promotes cervical cancer via YBX1-mediated Wnt/\u03b2-catenin signaling",
+        "result": "Confirmed; partial reversal with Wnt agonist"
+      },
+      {
+        "hypothesis": "LRRC59 correlates with poor prognosis",
+        "result": "Confirmed in clinical cohort and TCGA"
+      }
+    ]
+  },
+  "nature:10.1038/s42003-026-10116-z": {
+    "category": "Organelles",
+    "task": "Define role of hepatic GGPP in mediating metabolically unhealthy obesity through adipocyte ACSL1",
+    "key_results": "GGPP from hepatic mevalonate pathway binds ACSL1 non-covalently; Ggpps deletion reduced adipocyte hypertrophy and improved insulin sensitivity; GGPP-ACSL1 interaction inhibits ER-to-mitochondria translocation, reducing lipid oxidation",
+    "comments": "Novel non-geranylgeranylation mechanism of GGPP-protein interaction distinguishes metabolic subtypes via liver-adipose axis.",
+    "model_io": [
+      {
+        "model": "High-fat diet mice; liver-specific Ggpps knockout; epididymal white adipose tissue",
+        "inputs": [
+          "GGPP",
+          "ACSL1",
+          "Starch-oleate diet",
+          "Lipid substrates"
+        ],
+        "outputs": [
+          "Adipocyte hypertrophy",
+          "Insulin sensitivity",
+          "Triglyceride synthesis",
+          "Lipid oxidation",
+          "ACSL1 localization"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Hepatic GGPP drives visceral adipose hypertrophy via ACSL1 binding",
+        "result": "Confirmed; deletion improves adipose remodeling"
+      },
+      {
+        "hypothesis": "GGPP-ACSL1 interaction prevents mitochondrial translocation of ACSL1",
+        "result": "Confirmed through localization studies"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-50612-0": {
+    "category": "Structural Prediction",
+    "task": "Reconstruct 3D small bowel structure from monocular laser-assisted capsule endoscopy",
+    "key_results": "RMSE \u00b10.3 cm on full reconstruction; individual point cloud validation (2.27 mm Python, 3.13 mm CloudCompare); 259.2 FPS real-time inference",
+    "comments": "Novel laser-assisted monocular approach avoids stereo complexity; proof-of-concept on phantoms; clinical validation pending.",
+    "model_io": [
+      {
+        "model": "Laser-assisted capsule endoscopy 3D reconstruction",
+        "inputs": [
+          "monocular endoscopy images with circumferential laser point projection"
+        ],
+        "outputs": [
+          "3D point cloud",
+          "bowel geometry model"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Monocular laser point segmentation enables accurate 3D reconstruction without stereo vision",
+        "result": "Achieved geometrically consistent models with \u00b10.3 cm RMSE on phantom; superior to feature-based methods (SIFT/ORB-SfM)"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-50622-y": {
+    "category": "Statistical Methods",
+    "task": "Determine annotation requirements for uncertainty-aware image segmentation",
+    "key_results": "Ensemble probability maps achieve comparable performance with single vs. multi-annotation; disagreement-as-class benefits from multi-annotation",
+    "comments": "Practically important finding reducing annotation burden; ensemble methods show robustness across single/multi-annotation training.",
+    "model_io": [
+      {
+        "model": "nnU-Net with uncertainty extensions (Ensemble, Bayesian, Probabilistic, Hierarchical Probabilistic)",
+        "inputs": [
+          "medical images",
+          "single or multiple expert annotations"
+        ],
+        "outputs": [
+          "segmentation masks",
+          "uncertainty estimates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Ensemble-based uncertainty quantification does not require multiple annotations per case",
+        "result": "Single-annotation ensembles match multi-annotation performance; disagreement-as-class approach differs"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-02682-7": {
+    "category": "Statistical Methods",
+    "task": "Validate ECG-based AI model for emergency and cardiac assessment across U.S. healthcare systems",
+    "key_results": "Ten digital biomarkers with AUC 0.883\u20130.949; ECG-AI outperformed troponin T for AMI (AUC 0.920 vs. 0.878) and STEMI (AUC 0.932 vs. 0.736)",
+    "comments": "Strong external validation across diverse U.S. populations; practical clinical superiority over troponin suggests deployment potential.",
+    "model_io": [
+      {
+        "model": "ECG Buddy (ARPI Inc.) - ECG-based AI model",
+        "inputs": [
+          "12-lead ECG recordings"
+        ],
+        "outputs": [
+          "ten digital biomarkers",
+          "emergency/cardiac condition predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "ECG-AI model trained in Korea maintains non-inferiority performance in U.S. populations",
+        "result": "All ten conditions met non-inferiority AUC criteria; performance consistent across age/sex strata"
+      },
+      {
+        "hypothesis": "ECG-AI outperforms troponin T for acute myocardial infarction detection",
+        "result": "AMI AUC 0.920 vs. 0.878; STEMI AUC 0.932 vs. 0.736 (both p<0.001)"
+      }
+    ]
+  },
+  "nature:10.1038/s41597-026-07219-x": {
+    "category": "Other",
+    "task": "Partial discharge detection dataset for transmission power lines",
+    "key_results": "Terabyte-scale dataset with 7-class imbalanced distribution from 23 real power lines; 3% previously published",
+    "comments": "Rich real-world dataset with detailed labeling is valuable for ML, but no baseline algorithms or detection results are presented in abstract.",
+    "model_io": [
+      {
+        "model": "Signal processing via voltage-based method with feature extraction",
+        "inputs": [
+          "Covered conductor contact galvanic signals from 23 power lines"
+        ],
+        "outputs": [
+          "7-class partial discharge labels with extracted features"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-49417-y": {
+    "category": "Algorithms",
+    "task": "Railway surface defect detection under occlusion and ambiguity",
+    "key_results": "Consistently outperforms state-of-the-art on complex rail datasets; improved robustness in challenging conditions",
+    "comments": "Topology-enhanced feature association via graph and hypergraph convolution is theoretically sound, but quantitative metrics are absent from abstract.",
+    "model_io": [
+      {
+        "model": "Topology-enhanced relational model (semantic graph + multi-directional SSM + hypergraph convolution)",
+        "inputs": [
+          "Railway surface images with defects"
+        ],
+        "outputs": [
+          "Defect detection and localization"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "High-order relationships via hypergraph improve discrimination of heterogeneous defect patterns",
+        "result": "Demonstrated by consistent outperformance vs. state-of-the-art"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-49667-w": {
+    "category": "Algorithms",
+    "task": "Monte Carlo simulation of organic-molecular self-assembly on surfaces",
+    "key_results": "Pair-potential Monte Carlo generates close-to-relaxed structures for DFT input on graphite and Si(111) surfaces",
+    "comments": "Bridging coarse classical simulation and quantum-mechanical refinement is practical, though computational timing and accuracy comparison with direct DFT not detailed.",
+    "model_io": [
+      {
+        "model": "PairPotMCinator (pair potential + Monte Carlo optimization)",
+        "inputs": [
+          "Experimental superstructure periodicity data"
+        ],
+        "outputs": [
+          "Relaxed molecular structures for DFT input"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Pair-potential MC efficiently generates reasonable initial structures from experimental periodicity data",
+        "result": "Structures suitable as DFT input for systems with hundreds of atoms"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-49949-3": {
+    "category": "ML Theory",
+    "task": "Privacy-preserving data mining with multi-noise injection and hybrid deep learning",
+    "key_results": "High predictive accuracy and Kappa scores on Breast Cancer, Adult, Customer Churn; multi-noise approach outperforms traditional PPDM",
+    "comments": "Defense-in-depth via multiple perturbation types is thorough; however, privacy quantification (differential privacy guarantees) and utility-privacy frontiers are not rigorously formalized.",
+    "model_io": [
+      {
+        "model": "PPDM framework (k-NN imputation + Tomek SMOTE + multi-noise injection + 1D CNN-LSTM)",
+        "inputs": [
+          "Sensitive datasets with missing values and class imbalance"
+        ],
+        "outputs": [
+          "Privacy-perturbed predictions with maintained utility"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-noise injection (Laplace, Cauchy, t, fuzzy, exponential, speckle, Gaussian) provides stronger privacy than single perturbations",
+        "result": "Demonstrated superior defense-in-depth vs. traditional PPDM on three datasets"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-50135-8": {
+    "category": "Other",
+    "task": "Thermal control design for ultra-high-speed inter-satellite laser communication terminal",
+    "key_results": "Main optical system temperature: 18.7\u201322.0\u00b0C (simulation), 17.6\u201321.1\u00b0C (test), meeting \u00b13\u00b0C requirement",
+    "comments": "Thermal simulation and balance testing are rigorous; engineering contribution is solid but domain-specific, limited to thermal control methodology without broader ML/algorithmic novelty.",
+    "model_io": [
+      {
+        "model": "Thermal simulation and balance test validation",
+        "inputs": [
+          "Thermal interface specifications, satellite platform heat generation"
+        ],
+        "outputs": [
+          "Optical system temperature profile, thermal design optimization"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-stage thermal design with optimized wiring ensures optical system temperature stability",
+        "result": "Achieved 20 \u00b1 3\u00b0C requirement through thermal simulation and validation"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-50487-1": {
+    "category": "Algorithms",
+    "task": "Acoustic scene classification with low-complexity multi-scale pyramid pooling",
+    "key_results": "MSP adds 4.99k parameters yielding 5.26% (DCASE 2019) and 4.38% (DCASE 2020) improvements over baseline CNNs",
+    "comments": "Parameter efficiency is excellent for edge deployment; multi-scale feature correlation is well-motivated, though inference latency and memory footprint on actual IoT devices are not reported.",
+    "model_io": [
+      {
+        "model": "CNN with multi-scale pyramid pooling (MSP) modules",
+        "inputs": [
+          "Spectrograms from acoustic scenes (DCASE 2019, 2020)"
+        ],
+        "outputs": [
+          "Scene classification with improved performance under low-parameter constraints"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-scale pyramid pooling captures sound event correlations across time-frequency resolutions with minimal parameters",
+        "result": "Achieved 5.26% and 4.38% accuracy gains on DCASE benchmarks"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-50630-y": {
+    "category": "ML Theory",
+    "task": "Physics-informed neural networks for mobile robot pure inertial navigation",
+    "key_results": "MoRPI-PINN achieves >80% accuracy improvement vs. baselines on unseen trajectories; lightweight for edge device deployment",
+    "comments": "Embedding physics constraints into PINN training for inertial navigation is sound; however, specific RMSE metrics and comparison with classical EKF/UKF filtering are absent.",
+    "model_io": [
+      {
+        "model": "MoRPI-PINN (physics-informed neural network with inertial sensor constraints)",
+        "inputs": [
+          "Inertial measurement unit (IMU) signals from slithering robot motion"
+        ],
+        "outputs": [
+          "Position trajectory with >80% error reduction"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Physics-informed constraints on inertial equations reduce drift in pure inertial navigation",
+        "result": "Achieved >80% accuracy improvement and lightweight edge-device deployment"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-50985-2": {
+    "category": "ML Theory",
+    "task": "Federated learning robustness against poisoning attacks via adaptive trust evaluation",
+    "key_results": "FLAURA reduces attack success rate and target-label confidence while maintaining accuracy; outperforms state-of-the-art on FMNIST, CIFAR-10, CIFAR-100",
+    "comments": "Dual-level trust mechanism with MMD and knee-point detection is principled; assumes non-IID data but evaluation on benchmark datasets may not reflect true heterogeneity.",
+    "model_io": [
+      {
+        "model": "FLAURA (penultimate-layer representation + MMD + geometric median + hybrid filtering)",
+        "inputs": [
+          "Federated local updates from possibly poisoned clients"
+        ],
+        "outputs": [
+          "Aggregated global model with backdoor robustness"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Geometric median of PLRs robustly mitigates malicious cluster shifts without adversary fraction prior",
+        "result": "Outperforms baselines on FMNIST, CIFAR-10, CIFAR-100 under model poisoning"
+      }
+    ]
+  },
+  "nature:10.1038/s41534-026-01249-4": {
+    "category": "Quantum",
+    "task": "Develop lift-off-free Josephson junction fabrication using SiO\u2082 scaffold for superconducting qubits",
+    "key_results": "Relaxation times up to 57 \u03bcs (PVD-based WJ); lift-off-free process compatible with industrial foundry tools; SiO\u2082 scaffold cleanly removed via vapor HF; resonator quality factors improved",
+    "comments": "Quality factor improvement quantified as T\u2081 = 57 \u03bcs, but gate errors and two-qubit metrics essential for fault-tolerant QC are not provided.",
+    "model_io": [
+      {
+        "model": "Window junction fabrication with SiO\u2082 scaffold",
+        "inputs": [
+          "SiO\u2082 geometry",
+          "HF etch parameters"
+        ],
+        "outputs": [
+          "Josephson junction critical current",
+          "quality factor"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "SiO\u2082 scaffold removal minimizes substrate/material damage vs. resist-based double-angle evaporation",
+        "result": "Confirmed by T\u2081 = 57 \u03bcs and resonator Q improvements"
+      }
+    ]
+  },
+  "nature:10.1038/s41535-026-00875-7": {
+    "category": "Condensed Matter",
+    "task": "Observe and characterize phonon-drag thermopower polarity reversal via Umklapp scattering in Ba:KTaO\u2083",
+    "key_results": "Sign reversal in thermopower at ~80 K in heavily doped sample (3.7\u00d710\u00b2\u2070 cm\u207b\u00b3) despite n-type carriers; Fermi surface spans 80% of Brillouin zone; lightly doped samples show monotonic negative thermopower",
+    "comments": "Umklapp condition provides clear mechanism, but quantitative Seebeck coefficient values and ZT comparisons are absent.",
+    "model_io": [
+      {
+        "model": "Epitaxial Ba-doped KTaO\u2083 thin films with varying doping",
+        "inputs": [
+          "carrier concentration (3 levels)",
+          "temperature"
+        ],
+        "outputs": [
+          "thermopower",
+          "Fermi surface geometry"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Umklapp scattering at high carrier density reverses phonon-drag thermopower sign",
+        "result": "Confirmed in 3.7\u00d710\u00b2\u2070 cm\u207b\u00b3 sample; absent in lower-doped samples"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-49191-x": {
+    "category": "Applied Physics",
+    "task": "High-resolution underground object localization using TR-MUSIC with GPR",
+    "key_results": "Clearer, sharper images with enhanced resolution vs. conventional GPR; operates monostatic/bistatic without multiple antennas; detects deeply buried objects via low-frequency signals",
+    "comments": "Quantitative resolution improvement metrics (e.g., lateral resolution in cm) not provided; computational overhead vs. classical methods not disclosed.",
+    "model_io": [
+      {
+        "model": "HRTR algorithm (Time Reversal + MUSIC applied to GPR)",
+        "inputs": [
+          "GPR A-scan or B-scan waveforms"
+        ],
+        "outputs": [
+          "high-resolution depth profile",
+          "object localization coordinates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Combination of TR and MUSIC improves GPR resolution without additional hardware",
+        "result": "Confirmed via simulation (gprMax) and field/lab experiments"
+      }
+    ]
   }
 }
