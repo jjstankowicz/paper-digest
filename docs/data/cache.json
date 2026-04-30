@@ -135241,5 +135241,530 @@
         "result": "Confirmed: 2 dB improvement at band-gap frequencies"
       }
     ]
+  },
+  "hf:2604.26091": {
+    "category": "Agents/RL",
+    "task": "Reliability in autonomous LLM agents executing real financial trades onchain",
+    "key_results": "7.5M agent invocations, ~300K onchain actions, $20M volume, 99.9% settlement success; fabricated sell rules reduced from 57% to 3% via operating-layer controls",
+    "comments": "Demonstrates that reliability emerges from system design (prompt compilation, validation, guards, memory) rather than base model alone; real-capital deployment is a crucial stress test absent from typical benchmarks.",
+    "model_io": [
+      {
+        "model": "LLM (base model unspecified)",
+        "inputs": [
+          "user mandate",
+          "vault configuration",
+          "natural-language strategy",
+          "portfolio state",
+          "market data"
+        ],
+        "outputs": [
+          "buy/sell trade decisions",
+          "validated onchain actions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Operating-layer interventions (typed controls, policy validation, execution guards) reduce specific failure modes",
+        "result": "Confirmed: targeted harness changes reduced fabricated rules 57%\u21923%, fee paralysis 32.5%\u2192<10%, improved deployment 42.9%\u219278%"
+      },
+      {
+        "hypothesis": "Text-only benchmarks miss capital-relevant failure modes",
+        "result": "Confirmed: pre-launch testing exposed fabricated rules, fee paralysis, anchoring, cadence trading, and tokenomics misreads"
+      }
+    ]
+  },
+  "hf:2604.25135": {
+    "category": "Agents/RL",
+    "task": "Improving multi-turn tool-use agent reliability for open-source LLMs in conversational settings",
+    "key_results": "FAMA framework achieves up to 27% performance gains over baselines; reduces error accumulation in multi-turn interactions",
+    "comments": "Two-stage approach (failure analysis + specialized agent orchestration) is practical for resource-constrained open-source models; real-world conversational benchmarks better reflect deployment challenges.",
+    "model_io": [
+      {
+        "model": "Open-source LLMs (varying parameter sizes)",
+        "inputs": [
+          "user query",
+          "tool descriptions",
+          "failure context from baseline trajectory analysis"
+        ],
+        "outputs": [
+          "tool selection",
+          "tool arguments",
+          "conversational response"
+        ]
+      },
+      {
+        "model": "Specialized agent ensemble",
+        "inputs": [
+          "identified failure patterns",
+          "current conversational state"
+        ],
+        "outputs": [
+          "targeted context injection"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Analyzing baseline failure trajectories enables targeted context curation",
+        "result": "Confirmed: specialized agents addressing prevalent errors yield 27% performance improvement"
+      },
+      {
+        "hypothesis": "Minimal subset of specialized agents outperforms larger generalist ensembles",
+        "result": "Supported: orchestration of task-specific agents shows efficiency gains for resource-constrained settings"
+      }
+    ]
+  },
+  "hf:2604.25441": {
+    "category": "Generative",
+    "task": "Commercial-quality Indic text-to-speech from frozen non-Indic base model without commercial training data",
+    "key_results": "Matches commercial baselines on Telugu (26.7% retroflex collapse vs Sarvam 33.3%), Tamil (71% zha collapse vs commercial 86%), Hindi LLM-WER 0.025; code-mix LLM-WER reduced 0.80-0.85\u21920.14-0.27",
+    "comments": "Clever application of LoRA adaptation + phoneme space normalization + voice-prompt engineering; three-branch deployment suggests modular approach fits heterogeneous code-mix requirements.",
+    "model_io": [
+      {
+        "model": "Chatterbox (frozen base) + BUPS + LoRA (t3 text-token predictor)",
+        "inputs": [
+          "Indic text (romanized via BUPS)",
+          "voice prompt (8-11s reference)",
+          "sampling config (exaggeration 0.7, temperature 0.6)"
+        ],
+        "outputs": [
+          "Indic audio synthesis (Telugu, Tamil, Hindi)"
+        ]
+      },
+      {
+        "model": "IndicF5 + native-script transliteration (code-mix branch)",
+        "inputs": [
+          "code-mixed text (Hi/Te/Ta)"
+        ],
+        "outputs": [
+          "code-mixed audio"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LoRA on text-token predictor alone suffices for Indic adaptation without acoustic-decoder retraining",
+        "result": "Confirmed for Telugu/Tamil; Hindi regresses, requiring vanilla Chatterbox + voice-prompt recovery instead"
+      },
+      {
+        "hypothesis": "Voice-prompt recovery (same-language reference + sampling overrides) recovers commercial-class output without acoustic training",
+        "result": "Confirmed: Config B (exaggeration 0.7, temperature 0.6, min_p 0.1) achieves commercial parity"
+      }
+    ]
+  },
+  "hf:2604.25476": {
+    "category": "Benchmark",
+    "task": "Per-dimension accent quantification for Indic text-to-speech via phonological feature decomposition",
+    "key_results": "Retroflex collapse grows monotonically: Hindi ~1%, Telugu ~40%, Tamil ~68%; PSP ordering diverges from WER\u2014commercial WER-leaders don't uniformly lead on retroflex/prosody; no system Pareto-optimal across six dimensions",
+    "comments": "Interpretable benchmark revealing accent dimensions independent of standard intelligibility/naturalness metrics; native reference centroids and embedding datasets enable reproducible measurement but formal MOS-correlation deferred.",
+    "model_io": [
+      {
+        "model": "Benchmark scoring (forced alignment + Wav2Vec2-XLS-R layer-9 + native centroid probes)",
+        "inputs": [
+          "synthesized speech",
+          "reference native audio",
+          "phoneme alignment"
+        ],
+        "outputs": [
+          "retroflex rate (RR), aspiration fidelity (AF), vowel-length fidelity (LF), Tamil-zha fidelity (ZF), FAD, PSD"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Retroflex collapse correlates with phonological difficulty rank (Hindi < Telugu < Tamil)",
+        "result": "Confirmed: monotonic growth ~1%\u219240%\u219268%"
+      },
+      {
+        "hypothesis": "WER ranking disagrees with retroflex/prosodic fidelity ranking",
+        "result": "Confirmed: commercial WER leaders do not uniformly lead other dimensions"
+      },
+      {
+        "hypothesis": "No TTS system achieves Pareto optimality across all six accent dimensions",
+        "result": "Confirmed: trade-offs observed across retroflex, aspiration, vowel length, zha, FAD, and PSD"
+      }
+    ]
+  },
+  "hf:2604.26116": {
+    "category": "Systems",
+    "task": "Sample selection in federated learning via multi-task autoencoders under non-IID data and label noise",
+    "key_results": "Loss-based selection with OCSVM: 7.02% accuracy gain on CIFAR10, 1.83% on MNIST; federated SVDD adds 0.99% further gain; robust across 40% noise levels",
+    "comments": "Multi-task autoencoder design for simultaneous loss/feature analysis is sound; outlier detection (OCSVM, IF, AT) managed server-side avoids client computation but requires careful privacy review.",
+    "model_io": [
+      {
+        "model": "Multi-task autoencoder (loss & feature analysis branches)",
+        "inputs": [
+          "client image samples (CIFAR10, MNIST)"
+        ],
+        "outputs": [
+          "sample contribution estimates (loss + feature vectors)"
+        ]
+      },
+      {
+        "model": "Outlier detection ensemble (OCSVM, IF, AT + federated SVDD)",
+        "inputs": [
+          "loss estimates",
+          "feature vectors"
+        ],
+        "outputs": [
+          "sample selection masks"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Loss-based sample selection via OCSVM reduces impact of noisy/malicious samples",
+        "result": "Confirmed: 7.02% CIFAR10, 1.83% MNIST accuracy gains"
+      },
+      {
+        "hypothesis": "Multi-class federated SVDD enhances feature-based selection beyond unsupervised outlier detection",
+        "result": "Confirmed: additional 0.99% CIFAR10 gain over loss-only selection"
+      },
+      {
+        "hypothesis": "Methods generalize across varying client counts, non-IID ratios, and noise up to 40%",
+        "result": "Supported: consistent gains across experimental conditions"
+      }
+    ]
+  },
+  "hf:2604.23426": {
+    "category": "Systems",
+    "task": "Privacy and communication efficiency in federated learning via adaptive quantization and Laplacian differential privacy",
+    "key_results": "Adaptive quantization reduces communicated data: 52.64% (MNIST), 45.06% (CIFAR10), 31-37% (medical imaging) vs 32-bit float; maintains accuracy with DP guarantees across non-IID data",
+    "comments": "Laplacian DP offers tighter bounds than Gaussian but is underexplored in FL; client-based bit-length scheduler (entropy-driven) outperforms global scheduler and avoids overhead of per-sample DP noise.",
+    "model_io": [
+      {
+        "model": "Federated learning server + clients",
+        "inputs": [
+          "client gradients",
+          "client dataset entropy",
+          "privacy budget \u03b5",
+          "round index"
+        ],
+        "outputs": [
+          "quantized gradients (adaptive bit-length)",
+          "global model parameters",
+          "privacy-cost accounting"
+        ]
+      },
+      {
+        "model": "Laplacian DP mechanism + adaptive quantization",
+        "inputs": [
+          "unquantized gradients",
+          "client entropy",
+          "cosine-annealed bit-length schedule"
+        ],
+        "outputs": [
+          "differentially private quantized updates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Round-based cosine annealing global scheduler reduces communication efficiently",
+        "result": "Confirmed: systematic data reduction across all three datasets"
+      },
+      {
+        "hypothesis": "Client-based scheduler using dataset entropy adapts better than global scheduler",
+        "result": "Supported: entropy-driven adaptation yields competitive or superior accuracy under communication constraints"
+      },
+      {
+        "hypothesis": "Laplacian DP preserves privacy with tighter guarantees than Gaussian DP",
+        "result": "Assumed (underexplored in FL literature); empirical privacy-utility trade-offs demonstrated across \u03b5 values"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-72556-9": {
+    "category": "Protein Dynamics",
+    "task": "Elucidate Mg\u00b2\u207a-dependent regulation of TopIA conformational dynamics via salt-bridge networks",
+    "key_results": "Mg\u00b2\u207a binding tunes salt-bridge network switching kinetics, directly modulating DNA-gate opening/closing and enzyme activity; provides protection against DNA damage under Mg\u00b2\u207a depletion",
+    "comments": "Elegant integration of single-molecule, MD, and mutagenesis validates a conserved cation-sensing mechanism, though the broader applicability to other metal-dependent enzymes remains to be explored.",
+    "model_io": [
+      {
+        "model": "Type IA Topoisomerase (TopIA)",
+        "inputs": [
+          "Mg\u00b2\u207a ions",
+          "DNA substrate"
+        ],
+        "outputs": [
+          "Salt-bridge network configuration",
+          "DNA-gate opening/closing kinetics",
+          "Enzyme activity"
+        ]
+      },
+      {
+        "model": "Molecular Dynamics Simulations",
+        "inputs": [
+          "Protein structure",
+          "Mg\u00b2\u207a coordination geometry"
+        ],
+        "outputs": [
+          "Conformational transition pathways",
+          "Salt-bridge dynamics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Mg\u00b2\u207a binding modulates salt-bridge network to regulate DNA-gate dynamics",
+        "result": "Confirmed; Mg\u00b2\u207a orchestrates opening/closing kinetics and protects against DNA damage under metal depletion"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-51480-4": {
+    "category": "Cell Signaling",
+    "task": "Demonstrate HSYA promotion of osteogenesis and inhibition of osteoclastogenesis via PI3K/AKT",
+    "key_results": "HSYA activates PI3K/AKT pathway increasing Runx2 and calcium nodule deposition; simultaneously suppresses osteoclast differentiation",
+    "comments": "Dual-action mechanism on bone homeostasis is promising but lacks direct evidence of Runx2 transcriptional activity on osteogenic genes.",
+    "model_io": [
+      {
+        "model": "In vitro BMSC osteoblast differentiation and osteoclast models",
+        "inputs": [
+          "HSYA",
+          "BMSCs"
+        ],
+        "outputs": [
+          "PI3K/AKT activation",
+          "Runx2 upregulation",
+          "calcium deposition",
+          "osteoclast inhibition"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "HSYA stimulates osteoblastogenesis and inhibits osteoclastogenesis via PI3K/AKT",
+        "result": "Confirmed in in vitro models; in vivo bone loss mitigation demonstrated in ovariectomy model"
+      }
+    ]
+  },
+  "nature:10.1038/s41597-026-07298-w": {
+    "category": "Other",
+    "task": "Standardized vaccine representation and knowledge integration",
+    "key_results": "Vaccine Ontology models >10,000 vaccines targeting 289 pathogens and cancers; enables semantic queries and supports vaccine AI research",
+    "comments": "Comprehensive standardization effort, but clinical utility for precision medicine applications remains to be demonstrated.",
+    "model_io": [
+      {
+        "model": "Vaccine Ontology (VO)",
+        "inputs": [
+          "vaccine data",
+          "vaccine components",
+          "immune responses",
+          "study metadata"
+        ],
+        "outputs": [
+          "standardized vaccine representations",
+          "semantic mappings",
+          "ontological relationships"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Ontological standardization enables vaccine AI and literature mining",
+        "result": "VO enhanced analysis of experimental, clinical vaccine datasets and vaccine-related literature"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-50079-z": {
+    "category": "Single Cell",
+    "task": "Forecast self-injurious behavior in autistic youth using wearable sensors",
+    "key_results": "ML models detect SIB feasibility; performance rises from near-chance at 3s to above-chance at 60s+ horizons; optimal configurations are highly person-specific",
+    "comments": "Small sample size (n=9) and high inter-subject variability limit generalizability; person-specific approaches promising but underdeveloped.",
+    "model_io": [
+      {
+        "model": "Random Forest, AdaBoost.M2, LSTM, Double-Stacked LSTM",
+        "inputs": [
+          "motion (accelerometry)",
+          "physiological signals (heart rate, skin conductance)"
+        ],
+        "outputs": [
+          "SIB forecast (3s to 120s horizons)",
+          "Area Under Precision-Recall Curve"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Wearable sensor data enables SIB forecasting at clinically useful horizons",
+        "result": "Performance above chance at 60s+ with substantial person-specific variability"
+      },
+      {
+        "hypothesis": "Combined motion and physiological features outperform single modalities",
+        "result": "Aggregated results showed no significant differences; subject-level analysis suggested feature-set dependency"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-50992-3": {
+    "category": "Network Biology",
+    "task": "Network localization of brain abnormalities in OCD and neuromodulation targeting",
+    "key_results": "Three distributed networks identified (gray matter, executive dysfunction, emotion processing); convergence on basal ganglia; neuromodulation targets show differential network correspondence",
+    "comments": "Sophisticated network mapping approach but sample size (likely small) and cross-validation not clearly specified; clinical utility requires prospective validation.",
+    "model_io": [
+      {
+        "model": "Coordinate-based network mapping with connectome integration",
+        "inputs": [
+          "voxel-based morphometry peaks",
+          "executive function peaks",
+          "emotion processing peaks",
+          "resting-state connectome"
+        ],
+        "outputs": [
+          "distributed brain networks",
+          "network-based biomarkers",
+          "neuromodulation target mapping"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "OCD abnormalities organize into discrete brain networks converging on basal ganglia",
+        "result": "Three networks identified with significant convergence; permutation testing confirmed non-random organization"
+      },
+      {
+        "hypothesis": "Different neuromodulation targets engage distinct OCD networks",
+        "result": "DLPFC/SMA align with executive network; OFC shows opposing connectivity pattern"
+      }
+    ]
+  },
+  "nature:10.1038/s44184-026-00209-2": {
+    "category": "Statistical Methods",
+    "task": "External validation and comparison of suicide attempt risk prediction models",
+    "key_results": "ML outperformed DL on most metrics; existing models showed poor generalization across healthcare settings; DL achieved higher sensitivity",
+    "comments": "Important negative result highlighting generalization challenges; person-specific approaches suggested but not demonstrated.",
+    "model_io": [
+      {
+        "model": "Machine learning and deep learning classifiers",
+        "inputs": [
+          "healthcare records from 750,000+ patient encounters"
+        ],
+        "outputs": [
+          "suicide attempt risk predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "State-of-the-art SARP models generalize across healthcare settings",
+        "result": "Models did not generalize well to external validation cohort"
+      },
+      {
+        "hypothesis": "DL outperforms ML for SARP on tabular healthcare data",
+        "result": "ML significantly outperformed DL on most metrics, DL only achieved higher sensitivity"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-72308-9": {
+    "category": "Optics/Photonics",
+    "task": "Enhance electrically small antenna radiation-bandwidth product via dual-tone parametric modulation",
+    "key_results": "Dual-resonant ESA driven by two parametric pump tones at sum and difference frequencies surpasses conventional gain-bandwidth product limits; enhancement of both peak transmission and 3-dB bandwidth demonstrated",
+    "comments": "Elegant dual-tone parametric approach overcomes fundamental ESA limitations, though stability analysis against nonlinearities and practical integration with passive matching networks require further investigation.",
+    "model_io": [
+      {
+        "model": "Dual-resonant electrically small antenna with parametric pumping",
+        "inputs": [
+          "pump power levels",
+          "pump frequencies (sum and difference tones)"
+        ],
+        "outputs": [
+          "radiation efficiency",
+          "bandwidth",
+          "transmission enhancement",
+          "data rate"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Dual-tone parametric drive at tailored resonant modes overcome gain-bandwidth trade-off",
+        "result": "Confirmed; both peak transmission and 3-dB bandwidth enhanced"
+      },
+      {
+        "hypothesis": "Careful pump engineering surpasses conventional gain-bandwidth product limitations",
+        "result": "Confirmed through analytical and experimental validation"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-47507-5": {
+    "category": "Condensed Matter",
+    "task": "Investigate multiple Andreev reflections in spinful Josephson junctions under spin-orbit coupling and magnetic field",
+    "key_results": "Spin-orbit coupling opens avoided crossings in lead dispersion, producing pronounced multiple Andreev reflection features; band spin polarization governs feature visibility under external magnetic field",
+    "comments": "Theoretical analysis elegantly connects avoided crossings to conductance features, though experimental validation in nanoscopic junctions and quantitative predictions for specific materials are missing.",
+    "model_io": [
+      {
+        "model": "Voltage-biased Josephson junction with spin-orbit coupling",
+        "inputs": [
+          "spin-orbit coupling strength",
+          "external magnetic field"
+        ],
+        "outputs": [
+          "subharmonic gap structure",
+          "conductance traces",
+          "spin polarization effects"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Spin mixing from spin-orbit coupling results in pronounced MAR features in conductance",
+        "result": "Confirmed; avoided crossings correlate with conductance enhancements"
+      },
+      {
+        "hypothesis": "Band spin polarization governs MAR feature visibility under magnetic field",
+        "result": "Confirmed through conductance analysis"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-48749-z": {
+    "category": "Mathematical Physics",
+    "task": "Solve coupled fractional Schr\u00f6dinger-KdV system via RPSTM and ITM with fractional-order effects analysis",
+    "key_results": "Fractional-order parameter significantly impacts wave propagation properties including amplitude attenuation and propagation speed; RPSTM and ITM provide effective semi-analytical approximations with convergence validation",
+    "comments": "Memory and non-local dynamics captured via fractional derivatives offer realistic modeling, though direct experimental validation against physical plasma or nonlinear optics data is absent.",
+    "model_io": [
+      {
+        "model": "Coupled fractional Schr\u00f6dinger-KdV system with Mohand transform",
+        "inputs": [
+          "ramp-type laser heating",
+          "fractional-order parameter"
+        ],
+        "outputs": [
+          "approximate solutions",
+          "dispersion characteristics",
+          "wave propagation properties"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Fractional-order derivatives capture memory and non-local dynamics beyond classical integer-order formulations",
+        "result": "Confirmed; fractional-order parameter shows tremendous impact on wave propagation mechanisms"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-50619-7": {
+    "category": "Mathematical Physics",
+    "task": "Develop flexible bounded stochastic framework for uncertainty quantification in physical systems",
+    "key_results": "Four-parameter family via beta transformation of Kumaraswamy baseline captures diverse boundary behaviors; closed-form expressions derived for moments, information-theoretic characterizations, and MLE properties",
+    "comments": "Rigorous theoretical development with structural identifiability and asymptotic analysis, though single engineered system application limits demonstration of practical utility.",
+    "model_io": [
+      {
+        "model": "Beta-transformed Kumaraswamy bounded distribution",
+        "inputs": [
+          "physical measurements (proportions, efficiencies, normalized quantities)",
+          "parameter estimation"
+        ],
+        "outputs": [
+          "uncertainty quantification",
+          "reliability analysis",
+          "boundary behavior characterization"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Beta transformation of Kumaraswamy baseline yields flexible family with diverse hazard rate structures",
+        "result": "Confirmed; four-parameter family captures multiple boundary behaviors"
+      }
+    ]
   }
 }
