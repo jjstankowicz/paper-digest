@@ -169099,5 +169099,374 @@
         "result": "Confirmed by TDDFT; toroidal states accessible via one-photon transitions"
       }
     ]
+  },
+  "hf:2604.26326": {
+    "category": "LLM/Reasoning",
+    "task": "Prevent performance saturation in LLM RL via entropy control",
+    "key_results": "4B model outperforms 8B baseline; sustains improvement 4x longer; 50% pass@K improvement over baseline",
+    "comments": "Elegant rejection-sampling approach with strong empirical gains, though the theoretical connection between advantage distributions and per-step entropy deserves deeper justification.",
+    "model_io": [
+      {
+        "model": "LLM with RL training",
+        "inputs": [
+          "language model",
+          "reward signal"
+        ],
+        "outputs": [
+          "policy with controlled entropy trajectory"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Linear annealing entropy schedules (high-to-lower) outperform other schedules",
+        "result": "Confirmed empirically across experiments"
+      },
+      {
+        "hypothesis": "Per-step entropy collapse explains performance saturation in RL",
+        "result": "Confirmed; entropy curve control addresses saturation"
+      }
+    ]
+  },
+  "hf:2605.10889": {
+    "category": "LLM/Reasoning",
+    "task": "Determine optimal per-token teacher distillation configurations for reasoning models",
+    "key_results": "Distillation gradient aligns better with incorrect rollouts than correct ones; optimal context depends jointly on student capacity and task",
+    "comments": "The training-free diagnostic framework is novel and highly interpretable, but the per-task optimization requirement may limit practical applicability at scale.",
+    "model_io": [
+      {
+        "model": "Student LLM + teacher model(s)",
+        "inputs": [
+          "student rollouts",
+          "teacher trajectories",
+          "question context"
+        ],
+        "outputs": [
+          "gradient alignment scores",
+          "per-token distillation recommendations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Distillation signals are beneficial universally across tasks and students",
+        "result": "Rejected; optimal configuration is task and capacity-dependent"
+      },
+      {
+        "hypothesis": "Teacher guidance is most effective on correct rollouts",
+        "result": "Rejected; guidance aligns better on incorrect rollouts"
+      }
+    ]
+  },
+  "hf:2605.10762": {
+    "category": "Vision",
+    "task": "Adaptive test-time compute for long-video VLM inference via frame selection",
+    "key_results": "3.36\u00d7 TFLOPs reduction with 1.6 pp accuracy loss on Video-MME-v2; up to +4.0 pp with 0.52\u00d7 compute using decoupled 2B selector + 4B/8B QA",
+    "comments": "GridProbe's posterior-probing approach is creative and interpretable, though the grid-based probe design may not generalize optimally to videos with non-uniform information distribution.",
+    "model_io": [
+      {
+        "model": "VLM with GridProbe selector",
+        "inputs": [
+          "long video frames",
+          "question"
+        ],
+        "outputs": [
+          "question-adapted subset of frames",
+          "answer"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Fixed frame budgets are suboptimal; per-question adaptive budgets improve efficiency",
+        "result": "Confirmed; M_eff tracks question difficulty without seeing answers"
+      },
+      {
+        "hypothesis": "Posterior-based probes enable test-time adaptive compute without retraining",
+        "result": "Confirmed; decoupled selector-QA pairing shows Pareto improvements"
+      }
+    ]
+  },
+  "hf:2605.10032": {
+    "category": "Benchmark",
+    "task": "Evaluate LLMs on literature-grounded plant marker evidence interpretation",
+    "key_results": "Frontier models achieve strong performance on expression evidence but drop substantially on functional/indirect evidence; open-weight models show elevated false-positive rates",
+    "comments": "The benchmark is well-constructed with 5,550 annotated instances, but the evidence-type confusion failure mode suggests models lack deep biological reasoning rather than evidence grounding capability.",
+    "model_io": [
+      {
+        "model": "Various LLMs (open-weight and closed-source)",
+        "inputs": [
+          "full-text biological paper sentences",
+          "gene-cell-type pairs"
+        ],
+        "outputs": [
+          "marker-evidence validity predictions",
+          "evidence-type classifications"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Frontier models generalize equally across all evidence types",
+        "result": "Rejected; significant performance gaps on functional and indirect evidence"
+      },
+      {
+        "hypothesis": "Literature-grounded evidence improves marker prediction reliability",
+        "result": "Partially confirmed; strong on direct expression but weak on complex reasoning"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-50382-9": {
+    "category": "Computational Biophysics",
+    "task": "Develop improved field control for cryogenic fast-field-cycling NMR relaxometry at low temperatures",
+    "key_results": "PID feedback control extends measurable T\u2081 down to 100 ms; enables signal averaging over 0\u20132.5 T and 300\u20133 K range with reduced field settling times",
+    "comments": "Enhanced sensitivity and dynamic range address a technical bottleneck in characterizing spin-lattice relaxation for hyperpolarization applications.",
+    "model_io": [
+      {
+        "model": "Fast-field-cycling NMR system with PID feedback",
+        "inputs": [
+          "magnetic field (0\u20132.5 T)",
+          "temperature (3\u2013300 K)",
+          "NMR pulse sequence"
+        ],
+        "outputs": [
+          "T\u2081(B,T) relaxation profiles",
+          "field error magnitude",
+          "signal-to-noise ratio"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "PID field control improves measurement repeatability and reduces settling times",
+        "result": "Confirmed; enables detection of T\u2081 constants down to 100 ms and supports signal averaging"
+      }
+    ]
+  },
+  "nature:10.1038/s41419-026-08819-6": {
+    "category": "Organelles",
+    "task": "Determine emerin's role in MTOC translocation to nuclear envelope during myogenic differentiation",
+    "key_results": "Emerin loss in EDMD1 causes pericentrin recruitment defects, LINC protein impairment, altered mitochondrial distribution; CRISPR rescue restores pericentrin, AKAP6, PKA, and YAP localization",
+    "comments": "Emerin dysfunction disrupts NE-MTOC organization, suggesting a key pathogenic mechanism in muscular dystrophy.",
+    "model_io": [
+      {
+        "model": "EDMD1 patient-derived and corrected myotubes",
+        "inputs": [
+          "EMD mutation",
+          "CRISPR EMD correction"
+        ],
+        "outputs": [
+          "pericentrin/LINC/AKAP localization",
+          "microtubule organization",
+          "mitochondrial distribution",
+          "YAP nucleocytoplasmic localization"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Emerin is required for NE-MTOC complex assembly",
+        "result": "Loss of emerin impairs centrosomal protein recruitment and microtubule dynamics; rescue restores organization"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-72796-9": {
+    "category": "Network Biology",
+    "task": "Local subgraph estimation with false discovery control",
+    "key_results": "PFS recovers interpretable networks in multiomics, brain connectomics, and single-nucleus RNA-seq with rigorous finite-sample FDC",
+    "comments": "Addresses important interpretability problem in network analysis, though validation relies on domain consistency rather than independent benchmarks.",
+    "model_io": [
+      {
+        "model": "Pathwise Feature Selection (PFS)",
+        "inputs": [
+          "mixed variable types",
+          "nonlinear dependencies"
+        ],
+        "outputs": [
+          "local subgraphs",
+          "false discovery rates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Local graph estimation outperforms global methods for discovering target-centric structures",
+        "result": "PFS recovers established mechanisms and generates novel hypotheses across four applications"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-72903-w": {
+    "category": "Statistical Methods",
+    "task": "Unbiased evaluation of cancer drug response prediction models",
+    "key_results": "Deep learning barely outperforms naive mean predictor; tree-based ensembles with proper tuning beat complex models in realistic settings",
+    "comments": "Critical reality-check on overfitting in drug response literature; DrEval benchmark valuable but reveals field-wide overly optimistic reporting.",
+    "model_io": [
+      {
+        "model": "DrEval benchmark pipeline",
+        "inputs": [
+          "cancer cell line omics",
+          "drug sensitivity screens"
+        ],
+        "outputs": [
+          "unbiased model performance",
+          "cross-study comparisons",
+          "ablation studies"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Deep learning models outperform traditional baselines for drug response",
+        "result": "Complex DL models barely outperform naive mean predictor; tree-ensembles remain superior in realistic settings"
+      }
+    ]
+  },
+  "nature:10.1038/s41523-026-00958-5": {
+    "category": "Other",
+    "task": "CDK4/6 inhibitor therapy optimization in metastatic breast cancer",
+    "key_results": "Shift from sequencing to precision framework; biomarker-selected intensification and PRO/PREM integration recommended",
+    "comments": "Opinion piece rather than primary research; identifies strategic direction but lacks quantitative validation of proposed approach.",
+    "model_io": [],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41746-026-02666-7": {
+    "category": "Other",
+    "task": "FHIR-based digital health data pipeline for research",
+    "key_results": "Spezi Data Pipeline enables standardized handling of sensor data, ECG, questionnaires; demonstrated on Apple Watch ECG annotation at Stanford",
+    "comments": "Addresses real clinical bottleneck in data interoperability; focus on infrastructure rather than novel methods limits impact on scientific discovery.",
+    "model_io": [
+      {
+        "model": "Spezi Data Pipeline (Python toolkit)",
+        "inputs": [
+          "FHIR data",
+          "sensor observations",
+          "ECG recordings",
+          "clinical questionnaires"
+        ],
+        "outputs": [
+          "standardized datasets",
+          "clinician annotations",
+          "comparative analysis"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s43856-026-01631-5": {
+    "category": "Other",
+    "task": "LLM benchmark for Traditional Chinese Medicine",
+    "key_results": "Comprehensive triaxial benchmark framework developed; systematic LLM proficiency assessment in TCM proposed",
+    "comments": "Benchmarking framework described but results and actual LLM performance metrics not provided in abstract.",
+    "model_io": [
+      {
+        "model": "Multi-dimensional TCM benchmark for LLMs",
+        "inputs": [
+          "TCM clinical cases",
+          "theoretical principles",
+          "treatment guidelines"
+        ],
+        "outputs": [
+          "LLM response accuracy",
+          "domain proficiency scores"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-51675-9": {
+    "category": "Statistics/Probability",
+    "task": "Time series forecasting of hospital medical waste generation",
+    "key_results": "ARIMA models achieved MAPE of 2.51% (general waste), 22.78% (biohazardous), 65.16% (special waste); projections show continuous waste increase 2025-2026",
+    "comments": "Practical application with strong performance on general waste but higher error on special waste; PDCA cycle integration is sound methodology for intervention design.",
+    "model_io": [
+      {
+        "model": "ARIMA(2,1,2), ARIMA(1,1,0), ARIMA(1,2,1)",
+        "inputs": [
+          "monthly waste data 2017-2024"
+        ],
+        "outputs": [
+          "waste generation forecasts 2025-2026"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "ARIMA models can accurately forecast waste by waste type",
+        "result": "Confirmed for general waste (MAPE 2.51%), less reliable for special waste (MAPE 65.16%)"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-72577-4": {
+    "category": "Condensed Matter",
+    "task": "Detect magneto-optic Kerr effect in A-type antiferromagnets",
+    "key_results": "Observed imaginary MOKE component in MnBi\u2082Te\u2084 A-type AFM; mechanism confirmed intrinsic to all collinear A-type AFMs with out-of-plane spin order",
+    "comments": "Extends MOKE applicability beyond ferromagnets and ferrimagnets, enabling AFM domain detection, though signal magnitude may limit few-layer samples.",
+    "model_io": [
+      {
+        "model": "MnBi\u2082Te\u2084 A-type antiferromagnet",
+        "inputs": [
+          "photon energy sweep"
+        ],
+        "outputs": [
+          "imaginary MOKE component vs. energy"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "A-type AFM geometry with out-of-plane spin order produces observable MOKE despite vanishing magnetization",
+        "result": "Confirmed experimentally and theoretically in MnBi\u2082Te\u2084"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-72887-7": {
+    "category": "Optics/Photonics",
+    "task": "Integrate metasurface Shack-Hartmann wavefront sensor on CMOS without external optics",
+    "key_results": "Dual-encoding strategy (orientation-encoded double-helix PSF + orthogonal circular polarization) extends dynamic range to \u00b19.4\u00b0 per channel while maintaining ~10 sub-apertures/mm; demonstrated 3D localization, profilometry, video-rate monitoring",
+    "comments": "Chip-integrated on-CMOS design eliminates external optics and improves compactness, though polarization-encoding approach may limit wavelength range.",
+    "model_io": [
+      {
+        "model": "Chip-integrated metasurface Shack-Hartmann sensor on CMOS",
+        "inputs": [
+          "incoming wavefront (with/without polarization)"
+        ],
+        "outputs": [
+          "wavefront shape (\u00b19.4\u00b0 dynamic range)",
+          "3D location",
+          "polarization state"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Orientation-encoding double-helix PSF and polarization-channel multiplexing overcome dynamic range vs. sampling density trade-off",
+        "result": "Confirmed; demonstrated extended range without density degradation"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-51899-9": {
+    "category": "Optics/Photonics",
+    "task": "Measure nonlinear refractive index via four-wave mixing in barium titanate microresonators",
+    "key_results": "BTO thin-film Kerr coefficient n\u2082 = 1.4 \u00d7 10\u207b\u00b9\u2078 m\u00b2/W (order of magnitude larger than lithium niobate, slightly less than silicon without free-carrier loss)",
+    "comments": "Strong integrated nonlinear response without free-carrier absorption loss makes BTO promising, though fabrication complexity and scalability of resonators merit further development.",
+    "model_io": [
+      {
+        "model": "BTO-on-insulator microring resonators",
+        "inputs": [
+          "pump signal",
+          "phase-matching conditions"
+        ],
+        "outputs": [
+          "idler power",
+          "nonlinear refractive index n\u2082"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Barium titanate thin films exhibit strong Kerr nonlinearity suitable for integrated photonics",
+        "result": "Confirmed; n\u2082 measured via four-wave mixing demonstrates quantum-application potential"
+      }
+    ]
   }
 }
