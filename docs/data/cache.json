@@ -173553,5 +173553,606 @@
         "result": "Confirmed; ageing clocks partially mediate long sleep-depression pathway; short sleep shows direct link"
       }
     ]
+  },
+  "hf:2605.12484": {
+    "category": "LLM/Reasoning",
+    "task": "Continual learning in LLMs balancing parameter updates and in-context adaptation",
+    "key_results": "Fast-Slow Training achieves 3x sample efficiency over RL alone; maintains 70% less KL divergence from base model; preserves plasticity across sequential tasks",
+    "comments": "Clever dual-timescale approach mirroring human cognition, though the mechanism for incorporating textual feedback into context remains underexplained.",
+    "model_io": [
+      {
+        "model": "Fast-Slow Training framework",
+        "inputs": [
+          "task trajectories",
+          "textual feedback"
+        ],
+        "outputs": [
+          "task-specific performance",
+          "base model alignment"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Separating fast (context) and slow (parameter) learning reduces catastrophic forgetting versus pure RL",
+        "result": "Confirmed: FST shows up to 70% less KL divergence and better continual learning than parameter-only training"
+      }
+    ]
+  },
+  "hf:2605.08504": {
+    "category": "LLM/Reasoning",
+    "task": "Understanding and mitigating massive activations in LLM layers",
+    "key_results": "Identified Massive Emergence Layer (ME Layer) consistent across model families; proposed method improves performance on instruction following and math reasoning tasks",
+    "comments": "Elegant analysis connecting low-level activation patterns to downstream performance, though specific quantitative improvements are vague.",
+    "model_io": [
+      {
+        "model": "Large Language Model",
+        "inputs": [
+          "text prompts"
+        ],
+        "outputs": [
+          "task predictions",
+          "hidden activations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "RMSNorm and FFN jointly cause massive activations at specific layers",
+        "result": "Confirmed: ME Layer identified where activations first emerge and propagate via residual connections"
+      },
+      {
+        "hypothesis": "Reducing massive activation rigidity improves downstream performance",
+        "result": "Confirmed across instruction following and math reasoning tasks"
+      }
+    ]
+  },
+  "hf:2605.09296": {
+    "category": "Vision",
+    "task": "Detecting AI-generated images via local distributional anomalies",
+    "key_results": "MDMF consistently outperforms baseline detectors across multiple benchmarks; leverages patch-level forensic signals with MMD-based discrepancy quantification",
+    "comments": "Principled use of distributional testing, but evaluation metrics and dataset details are absent from the abstract.",
+    "model_io": [
+      {
+        "model": "Patch Forensic Signature + MMD detector",
+        "inputs": [
+          "image patches"
+        ],
+        "outputs": [
+          "real/AI-generated classification",
+          "distributional discrepancy score"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Local patch-level analysis detects micro-defects better than global semantic features",
+        "result": "Confirmed: patch-wise MMD modeling yields larger separable discrepancies than global aggregation"
+      }
+    ]
+  },
+  "hf:2605.12498": {
+    "category": "Vision",
+    "task": "3D egocentric hand pose reconstruction from monocular fisheye/wide-FOV cameras",
+    "key_results": "EgoForce reduces camera-space MPJPE by up to 28% on HOT3D; maintains consistent performance across diverse camera configurations with single unified network",
+    "comments": "Addresses practical deployment constraints (single camera, no depth sensor) but relies on differentiable forearm priors that may not generalize to occlusions.",
+    "model_io": [
+      {
+        "model": "Unified arm-hand transformer + ray space solver",
+        "inputs": [
+          "egocentric RGB frame"
+        ],
+        "outputs": [
+          "3D hand pose",
+          "3D hand shape",
+          "absolute camera-space coordinates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Forearm representation stabilization and unified hand-arm modeling reduce depth-scale ambiguity",
+        "result": "Confirmed: SOTA 3D accuracy across three egocentric benchmarks with cross-camera generalization"
+      }
+    ]
+  },
+  "hf:2605.12466": {
+    "category": "LLM/Reasoning",
+    "task": "Scalable iterative refinement via fixed-point solving in Transformers",
+    "key_results": "Attractor Models achieve 46.6% perplexity improvement and 19.7% downstream accuracy gain over standard Transformers; 770M model outperforms 1.3B Transformer; 27M model reaches 91.4% on Sudoku-Extreme",
+    "comments": "Novel equilibrium internalization finding suggests models can learn recurrence implicitly, though generalization beyond reasoning/language tasks unclear.",
+    "model_io": [
+      {
+        "model": "Attractor Model (backbone + attractor with implicit differentiation)",
+        "inputs": [
+          "text input",
+          "task prompt"
+        ],
+        "outputs": [
+          "refined output embeddings",
+          "next token prediction"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Fixed-point solving via implicit differentiation enables stable, efficient iterative refinement",
+        "result": "Confirmed: constant training memory, adaptive iteration depth, Pareto improvement over feed-forward Transformers"
+      },
+      {
+        "hypothesis": "Models learn to internalize equilibrium during training, allowing solver removal at inference",
+        "result": "Confirmed: equilibrium internalization phenomenon observed with minimal degradation post-removal"
+      }
+    ]
+  },
+  "hf:2605.09252": {
+    "category": "Agents/RL",
+    "task": "Predicting when LLM agents should call tools versus answering directly",
+    "key_results": "Tool necessity linearly decodable from hidden states with AUROC 0.89-0.96; Probe&Prefill reduces unnecessary tool calls by 48% with only 1.7% accuracy loss vs. 6% reduction for best baseline",
+    "comments": "Clever finding that models know tool necessity but fail to act on it; Probe&Prefill is practical but adds inference-time overhead.",
+    "model_io": [
+      {
+        "model": "LLM + linear probe on hidden states + prefill steering",
+        "inputs": [
+          "query",
+          "available tools"
+        ],
+        "outputs": [
+          "tool-necessary prediction",
+          "steered generation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LLMs possess latent knowledge of tool necessity in their hidden states independent of verbalized reasoning",
+        "result": "Confirmed: hidden-state probes achieve AUROC 0.89-0.96, exceeding model's own reasoning quality"
+      },
+      {
+        "hypothesis": "Steering via prefilled response based on hidden-state signal reduces unnecessary tool calls",
+        "result": "Confirmed: 48% tool call reduction with minimal accuracy loss vs. reasoning-based baselines"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-72429-1": {
+    "category": "Development",
+    "task": "Elucidate mechanism of Wnt-dependent cell segregation in optic cup development",
+    "key_results": "Wnt signaling drives P-cadherin to N-cadherin switch independent of \u03b2-catenin; wild-type cells preferentially retained in ciliary margin niche via cadherin-mediated segregation",
+    "comments": "This work redefines passive cell competition through adhesion dynamics rather than proliferative advantage, with implications for tissue niche formation.",
+    "model_io": [
+      {
+        "model": "Mosaic \u03b2-catenin knockout mouse optic cup",
+        "inputs": [
+          "Wnt signaling",
+          "P-cadherin",
+          "N-cadherin"
+        ],
+        "outputs": [
+          "Cell segregation patterns",
+          "tissue niche retention",
+          "ciliary body formation"
+        ]
+      },
+      {
+        "model": "Theoretical modeling",
+        "inputs": [
+          "cadherin interaction parameters"
+        ],
+        "outputs": [
+          "predicted segregation clusters"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "\u03b2-catenin is required for ciliary margin specification",
+        "result": "Refuted; ciliary body and iris form normally despite \u03b2-catenin deletion"
+      },
+      {
+        "hypothesis": "Wnt signaling regulates cadherin switching to enable cell segregation",
+        "result": "Confirmed; P- to N-cadherin switch drives niche exclusion"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-72489-3": {
+    "category": "Development",
+    "task": "Define ABL-PTPN12-p130CAS pathway in lens vesicle separation and Peters anomaly type II prevention",
+    "key_results": "ABL kinases phosphorylate PTPN12 to suppress p130CAS/RHO activation and actomyosin contractility; ABL loss reduces lens vesicle tension causing Peters anomaly; CRK/CRKL deletion rescues phenotype",
+    "comments": "The discovery that ABL acts through PTPN12-p130CAS rather than direct CRK phosphorylation revises mechanistic understanding and identifies RHO/RAC balance as therapeutic target.",
+    "model_io": [
+      {
+        "model": "ABL-null mouse lens development, zebrafish optic development",
+        "inputs": [
+          "ABL kinase",
+          "PTPN12",
+          "p130CAS",
+          "RHO/RAC GTPases"
+        ],
+        "outputs": [
+          "actomyosin contractility",
+          "lens vesicle separation",
+          "corneal opacity"
+        ]
+      },
+      {
+        "model": "Cultured lens epithelial cells",
+        "inputs": [
+          "ABL inhibition",
+          "RHOA/RAC1 inhibitors"
+        ],
+        "outputs": [
+          "cytoskeletal tension",
+          "cell migration"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "ABL kinases directly phosphorylate CRK/CRKL to suppress RHO activation",
+        "result": "Refuted; rescue by CRK/CRKL deletion indicates indirect regulation"
+      },
+      {
+        "hypothesis": "ABL-PTPN12-p130CAS axis controls actomyosin contractility in lens vesicles",
+        "result": "Confirmed; loss reduces tension and prevents proper separation"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-73027-x": {
+    "category": "Cell Signaling",
+    "task": "Identify role of Sec24D O-GlcNAcylation in collagen trafficking via COPII",
+    "key_results": "Site-specific O-GlcNAcylation of Sec24D recruits myoferlin to facilitate ERES-ERGIC fusion; O-GlcNAc modifications regulate COPII protein-protein interactions across all transport steps",
+    "comments": "The discovery that post-translational glycosylation dynamically rewires COPII interactomes offers elegant mechanistic insight into cargo-selective trafficking of large proteins.",
+    "model_io": [
+      {
+        "model": "Human cells, zebrafish embryos",
+        "inputs": [
+          "Sec24D with O-GlcNAc modifications",
+          "myoferlin",
+          "collagen cargo"
+        ],
+        "outputs": [
+          "COPII-mediated transport efficiency",
+          "ERES-ERGIC fusion rate"
+        ]
+      },
+      {
+        "model": "Crosslinking mass spectrometry",
+        "inputs": [
+          "Glycosylated vs unglycosylated Sec24D"
+        ],
+        "outputs": [
+          "Interactome maps",
+          "protein-protein interaction strengths"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "O-GlcNAcylation of Sec24D is required for collagen trafficking",
+        "result": "Confirmed in human cells and zebrafish; mutations abolish transport"
+      },
+      {
+        "hypothesis": "Each O-GlcNAc site has distinct effects on COPII interactome",
+        "result": "Confirmed; crosslinking proteomics reveals site-specific interaction changes"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-73139-4": {
+    "category": "Development",
+    "task": "Establish poFUT1/O-fucosylation-EDIL3/LIFR axis in trophoblast invasion and placental development",
+    "key_results": "poFUT1 levels reduced in PE plasma and placental tissue; poFUT1 knockout induces PE-like phenotypes in mice; EDIL3 O-fucosylated at T88 interacts with LIFR to activate STAT3; O-fucosylation enhances EDIL3-LIFR binding and trophoblast invasion",
+    "comments": "The discovery of O-fucosylation as a developmentally regulated PTM controlling EDIL3-LIFR signaling identifies a glycobiological mechanism underlying preeclampsia pathogenesis.",
+    "model_io": [
+      {
+        "model": "poFUT1 knockout transgenic mice; human trophoblast explants",
+        "inputs": [
+          "poFUT1",
+          "EDIL3 O-fucosylation",
+          "LIFR",
+          "STAT3"
+        ],
+        "outputs": [
+          "trophoblast invasion capacity",
+          "vascular remodeling",
+          "placental development",
+          "preeclampsia phenotypes"
+        ]
+      },
+      {
+        "model": "Cell-based assays on primary trophoblasts",
+        "inputs": [
+          "O-fucosylated vs de-O-fucosylated EDIL3",
+          "LIFR signaling"
+        ],
+        "outputs": [
+          "invasion index",
+          "STAT3 phosphorylation",
+          "adhesion molecule expression"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "poFUT1-catalyzed EDIL3 O-fucosylation is required for trophoblast invasion",
+        "result": "Confirmed; O-fucosylation enhances LIFR binding and invasion"
+      },
+      {
+        "hypothesis": "poFUT1 deficiency causes PE-like phenotypes via impaired O-fucosylation of EDIL3",
+        "result": "Confirmed; poFUT1 knockout mice recapitulate PE features"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-52638-w": {
+    "category": "Apoptosis/Cell Death",
+    "task": "Establish Forsythiaside A anti-lung cancer mechanism via ESR1/PI3K/AKT-induced autophagy",
+    "key_results": "FSA inhibited A549/H1975 proliferation (IC50 ~10 \u00b5M), migration, invasion; FSA downregulated ESR1, reduced pPI3K/pAKT; LC3-II/I ratio increased ~3-fold, p62 decreased; mitochondrial membrane potential loss evident",
+    "comments": "Network pharmacology screening effectively identified ESR1 as FSA target; the activation of autophagic flux through lipid kinase inhibition offers mechanism-based cancer therapeutics.",
+    "model_io": [
+      {
+        "model": "Lung adenocarcinoma cell lines A549, H1975; mouse xenograft",
+        "inputs": [
+          "Forsythiaside A",
+          "ESR1",
+          "PI3K/AKT pathway"
+        ],
+        "outputs": [
+          "cell proliferation",
+          "autophagy markers (LC3, p62)",
+          "mitochondrial membrane potential",
+          "tumor growth"
+        ]
+      },
+      {
+        "model": "Network pharmacology + molecular docking",
+        "inputs": [
+          "Angelica sinensis compounds"
+        ],
+        "outputs": [
+          "target predictions (ESR1)",
+          "pathway enrichment (PI3K-Akt)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "FSA inhibits lung cancer proliferation via ESR1/PI3K/AKT pathway",
+        "result": "Confirmed; FSA downregulates ESR1 and reduces phospho-PI3K/AKT"
+      },
+      {
+        "hypothesis": "FSA-induced autophagy mediates anti-tumor effects",
+        "result": "Confirmed; LC3-II accumulation and p62 degradation observed"
+      }
+    ]
+  },
+  "nature:10.1038/s41540-026-00736-w": {
+    "category": "Genomics",
+    "task": "Simulate cancer cell evolution and predict drug response from patient genomic/radiological data",
+    "key_results": "Reconstructs tumor features, clonal dynamics, VAF, tumor purity; synthetic tests confirm recovery of ground-truth parameters; TCGA samples enable ensemble forecasts of drug response",
+    "comments": "Explicit modeling of CNAs/SNVs and intra-tumor heterogeneity is rigorous, but validation on real patient-derived xenografts is absent.",
+    "model_io": [
+      {
+        "model": "tugMedi (cancer evolution simulator)",
+        "inputs": [
+          "NGS genomic data",
+          "radiological imaging",
+          "copy number alterations",
+          "SNVs",
+          "parental chromosome genotypes"
+        ],
+        "outputs": [
+          "tumor growth trajectories",
+          "clonal dynamics",
+          "VAF estimates",
+          "tumor purity",
+          "drug response predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Patient-specific genomic and imaging data enable accurate therapy response simulation",
+        "result": "Synthetic tests validated ground-truth recovery; TCGA ensemble forecasts feasible"
+      }
+    ]
+  },
+  "nature:10.1038/s41698-026-01475-1": {
+    "category": "Structural Prediction",
+    "task": "Predict 1-year progression risk in high-grade glioma using MRI radiomics and deep learning",
+    "key_results": "DL_com achieves AUC 0.954 (train), 0.911 (valid), 0.919 (test); outperforms U-Net, SegNet, Swin-UNet, VM-UNet; Dice=0.91\u00b10.01",
+    "comments": "Strong clinical performance on test set with explainability (SHAP) analysis; external generalization on independent cohort is promising.",
+    "model_io": [
+      {
+        "model": "MobileNet-based Hybrid Network (MobHy-Net) + clinical variables",
+        "inputs": [
+          "T2-FLAIR MRI",
+          "extracellular volume (ECV) images",
+          "clinical variables"
+        ],
+        "outputs": [
+          "1-year progression risk prediction",
+          "SHAP feature importance maps"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Integration of ECV with T2-FLAIR improves progression prediction",
+        "result": "DL_com AUC=0.919 on test set; superior to baseline models"
+      }
+    ]
+  },
+  "nature:10.1038/s42003-026-10251-7": {
+    "category": "Genomics",
+    "task": "Impute genotype-tissue-specific gene expression from genomic context",
+    "key_results": "~30% higher accuracy than distance-based methods; expression profiles align closely with experimental GTEx data",
+    "comments": "Hybrid architecture (CNN+transformer+XGBoost) is effective but computational complexity and generalization to non-human genomes warrant further investigation.",
+    "model_io": [
+      {
+        "model": "Hybrid deep learning (CNN + transformer encoder + XGBoost)",
+        "inputs": [
+          "promoter sequences",
+          "tissue correlation matrices",
+          "intergene distances",
+          "gene orientation"
+        ],
+        "outputs": [
+          "genotype-tissue-specific expression profiles"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Incorporating neighboring gene context and tissue correlations improves multi-tissue expression imputation",
+        "result": "Model achieved 30% improvement over distance-based baselines"
+      }
+    ]
+  },
+  "nature:10.1038/s41524-026-02112-y": {
+    "category": "ML Theory",
+    "task": "Multi-fidelity Bayesian neural operator for nonlinear mechanics of spinodal metamaterials",
+    "key_results": "22 strategically selected high-fidelity samples from pool of 3000 reduce MSE by 84.1%; superior stress-strain predictions vs single-fidelity",
+    "comments": "Hybrid active learning maximizes uncertainty and geometric diversity; effective data-efficient pathway for inverse design.",
+    "model_io": [
+      {
+        "model": "Bayesian multi-fidelity deep operator network with active learning",
+        "inputs": [
+          "low-fidelity FE simulations",
+          "high-fidelity nanomechanical experiments"
+        ],
+        "outputs": [
+          "full nonlinear stress-strain response"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-fidelity Bayesian learning with active sample selection reduces data requirements for metamaterial characterization",
+        "result": "Confirmed; 84.1% MSE reduction achieved with 22 high-fidelity samples"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-51838-8": {
+    "category": "ML Theory",
+    "task": "Speech emotion recognition for Guanzhong dialect using multi-dimensional feature fusion",
+    "key_results": "77.67% emotion classification accuracy; 12.31% improvement over CNN, 7.23% over Bi-LSTM, 4.61% over Conformer",
+    "comments": "Strong baseline comparisons on dialect-specific dataset; CAM+Bi-LSTM architecture is straightforward extension of existing methods.",
+    "model_io": [
+      {
+        "model": "FCAL-Net (CNN with CAM + Bi-LSTM)",
+        "inputs": [
+          "Guanzhong dialect speech"
+        ],
+        "outputs": [
+          "emotion labels: joy/sadness/anger/neutral"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-dimensional feature fusion with attention improves dialectal SER performance",
+        "result": "Confirmed; FCAL-Net outperforms CNN, Bi-LSTM, and modern baselines"
+      }
+    ]
+  },
+  "nature:10.1038/s42005-026-02651-2": {
+    "category": "Topology/Geometry",
+    "task": "Characterizing higher-order networks via spectral triplet and geometric measures",
+    "key_results": "Spectral distance and discrete curvature generalized to higher-order networks; latent structures revealed in musical compositions dataset",
+    "comments": "Rigorous mathematical framework using Connes' spectral triplet formalism; application to music data is illustrative but novel.",
+    "model_io": [
+      {
+        "model": "Spectral triplet formalism for higher-order networks",
+        "inputs": [
+          "higher-order network matrix representations"
+        ],
+        "outputs": [
+          "spectral distance metric",
+          "discrete curvature"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Non-commutative algebra via spectral triplet captures geometric features of higher-order networks",
+        "result": "Confirmed; complementary metrics proposed beyond topological measures"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-72892-w": {
+    "category": "Optics/Photonics",
+    "task": "Sub-picosecond extraction of hot carriers in black phosphorus via terahertz electronics",
+    "key_results": "Ultrafast photocurrent decay time ~ 400 fs; measured 3 dB bandwidth 260 GHz (intrinsic limit ~ 600 GHz); hot carriers harvestable without discarding cold carriers",
+    "comments": "Bridges fundamental physics and high-speed applications convincingly, though practical device design for integrated hot-carrier extraction remains underdeveloped.",
+    "model_io": [
+      {
+        "model": "Black phosphorus photodetector with metal contact",
+        "inputs": [
+          "near-contact photoexcitation",
+          "terahertz probe"
+        ],
+        "outputs": [
+          "ultrafast photocurrent",
+          "decay kinetics",
+          "carrier dynamics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Super-diffusive hot-carrier transport explains ultrafast photocurrent",
+        "result": "Proposed; ~400 fs decay orders of magnitude faster than sub-nanosecond energy relaxation"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-72895-7": {
+    "category": "Condensed Matter",
+    "task": "Direct visualization and control of topological spin textures in van der Waals antiferromagnet",
+    "key_results": "Antiferromagnetic skyrmions created from stripe domains under external stimuli despite zero remanent magnetization; direct imaging via spin-polarized LEEM",
+    "comments": "First direct observation of skyrmions in compensated antiferromagnet is significant for spintronic platforms, though control mechanism tunability warrants further investigation.",
+    "model_io": [
+      {
+        "model": "vdW antiferromagnet (Fe\u2081\u208b\u2093Co\u2093)\u2083GaTe\u2082",
+        "inputs": [
+          "external stimuli",
+          "spin-polarized electrons"
+        ],
+        "outputs": [
+          "antiferromagnetic domains",
+          "topological textures",
+          "skyrmion configurations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "External stimuli can reconfigure stripe domains into antiferromagnetic skyrmions",
+        "result": "Confirmed via spin-polarized LEEM imaging"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-73004-4": {
+    "category": "Condensed Matter",
+    "task": "Deterministic switching of charge density wave orientation via rotating magnetic fields",
+    "key_results": "Hysteretic reversible transitions between two 3a\u2080 \u00d7 1a\u2080 CDW domains (Q1, Q2) separated 60\u00b0 apart; short-circuit current density enhanced by 136-158%",
+    "comments": "Demonstrates spin-lattice coupling mechanism enabling tunable multistate memory, though practical device scalability remains to be demonstrated.",
+    "model_io": [
+      {
+        "model": "Magnetic kagome metal GdTi\u2083Bi\u2084",
+        "inputs": [
+          "in-plane rotating magnetic field"
+        ],
+        "outputs": [
+          "charge density wave domain orientation",
+          "spin reorientation",
+          "hysteretic phase diagram"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Antiferromagnetic spin reorientation mediates CDW switching",
+        "result": "Confirmed via atomically resolved spectroscopy showing field-dependent spin-lattice coupling"
+      }
+    ]
   }
 }
