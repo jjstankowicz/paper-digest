@@ -185727,5 +185727,822 @@
         "result": "Confirmed; optimized designs achieve high STL at deep sub-wavelength scales"
       }
     ]
+  },
+  "hf:2605.15138": {
+    "category": "LLM/Reasoning",
+    "task": "Machine unlearning that survives post-training quantization",
+    "key_results": "MANSU achieves meaningful forgetting (94.2% hazard suppression) while surviving 4-bit quantization with zero accuracy recovery gap, vs. baselines losing 0.05+ accuracy under compression",
+    "comments": "Identifies a fundamental sparsity-permanence tradeoff in quantization that prior unlearning work overlooked; mechanistic approach via circuit attribution is novel but computationally intensive.",
+    "model_io": [
+      {
+        "model": "Language models (Llama, Mistral) with circuit attribution",
+        "inputs": [
+          "target forget data",
+          "retain data",
+          "model weights"
+        ],
+        "outputs": [
+          "unlearned model weights quantizable to NF4"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Gradient-based unlearning methods fail under quantization due to per-parameter updates being too small relative to quantization bin width",
+        "result": "Confirmed; updates measured 47-828x below NF4 bin width across all baselines"
+      },
+      {
+        "hypothesis": "Circuit attribution can identify minimal forget-set subgraphs suitable for permanent unlearning",
+        "result": "Confirmed; MANSU jointly satisfies meaningful forgetting, retain preservation, and quantization survival"
+      }
+    ]
+  },
+  "hf:2605.10302": {
+    "category": "Generative",
+    "task": "Training-free controllable image generation via reference guidance",
+    "key_results": "Reference-Mean Guidance enables color, identity, style, and structure control on frozen FLUX.2-klein (4B) with zero fine-tuning; Semi-Parametric variant matches DiT-B/4 unconditional quality on AFHQv2",
+    "comments": "Elegant principle leveraging flow matching's endpoint-mean dependence, but evaluation limited to relatively small models and mostly visual attributes without quantitative benchmarks.",
+    "model_io": [
+      {
+        "model": "Flow matching (FLUX.2-klein, DiT-B/4)",
+        "inputs": [
+          "reference image bank",
+          "text prompt",
+          "seed"
+        ],
+        "outputs": [
+          "controlled generated image"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Shifting the conditional endpoint mean in flow matching enables steering without parameter updates",
+        "result": "Confirmed; closed-form mean correction enables training-free control"
+      }
+    ]
+  },
+  "hf:2602.09016": {
+    "category": "Vision",
+    "task": "Reconstructing vector floorplans from rasterized images via polygon sequences",
+    "key_results": "State-of-the-art on Structure3D, CubiCasa5K, Raster2Graph; strong generalization to WAFFLE dataset with diverse room structures",
+    "comments": "Frames structured reconstruction as seq2seq with learnable spatial anchors; autoregressive decoding flexibly handles variable polygon counts but lacks detailed quantitative comparisons.",
+    "model_io": [
+      {
+        "model": "Seq2seq with image encoder and autoregressive polygon decoder",
+        "inputs": [
+          "floorplan image",
+          "anchor coordinates"
+        ],
+        "outputs": [
+          "polygon corner sequences with room/door/window labels"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Learnable spatial anchors improve attention focus on relevant image regions for polygon corner prediction",
+        "result": "Confirmed via SOTA results; method handles complex multi-room layouts effectively"
+      }
+    ]
+  },
+  "hf:2506.01015": {
+    "category": "Vision",
+    "task": "Audio-visual video segmentation via integration with SAM2",
+    "key_results": "Notable accuracy gains on public audio-visual segmentation benchmarks with minimal SAM2 inference overhead; audio-guided contrastive loss reduces audio-prompt dilution",
+    "comments": "Clever pyramid-based audio-visual feature fusion avoids expensive adapter injection but evaluation is vague on actual benchmark numbers and comparison baselines.",
+    "model_io": [
+      {
+        "model": "SAM2 with AuralFuser audio-visual fusion module",
+        "inputs": [
+          "video frame sequence",
+          "audio waveform"
+        ],
+        "outputs": [
+          "segmentation masks for audio-relevant regions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Audio-guided contrastive loss prevents audio signal dilution through network propagation",
+        "result": "Confirmed; dense/sparse prompt generation via feature pyramid preserves cross-modal influence"
+      }
+    ]
+  },
+  "hf:2605.14786": {
+    "category": "Agents/RL",
+    "task": "Fingerprinting LLM-based web agents via UI interaction traces",
+    "key_results": "96% F1 agent model identification from passive JavaScript tracking; classifiers generalize across model sizes/families and recover 80%+ performance when retrained on timing-delayed traces",
+    "comments": "Demonstrates serious fingerprinting vulnerability but mitigation via timing randomization is weak; evaluation limited to 14 models and simple task domains.",
+    "model_io": [
+      {
+        "model": "Action/timing classifier (not detailed)",
+        "inputs": [
+          "UI action sequences",
+          "interaction timings"
+        ],
+        "outputs": [
+          "predicted LLM model identity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Agent behavioral patterns captured in UI traces uniquely identify the underlying LLM model",
+        "result": "Confirmed; up to 96% F1 across frontier models; generalizes to unseen model sizes"
+      },
+      {
+        "hypothesis": "Timing randomization robustly mitigates fingerprinting attacks",
+        "result": "Rejected; retrained classifiers recover most performance even with injected delays"
+      }
+    ]
+  },
+  "hf:2605.07249": {
+    "category": "Benchmark",
+    "task": "Multilingual language-aware information retrieval evaluation",
+    "key_results": "Evaluation of 31 retrievers reveals query-language preference and semantic relevance are distinct behaviors; standard metrics obscure 2-3x accuracy differences when decomposed by language mismatch",
+    "comments": "Thoughtful protocol disentangling language preference from semantics but requires expensive parallel multilingual annotation; limited to ~30 test queries per language pair.",
+    "model_io": [
+      {
+        "model": "Dense, sparse, late-interaction retrieval models",
+        "inputs": [
+          "multilingual query"
+        ],
+        "outputs": [
+          "ranked passages in multiple languages"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Standard IR metrics conflate semantic relevance with query-language preference",
+        "result": "Confirmed; Lang-nDCG and LPR decomposition reveals distinct retriever behaviors missed by nDCG"
+      },
+      {
+        "hypothesis": "Semantically strong retrievers may underperform on language-aware metrics due to cross-lingual returns",
+        "result": "Confirmed; semantic quality and language preference show weak correlation"
+      }
+    ]
+  },
+  "nature:10.1038/s41380-026-03630-3": {
+    "category": "Development",
+    "task": "Establish MSK1-MeCP2 signaling axis in striatal GABAergic neuron development and its role in psychiatric-relevant behaviors",
+    "key_results": "MSK1 mediates BDNF-induced MeCP2 S421 phosphorylation via MAPK/ERK in striatal MSNs; Msk1IV knockout causes striatal volume reduction, altered GABAergic/dopaminergic gene expression, hypersociability, and increased depressive-like behavior",
+    "comments": "Links developmental kinase signaling to adult psychiatric phenotypes via transcriptional co-factor phosphorylation; region-specific MSK1 expression dynamics suggest developmental windows for intervention.",
+    "model_io": [
+      {
+        "model": "Msk1IV knockout mice and cultured striatal neurons",
+        "inputs": [
+          "BDNF",
+          "MAPK/ERK pathway",
+          "MSK1 kinase activity"
+        ],
+        "outputs": [
+          "MeCP2 S421 phosphorylation",
+          "striatal volume",
+          "MSN dendritic complexity",
+          "gene expression (Gad1, Gabrg3, Drd1/2/3)",
+          "social behavior",
+          "depressive-like behavior"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "MSK1-mediated MeCP2 S421 phosphorylation is essential for striatal circuit development and psychiatric-relevant behaviors",
+        "result": "Msk1IV KO reduced striatal volume/MSN complexity and dysregulated GABAergic/dopaminergic genes; behavioral phenotype mirrors MeCP2 dysfunction"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-72573-8": {
+    "category": "Cell Signaling",
+    "task": "Characterize copper-dependent hydrogen peroxide perception mechanism in plant LRR-RLK receptor CARD1/HPCA1",
+    "key_results": "CARD1 harbors a copper ion coordinated by histidine residues on ectodomain surface; copper (not cysteine residues) crucial for H\u2082O\u2082 signaling and ROS/quinone discrimination",
+    "comments": "Novel redox perception mechanism distinct from typical cysteine-based redox sensing; structural basis for discriminating chemically distinct oxidative signals offers insight into RLK signaling specificity.",
+    "model_io": [
+      {
+        "model": "CARD1/HPCA1 receptor structural analysis and plant genetic/biochemical models",
+        "inputs": [
+          "hydrogen peroxide (H\u2082O\u2082)",
+          "quinones",
+          "copper ions",
+          "histidine residues"
+        ],
+        "outputs": [
+          "receptor conformational changes",
+          "Ca\u00b2\u207a signaling",
+          "ROS perception",
+          "quinone perception"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "CARD1-coordinated copper ion is essential for H\u2082O\u2082 signal perception and discrimination from quinone signals",
+        "result": "Copper (not cysteine) required for H\u2082O\u2082-induced responses; copper coordination enables selective redox perception"
+      }
+    ]
+  },
+  "nature:10.1038/s41536-026-00476-9": {
+    "category": "Cell Signaling",
+    "task": "Elucidate mechanosensitive control of post-pneumonectomy endothelial regeneration via paxillin signaling",
+    "key_results": "Paxillin mediates stretch-induced YAP1-TEAD1-GATA2-ANGPT2 axis in CAP1 endothelial cells; collagen VI expression at lung periphery drives paxillin-dependent regeneration",
+    "comments": "Integrates mechanical force sensing with spatial gene regulation during organ regeneration; mechanotransduction appears to polarize EC subtype-specific responses.",
+    "model_io": [
+      {
+        "model": "Mouse unilateral pneumonectomy (PNX) model and cultured endothelial cells",
+        "inputs": [
+          "mechanical stretch",
+          "collagen VI",
+          "paxillin",
+          "YAP1-TEAD1 complex"
+        ],
+        "outputs": [
+          "ANGPT2 transcription",
+          "EC proliferation",
+          "angiogenesis",
+          "regional lung growth"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Paxillin mediates mechanotransduction to activate YAP1-TEAD1-GATA2 signaling in ECs",
+        "result": "Endothelial paxillin deletion suppresses GATA2 and ANGPT2 in CAP1s; mechanical tension inhibition attenuates post-PNX regeneration"
+      }
+    ]
+  },
+  "nature:10.1038/s41573-026-01449-9": {
+    "category": "Apoptosis/Cell Death",
+    "task": "Review context-dependent roles of autophagy in cancer development, progression, and immunotherapy response",
+    "key_results": "Autophagy deficiency promotes malignant transformation; proficient autophagy supports tumor survival under stress; nonspecific pharmacological inhibitors limit therapeutic utility",
+    "comments": "Comprehensive perspective highlighting the challenge of developing autophagy-targeting therapeutics without harming immune effectors; no single therapeutic approach will suffice.",
+    "model_io": [],
+    "hypotheses": [
+      {
+        "hypothesis": "Autophagy inhibition uniformly suppresses cancer and enhances immunotherapy",
+        "result": "Context-dependent outcomes; autophagy functions pleiotropically in tumor and immune cells, confounding one-size-fits-all approaches"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-51659-9": {
+    "category": "Cell Signaling",
+    "task": "Investigate tanshinone IIA suppression of foam cell formation and atherosclerosis via TRPM2-Hedgehog pathway inhibition",
+    "key_results": "Tan IIA reduced aortic plaque areas and serum lipid/inflammatory factors in ApoE\u2212/\u2212 mice; enhanced cholesterol efflux via TRPM2 downregulation and Ca\u00b2\u207a suppression",
+    "comments": "Identifies a mechanistic link between ion channel regulation and lipid metabolism in atherosclerosis; clinical translation requires determination of bioavailability and safety of Tan IIA.",
+    "model_io": [
+      {
+        "model": "ApoE\u2212/\u2212 atherosclerosis mouse model and macrophage cell cultures",
+        "inputs": [
+          "tanshinone IIA",
+          "TRPM2",
+          "Hedgehog ligands",
+          "LDL"
+        ],
+        "outputs": [
+          "plaque area",
+          "foam cell formation",
+          "cholesterol efflux",
+          "Ca\u00b2\u207a influx",
+          "inflammatory cytokines"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Tan IIA suppresses foam cell formation by inhibiting Hedgehog signaling through TRPM2-mediated Ca\u00b2\u207a suppression",
+        "result": "Tan IIA enhanced cholesterol efflux and reduced Hh pathway activity; decreased foam cell numbers and atherosclerotic lesions"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-53336-3": {
+    "category": "Cell Division/Cycle",
+    "task": "Determine immunosuppressive mechanisms of cell-free adipose stem cell extracts on T cell proliferation and cell cycle arrest",
+    "key_results": "ADSC extract superior to ADSC-CCM in inhibiting T cell proliferation and inducing G0/G1 arrest via p21/p27 activation; TGF-\u03b21 and IL-10 key immunoregulatory components",
+    "comments": "Cell-free products offer practical advantages over live cell therapies; mechanism appears to involve non-apoptotic growth suppression, potentially suitable for regenerative/immunomodulatory applications.",
+    "model_io": [
+      {
+        "model": "Adipose tissue-derived stem cell (ADSC) extracts and isolated T lymphocytes",
+        "inputs": [
+          "ADSC extract",
+          "ADSC-CCM",
+          "activated T cells"
+        ],
+        "outputs": [
+          "T cell proliferation",
+          "T regulatory cell expansion",
+          "cell cycle phase (G0/G1)",
+          "p21/p27 levels",
+          "cytokine profile"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "ADSC extract mediates T cell immunosuppression primarily through G0/G1 cell cycle arrest rather than apoptosis",
+        "result": "ADSC extract induced G0/G1 arrest via p21/p27 upregulation and partially IL-10/TGF-\u03b21-dependent inhibition of T cell proliferation"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-53360-3": {
+    "category": "Cell Signaling",
+    "task": "Clarify the role of PI3K/AKT pathway in Bletilla striata polysaccharide-stimulated gingival fibroblast proliferation and migration on titanium",
+    "key_results": "BSPs (800 \u00b5g/mL) significantly increased HGF proliferation (Ki67/PCNA+ cells), migration, and fibronectin/collagen I secretion via PI3K/AKT activation; wortmannin abolished effects",
+    "comments": "Demonstrates polysaccharide bioactivity in implant osseointegration; in vivo validation critical before clinical translation for peri-implant soft tissue regeneration.",
+    "model_io": [
+      {
+        "model": "Primary human gingival fibroblasts (HGF) on titanium surfaces",
+        "inputs": [
+          "Bletilla striata polysaccharides (BSP)",
+          "wortmannin (PI3K inhibitor)",
+          "titanium sheets"
+        ],
+        "outputs": [
+          "cell proliferation (CCK-8, Ki67/PCNA)",
+          "cell migration (scratch/Transwell)",
+          "fibronectin secretion",
+          "collagen I secretion",
+          "cell morphology (SEM)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "BSPs promote HGF proliferation and migration on titanium via PI3K/AKT pathway activation",
+        "result": "BSPs activated PI3K/AKT signaling; wortmannin cotreatment abolished proliferative and migratory effects and pathway activation"
+      }
+    ]
+  },
+  "nature:10.1038/s41698-026-01445-7": {
+    "category": "Cell Signaling",
+    "task": "Elucidate fibroblast-derived HSD11B1 deficiency as a driver of lung cancer in never-smokers via steroid metabolic imbalance",
+    "key_results": "HSD11B1 loss in fibroblasts alters local steroid metabolite balance, promoting lung epithelial cell transformation and growth; linked to early disease progression and poor outcomes",
+    "comments": "Identifies a metabolic gatekeeper distinct from smoking-related pathways; therapeutic potential depends on restoring fibroblast-epithelial metabolic crosstalk without systemic steroid disruption.",
+    "model_io": [
+      {
+        "model": "Genetic/single-cell analyses and functional studies in never-smoker lung cancer models",
+        "inputs": [
+          "fibroblast HSD11B1 knockout",
+          "steroid metabolites"
+        ],
+        "outputs": [
+          "epithelial cell transformation",
+          "tumor growth",
+          "disease progression"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Fibroblast HSD11B1 loss promotes lung epithelial transformation through altered steroid metabolism",
+        "result": "HSD11B1 deficiency in fibroblasts increased lung cancer incidence in never-smokers and accelerated disease progression"
+      }
+    ]
+  },
+  "nature:10.1038/s42003-026-10302-z": {
+    "category": "Cell Division/Cycle",
+    "task": "Link astral microtubule stability to spindle orientation control via cell cycle-regulated phosphorylation",
+    "key_results": "SAPCD2 depletion causes spindle misorientation and mitotic delay; CDK1-phosphorylation at S157/S276 destabilizes astral microtubules",
+    "comments": "Identifies a previously uncharacterized mechanism coupling post-translational modification dynamics to spindle geometry, though the functional rescue attempt with phospho-site mutations was unsuccessful.",
+    "model_io": [
+      {
+        "model": "HeLa and HaCaT cultured cells",
+        "inputs": [
+          "SAPCD2 siRNA",
+          "live-cell imaging",
+          "CDK1 kinase activity"
+        ],
+        "outputs": [
+          "spindle orientation",
+          "mitotic timing",
+          "astral microtubule stability",
+          "cell division fidelity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "SAPCD2 phosphorylation at S157/S276 by CDK1 regulates astral microtubule stability",
+        "result": "Phosphorylation destabilizes microtubules; double phospho-site mutation fails to rescue SAPCD2 depletion phenotype"
+      }
+    ]
+  },
+  "nature:10.1038/s42255-026-01533-9": {
+    "category": "Epigenetics",
+    "task": "Elucidate cardiolipin role in preserving Treg metabolic fitness and gut-immune homeostasis via mitonuclear signaling",
+    "key_results": "PTPMT1 deletion (cardiolipin deficiency) in T cells impairs Treg metabolic fitness and triggers maladaptive integrated stress response, predisposing to colitis; Barth syndrome exhibits similar gastrointestinal pathology",
+    "comments": "Identifies a lipid-mediated mitonuclear axis controlling immune tolerance; pharmacological stress response reversal restored gut homeostasis and extended lifespan, offering therapeutic insight.",
+    "model_io": [
+      {
+        "model": "PTPMT1-deficient T cell mice, Barth syndrome patients, and pathobiont infection models",
+        "inputs": [
+          "cardiolipin-synthesizing enzyme PTPMT1",
+          "T cell metabolic status",
+          "integrated stress response"
+        ],
+        "outputs": [
+          "Treg cell fitness",
+          "colitis development",
+          "inflammatory markers",
+          "lifespan",
+          "gastrointestinal inflammation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Cardiolipin-dependent Treg metabolic fitness preserves gut-immune homeostasis; deficiency triggers stress response and loss of tolerance",
+        "result": "PTPMT1 deletion in T cells impaired Treg function and caused colitis-susceptibility; pharmacological or genetic reversal of integrated stress response restored homeostasis"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-72872-0": {
+    "category": "Single Cell",
+    "task": "Single-cell transcriptome reconstruction from multicellular spatial transcriptomics platforms",
+    "key_results": "Successfully identified immune cell subtypes (CD4/CD8 T cells, CAF subtypes, SPP1+ macrophages) and tertiary lymphoid structures in cancer tissues across three ST platforms",
+    "comments": "STARS leverages Vision Transformer and contrastive learning to bridge resolution gaps across different spatial technologies, enabling downstream cell-type-specific analysis.",
+    "model_io": [
+      {
+        "model": "STARS (Vision Transformer + contrastive learning)",
+        "inputs": [
+          "high-resolution histology images",
+          "spot-level transcriptomics (Visium, Visium HD, Stereo-seq)"
+        ],
+        "outputs": [
+          "single-cell-level gene expression",
+          "cell-type annotations",
+          "tissue-level region assignments"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Vision Transformer can map histology pixels to single cells",
+        "result": "Confirmed; identified immune cells and tissue structures at single-cell resolution"
+      },
+      {
+        "hypothesis": "Integration improves cell-type separation compared to spot-level analysis",
+        "result": "Confirmed; differential expression showed greater accuracy in identifying cell-type-specific markers"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-47463-0": {
+    "category": "Statistical Methods",
+    "task": "Hybrid mRMR and Binary Lion Optimization for cancer microarray feature selection",
+    "key_results": "mRMR-BLO achieved highest prediction accuracy across 11 cancer datasets with smaller feature subsets compared to four binary optimization baselines",
+    "comments": "Two-stage filter-wrapper approach (mRMR pre-filtering followed by BLO optimization) balances dimensionality reduction with classifier performance.",
+    "model_io": [
+      {
+        "model": "mRMR filter + Binary Lion Optimization (BLO) wrapper",
+        "inputs": [
+          "high-dimensional cancer microarray expression data (11 datasets)"
+        ],
+        "outputs": [
+          "optimized feature subset",
+          "classification accuracy/precision/recall/F1/MCC"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Binary LO optimization with S-shaped Transfer Function improves wrapping-based feature selection",
+        "result": "Confirmed; mRMR-BLO outperformed other binary optimization methods"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-52728-9": {
+    "category": "Statistical Methods",
+    "task": "Semi-automated karyotyping and chromosomal anomaly detection via multi-stage deep learning",
+    "key_results": "YOLOv8 achieved 98.03% detection accuracy (mAP@0.5=0.985), 94.01% pair classification; end-to-end accuracy 92.21% (hybrid) and 94.01% (unified); autoencoder unsupervised anomaly screening showed clear separation",
+    "comments": "Stability-aware multi-stage pipeline with upstream morphological QC gate and autoencoder-based anomaly detection demonstrates clinical interpretability without requiring extensive labeled pathological data.",
+    "model_io": [
+      {
+        "model": "YOLOv8 detection + ResNet-50 classification + convolutional autoencoder",
+        "inputs": [
+          "karyotype metaphase images"
+        ],
+        "outputs": [
+          "single-chromosome detection",
+          "homologous-pair assignments",
+          "automated karyotype",
+          "structural anomaly flags"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "YOLOv8 achieves high detection and classification accuracy for 24 chromosome classes",
+        "result": "Confirmed; 98.03% detection and 94.01% classification accuracy"
+      },
+      {
+        "hypothesis": "Autoencoders detect chromosomal anomalies without explicit pathological labels",
+        "result": "Confirmed; clear separation between normal and anomalous reconstruction-error distributions"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-52806-y": {
+    "category": "Genomics",
+    "task": "Identification of GCNT3 as glycometabolism-associated biomarker in endometrial cancer",
+    "key_results": "GCNT3 upregulated in endometrial cancer; high expression associated with improved overall/disease-free survival and lower tumor grade; independent prognostic factor in multivariable Cox regression",
+    "comments": "Integration of pancreatic diabetes datasets with TCGA-UCEC reveals glycometabolic basis linking diabetes risk to EC, with GCNT3 as actionable target.",
+    "model_io": [
+      {
+        "model": "Three ML algorithms (LASSO, SVM-RFE, Random Forest) on multi-omics data",
+        "inputs": [
+          "pancreatic tissue DM datasets (GSE25724, GSE76896, GSE95849)",
+          "TCGA-UCEC RNA-seq",
+          "clinical data",
+          "tissue samples (80 EC, 40 normal)"
+        ],
+        "outputs": [
+          "GCNT3 expression levels",
+          "survival predictions",
+          "immune infiltration signatures",
+          "drug-gene interactions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "High GCNT3 expression confers favorable prognosis in endometrial cancer",
+        "result": "Confirmed; associated with improved survival and lower tumor grade/stage"
+      },
+      {
+        "hypothesis": "GCNT3 expression correlates with differential drug responsiveness",
+        "result": "Confirmed via docking; Afatinib and Selumetinib showed potential binding"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-52891-z": {
+    "category": "Statistical Methods",
+    "task": "Crypto-agile federated learning with post-quantum security for legacy IoMT devices in ICU monitoring",
+    "key_results": "HybridTrust achieved 90.5% anomaly detection accuracy with 0.09\u20130.43 ms quantum-safe cryptographic overhead; supports ECC/ML-KEM-512/hybrid operation for backward compatibility",
+    "comments": "Dynamic crypto-negotiation and hybrid certificate format (931 bytes) enable practical post-quantum transition without sacrificing real-time ICU monitoring performance.",
+    "model_io": [
+      {
+        "model": "HybridTrust: on-device federated TinyML + crypto-agile security",
+        "inputs": [
+          "ICU sensor data (distributed across 5 hospitals)",
+          "dynamic crypto capabilities per device"
+        ],
+        "outputs": [
+          "local anomaly detection models",
+          "federated model aggregation",
+          "cryptographically secure updates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Hybrid ECC\u2013ML-KEM enables secure collaboration between legacy and quantum-safe devices",
+        "result": "Confirmed; framework maintained 90.5% accuracy with minimal latency overhead"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-53179-y": {
+    "category": "Genomics",
+    "task": "Genome-wide identification of YTH domain-containing RNA-binding proteins in maize under abiotic stress",
+    "key_results": "22 ZmYTH genes identified across 10 chromosomes; 10 genes differentially expressed under drought/salt/heat; ZmYTH1 and ZmYTH3 consistently induced; 31 cis-regulatory elements involved in stress/hormonal responses",
+    "comments": "Integration of phylogenetic, expression, and promoter analysis reveals YTH family role in post-transcriptional m6A regulation during stress adaptation.",
+    "model_io": [
+      {
+        "model": "Comparative genomics + expression profiling + promoter analysis",
+        "inputs": [
+          "maize genome sequences",
+          "RNA-seq under drought/salt/heat stress",
+          "promoter sequences"
+        ],
+        "outputs": [
+          "YTH gene family annotation",
+          "phylogenetic groupings",
+          "stress-responsive expression profiles",
+          "cis-regulatory elements"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "YTH genes are differentially expressed under abiotic stress conditions",
+        "result": "Confirmed; 10 of 22 genes showed stress-specific expression patterns"
+      },
+      {
+        "hypothesis": "Segmental and whole-genome duplication drove YTH family expansion in maize",
+        "result": "Confirmed; duplication analysis identified segmental and WGD events"
+      }
+    ]
+  },
+  "nature:10.1038/s41534-026-01264-5": {
+    "category": "Other",
+    "task": "Quantum key distribution security with source and detector imperfections via phase-error estimation",
+    "key_results": "First finite-key security proof against coherent attacks simultaneously handling source and detector imperfections via modular lifting theorem",
+    "comments": "Theoretical contribution extending BB84-type protocols; practical implications for real-world QKD deployments with hardware flaws.",
+    "model_io": [],
+    "hypotheses": [
+      {
+        "hypothesis": "Modular lifting theorem extends phase-error proofs to incorporate detector efficiency mismatches without infinite rounds",
+        "result": "Finite-key security proof combining source and detector imperfections achieved"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-49814-3": {
+    "category": "Algorithms",
+    "task": "Multi-strategy self-adaptive Rime Optimization with image segmentation application",
+    "key_results": "MSRIME achieves best mean rankings 1.93 (CEC2017 30D) and 1.77 (CEC2017 100D); multilevel image segmentation outperforms in PSNR, SSIM, FSIM",
+    "comments": "Heterogeneous strategy pool with adaptive selection is sound; Friedman test validates statistical superiority across benchmark suites.",
+    "model_io": [
+      {
+        "model": "MSRIME (multi-strategy with adaptive differential mutation)",
+        "inputs": [
+          "CEC2017/CEC2022 benchmark functions",
+          "image datasets"
+        ],
+        "outputs": [
+          "optimization solutions",
+          "segmented images"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Dynamic strategy allocation and differential mutation improve convergence and robustness on complex optimization landscapes",
+        "result": "Best Friedman rankings (1.93, 1.77) on CEC2017; superior image segmentation quality"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-51032-w": {
+    "category": "Algorithms",
+    "task": "Inverse kinematics optimization for 6-DOF surgical robot under unified constrained framework",
+    "key_results": "ACO-B&B-SQP pipeline achieves lowest mean path error on planar and spatial trajectories; SQP remains fastest; unified evaluation framework established",
+    "comments": "Comparative study of six optimization methods (SQP, B&B, ACO, hybrids) on Viper 650s; statistical summaries support robustness assessment.",
+    "model_io": [
+      {
+        "model": "Six IK solvers: SQP, B&B, ACO, ACO-SQP, B&B-SQP, ACO-B&B-SQP",
+        "inputs": [
+          "target poses (planar triangle, spatial helix)"
+        ],
+        "outputs": [
+          "joint configurations for path following"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Three-stage hybrid ACO-B&B-SQP pipeline balances global exploration and local refinement for accurate surgical robot IK",
+        "result": "Lowest mean path error on both trajectories; ACO-B&B-SQP superior despite SQP speed advantage"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-52557-w": {
+    "category": "ML Theory",
+    "task": "UAV dam crack detection via enhanced YOLOv12 with adaptive transformer and multi-scale inference",
+    "key_results": "HiResDC-YOLO surpasses existing methods in precision, recall, and mAP on dam crack dataset; multi-scale inference dramatically accelerates processing; maintains detection of miniature cracks",
+    "comments": "ADyT module and MSCA capture multi-scale context; HiResInfer strategy balances high-resolution integrity and computational efficiency.",
+    "model_io": [
+      {
+        "model": "HiResDC-YOLO (YOLOv12 + ADyT + MSED + MSCA + HiResInfer)",
+        "inputs": [
+          "high-resolution UAV dam imagery"
+        ],
+        "outputs": [
+          "dam crack detections (bounding boxes)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Adaptive transformers + multi-scale detection + region-guided inference improve miniature crack detection on full-resolution UAV images",
+        "result": "State-of-the-art mAP; high precision/recall; real-time inference without target integrity loss"
+      }
+    ]
+  },
+  "nature:10.1038/s41524-026-02129-3": {
+    "category": "Condensed Matter",
+    "task": "Altermagnetic magnon splitting in RFeO\u2083 orthoferrites via symmetry and strain control",
+    "key_results": "Non-relativistic exchange interactions induce chiral magnon splitting generating transverse spin current; DMI and altermagnetic contributions coexist independently; anisotropic strain enables tunable magnon band splitting",
+    "comments": "First-principles study is comprehensive but experimental magnon spectroscopy (INS) validation essential; dissipationless magnon current claims require confirmation.",
+    "model_io": [
+      {
+        "model": "RFeO\u2083 spin Hamiltonian and DFT",
+        "inputs": [
+          "rare-earth type",
+          "strain parameters"
+        ],
+        "outputs": [
+          "magnon band structure",
+          "magnon splitting",
+          "spin current"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Non-relativistic altermagnetic interactions dominate magnon splitting; strain modulates splitting via rare-earth displacement",
+        "result": "Confirmed via first-principles; DMI and altermagnetic contributions interact weakly and independently"
+      }
+    ]
+  },
+  "nature:10.1038/s41524-026-02131-9": {
+    "category": "Mathematical Physics",
+    "task": "Physics-informed graph neural network for crystal property prediction",
+    "key_results": "AtomNet integrates physicochemical attributes into crystal graph representations via multi-edge GNN; superior performance on standard benchmarks; integrated gradients quantify attribute contributions",
+    "comments": "Framework is methodologically sound but paper lacks specific quantitative benchmark comparisons; universal applicability claim requires more diverse validation datasets.",
+    "model_io": [
+      {
+        "model": "AtomNet multi-edge GNN",
+        "inputs": [
+          "crystal structure",
+          "physicochemical attributes",
+          "electronegativity differences"
+        ],
+        "outputs": [
+          "crystal property predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Joint modeling of multiple physicochemical attributes via enhanced graph representations improves property prediction",
+        "result": "Confirmed; superior performance demonstrated on benchmarks"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-51122-9": {
+    "category": "Optics/Photonics",
+    "task": "6G-oriented secure bidirectional key exchange using graphene-assisted terahertz physical layer",
+    "key_results": "Dual-layer graphene metasurface at 1 THz with >30 GHz electro-optic bandwidth; BER <10\u207b\u00b3 at 10 dB SNR; security analysis under Dolev\u2013Yao model confirms resistance to passive and active attacks",
+    "comments": "Novel integration of THz and cryptography, but security proof is informal; practical implementation at 1 THz faces significant engineering challenges not addressed.",
+    "model_io": [
+      {
+        "model": "Graphene-assisted THz secure key exchange",
+        "inputs": [
+          "THz waveform",
+          "BPSK modulation",
+          "Diffie-Hellman parameters",
+          "AWGN"
+        ],
+        "outputs": [
+          "shared secret key",
+          "Bell parameter violation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "THz physical-layer modulation with graphene metasurfaces enables secure key exchange resistant to Dolev\u2013Yao attacks",
+        "result": "Partially confirmed; simulation shows reliable key agreement but experimental THz implementation not demonstrated"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-52355-4": {
+    "category": "Astrophysics/Cosmology",
+    "task": "L-histidine photostability on nontronite under Martian UV irradiation",
+    "key_results": "L-histidine intercalates into nontronite interlayer at acidic pH with minor degradation post-UV; polymolecular layers at basic pH show no degradation; nontronite acts as photoprotective mineral",
+    "comments": "Addresses Mars organic detection relevance convincingly; however, Mars-simulated conditions (pressure, temperature) only partially replicated; broader amino acid screening would strengthen astrobiology implications.",
+    "model_io": [
+      {
+        "model": "Nontronite mineral with adsorbed L-histidine",
+        "inputs": [
+          "L-histidine",
+          "pH",
+          "Martian-like UV radiation"
+        ],
+        "outputs": [
+          "molecular degradation state",
+          "mineral-organic interactions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Nontronite provides photoprotection to L-histidine under Martian-like UV exposure",
+        "result": "Confirmed; intercalation at acidic pH and polymolecular layers at basic pH both preserve histidine"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-52711-4": {
+    "category": "Optics/Photonics",
+    "task": "Optical cavity mechanism clarification in superconducting strip single photon detectors",
+    "key_results": "Analytical formulae derived for absorptance via transmission line model; impedance model shows maximum absorptance at impedance matching; results match numerical simulations",
+    "comments": "Provides theoretical clarity on cavity design principles applicable to multiple superconducting detector types; lacks experimental validation of predicted absorptance enhancement.",
+    "model_io": [
+      {
+        "model": "SSPD with optical cavities",
+        "inputs": [
+          "incident photons",
+          "cavity configuration (single/double-side, multi-layer dielectric)"
+        ],
+        "outputs": [
+          "absorptance",
+          "input impedance"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Maximum absorptance in SSPDs with optical cavities occurs when input impedance matches medium impedance",
+        "result": "Confirmed via impedance model; transmission line model yields analytical formulae matching simulations"
+      }
+    ]
   }
 }
