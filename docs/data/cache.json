@@ -191320,5 +191320,999 @@
         "result": "Confirmed; explains both C = \u22123 and C = \u22125 QAH states"
       }
     ]
+  },
+  "hf:2605.18749": {
+    "category": "Generative",
+    "task": "High-fidelity audio generation directly in waveform space",
+    "key_results": "VGGSound FD_PaSST: 59.98, AudioCaps FD_PANNs: 10.63, matching latent-based methods without intermediate compression",
+    "comments": "Eliminates latent-space bottlenecks but requires careful signal conditioning via patchification and amplitude lifting to handle low-energy waveforms.",
+    "model_io": [
+      {
+        "model": "WavFlow (flow matching)",
+        "inputs": [
+          "video frames",
+          "text descriptions"
+        ],
+        "outputs": [
+          "raw waveform audio"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Direct waveform generation without latent compression can match latent-based methods",
+        "result": "Confirmed on VGGSound and AudioCaps benchmarks"
+      }
+    ]
+  },
+  "hf:2605.18106": {
+    "category": "Systems",
+    "task": "Optimizer design respecting symmetry and equivariance properties of neural network layers",
+    "key_results": "Symmetry-compatible updates consistently improve validation loss over AdamW across dense and sparse MoE models; improved training stability in several cases",
+    "comments": "Principled framework bridging abstract symmetry theory and practical optimizer implementation, though benefits appear incremental rather than transformative.",
+    "model_io": [
+      {
+        "model": "Symmetry-compatible optimizer stack",
+        "inputs": [
+          "weight blocks with different symmetry structures (embeddings, LM heads, SwiGLU, MoE routers)"
+        ],
+        "outputs": [
+          "equivariant gradient updates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Optimizer updates should be equivariant under the symmetry group of their parameter blocks",
+        "result": "Confirmed; custom updates for embeddings, LM heads, SwiGLU, and MoE routers outperform coordinate-wise AdamW"
+      }
+    ]
+  },
+  "hf:2605.18727": {
+    "category": "Agents/RL",
+    "task": "Benchmark for dexterous manipulation and embodied perception in Texas Hold'em card game",
+    "key_results": "\u03c0\u2080.\u2085 achieves 61.2% task completion on primitives, 47.5% scene-preserving success; Claude Opus achieves 34.3% strict perception accuracy, GPT-4o 66.8% field-wise accuracy",
+    "comments": "Well-designed benchmark exposing a critical gap between isolated perception capabilities and end-to-end embodied task execution; closed-loop failure modes highly informative.",
+    "model_io": [
+      {
+        "model": "ShadowHand + vision + policy agent",
+        "inputs": [
+          "tabletop scene images",
+          "game state context"
+        ],
+        "outputs": [
+          "primitive actions (card manipulation)",
+          "game state predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Frontier vision models can reliably recover game state from tabletop images for embodied decision making",
+        "result": "Partially confirmed; strong field-level accuracy (66.8%) but only 34.3% strict problem-level accuracy, indicating brittleness in routing-relevant state recovery"
+      }
+    ]
+  },
+  "hf:2605.17757": {
+    "category": "Systems",
+    "task": "2-bit KV-cache quantization for long-context LLM inference",
+    "key_results": "On Qwen3-4B/8B: reduces BF16 gap to 3.78/1.42 points; 8x memory reduction, 7x throughput improvement at large batch sizes, 3x speedup for batch-size-1 decoding",
+    "comments": "Attention-aware covariance alignment is the key insight; naive rotations collapse, but principled offline estimation + custom INT2 kernels enable practical deployment.",
+    "model_io": [
+      {
+        "model": "OSCAR (covariance-aware rotation + INT2 quantization)",
+        "inputs": [
+          "BF16 KV cache",
+          "attention patterns"
+        ],
+        "outputs": [
+          "INT2 quantized KV cache"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "KV quantization aligned with attention covariance structures outperforms naive rotations for INT2",
+        "result": "Confirmed; OSCAR remains robust to 128K context while naive INT2 collapses"
+      }
+    ]
+  },
+  "hf:2605.18630": {
+    "category": "Benchmark",
+    "task": "Multi-turn clarification for scientific task formulation in computational domains",
+    "key_results": "Best model resolves only 52.7% of disambiguation cases in fluid mechanics; frontier LLMs resolve inconsistencies well but make silent assumptions and ungrounded repairs",
+    "comments": "Identifies a crucial upstream capability (task clarification) often overlooked in scientific AI evaluation; conversational grounding remains a significant weakness.",
+    "model_io": [
+      {
+        "model": "Frontier LLMs (Claude, GPT series)",
+        "inputs": [
+          "ill-posed scientific task descriptions",
+          "multi-turn user clarifications"
+        ],
+        "outputs": [
+          "clarification questions",
+          "final task specifications"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Frontier LLMs can reliably disambiguate and resolve inconsistencies in ill-posed scientific tasks through dialogue",
+        "result": "Partially confirmed; strong on inconsistency resolution (~70%+) but weak on disambiguation; grounding of assumed information problematic"
+      }
+    ]
+  },
+  "nature:10.1038/s41419-026-08863-2": {
+    "category": "Cell Signaling",
+    "task": "Define E2F8-WWP1-TSC1-mTORC1 axis in lung adenocarcinoma progression",
+    "key_results": "E2F8 upregulated in LUAD and associated with adverse prognosis; E2F8 activated WWP1-mediated TSC1 K48-linked polyubiquitination and degradation, sustaining mTORC1; WWP1 inhibition with I3C suppressed xenograft growth",
+    "comments": "The mechanistic dissection of E2F8-driven mTORC1 activation through WWP1-TSC1 is elegant, and the I3C-based pharmacologic validation provides a potential therapeutic lead.",
+    "model_io": [
+      {
+        "model": "PC-9 and H1975 LUAD cells",
+        "inputs": [
+          "E2F8 overexpression/silencing",
+          "WWP1 expression",
+          "TSC1 protein"
+        ],
+        "outputs": [
+          "proliferation",
+          "clonogenicity",
+          "migration",
+          "mTORC1 signaling (p-mTOR, p-S6K1, p-4EBP1)"
+        ]
+      },
+      {
+        "model": "HCT116 xenograft mouse model",
+        "inputs": [
+          "E2F8/WWP1 activation",
+          "I3C (WWP1 inhibitor)"
+        ],
+        "outputs": [
+          "xenograft growth",
+          "TSC1 abundance",
+          "mTORC1 pathway readouts"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "E2F8 activates mTORC1 via WWP1-mediated TSC1 degradation to promote LUAD progression",
+        "result": "Confirmed; E2F8 upregulated WWP1, which polyubiquitinated TSC1, sustaining mTORC1 activation; I3C reversed this"
+      }
+    ]
+  },
+  "nature:10.1038/s41420-025-02921-y": {
+    "category": "Apoptosis/Cell Death",
+    "task": "Review copper homeostasis and cuproptosis mechanisms in orthopedic diseases",
+    "key_results": "Copper accumulation triggers cuproptosis via oxidative stress, mitochondrial dysfunction, and apoptosis; cuproptosis-related genes (CRGs) function as diagnostic markers and therapeutic targets; natural antioxidants and exosomal miRNAs proposed as therapeutic strategies",
+    "comments": "This review highlights the therapeutic potential of modulating cuproptosis while preserving physiologic copper functions, but achieving this balance clinically remains a significant challenge.",
+    "model_io": [],
+    "hypotheses": [
+      {
+        "hypothesis": "Copper accumulation triggers cuproptosis through oxidative stress and mitochondrial dysfunction in orthopedic diseases",
+        "result": "Proposed; cuproptosis linked to OA, RA, OS, and OP pathology via CRGs and oxidative mechanisms"
+      }
+    ]
+  },
+  "nature:10.1038/s41420-026-03143-6": {
+    "category": "Cell Signaling",
+    "task": "Suppress pyroptosis in sepsis-induced acute kidney injury",
+    "key_results": "MSC-sEV delivering miR-125a-5p significantly ameliorated renal damage and improved survival rates; engineered MSC-sEV with EXOMotif GGAG enhanced miR-125a-5p delivery and TNFR2 inhibition",
+    "comments": "The mechanism elegantly links miRNA delivery to pyroptosis suppression via NF-\u03baB/NLRP3 pathway modulation, though clinical translation remains uncertain.",
+    "model_io": [
+      {
+        "model": "in vivo S-AKI model (sepsis-induced acute kidney injury)",
+        "inputs": [
+          "MSC-sEV",
+          "miR-125a-5p"
+        ],
+        "outputs": [
+          "renal damage markers",
+          "survival rate",
+          "TNFR2 expression",
+          "TNF-driven pyroptosis"
+        ]
+      },
+      {
+        "model": "renal tubular epithelial cells (in vitro)",
+        "inputs": [
+          "MSC-sEV",
+          "miR-125a-5p",
+          "TNF-\u03b1"
+        ],
+        "outputs": [
+          "pyroptosis markers",
+          "NF-\u03baB/NLRP3 pathway activation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "MSC-sEV deliver miR-125a-5p to inhibit TNFR2 and block TNF-driven pyroptosis",
+        "result": "Confirmed; MSC-sEV internalized by renal cells and suppressed pyroptosis via NF-\u03baB/NLRP3 pathway"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-72656-6": {
+    "category": "Cell Division/Cycle",
+    "task": "Elucidate HORMA domain protein structural mobility in meiotic chromosome organization",
+    "key_results": "Second mobile region \u03b25-\u03b1C loop identified in mHORMADs; \u03b25-\u03b1C loop/safety belt interplay controls specialization of C. elegans HTP-1 and HTP-2; \u03b25-\u03b1C loop-HORMA core interaction conserved across species",
+    "comments": "This structural work elegantly expands the bimodal folding paradigm first identified in Mad2, though in vivo validation of the \u03b25-\u03b1C loop mechanism across species could be strengthened.",
+    "model_io": [
+      {
+        "model": "C. elegans mHORMAD paralogs (HTP-1, HTP-2, HTP-3)",
+        "inputs": [
+          "\u03b25-\u03b1C loop mutations",
+          "safety belt mutations"
+        ],
+        "outputs": [
+          "axis loading",
+          "closure motif binding",
+          "chromosome pairing/recombination"
+        ]
+      },
+      {
+        "model": "molecular dynamics simulations",
+        "inputs": [
+          "HORMA domain structure",
+          "\u03b25-\u03b1C loop dynamics"
+        ],
+        "outputs": [
+          "conformational energy landscape",
+          "safety belt dynamics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "\u03b25-\u03b1C loop controls mHORMAD functional specialization through interactions with HORMA core",
+        "result": "Confirmed; \u03b25-\u03b1C loop mutations impaired closure motif binding and axis loading in vivo"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-72974-9": {
+    "category": "Cell Signaling",
+    "task": "Identify lymphatic dysfunction in atrial fibrillation pathogenesis",
+    "key_results": "Epicardial adipose tissue secretes kynurenic acid, which via GPR35 impairs lymphatic endothelial cell metabolism and promotes EndMT; decreased atrial lymphatic vessel density in AF patients; VEGFC and LY3437943 interventions attenuated AF inducibility",
+    "comments": "The identification of a novel adipose-lymphatic-cardiac axis in AF is mechanistically interesting, though the causal relationship between lymphatic dysfunction and arrhythmia severity requires further validation.",
+    "model_io": [
+      {
+        "model": "human left atrial appendage (ex vivo)",
+        "inputs": [
+          "tissue from AF vs. sinus rhythm patients"
+        ],
+        "outputs": [
+          "lymphatic vessel density"
+        ]
+      },
+      {
+        "model": "lymphatic endothelial cells (in vitro)",
+        "inputs": [
+          "kynurenic acid",
+          "GPR35 signaling"
+        ],
+        "outputs": [
+          "cell metabolism",
+          "mitochondrial homeostasis",
+          "EndMT markers"
+        ]
+      },
+      {
+        "model": "AngII-induced AF mouse model",
+        "inputs": [
+          "VEGFC",
+          "LY3437943 weight loss therapy"
+        ],
+        "outputs": [
+          "lymphangiogenesis",
+          "AF inducibility"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Epicardial adipose tissue-derived kynurenic acid impairs lymphatic endothelial cell function via GPR35",
+        "result": "Confirmed; kynurenic acid disrupted metabolism and promoted EndMT; lymphatic dysfunction increased AF susceptibility"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-73292-w": {
+    "category": "Development",
+    "task": "Elucidate TGF\u03b2-mediated dural cell migration in coronal suture development",
+    "key_results": "Dural cell migration into coronal suture regulated by TGF\u03b2 signaling to Tgfbr2+ cells; Tgfbr2 loss impaired migration and caused premature fusion; restoring TGF\u03b2 signaling rescued patency in Twist1+/- syndromic mice",
+    "comments": "This work elegantly identifies a novel developmental mechanism explaining preferential coronal suture involvement in syndromic craniosynostosis and provides therapeutic validation.",
+    "model_io": [
+      {
+        "model": "postnatal coronal suture development (in vivo)",
+        "inputs": [
+          "TGF\u03b2 signaling",
+          "dural cells",
+          "Tgfbr2 expression"
+        ],
+        "outputs": [
+          "lineage transition",
+          "Gli1+ progenitor pool",
+          "suture patency/fusion status"
+        ]
+      },
+      {
+        "model": "Twist1+/- syndrome mouse model",
+        "inputs": [
+          "TGF\u03b2 signaling restoration"
+        ],
+        "outputs": [
+          "coronal suture patency",
+          "decorin levels"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "TGF\u03b2 signaling to dural Tgfbr2+ cells regulates migration into the suture mesenchyme",
+        "result": "Confirmed; Tgfbr2 loss impaired migration and caused fusion; upregulated decorin in Twist1+/- disrupts this pathway"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-73293-9": {
+    "category": "Development",
+    "task": "Define RANK signaling in intestinal epithelial specialization and immune regulation",
+    "key_results": "RANK deficiency reduced tuft and BEST4 cell abundance and increased goblet cells; RANK-mediated BEST4+ cell expansion following Vibrio cholerae infection; RANK deficiency enhanced pathogen susceptibility",
+    "comments": "The work elegantly connects a developmental signaling pathway to immune defense, though the relative contributions of tuft versus BEST4 cells to anti-pathogen immunity could be dissected further.",
+    "model_io": [
+      {
+        "model": "zebrafish intestinal epithelium",
+        "inputs": [
+          "RANK signaling"
+        ],
+        "outputs": [
+          "tuft cell subtypes",
+          "BEST4 cell frequency",
+          "goblet cell abundance",
+          "leukocyte infiltration"
+        ]
+      },
+      {
+        "model": "Vibrio cholerae infection (in vivo)",
+        "inputs": [
+          "RANK function"
+        ],
+        "outputs": [
+          "BEST4 marker (cftr) expression",
+          "pathogen colonization",
+          "host defense"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "RANK signaling promotes tuft and BEST4 cell development to regulate intestinal immune responses",
+        "result": "Confirmed; RANK deficiency reduced these cell types and increased pathogen susceptibility"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-73514-1": {
+    "category": "Organelles",
+    "task": "Identify lipid transport proteins at chloroplast envelope-thylakoid interface",
+    "key_results": "Identified TVPFP, PMFP, and LETM1-LIKE proteins in intermediate-density membrane fraction; loss-of-function mutants exhibited altered thylakoid-envelope proximity and disrupted membrane architecture",
+    "comments": "The discovery of contact site homologs in chloroplasts expands understanding of inter-organellar communication, though functional validation of lipid transport remains incomplete.",
+    "model_io": [
+      {
+        "model": "chloroplast membrane fractions (proteomic profiling)",
+        "inputs": [
+          "membrane domains",
+          "lipid metabolic proteins"
+        ],
+        "outputs": [
+          "candidate lipid transporters",
+          "contact site homologs"
+        ]
+      },
+      {
+        "model": "tvpfp/pmfp loss-of-function mutants",
+        "inputs": [
+          "genetic deletion"
+        ],
+        "outputs": [
+          "chloroplast ultrastructure",
+          "thylakoid-envelope proximity",
+          "membrane organization"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "TVPFP and PMFP maintain chloroplast membrane architecture and facilitate lipid transport",
+        "result": "Supported; loss-of-function mutants showed altered thylakoid-envelope proximity and disrupted organization"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-52267-3": {
+    "category": "Cell Signaling",
+    "task": "Demonstrate high glucose sensitization of neurons to oxidative and neurotoxic damage",
+    "key_results": "High glucose (100 mM, 120 h) reduced viability in concentration- and time-dependent manner; HG increased oxidative DNA damage, mitochondrial superoxide, and apoptosis with reduced OGG1 expression; combined HG+H2O2 or HG+OA further decreased viability",
+    "comments": "The study links hyperglycemia to neuronal vulnerability through oxidative stress and DNA damage mechanisms relevant to diabetic neurodegeneration, though the chronic exposure conditions may not fully recapitulate in vivo diabetes pathology.",
+    "model_io": [
+      {
+        "model": "SH-SY5Y differentiated neuron-like cells",
+        "inputs": [
+          "high glucose (100 mM)",
+          "hydrogen peroxide",
+          "okadaic acid"
+        ],
+        "outputs": [
+          "cell viability",
+          "DNA damage (OGG1 expression)",
+          "mitochondrial ROS",
+          "apoptosis",
+          "cell cycle distribution"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "High glucose increases neuronal vulnerability to oxidative and neurotoxic insults via DNA damage and mitochondrial dysfunction",
+        "result": "Confirmed; HG reduced viability, increased oxidative DNA damage and mitochondrial ROS; combined stressors further exacerbated damage"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-52405-x": {
+    "category": "Apoptosis/Cell Death",
+    "task": "Determine silicon-based agent alleviation of intestinal ischemia/reperfusion injury via ferroptosis inhibition",
+    "key_results": "Silicon-based agent generated H2 in intestinal alkaline environment; Si-based agent activated AMPK-Sirt1 pathway, suppressed ferroptosis, reduced apoptosis, and ameliorated II/R injury; hydrogen mediates ferroptosis inhibition",
+    "comments": "The AMPK-Sirt1-ferroptosis axis is well-characterized, though the pharmacokinetics of silicon-based H2 generation in clinical settings requires careful optimization.",
+    "model_io": [
+      {
+        "model": "mouse II/R injury model (in vivo)",
+        "inputs": [
+          "silicon-based agent",
+          "AMPK agonists/inhibitors",
+          "ferroptosis inhibitors"
+        ],
+        "outputs": [
+          "histopathology",
+          "apoptosis markers",
+          "oxidative stress",
+          "ferroptosis markers",
+          "AMPK-Sirt1 pathway activation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Silicon-based agent generates H2 to inhibit ferroptosis via AMPK-Sirt1 pathway activation",
+        "result": "Confirmed; Si-based agent activated AMPK-Sirt1, suppressed ferroptosis, and ameliorated II/R injury"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-52669-3": {
+    "category": "Cell Signaling",
+    "task": "Elucidate stress-induced CBS inhibition and hyperhomocysteinemia mechanism",
+    "key_results": "Stress-induced E/NE activated \u03b2-adrenergic receptors, elevating IL-6, which suppressed CBS activity via IL-6/NF-\u03baB/Sp3-mediated Cbs transcriptional repression; IL-6 treatment reduced Cbs mRNA 1-hour post-exposure",
+    "comments": "The study provides a mechanistic link between catecholamine signaling and homocysteine metabolism, though the clinical relevance of the IL-6 timescale remains to be determined.",
+    "model_io": [
+      {
+        "model": "restraint-stressed rats (in vivo)",
+        "inputs": [
+          "stress stimulus"
+        ],
+        "outputs": [
+          "epinephrine/norepinephrine",
+          "serum IL-6",
+          "hepatic CBS activity/expression",
+          "plasma homocysteine"
+        ]
+      },
+      {
+        "model": "rat primary hepatocytes (in vitro)",
+        "inputs": [
+          "IL-6 treatment"
+        ],
+        "outputs": [
+          "CBS activity",
+          "Cbs mRNA expression",
+          "Sp3-mediated transcriptional repression",
+          "NF-\u03baB activation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Stress-induced E/NE upregulates IL-6 to suppress CBS via IL-6/NF-\u03baB/Sp3 pathway",
+        "result": "Confirmed; IL-6 suppressed CBS activity and Cbs mRNA via NF-\u03baB-potentiated Sp3-mediated repression"
+      }
+    ]
+  },
+  "nature:10.1038/s42003-026-10272-2": {
+    "category": "Cell Division/Cycle",
+    "task": "Identify MYPOP as a selective tumor cell growth suppressor",
+    "key_results": "MYPOP re-expression suppressed cervical cancer cell proliferation and induced G1/S-phase arrest; broadly diminished MYPOP expression across multiple human cancers; re-expression spared normal keratinocytes",
+    "comments": "The selectivity for cancer cells over normal cells is promising, though the precise mechanistic basis beyond MYC silencing and IL-24 release remains incompletely defined.",
+    "model_io": [
+      {
+        "model": "HPV-transformed cervical cancer cells",
+        "inputs": [
+          "MYPOP expression"
+        ],
+        "outputs": [
+          "cell morphology changes",
+          "E6/MYC silencing",
+          "IL-24 release",
+          "G1/S-phase arrest",
+          "apoptosis"
+        ]
+      },
+      {
+        "model": "mouse cancer cells with murine Mypop",
+        "inputs": [
+          "Mypop expression"
+        ],
+        "outputs": [
+          "cell growth inhibition"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "MYPOP acts as a tumor suppressor by inducing cell cycle arrest and apoptosis",
+        "result": "Confirmed; MYPOP induced G1/S arrest, apoptosis, and selective tumor cell growth suppression across multiple cancer types"
+      }
+    ]
+  },
+  "nature:10.1038/s42003-026-10331-8": {
+    "category": "Cell Signaling",
+    "task": "Characterize mechanical stress-mediated lipid metabolic reprogramming in fibroblasts",
+    "key_results": "Mechanical stretch elicits multi-layered lipid metabolic responses with post-translational regulation predominant; shift from fatty acids to ganglioside observed; critical mechanosensitive genes identified",
+    "comments": "The multi-omics approach is comprehensive, but the functional consequences of the fatty acid-to-ganglioside shift in fibrosis pathogenesis remain to be determined.",
+    "model_io": [
+      {
+        "model": "human cavernous fibroblasts under mechanical stretch",
+        "inputs": [
+          "mechanical force",
+          "extracellular matrix"
+        ],
+        "outputs": [
+          "transcriptomics",
+          "translation (Ribo-seq)",
+          "proteomics",
+          "lipidomics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Mechanical force reprograms lipid metabolism from fatty acids to gangliosides via post-translational mechanisms",
+        "result": "Confirmed; mechanical stretch induced lipid metabolic shift; post-translational regulation predominant"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10652-y": {
+    "category": "Other",
+    "task": "Autonomous multi-agent system for hypothesis generation and experimental design in biomedical discovery",
+    "key_results": "Robin identified ripasudil and KL001 as therapeutic candidates for dry AMD; proposed and validated ABCA1 upregulation mechanism via RNA-seq; all hypotheses and analyses autonomously generated",
+    "comments": "Remarkable proof-of-concept for AI-driven discovery but limited scope to single disease; reproducibility and long-term reliability require further validation.",
+    "model_io": [
+      {
+        "model": "Robin multi-agent system (literature search + data analysis agents)",
+        "inputs": [
+          "literature corpus",
+          "experimental data (transcriptomics, cell viability assays)"
+        ],
+        "outputs": [
+          "hypotheses",
+          "proposed experiments",
+          "interpreted results",
+          "updated hypotheses",
+          "therapeutic candidates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Enhancing retinal pigment epithelium phagocytosis is a viable therapeutic strategy for dry AMD",
+        "result": "Ripasudil and KL001 confirmed to upregulate phagocytosis in vitro"
+      },
+      {
+        "hypothesis": "Ripasudil exerts therapeutic benefit through upregulation of ABCA1",
+        "result": "RNA-seq revealed ABCA1 upregulation; identified as novel potential target"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-53242-8": {
+    "category": "Structural Prediction",
+    "task": "Longitudinal brain tumor segmentation with temporal attention and spatial consistency",
+    "key_results": "TST-Net achieves 86.0% Dice (tumor), 88.0% (core), 91.0% (overall) on BraTS longitudinal data; temporal attention reduces follow-up inconsistencies",
+    "comments": "Temporal information improves segmentation consistency but modest gains over baselines; mechanism of temporal dependency capture not fully analyzed.",
+    "model_io": [
+      {
+        "model": "Temporal-Spatial Transformer Network (TST-Net)",
+        "inputs": [
+          "longitudinal MRI sequences (time-aligned)"
+        ],
+        "outputs": [
+          "temporally consistent tumor segmentations",
+          "tumor core delineations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Temporal attention across successive MRI scans integrates progression-aware information improving segmentation consistency",
+        "result": "TST-Net outperformed single-timepoint methods; temporal dimension reduces inter-scan variability"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-54050-w": {
+    "category": "Structural Prediction",
+    "task": "Parkinson's Disease MRI classification via prototype-guided deformable memory transformer",
+    "key_results": "Proto-MemFormer achieves 93.45% accuracy, 93.46% F1-score, 94.81% AUC on NTUA-Parkinson dataset; <3% performance fluctuation across hyperparameters",
+    "comments": "Strong performance and stability but limited cross-dataset external validation; mechanism of feature alignment not fully elucidated.",
+    "model_io": [
+      {
+        "model": "Proto-MemFormer (prototype-guided memory + deformable attention + position-calibrated retrieval)",
+        "inputs": [
+          "MRI images from Parkinson's patients and controls"
+        ],
+        "outputs": [
+          "disease classification",
+          "discriminative representations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Prototype-guided memory mechanism with deformable attention improves feature aggregation and tumor/lesion detection",
+        "result": "Achieved state-of-the-art performance on two public datasets with high stability"
+      }
+    ]
+  },
+  "nature:10.1038/s41698-026-01488-w": {
+    "category": "Proteomics",
+    "task": "Review of ubiquitination\u2013PTM crosstalk in cancer immunity and therapeutic opportunities",
+    "key_results": "Ubiquitination synergistically/competitively regulates immune checkpoint stability (PD-L1); PTM-targeting strategies (PROTACs, inhibitors, peptides) offer approaches to overcome immunotherapy resistance",
+    "comments": "Comprehensive review but lacks quantitative benchmarks; therapeutic efficacy claims remain largely preclinical.",
+    "model_io": [],
+    "hypotheses": [
+      {
+        "hypothesis": "Crosstalk between ubiquitination and other PTMs dynamically regulates immune checkpoint function and TME composition",
+        "result": "Literature synthesis confirms synergistic/competitive modification of PD-L1, STAT/IFN/NF-\u03baB pathways; therapeutic targeting identified"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-02774-4": {
+    "category": "Statistical Methods",
+    "task": "Heart failure detection from ECG via deep learning with pragmatic NT-proBNP label validation",
+    "key_results": "Neural network achieves AUC=0.86 (hospital-diagnosed HF), AUC=0.91 (age-adjusted NT-proBNP), AUC=0.96 (strict limits 125\u20131000 ng/L); externally validated on MIMIC-IV (N=161,352)",
+    "comments": "Large-scale validation and pragmatic label refinement strengthen evidence; echocardiographic corroboration of diastolic/systolic function interpretation is notable.",
+    "model_io": [
+      {
+        "model": "Neural network for HF detection from ECG",
+        "inputs": [
+          "resting 12-lead ECG recordings (25,300 dev, 43,727 test, 161,352 external)"
+        ],
+        "outputs": [
+          "HF risk prediction",
+          "AUC scores with varying label strategies"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "NT-proBNP validation mitigates label noise improving model performance beyond diagnosis-code labels alone",
+        "result": "AUC improved from 0.86 (code-based) to 0.96 (strict NT-proBNP limits); validated on echocardiographic function measures"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10658-6": {
+    "category": "ML Theory",
+    "task": "Automated scientific software generation using LLM and tree search",
+    "key_results": "40 novel single-cell analysis methods outperformed top human methods; 14 COVID-19 forecasting models outperformed CDC ensemble",
+    "comments": "Impressive practical demonstrations across diverse domains, though generalization to new problem classes remains unclear.",
+    "model_io": [
+      {
+        "model": "ERA (LLM + Tree Search)",
+        "inputs": [
+          "problem specifications",
+          "external research sources"
+        ],
+        "outputs": [
+          "expert-level scientific software",
+          "quality metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Tree search can systematically improve software quality by exploring solution space",
+        "result": "Confirmed across bioinformatics, epidemiology, geospatial analysis, and other domains"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-41645-6": {
+    "category": "Other",
+    "task": "6DOF spacecraft attitude-orbit control via adaptive SMC with dual inertial matrix compensation",
+    "key_results": "Asymptotic stability proven via Lyapunov; faster convergence and superior performance vs. advanced sliding mode baselines",
+    "comments": "Direct dual inertial matrix derivative estimation novel; dual quaternion framework elegant for coupled translational/rotational dynamics.",
+    "model_io": [
+      {
+        "model": "Adaptive Sliding Mode Control (SMC) with dual quaternion",
+        "inputs": [
+          "spacecraft state (position, orientation, velocities)",
+          "inertia parameter uncertainties"
+        ],
+        "outputs": [
+          "control torques and forces"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Direct dual inertial matrix estimation enables efficient adaptive SMC for 6DOF coupled control",
+        "result": "Confirmed with proven Lyapunov stability and improved convergence vs. baselines"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-48504-4": {
+    "category": "Other",
+    "task": "Evaluate noise reduction of alternative transverse rumble strip designs",
+    "key_results": "All 5 designs generated 3-15 dBA in-vehicle noise increase; 4 novel designs reduced roadside noise by 18%-77% vs baseline",
+    "comments": "Comprehensive field study with 13 vehicle types provides practical engineering guidance for DOTs.",
+    "model_io": [],
+    "hypotheses": [
+      {
+        "hypothesis": "Alternative designs (angled, staggered, sinusoidal) reduce external noise while maintaining alerting benefit",
+        "result": "Confirmed with 18%-77% roadside noise reduction compared to baseline"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-52318-9": {
+    "category": "ML Theory",
+    "task": "Fire-damaged concrete quality classification via K-means clustering and decision trees",
+    "key_results": "Decision tree achieves 96.1% accuracy with superior interpretability; K-means identifies 4 quality grades; temperature and UPV dominant factors",
+    "comments": "Shift from numerical prediction to actionable classification is pragmatic; SMOTE-expanded dataset (334\u21923,006 points) addresses scarcity.",
+    "model_io": [
+      {
+        "model": "K-means + Decision Tree",
+        "inputs": [
+          "compressive strength",
+          "ultrasonic pulse velocity",
+          "temperature exposure"
+        ],
+        "outputs": [
+          "quality grade (Safety/Caution/Warning/Danger)",
+          "rule-based decision paths"
+        ]
+      },
+      {
+        "model": "SMOTE (oversampling)",
+        "inputs": [
+          "original imbalanced dataset"
+        ],
+        "outputs": [
+          "balanced augmented dataset (3,006 points)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Decision tree-based classification provides better interpretability than black-box models for structural safety decisions",
+        "result": "Confirmed with 96.1% accuracy and transparent rule-based criteria"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-53821-9": {
+    "category": "ML Theory",
+    "task": "Green supply chain optimization for MNCs via Transformer and deep reinforcement learning",
+    "key_results": "Reduces carbon emissions, increases renewable energy usage, maintains high order fulfillment; attention weights provide interpretable decision influence",
+    "comments": "Hierarchical attention mechanism captures supply chain complexity; integration of carbon metrics with operational KPIs is pragmatic.",
+    "model_io": [
+      {
+        "model": "Transformer-DRL framework",
+        "inputs": [
+          "supplier relationships",
+          "logistics pathways",
+          "green practices",
+          "environmental/operational metrics"
+        ],
+        "outputs": [
+          "procurement decisions",
+          "logistics routing",
+          "renewable energy allocation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Hierarchical attention captures high-dimensional supply chain dependencies better than baseline DRL",
+        "result": "Confirmed with multi-objective optimization gains and interpretable decision pathways"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-53855-z": {
+    "category": "ML Theory",
+    "task": "High-fidelity image compression via lightweight perceptual-guided VQ-VAE",
+    "key_results": "18%-40% fidelity gains over similar-sized baselines; 3.21M parameters; outperforms high-complexity VQGAN/OptVQ in quality-efficiency tradeoff",
+    "comments": "Asymmetric encoder-decoder with dual-path frequency domain decomposition elegantly resolves quality-efficiency dilemma.",
+    "model_io": [
+      {
+        "model": "HiRes-VQ (hierarchical VQ-VAE)",
+        "inputs": [
+          "images"
+        ],
+        "outputs": [
+          "compressed latent codes",
+          "reconstructed images"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Asymmetric encoder-decoder with dual-path frequency decomposition and perceptual loss improves reconstruction fidelity",
+        "result": "Confirmed with 18%-40% gains on FFHQ-256 and ImageNet-256 benchmarks"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-02775-3": {
+    "category": "Algorithms",
+    "task": "HPV vaccine allocation optimization for cervical cancer elimination in China",
+    "key_results": "40-year elimination requires 23.97% coverage of 15-17-year-old girls; 30-year requires 76.66%; \u00a535.93 billion funding gap identified",
+    "comments": "Bayesian optimization with transmission dynamics provides actionable policy guidance; three-party financing mechanism is pragmatic.",
+    "model_io": [
+      {
+        "model": "Bayesian optimization + demographic HPV transmission model",
+        "inputs": [
+          "coverage targets",
+          "time horizons",
+          "willingness-to-pay data"
+        ],
+        "outputs": [
+          "optimal vaccination strategy",
+          "funding requirements",
+          "elimination timeline"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Optimal coverage rates scale nonlinearly with elimination timeline",
+        "result": "Confirmed: 40-year target needs 23.97% vs 76.66% for 30-year target"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-73066-4": {
+    "category": "Optics/Photonics",
+    "task": "Bridge quantum noise and classical electrodynamics for quantum optical simulations",
+    "key_results": "Coupled stochastic framework with cross-covariance structure captures quantum signatures while maintaining classical EM compatibility; agreement with experimental InGaAs quantum-dot emission spectra.",
+    "comments": "Elegant middle ground between semiclassical and full Hilbert-space approaches; scalable for complex photonic systems.",
+    "model_io": [
+      {
+        "model": "Coupled stochastic processes with cross-covariance structure",
+        "inputs": [
+          "quantized EM field",
+          "classical Maxwell equations",
+          "InGaAs quantum dot"
+        ],
+        "outputs": [
+          "emission spectra",
+          "quantum signatures (non-classicality)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Stochastic framework naturally handles quantum-to-classical transition via non-commutativity",
+        "result": "Confirmed; excellent match with experimental spectra demonstrates validity"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-51870-8": {
+    "category": "Quantum",
+    "task": "Enhance hybrid quantum-classical classification using chaos diagnostics in QAOA",
+    "key_results": "Chaos-aware variant improves test accuracy by \u0394 \u2248 +0.018 at n \u2208 {4,6,8} qubits with 86\u2013100% win-rates; optimal performance at n=8 with 0.9006\u00b10.0069 accuracy; effect reverses at n=10 indicating over-sensitivity.",
+    "comments": "OTOC-derived chaos features provide a principled knob to balance expressivity and generalization in resource-limited NISQ devices, though scaling requires careful tuning.",
+    "model_io": [
+      {
+        "model": "Hybrid quantum-classical QAOA classifier with OTOC chaos diagnostic",
+        "inputs": [
+          "MNIST images (n=1000 subset)",
+          "OTOC parameter scaling rays",
+          "qubits: n \u2208 {4,6,8,10}"
+        ],
+        "outputs": [
+          "test accuracy",
+          "chaos feature (scalar from lognormal spacing)",
+          "paired effect sizes"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Chaos-aware QAOA improves generalization by capturing circuit expressivity mismatch",
+        "result": "Supported for n \u2208 {4,6,8}; collapses at n=10 due to over-sensitivity to noise"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-52230-2": {
+    "category": "Condensed Matter",
+    "task": "Investigate high-temperature superconductivity in hydrogen-rich Li\u2082CuH\u2086",
+    "key_results": "Thermodynamically metastable at ambient but dynamically stable (AIMD confirms structural integrity at 300 K); metallic with flat band and van Hove singularity near Fermi level; large electron-phonon coupling; Tc estimates 93\u2013152 K via multiple approaches.",
+    "comments": "Dynamic stability enables pressure synthesis and decompression retention; mixed covalent-ionic Cu-H bonding; promising candidate for experimental exploration despite metastability.",
+    "model_io": [
+      {
+        "model": "Li\u2082CuH\u2086 (fcc phase) via first-principles DFT and AIMD",
+        "inputs": [
+          "crystal structure",
+          "temperature (300 K AIMD)",
+          "phonon modes"
+        ],
+        "outputs": [
+          "band structure",
+          "Fermi surface",
+          "electron-phonon coupling constant \u03bb",
+          "Tc estimates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Dynamic stability and large electron-phonon coupling enable high-Tc superconductivity despite thermodynamic metastability",
+        "result": "Supported; Tc estimates range 93\u2013152 K"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-52950-5": {
+    "category": "Applied Physics",
+    "task": "Optimize bell-shaped slotted pentaband patch antenna via metaheuristic algorithms",
+    "key_results": "Five resonant frequencies (5.2, 8.4, 10.4, 12, 19.2 GHz) with S\u2081\u2081 < \u221215 dB; gains 4.96\u20138.83 dB; Differential Evolution optimization achieves 4% S\u2081\u2081 improvement, 2.2% VSWR reduction; 85\u201395%+ radiation/total efficiency across bands.",
+    "comments": "DE algorithm outperforms other metaheuristics; multi-objective optimization balances competing design objectives effectively.",
+    "model_io": [
+      {
+        "model": "Bell-shaped slotted pentaband patch antenna with DE metaheuristic optimization",
+        "inputs": [
+          "patch geometry (bell shape, C-slots, perturbations)",
+          "substrate parameters"
+        ],
+        "outputs": [
+          "S\u2081\u2081 parameter",
+          "resonant frequencies",
+          "radiation patterns",
+          "gains",
+          "efficiency"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Metaheuristic optimization improves antenna performance via geometry tuning",
+        "result": "Confirmed; DE yields best results (4% S\u2081\u2081 improvement)"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-53854-0": {
+    "category": "High Energy/Particle",
+    "task": "Improve forward identified hadron spectra in proton-carbon collisions via impact-parameter-dependent subcollision acceptance",
+    "key_results": "Impact-parameter-dependent suppression in Angantyr hardens forward proton tail (p \u2273 40 GeV/c) while preserving mid-angle production; combined with strangeness retune and modest rescattering, achieves consistent description of proton, pion, kaon yields.",
+    "comments": "Minimal modification to NN encounter-type fractions improves very-forward region without distortions elsewhere; illustrates importance of b-dependent selection in SPS regime.",
+    "model_io": [
+      {
+        "model": "PYTHIA 8.315 Angantyr with impact-parameter-dependent ND/SD/DD/EL suppression",
+        "inputs": [
+          "proton-carbon collision at plab=90 GeV/c",
+          "NA61/SHINE production-event definition",
+          "hadronic rescattering"
+        ],
+        "outputs": [
+          "identified hadron spectra (p, \u03c0\u00b1, K\u00b1)",
+          "forward proton yields",
+          "angle-dependent distributions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Impact-parameter-dependent mixture of NN encounter types improves forward yields without distorting large-angle production",
+        "result": "Confirmed; superior description across hadron species and angular ranges"
+      }
+    ]
   }
 }
