@@ -204359,5 +204359,560 @@
         "result": "QAIS with non-separable PDE encoding outperforms dimension-by-dimension refinement"
       }
     ]
+  },
+  "hf:2605.17602": {
+    "category": "Generative",
+    "task": "Learning interpretable reward rubrics for text-to-image alignment",
+    "key_results": "Outperforms reward model baselines on MMRB2; uses <0.01% of preference annotation data; improves downstream T2I generation via Flow-GRPO",
+    "comments": "Novel approach to reward modeling via rule synthesis and selection, though the reliance on VLM judge quality could be a bottleneck in practice.",
+    "model_io": [
+      {
+        "model": "Vision-Language Model (VLM) judge",
+        "inputs": [
+          "text prompt",
+          "generated image",
+          "candidate rubric"
+        ],
+        "outputs": [
+          "rubric-score difference",
+          "preference signal"
+        ]
+      },
+      {
+        "model": "\u21131-Regularized Logistic Regression Refiner",
+        "inputs": [
+          "candidate rubrics",
+          "pairwise preference scores"
+        ],
+        "outputs": [
+          "Top-N discriminative rubrics"
+        ]
+      },
+      {
+        "model": "Diffusion model + Flow-GRPO",
+        "inputs": [
+          "text prompt",
+          "rubric-based reward"
+        ],
+        "outputs": [
+          "generated image"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Automatically synthesized rubrics can provide interpretable reward signals with minimal labeled data",
+        "result": "AutoRubric-T2I achieves comparable or better performance than trained BT reward models on benchmarks"
+      },
+      {
+        "hypothesis": "Rule-based rewards improve downstream generation quality in RL settings",
+        "result": "Flow-GRPO with AutoRubric-T2I rewards improves generation quality on TIIF and UniGenBench++"
+      }
+    ]
+  },
+  "hf:2605.15669": {
+    "category": "LLM/Reasoning",
+    "task": "Design rule checking script synthesis from natural language rules",
+    "key_results": "Benchmark with 1,000 rule-to-script tasks and 13,921 layouts; SplitTester improves Best-of-N selection via execution-guided test generation",
+    "comments": "Execution-based evaluation is more rigorous than code similarity, though the 13K layout dataset may still be insufficient for complex manufacturing rules.",
+    "model_io": [
+      {
+        "model": "LLM agent for DRC script synthesis",
+        "inputs": [
+          "natural language design rule"
+        ],
+        "outputs": [
+          "DRC script (executable code)"
+        ]
+      },
+      {
+        "model": "SplitTester agent",
+        "inputs": [
+          "candidate DRC scripts",
+          "execution feedback from layouts"
+        ],
+        "outputs": [
+          "discriminative test cases",
+          "selected best script"
+        ]
+      },
+      {
+        "model": "DRC execution engine",
+        "inputs": [
+          "DRC script",
+          "chip layout"
+        ],
+        "outputs": [
+          "pass/fail outcome",
+          "geometry violations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Execution feedback can guide generation of test cases that separate indistinguishable scripts",
+        "result": "SplitTester substantially improves Best-of-N selection performance"
+      },
+      {
+        "hypothesis": "Execution-based metrics better evaluate script correctness than code similarity",
+        "result": "Proposed evaluation pipeline measures functional correctness without requiring layouts as agent input"
+      }
+    ]
+  },
+  "hf:2605.22717": {
+    "category": "Generative",
+    "task": "Interactive streaming music generation with diffusion models on consumer hardware",
+    "key_results": "LMDMs achieve inference complexity competitive with discrete-AR models; enable stable post-training via ARC-Forcing without RL; demonstrated in live artist-AI collaboration",
+    "comments": "Clever use of block-wise KV caching to address diffusion's bidirectional bottleneck; real-world deployment on gaming laptops is impressive but stability under adversarial live conditions unclear.",
+    "model_io": [
+      {
+        "model": "Live Music Diffusion Model (LMDM)",
+        "inputs": [
+          "partial music sequence (previous block)",
+          "optional text conditioning or sketch"
+        ],
+        "outputs": [
+          "next audio block (streaming)"
+        ]
+      },
+      {
+        "model": "Block-wise KV caching mechanism",
+        "inputs": [
+          "diffusion hidden states from previous blocks"
+        ],
+        "outputs": [
+          "cached key-value pairs for efficient inference"
+        ]
+      },
+      {
+        "model": "ARC-Forcing alignment paradigm",
+        "inputs": [
+          "generated audio",
+          "reference trajectory or feedback"
+        ],
+        "outputs": [
+          "alignment signal (without explicit RL)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Block-wise KV caching can recover diffusion inference efficiency to match discrete-AR models",
+        "result": "LMDMs achieve competitive inference complexity with discrete Live Music Models"
+      },
+      {
+        "hypothesis": "ARC-Forcing paradigm stabilizes post-training alignment without RL or reward models",
+        "result": "Reduced error accumulation in open-loop generation demonstrated across domains"
+      },
+      {
+        "hypothesis": "Audio diffusion models can be adapted for interactive real-time performance on consumer hardware",
+        "result": "Successful live jamming and artist-AI collaboration on a consumer gaming laptop"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-52673-7": {
+    "category": "Membrane Biophysics",
+    "task": "Rapid measurement of epithelial barrier integrity and morphology via impedance",
+    "key_results": "~100-fold time resolution improvement (sub-second vs tens of seconds); TER/TEC/\u03b1 errors 0.17-26.35% vs EIS; reveals double-exponential dynamics undetectable by conventional EIS",
+    "comments": "Clever time-domain approach circumvents frequency-sweep bottleneck, though larger errors in \u03b1 measurement (~26%) may limit some applications.",
+    "model_io": [
+      {
+        "model": "epithelial cell monolayers (16HBE, Caco-2)",
+        "inputs": [
+          "step current excitations"
+        ],
+        "outputs": [
+          "transepithelial resistance (TER/TEER)",
+          "transepithelial capacitance (TEC)",
+          "membrane ratio (\u03b1)",
+          "impedance spectrum"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Time-domain step excitation analysis can achieve equivalent accuracy to frequency-domain EIS while improving temporal resolution",
+        "result": "Confirmed; average errors 0.17-3.55% for TER, 1.13-8.96% for TEC across electrical circuits and cell lines"
+      },
+      {
+        "hypothesis": "Saponin-induced barrier disruption exhibits rapid dynamics missed by EIS",
+        "result": "Confirmed; smoothly gated double-exponential TER and TEC transients revealed only via TEIM"
+      }
+    ]
+  },
+  "nature:10.1038/s41538-026-00892-7": {
+    "category": "Other",
+    "task": "Determine flavonoid-mediated autophagy activation role in high-fat diet-induced hyperlipidemia",
+    "key_results": "Rosa sterilis flavonoids (FRS) corrected glycolipid metabolism and reduced hepatic fat accumulation in HFD mice; FRS activated autophagy, promoted lipolysis, and inhibited adipocyte differentiation; BAFA1 (autophagy inhibitor) abolished FRS effects on lipid accumulation",
+    "comments": "Natural product approach to targeting lipid metabolism via autophagy is promising but requires bioavailability/pharmacokinetic optimization; clinical translation hampered by flavonoid stability and absorption variability.",
+    "model_io": [
+      {
+        "model": "High-fat diet-induced mouse obesity model",
+        "inputs": [
+          "Rosa sterilis flavonoids (FRS)",
+          "high-fat diet"
+        ],
+        "outputs": [
+          "body weight",
+          "lipid metabolism markers",
+          "liver triglyceride content",
+          "oxidative stress markers",
+          "autophagy markers"
+        ]
+      },
+      {
+        "model": "3T3-L1 adipocyte differentiation assay",
+        "inputs": [
+          "FRS treatment",
+          "BAFA1 (autophagy inhibitor)",
+          "differentiation induction factors"
+        ],
+        "outputs": [
+          "autophagy activation (LC3-II/I ratio)",
+          "lipid accumulation",
+          "adipogenic gene expression"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "FRS alleviates HFD-induced obesity via autophagy activation",
+        "result": "Confirmed: FRS reduced body weight and lipid accumulation; BAFA1 abolished effects"
+      },
+      {
+        "hypothesis": "FRS suppresses adipocyte differentiation through autophagy",
+        "result": "Confirmed: FRS activated autophagy and reduced lipid accumulation in 3T3-L1 cells; BAFA1 blocked effects"
+      },
+      {
+        "hypothesis": "FRS promotes lipolysis and inhibits lipogenesis",
+        "result": "Confirmed: Gene expression analysis showed increased lipolytic and decreased lipogenic gene expression"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-53579-0": {
+    "category": "Development",
+    "task": "Investigate quercetin's molecular mechanisms in accelerating full-thickness burn wound repair",
+    "key_results": "Topical 0.3% quercetin significantly accelerated healing by day 7 via enhanced proliferation (PCNA, TGF-\u03b21), angiogenesis (CD31), and antioxidant defense (Nrf2, SOD, GST); reduced inflammatory markers (NF-\u03baB, TNF-\u03b1) and pain signaling (substance-P receptor)",
+    "comments": "Comprehensive mechanistic profiling shows multi-pathway benefits; comparison with SSD reference arm strengthens translational relevance but lacks long-term scar formation assessment.",
+    "model_io": [
+      {
+        "model": "Full-thickness burn wound model in rats",
+        "inputs": [
+          "topical quercetin (0.1%, 0.3%)",
+          "silver sulfadiazine (1%)",
+          "vehicle control"
+        ],
+        "outputs": [
+          "wound closure rate",
+          "re-epithelialization markers (cytokeratin 14)",
+          "angiogenesis (CD31)",
+          "ECM remodeling (fibronectin)",
+          "collagen organization",
+          "inflammatory markers (NF-\u03baB, TNF-\u03b1, COX-2)",
+          "oxidative stress (SOD, GST, Nrf2)",
+          "pain-related markers (substance-P receptor, TRPV3)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Quercetin accelerates burn healing via antioxidant and anti-inflammatory mechanisms",
+        "result": "Confirmed: 0.3% quercetin enhanced Nrf2/SOD/GST and reduced NF-\u03baB/TNF-\u03b1/COX-2"
+      },
+      {
+        "hypothesis": "Quercetin promotes angiogenesis and tissue regeneration",
+        "result": "Confirmed: Enhanced CD31, TGF-\u03b21, PCNA, and fibronectin deposition"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-54675-x": {
+    "category": "Cell Signaling",
+    "task": "Elucidate \u03b22-adrenergic receptor-mediated arrhythmogenic effects in aging hearts",
+    "key_results": "\u03b22AR agonist (salbutamol) shortened QTc in young hearts but induced repolarization delay and arrhythmias in aging hearts; Gi\u03b2\u03b3-PLC-mTOR axis mediated effect; ML277 (IKs activator) provided protective against aging-related arrhythmias",
+    "comments": "Age-dependent loss of \u03b22AR-mediated repolarization shortening is clinically relevant for polypharmacy in elderly; mechanistic focus on Gi\u03b2\u03b3 signaling is solid but crosstalk with Gs-cAMP pathway not examined.",
+    "model_io": [
+      {
+        "model": "Guinea pig hearts (in vivo, in vitro) and hiPSC-derived cardiomyocytes (hiPSC-CMs)",
+        "inputs": [
+          "\u03b22AR agonist salbutamol",
+          "pertussis toxin (Gi inhibitor)",
+          "gallein (G\u03b2\u03b3 inhibitor)",
+          "U73122 (PLC inhibitor)",
+          "ML277 (IKs activator)",
+          "D-galactose (aging model)"
+        ],
+        "outputs": [
+          "QTc interval",
+          "action potential duration (APD)",
+          "APD shortening with pacing rate",
+          "ventricular arrhythmia incidence",
+          "repolarization markers"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "\u03b22AR activation impairs repolarization reserve in aging via Gi\u03b2\u03b3-PLC signaling",
+        "result": "Confirmed: Pertussis toxin, gallein, and U73122 reduced arrhythmogenesis in aged hearts/CMs"
+      },
+      {
+        "hypothesis": "IKs activation protects against aging-related \u03b22AR-induced arrhythmias",
+        "result": "Confirmed: ML277 exerted protective effects against aging-related repolarization delay"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-025-27631-4": {
+    "category": "Other",
+    "task": "Standardized reporting and data systems for laparoscopic cholecystectomy",
+    "key_results": "73% of surveyed surgeons agreed LC-RADS effectively records relevant data; 77% willing to use regularly",
+    "comments": "Pragmatic informatics contribution addressing real clinical workflow, but adoption rates depend on EMR integration and institutional buy-in.",
+    "model_io": [
+      {
+        "model": "LC-RADS (structured proforma)",
+        "inputs": [
+          "preoperative findings",
+          "ultrasound",
+          "operative video",
+          "surgeon metrics",
+          "postoperative follow-up"
+        ],
+        "outputs": [
+          "standardized surgical data records",
+          "complication tracking"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Standardized LC-RADS improves data consistency and clinical decision-making across centers",
+        "result": "73% surgeon agreement on effectiveness; 77% willing to use regularly in practice"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-52865-1": {
+    "category": "Other",
+    "task": "Evaluating arensulfonylhydrazinoxamoyl derivatives as acetylcholinesterase inhibitors and anticancer agents",
+    "key_results": "Compound 2: AChE IC50 6.51 \u00b5M (>compound 1 at 24.05 \u00b5M, <donepezil); modest cytotoxicity (MCF-7, HepG2); favorable docking (\u221211.13 kcal/mol MEK, \u221210.34 BRAF)",
+    "comments": "Early-stage scaffolds with preliminary AChE activity and acceptable ADME properties; structural optimization and kinase validation needed for therapeutic development.",
+    "model_io": [
+      {
+        "model": "Chemical synthesis + enzymatic assay + cytotoxicity screening + molecular docking + ADME/T prediction",
+        "inputs": [
+          "arensulfonylhydrazinoxamoyl derivatives",
+          "human AChE",
+          "cancer cell lines"
+        ],
+        "outputs": [
+          "IC50 values",
+          "docking poses",
+          "ADME/T parameters"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Arensulfonylhydrazinoxamoyl scaffolds inhibit AChE with acceptable drug-likeness for Alzheimer's-related development",
+        "result": "Compound 2 showed AChE IC50 6.51 \u00b5M and favorable ADME with no Lipinski violations; weak cytotoxicity limiting utility"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-54390-7": {
+    "category": "Statistical Methods",
+    "task": "Detecting anomalous recovery trajectories in post-PCI myocardial infarction patients via dynamic isolation forest",
+    "key_results": "Dynamic isolation forest (DIF) best agreement with expert ratings (\u03c1=0.585); AUC 0.859; external validation in MIMIC-IV linked high DIF scores to mortality risk",
+    "comments": "Unsupervised method capturing dynamic deviations from typical recovery; clinical utility validated but requires prospective deployment to assess impact on triage/risk stratification.",
+    "model_io": [
+      {
+        "model": "Dynamic isolation forest",
+        "inputs": [
+          "longitudinal laboratory parameters (3 time-points post-PCI)"
+        ],
+        "outputs": [
+          "anomaly scores",
+          "abnormal recovery window classification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Unsupervised anomaly detection on temporal lab patterns identifies post-PCI recovery deviations predictive of adverse outcomes",
+        "result": "DIF \u03c1=0.585 vs. expert ratings; high anomaly scores associated with increased mortality in MIMIC-IV"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-54474-4": {
+    "category": "Evolutionary Biology",
+    "task": "Screening phytochemicals as inhibitors of ToLCNDV suppressor proteins for antiviral therapy",
+    "key_results": "Agathisflavone showed strongest binding affinities (\u22128.7 to \u22129.0 kcal/mol); restored host RNA silencing in planta for AV2 and AC2",
+    "comments": "Rational drug discovery approach combining docking and in planta validation; AC4 inhibition weaker, suggesting multiplex targeting strategy needed.",
+    "model_io": [
+      {
+        "model": "Molecular docking + molecular dynamics simulation",
+        "inputs": [
+          "15 phytochemicals",
+          "ToLCNDV suppressor proteins (AV2, AC2, AC4)"
+        ],
+        "outputs": [
+          "binding affinities",
+          "stable protein-ligand complexes",
+          "in planta suppressor inhibition"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Plant-derived flavonoids can inhibit viral suppressor proteins, restoring host antiviral silencing",
+        "result": "Agathisflavone showed strongest binding and restored AV2/AC2 suppression reversal in agathisflavone-treated plants"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-02789-x": {
+    "category": "Statistical Methods",
+    "task": "Systematic review of LLM performance for clinical data extraction from pathology reports",
+    "key_results": "Best models achieved 87.7\u201397.4% accuracy; 9 studies evaluated 30+ LLM architectures; 55.6% at low risk of bias",
+    "comments": "Methodologically rigorous systematic review highlighting variability across studies and gaps in fairness/validation reporting; meta-analysis limited by task heterogeneity.",
+    "model_io": [
+      {
+        "model": "Various LLMs (30+ architectures)",
+        "inputs": [
+          "breast cancer pathology reports"
+        ],
+        "outputs": [
+          "structured clinical data (diagnoses, staging, biomarkers)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LLMs can match human-level accuracy for pathology report extraction",
+        "result": "Best models achieved 87.7\u201397.4% accuracy, but external validation and fairness reporting gaps remain"
+      }
+    ]
+  },
+  "nature:10.1038/s44259-026-00218-3": {
+    "category": "Genomics",
+    "task": "Generative AI for discovery and optimization of antimicrobial peptides against drug-resistant pathogens",
+    "key_results": "COMPASS database: 75,381 AMP sequences; AmpGPT2 generated 95.41% AMP-predicted sequences; one of five tested peptides showed concentration-dependent activity vs. K. pneumoniae and P. aeruginosa",
+    "comments": "Novel transformer-based generative model with promising hit rate; experimental validation limited to 5 peptides, suggesting gap between computational predictions and bioactivity.",
+    "model_io": [
+      {
+        "model": "AmpGPT2 (transformer-based generative model)",
+        "inputs": [
+          "COMPASS AMP database (75,381 sequences)"
+        ],
+        "outputs": [
+          "generated AMP sequences",
+          "predicted antimicrobial activity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Undirected generative modeling on curated AMP sequence database produces high-quality AMP candidates with functional antimicrobial activity",
+        "result": "AmpGPT2 generated 95.41% AMP-predicted sequences; 1 of 5 tested showed activity vs. K. pneumoniae and P. aeruginosa"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-51515-w": {
+    "category": "ML Theory",
+    "task": "Interpretable fault diagnosis in chemical engineering via fuzzy systems",
+    "key_results": "TSK fuzzy system with information granules and nonlinear consequents; gradient descent optimization; validation on Tennessee Eastman process",
+    "comments": "Addresses interpretability gap in data-driven models, though quantitative performance metrics not reported.",
+    "model_io": [
+      {
+        "model": "Takagi-Sugeno-Kang (TSK) fuzzy system",
+        "inputs": [
+          "sensor measurements",
+          "fault categories"
+        ],
+        "outputs": [
+          "fault diagnosis predictions",
+          "interpretable fuzzy rules"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Information granules improve interpretability while maintaining accuracy",
+        "result": "Fuzzy antecedents composed of granules provide data distribution characterization"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-53309-6": {
+    "category": "Other",
+    "task": "Carbon-aware ML model recommendation balancing performance and environmental impact",
+    "key_results": "CAOMLF framework evaluates classification, regression, clustering across text, image, tabular; multi-objective trade-off score for performance vs carbon footprint",
+    "comments": "Addresses sustainability in ML deployment; practical trade-off analysis though specific model recommendations and carbon baselines not detailed.",
+    "model_io": [
+      {
+        "model": "CAOMLF with train-once recommendation phase",
+        "inputs": [
+          "task type",
+          "data type",
+          "dataset size"
+        ],
+        "outputs": [
+          "model recommendation",
+          "hyperparameters",
+          "carbon-performance trade-off"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Balancing accuracy and carbon emissions guides sustainable model selection",
+        "result": "Trade-off scores enable environmentally-conscious ML deployment"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-53543-y": {
+    "category": "Algorithms",
+    "task": "State-of-charge (SoC) and state-of-health (SoH) estimation in lithium-ion batteries",
+    "key_results": "MAE=0.1507, MSE=0.2030, R\u00b2=0.9998 on real battery datasets; outperforms RF, SVR, GBM baselines",
+    "comments": "Hybrid CNN-ResNet-LSTM architecture is well-suited for temporal battery dynamics, achieving near-perfect R\u00b2 with practical significance unclear.",
+    "model_io": [
+      {
+        "model": "Multi-scale CNN + Residual blocks + LSTM",
+        "inputs": [
+          "battery voltage",
+          "current",
+          "temperature"
+        ],
+        "outputs": [
+          "SoC predictions",
+          "SoH estimates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Hybrid architecture captures both spatial patterns and temporal dependencies",
+        "result": "Significantly lower prediction errors and minimal systematic bias vs baselines"
+      }
+    ]
+  },
+  "nature:10.1038/s44310-026-00131-7": {
+    "category": "Optics/Photonics",
+    "task": "Self-traceable length metrology via atomic transition frequency and grating interferometry",
+    "key_results": "Grating pitch 212.7779 nm (4700 lines/mm) with 0.0021 nm uncertainty; sub-nanometer repeat positioning; direct atomic frequency traceability",
+    "comments": "Atom lithography establishes novel metrological traceability chain linking atomic standards to engineered solid-state structures.",
+    "model_io": [
+      {
+        "model": "Self-traceable grating interferometer with Cr atom lithography",
+        "inputs": [
+          "Cr atomic transition frequency 7S\u2083\u21927P\u2084",
+          "grating pitch 212.7779 nm",
+          "laser interferometry",
+          "displacement signal"
+        ],
+        "outputs": [
+          "length measurement",
+          "pitch precision",
+          "repeat positioning accuracy",
+          "traceability uncertainty"
+        ]
+      }
+    ],
+    "hypotheses": []
   }
 }
