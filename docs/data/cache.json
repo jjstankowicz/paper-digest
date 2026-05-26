@@ -214233,5 +214233,423 @@
         "result": "AC-CNRs sustain larger strains; inverted Young's modulus trend emerges with width for AC vs ZZ"
       }
     ]
+  },
+  "hf:2605.24517": {
+    "category": "Agents/RL",
+    "task": "Improve terminal agent performance by learning from environment feedback",
+    "key_results": "Qwen3-8B improves from 2.70% to 5.17% pass@1 on TerminalBench-2.0; Qwen3-14B from 5.17% to 10.79%; reduces environment-token cross-entropy on held-out rollouts",
+    "comments": "Novel insight that terminal output streams provide dense supervision signals already present in rollouts, but gains diminish relative to expert-SFT baselines.",
+    "model_io": [
+      {
+        "model": "Qwen3 (8B, 14B)",
+        "inputs": [
+          "CLI command history",
+          "environment observations"
+        ],
+        "outputs": [
+          "action tokens",
+          "predicted environment tokens"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Environment observation tokens can serve as dense supervision for policy learning without additional rollouts",
+        "result": "Confirmed: ECHO objective reuses same forward pass and produces observable gains in both action and environment prediction"
+      },
+      {
+        "hypothesis": "Policies trained to predict environment dynamics improve on unseen OOD tasks",
+        "result": "Partially confirmed: verifier-free self-improvement occurs in some settings but not consistently across all OOD tasks"
+      }
+    ]
+  },
+  "hf:2605.24213": {
+    "category": "Systems",
+    "task": "Characterize operational challenges in ML evaluation software systems",
+    "key_results": "Analyzed 57 harnesses with 16,560 classified issues; 41.4% of issues in Specification stage; unimplemented features (24.3%), documentation gaps (20.3%), missing validation (17.2%) account for 61.7% of issues",
+    "comments": "Valuable empirical foundation for evaluation engineering as a discipline, though results may skew toward open-source harnesses with better issue tracking.",
+    "model_io": [],
+    "hypotheses": [
+      {
+        "hypothesis": "Operational challenges concentrate in specific workflow stages rather than uniformly distributed",
+        "result": "Confirmed: Specification stage dominates with 41.4%; provisioning and assessment stages show distinct root cause distributions"
+      },
+      {
+        "hypothesis": "Root causes of failures vary predictably by workflow stage",
+        "result": "Confirmed: environment incompatibility dominates provisioning (36.2%), while algorithmic error dominates assessment (25.9%)"
+      }
+    ]
+  },
+  "hf:2605.22880": {
+    "category": "LLM/Reasoning",
+    "task": "Measure and quantify political expressivity and jailbreak susceptibility of open-source LLMs",
+    "key_results": "Evaluated 30+ LLMs across 10 families; found systematic left-leaning bias in open-source models; Overton Windows contract inversely with model size; simple jailbreaks expand political expression range substantially",
+    "comments": "Timely safety analysis but focus on local models may underestimate risks from frontier API models with stronger safety training.",
+    "model_io": [
+      {
+        "model": "30+ open-source LLMs (10 families, 5 countries)",
+        "inputs": [
+          "controversial political topics",
+          "jailbreak prompts"
+        ],
+        "outputs": [
+          "social media content generation",
+          "political stance expressions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Open-source LLMs exhibit asymmetric political expressivity favoring left-leaning content",
+        "result": "Confirmed: systematic bias observed across evaluated models"
+      },
+      {
+        "hypothesis": "Model size inversely correlates with Overton Window breadth",
+        "result": "Confirmed: larger models show more constrained political expression ranges"
+      },
+      {
+        "hypothesis": "Jailbreak effectiveness varies systematically across model families",
+        "result": "Confirmed: sharp variation observed, enabling identification of effective jailbreak combinations"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55304-3": {
+    "category": "Statistical Methods",
+    "task": "Classify heart valve disease from phonocardiogram signals with uncertainty quantification",
+    "key_results": "Well-calibrated uncertainty estimates using four UQ methods; low predictive uncertainty for correct classifications, high for ambiguous samples; among first to analyze UQ in PCG classification",
+    "comments": "Multi-method UQ comparison is thorough, but limited to single dataset and unclear which UQ method generalizes best clinically.",
+    "model_io": [
+      {
+        "model": "DMEFNet with UQ (MC dropout, BNN, Deep Ensembles, EDL)",
+        "inputs": [
+          "1D temporal PCG signals",
+          "2D time-frequency representations"
+        ],
+        "outputs": [
+          "heart valve disease classification",
+          "prediction uncertainty estimates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Uncertainty quantification improves clinical reliability of PCG-based diagnosis",
+        "result": "Confirmed; well-calibrated uncertainty enables risk-aware clinical decisions"
+      }
+    ]
+  },
+  "nature:10.1038/s41698-026-01485-z": {
+    "category": "Genomics",
+    "task": "Identify prognostic genes and druggable targets in esophageal squamous cell carcinoma using AI-driven multi-omics",
+    "key_results": "Identified IL22RA1 and FAM221A as hub genes in epithelial cells; AZD7762 nominated as multi-target inhibitor; convergence of MR, bulk transcriptomics, Cox regression, and ML drug sensitivity prediction; in vitro validation confirms IL22RA1/FAM221A promote proliferation, migration, invasion",
+    "comments": "Comprehensive multi-omics pipeline with functional validation is rigorous, but the molecular docking and in silico predictions need experimental kinase inhibition assays.",
+    "model_io": [
+      {
+        "model": "AI-driven multi-omics pipeline (MR, transcriptomics, Cox regression, NMF, SHAP, scRNA-seq, drug screening)",
+        "inputs": [
+          "summary-data MR data",
+          "bulk transcriptomics",
+          "scRNA-seq",
+          "ADMET-AI toxicity"
+        ],
+        "outputs": [
+          "prognostic genes",
+          "hub genes (IL22RA1, FAM221A)",
+          "drug candidate (AZD7762)",
+          "molecular subgroups"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "IL22RA1 and FAM221A are druggable targets in ESCC progression",
+        "result": "Confirmed; AZD7762 identified as multitarget inhibitor; in vitro assays confirm target role in proliferation and invasion"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-02788-y": {
+    "category": "Other",
+    "task": "Improve completeness of surgical RCT abstracts using constrained LLM pipeline with CONSORT guidance",
+    "key_results": "LLM rewriting significantly improved completeness (+7.40 for 250-word, +8.06 for 300-word versions, p<0.0001); gains across all CONSORT domains; 651 RCTs analyzed; validation rubric showed good agreement (0.71 CCC) with expert scoring",
+    "comments": "Practical application of constrained LLMs for scientific publishing is valuable; however, the non-fabrication constraints and human oversight requirements should be emphasized more.",
+    "model_io": [
+      {
+        "model": "GPT-4o (constrained LLM pipeline with non-fabrication constraints)",
+        "inputs": [
+          "full-text surgical RCT articles"
+        ],
+        "outputs": [
+          "rewritten abstracts (250-word and 300-word versions)",
+          "CONSORT completeness scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Constrained LLM pipeline improves CONSORT guideline compliance in surgical RCT abstracts",
+        "result": "Confirmed; significant improvements in completeness across randomization, harms, trial registration domains"
+      }
+    ]
+  },
+  "nature:10.1038/s42003-026-10295-9": {
+    "category": "Network Biology",
+    "task": "Characterize viral mimetic-induced reprogramming of colorectal tumor microenvironment toward pro-inflammatory state",
+    "key_results": "poly(I:C) induces acute macrophage polarization and CMS1-like regenerative stem cell state; identifies immune-warm patient subset enriched for pMMR and anti-inflammatory macrophages; novel biomarkers for patient stratification",
+    "comments": "Integration of cellular phenotyping with mechanistic insights is valuable, but the therapeutic translation pathway and clinical trial design could be more explicit.",
+    "model_io": [
+      {
+        "model": "Viral mimetic response profiling (poly(I:C) treatment analysis)",
+        "inputs": [
+          "CMS4 colorectal tumors",
+          "immune cell populations",
+          "transcriptomic profiles"
+        ],
+        "outputs": [
+          "macrophage polarization states",
+          "stem cell phenotypes",
+          "patient stratification biomarkers",
+          "anti-metastatic mechanisms"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Viral mimetics reprogram immunosuppressed CMS4 tumors toward pro-inflammatory and regenerative states",
+        "result": "Confirmed; poly(I:C) induces favorable immune cell programming and identifies responsive patient subset"
+      }
+    ]
+  },
+  "nature:10.1038/s44259-026-00217-4": {
+    "category": "Genomics",
+    "task": "Predict bacterial antimicrobial susceptibility from whole-genome sequencing using scalable, interpretable machine learning",
+    "key_results": "71.6% of MIC predictions within one dilution; external validation F1=0.85 (vs. 0.82 for resistance determinant model, 0.74 for k-mer model); low RAM usage (23.6GB vs. 38.8GB); identifies known and potentially novel resistance determinants",
+    "comments": "Data-driven approach outperforms knowledge-based methods and is computationally efficient, though validation on additional species and drugs would strengthen generalizability claims.",
+    "model_io": [
+      {
+        "model": "Progressive genome segment refinement with ML (interpretable feature selection)",
+        "inputs": [
+          "bacterial whole genome sequences (762 E. coli strains)"
+        ],
+        "outputs": [
+          "MIC predictions",
+          "resistance determinant identification",
+          "interpretable feature contributions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Data-driven genome analysis outperforms knowledge-based resistance determinant annotation for MIC prediction",
+        "result": "Confirmed; achieves 71.6% accuracy within one dilution with superior external generalization (F1=0.85)"
+      }
+    ]
+  },
+  "nature:10.1038/s41524-026-02154-2": {
+    "category": "ML Theory",
+    "task": "Transfer learning for efficient phase diagram mapping in autonomous materials discovery",
+    "key_results": "50% reduction in sampling requirements vs. conventional active learning; PhaseTransfer combines target + source models with spatially-varying reliability assessments",
+    "comments": "Smart reuse of prior phase diagrams; validates on synthetic + experimental microfluidic platform; transferability to distant material families unclear.",
+    "model_io": [
+      {
+        "model": "PhaseTransfer (Gaussian processes with transfer learning)",
+        "inputs": [
+          "prior phase diagrams, current experimental data"
+        ],
+        "outputs": [
+          "optimal sampling locations, predicted phase diagram"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Transfer learning from related phase diagrams accelerates mapping via knowledge reuse",
+        "result": "50% sampling reduction vs. conventional active learning"
+      }
+    ]
+  },
+  "nature:10.1038/s41538-026-00901-9": {
+    "category": "Other",
+    "task": "AI-driven personalization in precision nutrition and climate-resilient food supply chains",
+    "key_results": "Review identifies data integration, algorithm optimization, and application effectiveness as key enablers; Singapore vertical farming and IBM Food Trust cited as promising cases",
+    "comments": "Narrative review lacking quantitative synthesis; identifies synergies between nutrition and supply chains but proposes no novel methodology.",
+    "model_io": [
+      {
+        "model": "N/A (literature review)",
+        "inputs": [],
+        "outputs": []
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-44227-8": {
+    "category": "Algorithms",
+    "task": "Charger placement optimization in wireless sensor networks via graph coloring and Enhanced Aquila Optimization",
+    "key_results": "Enhanced Aquila achieves 99% coverage with faster convergence than Raindrop (82%), Grey Wolf (85%), Black Hole/Dragonfly (89%), standard Aquila (93%)",
+    "comments": "Two-stage hybrid approach (coloring + optimization) is logical; coverage gains modest over baselines; scalability to large networks not demonstrated.",
+    "model_io": [
+      {
+        "model": "Degree-based Grundy coloring + Enhanced Aquila Optimization",
+        "inputs": [
+          "WSN topology, coverage/power constraints"
+        ],
+        "outputs": [
+          "charger count, optimal locations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Enhanced Aquila Optimization (eagle-hunting inspired) determines optimal charger placement more efficiently than standard metaheuristics",
+        "result": "99% coverage with faster convergence; 6% coverage improvement vs. standard Aquila"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-50060-w": {
+    "category": "Algorithms",
+    "task": "Energy-aware priority-based task scheduling via Hyper-Heuristic Bacterial Foraging Optimization",
+    "key_results": "BFO-HH reduces energy 9.9%, makespan 9.3%, SLA violations 28%, increases resource utilization 7%, reduces cost 14% vs. GA/PSO/ACO/ABC on 200 tasks",
+    "comments": "Practical metaheuristic combining four low-level heuristics; CloudSim experiments thorough; gains statistically significant but modest.",
+    "model_io": [
+      {
+        "model": "BFO-HH (Hyper-Heuristic Bacterial Foraging Optimization)",
+        "inputs": [
+          "cloudlets (tasks), VMs, cloud resources"
+        ],
+        "outputs": [
+          "task schedule, energy consumption, makespan, cost"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Hyper-heuristic BFO dynamically combining four heuristics outperforms single metaheuristics in cloud task scheduling",
+        "result": "9.9% energy reduction, 9.3% makespan, 28% SLA violation reduction for 200 tasks"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-52623-3": {
+    "category": "ML Theory",
+    "task": "Causal discovery from LLM interaction logs for digital literacy",
+    "key_results": "F1=0.802, Hamming distance=10.3 (12% and 23.7% improvement over FGES baseline); 85.7% edges exceed reliability threshold",
+    "comments": "Novel application of causal discovery to LLM behavioral logs; interpretability gains valuable for education but limited by proxy-based literacy measurement.",
+    "model_io": [
+      {
+        "model": "CD-LLM (causal discovery framework)",
+        "inputs": [
+          "8456 interaction records from WildChat"
+        ],
+        "outputs": [
+          "causal hypotheses among 16 variables"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Interaction features mediate relationships between prompt characteristics and digital literacy",
+        "result": "21 data-consistent causal hypotheses identified with high reliability"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-52752-9": {
+    "category": "ML Theory",
+    "task": "Personalized prediction of student moral education progress via multimodal fusion and self-attention",
+    "key_results": "+7.1% accuracy, +7% F-measure vs. competing methods using Auto-Encoder + self-attention + random forest",
+    "comments": "Methodologically sound fusion pipeline; modest improvements; moral development is subjective\u2014evaluation criteria and dataset details unclear.",
+    "model_io": [
+      {
+        "model": "Auto-Encoder + self-attention + Random Forest",
+        "inputs": [
+          "multimodal student data (behavior, assessments, engagement)"
+        ],
+        "outputs": [
+          "moral development stage/progress prediction"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multimodal fusion with self-attention enables better personalized prediction of moral education progress",
+        "result": "+7.1% accuracy, +7% F-measure"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-73581-4": {
+    "category": "Quantum",
+    "task": "Demonstrate asymmetric relativistic zero-knowledge proofs with unconditional quantum security",
+    "key_results": "Practical implementation completing 0.22 second runtime; overall randomness cost 430.81 MB; linear round complexity relation improves feasibility over symmetric ZKPs; quantum soundness related to CHSH game",
+    "comments": "Significant advance in relativistic cryptography feasibility; integration of special relativity with quantum mechanics for trustless protocols is conceptually elegant but deployment requires specialized hardware.",
+    "model_io": [
+      {
+        "model": "Asymmetric relativistic ZKP protocol using relativistic bit commitments and CHSH game analysis",
+        "inputs": [
+          "graph three-coloring problem instance",
+          "quantum state preparation",
+          "relativistic constraints"
+        ],
+        "outputs": [
+          "zero-knowledge proof verification",
+          "quantum soundness certification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Asymmetric protocol reduces round complexity linearly with edge count, improving practical feasibility over symmetric relativistic ZKPs",
+        "result": "Confirmed experimentally with 0.22 second completion time"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-73696-8": {
+    "category": "Applied Physics",
+    "task": "Transport enzymatic activity across liquid-liquid interfaces using field-modulated magnetic particle assembly",
+    "key_results": "Gravity-resisting growth of seaweed-like structures penetrating perfluorohexane-water interface; enzyme-functionalized transporters achieve cross-interface catalytic activity in chip systems",
+    "comments": "Innovative bio-inspired assembly strategy; demonstrates functional principle but scalability and enzyme activity retention during transport require further investigation.",
+    "model_io": [
+      {
+        "model": "Frequency-modulated magnetic and hydrodynamic assembly of particles in microfluidics",
+        "inputs": [
+          "static/oscillating magnetic fields",
+          "particle suspensions",
+          "enzyme functionalization"
+        ],
+        "outputs": [
+          "high-aspect-ratio structures",
+          "interfacial transport",
+          "catalytic reactions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Combined static and oscillating fields enable directional growth with gravity resistance via frequency-modulated interactions",
+        "result": "Confirmed; seaweed-like morphologies achieve interface penetration and catalytic activity"
+      }
+    ]
+  },
+  "nature:10.1038/s41534-026-01213-2": {
+    "category": "Quantum",
+    "task": "Develop local decoders for quantum error correction with practical thresholds",
+    "key_results": "Exponential logical error suppression with improved threshold approaching global decoders; two-row shearing-rule implementation reduces classical memory requirements",
+    "comments": "Significant progress on local quantum error correction; practical implementation feasibility demonstrated but threshold comparison quantitative details limited.",
+    "model_io": [
+      {
+        "model": "Signal-rule and shearing-rule local cellular-automaton decoders for repetition code",
+        "inputs": [
+          "odd parities between neighboring qubits",
+          "defect positions",
+          "noise (data and measurement errors)"
+        ],
+        "outputs": [
+          "logical error rates",
+          "decoded qubit states"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Binary-signal exchange between defects enables near-global performance with local processing",
+        "result": "Confirmed with threshold significantly improved over prior local decoders"
+      }
+    ]
   }
 }
