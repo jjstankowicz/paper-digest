@@ -213253,5 +213253,985 @@
         "result": "Confirmed; TE topological, TM trivial at long wavelengths; behavior reverses at short wavelengths"
       }
     ]
+  },
+  "hf:2605.25191": {
+    "category": "Generative",
+    "task": "Inject visual guidance into text-to-image diffusion models at inference without retraining",
+    "key_results": "VCF successfully transfers visual attributes (style, composition, color) while maintaining prompt adherence; demonstrates trade-off between text alignment (CLIP score) and visual fidelity (LPIPS)",
+    "comments": "Novel inference-time approach avoids expensive fine-tuning, but the documented trade-off between text and visual alignment suggests fundamental tensions in dual conditioning.",
+    "model_io": [
+      {
+        "model": "Visual Concept Fusion (VCF) + Stable Diffusion",
+        "inputs": [
+          "text prompt",
+          "reference image"
+        ],
+        "outputs": [
+          "generated image"
+        ]
+      },
+      {
+        "model": "CLIP-based aligner",
+        "inputs": [
+          "image tokens"
+        ],
+        "outputs": [
+          "text embedding space features"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Visual concept injection can be achieved by aligning CLIP image features with text embeddings without concept-specific training",
+        "result": "Confirmed; VCF successfully transfers visual attributes at inference time"
+      }
+    ]
+  },
+  "hf:2605.25189": {
+    "category": "Agents/RL",
+    "task": "Mitigate reward hacking in RL-based language model optimization",
+    "key_results": "Trusted-direction projection delays shortcut exploitation and preserves task performance; reward-hacking runs show substantially larger directional change in parameter updates than clean runs",
+    "comments": "Geometric analysis of RL drift is insightful, but the approach is reactive\u2014preventing drift rather than addressing root causes of misaligned incentives.",
+    "model_io": [
+      {
+        "model": "Language model with RL optimization",
+        "inputs": [
+          "task examples",
+          "reward signal"
+        ],
+        "outputs": [
+          "optimized model parameters"
+        ]
+      },
+      {
+        "model": "Trusted-direction projection module",
+        "inputs": [
+          "gradient updates",
+          "reference subspace"
+        ],
+        "outputs": [
+          "constrained gradient updates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Reward hacking emerges when optimization drifts from stable low-dimensional trajectories, detectable via dominant singular directions of parameter updates",
+        "result": "Confirmed; hacking exhibits substantially larger directional change than clean runs"
+      },
+      {
+        "hypothesis": "Constraining gradients to clean reference subspace delays exploitation",
+        "result": "Confirmed across mathematical reasoning tasks"
+      }
+    ]
+  },
+  "hf:2605.23491": {
+    "category": "Agents/RL",
+    "task": "Improve LLM code generation without ground-truth unit tests via test-time scaling",
+    "key_results": "CoSPlay improves BoN from 22.1% to 33.2% on Qwen2.5-7B; increases UT accuracy from 14.6% to 78.3%; matches or surpasses RLVR baselines without ground-truth data",
+    "comments": "Clever co-evolutionary approach to jointly improve code and test quality, but scalability and generalization beyond code generation remain open questions.",
+    "model_io": [
+      {
+        "model": "LLM code generator (Qwen2.5-7B-Instruct, CURE-7B)",
+        "inputs": [
+          "problem description"
+        ],
+        "outputs": [
+          "code candidates"
+        ]
+      },
+      {
+        "model": "Self-generated unit test generator",
+        "inputs": [
+          "code candidates",
+          "problem context"
+        ],
+        "outputs": [
+          "test cases"
+        ]
+      },
+      {
+        "model": "CoSPlay framework",
+        "inputs": [
+          "code-UT execution matrix"
+        ],
+        "outputs": [
+          "refined codes",
+          "refined UTs",
+          "final selected code"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Codes and unit tests can be jointly improved through cooperative self-play without ground-truth supervision",
+        "result": "Confirmed; co-evolution produces both better codes and tests"
+      },
+      {
+        "hypothesis": "Bidirectional pass-count signals enable discriminative pruning and refinement",
+        "result": "Confirmed; reaches 33.2% BoN without ground-truth data"
+      },
+      {
+        "hypothesis": "Output-consensus clustering identifies correct codes",
+        "result": "Confirmed; correct codes agree on same inputs while wrong codes diverge"
+      }
+    ]
+  },
+  "hf:2605.21748": {
+    "category": "Benchmark",
+    "task": "Evaluate LLM-as-a-judge quality on multi-turn conversational tasks",
+    "key_results": "Evaluated 21 frontier LLM judges on RankJudge; validation layer corrects 29% of queries; judge rankings stable under partial observability and coarser correctness criteria",
+    "comments": "Well-designed benchmark with unambiguous labeling via paired-conversation injection, though focus on reference-grounded conversations may not fully capture open-domain dialogue challenges.",
+    "model_io": [
+      {
+        "model": "Various LLM judges (21 frontier models)",
+        "inputs": [
+          "multi-turn conversation pair"
+        ],
+        "outputs": [
+          "quality ranking or judgment"
+        ]
+      },
+      {
+        "model": "Bradley-Terry ranking model",
+        "inputs": [
+          "pairwise judge comparisons"
+        ],
+        "outputs": [
+          "judge rankings"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LLM-as-a-judge can reliably evaluate multi-turn conversations on reference-grounded tasks",
+        "result": "Partially confirmed; judge rankings are stable under multiple criteria but represent frontier models with varying performance"
+      },
+      {
+        "hypothesis": "Judge rankings are stable under partial observability and alternative rating algorithms",
+        "result": "Confirmed across multiple evaluation configurations"
+      }
+    ]
+  },
+  "hf:2605.21712": {
+    "category": "LLM/Reasoning",
+    "task": "Enable natural language access to geospatial transportation safety data via schema-grounded queries",
+    "key_results": "All queries executed successfully; validation layer corrects errors in 29% of queries; framework demonstrated on statewide Massachusetts safety database with crash records and GIS layers",
+    "comments": "Well-motivated public-sector application separating flexible language interpretation from deterministic execution; the 29% error correction rate highlights inherent gaps between natural language and schema compliance.",
+    "model_io": [
+      {
+        "model": "LLM (unspecified) + validation layer + DAG compiler",
+        "inputs": [
+          "natural language query"
+        ],
+        "outputs": [
+          "semantic frame",
+          "typed DAG of spatial operations"
+        ]
+      },
+      {
+        "model": "PostGIS database executor",
+        "inputs": [
+          "typed DAG"
+        ],
+        "outputs": [
+          "geospatial query results"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Schema-grounded natural language interface can broaden access to transportation safety data while maintaining reproducibility",
+        "result": "Confirmed; framework executed all queries successfully with validation layer catching errors"
+      },
+      {
+        "hypothesis": "Separating language interpretation from deterministic execution preserves trust in public-sector AI",
+        "result": "Supported; design enables reviewable, schema-grounded execution independent of LLM errors"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-73600-4": {
+    "category": "Protein Dynamics",
+    "task": "Map allosteric coupling network in BAP1-UCH and link dynamic perturbations to oncogenic mutations",
+    "key_results": "L49V mutation abolishes DUB activity by disrupting \u03bcs\u2013ms timescale correlated motions in a phenylalanine cluster; 22 cancer mutations reveal allosteric hub centered on conserved leucine L49",
+    "comments": "Methyl NMR provides excellent sensitivity to conformational dynamics, though the causal relationship between motion loss and catalytic defect could benefit from direct activity assays on intermediate variants.",
+    "model_io": [
+      {
+        "model": "BAP1-UCH domain with cancer mutations and methyl-labeling",
+        "inputs": [
+          "22 cancer mutations",
+          "22 methyl mutations at cancer sites"
+        ],
+        "outputs": [
+          "methyl chemical shift perturbations",
+          "\u03bcs\u2013ms timescale motion correlations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "L49 serves as central allosteric hub coupling cancer mutations to DUB activity loss",
+        "result": "Confirmed: L49V truncation abolishes activity and disrupts phenylalanine cluster dynamics"
+      },
+      {
+        "hypothesis": "Subtle structural perturbations collapse the dynamic network required for catalysis",
+        "result": "Confirmed: single-carbon side-chain truncation sufficient to ablate activity"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-73538-7": {
+    "category": "Apoptosis/Cell Death",
+    "task": "Elucidate pathophysiological mechanisms of EPG5 deficiency in Vici syndrome",
+    "key_results": "Impaired mitophagy causes mitochondrial Ca\u00b2\u207a overload, mtDNA release, and cGAS-STING pathway activation; mPTP inhibition reverses cascade",
+    "comments": "Multi-level mechanistic dissection from patient cells identifies actionable therapeutic targets in a rare monogenic disorder.",
+    "model_io": [
+      {
+        "model": "Patient-derived fibroblasts and iPS-derived cortical neurons",
+        "inputs": [
+          "EPG5 pathogenic variants",
+          "cytosolic Ca\u00b2\u207a signals"
+        ],
+        "outputs": [
+          "mitochondrial bioenergetic dysfunction",
+          "mtDNA release",
+          "cGAS-STING activation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "EPG5 deficiency impairs mitophagy leading to mitochondrial dysfunction",
+        "result": "Confirmed; impaired mitophagy and bioenergetic stress observed"
+      },
+      {
+        "hypothesis": "mPTP opening drives innate immune activation",
+        "result": "Confirmed; mPTP inhibition and STING inhibition reverse pathogenic cascade"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-51184-9": {
+    "category": "Apoptosis/Cell Death",
+    "task": "Enhance ferroptosis via NO-mediated ROS and GSH modulation in tumors",
+    "key_results": "Arg-modified mesoporous Fe3O4 nanoparticles release NO and deliver DOX; dual NO-enhanced ferroptosis and apoptosis with synergistic anti-tumor effect in vivo; no systemic toxicity",
+    "comments": "Nanosystem engineering for dual-modality cell death is elegant; clinical translation requires biocompatibility and biodistribution optimization.",
+    "model_io": [
+      {
+        "model": "Tumor cell lines and xenograft mouse models",
+        "inputs": [
+          "Arg-AFe3O4@DOX nanosystem",
+          "NO release",
+          "doxorubicin"
+        ],
+        "outputs": [
+          "intracellular ROS",
+          "GSH levels",
+          "lipid peroxides",
+          "ferroptosis markers",
+          "apoptosis markers",
+          "tumor growth inhibition"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "NO dual-enhances both ferroptosis and apoptosis pathways",
+        "result": "Confirmed; NO simultaneously increases lipid peroxidation and triggers apoptotic cascades"
+      },
+      {
+        "hypothesis": "Arg-AFe3O4@DOX nanosystem induces synergistic cell death",
+        "result": "Confirmed; superior anti-tumor efficacy vs. monotherapy in vivo"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-52312-1": {
+    "category": "Development",
+    "task": "Define mechanisms controlling symmetric vs. asymmetric division during epicardial cell specification",
+    "key_results": "miR-200b expressed in epicardial subset; miR-200b regulates EPDC numbers via filamin A (FLNA) targeting; FLNA loss reduces asymmetric divisions",
+    "comments": "Identification of miR-200b-FLNA axis governing spindle positioning provides mechanistic insight into developmental cell fate bifurcation.",
+    "model_io": [
+      {
+        "model": "Embryonic epicardial cells with gain/loss-of-function miR-200b; ex vivo explants",
+        "inputs": [
+          "miR-200b mimic/inhibitor",
+          "FLNA knockout"
+        ],
+        "outputs": [
+          "EPDC number",
+          "symmetric/asymmetric division ratio",
+          "spindle positioning",
+          "post-MI cardiac remodeling"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "miR-200b regulates EPDC specification through modulation of cell division symmetry",
+        "result": "Confirmed; miR-200b controls symmetric vs. asymmetric division balance"
+      },
+      {
+        "hypothesis": "FLNA is a direct miR-200b target that promotes asymmetric division",
+        "result": "Confirmed; FLNA loss reduces asymmetric divisions; direct binding validated"
+      },
+      {
+        "hypothesis": "miR-200b dysregulation after MI affects cardiac remodeling",
+        "result": "Supported; altered post-MI miR-200b expression in mice and humans"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-54142-7": {
+    "category": "Cell Division/Cycle",
+    "task": "Determine effects of high glucose on autophagy and mitochondrial homeostasis in dental pulp cells",
+    "key_results": "High glucose (35 mmol/L) increased p62, reduced LC3B, decreased AMPK\u03b1 phosphorylation, increased mTOR phosphorylation; ROS increased, ATP decreased",
+    "comments": "Standard metabolic stress markers confirm glucose-induced autophagic impairment; AMPK/mTOR axis clearly implicated.",
+    "model_io": [
+      {
+        "model": "Human dental pulp cells in vitro",
+        "inputs": [
+          "35 mmol/L glucose",
+          "CCK-8 assay timepoints (24-96h)"
+        ],
+        "outputs": [
+          "p62/LC3B ratio",
+          "p-AMPK\u03b1",
+          "p-mTOR",
+          "ROS",
+          "ATP",
+          "glutathione levels"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "High glucose impairs autophagy via mTOR pathway suppression of AMPK",
+        "result": "Confirmed; decreased AMPK\u03b1 phosphorylation and increased mTOR phosphorylation observed"
+      },
+      {
+        "hypothesis": "Impaired autophagy correlates with mitochondrial dysfunction",
+        "result": "Confirmed; ATP depletion and ROS elevation mirror autophagy markers"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55204-6": {
+    "category": "Cell Division/Cycle",
+    "task": "Elucidate circRNA-miRNA regulatory axis driving H. pylori-induced gastric cancer progression",
+    "key_results": "H. pylori upregulates hsa_circ_0085465; circRNA promotes proliferation, migration, invasion in vitro and tumor growth in vivo; sponges miR-33b-3p; miR-33b-3p suppresses cancer phenotypes and reverses circRNA effects",
+    "comments": "Comprehensive ceRNA mechanism validated via dual-luciferase and FISH; H. pylori link underscores infection-driven tumorigenesis.",
+    "model_io": [
+      {
+        "model": "H. pylori-infected gastric epithelial cells and gastric cancer cells; xenograft mouse model",
+        "inputs": [
+          "H. pylori infection",
+          "hsa_circ_0085465 overexpression/knockdown",
+          "miR-33b-3p modulation"
+        ],
+        "outputs": [
+          "cell proliferation",
+          "migration/invasion",
+          "tumor growth rate",
+          "circRNA-miRNA binding",
+          "target gene expression"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "H. pylori infection upregulates hsa_circ_0085465 in gastric cells",
+        "result": "Confirmed; transcriptome sequencing validated upregulation"
+      },
+      {
+        "hypothesis": "hsa_circ_0085465 promotes gastric cancer progression via miR-33b-3p sponging",
+        "result": "Confirmed; circRNA acts as ceRNA; miR-33b-3p suppresses proliferation/migration/invasion"
+      },
+      {
+        "hypothesis": "miR-33b-3p partially rescues circRNA-induced cancer phenotypes",
+        "result": "Confirmed; miR-33b-3p restoration reverses oncogenic effects"
+      }
+    ]
+  },
+  "nature:10.1038/s41698-026-01492-0": {
+    "category": "Cell Division/Cycle",
+    "task": "Identify NAALADL1 as resistance mediator to Tumor Treating Fields in colorectal cancer",
+    "key_results": "TTFields induce mitotic disruption, metabolic stress, apoptosis across CRC panel; NAALADL1 significantly upregulated in resistant lines; NAALADL1 knockdown sensitizes to TTFields; Lumacaftor and Bestatin synergize with TTFields",
+    "comments": "Systematic TTFields evaluation across CRC lines reveals heterogeneity; NAALADL1 identification provides rational combination strategy.",
+    "model_io": [
+      {
+        "model": "Panel of low-passage CRC cell lines; transcriptomics and targeted sequencing",
+        "inputs": [
+          "TTFields",
+          "NAALADL1 shRNA",
+          "Lumacaftor",
+          "Bestatin"
+        ],
+        "outputs": [
+          "cell viability",
+          "microtubule stability",
+          "G2/M arrest",
+          "apoptosis markers",
+          "gene expression signatures"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "NAALADL1 confers resistance to TTFields in CRC",
+        "result": "Confirmed; upregulated in resistant lines; knockdown sensitizes"
+      },
+      {
+        "hypothesis": "NAALADL1 depletion destabilizes microtubules and enhances G2/M arrest",
+        "result": "Confirmed; NAALADL1 inhibition synergizes with TTFields via microtubule disruption"
+      },
+      {
+        "hypothesis": "Lumacaftor and Bestatin inhibit NAALADL1 and enhance TTFields efficacy",
+        "result": "Predicted by virtual screening; efficacy validation needed"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-44924-4": {
+    "category": "Structural Prediction",
+    "task": "Discovering multi-target antiviral inhibitors against aspartyl polymerases",
+    "key_results": "Four lead compounds identified via virtual screening (200,583 compounds); Lig-2 surpassed Ribavirin for SARS-CoV-2 RdRp and HIV-1 RT; all candidates showed stable binding in 200 ns MD simulations",
+    "comments": "Computational pipeline is rigorous, but experimental validation of top leads remains pending to confirm in vitro activity.",
+    "model_io": [
+      {
+        "model": "Virtual screening and molecular docking pipeline",
+        "inputs": [
+          "ZINC library (200,583 compounds)",
+          "target structures (SARS-CoV-2 RdRp, HIV-1 RT, HCV NS5B)"
+        ],
+        "outputs": [
+          "lead compounds",
+          "binding affinities",
+          "ADME/T properties",
+          "binding stability (200 ns MD)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Lig-2 and Lig-1 have superior binding to polymerase active sites compared to Ribavirin",
+        "result": "Confirmed for SARS-CoV-2 RdRp and HIV-1 RT; Ribavirin superior for HCV NS5B"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-53163-6": {
+    "category": "Structural Prediction",
+    "task": "Elucidating mechanism of Lysimachia paridiformis against rheumatoid arthritis via network pharmacology",
+    "key_results": "99 potential targets identified; 5 core targets (TNF, IL6, AKT1, IL1B, PTGS2); TNF signaling pathway enriched; alternariol, galangin-3-methoxy, alpinetin bind TNF-\u03b1; LPSF inhibits TNF-\u03b1 activity, increases L929 viability, suppresses mRNA/protein of inflammatory factors",
+    "comments": "Multi-dimensional validation (network pharmacology, docking, MD, cell assays, reporter assays) thorough; in vivo efficacy in RA models recommended.",
+    "model_io": [
+      {
+        "model": "Network pharmacology and molecular validation pipeline",
+        "inputs": [
+          "LPSF components",
+          "RA-related targets",
+          "protein-protein interaction networks"
+        ],
+        "outputs": [
+          "target predictions",
+          "TNF-\u03b1 binding affinities",
+          "inflammatory response inhibition",
+          "functional assay outcomes"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LPSF exerts therapeutic effects against RA by targeting TNF-\u03b1 signaling",
+        "result": "Confirmed; strong binding to TNF-\u03b1; LPSF suppressed TNF-\u03b1-induced migration and downregulated inflammatory cytokines"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55024-8": {
+    "category": "Statistical Methods",
+    "task": "Detecting anomalous EHR access patterns for healthcare cybersecurity",
+    "key_results": "VAE-based model achieved F1-score 0.93; lower false-positive rates and greater sensitivity to noisy data compared to Isolation Forest and One-Class SVM",
+    "comments": "Synthetic dataset generation addresses privacy constraints but introduces potential domain shift; real-world deployment validation needed.",
+    "model_io": [
+      {
+        "model": "Variational Autoencoder (VAE)",
+        "inputs": [
+          "EHR access logs (departmental affiliations, user roles, access frequency, timestamps)"
+        ],
+        "outputs": [
+          "anomaly scores",
+          "latent representations of access patterns"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "VAE-based unsupervised learning outperforms traditional ML for anomaly detection in EHR access",
+        "result": "Confirmed; VAE achieved F1=0.93 vs. baselines with lower false-positive rates"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-02806-z": {
+    "category": "Other",
+    "task": "Mapping landscape of virtual simulation in undergraduate dental education and AI incorporation",
+    "key_results": "Scoping review of 57 studies (2007\u20132025); first-generation systems support knowledge, second-generation support procedural skills; most studies reported improved learner performance and confidence; challenges include uncertain knowledge retention and incomplete clinical replication",
+    "comments": "Scoping review methodology appropriate for emerging field; AI implications well-articulated but require prospective evaluation in dental curricula.",
+    "model_io": [],
+    "hypotheses": [
+      {
+        "hypothesis": "Virtual simulation improves learner performance in dental education",
+        "result": "Supported; majority of 57 studies reported improved performance and confidence"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-73387-4": {
+    "category": "Combinatorics/Graph Theory",
+    "task": "Minimizing off-target DNA strand interactions in DNA origami",
+    "key_results": "Scaffolds predicted low off-target interactions show higher yield by AFM; optical tweezers confirm more uniform mechanics",
+    "comments": "Multi-objective computational scoring of off-target interactions is practical and experimentally validated across 2D/3D origami.",
+    "model_io": [
+      {
+        "model": "Computational framework scoring 4 classes of off-target interactions; AFM/optical tweezers validation",
+        "inputs": [
+          "candidate DNA sequences"
+        ],
+        "outputs": [
+          "assembly yield",
+          "mechanical uniformity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Off-target scaffold-staple interactions are major determinant of DNA origami yield",
+        "result": "Low off-target predictions correlate with high experimental yield and mechanical uniformity"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-42947-5": {
+    "category": "Graph Theory",
+    "task": "Network resilience restoration via strategic and budget-constrained rewiring",
+    "key_results": "Laplacian Energy metric captures vulnerability spectrum better than largest connected component size alone",
+    "comments": "Two rewiring approaches and deeper robustness evaluation via Laplacian Energy is sound but no quantitative comparison vs baseline restoration methods.",
+    "model_io": [
+      {
+        "model": "Strategic rewiring + budget-constrained optimal rewiring",
+        "inputs": [
+          "fragmented network topology"
+        ],
+        "outputs": [
+          "rewired network",
+          "robustness metrics (LCC size, Laplacian Energy)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Laplacian Energy better characterizes network vulnerability than component size in fragmented networks",
+        "result": "Evaluated as metric of restored network robustness"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-47297-w": {
+    "category": "ML Theory",
+    "task": "Low-light image enhancement in HSV space via continuous hue and dual-branch restoration",
+    "key_results": "Favorable trade-off between enhancement quality and computational cost on paired and unpaired benchmarks",
+    "comments": "Continuous sine-cosine hue encoding and asymmetric dual-branch (luminance/chrominance) is architecturally sound; quantitative PSNR/SSIM improvements not provided.",
+    "model_io": [
+      {
+        "model": "HVD-Net (HSV input, HCSA + MSFM dual branches)",
+        "inputs": [
+          "low-light images in HSV space"
+        ],
+        "outputs": [
+          "enhanced images"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Continuous hue encoding and separate luminance/chrominance branches reduce color distortion and noise",
+        "result": "Competitive enhancement quality with reduced computation vs RGB methods"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-47812-z": {
+    "category": "ML Theory",
+    "task": "CNN regularization via adaptive conditional dropout and dynamic regularization",
+    "key_results": "+3.3% CIFAR-10, +9.27% CIFAR-100, +3.94% Tiny ImageNet; 58.8% train-test gap reduction on CIFAR-100",
+    "comments": "CDDR phase-aware design (dropout disabled early, then adaptive) is simple and effective; uncertainty estimation via MC-Dropout adds value.",
+    "model_io": [
+      {
+        "model": "VGG-16 / ResNet-18 with CDDR",
+        "inputs": [
+          "image patches"
+        ],
+        "outputs": [
+          "class predictions + uncertainty"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Adaptive dropout and L2 decay reduce overfitting in imbalanced/scarce data regimes",
+        "result": "Significant accuracy gains and train-test gap closure"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-52720-3": {
+    "category": "ML Theory",
+    "task": "Sustainable e-commerce via adaptive green intelligence and autonomous ESG auditing",
+    "key_results": "AGIA2 accuracy 96.1%, F1=0.96, ROC-AUC=0.98; reduced sustainability violation false-negatives vs baseline ML/DL models",
+    "comments": "Multimodal IoT+transaction+carbon+ESG dataset integration is comprehensive but comparison baselines (SVM/RF/LR/CNN) are weak; real-world deployment impact unclear.",
+    "model_io": [
+      {
+        "model": "SVM/RF/LR/CNN/RNN-LSTM ensembles with SHAP/LIME explainability",
+        "inputs": [
+          "transaction logs, IoT sensor streams, carbon intensity, ESG indicators"
+        ],
+        "outputs": [
+          "sustainability score, anomalies, compliance audit"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Hybrid ensemble + adaptive routing improve sustainability scoring and ESG compliance detection",
+        "result": "Accuracy 96.1%, reduced false-negatives on violations vs single-model baselines"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-53106-1": {
+    "category": "ML Theory",
+    "task": "Short-form video recommendation via GCN and reinforcement learning",
+    "key_results": "Improved Precision@K, Recall@K, NDCG@K; multimodal + DRL outperforms baseline configurations",
+    "comments": "Multimodal GCN + DRL combination is sensible but abstract lacks specific metrics vs baselines.",
+    "model_io": [
+      {
+        "model": "GCN + self-attention + DRL (Deep Q-learning)",
+        "inputs": [
+          "visual/audio/text modality graphs",
+          "user-item interactions"
+        ],
+        "outputs": [
+          "video recommendation ranking"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multimodal GCN with DRL captures user preference dynamics",
+        "result": "Improved ranking metrics vs standard GCN; DRL enables adaptive policy optimization"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-54422-2": {
+    "category": "ML Theory",
+    "task": "Topic classification with hyperparameter optimization",
+    "key_results": "98.62% accuracy on BBC News, 98.23% on AG News using MBOA-optimized BiGRU",
+    "comments": "Strong empirical results but the novelty of MBOA optimization algorithm is unclear from abstract.",
+    "model_io": [
+      {
+        "model": "BiGRU with Modified Builder Optimization Algorithm",
+        "inputs": [
+          "text documents"
+        ],
+        "outputs": [
+          "topic labels"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "MBOA hyperparameter optimization improves BiGRU performance",
+        "result": "State-of-the-art results on both datasets"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-54500-5": {
+    "category": "Algorithms",
+    "task": "Risk-aware path planning in partially observable environments",
+    "key_results": "Reduced proxy risk exposure vs baselines while maintaining competitive mission completion in simulated scenarios",
+    "comments": "TVF-RPPO factorization enables post-hoc risk adjustment without retraining, but quantitative improvements not specified.",
+    "model_io": [
+      {
+        "model": "TVF-RPPO with SwiftFormer and GRU belief state",
+        "inputs": [
+          "terrain costs",
+          "risk maps",
+          "observation history"
+        ],
+        "outputs": [
+          "planned path",
+          "speed control"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Factorized value estimation improves risk-safety tradeoff",
+        "result": "Reduced risk exposure with adjustable risk-weight parameter"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-54859-5": {
+    "category": "ML Theory",
+    "task": "3D object detection via radar-camera fusion in BEV",
+    "key_results": "NDS 57.1%, mAP 45.7% on nuScenes; robust under adverse weather",
+    "comments": "Spatial-aware dual-expert fusion is intuitive but modest improvements over implicit spatial fusion baselines unclear from abstract.",
+    "model_io": [
+      {
+        "model": "SDEF-BEV (parallel dual-expert + CSF paths)",
+        "inputs": [
+          "radar features",
+          "camera features"
+        ],
+        "outputs": [
+          "BEV 3D object detections"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Adaptive dual-expert fusion learns region-specific modality weighting",
+        "result": "Competitive NDS/mAP on nuScenes with robustness to weather"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-54981-4": {
+    "category": "ML Theory",
+    "task": "Long-video music generation via multi-agent framework",
+    "key_results": "Outperforms SOTA on audio quality, semantic consistency, and temporal alignment",
+    "comments": "Abstract lacks quantitative metrics; 'new standard' claim is unsupported numerically.",
+    "model_io": [
+      {
+        "model": "Hierarchical multi-agent framework with storyboard and dual-path fusion",
+        "inputs": [
+          "video scenes",
+          "emotional tones"
+        ],
+        "outputs": [
+          "background music"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-agent collaboration ensures semantic-temporal coherence",
+        "result": "Outperforms baselines on multiple quality dimensions"
+      }
+    ]
+  },
+  "nature:10.1038/s44387-026-00119-w": {
+    "category": "Algorithms",
+    "task": "Information quality assessment via diffusion features",
+    "key_results": "Pearson r=0.834 for next-year citation gain; 95.62% accuracy predicting high-impact papers (STEM dataset n=29,264)",
+    "comments": "GAM on three theoretically-grounded features (diversity, timeliness, salience) is transparent and interpretable; domain transfer to non-academic settings untested.",
+    "model_io": [
+      {
+        "model": "Generalized Additive Model on diffusion features",
+        "inputs": [
+          "diversity, timeliness, salience from paper diffusion networks"
+        ],
+        "outputs": [
+          "impact prediction"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Diffusion-based features predict academic impact independent of content",
+        "result": "r=0.834 next-year citation gain; 95.62% high-impact classification accuracy"
+      }
+    ]
+  },
+  "nature:10.1038/s44387-026-00120-3": {
+    "category": "ML Theory",
+    "task": "GAN training stabilization via state-feedback control theory",
+    "key_results": "Jointly addresses instability, gradient vanishing, mode collapse in image and molecular generation",
+    "comments": "Control-theoretic perspective is novel but quantitative improvements in generation quality vs SOTA GAN variants not reported.",
+    "model_io": [
+      {
+        "model": "CLC-regularized GAN with state-feedback control",
+        "inputs": [
+          "training dynamics state",
+          "feedback control input"
+        ],
+        "outputs": [
+          "generated images/molecular sequences"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Feedback control unifies three GAN training pathologies",
+        "result": "Stable training without gradient vanishing or mode collapse"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-72818-6": {
+    "category": "Quantum",
+    "task": "Realize unconditional remote CNOT gate via quantum teleportation in solid-state networks",
+    "key_results": "Deterministic CNOT between remote diamond NV-C13 qubit registers; 4-partite GHZ state demonstrates genuine entanglement; no post-selection required",
+    "comments": "Key milestone for distributed quantum computing; extends quantum network capabilities to gate-level remote operations.",
+    "model_io": [
+      {
+        "model": "Remote quantum teleportation protocol with NV-C13 systems",
+        "inputs": [
+          "NV electron spin entanglement generation",
+          "C13 nuclear spin control",
+          "single-shot readout",
+          "real-time feed-forward"
+        ],
+        "outputs": [
+          "remote CNOT gate fidelity",
+          "GHZ state entanglement",
+          "gate operation success rate"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Unconditional teleported gate achievable via deterministic local logic and real-time feed-forward",
+        "result": "Non-local CNOT demonstrated without post-selection; 4-partite GHZ entanglement verified between nodes"
+      }
+    ]
+  },
+  "nature:10.1038/s41524-026-02145-3": {
+    "category": "Condensed Matter",
+    "task": "Uncertainty-aware background subtraction in core-loss EELS with ML",
+    "key_results": "Physics-informed neural networks with Monte Carlo replica generation; well-calibrated uncertainty; ~50 fT nanoscale CrSBr stacking modulation detected",
+    "comments": "Novel integration of ML with rigorous uncertainty propagation; demonstrates path to automated quantitative EELS analysis.",
+    "model_io": [
+      {
+        "model": "Physics-informed neural network ensemble with MC replicas",
+        "inputs": [
+          "pre-edge EELS region",
+          "empirical covariance matrix",
+          "effective-exponent constraint"
+        ],
+        "outputs": [
+          "core-loss background probability distributions",
+          "pixel/energy-resolved uncertainties",
+          "edge-onset intensities"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Uncertainty-aware ML enables faithful background reconstruction and extrapolation",
+        "result": "Closure tests on synthetic data confirm well-calibrated uncertainties; CrSBr modulations exceed propagated error"
+      }
+    ]
+  },
+  "nature:10.1038/s41535-026-00894-4": {
+    "category": "Condensed Matter",
+    "task": "Identify Z2 vortex crystal phase in triangular Heisenberg-Kitaev quantum magnet",
+    "key_results": "Organic magnet (CD3ND3)2NaRuCl6 exhibits triangular Ru3+ lattice with jeff=1/2; multi-q ground state candidate Z2 vortex crystal; three incommensurate states in H-T phase diagram",
+    "comments": "First member of new quantum triangular lattice family; interplay of frustration and spin-orbit effects opens design space.",
+    "model_io": [
+      {
+        "model": "Triangular Heisenberg-Kitaev model on (CD3ND3)2NaRuCl6",
+        "inputs": [
+          "spin configuration",
+          "magnetic field H\u2225c",
+          "temperature",
+          "spin-wave measurements"
+        ],
+        "outputs": [
+          "phase diagram (H-T)",
+          "ground state (multi-q)",
+          "spin-wave spectrum",
+          "Hamiltonian parameters (J, J\u00b1\u00b1)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-q ground state in (CD3ND3)2NaRuCl6 realizes Z2 vortex crystal from Heisenberg-Kitaev model",
+        "result": "Thermodynamic and neutron data support multi-q order; resonant magnetoelastic coupling implies proposed ground state"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-50113-0": {
+    "category": "Optics/Photonics",
+    "task": "Detect single-trial cortical population spikes using high-frequency MEG",
+    "key_results": "Noise floor ~500 aT/Hz^1/2; achieved single-trial detection of hfSER at ~50 fT_pp amplitude",
+    "comments": "State-of-the-art neuromagnetic sensitivity; dynamic range optimization and biological interpretation remain challenging.",
+    "model_io": [
+      {
+        "model": "12-channel SQUID MEG system with multimode signal architecture",
+        "inputs": [
+          "median nerve electrical stimulus",
+          "magnetic field coupling"
+        ],
+        "outputs": [
+          "spatially resolved 450-850 Hz band activity",
+          "single-trial waveforms",
+          "noise characterization"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Neuronal hfSER magnetic field ~35 fT peak-to-peak for somatosensory cortex",
+        "result": "Single-trial detection confirmed at ~50 fT_pp in vivo, consistent with predictions"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-54612-y": {
+    "category": "Optics/Photonics",
+    "task": "Optimize THz MIMO antenna design using ML regression models for 6G communication",
+    "key_results": "1\u00d72 MIMO patch (130.7\u00d7288 \u03bcm) achieves 14.07 dB gain, 87.7% efficiency, -44.64 dB isolation; ML Extra Trees prediction R\u00b2=98.13%, MAE=1.31%, RMSE=1.76%",
+    "comments": "Effective ML-driven antenna optimization; compact form factor and high isolation promising for 6G/IoT integration.",
+    "model_io": [
+      {
+        "model": "THz MIMO antenna design with ML regression (Extra Trees)",
+        "inputs": [
+          "antenna dimensions",
+          "patch geometry",
+          "feed configuration",
+          "dual-frequency bands (8.2-10.86 THz)"
+        ],
+        "outputs": [
+          "gain",
+          "efficiency",
+          "isolation (MIMO)",
+          "ECC",
+          "DG",
+          "TARC/CCL",
+          "ML-optimized parameters"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "ML optimization improves THz MIMO antenna performance over baseline designs",
+        "result": "Extra Trees achieves 98.13% prediction accuracy; optimized design shows 14.07 dB gain, -44.64 dB isolation"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55137-0": {
+    "category": "Condensed Matter",
+    "task": "Characterize width and chirality effects on elastic and fracture properties of coronene nanoribbons",
+    "key_results": "Peak stress ~40 GPa larger for AC-CNRs vs ZZ-CNRs; Young's modulus approaches graphene value (1 TPa) with width; fracture patterns uniform except narrowest ribbons",
+    "comments": "Comprehensive MD study revealing quasi-1D to 2D transition; edge effects dominate mechanical response at small widths.",
+    "model_io": [
+      {
+        "model": "Molecular dynamics simulation of CNRs under tensile stress",
+        "inputs": [
+          "ribbon width",
+          "chirality (AC/ZZ edges)",
+          "strain rate",
+          "temperature"
+        ],
+        "outputs": [
+          "elastic constants",
+          "Young's modulus",
+          "peak stress",
+          "fracture patterns"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Edge chirality and bonding orientation affect strain response and fracture initiation",
+        "result": "AC-CNRs sustain larger strains; inverted Young's modulus trend emerges with width for AC vs ZZ"
+      }
+    ]
   }
 }
