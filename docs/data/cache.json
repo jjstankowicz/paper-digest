@@ -217487,5 +217487,795 @@
         "result": "Confirmed: thousands of vesicles trapped and analyzed in seconds via Brownian motion and interferometric scattering"
       }
     ]
+  },
+  "hf:2605.27102": {
+    "category": "Generative",
+    "task": "Clean-latent prediction in latent diffusion transformers",
+    "key_results": "JLT-B/1 achieves FID-50K 2.50 on ImageNet 256\u00d7256 with classifier-free guidance, with substantial improvement over matched velocity-prediction baseline",
+    "comments": "The finding that prediction targets are representation-dependent geometric choices rather than algebraically equivalent parameterizations is conceptually important but relies on a single architecture comparison.",
+    "model_io": [
+      {
+        "model": "JLT (130M latent diffusion Transformer)",
+        "inputs": [
+          "frozen FLUX.2 VAE codes"
+        ],
+        "outputs": [
+          "clean-latent predictions"
+        ]
+      },
+      {
+        "model": "Velocity-prediction DiT baseline",
+        "inputs": [
+          "frozen FLUX.2 VAE codes"
+        ],
+        "outputs": [
+          "velocity predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Clean-data prediction exploits low-dimensional latent structure better than velocity prediction in latent space",
+        "result": "Confirmed: FID-50K 2.50 for clean prediction vs. lower performance for velocity baseline"
+      },
+      {
+        "hypothesis": "Velocity regression amplifies low-variance latent directions while clean prediction damps them",
+        "result": "Confirmed via local Gaussian analysis showing different covariance properties"
+      }
+    ]
+  },
+  "hf:2605.27068": {
+    "category": "Agents/RL",
+    "task": "Auditing grounding and consistency in multimodal social deduction agents",
+    "key_results": "Leading VLMs hallucinate 15.1% of spatial claims and make over 50% of accusations without grounded evidence; agents fail across spatial hallucination, deception collapse, and language-action inconsistency",
+    "comments": "The three-level evaluation framework (outcomes, trajectories, utterance-level consistency) is thorough, though the evaluation is limited to social deduction games and may not generalize to other reasoning domains.",
+    "model_io": [
+      {
+        "model": "Three frontier VLMs (unspecified names)",
+        "inputs": [
+          "multimodal social deduction game states",
+          "agent action history"
+        ],
+        "outputs": [
+          "discussion utterances",
+          "accusations",
+          "spatial claims"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "VLMs ground their language in actual perceived states and actions",
+        "result": "Rejected: 15.1% spatial hallucination and >50% unsupported accusations indicate poor grounding"
+      }
+    ]
+  },
+  "hf:2605.23215": {
+    "category": "Systems",
+    "task": "Benchmarking GPU kernel generation by LLM agents in production environments",
+    "key_results": "Strongest agent achieves only 0.94\u00d7 speedup over baselines; 46 representative kernels subsume 96.2% of HuggingFace Transformers architectures",
+    "comments": "The paper makes a critical observation about benchmark-production misalignment, but the negative result (agents underperforming) limits immediate practical impact; release of production-grade framework is valuable.",
+    "model_io": [
+      {
+        "model": "State-of-the-art kernel generation agents",
+        "inputs": [
+          "target GPU architecture specifications",
+          "kernel operation descriptions"
+        ],
+        "outputs": [
+          "optimized GPU kernel code"
+        ]
+      },
+      {
+        "model": "FastKernels inference framework",
+        "inputs": [
+          "GPU kernels",
+          "LLM inference workloads"
+        ],
+        "outputs": [
+          "throughput measurements",
+          "correctness validation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Benchmark gains translate to production throughput improvements",
+        "result": "Rejected: benchmark-optimized kernels underperform in production (0.53\u20130.94\u00d7 speedup)"
+      },
+      {
+        "hypothesis": "46 representative kernels can cover most Transformer architectures",
+        "result": "Confirmed: 96.2% coverage of HuggingFace Transformers"
+      }
+    ]
+  },
+  "hf:2605.26242": {
+    "category": "LLM/Reasoning",
+    "task": "Evaluating whether LLMs possess genuine introspective metacognition",
+    "key_results": "Models cannot distinguish internal state interventions from input manipulations; classifiers with only input access match in-context prediction performance; models perform near-chance on relabeled control tasks",
+    "comments": "The paper makes a methodologically sound critique by importing standards from human metacognition research, though the negative conclusions rest on relatively small-scale re-examinations of prior work.",
+    "model_io": [
+      {
+        "model": "LLMs (unspecified architectures)",
+        "inputs": [
+          "original inputs",
+          "tampered internal states",
+          "task prompts with semantic labels"
+        ],
+        "outputs": [
+          "binary detection decisions",
+          "hidden state predictions"
+        ]
+      },
+      {
+        "model": "Baseline classifiers",
+        "inputs": [
+          "input representations only"
+        ],
+        "outputs": [
+          "label predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LLMs can detect tampering of their internal states",
+        "result": "Rejected: models conflate internal tampering with input anomalies"
+      },
+      {
+        "hypothesis": "LLMs have privileged access to their hidden representations for prediction",
+        "result": "Rejected: input-only classifiers match in-context performance; control setting yields near-chance results"
+      }
+    ]
+  },
+  "hf:2503.08600": {
+    "category": "Benchmark",
+    "task": "Mining scientific claims and investigation proposals from NSF award abstracts",
+    "key_results": "2.8 million claims from 400,000 abstracts; fine-tuning yields >100% relative gains on claim/proposal extraction; NSF-SciFy-20K contains 135,000 claims across five directorates",
+    "comments": "The dataset is large and spans diverse disciplines, but high precision with lower recall on extraction suggests the automated generation may require manual refinement for high-stakes scientific claim verification tasks.",
+    "model_io": [
+      {
+        "model": "LLMs with zero-shot prompting",
+        "inputs": [
+          "NSF award abstracts"
+        ],
+        "outputs": [
+          "extracted scientific claims",
+          "investigation proposals"
+        ]
+      },
+      {
+        "model": "Fine-tuned language models",
+        "inputs": [
+          "NSF award abstracts"
+        ],
+        "outputs": [
+          "claimed claims",
+          "investigation proposals"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Fine-tuning on NSF-SciFy improves downstream scientific information extraction",
+        "result": "Confirmed: >100% relative gains on claim and proposal extraction tasks"
+      },
+      {
+        "hypothesis": "Large-scale claim extraction enables scientific verification at scale",
+        "result": "Partial: 2.8M claims extracted, but precision-recall trade-off limits immediate verification readiness"
+      }
+    ]
+  },
+  "nature:10.1038/s41388-026-03824-7": {
+    "category": "Cell Division/Cycle",
+    "task": "Characterize MST4 context-dependent dual roles in p53-driven lung adenocarcinoma",
+    "key_results": "MST4 tumor-suppressive in wtp53 cells (inhibits proliferation/migration) but oncogenic in GOF-mutant p53 cells; MST4 stabilizes both wtp53 and GOF-p53 via MDM2-competitive kinase-independent mechanism; MST4 targeting suppresses GOF-p53 xenografts",
+    "comments": "Reveals p53 mutation-status-dependent regulation; non-canonical kinase-independent mechanism of MST4 action.",
+    "model_io": [
+      {
+        "model": "CRISPR-knockout LUAD cell lines with p53 status profiling",
+        "inputs": [
+          "MST4 depletion",
+          "p53 status"
+        ],
+        "outputs": [
+          "cell proliferation",
+          "p53 ubiquitination",
+          "tumor formation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "MST4 context-dependently regulates p53 stability competing with MDM2",
+        "result": "Confirmed; tumor suppression in wtp53 but oncogenicity in GOF-p53 contexts"
+      }
+    ]
+  },
+  "nature:10.1038/s41419-026-08877-w": {
+    "category": "Cell Signaling",
+    "task": "Characterize NIK as tumor suppressor in KRAS-driven pancreatic cancer",
+    "key_results": "NIK deletion accelerates PanIN progression and carcinoma in KC/KPC models; shortened survival in KPNiC mice correlates with elevated ERK signaling and myCAF enrichment",
+    "comments": "Demonstrates context-dependent effects of NF-\u03baB pathway modulation; caution needed when targeting this pathway therapeutically.",
+    "model_io": [
+      {
+        "model": "Genetically engineered mouse models (KC, KPC, KNiC, KPNiC)",
+        "inputs": [
+          "KRAS mutation",
+          "NIK deletion",
+          "cerulein-induced pancreatitis"
+        ],
+        "outputs": [
+          "tumor grade",
+          "survival",
+          "ERK/STAT3 signaling",
+          "myCAF markers"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "NIK deletion accelerates KRAS-driven tumorigenesis via increased ERK signaling",
+        "result": "Confirmed; elevated ERK and IL6-STAT3 signaling observed"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10539-y": {
+    "category": "Cell Signaling",
+    "task": "Elucidate \u03b2-arrestin liquid-liquid phase separation in GPCR regulation",
+    "key_results": "\u03b2-arrestins form condensates specific to visual and \u03b2-arrestins (not other arrestins); condensation occurs in proximity to GPCR; regulates internalization and signaling",
+    "comments": "Reveals phase separation as an organizing principle for GPCR signaling compartmentalization.",
+    "model_io": [
+      {
+        "model": "GPCR cell-based assays with phase separation analysis",
+        "inputs": [
+          "\u03b2-arrestin",
+          "GPCR"
+        ],
+        "outputs": [
+          "condensate formation",
+          "GPCR internalization",
+          "signaling output"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "\u03b2-arrestin condensates regulate GPCR function through liquid-liquid phase separation",
+        "result": "Confirmed; condensation specific to visual and \u03b2-arrestins"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10584-7": {
+    "category": "Epigenetics",
+    "task": "Identify \u03b1KG-carnitine axis driving histone acetylation-dependent DNA repair",
+    "key_results": "TMLHE (carnitine synthesis enzyme) necessary for HR-proficient cell survival with DNA damaging agents; \u03b1KG-TMLHE axis required for histone acetylation via non-redundant pathway; high TMLHE correlates with worse PFS in treated patients",
+    "comments": "Unexpected metabolic regulation of epigenetics; high TMLHE as negative prognostic marker for DNA-damaging therapy.",
+    "model_io": [
+      {
+        "model": "CRISPR screening of 64 \u03b1KGDD genes and functional validation",
+        "inputs": [
+          "\u03b1KG",
+          "TMLHE",
+          "DNA-damaging agents"
+        ],
+        "outputs": [
+          "histone acetylation",
+          "HR-mediated repair",
+          "cell survival"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "\u03b1KG-TMLHE-mediated carnitine synthesis drives histone acetylation for HR DNA repair",
+        "result": "Confirmed; TMLHE depletion sensitizes HR-proficient cells to DNA damage"
+      }
+    ]
+  },
+  "nature:10.1038/s42003-026-10200-4": {
+    "category": "Cytoskeleton",
+    "task": "Characterize formation, function, and regulation of intercellular bridges in male germ cell development",
+    "key_results": "Not a primary research paper; reviews conserved ICB structures connecting synchronously developing germ cells; highlights core regulatory machinery and cross-species distribution patterns",
+    "comments": "Comprehensive review of ICB biology; identifies key gaps in understanding regulatory mechanisms and broader biological significance.",
+    "model_io": [],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41540-026-00749-5": {
+    "category": "Statistical Methods",
+    "task": "Uncertainty quantification in Neural and Universal Differential Equations for out-of-distribution scenarios",
+    "key_results": "Proposed ensemble construction method improved UQ reliability in OOD scenarios vs standard ensembles; tested on Lotka-Volterra, damped oscillator, Lorenz, and cell apoptosis models",
+    "comments": "Diversity-promoting ensemble construction is creative; evaluation on biological apoptosis model strengthens relevance, though clinical translation remains speculative.",
+    "model_io": [
+      {
+        "model": "Ensemble of NODEs/UDEs with diversity-promoting construction",
+        "inputs": [
+          "time-series trajectories from dynamical systems",
+          "partial observability",
+          "noisy training data"
+        ],
+        "outputs": [
+          "vector field reconstructions",
+          "OOD uncertainty estimates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Diversity in reconstructed vector fields within ensemble regions improves UQ reliability in OOD scenarios",
+        "result": "Improved UQ reliability compared to standard ensembles on benchmark and apoptosis models"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55107-6": {
+    "category": "Statistical Methods",
+    "task": "Cross-domain plant leaf disease classification with uncertainty quantification",
+    "key_results": "97.8% accuracy (controlled data), 93.6% (field data); ECE 0.032/0.041; improved robustness under domain shift with stable uncertainty behavior",
+    "comments": "Hierarchical Vision Transformer with Monte Carlo Dropout and calibration is thorough; bidirectional cross-domain evaluation (controlled\u2194field) strengthens generalizability assessment.",
+    "model_io": [
+      {
+        "model": "Hierarchical Vision Transformer (HViT) with Monte Carlo Dropout",
+        "inputs": [
+          "plant leaf images (NPDD and PlantDoc datasets)"
+        ],
+        "outputs": [
+          "disease class predictions",
+          "predictive uncertainty estimates"
+        ]
+      },
+      {
+        "model": "Temperature-based calibration module",
+        "inputs": [
+          "model logits"
+        ],
+        "outputs": [
+          "calibrated confidence scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Uncertainty estimation and calibration within hierarchical transformer framework improve robustness under domain shift",
+        "result": "97.8% controlled accuracy, 93.6% field accuracy; reduced ECE and improved calibration vs baselines"
+      }
+    ]
+  },
+  "nature:10.1038/s41698-026-01482-2": {
+    "category": "Statistical Methods",
+    "task": "Multi-center foundation-model-based detection and classification of colorectal liver metastases on CT",
+    "key_results": "AUC 0.89, sensitivity 0.82 (EuCanImage test); sensitivity 0.85 (TCIA external cohort); AUC 0.90 after excluding most uncertain 20% cases; lesion-level detector 69.1% sensitivity overall",
+    "comments": "UMedPT foundation model encoder provides robust generalization across multi-center scanners; Grad-CAM interpretability and decision-curve analysis strengthen clinical utility.",
+    "model_io": [
+      {
+        "model": "UMedPT foundation model-based encoder + lesion detection pipeline",
+        "inputs": [
+          "contrast-enhanced CT DICOM images (2437 EuCanImage + 197 TCIA)"
+        ],
+        "outputs": [
+          "patient-level CRLM classification",
+          "lesion-level detection with confidence"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Foundation models enable robust, generalizable CRLM detection across multi-center heterogeneous scanners",
+        "result": "AUC 0.89-0.90, sensitivity 0.82-0.85; strong external validation on TCIA cohort"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-02771-7": {
+    "category": "Statistical Methods",
+    "task": "Evaluating causal reasoning consistency in LLMs for HIV antiretroviral therapy pharmacoepidemiology",
+    "key_results": "Moderate to high intra-model agreement (decreasing associational\u2192counterfactual); modest expert alignment; associational reasoning rated favorably; counterfactual reasoning showed key weaknesses",
+    "comments": "Systematic evaluation across causal ladder (associational/interventional/counterfactual) is rigorous; LLM hallucinations and reduced counterfactual reliability limit clinical deployment.",
+    "model_io": [
+      {
+        "model": "Multiple LLMs (GPT-4o, LLaMA-3, open/closed-source)",
+        "inputs": [
+          "clinical vignettes with context-rich and context-simple queries"
+        ],
+        "outputs": [
+          "causal reasoning responses at three levels (associational, interventional, counterfactual)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LLMs exhibit consistent causal reasoning across associational, interventional, and counterfactual queries in HIV pharmacoepidemiology",
+        "result": "Moderate intra-model agreement; lower inter-model agreement; modest expert alignment diminishing toward counterfactual level"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-02803-2": {
+    "category": "Statistical Methods",
+    "task": "Automated lesion detection and stroke outcome prediction via deep learning neuroimaging",
+    "key_results": "96% concordance with manual methods; multiple cognitive outcomes predicted with reasonable accuracy; ~3 min turnaround for personalized LLM-generated reports",
+    "comments": "End-to-end automation from DICOM to interpretable text is impressive; external validation on N=153 stroke cohort strengthens generalizability claim.",
+    "model_io": [
+      {
+        "model": "Deep learning lesion segmentation + location/network-based feature extraction",
+        "inputs": [
+          "raw DICOM MRI data (heterogeneous scanners)"
+        ],
+        "outputs": [
+          "lesion masks",
+          "cognitive outcome predictions"
+        ]
+      },
+      {
+        "model": "Large language model report generator",
+        "inputs": [
+          "lesion features",
+          "outcome probabilities"
+        ],
+        "outputs": [
+          "personalized text-based prognostic reports"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Automated lesion segmentation + location/network features enable accurate personalized cognitive outcome prediction",
+        "result": "96% concordance with manual methods; successful external validation"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10526-3": {
+    "category": "Development",
+    "task": "Map transcription factor codes that pattern neuronal cell types in Drosophila cerebrum",
+    "key_results": "Identified a hierarchical set of transcription factors delineating cerebral hemilineages; transcription factors are required to generate gross anatomical features and stratify subtypes by birth order",
+    "comments": "Elegant use of lineage tracing to connect developmental transcriptomics to circuit function, though functional validation of individual TF combinations remains incomplete.",
+    "model_io": [
+      {
+        "model": "Drosophila melanogaster cerebrum neurons",
+        "inputs": [
+          "transcription factor expression",
+          "neuronal lineage identity",
+          "Notch signaling status"
+        ],
+        "outputs": [
+          "hemilineage classification",
+          "anatomical class identity",
+          "sexual differentiation state"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Transcription factors operate hierarchically to build and diversify lineally related neurons in motivated behaviour circuits",
+        "result": "Confirmed; distinct TF sets control gross features vs. fine-scale diversity and sexual differentiation"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10537-0": {
+    "category": "Sensory Systems",
+    "task": "Characterize spatial coding transformation between hippocampal CA3 and CA1 in large naturalistic environments",
+    "key_results": "CA3 exhibits ultrasparse coding (predominantly single place fields) while CA1 exhibits dense coding (multiple place fields); place field sizes similar across both areas and environment sizes (6\u2013200 m); trajectory history modulates place cells over >100 m distances",
+    "comments": "Clever use of bat flight tunnels to test predictions impossible in standard rodent arenas, though the computational advantage of sparse-to-dense transformation is demonstrated only in simulation.",
+    "model_io": [
+      {
+        "model": "Bat hippocampus (CA1 and CA3 simultaneously recorded)",
+        "inputs": [
+          "bat flight trajectory",
+          "spatial position",
+          "environmental geometry"
+        ],
+        "outputs": [
+          "place cell firing",
+          "place field maps",
+          "trajectory history modulation"
+        ]
+      },
+      {
+        "model": "Recurrent neural network",
+        "inputs": [
+          "sparse CA3-like input",
+          "learning task"
+        ],
+        "outputs": [
+          "dense CA1-like output",
+          "learning speed metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Small experimental arenas mask true CA1\u2013CA3 coding differences",
+        "result": "Confirmed; large environments reveal sparse CA3 vs. dense CA1 coding"
+      },
+      {
+        "hypothesis": "Sparse-to-dense transformation facilitates fast learning of new spatial maps",
+        "result": "Supported by neural network simulation"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-72506-5": {
+    "category": "Quantum",
+    "task": "Classical surrogate models for quantum processor emulation to reduce experimental overhead",
+    "key_results": "Predictive surrogates emulate up to 42-qubit superconducting processor with 10,000\u00d7 computational speedup; reduce measurement overhead by orders of magnitude; pre-train variational quantum eigensolvers and identify non-equilibrium Floquet phases",
+    "comments": "Practical approach to democratizing quantum processor access; validated on transverse-field Ising models and Floquet phases, but generalization to arbitrary quantum algorithms unclear.",
+    "model_io": [
+      {
+        "model": "Classical neural-network surrogate for quantum processor",
+        "inputs": [
+          "circuit parameters (up to 42 qubits)",
+          "variational ansatz settings"
+        ],
+        "outputs": [
+          "mean-value observables",
+          "variational quantum eigensolvers",
+          "phase identification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Machine-learning surrogates capture mean-value behavior of quantum processors with provable computational efficiency",
+        "result": "Confirmed; surrogates enable efficient pre-training and reduce measurement overhead by orders of magnitude"
+      }
+    ]
+  },
+  "nature:10.1038/s41524-026-02147-1": {
+    "category": "Condensed Matter",
+    "task": "Generative diffusion model for accelerated design of inorganic crystalline materials",
+    "key_results": "Unified end-to-end crystal structure generation 100\u20131000\u00d7 faster than prior methods; DFT-validated rare-earth-free ferromagnets with high saturation magnetization and large anisotropy; metallic antiferromagnets discovered",
+    "comments": "Major acceleration in materials discovery; practical synthesis feasibility assessment and experimental validation of generated materials would strengthen impact.",
+    "model_io": [
+      {
+        "model": "DiffCrysGen score-based diffusion model",
+        "inputs": [
+          "desired target properties (magnetic, electronic)"
+        ],
+        "outputs": [
+          "complete crystal structures",
+          "atom types",
+          "positions",
+          "lattice parameters"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Score-based diffusion enables unified, efficient generation of diverse, stable crystal structures",
+        "result": "Confirmed; 100\u20131000\u00d7 speedup achieved; DFT-validated novel magnetic materials discovered"
+      }
+    ]
+  },
+  "nature:10.1038/s41526-026-00613-0": {
+    "category": "Applied Physics",
+    "task": "Bubble transport on superaerophilic wedge surfaces under variable gravity conditions",
+    "key_results": "Reduced gravity enhances bubble transport and eliminates volume constraints; microgravity enables capture of >1000 \u03bcL bubbles exceeding terrestrial limits; lower temperature and larger wedge angles accelerate transport",
+    "comments": "Valuable for space-based electrolysis; gravity-dependent enhancement well-modeled, but material scalability to large industrial scales unclear.",
+    "model_io": [
+      {
+        "model": "Bubble transport on superaerophilic wedge surface",
+        "inputs": [
+          "gravity level",
+          "wedge angle",
+          "surface temperature",
+          "bubble volume"
+        ],
+        "outputs": [
+          "transport velocity",
+          "capture efficiency",
+          "critical volume limit"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Reduced gravity monotonically enhances bubble transport by increasing Laplace-pressure-gradient efficiency",
+        "result": "Confirmed; microgravity removes terrestrial volume constraints, enabling >1000 \u03bcL capture"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10521-8": {
+    "category": "Quantum",
+    "task": "Device-independent randomness amplification via loophole-free Bell test",
+    "key_results": "Experimental implementation of randomness amplification with superconducting circuits; demonstrates definitive quantum advantage\u2014a task impossible by purely classical means",
+    "comments": "First experimental demonstration of a fundamental quantum information advantage; practical scaling to cryptographically useful randomness generation rates remains challenging.",
+    "model_io": [
+      {
+        "model": "Superconducting Bell test for randomness amplification",
+        "inputs": [
+          "weak random bits",
+          "quantum device (high violation + high repetition rate)"
+        ],
+        "outputs": [
+          "amplified random bits (device-independent)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Device-independent randomness amplification leveraging loophole-free Bell violations is possible and unattainable classically",
+        "result": "Confirmed; first experimental demonstration with superconducting qubits"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10556-x": {
+    "category": "High Energy/Particle",
+    "task": "Precision hyperfine-structure measurement of antihydrogen ground state for CPT tests",
+    "key_results": "4 ppm measurement of hyperfine splitting: a\u2081\u209b/h = 1,420,404.8 \u00b1 1.1 (stat.) \u00b1 5.6 (sys.) kHz; 100\u00d7 improvement over prior 400 ppm precision; consistent with hydrogen expectations",
+    "comments": "Remarkable precision advance in antimatter spectroscopy; approaching limit of existing antiproton structure theory, indicating need for refined theoretical predictions.",
+    "model_io": [
+      {
+        "model": "Trapped antihydrogen (~24,000 anti-atoms) in 1 T magnetic field",
+        "inputs": [
+          "microwave spectroscopy",
+          "antiproton + positron annihilation events"
+        ],
+        "outputs": [
+          "hyperfine splitting frequency a\u2081\u209b/h",
+          "antiproton internal structure sensitivity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Ground-state hyperfine splitting measured to 4 ppm enables CPT symmetry tests and probes antiproton structure",
+        "result": "Confirmed; measurement consistent with hydrogen and sensitive to antiproton interior at ~40 ppm level"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10581-w": {
+    "category": "High Energy/Particle",
+    "task": "Direct measurement of extreme alpha-particle preformation in \u00b9\u2070\u2074Te decay",
+    "key_results": "\u00b9\u2070\u2074Te half-life 7.2\u207a\u00b2\u00b7\u00b3\u208b\u2081.\u2085 ns; fastest ground-state \u03b1-emitter known; preformation factor exceeds all other nuclei",
+    "comments": "Remarkable experimental confirmation of surface-localized \u03b1 clustering near magic \u00b9\u2070\u2070Sn; interpretation requires nuclear models accounting for low-density surface regions.",
+    "model_io": [
+      {
+        "model": "Alpha decay of \u00b9\u2070\u2074Te \u2192 \u00b9\u2070\u2070Sn + \u03b1",
+        "inputs": [
+          "alpha-particle tunneling",
+          "barrier penetrability",
+          "residual nucleus structure"
+        ],
+        "outputs": [
+          "decay half-life (7.2 ns)",
+          "alpha preformation probability"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Extreme alpha-particle preformation in \u00b9\u2070\u2074Te arises from doubly-magic \u00b9\u2070\u2070Sn proximity enabling surface \u03b1 clustering",
+        "result": "Confirmed; preformation exceeds all previously measured nuclei; fastest ground-state \u03b1-emitter"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10585-6": {
+    "category": "Quantum",
+    "task": "Dynamical freezing for enhanced quantum magnetometry in interacting NV spin ensembles",
+    "key_results": "Emergent long-lived spin magnetization and coherent oscillations persist >T\u2082 by order of magnitude; dynamical-freezing-enhanced ac magnetometry achieves 2.7\u00d7 sensitivity enhancement over conventional dynamical decoupling",
+    "comments": "Compelling observation of thermalization breakdown in driven systems; practical magnetometry improvement is significant, though field of application limited to NV systems.",
+    "model_io": [
+      {
+        "model": "Driven NV spin ensemble (~10\u2074 spins) with dynamical freezing",
+        "inputs": [
+          "driving frequency and detuning",
+          "interacting spin Hamiltonian"
+        ],
+        "outputs": [
+          "long-lived magnetization",
+          "coherent oscillatory micromotions",
+          "enhanced ac magnetometry sensitivity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Dynamical freezing via emergent conservation laws extends T\u2082-limited coherence by >10\u00d7 and enables enhanced magnetometry",
+        "result": "Confirmed; 2.7\u00d7 sensitivity enhancement demonstrated over conventional methods"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10609-1": {
+    "category": "Condensed Matter",
+    "task": "Cavity-mediated exciton formation in bilayer graphene via terahertz coupling",
+    "key_results": "Ultrastrong light-matter coupling (g/\u03c9c \u2248 40%) and cavity-induced resonance resembling Coulomb-bound excitons stable across broad temperature range",
+    "comments": "Demonstrates practical integration of 2D materials in terahertz cavities, though exciton-like nature versus genuine bound states requires further clarification.",
+    "model_io": [
+      {
+        "model": "Bilayer graphene in THz cavity",
+        "inputs": [
+          "dual-gated bilayer graphene",
+          "terahertz photons"
+        ],
+        "outputs": [
+          "field-tunable bandgap",
+          "ultrastrong coupling signatures",
+          "cavity-induced resonances"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Terahertz cavity photons mediate attractive interactions in 2D materials",
+        "result": "Confirmed; cavity-induced resonance observed with ultrastrong coupling"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-53535-y": {
+    "category": "Applied Physics",
+    "task": "Fractional-order Klein-Gordon nonlocal thermo-elasto-diffusion model for porous media",
+    "key_results": "Generalized framework incorporating fractional heat conduction and Klein-Gordon nonlocal dynamics; fractional parameters and nonlocal effects significantly influence wave propagation and heat transfer near boundaries",
+    "comments": "Theoretically sophisticated extension of Lord\u2013Shulman framework; analytical solutions obtained in Laplace domain, but practical materials characterization (intrinsic time/length scales) and experimental validation missing.",
+    "model_io": [
+      {
+        "model": "Fractional Klein-Gordon thermo-elasto-diffusion system",
+        "inputs": [
+          "fractional-order parameters",
+          "nonlocal length/time scales",
+          "thermal and chemical loading"
+        ],
+        "outputs": [
+          "displacement field",
+          "temperature",
+          "chemical potential",
+          "stress fields"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Fractional-order heat conduction and Klein-Gordon nonlocal effects realistically capture coupled transport in porous and semiconductor materials under extreme conditions",
+        "result": "Confirmed qualitatively; wave propagation and heat-transfer behavior significantly altered near boundaries"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-54278-6": {
+    "category": "Applied Physics",
+    "task": "Monte Carlo optimization of gold nanoparticle detection limits in benchtop X-ray fluorescence computed tomography",
+    "key_results": "GNP detection limits 104\u2013140 ppm at 1.775 cGy and 69\u201388 ppm at 3.55 cGy with 1.8 mm Sn-filtered 125 kVp; monochromatic 85 keV beam improves limits 3-fold",
+    "comments": "Thorough theoretical framework validated experimentally; optimized beam spectrum identified but practical clinical translation to small-animal imaging requires further development.",
+    "model_io": [
+      {
+        "model": "Benchtop cone-beam XFCT with Monte Carlo simulation",
+        "inputs": [
+          "incident X-ray spectrum",
+          "GNP concentration",
+          "dose (cGy)",
+          "detector sensitivity"
+        ],
+        "outputs": [
+          "GNP detection limit (ppm)",
+          "signal-to-noise ratio"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Monochromatic beams above gold K-edge improve detection limits over filtered polychromatic beams",
+        "result": "Confirmed; 3-fold improvement achieved with 85 keV monochromatic illumination"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55101-y": {
+    "category": "Mathematical Physics",
+    "task": "Quantify truncation error in first-order power-law approximations for biochemical systems",
+    "key_results": "Closed-form KL risk expression reduces to trace contraction of log-curvature Hessian; criterion directly estimable from perturbation data without Monte Carlo",
+    "comments": "Practical utility depends on accurate Hessian estimation; validation on only two biochemical case studies is limited.",
+    "model_io": [
+      {
+        "model": "Biochemical system with first-order truncation",
+        "inputs": [
+          "nonlinear rate laws",
+          "log-input covariance \u03a3",
+          "log-output noise variance s\u00b2"
+        ],
+        "outputs": [
+          "KL risk estimate",
+          "Hessian trace contraction"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Expected KL risk under Gaussian fluctuations equals trace contraction of log-curvature Hessian",
+        "result": "Confirmed; criterion matches Monte Carlo estimates and identifies failure conditions"
+      }
+    ]
   }
 }
