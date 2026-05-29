@@ -225740,5 +225740,1191 @@
         "result": "KOM showed improved performance under lactate supplementation with slight parameter modifications, suggesting good transferability"
       }
     ]
+  },
+  "hf:2605.29507": {
+    "category": "LLM/Reasoning",
+    "task": "Mechanistically explaining dense retrieval decisions at the embedding level",
+    "key_results": "Xetrieval uncovers coherent interpretable features with stronger pair-level intervention effects and enables task-level feature steering across diverse retrievers",
+    "comments": "Novel approach of internalizing CoT reasoning in embedding space avoids expensive generation but the practical impact on retrieval quality itself (vs. just interpretability) remains unclear.",
+    "model_io": [
+      {
+        "model": "Dense Retriever + Reasoning Internalizer + Sparse Feature Decomposer",
+        "inputs": [
+          "query text",
+          "document text"
+        ],
+        "outputs": [
+          "relevance score",
+          "interpretable feature explanations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Reasoning-oriented information can be enriched in embeddings without autoregressive generation",
+        "result": "Single forward pass reasoning internalizer approximates CoT effectively"
+      },
+      {
+        "hypothesis": "Sparse features with natural language descriptions explain retrieval decisions",
+        "result": "Feature-level explanations are coherent and support intervention and steering"
+      }
+    ]
+  },
+  "hf:2605.30350": {
+    "category": "Vision",
+    "task": "Learning dynamics-aware visual representations for robot manipulation",
+    "key_results": "+22.5% improvement in out-of-distribution manipulation tasks; representations outperform vision-language baselines consistently across policies",
+    "comments": "Clever use of tri-modal (image-language-3D flow) supervision and simplex-volume geometry to encode motion understanding upstream, but real-world validation on complex multi-step tasks would strengthen claims.",
+    "model_io": [
+      {
+        "model": "DynaFLIP multimodal encoder",
+        "inputs": [
+          "image",
+          "language description",
+          "3D flow"
+        ],
+        "outputs": [
+          "dynamics-aware visual embedding"
+        ]
+      },
+      {
+        "model": "Downstream manipulation policy",
+        "inputs": [
+          "dynamics-aware visual embedding"
+        ],
+        "outputs": [
+          "robot action"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Motion understanding should be encoded in perception rather than left to downstream policies",
+        "result": "Dynamics-aware representations improve generalization and out-of-distribution robustness"
+      },
+      {
+        "hypothesis": "Simplex-volume minimization with contrastive objectives prevents collapse in tri-modal alignment",
+        "result": "Consistent improvements across diverse simulation and real-world setups"
+      }
+    ]
+  },
+  "hf:2605.30052": {
+    "category": "Agents/RL",
+    "task": "Recovering from invalid actions in one-shot Program-of-Thought planning",
+    "key_results": "+3 to +11 pp absolute improvement over PoT; peaks at 96.9% vs 86.3% on gpt-5.4-mini-medium; verified checkpoint information is the key recovery signal",
+    "comments": "Pragmatic engineering solution with modest LLM cost overhead, but the Adaptive RePoT dispatcher is preliminary and results are mixed across model scales.",
+    "model_io": [
+      {
+        "model": "LLM Program-of-Thought generator",
+        "inputs": [
+          "problem statement"
+        ],
+        "outputs": [
+          "Python program + execution trace"
+        ]
+      },
+      {
+        "model": "Deterministic verified replay + checkpoint repair LLM",
+        "inputs": [
+          "original program",
+          "environment state at first invalid transition"
+        ],
+        "outputs": [
+          "corrected action plan"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "A single recovery LLM call from verified prefix outperforms full retry on hard problems",
+        "result": "RePoT wins decisively on Gemini and replicates across multiple benchmarks"
+      },
+      {
+        "hypothesis": "Checkpoint information is more valuable than error-only feedback for recovery",
+        "result": "Controlled experiments show >=30% success with checkpoints vs <=3.1% with error-only on GPT-medium"
+      }
+    ]
+  },
+  "hf:2605.29271": {
+    "category": "LLM/Reasoning",
+    "task": "Jointly training dense encoder and LLM rewriter for API tool retrieval",
+    "key_results": "+2.5 pp NDCG@5 on standard queries, +6.3 pp on vague queries; up to +8 pp on hardest vague tier after three co-training rounds",
+    "comments": "Well-motivated problem of bridging colloquial queries to technical API catalogs; co-training elegantly combines complementary strengths but gains plateau after round 3.",
+    "model_io": [
+      {
+        "model": "Dense encoder + LLM rewriter (co-trained)",
+        "inputs": [
+          "user query"
+        ],
+        "outputs": [
+          "ranked API tools"
+        ]
+      },
+      {
+        "model": "Dense encoder",
+        "inputs": [
+          "query (via rewriter) or hypothetical descriptions"
+        ],
+        "outputs": [
+          "embedding"
+        ]
+      },
+      {
+        "model": "LLM rewriter",
+        "inputs": [
+          "underspecified query"
+        ],
+        "outputs": [
+          "catalog-aware hypothetical descriptions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Co-training encoder and rewriter jointly outperforms either component in isolation",
+        "result": "CoHyDE gains up to +8 pp on vague queries vs single-component baselines"
+      },
+      {
+        "hypothesis": "DPO-based preference alignment improves rewriter awareness of encoder scores",
+        "result": "Iterative procedure produces increasingly catalog-aligned descriptions"
+      }
+    ]
+  },
+  "hf:2605.25220": {
+    "category": "Vision",
+    "task": "Generating multi-view consistent 3D Gaussian head avatars from single 2D images",
+    "key_results": "State-of-the-art perceptual quality; surpasses prior methods in texture and geometric consistency; released FaceGS-10K dataset with 10K ready-to-use 3D Gaussian assets",
+    "comments": "Novel application of state space models (Mamba) with hierarchical bi-directional scanning for 3D consistency; SE(3) critic is elegant but multi-view consistency from single images remains geometrically challenging.",
+    "model_io": [
+      {
+        "model": "MVCHead (state space model with HiSS + HiBiSS)",
+        "inputs": [
+          "single 2D head image"
+        ],
+        "outputs": [
+          "3D Gaussian head representation"
+        ]
+      },
+      {
+        "model": "SE(3) Multi-view Critic",
+        "inputs": [
+          "self-rendered views from 3D Gaussians"
+        ],
+        "outputs": [
+          "multi-view consistency score"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-view consistency can be enforced directly in 3D representation without multi-view supervision",
+        "result": "MVCHead learns from single images and achieves state-of-the-art consistency metrics"
+      },
+      {
+        "hypothesis": "Hierarchical bi-directional state scan aligns recurrence with axes of strongest inconsistency",
+        "result": "Progressively refined Gaussians maintain cross-view alignment and texture consistency"
+      }
+    ]
+  },
+  "hf:2605.30344": {
+    "category": "Medical",
+    "task": "Efficient VLM fine-tuning for time-series anomaly detection with interpretable explanations",
+    "key_results": "+21.23 pp precision and +23.87 pp F1 on VisAnomBench; +9.57 pp precision and +13.39 pp F1 on TSB-AD-U cross-benchmark; parameter-efficient fine-tuning",
+    "comments": "Clever use of synthetic high-quality anomaly rationales from multiple VLMs and task-specific rewards addresses the lack of natural language supervision; strong cross-benchmark generalization is valuable.",
+    "model_io": [
+      {
+        "model": "Vision-Language Model (parameter-efficient fine-tuned)",
+        "inputs": [
+          "time-series visualization",
+          "domain context"
+        ],
+        "outputs": [
+          "anomaly localization",
+          "natural language explanation"
+        ]
+      },
+      {
+        "model": "Multi-VLM reward model",
+        "inputs": [
+          "generated explanation"
+        ],
+        "outputs": [
+          "task-specific quality score"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Large VLMs can generate high-quality synthetic anomaly rationales when guided by fine-grained task-specific rewards",
+        "result": "VisAnomBench constructed with curated explanations significantly outperforms baselines"
+      },
+      {
+        "hypothesis": "Parameter-efficient fine-tuning of VLMs generalizes across time-series anomaly benchmarks",
+        "result": "VisAnomReasoner shows strong cross-benchmark generalization with substantial F1 gains"
+      }
+    ]
+  },
+  "hf:2605.22771": {
+    "category": "LLM/Reasoning",
+    "task": "Reducing covert political bias in LLMs through consistency training",
+    "key_results": "PCT substantially reduces covert political bias while preserving overall helpfulness; generalizes to held-out benchmarks; identifies 7 techniques of covert bias",
+    "comments": "Important work on asymmetric treatment of opposing political viewpoints; two consistency metrics (sentiment and helpfulness) are sensible but the evaluation scope and real-world political impact assessment could be deeper.",
+    "model_io": [
+      {
+        "model": "LLM with Political Consistency Training (RL-based)",
+        "inputs": [
+          "political prompt pair (opposing sides)"
+        ],
+        "outputs": [
+          "balanced response"
+        ]
+      },
+      {
+        "model": "Sentiment Consistency & Helpfulness Consistency scorers",
+        "inputs": [
+          "paired responses"
+        ],
+        "outputs": [
+          "consistency metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LLMs exhibit systematic covert political bias through asymmetric handling of counterpart topics",
+        "result": "7 categories of covert bias techniques identified and quantified via consistency metrics"
+      },
+      {
+        "hypothesis": "RL training with sentiment and helpfulness consistency objectives reduces bias without sacrificing helpfulness",
+        "result": "PCT generalizes to held-out benchmarks and preserves overall response quality"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-73695-9": {
+    "category": "Other",
+    "task": "ToxiTaRGET: multi-omics database for toxicant-responsive molecular targets",
+    "key_results": "3607 multi-omics datasets from TaRGET II Consortium spanning 7 toxicants (As, Pb, BPA, TBT, DEHP, TCDD, PM2.5); integrated transcriptome, chromatin accessibility, DNA methylation profiles across tissues, sex, and life stages",
+    "comments": "Landmark resource for environmental toxicogenomics; comprehensive longitudinal design in mice enables cause-effect inference; open access platform democratizes toxicant-response biology.",
+    "model_io": [
+      {
+        "model": "ToxiTaRGET Data Integration Platform",
+        "inputs": [
+          "gene expression arrays",
+          "chromatin accessibility assays",
+          "DNA methylation profiles"
+        ],
+        "outputs": [
+          "searchable integrated database with visualization tools"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Early-life toxicant exposures produce coordinated multi-omic signatures",
+        "result": "Confirmed; 3607 datasets support systematic characterization across tissues/sex/stages"
+      }
+    ]
+  },
+  "nature:10.1038/s41540-026-00735-x": {
+    "category": "Network Biology",
+    "task": "Graph-based prediction of immunotherapy response via spatial transcriptomics",
+    "key_results": "GraphTME achieved F1 > 0.83 for anti-PD-1 response prediction; responder CD8+ T cells exhibited higher abundance and directional signaling in MERFISH validation",
+    "comments": "First framework quantifying single-cell spatial interactions for ICI response; biologically grounded edge weights (ligand-receptor distance) enhance interpretability over black-box approaches.",
+    "model_io": [
+      {
+        "model": "GraphTME (Graph Neural Network)",
+        "inputs": [
+          "single-cell RNA-seq CD8+ T cells",
+          "spatial coordinates from imaging transcriptomics"
+        ],
+        "outputs": [
+          "anti-PD-1 response prediction (binary)"
+        ]
+      },
+      {
+        "model": "Pathway-Specific Ligand-Receptor Graph",
+        "inputs": [
+          "signaling pathway databases",
+          "cell-cell spatial distances"
+        ],
+        "outputs": [
+          "multi-relational directed graph with edge weights"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Spatial ligand-receptor interactions predict ICI response",
+        "result": "Confirmed; F1 > 0.83 in NSCLC cohort"
+      },
+      {
+        "hypothesis": "Responders exhibit higher CD8+ T cell abundance and directional signaling",
+        "result": "Confirmed in MERFISH spatial validation data"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-53116-z": {
+    "category": "Genomics",
+    "task": "Characterization of hepatic miRNA signatures across chronic HBV infection phases",
+    "key_results": "65 significantly differentially expressed miRNAs identified; immune-associated miRNAs (miR-155-5p, miR-150-5p, miR-142-5p) upregulated in IA/ENH phases; 22 IA-phase miRNAs associated with macrophage/T cell markers",
+    "comments": "Comprehensive miRNA profiling across CHB natural history; hepatocyte-enriched miRNAs (miR-122-5p, miR-192-5p) stable across phases, suggesting immune-driven selective dysregulation.",
+    "model_io": [
+      {
+        "model": "miRNA Profiling Pipeline",
+        "inputs": [
+          "liver biopsies from 43 CHB patients across 4 phases"
+        ],
+        "outputs": [
+          "miRNA expression levels",
+          "differentially expressed miRNA sets"
+        ]
+      },
+      {
+        "model": "Cell Composition Inference (CIBERSORT)",
+        "inputs": [
+          "mRNA sequencing data"
+        ],
+        "outputs": [
+          "inferred immune and hepatic cell fractions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Hepatic miRNA profiles differ across CHB clinical phases",
+        "result": "Partially confirmed; miRNAs stable overall, but selective immune-phase changes in IA/ENH"
+      },
+      {
+        "hypothesis": "Immune cell infiltration associates with miRNA expression changes",
+        "result": "Confirmed; immune-associated miRNAs correlate with T cell/macrophage markers"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55098-4": {
+    "category": "Statistical Methods",
+    "task": "Structure-activity relationship modeling of heparanase inhibitors via machine learning",
+    "key_results": "Random Forest with PCA on 2D+Morgan+3D features achieved ~80% accuracy and 78.5% balanced accuracy on test set; best model successfully classified unseen compounds",
+    "comments": "Comprehensive pipeline addresses class imbalance via SMOTE; multi-dimensional feature integration (2D physicochemical, fingerprints, 3D conformers) captures complementary SAR information.",
+    "model_io": [
+      {
+        "model": "Molecular Representation Pipeline",
+        "inputs": [
+          "HPSE inhibitor SMILES from ChEMBL"
+        ],
+        "outputs": [
+          "2D physicochemical descriptors",
+          "Morgan fingerprints",
+          "3D descriptors from MMFF94s conformers"
+        ]
+      },
+      {
+        "model": "Classification Ensemble",
+        "inputs": [
+          "combined molecular features",
+          "SMOTE-balanced training set"
+        ],
+        "outputs": [
+          "activity class prediction (A/B/C based on pIC50)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Integrated 2D+fingerprint+3D representations outperform single descriptors",
+        "result": "Confirmed; RF with combined features (80% accuracy) best performing"
+      },
+      {
+        "hypothesis": "SMOTE balancing improves minority class prediction",
+        "result": "Applied and optimized via cross-validation; balanced accuracy tracked"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55163-y": {
+    "category": "Genomics",
+    "task": "ASD identification from multimodal MRI quality metrics",
+    "key_results": "95.84% diagnostic accuracy using Voting Ensemble on Quality Vector; outperforms individual 1D-ResNet, CNN, SVM, kNN models",
+    "comments": "Novel insight that technical imaging noise signatures contain diagnostic signal; however, validation needed on external cohorts and larger sample sizes to confirm clinical utility.",
+    "model_io": [
+      {
+        "model": "Quality Vector Extraction Pipeline",
+        "inputs": [
+          "structural MRI (sMRI)",
+          "functional MRI (fMRI)",
+          "diffusion tensor imaging (DTI)"
+        ],
+        "outputs": [
+          "Quality Vector from QAP metrics"
+        ]
+      },
+      {
+        "model": "Classification Ensemble",
+        "inputs": [
+          "Quality Vector"
+        ],
+        "outputs": [
+          "ASD classification (binary)"
+        ]
+      },
+      {
+        "model": "Preprocessing (DBSCAN + PCA)",
+        "inputs": [
+          "raw Quality Vector"
+        ],
+        "outputs": [
+          "cleaned, dimensionality-reduced features"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Technical MRI quality metrics contain diagnostic signal for ASD",
+        "result": "Confirmed; 95.84% accuracy suggests strong diagnostic value"
+      },
+      {
+        "hypothesis": "Ensemble voting outperforms individual classifiers",
+        "result": "Confirmed; Voting Ensemble (SVM+KNN+XGBoost) superior to 1D-ResNet and CNN alone"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55249-7": {
+    "category": "Structural Prediction",
+    "task": "In silico drug discovery for malaria via Plasmodium falciparum DHOD inhibition",
+    "key_results": "Three B. sapida compounds showed strong binding affinities (\u22128.1 to \u221210.0 kcal/mol); 2-methyl-6-(4-methylenecyclohex-2-en-1-yl)hept-2-en-4-one most stable (RMSD=0.12, RMSF=0.10); favorable ADMET profiles",
+    "comments": "Natural product screening approach; MD simulations validate binding stability; drug-likeness predictions support clinical viability; warrants experimental validation.",
+    "model_io": [
+      {
+        "model": "Compound Identification (GC-MS)",
+        "inputs": [
+          "B. sapida ethanolic leaf extract"
+        ],
+        "outputs": [
+          "21 identified compounds"
+        ]
+      },
+      {
+        "model": "Molecular Docking (AutoDock Vina)",
+        "inputs": [
+          "compound structures",
+          "PfDHODH protein structure"
+        ],
+        "outputs": [
+          "binding affinity scores",
+          "docking poses"
+        ]
+      },
+      {
+        "model": "Molecular Dynamics (GROMACS)",
+        "inputs": [
+          "docked complexes"
+        ],
+        "outputs": [
+          "stability metrics (RMSD, RMSF, ROG, SASA)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "B. sapida bioactive compounds inhibit PfDHODH",
+        "result": "Confirmed; 21 compounds showed docking interactions; 3 showed strong affinities"
+      },
+      {
+        "hypothesis": "Top inhibitors are stable in MD simulations and drug-like",
+        "result": "Confirmed; 2-methyl-6-(4-methylenecyclohex-2-en-1-yl)hept-2-en-4-one most stable with favorable ADMET"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55306-1": {
+    "category": "Statistical Methods",
+    "task": "Quantum annealing for chromatin topologically associating domain formation",
+    "key_results": "QA-sampled configurations reproduce statistical TAD features (mean marker incidences, nucleosome correlations) and exhibit TAD-like motifs; outperforms classical samplers on high-frustration spin systems",
+    "comments": "Novel quantum computing application to genomics; models chromatin as epigenetic Ising system with D-Wave embedding; reconstructs aggregate statistics rather than individual TAD sizes.",
+    "model_io": [
+      {
+        "model": "Epigenetic Ising Spin System",
+        "inputs": [
+          "nucleosome positions",
+          "epigenetic marker patterns",
+          "interaction strengths"
+        ],
+        "outputs": [
+          "spin configurations"
+        ]
+      },
+      {
+        "model": "D-Wave Quantum Annealer",
+        "inputs": [
+          "embedded Ising Hamiltonian"
+        ],
+        "outputs": [
+          "sampled chromatin states"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Epigenetic patterns drive TAD formation via spin-system dynamics",
+        "result": "QA reproduces statistical TAD features, supporting mechanistic link"
+      },
+      {
+        "hypothesis": "Quantum annealing efficiently samples frustrated chromatin models",
+        "result": "Confirmed; QA outperforms classical samplers for dense coupling topologies"
+      }
+    ]
+  },
+  "nature:10.1038/s41698-026-01510-1": {
+    "category": "Structural Prediction",
+    "task": "Multimodal MRI deep learning-radiomics for lymph node metastasis prediction post-nCRT in rectal cancer",
+    "key_results": "Combined clinical+radiomics+DL model achieved AUC 0.771 on external test; SHAP/Grad-CAM provided interpretability; outperformed individual feature modalities",
+    "comments": "Robust multicenter validation; interpretability tools strengthen clinical adoption potential; addresses key prognostic challenge in rectal cancer management.",
+    "model_io": [
+      {
+        "model": "Multimodal Fusion Network",
+        "inputs": [
+          "T2-weighted MRI",
+          "diffusion-weighted MRI",
+          "clinical demographics"
+        ],
+        "outputs": [
+          "lymph node metastasis probability"
+        ]
+      },
+      {
+        "model": "Feature Extraction (Radiomics + DL)",
+        "inputs": [
+          "tumor ROI from MRI"
+        ],
+        "outputs": [
+          "handcrafted radiomic signatures",
+          "deep learning-derived features"
+        ]
+      },
+      {
+        "model": "Random Forest Classifier",
+        "inputs": [
+          "harmonized features"
+        ],
+        "outputs": [
+          "metastasis risk prediction"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multimodal integration (clinical+radiomics+DL) improves prediction vs. unimodal",
+        "result": "Confirmed; combined model optimal with AUC 0.771 on external cohort"
+      },
+      {
+        "hypothesis": "Deep learning features capture complementary imaging information to handcrafted radiomics",
+        "result": "Supported; fusion outperforms either feature set alone"
+      }
+    ]
+  },
+  "nature:10.1038/s41698-026-01517-8": {
+    "category": "Proteomics",
+    "task": "MS-based proteomics of FFPE lung cancer from minimal clinical material",
+    "key_results": "Single-slide FFPE proteomics achieved in-depth profiling from diagnostic biopsies; detected actionable proteins, immune signatures, and multivariate biomarkers despite minimal input material",
+    "comments": "Significant practical advance for precision oncology; demonstrates proteomics feasibility on scarce retrospective tissue; bridges genomics and histopathology in clinical workflow.",
+    "model_io": [
+      {
+        "model": "Mass Spectrometry-Based Proteomics",
+        "inputs": [
+          "FFPE lung tumor sections (single glass slides)"
+        ],
+        "outputs": [
+          "quantitative proteomic profiles",
+          "protein abundance measurements"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "State-of-the-art MS enables proteomics on minimal FFPE material",
+        "result": "Confirmed; single-slide analyses yield biologically and clinically informative data"
+      },
+      {
+        "hypothesis": "Small FFPE samples harbor detectable actionable proteins and immune signatures",
+        "result": "Confirmed; multivariate biomarkers recovered despite minimal input"
+      }
+    ]
+  },
+  "nature:10.1038/s41698-026-01529-4": {
+    "category": "Genomics",
+    "task": "SQLE as diagnostic and prognostic biomarker for hepatocellular carcinoma",
+    "key_results": "SQLE significantly upregulated in LIHC across 9 GEO datasets + TCGA; independent prognostic factor for poor OS; SQLE inhibition decreased proliferation/migration; high SQLE negatively correlated with CD8+ T cell infiltration",
+    "comments": "Multiscale validation (transcriptomics, proteomics, spatial mIHC, functional assays); metabolic-immunological mechanism linking lipid biosynthesis to immunosuppression is compelling.",
+    "model_io": [
+      {
+        "model": "Multi-Cohort Transcriptomic Analysis",
+        "inputs": [
+          "9 GEO datasets + TCGA LIHC samples"
+        ],
+        "outputs": [
+          "SQLE differential expression signature"
+        ]
+      },
+      {
+        "model": "Spatial Proteomics (mIHC)",
+        "inputs": [
+          "tissue microarray (48 paired samples)"
+        ],
+        "outputs": [
+          "SQLE protein localization",
+          "correlation with Pan-Cytokeratin and CD8+ infiltration"
+        ]
+      },
+      {
+        "model": "Functional Assay (shRNA knockdown)",
+        "inputs": [
+          "LIHC cell lines with SQLE perturbation"
+        ],
+        "outputs": [
+          "proliferation",
+          "colony formation",
+          "migration metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "SQLE is upregulated in LIHC and predicts poor prognosis",
+        "result": "Confirmed; independent prognostic factor for OS across cohorts"
+      },
+      {
+        "hypothesis": "SQLE promotes LIHC progression via lipid metabolism and immunosuppression",
+        "result": "Confirmed; SQLE inhibition reduces proliferation; high SQLE associated with low CD8+ infiltration"
+      }
+    ]
+  },
+  "nature:10.1038/s41698-026-01532-9": {
+    "category": "Genomics",
+    "task": "Circulating microbiome DNA liquid biopsy for early gastric cancer detection",
+    "key_results": "cmDNA-MLM achieved AUC 0.831 (testing), 0.914 (validation); AUC 0.792 for stage I GC; notable stage shift toward earlier diagnosis; favorable sensitivities across molecular subtypes",
+    "comments": "Novel biomarker leveraging plasma microbiome DNA; strong performance on early-stage GC addresses major diagnostic challenge; requires prospective clinical validation.",
+    "model_io": [
+      {
+        "model": "cmDNA Feature Extraction",
+        "inputs": [
+          "plasma circulating microbiome DNA sequences"
+        ],
+        "outputs": [
+          "taxonomic and functional features"
+        ]
+      },
+      {
+        "model": "Machine Learning Diagnostic Model (cmDNA-MLM)",
+        "inputs": [
+          "significant cmDNA features"
+        ],
+        "outputs": [
+          "GC probability score"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Circulating microbiome DNA harbors GC-specific signatures",
+        "result": "Confirmed; AUC 0.914 in validation cohort"
+      },
+      {
+        "hypothesis": "cmDNA-MLM enables early-stage (stage I) GC detection",
+        "result": "Confirmed; AUC 0.792 for stage I with improved stage shift"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-02744-w": {
+    "category": "Statistical Methods",
+    "task": "Systematic review of AI-delivered CBT efficacy for anxiety and depression",
+    "key_results": "Only 1/14 studies showed significant anxiety improvement; only 4/16 studies showed significant depression improvement; limited evidence for older adults",
+    "comments": "Cautionary findings highlight current limitations of AI CBT interventions; study quality concerns and lack of personalization benefits suggest mature technologies needed before clinical deployment.",
+    "model_io": [],
+    "hypotheses": [
+      {
+        "hypothesis": "AI CBT shows efficacy comparable to standard CBT for anxiety",
+        "result": "Not supported; only 7.1% of anxiety studies showed significant improvements"
+      },
+      {
+        "hypothesis": "Personalization and human support improve outcomes",
+        "result": "Not reliably associated with improved outcomes across studies"
+      },
+      {
+        "hypothesis": "Third-wave CBT and interventions for younger populations show greater promise",
+        "result": "Preliminary evidence supports this for anxiety reduction"
+      }
+    ]
+  },
+  "nature:10.1038/s42003-026-10394-7": {
+    "category": "Statistical Methods",
+    "task": "Neural speech tracking under concurrent cognitive load via EEG",
+    "key_results": "Higher cognitive load reduces delta-band TRF accuracy and ANN decoding without latency shift; reduced response amplitude in delta-band; selective delta-band phase coupling changes",
+    "comments": "Elegant dissociation between speech encoding amplitude and timing; frontotemporal coupling alterations suggest load redistributes neural resources while preserving synchronization.",
+    "model_io": [
+      {
+        "model": "Temporal Response Function (TRF) Analysis",
+        "inputs": [
+          "continuous speech envelope",
+          "EEG recordings (delta/theta bands)"
+        ],
+        "outputs": [
+          "TRF prediction accuracy",
+          "response latency"
+        ]
+      },
+      {
+        "model": "Artificial Neural Network Decoding",
+        "inputs": [
+          "EEG features"
+        ],
+        "outputs": [
+          "speech-envelope reconstruction accuracy"
+        ]
+      },
+      {
+        "model": "Phase-Lag Index (PLI) Connectivity",
+        "inputs": [
+          "EEG delta-band signals"
+        ],
+        "outputs": [
+          "phase coupling networks",
+          "network topology metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Cognitive load weakens neural speech encoding amplitude",
+        "result": "Confirmed; lower delta TRF prediction accuracy and ANN decoding under load"
+      },
+      {
+        "hypothesis": "Cognitive load shifts speech response timing (peak latency)",
+        "result": "Not supported; no significant latency shift despite amplitude reduction"
+      },
+      {
+        "hypothesis": "Load alters frontotemporal phase coupling topology",
+        "result": "Confirmed; more clustered, small-world-like delta-band PLI networks under load"
+      }
+    ]
+  },
+  "nature:10.1038/s43856-026-01695-3": {
+    "category": "Other",
+    "task": "Predictive framework for neuromuscular performance under epidural electrical stimulation",
+    "key_results": "Framework developed to predict neuromuscular responses to EES parameters; reduces need for extensive in-clinic parameter searches (phase 1 interim results)",
+    "comments": "Practical advance for paralysis therapy; computational prediction of stimulation-response mapping crucial for clinical translation; phase 1 results suggest feasibility but final outcomes pending.",
+    "model_io": [
+      {
+        "model": "EES Neuromuscular Response Predictor",
+        "inputs": [
+          "stimulation parameters (electrode location, frequency, intensity, pulse width)"
+        ],
+        "outputs": [
+          "predicted motor output",
+          "muscle activation patterns"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Computational models predict neuromuscular performance under varied EES parameters",
+        "result": "Framework developed; phase 1 results suggest predictive validity (final outcomes pending)"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-51429-7": {
+    "category": "ML Theory",
+    "task": "Knowledge tracing and course recommendation via hierarchical graph attention",
+    "key_results": "HGAKT+PR outperforms baselines on multiple educational datasets; stable performance under different learning scenarios; improves personalized resource delivery",
+    "comments": "Three-level knowledge graph structure well-motivated; shared representation learning for joint optimization is sound, though experimental details sparse.",
+    "model_io": [
+      {
+        "model": "HGAKT+PR (hierarchical GAT + shared encoder)",
+        "inputs": [
+          "learner interaction history",
+          "three-level knowledge graph"
+        ],
+        "outputs": [
+          "answer performance prediction",
+          "personalized resource recommendations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Hierarchical knowledge modeling improves state estimation",
+        "result": "Stable performance across diverse datasets"
+      },
+      {
+        "hypothesis": "Shared representation learning unifies prediction and recommendation",
+        "result": "Better resource delivery and learning outcomes"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-52505-8": {
+    "category": "ML Theory",
+    "task": "Data-efficient forensic shoeprint matching under domain shift and annotation scarcity",
+    "key_results": "Domain-aligned pretrained backbones provide stable performance; morphology-preserving generative augmentation outperforms geometric transforms; 1-3% fine-tuning recovers substantial cross-domain performance",
+    "comments": "Pragmatic guidance for practitioner-oriented deep learning; non-monotonic effects of standard augmentation are noteworthy.",
+    "model_io": [
+      {
+        "model": "Pretrained backbone (domain-aligned)",
+        "inputs": [
+          "shoeprint images"
+        ],
+        "outputs": [
+          "learned features"
+        ]
+      },
+      {
+        "model": "Convolutional autoencoder (generative augmentation)",
+        "inputs": [
+          "shoeprint image"
+        ],
+        "outputs": [
+          "morphology-preserving augmented variants"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Domain-aligned representations reduce distributional mismatch",
+        "result": "Stable performance across datasets"
+      },
+      {
+        "hypothesis": "Generative augmentation preserves morphological invariants better than geometric transforms",
+        "result": "Improved cross-domain performance"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55228-y": {
+    "category": "Algorithms",
+    "task": "Small object detection in remote sensing via multi-scale feature enhancement",
+    "key_results": "MSFE-YOLO: +4.6% mAP@50 and +8.9% mAP@50-95 vs. baseline on RSOD; AMCA + SCAF + APU + MDRF modules; 12.7M params (vs. 11.17M), 74.56 FPS (vs. 105.62); favorable accuracy-efficiency trade-off",
+    "comments": "Modular architecture addresses multi-scale fusion systematically; content-aware upsampling preserves small object details; computational cost increase is acceptable for 8.9% mAP gain.",
+    "model_io": [
+      {
+        "model": "MSFE-YOLO (AMCA backbone + SCAF-APU fusion + MDRF head)",
+        "inputs": [
+          "remote sensing images (variable scale objects)"
+        ],
+        "outputs": [
+          "bounding boxes with class and confidence scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "AMCA suppresses background noise across scales",
+        "result": "Improved feature discrimination"
+      },
+      {
+        "hypothesis": "SCAF-APU preserves small object details during upsampling",
+        "result": "+8.9% mAP@50-95 improvement"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55325-y": {
+    "category": "ML Theory",
+    "task": "Privacy-preserving deepfake detection via stacked multi-fusion CNN with adaptive attention",
+    "key_results": "SMF-CNN achieves 97.80% test accuracy and 99.79% ROC-AUC on 140K RFF dataset; hybrid cryptosystem (chaos + DNA) secures cloud storage; ablation validates component contributions",
+    "comments": "Attention mechanisms and residual blocks are well-motivated; chaos-DNA encryption is novel but practical security implications need cryptographic formal analysis.",
+    "model_io": [
+      {
+        "model": "SMF-CNN (multi-scale attention + SE blocks)",
+        "inputs": [
+          "facial images (real or synthetic)"
+        ],
+        "outputs": [
+          "deepfake classification probability"
+        ]
+      },
+      {
+        "model": "Hybrid cryptosystem (chaos + DNA)",
+        "inputs": [
+          "image data"
+        ],
+        "outputs": [
+          "encrypted cloud storage"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-scale attention and SE mechanisms improve fine-grained deepfake cues",
+        "result": "97.80% accuracy, 99.79% ROC-AUC"
+      },
+      {
+        "hypothesis": "Hybrid encryption provides privacy in cloud deployment",
+        "result": "Secure image storage without sacrificing model utility"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55876-0": {
+    "category": "ML Theory",
+    "task": "GenAI-assisted instructional design for PE teaching via MoE-Transformer and MOPPO",
+    "key_results": "MoE-Trans-MOPPO achieves MSE=2.41 for physiological load prediction (vs. general models); lesson plan scientificity M=92.4, structural integrity M=94.2 in experimental group; 34.1% reduction in prep time",
+    "comments": "Domain-specific integration of pedagogical logic and exercise physiology is innovative; quasi-experimental design with n=60 is reasonable but cross-institutional validation needed.",
+    "model_io": [
+      {
+        "model": "MoE-Trans-MOPPO (Mixture-of-Experts + GPT-4 + FitRec dataset)",
+        "inputs": [
+          "lesson design requirements",
+          "pedagogical intent",
+          "exercise log data"
+        ],
+        "outputs": [
+          "generated lesson plan with physiological load prediction"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "MoE architecture couples pedagogical and physiological reasoning",
+        "result": "Superior load prediction (MSE=2.41) suppresses hallucination"
+      },
+      {
+        "hypothesis": "GenAI support reduces cognitive load on pre-service teachers",
+        "result": "34.1% shorter prep time, higher lesson quality scores (p<0.001)"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55898-8": {
+    "category": "Algorithms",
+    "task": "UAV path planning in dynamic environments",
+    "key_results": "CRGWO-DWA achieves best/tied-best benchmark performance; reduces path length and redundant nodes in static environments; enables safe smooth navigation in 3D multi-obstacle scenarios",
+    "comments": "Combines global optimization (Grey Wolf) with local control (DWA); practical framework but relies on heuristic parameter tuning.",
+    "model_io": [
+      {
+        "model": "CRGWO (Chaotic-Regenerative GWO)",
+        "inputs": [
+          "waypoints",
+          "obstacle coordinates"
+        ],
+        "outputs": [
+          "smooth reference path"
+        ]
+      },
+      {
+        "model": "DWA (Dynamic Window Approach)",
+        "inputs": [
+          "reference path",
+          "local sensor data",
+          "dynamic obstacles"
+        ],
+        "outputs": [
+          "collision-free trajectory",
+          "velocity commands"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Chaotic initialization improves population diversity in GWO",
+        "result": "Best performance on benchmark metrics"
+      },
+      {
+        "hypothesis": "Min-max normalization in DWA enhances trajectory discrimination",
+        "result": "Improved responsiveness under dynamic obstacle interference"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55918-7": {
+    "category": "ML Theory",
+    "task": "Predictive modeling of tensile strength in FDM PLA-wood composites via ANN, ANFIS, RSM",
+    "key_results": "ANFIS superior (R\u00b2=0.9906, RMSE=0.2821, MAPE=1.06%) vs. ANN and RSM; highest tensile strength 24.70 MPa at 95% infill, 300\u03bcm layer, 0\u00b0 raster; raster angle (38.36%) and print speed (32.55%) most influential",
+    "comments": "Comparative evaluation of three modeling paradigms is methodologically sound; Taguchi L27 design is efficient; ANFIS captures nonlinear interactions better.",
+    "model_io": [
+      {
+        "model": "ANN (artificial neural network)",
+        "inputs": [
+          "layer thickness, infill density, print speed, nozzle temp, raster angle"
+        ],
+        "outputs": [
+          "tensile strength"
+        ]
+      },
+      {
+        "model": "ANFIS (adaptive neuro-fuzzy inference)",
+        "inputs": [
+          "5 printing parameters"
+        ],
+        "outputs": [
+          "tensile strength"
+        ]
+      },
+      {
+        "model": "RSM (response surface methodology)",
+        "inputs": [
+          "5 parameters"
+        ],
+        "outputs": [
+          "tensile strength + optimal parameter region"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "ANFIS better captures nonlinear parameter interactions",
+        "result": "R\u00b2=0.9906, superior to ANN and RSM"
+      },
+      {
+        "hypothesis": "Raster angle and print speed dominate mechanical response",
+        "result": "Confirmed by ANOVA: 38.36% and 32.55% variance"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-73317-4": {
+    "category": "Condensed Matter",
+    "task": "Demonstrate electric-field control of phonon chirality in ferroelectrics",
+    "key_results": "Reversible chiral switching in triglycine sulfate via electric field; phonon chirality vanishes in paraelectric phase, tunable in racemic ferroelectric state; opposite circular phonon motions confirmed by DFT and Raman",
+    "comments": "Novel coupling pathway linking ferroelectricity, chirality, and chiral phonons; opens device pathways but requires demonstration of spin-phonon control.",
+    "model_io": [
+      {
+        "model": "Triglycine sulfate ferroelectric crystal",
+        "inputs": [
+          "electric field"
+        ],
+        "outputs": [
+          "phonon chirality",
+          "Kerr rotation",
+          "chiral phonon modes"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Electric field reversibly controls phonon chirality in ferroelectrics",
+        "result": "Confirmed via time-resolved magneto-optical Kerr measurements"
+      },
+      {
+        "hypothesis": "Phonon chirality couples to ferroelectricity and spin",
+        "result": "Supported by DFT and circularly polarized Raman spectroscopy"
+      }
+    ]
+  },
+  "nature:10.1038/s41535-026-00872-w": {
+    "category": "Condensed Matter",
+    "task": "Characterize magnetotransport in ballistic delafossite metal channels",
+    "key_results": "Directional ballistic regime in width-restricted PdCoO\u2082 and PtCoO\u2082 channels shows magnetic-field-induced magnetoresistance dependent on crystallographic orientation and channel width; field modifies boundary scattering; semiclassical theory explains trajectories",
+    "comments": "Demonstrates sensitivity of finite-size transport to Fermi surface anisotropy, but role of residual bulk scattering incompletely understood and limits practical device exploitation.",
+    "model_io": [
+      {
+        "model": "Narrow ballistic channel in delafossite metal",
+        "inputs": [
+          "magnetic field",
+          "channel width",
+          "crystallographic orientation"
+        ],
+        "outputs": [
+          "magnetoresistance",
+          "boundary scattering signature"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Magnetic field modifies electronic boundary scattering in ballistic channels",
+        "result": "Confirmed; magnetoresistance features correlate with electron trajectories"
+      }
+    ]
+  },
+  "nature:10.1038/s42005-026-02698-1": {
+    "category": "Quantum",
+    "task": "Transmit quantum information through completely depolarizing channels",
+    "key_results": "Output state fidelity 0.712 \u00b1 0.013 exceeds classical threshold of 2/3 using cyclic order superpositions; implemented on silicon photonic chip with four depolarizing channels",
+    "comments": "Novel use of indefinite causal order to overcome fundamental noise barrier; practical demonstration important but scalability to many channels unclear.",
+    "model_io": [
+      {
+        "model": "Programmable silicon photonic chip with superposed cyclic orders",
+        "inputs": [
+          "quantum state",
+          "four completely depolarizing channels"
+        ],
+        "outputs": [
+          "transmitted quantum state",
+          "output fidelity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Cyclic order superposition enables quantum transmission through depolarizing channels",
+        "result": "Confirmed with fidelity above classical limit"
+      }
+    ]
+  },
+  "nature:10.1038/s42005-026-02699-0": {
+    "category": "Optics/Photonics",
+    "task": "Generate and characterize toroidal helical electromagnetic pulses",
+    "key_results": "Demonstrated single-cycle toroidal helical pulses with non-transverse topology, space-time nonseparability, and controllable helicity using coaxial horn + spiral grating",
+    "comments": "Novel topological pulse design with potential applications in light-matter coupling, though practical device integration and efficiency remain to be demonstrated.",
+    "model_io": [
+      {
+        "model": "Coaxial horn emitter + equiangular spiral grating",
+        "inputs": [
+          "RF signal"
+        ],
+        "outputs": [
+          "toroidal helical pulse",
+          "polarization/topology characterization"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Combined horn-grating configuration generates helical toroidal topologies",
+        "result": "Confirmed experimentally"
+      }
+    ]
+  },
+  "nature:10.1038/s42005-026-02701-9": {
+    "category": "Quantum",
+    "task": "Evaluate molecular nanomagnets as quantum radiation sensors",
+    "key_results": "Mn12tBuAc single molecule magnet shows sensitive magnetization relaxation time response to ionizing radiation; sensitivity enhanced by metastable initial magnetic state",
+    "comments": "Demonstrates feasibility of using magnetic quantum systems for particle detection, though scalability to practical sensor devices remains uncertain.",
+    "model_io": [
+      {
+        "model": "Mn12tBuAc single molecule magnet",
+        "inputs": [
+          "ionizing radiation",
+          "initial magnetic state"
+        ],
+        "outputs": [
+          "magnetization relaxation time \u03c4_R",
+          "SQUID/NMR measurements"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Metastable magnetic state enhances sensitivity to radiation",
+        "result": "Confirmed via SQUID and NMR measurements"
+      }
+    ]
+  },
+  "nature:10.1038/s44310-026-00138-0": {
+    "category": "Quantum",
+    "task": "Engineer microwave field control for NV centers using metasurfaces",
+    "key_results": "SSPP-based metasurface generates circularly polarized microwave magnetic fields; demonstrates spin-selective, axis-aligned NV control; confirms non-reciprocal spin excitation via magnetic spin-momentum locking",
+    "comments": "Promising approach for on-chip quantum device integration, though field confinement scalability and multi-axis control remain to be fully optimized.",
+    "model_io": [
+      {
+        "model": "Spoof surface plasmon polariton metasurface",
+        "inputs": [
+          "microwave signal"
+        ],
+        "outputs": [
+          "confined circularly polarized magnetic field",
+          "spin-resonance spectra"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "SSPP metasurface enables circularly polarized microwave field generation for NV centers",
+        "result": "Confirmed via spin-resonance measurements"
+      },
+      {
+        "hypothesis": "Magnetic spin-momentum locking produces non-reciprocal spin excitation",
+        "result": "Confirmed experimentally"
+      }
+    ]
   }
 }
