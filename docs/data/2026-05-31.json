@@ -7,32 +7,45 @@
     "projectPage": "https://www.nature.com/articles/s41598-026-53453-z",
     "journal": "Scientific Reports",
     "publishedAt": "2026-05-31",
-    "category": "Other",
+    "category": "Structural Prediction",
     "task": "Disease detection and segmentation in pearl millet crops using deep learning",
-    "key_results": "HAMNet-Mask R-CNN achieved 99.35% Dice score, 98.80% IoU, and 99.65% accuracy, outperforming U-Net (95.03% Dice), SegNet (94.58% Dice), DeepLabV3 (98.31% Dice), and FCN (98.47% Dice)",
-    "comments": "While results are impressive, the evaluation appears limited to a single pearl millet dataset; cross-dataset validation and real-world deployment testing would strengthen claims of robustness.",
+    "key_results": "99.35% Dice score, 98.80% IoU, 99.78% Recall; outperformed U-Net (95.03% Dice), SegNet (94.58% Dice), DeepLabV3 (98.31% Dice), FCN (98.47% Dice)",
+    "comments": "While impressive metrics are reported, the study lacks discussion of generalization to other crop diseases or geographic/environmental conditions, and does not provide statistical significance testing or cross-validation details.",
     "model_io": [
       {
-        "model": "HAMNet-Mask R-CNN",
+        "model": "HAMNet-Mask R-CNN with hierarchical multi-scale attention and spectral-spatial fusion",
         "inputs": [
           "high-resolution crop images",
-          "spectral-spatial fusion data"
+          "spectral-spatial features"
         ],
         "outputs": [
-          "pixel-wise disease segmentation masks",
-          "disease localization maps",
-          "classification confidence scores"
+          "disease segmentation masks",
+          "disease classification",
+          "localized disease regions"
+        ]
+      },
+      {
+        "model": "Baseline comparison models",
+        "inputs": [
+          "high-resolution crop images"
+        ],
+        "outputs": [
+          "disease segmentation masks"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Hierarchical multi-scale attention mechanisms improve disease localization accuracy over single-scale approaches",
-        "result": "Confirmed: hierarchical feature learning with attention outperformed baseline U-Net, SegNet, DeepLabV3, and FCN models"
+        "hypothesis": "Hierarchical multi-scale attention mechanism improves disease localization and reduces false positives",
+        "result": "Confirmed; HAMNet achieved 99.35% Dice and 99.75% Precision, outperforming baselines"
       },
       {
-        "hypothesis": "Spectral-spatial fusion reduces false positives in disease boundary identification",
-        "result": "Supported: achieved 99.75% precision and 99.78% recall, indicating minimal false positives"
+        "hypothesis": "Spectral-spatial fusion enhances feature extraction for disease detection",
+        "result": "Confirmed; model showed superior performance in segmentation and classification tasks"
+      },
+      {
+        "hypothesis": "Mask R-CNN enables more precise pixel-wise disease boundary identification than FCN",
+        "result": "Confirmed; HAMNet-Mask R-CNN achieved 98.80% IoU vs FCN's 97.00% IoU"
       }
     ]
   },
@@ -44,33 +57,25 @@
     "projectPage": "https://www.nature.com/articles/s41598-026-53389-4",
     "journal": "Scientific Reports",
     "publishedAt": "2026-05-31",
-    "category": "Algorithms",
-    "task": "Maximum power point tracking (MPPT) under partial shading conditions in photovoltaic systems",
-    "key_results": "GWO-Fuzzy hybrid MPPT algorithm achieves superior tracking accuracy, reduced steady-state oscillations, and reliable global maximum power point (GMPP) tracking compared to PSO-PO, PSO-Fuzzy, and GWO-PSO",
-    "comments": "While GWO-Fuzzy is claimed superior, PSO-PO and GWO-PSO showed faster convergence; the trade-off between convergence speed and steady-state accuracy deserves deeper investigation.",
+    "category": "Other",
+    "task": "MPPT algorithm selection for photovoltaic systems under partial shading",
+    "key_results": [
+      "GWO-Fuzzy achieves superior tracking accuracy and reduced steady-state oscillations vs. PSO-PO and GWO-PSO",
+      "GWO-Fuzzy reliably tracks global maximum power point across varying sunlight intensities"
+    ],
+    "comments": "Comparative study lacks quantitative convergence speed metrics and steady-state error magnitudes needed to assess trade-offs between algorithms.",
     "model_io": [
       {
-        "model": "GWO-Fuzzy, PSO-PO, PSO-Fuzzy, GWO-PSO MPPT algorithms",
+        "model": "Five hybrid MPPT algorithms: PO-Fuzzy, PSO-PO, GWO-Fuzzy, PSO-Fuzzy, GWO-PSO",
         "inputs": [
-          "PV module voltage",
-          "PV module current",
-          "irradiance levels (partial shading)"
+          "PV module irradiance profiles",
+          "partial shading patterns",
+          "SEPIC converter switching frequency (10 kHz)"
         ],
         "outputs": [
-          "duty cycle commands for SEPIC converter",
+          "MPPT tracking decisions",
           "PV voltage",
           "PV power",
-          "output voltage",
-          "output power"
-        ]
-      },
-      {
-        "model": "SEPIC Converter",
-        "inputs": [
-          "duty cycle commands",
-          "250 W PV module characteristics"
-        ],
-        "outputs": [
           "output voltage",
           "output power"
         ]
@@ -78,12 +83,8 @@
     ],
     "hypotheses": [
       {
-        "hypothesis": "GWO-Fuzzy hybrid approach improves tracking accuracy and reduces oscillations under PSC",
-        "result": "Confirmed: GWO-Fuzzy outperformed alternatives in steady-state performance and GMPP tracking reliability"
-      },
-      {
-        "hypothesis": "Fuzzy logic combined with metaheuristic optimization handles multi-modal PV characteristics better than metaheuristics alone",
-        "result": "Partially confirmed: GWO-Fuzzy superior to PSO-Fuzzy and GWO-PSO, but faster convergence observed in PSO-PO and GWO-PSO"
+        "hypothesis": "GWO-Fuzzy hybrid MPPT achieves superior global maximum power point tracking under partial shading conditions",
+        "result": "Confirmed: GWO-Fuzzy demonstrates best tracking accuracy and reduced oscillations"
       }
     ]
   },
@@ -96,33 +97,36 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-05-31",
     "category": "Algorithms",
-    "task": "Dynamic task offloading optimization in mobile edge computing for wearable sports monitoring",
-    "key_results": "STM algorithm reduces energy consumption of smart wearable devices while maintaining queue backlog stability via Lyapunov drift-plus-penalty optimization",
-    "comments": "Theoretical optimization framework is well-motivated, but concrete quantitative improvements over baselines are not provided in the abstract.",
+    "task": "Dynamic task offloading optimization for smart wearable devices in MEC systems",
+    "key_results": [
+      "STM algorithm reduces energy consumption while maintaining queue stability",
+      "Lightweight server selection algorithm enables adaptive offloading with negligible computational overhead"
+    ],
+    "comments": "Lyapunov optimization is well-suited for online control, but comparative performance metrics against baseline algorithms are not explicitly quantified.",
     "model_io": [
       {
-        "model": "STM (Sports Training Monitoring) Algorithm",
+        "model": "Sports Training Monitoring (STM) algorithm",
         "inputs": [
           "task arrival rates",
           "channel state information",
-          "battery capacity",
-          "queue backlogs"
+          "server availability",
+          "power constraints"
         ],
         "outputs": [
           "offloading decisions",
-          "CPU frequency allocations",
-          "server selection"
+          "CPU frequency settings",
+          "server assignments"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Joint optimization of offloading decisions, CPU frequency, and power allocation minimizes energy consumption",
-        "result": "Confirmed: STM achieves efficient online solutions with reduced energy while maintaining performance"
+        "hypothesis": "Joint optimization of offloading decisions, CPU frequency, and power allocation minimizes SWD energy consumption under queue stability constraints",
+        "result": "Confirmed: STM achieves efficient online solutions with theoretical performance guarantees"
       },
       {
-        "hypothesis": "Lightweight server selection algorithm enables adaptive switching with negligible computational overhead",
-        "result": "Supported by algorithm design; experimental validation details not provided"
+        "hypothesis": "Lightweight server selection algorithm enables adaptive switching without significant computational burden",
+        "result": "Confirmed: Algorithm operates with negligible computational and signaling costs"
       }
     ]
   },
@@ -135,31 +139,31 @@
     "journal": "Nature Portfolio",
     "publishedAt": "2026-05-31",
     "category": "Condensed Matter",
-    "task": "Momentum-resolved spectroscopy of buried 2D electron/hole gases in nitride heterostructures",
-    "key_results": "Soft X-ray ARPES successfully probes quantized states several nanometers below GaN/AlN surface; chemical gating via oxygen adsorption enables band tuning and tracking of subband dispersions",
-    "comments": "Chemical gating provides practical alternative to electrostatic gating for wide-bandgap systems, though chemical approaches may be less reversible than true gate control.",
+    "task": "Momentum-resolved imaging of buried 2D electron/hole gases in GaN/AlN heterostructures under chemical gating",
+    "key_results": "Direct observation of quantized states several nanometers below surface using soft X-ray ARPES; tracking of band shifts via controlled oxygen adsorption chemical tuning",
+    "comments": "Soft X-ray ARPES elegantly circumvents surface sensitivity limitations of conventional UV-ARPES, though chemical gating remains a proxy for true electrostatic control due to leakage current challenges.",
     "model_io": [
       {
-        "model": "GaN/AlN heterostructure with 2D electron/hole gas",
+        "model": "GaN/AlN heterostructure with 2D gas interface",
         "inputs": [
-          "soft X-ray photons (ARPES)",
-          "controlled oxygen adsorbates"
+          "soft X-ray photons",
+          "oxygen adsorbates"
         ],
         "outputs": [
           "momentum-resolved band structure",
           "subband dispersions",
-          "band energy shifts under chemical gating"
+          "band shifts"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Soft X-ray ARPES can access deeply buried states in wide-bandgap heterostructures despite surface sensitivity limitations",
-        "result": "Confirmed: direct access to quantized states several nanometers below surface achieved"
+        "hypothesis": "Soft X-ray ARPES can probe buried quantized states in wide-bandgap heterostructures despite depth constraints of conventional ARPES",
+        "result": "Confirmed: directly accessed states nanometers below surface and correlated subband structure to transport"
       },
       {
-        "hypothesis": "Oxygen adsorption can chemically modulate the potential of buried 2D gases and enable momentum-resolved tuning studies",
-        "result": "Confirmed: oxygen adsorption tracks measurable band shifts enabling subband characterization"
+        "hypothesis": "Controlled oxygen adsorption can chemically modulate the potential of buried 2D gases for band tuning studies",
+        "result": "Confirmed: tracked measurable band shifts via oxygen-induced surface potential changes"
       }
     ]
   }
