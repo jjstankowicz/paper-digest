@@ -233174,5 +233174,438 @@
         "result": "Partially confirmed; detailed roadmap and performance trade-offs identified"
       }
     ]
+  },
+  "hf:2605.28657": {
+    "category": "Generative",
+    "task": "Real-time diffusion-based music generation with interactive parameter control",
+    "key_results": "12.3 decoder completions/second for 60-second music on RTX 5090; 8.0x VAE decode speedup via windowed decoding",
+    "comments": "Novel contribution to making diffusion sampling latency interactive, though practical musical applicability beyond synthesis demonstration unclear.",
+    "model_io": [
+      {
+        "model": "StreamDiffusion + ACE-Step 1.5 with TensorRT",
+        "inputs": [
+          "noise seed",
+          "denoising parameters (per-frame)"
+        ],
+        "outputs": [
+          "audio waveform"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Per-slot heterogeneous scheduling enables faster parameter propagation than global schedule redesign",
+        "result": "Confirmed: moving sliders tracked without queue disruption"
+      },
+      {
+        "hypothesis": "Shared mutable per-step state achieves next-tick parameter effect",
+        "result": "Confirmed: bypasses ring-buffer drain latency"
+      }
+    ]
+  },
+  "hf:2605.31535": {
+    "category": "Vision",
+    "task": "Self-supervised novel view synthesis from unconstrained video at scale",
+    "key_results": "Clean power-law scaling with data/compute; achieves competitive zero-shot performance with supervised SOTA on multiple benchmarks",
+    "comments": "Elegant unification of camera, reconstruction, and rendering into single transformer backbone; treating dynamics as nuisance factor is pragmatic for scaling.",
+    "model_io": [
+      {
+        "model": "RayDer (feed-forward transformer)",
+        "inputs": [
+          "video frames",
+          "camera parameters"
+        ],
+        "outputs": [
+          "novel view renderings"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Single unified model with minimal dynamic state scales better than multi-network systems on real video",
+        "result": "Confirmed: exhibits clean power-law scaling and outperforms static-scene data mixtures"
+      },
+      {
+        "hypothesis": "Treating dynamics as supervision signal rather than reconstruction target enables stable training",
+        "result": "Confirmed: enables scaling to unconstrained real-world video"
+      }
+    ]
+  },
+  "hf:2605.26112": {
+    "category": "Agents/RL",
+    "task": "Designing modular, scalable agent architectures around foundation models",
+    "key_results": "Framework identifies three core bottlenecks (context governance, trustworthy memory, dynamic skill routing); CheetahClaws reference implementation enables harness-level evaluation",
+    "comments": "Important systems perspective on agent design but lacks quantitative empirical validation\u2014mostly conceptual framework and future research roadmap.",
+    "model_io": [
+      {
+        "model": "CheetahClaws (Python-native reference harness with LLM backbone)",
+        "inputs": [
+          "user task",
+          "context",
+          "available tools"
+        ],
+        "outputs": [
+          "action sequence",
+          "final result"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Agent performance emerges from harness design as much as foundation model capability",
+        "result": "Posed as main claim but not empirically validated in abstract"
+      },
+      {
+        "hypothesis": "Harness-level metrics better capture agent quality than task-success-only evaluation",
+        "result": "Proposed as research agenda; comparison with Claude Code and OpenClaw mentioned but results not detailed"
+      }
+    ]
+  },
+  "hf:2605.29198": {
+    "category": "Agents/RL",
+    "task": "Per-token credit assignment for discrete policy optimization in generative tasks",
+    "key_results": "GCPO outperforms GRPO/DAPO: text-to-image and chain-of-thought benchmarks; emphasizes semantically relevant tokens in visual and reasoning traces",
+    "comments": "Practical improvement via contrastive guidance, though gains modest (2-3%) over baselines; credit assignment mechanism conceptually sound but not radically novel.",
+    "model_io": [
+      {
+        "model": "GCPO (policy optimization with contrastive guidance)",
+        "inputs": [
+          "positive prompt",
+          "negative prompt",
+          "generated sequence"
+        ],
+        "outputs": [
+          "per-token advantages",
+          "policy update"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Per-token advantages from contrastive predictions outperform uniform sample-level credit assignment",
+        "result": "Confirmed: consistently outperforms GRPO and DAPO across benchmarks"
+      },
+      {
+        "hypothesis": "Contrastive token credits emphasize semantically relevant regions",
+        "result": "Confirmed: visual areas in text-to-image and keywords in reasoning tasks receive higher credit"
+      }
+    ]
+  },
+  "hf:2605.28730": {
+    "category": "Agents/RL",
+    "task": "City-scale transit route network design with delayed feedback",
+    "key_results": "AlphaTransit achieves 54.6% and 82.1% service rate in mixed/full demand on Bloomington; 9.9-11.4% gains vs RL without search; 2.5-11.2% gains vs MCTS without guidance",
+    "comments": "Well-motivated problem with realistic benchmark; coupling MCTS and learned policy-value network effective, though gains diminish in high-demand setting.",
+    "model_io": [
+      {
+        "model": "MCTS + neural policy-value network",
+        "inputs": [
+          "road topology",
+          "demand distribution",
+          "partial route network"
+        ],
+        "outputs": [
+          "next route extension",
+          "value estimate"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "MCTS with learned guidance outperforms RL alone on delayed-feedback routing",
+        "result": "Confirmed: 9.9-11.4% service rate improvement"
+      },
+      {
+        "hypothesis": "Neural policy-value guidance improves MCTS vs uninformed search",
+        "result": "Confirmed: 2.5-11.2% gains; gains larger in full-demand setting"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-45768-8": {
+    "category": "Computational Biophysics",
+    "task": "Benchmark protein folding models for conformational ensemble generation and compare to molecular dynamics",
+    "key_results": "Chai-1 achieves best performance in recovering adenylate kinase conformations, identifying mobile regions, and sampling intermediates; protein identity significantly influences model performance across nine methods tested",
+    "comments": "Systematic benchmarking is valuable, but generative models may miss rare or high-energy conformations critical for enzyme catalysis that MD can sample; sub-domain validation remains limited for multi-domain proteins.",
+    "model_io": [
+      {
+        "model": "Nine protein folding methods (including Chai-1, diffusion-based, input-perturbed models)",
+        "inputs": [
+          "protein sequence",
+          "active/inactive state constraints"
+        ],
+        "outputs": [
+          "conformational ensemble",
+          "mobile region predictions",
+          "intermediate conformations"
+        ]
+      },
+      {
+        "model": "Molecular dynamics simulation (reference)",
+        "inputs": [
+          "adenylate kinase structure",
+          "force field"
+        ],
+        "outputs": [
+          "conformational ensemble",
+          "kinetic pathways",
+          "transition rates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Generative models efficiently capture protein conformational flexibility compared to MD",
+        "result": "Partially confirmed; Chai-1 recovers known conformations but systematic validation of kinetic relevance pending"
+      },
+      {
+        "hypothesis": "Protein identity is a minor factor in model performance variation",
+        "result": "Rejected; protein identity exerts non-negligible influence across methods"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-54803-7": {
+    "category": "Statistical Methods",
+    "task": "Screen asthma and COPD from respiratory sounds using multi-feature fusion and gradient boosting",
+    "key_results": "CatBoost ensemble on fused spectral-temporal and clinical features achieves 90.3% accuracy; class-wise F1: 0.945 (Healthy), 0.915 (Asthma), 0.842 (COPD); MCC=0.856, \u03ba=0.849",
+    "comments": "Multimodal fusion of handcrafted acoustics and cough embeddings is effective; ablation (\u22127.8% without full fusion) demonstrates importance of modality combination.",
+    "model_io": [
+      {
+        "model": "CatBoost classifier",
+        "inputs": [
+          "MFCCs",
+          "chroma",
+          "spectral contrast",
+          "tonnetz",
+          "mel-spectrogram",
+          "cough embeddings",
+          "clinical metadata"
+        ],
+        "outputs": [
+          "disease class (Healthy/Asthma/COPD)"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-56443-3": {
+    "category": "Statistical Methods",
+    "task": "Predict radial artery puncture success and hematoma risk using synthetic data augmentation and interpretable machine learning",
+    "key_results": "XGBoost optimal for puncture success (AUC 0.750, recall 0.951); MLPC best for hematoma prediction (precision 0.857); LIME identifies top 3 adverse event predictors for risk stratification",
+    "comments": "Synthetic Data Vault augmentation enables training on limited procedural data; LIME interpretability supports clinical adoption; single-center limits generalizability.",
+    "model_io": [
+      {
+        "model": "XGBoost, CatBoost, MLPC, SVM, Gaussian Naive Bayes, k-NN, LGBM, Logistic Regression, Decision Tree, ADAB",
+        "inputs": [
+          "patient demographics",
+          "procedural variables",
+          "synthetically augmented data"
+        ],
+        "outputs": [
+          "puncture success probability",
+          "hematoma risk",
+          "LIME feature explanations"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-50946-9": {
+    "category": "Other",
+    "task": "Neurocognitive analysis of program code comprehension via fixation-related potentials",
+    "key_results": "Confusing code (atoms of confusion) elicits late frontal positivity (400\u2013700 ms post-fixation) resembling event-related potential components in natural language processing, suggesting shared neurocognitive mechanisms for processing unexpected but informative inputs",
+    "comments": "Novel interdisciplinary application of ERP to software engineering; fixation-related potential analysis is cognitively grounded, but sample size and generalization across code domains unclear.",
+    "model_io": [
+      {
+        "model": "Eye-tracking and EEG recording with fixation-related potential analysis",
+        "inputs": [
+          "program code stimuli (confusing vs. clean variants)",
+          "programmer eye-tracking gaze data"
+        ],
+        "outputs": [
+          "fixation-related potentials (FRPs) with temporal-spectral characterization"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Confusing program code (atoms of confusion) elicits late frontal positivity similar to unexpected language constructs",
+        "result": "Confirmed; 400\u2013700 ms frontal positivity observed, suggesting shared situation-model updating mechanisms"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-53843-3": {
+    "category": "ML Theory",
+    "task": "Adversarial robustness analysis of 3D Gaussian Splatting under multi-view inconsistency attacks",
+    "key_results": "3D Gaussian Splatting shows strong robustness to multi-view photometric inconsistency attacks (< 1% quality degradation on PSNR, SSIM, LPIPS); multi-view averaging, explicit Gaussian primitives, and gradient dynamics suppress view-dependent artifacts",
+    "comments": "Comprehensive empirical analysis identifies structural reasons for robustness; suggests future adversarial attack strategies but raises questions about tighter attack formulations.",
+    "model_io": [
+      {
+        "model": "3D Gaussian Splatting with semantic-aware adversarial perturbation constraints",
+        "inputs": [
+          "multi-view training images perturbed with imperceptible inconsistency attacks"
+        ],
+        "outputs": [
+          "novel view syntheses with quality metrics (PSNR, SSIM, LPIPS)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-view averaging, explicit Gaussian representation, and gradient-based optimization dynamics confer inherent robustness to photometric inconsistency attacks",
+        "result": "Confirmed; < 1% quality degradation across Mip-NeRF 360 dataset under semantic-aware attack constraints"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-54190-z": {
+    "category": "ML Theory",
+    "task": "English translation teaching assessment via improved BERT and attention mechanism fusion",
+    "key_results": "AFBNet (Adaptive Fusion BERT Network) improved BLEU by 2.6\u20134.4 points over vanilla Transformer baseline on five translation tasks; effectively transfers pre-trained BERT knowledge to translation teaching scenarios",
+    "comments": "Two-step fusion of BERT multilayer representation with attention mechanism is sound, but task-specific gains vary; BERT-JAM outperforms on German tasks, limiting generality.",
+    "model_io": [
+      {
+        "model": "Adaptive Fusion BERT Network (AFBNet) integrating BERT multilayer representation with attention-based knowledge fusion",
+        "inputs": [
+          "source language sentences"
+        ],
+        "outputs": [
+          "target language translations with BLEU scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Two-step interactive fusion of BERT multilayer representation and attention mechanism improves translation teaching model performance over vanilla Transformer",
+        "result": "Confirmed; 2.6\u20134.4 BLEU improvement varies by task; BERT-JAM superior on German-related directions"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-54606-w": {
+    "category": "Algorithms",
+    "task": "Adaptive scheduling of heterogeneous AI-PC neural network inference via topology-aware resource coordination",
+    "key_results": "Topology-aware algorithm achieved 13.5% latency reduction, 15.6% throughput increase, 30.1% NPU utilization gain, 16.1% energy efficiency vs. SOTA baselines across six architectures (ResNet-50, MobileNetV3, YOLOv8, BERT, ViT, EfficientNet-B4); robust under dynamic workload and failures",
+    "comments": "Lightweight runtime topology extraction with predictive resource modeling is practical; heterogeneous CPU-GPU-NPU coordination addresses real AI-PC deployment, though cross-architecture generalization assertion needs validation.",
+    "model_io": [
+      {
+        "model": "Topology-aware adaptive scheduling algorithm with lightweight runtime extraction, predictive modeling, and DDQN-based optimization",
+        "inputs": [
+          "neural network computational graphs",
+          "device availability patterns",
+          "heterogeneous processor (CPU/GPU/NPU) state"
+        ],
+        "outputs": [
+          "adaptive operator-to-device assignments and schedule with latency, throughput, energy metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Real-time topology extraction coupled with predictive resource modeling enables superior heterogeneous resource allocation vs. topology-agnostic baselines",
+        "result": "Confirmed; 13.5% latency reduction, 15.6% throughput increase, 30.1% NPU utilization gain"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55495-9": {
+    "category": "Other",
+    "task": "Remaining useful life prediction of feedback rods in electro-hydraulic servo valves",
+    "key_results": "Integrated System Performance Modeling (SPM) and Stiffness Degradation Prediction (SDP) framework enables indirect rigidity assessment and lifespan estimation via coupled simulation",
+    "comments": "Framework concept is solid but lacks concrete numerical results or experimental validation data to assess practical effectiveness.",
+    "model_io": [
+      {
+        "model": "SPM-SDP coupled framework integrating continuum damage mechanics with machine learning",
+        "inputs": [
+          "externally observable parameters (indirect condition monitoring signals)",
+          "dynamic loading profiles"
+        ],
+        "outputs": [
+          "component rigidity evolution trajectory",
+          "remaining operational lifespan estimate"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Externally observable parameters enable indirect assessment of feedback rod rigidity without direct measurement",
+        "result": "Proposed as foundational premise; validation not detailed in abstract"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55724-1": {
+    "category": "ML Theory",
+    "task": "Automated bacterial colony counting via tiled YOLO inference on high-resolution Petri dish images",
+    "key_results": "Tiled strategy with YOLOv11n achieved 96.9% mAP@0.5 and 58.2% mAP@0.5:0.95 on 24-class dataset; inference < 320 ms on laptop GPU with 2.6M parameters",
+    "comments": "Tiling dramatically improves YOLO nano-scale models (44.9\u201366.3% \u2192 95.4\u201396.9% mAP@0.5), but the approach trades speed for accuracy via overlapping tiles.",
+    "model_io": [
+      {
+        "model": "YOLOv5n, YOLOv8n, YOLOv11n with tiled training and SAHI-based tiled inference",
+        "inputs": [
+          "high-resolution Petri dish images (full-res; tiled at 640\u00d7640 with 20% overlap)"
+        ],
+        "outputs": [
+          "per-colony bounding boxes and class predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Tiled training and inference preserve local colony details better than image resizing for nano-scale YOLO models",
+        "result": "Confirmed; tiling achieved 95.4\u201396.9% mAP@0.5 vs. 44.9\u201366.3% with resizing"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55756-7": {
+    "category": "ML Theory",
+    "task": "Dynamic resource scheduling in intelligent manufacturing via multi-modal data fusion and deep reinforcement learning",
+    "key_results": "LSTM-attention demand prediction + DDQN scheduling achieved 82.6% resource utilization and 89.1% on-time delivery in nominal scenarios; multi-modal fusion outperformed single-source by 9.6% prediction accuracy; limitations: poor peak-hour performance (12.8% delays), weak cross-industry generalization (67.9% efficiency retention), and computational overhead (18\u201335 min for large-scale scenarios)",
+    "comments": "Realistic assessment of practical limitations; fusion benefits are clear, but peak-hour bottlenecks and computational scalability remain unresolved.",
+    "model_io": [
+      {
+        "model": "LSTM with attention (demand prediction) + Double Deep Q-Network (DDQN) for resource scheduling",
+        "inputs": [
+          "sensor data (machine state)",
+          "production schedules",
+          "market demand signals"
+        ],
+        "outputs": [
+          "resource allocation decisions (machine dispatch, job sequencing)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-modal data fusion improves demand prediction accuracy by 9.6% over single-source methods",
+        "result": "Confirmed; intermediate fusion approach outperformed baselines"
+      },
+      {
+        "hypothesis": "DDQN-based scheduling achieves high nominal-case performance (82.6% utilization, 89.1% on-time delivery)",
+        "result": "Confirmed under nominal demand; degradation to 12.8% delays during peak hours indicates algorithm limitations"
+      }
+    ]
+  },
+  "nature:10.1038/s41534-026-01282-3": {
+    "category": "Quantum",
+    "task": "Scalable all-solid-state cavity QED on hybrid quantum-dot lithium-niobate platform",
+    "key_results": "Local spectral tuning up to 4.82 nm (7.30 meV); Purcell factor 3.52 (single tuning); 230\u00d7 linewidth enhancement with combined strain + EO tuning; wavelength-tunable cQED",
+    "comments": "Hybrid platform exploits TFLN piezoelectric and electro-optic properties for deterministic on-chip single-photon sources; scalable to large circuits.",
+    "model_io": [
+      {
+        "model": "Quantum-dot integrated on TFLN microring cavity",
+        "inputs": [
+          "QD emission",
+          "electro-optic modulation",
+          "piezoelectric strain"
+        ],
+        "outputs": [
+          "cavity-QD coupling strength",
+          "Purcell factor",
+          "single-photon emission"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Local strain and EO effects enable independent cavity-QD spectral tuning",
+        "result": "Achieved 0.30 nm tuning range with Purcell factors >1.89"
+      }
+    ]
   }
 }
