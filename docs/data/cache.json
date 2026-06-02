@@ -235828,5 +235828,1334 @@
         "result": "Confirmed; achieved orthogonal control of translation, degradation, and activation"
       }
     ]
+  },
+  "hf:2605.29707": {
+    "category": "LLM/Reasoning",
+    "task": "Accelerate LLM inference via decoupled causal modeling in speculative decoding",
+    "key_results": "5.49\u00d7 end-to-end speedup on Qwen3 models (Transformers backend); 5.8\u00d7 throughput speedup (SGLang serving)",
+    "comments": "Decoupling causal refinement from parallel drafting is elegant, but speedups depend heavily on downstream infrastructure and may not generalize across different model families.",
+    "model_io": [
+      {
+        "model": "Domino (parallel backbone + Domino head)",
+        "inputs": [
+          "tokens to draft"
+        ],
+        "outputs": [
+          "refined token distributions"
+        ]
+      },
+      {
+        "model": "target LLM (verifier)",
+        "inputs": [
+          "draft tokens"
+        ],
+        "outputs": [
+          "verified token sequence"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Parallel drafting with causal refinement achieves better speed-quality tradeoff than autoregressive drafting",
+        "result": "Confirmed via end-to-end speedup measurements"
+      }
+    ]
+  },
+  "hf:2605.30501": {
+    "category": "LLM/Reasoning",
+    "task": "Circumvent LLM watermarks via ensemble averaging",
+    "key_results": "Averaging 3\u20135 models reduces detection z-scores from 5\u2013300 to <2; TPR drops below 50% at 5% FPR; 27.5% quality improvement with 6\u00d7 speedup over baseline",
+    "comments": "Demonstrates a fundamental vulnerability of distributional watermarks in realistic multi-model scenarios, with immediate practical implications for watermark robustness.",
+    "model_io": [
+      {
+        "model": "WASH (Watermark Attenuation via Statistical Hybridisation)",
+        "inputs": [
+          "multiple watermarked LLM outputs"
+        ],
+        "outputs": [
+          "ensemble-averaged probability distributions",
+          "unwatermarked text"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Averaging independent distributional perturbations recovers unwatermarked distributions",
+        "result": "Confirmed; z-scores fall below detection threshold (4) with 3\u20135 models"
+      },
+      {
+        "hypothesis": "Ensemble averaging suppresses watermark detection across heterogeneous models",
+        "result": "Confirmed across six watermarking schemes and three LLMs"
+      }
+    ]
+  },
+  "hf:2606.02388": {
+    "category": "Agents/RL",
+    "task": "Co-train policy and world models for language agents using RL rollouts",
+    "key_results": "Consistent improvements over RL baselines across three agentic task benchmarks and multiple RL algorithms",
+    "comments": "Leveraging on-policy RL transitions for auxiliary supervision is practical, but the paper lacks specific quantitative comparisons and error bars across benchmarks.",
+    "model_io": [
+      {
+        "model": "PaW (Policy and World modeling co-training)",
+        "inputs": [
+          "RL policy rollouts with state transitions"
+        ],
+        "outputs": [
+          "improved policy parameters",
+          "world model predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Auxiliary world modeling supervision during RL improves policy performance without inference overhead",
+        "result": "Confirmed across three benchmarks; no additional inference cost"
+      },
+      {
+        "hypothesis": "Action-entropy-based data selection and reward-adaptive loss balancing stabilize WM training",
+        "result": "Implicitly supported by consistent improvements, but not ablated separately"
+      }
+    ]
+  },
+  "hf:2606.02373": {
+    "category": "Agents/RL",
+    "task": "Train retrieval search agents with externalized state management via RL",
+    "key_results": "0.730 average curated recall across eight benchmarks; +11.4 points over next strongest open agent; strong generalization to held-out transfer domains",
+    "comments": "Separating state management from policy learning is principled and shows strong empirical results, but the harness design may be task-specific and harder to adapt to other domains.",
+    "model_io": [
+      {
+        "model": "Harness-1 (20B RL-trained retrieval policy in stateful harness)",
+        "inputs": [
+          "user query",
+          "search state from environment harness"
+        ],
+        "outputs": [
+          "search decision (what/where to retrieve)",
+          "keep/discard judgments",
+          "verification requests",
+          "stop signal"
+        ]
+      },
+      {
+        "model": "environment harness",
+        "inputs": [
+          "policy actions"
+        ],
+        "outputs": [
+          "candidate pool updates",
+          "evidence links",
+          "compressed observations",
+          "context renderings"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Externalizing state management in a harness improves RL learning efficiency and generalization",
+        "result": "Confirmed; strong performance on in-domain and held-out transfer benchmarks"
+      }
+    ]
+  },
+  "hf:2605.26248": {
+    "category": "Benchmark",
+    "task": "Develop unified functional form for scaling laws across architectures and tasks",
+    "key_results": "UNSL accurately extrapolates scaling behavior when multiple dimensions vary simultaneously, outperforming existing functional forms",
+    "comments": "Unified scaling laws are valuable for research and deployment, but the paper lacks detailed comparisons with prior functional forms and does not specify the exact UNSL formula.",
+    "model_io": [
+      {
+        "model": "Unified Neural Scaling Law (UNSL)",
+        "inputs": [
+          "model size",
+          "dataset size",
+          "training steps",
+          "inference steps",
+          "compute",
+          "hyperparameters"
+        ],
+        "outputs": [
+          "predicted evaluation metric"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "A single functional form can capture scaling across vision, language, math, and RL tasks",
+        "result": "Confirmed; UNSL generalizes across diverse domains and architectures"
+      }
+    ]
+  },
+  "hf:2605.21102": {
+    "category": "Benchmark",
+    "task": "Extract verbatim text spans from research papers to answer user queries without hallucination",
+    "key_results": "ModernBERT (150M) token classifier achieves 53.6 word-level F1 on extracted QA task; outperforms strongest LLM extractor (48.7 F1)",
+    "comments": "Ground truth dataset and extractive baseline are valuable for hallucination-free research tools, but scalability to full papers and cross-domain transfer remain unclear.",
+    "model_io": [
+      {
+        "model": "VerbatimRAG + ModernBERT token classifier",
+        "inputs": [
+          "user query",
+          "research paper text chunks"
+        ],
+        "outputs": [
+          "verbatim text span answering query"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Token-level extraction from retrieved document spans achieves better accuracy than LLM generation",
+        "result": "Confirmed; ModernBERT F1 (53.6) > strongest LLM extractor (48.7)"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-73834-2": {
+    "category": "Membrane Biophysics",
+    "task": "Distinguish and characterize non-lytic vesicle production and nucleic acid cargo in symbiotic bacteria",
+    "key_results": "S. alvi, G. apicola, G. apis produce OMVs and OIMVs enriched in nucleic acids; symbiotic MVs carry significantly more NA than non-symbionts; DNA and RNA are of cytoplasmic origin in S. alvi",
+    "comments": "Cryo-EM distinction between OMVs and OIMVs is technically valuable, but the functional significance of NA cargo specificity and delivery efficiency to host cells needs further investigation.",
+    "model_io": [
+      {
+        "model": "Cryo-EM ultrastructure analysis of bacterial membrane vesicles",
+        "inputs": [
+          "honeybee symbiotic bacteria strains (S. alvi, G. apicola, G. apis)",
+          "E. coli, Salmonella as non-symbionts"
+        ],
+        "outputs": [
+          "OMV vs OIMV distinction",
+          "nucleic acid content quantification",
+          "lytic vs non-lytic release classification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Symbiotic bacteria produce non-lytic, NA-enriched vesicles for host communication; non-symbionts produce lytic debris",
+        "result": "Confirmed: symbionts exhibit clear OMV/OIMV budding with high NA content; non-symbionts show lytic release and low NA"
+      }
+    ]
+  },
+  "nature:10.1038/s41580-026-00964-2": {
+    "category": "Membrane Biophysics",
+    "task": "Review caveolae mechanics and their role in mechanosensing, membrane protection, and disease",
+    "key_results": "Caveolae exhibit metastable architecture enabling rapid disassembly in response to stimuli; regulate mechanosensing, membrane protection, and mechanotransduction; impaired caveolae mechanics linked to pathologies",
+    "comments": "This is a review article synthesizing structural and functional insights, but quantitative models of caveolae mechanics under physiological conditions remain limited.",
+    "model_io": [],
+    "hypotheses": [
+      {
+        "hypothesis": "Caveolae mechanics govern cellular mechanosensing and mechanotransduction through rapid disassembly",
+        "result": "Supported by recent cryo-EM and super-resolution data showing metastable architecture and dynamic responses"
+      }
+    ]
+  },
+  "nature:10.1038/s44328-026-00098-7": {
+    "category": "Single Molecule",
+    "task": "Observe unmodified IDP conformational dynamics and disorder-to-order transitions",
+    "key_results": "IDPs exhibit significantly larger conformational variations than globular proteins; phosphorylation of tau-441 by GSK3\u03b2 induces compaction; Sam68-RNA binding triggers disorder-to-order transition",
+    "comments": "Label-free nanoaperture optical tweezers avoid perturbations from site-specific labels, but the method's applicability to large, extremely disordered proteins remains unclear.",
+    "model_io": [
+      {
+        "model": "Nanoaperture optical tweezers",
+        "inputs": [
+          "single native tau-441 or Sam68 IDPs",
+          "phosphorylation by GSK3\u03b2",
+          "G8.5 RNA for binding assays"
+        ],
+        "outputs": [
+          "conformational dynamics trajectories",
+          "compaction measurements",
+          "binding-induced structural changes"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "IDPs undergo disorder-to-order transitions upon binding or post-translational modification",
+        "result": "Confirmed: tau phosphorylation and Sam68-RNA binding both induce compaction and reduced conformational heterogeneity"
+      }
+    ]
+  },
+  "nature:10.1038/s41420-026-03180-1": {
+    "category": "Cell Signaling",
+    "task": "Target USP10/SCD1 axis to suppress lipogenesis and induce ferroptosis in HNSCC",
+    "key_results": "RAF265 inhibits USP10, decreases SCD1 stability, reduces monounsaturated fatty acid synthesis, and enhances ferroptotic cell death in HNSCC models",
+    "comments": "FDA-approved compound repurposing is attractive, but the mechanism linking lipogenesis suppression to ferroptosis sensitization requires further mechanistic validation.",
+    "model_io": [
+      {
+        "model": "HNSCC cell lines",
+        "inputs": [
+          "RAF265",
+          "E2F4",
+          "USP10",
+          "SCD1",
+          "ubiquitin"
+        ],
+        "outputs": [
+          "lipogenesis levels",
+          "ferroptosis markers",
+          "tumor growth",
+          "SCD1 protein stability"
+        ]
+      },
+      {
+        "model": "HNSCC xenograft",
+        "inputs": [
+          "RAF265 treatment"
+        ],
+        "outputs": [
+          "tumor growth suppression",
+          "ferroptosis induction"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "E2F4 activates USP10 expression in HNSCC",
+        "result": "E2F4 binds USP10 promoter and increases USP10 expression"
+      },
+      {
+        "hypothesis": "USP10 deubiquitinates and stabilizes SCD1",
+        "result": "USP10 removal increases SCD1 ubiquitination and degradation"
+      },
+      {
+        "hypothesis": "RAF265 inhibits USP10 activity and reduces ferroptosis resistance",
+        "result": "RAF265 treatment decreases SCD1 levels and enhances ferroptosis"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-73840-4": {
+    "category": "Cell Signaling",
+    "task": "Characterize circadian regulation of hepatic protein secretion and inter-organ metabolic crosstalk",
+    "key_results": "Hundreds of liver-secreted proteins exhibit time-of-day and clock-dependent secretion; endostatin secretion peaks during fasting phase; endostatin suppresses mitochondrial gene expression in white adipose tissue and reduces respiration while enhancing lipolysis",
+    "comments": "Elegant temporal proteomics approach, but the functional significance of transient endostatin effects on adipocyte metabolism in vivo requires longer-term metabolic studies.",
+    "model_io": [
+      {
+        "model": "Ex vivo liver secretion",
+        "inputs": [
+          "circadian time",
+          "Bmal1",
+          "COL18A1",
+          "proteolytic processing"
+        ],
+        "outputs": [
+          "secreted proteome",
+          "endostatin levels",
+          "time-of-day-dependent secretion"
+        ]
+      },
+      {
+        "model": "White adipose tissue in vivo",
+        "inputs": [
+          "endostatin",
+          "circadian time"
+        ],
+        "outputs": [
+          "mitochondrial gene expression",
+          "mitochondrial respiration",
+          "lipolysis"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Liver secretes endostatin in circadian manner, peaking during fasting",
+        "result": "COL18A1/endostatin secretion is time-of-day-dependent and clock-controlled"
+      },
+      {
+        "hypothesis": "Endostatin suppresses white adipose tissue mitochondrial function",
+        "result": "Endostatin reduces mitochondrial gene expression and respiration while enhancing lipolysis"
+      },
+      {
+        "hypothesis": "Bmal1 regulates COL18A1/endostatin through transcriptional and post-translational mechanisms",
+        "result": "Bmal1 loss dysregulates endostatin via transcriptional repression and altered proteolytic processing"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-73887-3": {
+    "category": "Development",
+    "task": "Map spatiotemporal cell state transitions during morphallactic regeneration in Hydra",
+    "key_results": "scRNA-seq reveals temporal sequence of terminal/subterminal cell identity re-emergence with proximal signatures preceding distal; Wnt signaling remains dynamically active with changing composition",
+    "comments": "High-resolution temporal dynamics provide excellent framework, but mechanistic understanding of how organizer function re-establishes axial patterning remains incomplete.",
+    "model_io": [
+      {
+        "model": "Hydra morphallactic regeneration",
+        "inputs": [
+          "amputation",
+          "time course",
+          "single-cell transcriptomics"
+        ],
+        "outputs": [
+          "cell identity transcriptional signatures",
+          "proximal/distal gene expression",
+          "Wnt signaling activity",
+          "temporal sequence"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Morphallaxis involves sequential re-emergence of terminal and subterminal cell identities",
+        "result": "scRNA-seq shows proximal signatures appear before distal structures"
+      },
+      {
+        "hypothesis": "Wnt signaling remains dynamically active during morphallactic regeneration",
+        "result": "Wnt composition changes temporally at amputation site"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-73888-2": {
+    "category": "Cell Division/Cycle",
+    "task": "Elucidate distinct and overlapping roles of nucleases in meiotic Holliday junction resolution",
+    "key_results": "MutL\u03b3 uniquely imposes crossover-specific resolution on ZMM-bound dHJs; Mus81-Mms4 and STR generate mixed/noncrossover products; Top3-Rmi1 maintains ZMM-dHJ architecture independent of Sgs1",
+    "comments": "Innovative experimental system elegantly decouples dHJ resolution from upstream recombination, but in vivo confirmation of the proposed hierarchy during actual meiosis is needed.",
+    "model_io": [
+      {
+        "model": "Budding yeast system with stabilized ZMM-bound dHJs",
+        "inputs": [
+          "pre-existing dHJs",
+          "MutL\u03b3",
+          "Mus81-Mms4",
+          "STR complex",
+          "conditional resolution"
+        ],
+        "outputs": [
+          "crossover vs noncrossover products",
+          "dHJ processing efficiency"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "MutL\u03b3 uniquely drives crossover-specific resolution of ZMM-bound dHJs",
+        "result": "MutL\u03b3-mediated processing yields exclusively crossover products"
+      },
+      {
+        "hypothesis": "Mus81-Mms4 and STR can access ZMM-dHJs but generate mixed/noncrossover outcomes",
+        "result": "Alternative enzymes process dHJs but favor noncrossover products"
+      },
+      {
+        "hypothesis": "Top3-Rmi1 maintains ZMM-dHJ architecture independent of Sgs1",
+        "result": "Top3-Rmi1 prevents conversion of dHJs into MutL\u03b3-refractory species"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-73929-w": {
+    "category": "Cell Signaling",
+    "task": "Determine mechanisms controlling photobody (phyB condensate) number through nucleator state and seeding-site efficacy",
+    "key_results": "phyB output module functions as universal nucleator; phyB thermal reversion and temperature-responsive seeding-site efficacy jointly control condensate number; phyBY276H defines hypoactive nucleation state",
+    "comments": "Elegant separation of nucleation control from growth control, though the physiological significance of graded phyB conformations in plants remains to be demonstrated.",
+    "model_io": [
+      {
+        "model": "Plant nuclear system (phytochrome B)",
+        "inputs": [
+          "phyB PSM",
+          "phyB OPM",
+          "temperature",
+          "seeding sites"
+        ],
+        "outputs": [
+          "photobody number",
+          "photobody size",
+          "nucleation state"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "phyB OPM functions as universal nucleator across all PB types",
+        "result": "OPM mutations separate nucleation potency from PSM regulation"
+      },
+      {
+        "hypothesis": "phyB thermal reversion and seeding-site efficacy jointly control PB number",
+        "result": "Temperature tunes both nucleator state and site efficacy with cell-type-dependent contributions"
+      },
+      {
+        "hypothesis": "phyBY276H defines hypoactive nucleation state",
+        "result": "Constitutively active variant shows reduced nucleation potency despite continuous activation"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-53841-5": {
+    "category": "Apoptosis/Cell Death",
+    "task": "Characterize miR-31-5p-mediated UV-B protection in melanin-deficient vitiligo keratinocytes via autophagy axis",
+    "key_results": "miR-31-5p elevated in vitiligo lesions; mimic reduces UV-B DNA damage, increases NER gene expression (DDB1, ERCC2, XPC); targets SP1; robustly activates autophagy; autophagy inhibition abrogates DNA protection",
+    "comments": "Novel miR-31-5p-SP1-autophagy-DNA repair axis is elegant, though the clinical relevance to vitiligo's paradoxical cancer resistance requires in vivo validation.",
+    "model_io": [
+      {
+        "model": "Primary human keratinocytes with UV-B exposure",
+        "inputs": [
+          "miR-31-5p mimic",
+          "antagomiR",
+          "UV-B",
+          "SP1",
+          "ULK1 inhibitor",
+          "bafilomycin"
+        ],
+        "outputs": [
+          "DNA damage",
+          "NER gene expression",
+          "replication stress",
+          "autophagy markers",
+          "autophagic flux",
+          "LC3B",
+          "Beclin"
+        ]
+      },
+      {
+        "model": "Vitiligo lesional epidermis",
+        "inputs": [
+          "lesional tissue analysis"
+        ],
+        "outputs": [
+          "miR-31-5p expression",
+          "SP1 expression",
+          "autophagy markers"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "miR-31-5p targets SP1 to reduce DNA damage and enhance NER",
+        "result": "miR-31-5p mimic increases DDB1, ERCC2, XPC; reduces SP1 expression"
+      },
+      {
+        "hypothesis": "miR-31-5p activates autophagy to protect against UV-B DNA damage",
+        "result": "miR-31-5p mimic induces autophagy; ULK1 inhibition abrogates DNA protection"
+      },
+      {
+        "hypothesis": "Autophagy mediates DNA protection from UV-B in miR-31-5p-overexpressing keratinocytes",
+        "result": "Autophagy inhibition blocks miR-31-5p-mediated DNA damage reduction"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-54633-7": {
+    "category": "Development",
+    "task": "Characterize platelet-rich plasma and zinc oxide nanoparticle effects on canine cutaneous wound healing",
+    "key_results": "PRP-ZnO NPs combination most effective; increases epithelialization, wound contraction, antioxidant activity (TAC); elevates MEPE and PDGF\u03b2; produces arranged collagen bundles; PRP alone shows strongest TGF-\u03b2 increase and anti-inflammatory effect",
+    "comments": "Comprehensive wound healing metrics, but lack of mechanistic details on how ZnO NPs reduce oxidative stress and the specific role of each component limits translational potential.",
+    "model_io": [
+      {
+        "model": "Canine cutaneous full-thickness wounds",
+        "inputs": [
+          "PRP",
+          "ZnO NPs",
+          "lanolin",
+          "normal saline",
+          "etoposide"
+        ],
+        "outputs": [
+          "wound size reduction",
+          "epithelialization",
+          "wound contraction",
+          "healing rate",
+          "TAC",
+          "MDA",
+          "PDGF\u03b2 concentration",
+          "MEPE expression",
+          "TGF-\u03b2 expression",
+          "TNF-\u03b1 expression",
+          "collagen bundle organization"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "PRP-ZnO NPs combination optimally enhances wound healing via complementary mechanisms",
+        "result": "PRP-ZnO NPs shows best overall healing, epithelialization, contraction, and antioxidant activity"
+      },
+      {
+        "hypothesis": "PRP promotes regenerative signaling and TGF-\u03b2 expression",
+        "result": "PRP alone shows strongest TGF-\u03b2 increase and reduced TNF-\u03b1"
+      },
+      {
+        "hypothesis": "ZnO NPs reduce oxidative stress and support regeneration",
+        "result": "ZnO NPs elevate TAC and enhance collagen organization in combination with PRP"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55244-y": {
+    "category": "Cell Division/Cycle",
+    "task": "Establish structure-activity relationships for alkyl shikimates promoting human dermal fibroblast proliferation",
+    "key_results": "SAEs with C1-C3 alkyl groups increase proliferation 30-50% at 5.5 mM; C4 groups show low activity; C5 groups exhibit cytotoxicity; proliferation correlates with ClogP (r\u00b2=0.977-0.953)",
+    "comments": "Interesting membrane permeability-dependent mechanism, but the proposed carboxylesterase-mediated intracellular hydrolysis lacks direct biochemical confirmation.",
+    "model_io": [
+      {
+        "model": "Human dermal fibroblasts",
+        "inputs": [
+          "alkyl shikimates (SAE-1 through SAE-5)",
+          "shikimic acid",
+          "carboxylesterase",
+          "alcohols"
+        ],
+        "outputs": [
+          "cell proliferation rate",
+          "cell viability",
+          "ClogP correlation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Membrane-permeable SAEs form complexes with fibroblast carboxylesterase and are hydrolyzed intracellularly",
+        "result": "SAE proliferation activity correlates with hydrophobicity (ClogP) and membrane permeability"
+      },
+      {
+        "hypothesis": "Intracellularly regenerated shikimic acid promotes fibroblast proliferation",
+        "result": "Extracellular shikimic acid does not induce proliferation due to low membrane permeability"
+      },
+      {
+        "hypothesis": "Alkyl group length determines regenerated alcohol cytotoxicity",
+        "result": "C5 alcohols show highest toxicity; toxicity order correlates with ClogP values"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-56344-5": {
+    "category": "Cell Signaling",
+    "task": "Elucidate mast cell Cyp11a1-derived steroid axis in melanoma metastasis suppression",
+    "key_results": "Mast cell-specific Cyp11a1 ablation markedly reduces lung melanoma colonization; decreases mast cell lung infiltration; increases CD8+ T cell, NK cell, basophil activation; elevates IFN-\u03b3 in CD8+/CD4+ T cells",
+    "comments": "Novel mast cell steroid axis in tumor immunity is intriguing, but the identity and function of specific steroids produced by mast cells in this context remain uncharacterized.",
+    "model_io": [
+      {
+        "model": "Mast cell-specific Cyp11a1 knockout mice with melanoma",
+        "inputs": [
+          "mast cell-specific Cyp11a1 ablation",
+          "melanoma challenge"
+        ],
+        "outputs": [
+          "lung colonization",
+          "mast cell infiltration",
+          "Cyp11a1 expression",
+          "CD107a/LAMP1 staining",
+          "immune cell activation",
+          "IFN-\u03b3 levels"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Mast cell-derived steroids suppress melanoma lung metastasis",
+        "result": "Mast cell Cyp11a1 ablation reduces lung nodule colonization"
+      },
+      {
+        "hypothesis": "Mast cell-derived steroids suppress immune cell activation",
+        "result": "Cyp11a1 ablation increases CD107a/LAMP1 staining and CD8+, NK, basophil activation"
+      },
+      {
+        "hypothesis": "Enhanced T cell immunity mediates metastasis suppression in Cyp11a1 knockout mice",
+        "result": "Elevated IFN-\u03b3 expression in CD8+ and CD4+ T cells in lung tissue"
+      }
+    ]
+  },
+  "nature:10.1038/s44385-026-00089-3": {
+    "category": "Development",
+    "task": "Develop scalable human colon organoid model for investigating epithelial repair mechanisms in IBD",
+    "key_results": "96-well Transwell organoid model recapitulates cellular diversity and barrier function; EGF and TGF\u03b1 enhance barrier integrity under chronic/acute inflammation; IL-2 and IL-10 provide direct epithelial protection",
+    "comments": "High-throughput platform is valuable for drug screening, but integration of immune cell-epithelial interactions remains limited compared to in vivo IBD pathology.",
+    "model_io": [
+      {
+        "model": "Human colon organoid-derived Transwell epithelium",
+        "inputs": [
+          "EGF",
+          "TGF\u03b1",
+          "IL-2",
+          "IL-10",
+          "inflammatory cytokines",
+          "simulated inflammatory damage"
+        ],
+        "outputs": [
+          "barrier integrity",
+          "cell death",
+          "proliferation",
+          "epithelial maturation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Growth factors EGF and TGF\u03b1 promote epithelial barrier repair under inflammation",
+        "result": "EGF and TGF\u03b1 reduce cell death and support proliferation under chronic/acute inflammatory conditions"
+      },
+      {
+        "hypothesis": "Immunomodulatory cytokines IL-2 and IL-10 provide direct epithelial protection",
+        "result": "IL-2 and IL-10 treatment protects epithelial cells from inflammatory damage"
+      }
+    ]
+  },
+  "nature:10.1038/s41392-026-02665-w": {
+    "category": "Evolutionary Biology",
+    "task": "Montelukast disrupts retinoic acid signaling and induces autism-like behaviors",
+    "key_results": "MTK disrupts neuronal RA signaling in rat PFC and human brain organoids; prenatal/early postnatal MTK exposure induces autistic-like behaviors reversible by atRA supplementation; MTK physically interacts with RARs (docking + validation); Chinese cohort survey suggests MTK increases ASD risk in early childhood",
+    "comments": "Novel environmental risk factor for ASD with mechanistic support (RA pathway disruption); human cohort is observational, but pharmacological evidence in cell/animal models is compelling.",
+    "model_io": [
+      {
+        "model": "Multi-level mechanistic investigation (neuronal culture, brain organoids, animal behavioral, human cohort)",
+        "inputs": [
+          "montelukast exposure",
+          "retinoic acid signaling markers",
+          "behavioral assays",
+          "clinical data from Chinese ASD cohort"
+        ],
+        "outputs": [
+          "RA pathway disruption metrics",
+          "autistic-like behaviors",
+          "ASD risk associations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Montelukast disrupts neuronal RA signaling and increases ASD risk in early childhood",
+        "result": "MTK antagonizes RARs; induces autism-like behaviors in rats (reversible with atRA); multi-center Chinese survey suggests increased early-childhood ASD risk"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-72666-4": {
+    "category": "Single Cell",
+    "task": "Batch effect modeling and visualization in scRNA-seq",
+    "key_results": "scMEDAL-RE improves disease status prediction and produces interpretable batch-specific embeddings across autism, leukemia, and cardiovascular datasets; preserves biologically meaningful information lost in standard correction",
+    "comments": "Novel approach to preserve batch-confounded biology rather than discarding it, though clinical validation of preserved signals would strengthen impact.",
+    "model_io": [
+      {
+        "model": "scMEDAL-RE (random-effects Bayesian autoencoder)",
+        "inputs": [
+          "single-cell gene expression matrices",
+          "batch labels"
+        ],
+        "outputs": [
+          "batch-invariant embeddings",
+          "batch-specific representations",
+          "counterfactual reconstructions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Modeling batch effects separately preserves biologically meaningful information confounded with batch",
+        "result": "Improved disease status, donor group, and tissue prediction compared to standard correction methods"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-73773-y": {
+    "category": "Structural Prediction",
+    "task": "Multi-way chromatin interaction inference from scHi-C data",
+    "key_results": "MINTsC learns multi-way interactions from pairwise scHi-C data; reduces multiple-testing burden for molecular QTL studies; demonstrates potential for epistatic SNP effect detection",
+    "comments": "Addresses important gap in scHi-C analysis; statistical calibration is thorough, but biological validation on real QTL datasets would strengthen claims.",
+    "model_io": [
+      {
+        "model": "MINTsC (Dirichlet-multinomial spline model)",
+        "inputs": [
+          "scHi-C pairwise contact matrices",
+          "cell type annotations"
+        ],
+        "outputs": [
+          "multi-way interaction scores",
+          "calibrated p-values",
+          "epistatic effect predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-way chromatin interactions can be inferred from aggregated pairwise contacts",
+        "result": "scHi-C data from prefrontal cortex reveals multi-enhancer gene regulation; validates on human tissue"
+      }
+    ]
+  },
+  "nature:10.1038/s41540-026-00725-z": {
+    "category": "Network Biology",
+    "task": "Hierarchical embedding and visualization of scRNA-seq with improved pseudotime inference",
+    "key_results": "MuH-MDS achieves 103-fold speedup, scales to 80,000+ samples, improves pseudotime inference and lineage reconstruction vs. UMAP in C. elegans embryogenesis; preserves both local and global hierarchy",
+    "comments": "Hyperbolic embedding is theoretically sound for hierarchical biological data, but practical advantages over Euclidean methods on real datasets could be more thoroughly documented.",
+    "model_io": [
+      {
+        "model": "MuH-MDS (multiscale hyperbolic multidimensional scaling)",
+        "inputs": [
+          "scRNA-seq expression data",
+          "cell annotations"
+        ],
+        "outputs": [
+          "hyperbolic embeddings",
+          "pseudotime estimates",
+          "lineage trajectories"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Hyperbolic geometry better captures hierarchical structure than Euclidean methods",
+        "result": "Improved pseudotime inference and lineage reconstruction in C. elegans embryogenesis"
+      }
+    ]
+  },
+  "nature:10.1038/s41597-026-07468-w": {
+    "category": "Other",
+    "task": "Global pandemic tracking via harmonized epidemiological and policy data",
+    "key_results": "3-million datapoint compilation across 54 countries, 82 indicators covering epidemiology, environment, socio-economics, vaccination, policy with high precision and coverage for 2020-2021",
+    "comments": "Data resource paper; enables benchmarking and meta-analysis but individual analytic findings not reported.",
+    "model_io": [],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-49315-3": {
+    "category": "Other",
+    "task": "COVID-19 detection from chest X-ray images",
+    "key_results": "19-layer CNN outperforms ResNet50, VGG19, Inception, AlexNet, SqueezeNet across accuracy, sensitivity, specificity, F1-score for 3-class and 4-class classification",
+    "comments": "Clinical utility claims lack specificity; comparison metrics not quantified in abstract, and generalization to diverse patient populations unaddressed.",
+    "model_io": [
+      {
+        "model": "19-layer CNN",
+        "inputs": [
+          "chest X-ray images"
+        ],
+        "outputs": [
+          "disease classification (COVID-19, pneumonia, normal, lung opacity)"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-53036-y": {
+    "category": "Network Biology",
+    "task": "Biomedical knowledge graph integration and entity relationship exploration",
+    "key_results": "ROBOKOP v1.0 integrates multiple knowledge sources via Biolink schema; validated on asthma gene targets and applied to cardiotoxicity and pesticide-diabetes associations",
+    "comments": "Comprehensive infrastructure for knowledge integration; functional utility depends on knowledge base coverage and reasoning algorithm transparency.",
+    "model_io": [
+      {
+        "model": "ROBOKOP knowledge graph system with ORION pipeline",
+        "inputs": [
+          "heterogeneous biomedical knowledge sources"
+        ],
+        "outputs": [
+          "standardized knowledge graph",
+          "entity relationships",
+          "reasoning paths"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-53519-y": {
+    "category": "Statistical Methods",
+    "task": "Early antifungal resistance prediction from MALDI-TOF mass spectrometry",
+    "key_results": "Multi-layer perceptron with PCA dimensionality reduction achieves AUPRC 0.77 across 10 highest-performing species-drug pairs; best performance on C. albicans-micafungin, C. parapsilosis-fluconazole, S. cerevisiae-itraconazole/fluconazole",
+    "comments": "Addresses important gap in fungal AMR detection; could improve prescribing in ~30% of patients per guideline-based analysis, though clinical prospective validation pending.",
+    "model_io": [
+      {
+        "model": "Multi-layer perceptron with PCA",
+        "inputs": [
+          "MALDI-TOF mass spectra (658 pathogen spectra)",
+          "drug features",
+          "antifungal class encodings"
+        ],
+        "outputs": [
+          "antifungal resistance phenotype prediction"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "MALDI-TOF spectra combined with ML can predict antifungal resistance early",
+        "result": "AUPRC 0.77 achieved; could prevent resistant pathogen prescribing in ~30% of patients"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-54083-1": {
+    "category": "Structural Prediction",
+    "task": "3D genome organization and chromatin interactions during HBV infection",
+    "key_results": "HBV DNA preferentially localizes to active chromatin regions (CpG islands, promoters) without global A/B compartment reorganization; viral minichromosome enriched in H3K4me3/H3K27ac; host transcription remains stable",
+    "comments": "Integrated multi-modal approach (4C-seq, Hi-C, ChIP-seq, RNA-seq) reveals elegant 'stealth' viral strategy; mechanistic insights into viral persistence are well-supported.",
+    "model_io": [
+      {
+        "model": "Multi-omics integration (4C-seq, in situ Hi-C, RNA-seq, ChIP-seq/CUT&RUN)",
+        "inputs": [
+          "HBV-infected HepG2-hNTCP-C4 cells",
+          "primary human hepatocytes"
+        ],
+        "outputs": [
+          "HBV-chromatin interaction maps",
+          "3D genome compartments",
+          "histone modification profiles",
+          "transcriptional response"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "HBV selectively associates with transcriptionally permissive chromatin while preserving host architecture",
+        "result": "HBV localizes to active regions without compartmentalization reorganization; stealth persistence mechanism revealed"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-54182-z": {
+    "category": "Other",
+    "task": "Comparative assessment of vendor AI solutions for cardiac MRI segmentation",
+    "key_results": "Three models show strong AI-expert agreement (r > 0.8) for clinical parameters; inter-model biases include differing volume estimates; apical segmentation unreliable (Dice < 65%); papillary muscle inclusion differences produce clinically relevant LVM errors in LVH",
+    "comments": "Thorough comparative analysis identifies critical slice-detection and PM-handling issues; findings highlight non-interchangeability of commercial AI solutions.",
+    "model_io": [
+      {
+        "model": "Three cardiac MRI segmentation models (AI1, AI2, AI3)",
+        "inputs": [
+          "short-axis cine MRI images from 346 cases"
+        ],
+        "outputs": [
+          "ventricular volume estimates",
+          "left ventricular mass",
+          "segmentation masks (Dice coefficient)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Commercial AI solutions produce comparable clinical parameter estimates",
+        "result": "Strong AI-expert agreement but significant inter-model biases; not interchangeable due to basal/apical slice detection and papillary muscle handling differences"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-54976-1": {
+    "category": "Statistical Methods",
+    "task": "Machine learning prediction of cervical cancer screening knowledge among reproductive-age women",
+    "key_results": "XGBoost best performer: accuracy 84%, AUC 82%, F1 83%, recall 82%, precision 84% across 50,584 women in 7 sub-Saharan African countries; 56% good screening knowledge vs. 70% WHO target; top 14 predictors identified (HIV, education, media, maternal age, etc.)",
+    "comments": "Large diverse cohort with comprehensive feature selection; identifies modifiable factors (education, media exposure, autonomy, ANC attendance) for intervention.",
+    "model_io": [
+      {
+        "model": "Eight ML algorithms (Decision Tree, Random Forest, KNN, ANN, XGBoost, LightGBM, AdaBoost, GB)",
+        "inputs": [
+          "50,584 reproductive-age women, 7 countries; sociodemographic, health, and behavioral features"
+        ],
+        "outputs": [
+          "cervical cancer screening knowledge classification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Sociodemographic and behavioral factors predict cervical cancer screening knowledge",
+        "result": "XGBoost achieved 84% accuracy; HIV, education, media exposure, autonomy, ANC, wealth are top predictors; 56% good knowledge vs. 70% WHO target"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55388-x": {
+    "category": "Statistical Methods",
+    "task": "Deep learning prediction of diffusion-FLAIR mismatch from DWI/ADC without FLAIR",
+    "key_results": "AI model AUROC 0.92 (95% CI: 0.88\u20130.95) on external validation, significantly outperforms human expert average AUROC 0.82 (p < 0.001) in Focused classification; 2,369 derivation cases + 679 external validation",
+    "comments": "Clinically relevant problem with strong external validation; model outperforming experts is compelling, though explanations for predictions would strengthen adoption.",
+    "model_io": [
+      {
+        "model": "Deep learning DFM classifier",
+        "inputs": [
+          "B1000 diffusion-weighted images",
+          "apparent diffusion coefficient (ADC) maps"
+        ],
+        "outputs": [
+          "diffusion-FLAIR mismatch prediction",
+          "binary classification (match vs. mismatch)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "DFM can be reliably predicted from B1000 and ADC without FLAIR imaging",
+        "result": "AI AUROC 0.92, significantly outperforms human experts (AUROC 0.82, p < 0.001)"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-56303-0": {
+    "category": "Other",
+    "task": "Requirements specification for tuberculosis self-care mobile application",
+    "key_results": "65 key requirements clustered into 45 data items and 20 functional items; functional requirements prioritized higher than data requirements by 20 TB patients and 20 specialists; clinical items more important than administrative",
+    "comments": "Mixed-methods systematic approach to app requirements; results are stakeholder-informed but lack discussion of implementation barriers or feature validation.",
+    "model_io": [],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41746-026-02849-2": {
+    "category": "Statistical Methods",
+    "task": "Mamba-based deep learning for predicting chemotherapy response in breast cancer",
+    "key_results": "MCEN achieves AUROC 0.923 (training), 0.78 (validation), 0.761\u20130.809 (external test); incorporating clinicopathological info improves to 0.937, 0.811, and 0.773\u20130.84 respectively across 1646 patients",
+    "comments": "Large multi-hospital cohort with robust external validation; Mamba architecture shows promise but comparative advantage vs. CNN/transformer architectures not quantified.",
+    "model_io": [
+      {
+        "model": "MCEN (Mamba-based deep learning model)",
+        "inputs": [
+          "needle biopsy histopathology images",
+          "clinicopathological variables"
+        ],
+        "outputs": [
+          "pathological complete response prediction",
+          "risk scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Mamba architecture effectively predicts NAC response from breast cancer biopsies",
+        "result": "AUROC 0.78\u20130.809 (external), improved to 0.811\u20130.84 with clinicopathological data"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-02850-9": {
+    "category": "Other",
+    "task": "Large language model vs. dermatologist diagnostic performance on nail disorders",
+    "key_results": "Dermatologists: 70.6% accuracy (SD only), 80.3% (SD+DD); experts 96%; AI models (GPT-4o, Grok3, Claude, Gemini): 25.0% and 35.0% respectively (p < 0.001); AI classified only 13.9% of tumors correctly",
+    "comments": "Well-designed prospective study demonstrates current LLM limitations for specialized medical imaging; raises important caveats about standalone AI clinical use.",
+    "model_io": [
+      {
+        "model": "Four multimodal large language models (GPT-4o, Grok 3, Claude Sonnet 4, Gemini 2.5 Flash)",
+        "inputs": [
+          "clinical nail disorder images"
+        ],
+        "outputs": [
+          "diagnostic classification",
+          "differential diagnoses"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Current freely available LLMs achieve comparable diagnostic accuracy to dermatologists on nail disease",
+        "result": "AI accuracy 25-35% vs. dermatologist 70.6-96% (p < 0.001); insufficient for standalone use"
+      }
+    ]
+  },
+  "nature:10.1038/s43587-026-01132-z": {
+    "category": "Genomics",
+    "task": "DREAM complex repression links somatic mutation burden to lifespan and age-related disease",
+    "key_results": "Low DREAM activity associates with reduced mutation rates; predicts lifespan across 92 mammals (long-lived species have low activity); reduced activity in Alzheimer's patients predicts late onset/lower neuropathology; DREAM KO mice show 4.2% fewer SNVs, 19.6% fewer indels in brain",
+    "comments": "Compelling cross-species and human disease evidence; mechanistic link between DREAM and DNA repair repression is well-established, positioning DREAM as an aging regulator.",
+    "model_io": [
+      {
+        "model": "Multi-tissue analysis integrating DREAM activity, somatic mutations, and lifespan",
+        "inputs": [
+          "single-cell RNA-seq atlas (21 mouse tissues)",
+          "somatic mutation catalogs",
+          "mammalian lifespan data",
+          "Alzheimer's disease cohorts",
+          "DREAM knockout mice"
+        ],
+        "outputs": [
+          "DREAM-activity-associated mutation rates",
+          "lifespan predictions",
+          "disease onset/severity associations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Low DREAM-associated activity reduces somatic mutation burden and extends lifespan",
+        "result": "DREAM activity predicts lifespan across 92 mammals; DREAM KO reduces SNVs 4.2%, indels 19.6% in brain; low activity in Alzheimer's predicts late onset"
+      }
+    ]
+  },
+  "nature:10.1038/s43856-026-01706-3": {
+    "category": "Other",
+    "task": "Scoping review of machine learning applications for neglected tropical diseases",
+    "key_results": "Characterizes current landscape, trends, gaps, and opportunities for ML in NTD prevention/control in Africa and low-to-middle income countries",
+    "comments": "Scoping review; synthesizes existing applications but does not present novel experimental findings or quantitative results.",
+    "model_io": [],
+    "hypotheses": []
+  },
+  "nature:10.1038/s44385-026-00087-5": {
+    "category": "Other",
+    "task": "Non-invasive hemoglobin assessment via image-based machine learning",
+    "key_results": "LightGBM regression on fingernail/eyelid photographs achieves \u00b11.02 mmol/L residual SD for Hb prediction across 367 hematologic malignancy patients + 184 healthy donors; two-stage framework integrating QoL metrics shows concordance with clinician assessments",
+    "comments": "Feasibility study demonstrates proof-of-concept for non-invasive digital biomarker; QoL integration is novel, though prospective validation and comparison to point-of-care devices needed.",
+    "model_io": [
+      {
+        "model": "LightGBM regression + rule-based QoL aggregation",
+        "inputs": [
+          "fingernail/eyelid photographs",
+          "EORTC Global Health/Fatigue scores"
+        ],
+        "outputs": [
+          "hemoglobin level predictions",
+          "QoL-contextualized Hb estimates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Image-based ML can non-invasively predict hemoglobin levels in hematologic malignancy patients",
+        "result": "Residual SD \u00b11.02 mmol/L; QoL framework shows concordance with clinician assessments; supports feasibility for home monitoring"
+      }
+    ]
+  },
+  "nature:10.1038/s44401-026-00087-y": {
+    "category": "Other",
+    "task": "Critical analysis of AI advancements in chest radiography interpretation",
+    "key_results": "CNNs and transformers achieve diagnostic accuracies exceeding/comparable to radiologists; multimodal systems combining imaging + text improve performance and interpretability; challenges include bias, generalization, explainability; solutions include data sharing, domain adaptation, XAI",
+    "comments": "Comprehensive review synthesizing evolution from hand-crafted features to multimodal AI; practical deployment challenges and institutional barriers deserve more emphasis.",
+    "model_io": [],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-54244-2": {
+    "category": "Algorithms",
+    "task": "Large-scale portfolio optimization via Pauli correlation encoding",
+    "key_results": "Gate-based variational quantum algorithm scales to 250+ variables using multiple variables per qubit; market graph partitioning iteratively optimizes sub-portfolios",
+    "comments": "Innovative approach enabling gate-based quantum methods on realistic problems, though comparison with classical and annealing baselines on the same problem is absent.",
+    "model_io": [
+      {
+        "model": "Variational quantum algorithm with Pauli Correlation Encoding",
+        "inputs": [
+          "stock market graph with 250+ assets",
+          "correlation structure"
+        ],
+        "outputs": [
+          "optimized portfolio allocation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-variable-per-qubit encoding enables gate-based quantum scaling",
+        "result": "Successfully applied to 250+ variable portfolio problem"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-54487-z": {
+    "category": "Algorithms",
+    "task": "Dynamic hotel staff scheduling optimizing cost, service quality, and employee satisfaction",
+    "key_results": "At 90% occupancy: 15.3% cost reduction, 58.7% waiting time decrease, 65.7% overtime reduction, 78.3% complaint rate drop; <5 min response to sudden demand with 92% adjustment accuracy",
+    "comments": "Practical multi-objective optimization with strong empirical improvements, though results are specific to the hotel chain studied and generalization to other sectors needs validation.",
+    "model_io": [
+      {
+        "model": "LSTM forecasting + Genetic Simulated Annealing Algorithm (GASA)",
+        "inputs": [
+          "occupancy data",
+          "labor demand patterns",
+          "staff skill profiles"
+        ],
+        "outputs": [
+          "optimal shift schedules"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Dynamic demand forecasting + multi-objective GASA improves scheduling efficiency",
+        "result": "15.3% cost reduction and 58.7% waiting time decrease confirmed at 90% occupancy"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55392-1": {
+    "category": "Algorithms",
+    "task": "Joint optimization of EV routing and charging station placement via QUBO",
+    "key_results": "Sequential Bayesian+QUBO method converges stably to battery-feasible solutions; reliable discovery of near-optimal configurations on 20-location problem",
+    "comments": "Novel approach using Bayesian learning to handle battery constraints, but scalability beyond 20 locations and comparison to classical methods warrant further study.",
+    "model_io": [
+      {
+        "model": "Bayesian inference + QUBO solver (sequential optimization)",
+        "inputs": [
+          "EV routing problem with 20 locations",
+          "battery capacity constraints"
+        ],
+        "outputs": [
+          "charging station locations",
+          "EV routes"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Bayesian-learned constraints reduce QUBO auxiliary qubits and improve convergence",
+        "result": "Stable convergence to battery-feasible solutions confirmed"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55607-5": {
+    "category": "ML Theory",
+    "task": "Metamaterial geometric-performance modeling via Kolmogorov-Arnold operator informed networks",
+    "key_results": "KAOIN predicts gradient TPMS specific energy absorption from 50 datasets; 44.6% accuracy improvement over standard MLPs; 48\u201389% convergence speedup; validates physical mechanisms via spatial symmetry and Gibson-Ashby model",
+    "comments": "Elegant small-sample solution leveraging physics-informed neural networks; demonstrated interpretability through symmetry analysis is valuable, though scalability to diverse metamaterial geometries requires further investigation.",
+    "model_io": [
+      {
+        "model": "Kolmogorov-Arnold Operator Informed Network (KAOIN)",
+        "inputs": [
+          "metamaterial geometry (50 design samples)"
+        ],
+        "outputs": [
+          "specific energy absorption predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "KAOIN with physical law extraction improves geometric-performance prediction on small datasets",
+        "result": "44.6% accuracy improvement; validated against Gibson-Ashby model and spatial symmetry"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55737-w": {
+    "category": "Algorithms",
+    "task": "Secure adaptive task offloading in IoV edge computing with adversarial resilience",
+    "key_results": "SpiralEdge-IoV: 18% lower average task latency, ~15% energy reduction, >20% higher task success in adversarial settings vs. baselines; stable convergence and acceptable overhead in dense scenarios",
+    "comments": "Novel logarithmic spiral defense model integrating trust and optimization elegantly; impressive adversarial robustness on realistic traces (VeReMi), though scalability to massive fleets and comparison with dedicated security approaches needed.",
+    "model_io": [
+      {
+        "model": "Logarithmic Spiral Defense (LSD) + Addax-optimization-based decision (LSD-AddaxNet)",
+        "inputs": [
+          "vehicular tasks",
+          "edge server capabilities",
+          "vehicle mobility patterns",
+          "adversarial behaviors"
+        ],
+        "outputs": [
+          "offloading decisions",
+          "task assignments"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Logarithmic spiral trust model enables robust offloading under adversarial conditions",
+        "result": "18% latency reduction, >20% task success improvement in adversarial settings"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55785-2": {
+    "category": "Analysis",
+    "task": "Solving nonlinear Zoomeron equation via analytical methods",
+    "key_results": "Multiple new analytical solutions discovered (kink, anti-kink, singular periodic, dark solitary wave); Modified Khater Method validated as effective tool",
+    "comments": "Solid analytical work but limited to a specific nonlinear PDE; visualization and numerical verification strengthen credibility.",
+    "model_io": [
+      {
+        "model": "Modified Khater Method (MKM) converting PDE to ODE",
+        "inputs": [
+          "nonlinear Zoomeron equation"
+        ],
+        "outputs": [
+          "exact soliton solutions",
+          "2D/3D plots of dynamical behavior"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "MKM can discover diverse analytical solutions to the Zoomeron equation",
+        "result": "Multiple solution types confirmed; method valid for nonlinear evolution equations"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-56118-z": {
+    "category": "Algorithms",
+    "task": "Robust model predictive control for vehicle trajectory tracking under uncertain dynamics",
+    "key_results": "vs. PID/linear MPC: 78% lateral error reduction, 71% yaw stability improvement, 68% settling time reduction, 61% smoother steering, 57% disturbance rejection; 6.3 ms computation per cycle; robust to mass, tire, friction variations",
+    "comments": "Comprehensive benchmark and practical embedded feasibility are strengths; comparison with Sliding Mode Control shows trade-offs (smoothness vs. robustness), but lacks real-world vehicle validation.",
+    "model_io": [
+      {
+        "model": "Robust Model Predictive Control with constraint tightening",
+        "inputs": [
+          "vehicle state",
+          "desired trajectory",
+          "parameter uncertainty",
+          "disturbances"
+        ],
+        "outputs": [
+          "steering commands"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-parametric predictive modeling with robust optimization handles parameter uncertainty in vehicle dynamics",
+        "result": "78% lateral error reduction and 71% yaw stability improvement confirmed vs. PID"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-56196-z": {
+    "category": "ML Theory",
+    "task": "Network attack detection via multi-time-scale temporal feature modeling",
+    "key_results": "Detection accuracies 95.8% (UNSW-NB15) and 95.2% (CSE-CIC-IDS2018); macro F1-scores 94.2% and 93.6%; 25% training time reduction and 18% inference speedup vs. LSTM/CNN",
+    "comments": "CW-RNN's modular multi-time-scale design is intuitive and validated on benchmarks, though generalization to zero-day attacks unclear.",
+    "model_io": [
+      {
+        "model": "Clock-Work RNN (CW-RNN) with attention mechanism",
+        "inputs": [
+          "network traffic features from UNSW-NB15 and CSE-CIC-IDS2018"
+        ],
+        "outputs": [
+          "attack/benign classification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-time-scale modular processing captures both burst and latent attacks",
+        "result": "95.8% and 95.2% accuracy; outperforms LSTM and CNN"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-73459-5": {
+    "category": "Optics/Photonics",
+    "task": "Acoustic amplification and band folding in Floquet phononic time crystals",
+    "key_results": "Observation of amplified transmission at k-gap frequencies; two-gap structure via temporal-supercell engineering at half and quarter modulation frequency",
+    "comments": "Elegant demonstration of time-crystal band physics in acoustic domain, though scalability to higher-dimensional and topological regimes remains experimentally unexplored.",
+    "model_io": [
+      {
+        "model": "1D acoustic waveguide with resonant meta-atoms and dynamic modulation",
+        "inputs": [
+          "time-varying compressibility modulation",
+          "supercell phase design"
+        ],
+        "outputs": [
+          "transmission spectra",
+          "emission enhancement",
+          "k-gap structure"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Temporal-supercell creates multiple k-gaps via momentum band folding",
+        "result": "Confirmed: two clear amplified transmission ranges at half and quarter modulation frequencies"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-73482-6": {
+    "category": "Condensed Matter",
+    "task": "Room-temperature electrically-driven metastable states in moir\u00e9 CDW superlattice",
+    "key_results": "Multiple discrete resistivity plateaus across wide temperature window; giant hysteresis enabling multi-bit memory; field-induced suppression of CDW amplitude with reduced correlation length",
+    "comments": "Novel integration of moir\u00e9 physics with CDW switching offers practical high-temperature memory, though mechanism requires further verification beyond the proposed out-of-plane phase switching.",
+    "model_io": [
+      {
+        "model": "EuTe4 bulk material with moir\u00e9 superlattice",
+        "inputs": [
+          "electric field",
+          "temperature"
+        ],
+        "outputs": [
+          "resistivity plateaus",
+          "CDW amplitude",
+          "correlation length"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Electric field induces switching of out-of-plane CDW phases",
+        "result": "Confirmed via photoemission spectroscopy and diffraction showing suppressed CDW amplitude and reduced correlation length"
+      }
+    ]
+  },
+  "nature:10.1038/s43246-026-01209-7": {
+    "category": "Condensed Matter",
+    "task": "Half-quantized Hall plateaus via quantum point contact in graphene",
+    "key_results": "Half-quantized conductance at \u03bd = 5/2 and other unconventional filling factors; two distinct charge equilibration mechanisms including novel zeroth Landau level mediation",
+    "comments": "Challenges topological interpretation of half-integer plateaus; non-topological origin surprising but may complicate device engineering where topological protection is desired.",
+    "model_io": [
+      {
+        "model": "Monolayer graphene quantum point contact in strong magnetic field",
+        "inputs": [
+          "magnetic field",
+          "gate voltage"
+        ],
+        "outputs": [
+          "conductance plateaus",
+          "filling factor"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Half-quantized plateaus arise from charge equilibration between fractional QHE states and metallic reservoirs",
+        "result": "Confirmed via observation of non-topological origin and zeroth Landau level mediation"
+      }
+    ]
   }
 }
