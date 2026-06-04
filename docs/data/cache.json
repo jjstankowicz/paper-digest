@@ -244870,5 +244870,821 @@
         "result": "Confirmed; 1\u20132 order magnitude enhancement observed and quantified via quantum capacitance"
       }
     ]
+  },
+  "hf:2606.05102": {
+    "category": "Vision",
+    "task": "Feed-forward 3D scene reconstruction from images via Gaussian splatting",
+    "key_results": "6\u00d7 fewer Gaussians than pixel-aligned methods; 2.1dB PSNR improvement on DL3DV, 1.2dB on RealEstate10K over pose-free baselines",
+    "comments": "Decoupling Gaussian budget from camera resolution via token clustering is elegant, though the zero-shot generalization claims benefit from validation on more diverse datasets.",
+    "model_io": [
+      {
+        "model": "ZipSplat (multi-view backbone + k-means clustering + attention + MLP decoder)",
+        "inputs": [
+          "posed or pose-free images"
+        ],
+        "outputs": [
+          "3D Gaussian parameters (positions, covariances, colors)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Token-based clustering decouples Gaussian count from pixel resolution",
+        "result": "Confirmed; 6\u00d7 reduction in Gaussian count"
+      },
+      {
+        "hypothesis": "Single model can traverse quality-efficiency curve via variable clustering",
+        "result": "Confirmed across DL3DV and RealEstate10K"
+      }
+    ]
+  },
+  "hf:2606.03773": {
+    "category": "Benchmark",
+    "task": "High-quality German language model pretraining corpus construction and validation",
+    "key_results": "KletterMix achieves measurable improvements on German downstream evaluations; strong COMETKiwi translation quality scores across diverse domains",
+    "comments": "Translating English corpora preserves diversity but may introduce subtle linguistic artifacts; direct English\u2013German comparison is methodologically valuable but domain-specific effects require deeper analysis.",
+    "model_io": [
+      {
+        "model": "COMETKiwi (translation quality evaluator)",
+        "inputs": [
+          "German translated documents"
+        ],
+        "outputs": [
+          "quality scores"
+        ]
+      },
+      {
+        "model": "Language models (baseline German corpora vs. KletterMix)",
+        "inputs": [
+          "pretraining corpus text"
+        ],
+        "outputs": [
+          "downstream task performance metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Careful translation preserves semantic and stylistic richness of English corpus",
+        "result": "Confirmed via COMETKiwi quality analysis"
+      },
+      {
+        "hypothesis": "KletterMix improves German downstream task performance over existing corpora",
+        "result": "Confirmed through controlled pretraining ablations"
+      }
+    ]
+  },
+  "hf:2606.05112": {
+    "category": "Medical",
+    "task": "Dynamic clinical decision-making evaluation for LLMs via interactive standardized patient cases",
+    "key_results": "GPT-4 completes only 60.4% of expert-defined rubric items; best medically specialized model reaches 40%; increasing compute yields no gain",
+    "comments": "MedSP1000 reveals crucial gap between static benchmark performance and realistic clinical reasoning; the finding that specialized models underperform general ones suggests domain-specific training alone is insufficient.",
+    "model_io": [
+      {
+        "model": "LLMs (GPT-4, GPT-3.5, medically specialized variants)",
+        "inputs": [
+          "patient history, SP case scripts, environment context"
+        ],
+        "outputs": [
+          "clinical decisions, information requests, treatment plans"
+        ]
+      },
+      {
+        "model": "Patient agent + Environment controller",
+        "inputs": [
+          "clinical agent queries"
+        ],
+        "outputs": [
+          "simulated patient responses, trajectory updates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Static benchmark performance translates to dynamic SP scenario performance",
+        "result": "Rejected; performance does not reliably transfer"
+      },
+      {
+        "hypothesis": "Increased test-time compute improves rubric completion",
+        "result": "Rejected; no measurable gain observed"
+      }
+    ]
+  },
+  "hf:2606.05009": {
+    "category": "LLM/Reasoning",
+    "task": "Agentic rule-based reasoning over complex statutes and policies",
+    "key_results": "Agentic harnesses improve deontic reasoning frontier; improvements non-uniform with weaker models degrading on numerical tasks and high token consumption",
+    "comments": "The finding that agentic approaches help but inconsistently highlights that rule-following LLMs need better grounding mechanisms, particularly for numerical reasoning.",
+    "model_io": [
+      {
+        "model": "LLM agents with agentic harnesses",
+        "inputs": [
+          "case facts",
+          "statutes on demand"
+        ],
+        "outputs": [
+          "rulings, tax computations, immigration appeal outcomes"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Agentic interaction with statutes on demand improves rule application",
+        "result": "Partially confirmed; improvements exist but vary by task type"
+      },
+      {
+        "hypothesis": "Weaker models benefit equally from agentic harnesses",
+        "result": "Rejected; weaker models degrade on numerical tasks"
+      }
+    ]
+  },
+  "hf:2605.30257": {
+    "category": "Vision",
+    "task": "Fine-tune image layer decomposition without paired supervision via VLM-scored RL",
+    "key_results": "Stronger layer separation, fewer blank/artifact layers, lower per-layer reconstruction error on Crello dataset vs. base model",
+    "comments": "Using VLM feedback to train visual models is promising, but the two-stage calibration pipeline hints that naive VLM scoring has limited variance\u2014a potential weakness for other RL-from-VLM approaches.",
+    "model_io": [
+      {
+        "model": "Stable-Layers (Qwen-Image-Layered + Flow-GRPO + LoRA)",
+        "inputs": [
+          "images",
+          "VLM scoring via two-stage evaluation pipeline"
+        ],
+        "outputs": [
+          "layer decompositions (multiple candidates per image)"
+        ]
+      },
+      {
+        "model": "VLM (reward signal)",
+        "inputs": [
+          "candidate decompositions"
+        ],
+        "outputs": [
+          "structured per-sample scores + grid-based calibration scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "VLM feedback alone provides sufficient reward signal for GRPO",
+        "result": "Rejected; two-stage calibration pipeline needed to avoid score compression"
+      },
+      {
+        "hypothesis": "Fine-tuning improves layer separation and reduces artifacts",
+        "result": "Confirmed"
+      }
+    ]
+  },
+  "hf:2606.04978": {
+    "category": "LLM/Reasoning",
+    "task": "Assess mechanism-level alignment in LLM risk decision-making against human behavior",
+    "key_results": "LLMs produce finite bids resembling human outcomes in St. Petersburg game, yet controlled variants reveal conditionally rational rather than human-like mechanisms; human-cue prompting and instruction tuning lower bids but leave mechanism patterns unchanged",
+    "comments": "This carefully controlled analysis exposes a critical distinction: surface-level behavioral alignment masks fundamental differences in reasoning processes\u2014a lesson applicable beyond risk decisions.",
+    "model_io": [
+      {
+        "model": "28 LLMs (base and instruction-tuned variants)",
+        "inputs": [
+          "St. Petersburg game prompt variants (original, truncation, repeated play, endowment, identity), human-perspective prompts"
+        ],
+        "outputs": [
+          "willingness-to-pay bids"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LLM risk decisions resemble human behavior in original game",
+        "result": "Confirmed (outcome-level)"
+      },
+      {
+        "hypothesis": "LLM mechanisms align with human decision-making under controlled variants",
+        "result": "Rejected; models shift to conditionally rational behavior"
+      },
+      {
+        "hypothesis": "Human-cue prompting and instruction tuning achieve mechanism-level alignment",
+        "result": "Partially rejected; bids lower but mechanism patterns persist"
+      }
+    ]
+  },
+  "hf:2606.03712": {
+    "category": "LLM/Reasoning",
+    "task": "Mechanistic analysis of how LLMs process graph tokens in graph language models",
+    "key_results": "Graph sink tokens exhibit activation-level saliency (massive values in few dimensions) but do not carry primary graph information; decoupling between activation saliency and semantic utility identified",
+    "comments": "The disconnect between activation salience and actual utility is a striking finding that suggests current GLM tokenization schemes need fundamental rethinking rather than incremental fixes.",
+    "model_io": [
+      {
+        "model": "Graph Language Models (representative GLM architectures)",
+        "inputs": [
+          "graph topology",
+          "node information",
+          "textual instructions"
+        ],
+        "outputs": [
+          "processed graph tokens",
+          "downstream task predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Graph sink tokens (outlier activations) carry primary graph information",
+        "result": "Rejected; pruning/repositioning/swapping interventions show low semantic/structural importance"
+      },
+      {
+        "hypothesis": "Activation-level saliency in graph tokens indicates information utilization",
+        "result": "Rejected; decoupling observed between saliency and utility"
+      }
+    ]
+  },
+  "hf:2606.04056": {
+    "category": "Systems",
+    "task": "Prevent LLM-agent budget overruns through type-system enforcement and provide incident taxonomy",
+    "key_results": "Catalog of 63 confirmed production incidents (2023\u20132026) across 21 frameworks; affine-typed Rust mitigation achieves zero cap violations and zero false refusals; delegation-fanout race rejected at compile time",
+    "comments": "Translating operational safety into type-system guarantees is sound engineering, but the 4\u20136\u00d7 static over-reservation overhead and reliance on estimator assumptions merit deeper investigation for high-volume deployments.",
+    "model_io": [
+      {
+        "model": "token-budgets Rust crate (affine-typed ownership wrapper)",
+        "inputs": [
+          "delegation requests",
+          "token cap constraints"
+        ],
+        "outputs": [
+          "compile-time and runtime enforcement of budget limits"
+        ]
+      },
+      {
+        "model": "LLM agents (orchestration frameworks)",
+        "inputs": [
+          "tasks with budget constraints"
+        ],
+        "outputs": [
+          "API calls, delegation chains"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Affine ownership prevents budget-overrun failure modes",
+        "result": "Confirmed on delegation-fanout; 0/30 overshoot vs. 30/30 for asyncio"
+      },
+      {
+        "hypothesis": "Type-system enforcement is non-bypassable under operator error",
+        "result": "Confirmed; compile-time rejection of double-spend and use-after-delegation"
+      }
+    ]
+  },
+  "hf:2605.31559": {
+    "category": "Vision",
+    "task": "Operator learning via attention reinterpreted as functional correspondence between adaptive bases",
+    "key_results": "Functional Attention matches state-of-the-art on operator learning tasks (PDEs, 3D segmentation, regression) while remaining robust to varying discretizations; resolution-invariant and compact representations",
+    "comments": "Reformulating token-wise attention as functional operators is theoretically elegant, but empirical gains over baselines appear marginal\u2014the value proposition hinges on robustness and generalization rather than peak performance.",
+    "model_io": [
+      {
+        "model": "Functional Attention (structured linear operators replacing softmax)",
+        "inputs": [
+          "infinite-dimensional function space samples (discretized fields)"
+        ],
+        "outputs": [
+          "operator predictions (e.g., PDE solutions, segmentation masks, regression values)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Functional correspondence yields resolution-invariant representations",
+        "result": "Confirmed; robust to varying discretizations"
+      },
+      {
+        "hypothesis": "Structured operators match transformer-based operator learning performance",
+        "result": "Confirmed on PDEs, 3D segmentation, and regression"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-73837-z": {
+    "category": "Cell Signaling",
+    "task": "Define protein co-enrichment in extracellular vesicles as a biogenesis signature",
+    "key_results": "Measured pairwise protein co-enrichment in up to 240 protein pairs using antibody microarrays; co-enrichment reflects biogenesis pathway specificity; differential co-enrichment detects pathway perturbations",
+    "comments": "Novel quantitative framework for EV quality control, though validation across broader EV types and biological contexts would strengthen claims of universal applicability.",
+    "model_io": [
+      {
+        "model": "cultured cell lines",
+        "inputs": [
+          "extracellular vesicles",
+          "biogenesis pathway modulators"
+        ],
+        "outputs": [
+          "co-enrichment scores",
+          "differential co-enrichment profiles"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Co-enrichment reflects shared biogenesis pathways",
+        "result": "supported by pathway modulation experiments"
+      },
+      {
+        "hypothesis": "Co-enrichment is measurable as quality control metric",
+        "result": "demonstrated across three model cell lines"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-73861-z": {
+    "category": "Cytoskeleton",
+    "task": "Determine Mylpf dosage dependence for sarcomere growth in fast-twitch muscle",
+    "key_results": "mylpf mutations abolish sarcomere formation with dosage-dependent Hill equation (high slope); defects predicted by Mylpf protein abundance; impaired thick filament localization in mutants; species-compatible GFP rescue but not Distal Arthrogryposis variant",
+    "comments": "Quantitative analysis of protein dosage effects on organelle biogenesis is methodologically strong; the selective fast-twitch vulnerability suggests fiber-type-specific mechanisms.",
+    "model_io": [
+      {
+        "model": "zebrafish fast-twitch and slow-twitch muscle",
+        "inputs": [
+          "Mylpf proteins",
+          "thick filaments"
+        ],
+        "outputs": [
+          "sarcomere assembly",
+          "myofibril growth"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Mylpf dosage predicts sarcomere reduction via Hill kinetics",
+        "result": "confirmed by quantitative analysis of mylpf dosage series"
+      },
+      {
+        "hypothesis": "Mylpf mediates thick filament localization",
+        "result": "confirmed by immunofluorescence"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-73968-3": {
+    "category": "Cell Signaling",
+    "task": "Resolve structural dynamics and phosphorylation sites in KOR-\u03b2-arrestin1 complex",
+    "key_results": "KOR-\u03b2arr1 complex structure at 2.60 \u00c5 reveals multiple phosphorylation sites and phospholipid-binding site enhancing arrestin recruitment; distinct KOR-\u03b2arr1 interface from other GPCR-arrestin complexes; 3D variation analysis reveals conformational dynamics",
+    "comments": "High-resolution structural characterization provides framework for signaling bias understanding; allosteric pathway identification opens possibilities for biased ligand design.",
+    "model_io": [
+      {
+        "model": "KOR-\u03b2-arrestin1 complex",
+        "inputs": [
+          "KOR",
+          "\u03b2-arrestin1",
+          "phospholipids",
+          "opioid ligands"
+        ],
+        "outputs": [
+          "complex structure",
+          "phosphorylation sites",
+          "conformational states"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Phospholipid-binding enhances arrestin recruitment",
+        "result": "identified by structural and mass spectrometry analyses"
+      },
+      {
+        "hypothesis": "KOR-\u03b2arr1 interface differs from canonical GPCR-arrestin complexes",
+        "result": "confirmed by cryo-EM structure comparison"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-56205-1": {
+    "category": "Apoptosis/Cell Death",
+    "task": "Demonstrate bacteriophage-mediated restoration of epithelial integrity in pathobiont-challenged organoids",
+    "key_results": "Phage treatment attenuated ETBF and pks+ E. coli-induced epithelial disruption and DNA damage; restored inflammatory and DNA damage gene expression; reduced DNA double-strand breaks and recovered junctional integrity",
+    "comments": "Innovative use of patient-derived organoids for translational phage therapy; mechanistic basis of phage-mediated protection warrants deeper investigation beyond phenotypic recovery.",
+    "model_io": [
+      {
+        "model": "human colon organoids",
+        "inputs": [
+          "ETBF",
+          "pks+ E. coli",
+          "phages (Bac-FRP-3, Esc-COP-23)",
+          "phage-conditioned supernatants"
+        ],
+        "outputs": [
+          "epithelial integrity",
+          "DNA damage markers",
+          "inflammatory transcriptome"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Phage treatment reduces pathogenic impacts on epithelium",
+        "result": "confirmed by confocal imaging and transcriptomics"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-73986-1": {
+    "category": "Structural Prediction",
+    "task": "Generate diagnostic findings with visual localization for grounded biomedical image interpretation",
+    "key_results": "UniBiomed achieved state-of-the-art performance on 70 internal and 14 external datasets, trained on 27 million image-annotation-text triplets",
+    "comments": "Foundation model approach is promising but lacks granular evaluation metrics per task type; dataset curation effort is substantial.",
+    "model_io": [
+      {
+        "model": "UniBiomed (Multi-modal LLM + Segment Anything Model)",
+        "inputs": [
+          "biomedical images"
+        ],
+        "outputs": [
+          "diagnostic findings",
+          "target segmentation masks",
+          "interpretable localization"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Unified training on diverse tasks via integration of MLLM and SAM improves grounded interpretation",
+        "result": "State-of-the-art performance across 84 datasets demonstrates effectiveness of unified framework"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-52604-6": {
+    "category": "Evolutionary Biology",
+    "task": "Characterize three-dimensional infection network structure of fungal pathogen in different maize genotypes",
+    "key_results": "Network morphology, spatial association with vascular bundles, hyphal segment length, and branching frequency varied across genotypes; network depth was similar",
+    "comments": "Novel application of neuroscience-derived filament tracing to plant-fungal interactions; finding that lesion profiles may not predict infection structure is important.",
+    "model_io": [
+      {
+        "model": "Light-sheet microscopy + filament tracing",
+        "inputs": [
+          "3D infected leaf tissue images"
+        ],
+        "outputs": [
+          "fungal infection network metrics (depth, density, shape, vascular association)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Similar quantitative resistance levels can arise from different underlying infection network dynamics",
+        "result": "Network morphology and spatial organization varied across genotypes despite similar overall depth"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-53258-0": {
+    "category": "Genomics",
+    "task": "Detect heteroresistance in Mycobacterium tuberculosis using nanopore amplicon sequencing",
+    "key_results": "Amplicon sequencing achieved >4000\u00d7 coverage, detected resistant alleles at 1% frequency; adaptive sampling achieved 5% detection sensitivity with genomic context",
+    "comments": "Practical comparison of ONT workflows for TB heteroresistance detection; amplicon sequencing superior for sensitivity, adaptive sampling better for genomic context retention.",
+    "model_io": [
+      {
+        "model": "Oxford Nanopore sequencing (amplicon and adaptive sampling workflows)",
+        "inputs": [
+          "TB-positive sputum samples",
+          "cultured M. tuberculosis isolates"
+        ],
+        "outputs": [
+          "resistance allele frequency calls",
+          "lineage assignments"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "ONT amplicon sequencing can reliably detect drug-resistant subpopulations at low frequencies in TB mixed infections",
+        "result": "Detected resistant alleles at 1% frequency with >4000\u00d7 coverage; amplicon sequencing outperformed whole-genome approaches"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-53829-1": {
+    "category": "Statistical Methods",
+    "task": "Segment ischemic stroke lesions from neuroimaging with privacy preservation in federated learning",
+    "key_results": "Dice similarity coefficient 0.930, IoU 0.890, sensitivity 0.941, specificity 0.982; only 1.6% accuracy drop vs centralized training",
+    "comments": "Dual-layered privacy (differential privacy + secure aggregation) is well-motivated; non-IID handling via adaptive federated optimization is practical.",
+    "model_io": [
+      {
+        "model": "Fed-AttUNet-DP",
+        "inputs": [
+          "brain MRI scans from multiple institutions"
+        ],
+        "outputs": [
+          "stroke lesion segmentation masks"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Attention gates and differential privacy together maintain segmentation accuracy while preserving privacy",
+        "result": "Achieved 0.930 DSC with formal privacy guarantees (\u03b5=2.5, \u03b4=10\u207b\u2075)"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-54567-0": {
+    "category": "Structural Prediction",
+    "task": "Map human protein-protein interactions and multi-subunit complexes at near-atomic resolution",
+    "key_results": "Extended ~18,000 high-confidence predicted PPIs with novel examples in DNA repair, mitochondria, cilia; integrated disease-associated mutations within predicted interfaces",
+    "comments": "Structural predictions provide mechanistic hypotheses; integration with clinical mutations is insightful but limited to selected examples.",
+    "model_io": [
+      {
+        "model": "Computational PPI prediction framework",
+        "inputs": [
+          "human protein sequences",
+          "disease-associated mutations"
+        ],
+        "outputs": [
+          "predicted protein-protein interaction interfaces",
+          "multi-subunit complex models"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Predicted interfaces reveal mechanistic bases for disease mutations disrupting protein networks",
+        "result": "Disease mutations mapped within predicted interaction interfaces, explaining functional consequences"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-56089-1": {
+    "category": "Other",
+    "task": "Elucidate mechanism of Artemisia annua component quercetin in psoriasis treatment via ferroptosis regulation",
+    "key_results": "Network pharmacology identified quercetin as major active component; molecular docking showed strong TP53 binding; in vivo studies confirmed quercetin alleviated psoriatic lesions, increased GSH, reduced Fe\u00b2\u207a and ROS, downregulated P53/SAT1/ALOX15 pathway",
+    "comments": "Integrated network pharmacology and experimental validation is rigorous; ferroptosis as therapeutic mechanism in psoriasis is novel.",
+    "model_io": [
+      {
+        "model": "Network pharmacology, molecular docking, mouse IMQ-induced psoriasis model",
+        "inputs": [
+          "Artemisia annua active components",
+          "psoriasis disease genes",
+          "ferroptosis markers"
+        ],
+        "outputs": [
+          "core targets (TP53, IL6, IL1B)",
+          "skin lesion severity",
+          "GSH, Fe\u00b2\u207a, ROS levels"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Quercetin alleviates psoriasis by inhibiting epidermal ferroptosis via P53/SAT1/ALOX15 pathway",
+        "result": "Quercetin reduced Fe\u00b2\u207a accumulation, ROS production, and downregulated ferroptosis markers in IMQ-induced mouse model"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-56214-0": {
+    "category": "Structural Prediction",
+    "task": "Develop statistical shape model of proximal femur for hip implant design optimization",
+    "key_results": "First 11 principal components captured 92.85% of shape variance; specificity 1.33 mm, generalizability 0.83 mm; femoral neck-shaft angle morphometric analysis completed",
+    "comments": "Standard SSM pipeline applied rigorously; validation metrics are appropriate but clinical impact on implant design not demonstrated.",
+    "model_io": [
+      {
+        "model": "Statistical shape model via PCA",
+        "inputs": [
+          "femur CT/MRI images",
+          "anatomical landmarks"
+        ],
+        "outputs": [
+          "shape principal components",
+          "morphometric measurements (neck-shaft angle)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "SSM captures anatomical variation in proximal femur enabling population-specific implant design",
+        "result": "First 11 PCs explained 92.85% variance; model specificity and generalizability validated"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-56317-8": {
+    "category": "Statistical Methods",
+    "task": "Decode RSVP-based brain-computer interface targets using time-frequency guided neural networks",
+    "key_results": "Improved classification performance on Tsinghua RSVP and NeuBCI Target Retrieval datasets under cross-subject settings",
+    "comments": "Neuroscience-inspired design (oscillatory gating for theta activity) is principled; normalization-free dynamic activation is novel but benefits not quantified.",
+    "model_io": [
+      {
+        "model": "ZMW-RSVP (Transformer + oscillatory gating + Dynamic Tanh)",
+        "inputs": [
+          "single-trial EEG from RSVP paradigm"
+        ],
+        "outputs": [
+          "target/non-target classification",
+          "attention allocations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Time-frequency priors and normalization-free activations improve single-trial ERP decoding",
+        "result": "Improved classification performance on cross-subject RSVP tasks"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-02851-8": {
+    "category": "Statistical Methods",
+    "task": "Triage skin lesions for malignancy risk using AI-assisted mobile application for generalist healthcare workers",
+    "key_results": "Internal validation: sensitivity 0.79, specificity 0.95, AUC 0.95; clinical Phase 1: sensitivity improved from 0.64 to 0.80 with AI; Phase 2 rural: 17% triage improvement, 30% reduction in unnecessary referrals",
+    "comments": "Practical clinical validation demonstrates real-world utility; mobile deployment in resource-limited settings is valuable.",
+    "model_io": [
+      {
+        "model": "Fine-tuned MobileNet-V3 on offline-capable mobile app",
+        "inputs": [
+          "skin lesion images"
+        ],
+        "outputs": [
+          "malignancy risk classification (5 priority levels)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "AI-assisted triage improves skin cancer detection and reduces unnecessary referrals in resource-limited settings",
+        "result": "Phase 2 rural deployment showed 17% triage effectiveness improvement and 30% reduction in unnecessary referrals"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-02855-4": {
+    "category": "Statistical Methods",
+    "task": "Predict osteoporotic vertebral fracture from paraspinal muscle MRI signatures using federated learning",
+    "key_results": "Trimodal model (radiomics + federated learning + clinical variables) achieved pooled AUC 0.840; outperformed clinical-only models (AUC 0.742)",
+    "comments": "Multi-institutional federated approach respects privacy; integration of image-derived features complementary to traditional risk factors.",
+    "model_io": [
+      {
+        "model": "PMSAC-OVF (vision foundation model + federated learning + radiomics)",
+        "inputs": [
+          "lumbar MRI images",
+          "clinical variables"
+        ],
+        "outputs": [
+          "osteoporotic vertebral fracture risk predictions",
+          "feature importance scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Paraspinal muscle radiomics and federated learning signatures enhance fracture risk prediction vs clinical variables alone",
+        "result": "Trimodal model achieved AUC 0.840 (0.822-0.916) vs 0.742 (0.641-0.778) for clinical-only"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-74003-1": {
+    "category": "Algorithms",
+    "task": "Discovering polynomial-time approximate Nash equilibrium algorithms",
+    "key_results": "Rediscovered algorithm matching best guarantee for 2-player games; discovered 3-player algorithm improving guarantee from 0.6+\u03b4 to 0.5+\u03b4",
+    "comments": "Novel use of LLMs with symbolic proof certification; extends beyond known design paradigms but limited to specific game classes.",
+    "model_io": [
+      {
+        "model": "LLM + LegoNE symbolic compiler",
+        "inputs": [
+          "candidate algorithms"
+        ],
+        "outputs": [
+          "certified worst-case guarantees"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Domain-specific proof strategies can be encoded for automated algorithm certification",
+        "result": "Successfully certified and improved multi-player ANE algorithms"
+      }
+    ]
+  },
+  "nature:10.1038/s41524-026-02172-0": {
+    "category": "ML Theory",
+    "task": "Machine-learning discovery of extreme phonon thermal transport in Si-Ge superlattices",
+    "key_results": "Dense clustering reduces \u03bal by 35%; sparse ordered motifs enhance \u03bal by 33% vs. periodic; CNN-NEGF iterative approach accelerates design space exploration",
+    "comments": "Hybrid ML-physics approach: CNN guides expensive NEGF calculations; reveals motif-level order governs coherent transport better than global periodicity.",
+    "model_io": [
+      {
+        "model": "CNN (NEGF-trained) + NEGF simulator",
+        "inputs": [
+          "interface arrangement configurations"
+        ],
+        "outputs": [
+          "lattice thermal conductivity predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Local motif-level order rather than global periodicity governs extreme thermal transport in superlattices",
+        "result": "Dense clustering reduces \u03bal 35%; sparse ordered motifs enhance 33% vs. periodic designs"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55352-9": {
+    "category": "Algorithms",
+    "task": "FOPID control tuning for vehicle active suspension via bio-inspired optimization",
+    "key_results": "HLOA-FOPID reduces RMS sprung mass acceleration 26.6%, suspension deflection 72.6%; robust to \u00b125% mass, \u00b130% stiffness variations",
+    "comments": "Novel Horned Lizard algorithm balances exploration-exploitation; FOPID parameters tune jointly; practical robustness validated.",
+    "model_io": [
+      {
+        "model": "HLOA optimizer \u2192 FOPID(Kp,Ki,Kd,\u03bb,\u03bc) controller",
+        "inputs": [
+          "road disturbance",
+          "vehicle parameters"
+        ],
+        "outputs": [
+          "suspension force commands"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "HLOA-optimized FOPID with five-parameter tuning improves suspension comfort and stability vs. classical PID",
+        "result": "26.6% acceleration, 72.6% deflection reduction with robust parameter uncertainty handling"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55546-1": {
+    "category": "ML Theory",
+    "task": "Pareto optimization of accuracy-fairness-efficiency tradeoff in mobile image classification",
+    "key_results": "Pareto knee point: F1=0.934, EOD_gender=2.0%, 6.3 MB, 187 ms; Protected Fairness Pruning dominates magnitude pruning; ATWS yields +1.3pp F1, -0.6-0.7pp EOD",
+    "comments": "First joint formalization of accuracy-fairness-efficiency as constrained multi-objective optimization; Deployment-Feasible Zone provides practical guidance.",
+    "model_io": [
+      {
+        "model": "11 optimization strategies (3D-aug, PFP, ATWS, etc.)",
+        "inputs": [
+          "2821 images, 24 demographic subgroups"
+        ],
+        "outputs": [
+          "F1, EOD, model size, latency"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Protected Fairness Pruning + 3D-aware augmentation (C2) yields Pareto-optimal accuracy-fairness-efficiency tradeoff",
+        "result": "F1=0.934, EOD_gender=2.0%, 6.3MB, 187ms as Pareto knee"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55813-1": {
+    "category": "Algorithms",
+    "task": "Real-time image processing for capsule endoscopy on embedded hardware",
+    "key_results": "124 mW power consumption, 60.4 FPS at 640\u00d7480 resolution, 0.428 nJ energy per classification",
+    "comments": "Hardware-software codesign with extended image instructions; excellent energy efficiency but specialized to endoscopy domain.",
+    "model_io": [
+      {
+        "model": "EndoRISC-V reconfigurable processor",
+        "inputs": [
+          "endoscopy image frames"
+        ],
+        "outputs": [
+          "polyp detection results"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Custom image processing units reduce power while maintaining real-time capability",
+        "result": "4.29\u00d7 throughput improvement with extended instructions at 124 mW"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-56191-4": {
+    "category": "Analysis",
+    "task": "Predicting unpowered diving/floating motion for deep-sea submersibles",
+    "key_results": "Higher prediction accuracy than standard motion models; derived geometric similarity relationships for speed-weight correlation",
+    "comments": "Practical engineering approach based on similarity theory; limited to quasi-steady phases, not transient or coupled motions.",
+    "model_io": [
+      {
+        "model": "Geometric similarity-based model",
+        "inputs": [
+          "5000 m trial data",
+          "net weight"
+        ],
+        "outputs": [
+          "7000 m diving/floating speed predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Geometric similarity captures submersible hydrodynamics better than standard motion models",
+        "result": "Improved prediction accuracy for quasi-steady diving/floating phases"
+      }
+    ]
+  },
+  "nature:10.1038/s44304-026-00232-5": {
+    "category": "Other",
+    "task": "Intelligent disaster rescue plan generation using LLM and case-based reasoning",
+    "key_results": "Demonstrated on 2024 Hualien earthquake; integrates CBR, LLM prompt engineering, and Demphi-Dempster-Shafer decision-making",
+    "comments": "Novel multi-method integration for emergency response; case study validates framework but broader evaluation across disaster types needed.",
+    "model_io": [
+      {
+        "model": "CBR + LLM (prompt-engineered) + Delphi-DS expert consensus",
+        "inputs": [
+          "disaster parameters",
+          "historical cases"
+        ],
+        "outputs": [
+          "ranked rescue plans"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Case-based reasoning + LLM creativity + expert consensus improves rescue plan quality and speed",
+        "result": "Framework applied successfully to Hualien earthquake scenario"
+      }
+    ]
   }
 }
