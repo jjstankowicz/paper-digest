@@ -9,32 +9,23 @@
     "publishedAt": "2026-06-07",
     "category": "Other",
     "task": "Hyperparameter optimization for CNN-based plant disease classification",
-    "key_results": "ALO-DA hybrid metaheuristic achieved 97.83% test accuracy on tomato leaf disease dataset (21,421 training images, 10 classes); hybrid approaches outperformed single optimizers",
-    "comments": "While hyperparameter tuning via metaheuristics is practical, the fixed CNN architecture limits generalizability of findings across different model designs.",
+    "key_results": "ALO-DA achieved 97.83% test accuracy on tomato leaf disease dataset (10 classes, 30,609 images); hybrid metaheuristics outperformed single optimizers",
+    "comments": "While the results are strong, the fixed CNN architecture limits the scope of optimization; comparison against standard AutoML baselines (e.g., Bayesian optimization, grid search) would strengthen claims of efficiency.",
     "model_io": [
       {
-        "model": "Convolutional Neural Network (3 convolutional blocks)",
+        "model": "Hybrid metaheuristic (ALO-DA, ALO-WOA, ALO-PSO, PSO-WOA) tuned CNN",
         "inputs": [
-          "tomato leaf images (21,421 training, 4,586 validation, 4,602 test)"
+          "Tomato leaf images (21,421 training, 4,586 validation, 4,602 test)"
         ],
         "outputs": [
-          "disease class prediction (10 classes)"
-        ]
-      },
-      {
-        "model": "Hybrid metaheuristics (ALO-DA, ALO-WOA, ALO-PSO, PSO-WOA)",
-        "inputs": [
-          "CNN architecture with tunable dropout and learning rate"
-        ],
-        "outputs": [
-          "optimized hyperparameters"
+          "Test accuracy (97.83%, 97.67%, 97.52%, 95.26%)"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Hybrid metaheuristics balance exploration and exploitation better than single optimizers for CNN hyperparameter tuning",
-        "result": "ALO-DA, ALO-WOA, and PSO-WOA achieved higher accuracy (97.52\u201397.83%) than ALO-PSO (95.26%)"
+        "hypothesis": "Hybrid metaheuristics balance exploration-exploitation better than single optimizers",
+        "result": "ALO-DA and ALO-WOA achieved higher accuracy than PSO-WOA and ALO-PSO"
       }
     ]
   },
@@ -47,28 +38,28 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-06-07",
     "category": "Genomics",
-    "task": "Characterizing gut microbiome dysbiosis in gout via metagenomic diversity scaling",
-    "key_results": "Gout microbiomes showed higher inter-individual dissimilarity in rare genes (z-values), weaker scaling of dominant genes, and substantially reduced maximal accrual diversity compared to healthy controls; perturbed functional gene cluster scaling",
-    "comments": "The m-DAR model provides novel ecological perspective on dysbiosis, but translation to clinical microbiome-based therapeutics remains speculative and requires validation.",
+    "task": "Characterizing dysbiosis in gout microbiome using metagenomic scaling laws",
+    "key_results": "Gout microbiomes showed altered scaling (higher z-values at rare genes, weaker dominant gene scaling) and substantially lower maximal accrual diversity (MAD) versus healthy controls; functional gene clusters revealed reduced KEGG/KO pathway scaling but elevated CAZy scaling",
+    "comments": "The m-DAR model provides valuable ecological perspective on dysbiosis, but causality remains unclear and clinical translation of scaling metrics to interventions requires further investigation.",
     "model_io": [
       {
-        "model": "Metagenomic Diversity-Area Relationship (m-DAR)",
+        "model": "Metagenomic Diversity-Area Relationship (m-DAR) model",
         "inputs": [
-          "gut microbiome samples from gout patients and healthy controls"
+          "Gut microbiome sequences (gout patients, healthy controls)"
         ],
         "outputs": [
-          "diversity scaling parameters (z-values), maximal accrual diversity (MAD), functional gene cluster scaling"
+          "Scaling parameters (z-values), maximal accrual diversity (MAD), metagenomic functional gene cluster (MFGC) diversity"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Gout dysbiosis manifests as altered ecological structure with reduced homogeneity in dominant taxa and constrained diversity potential",
-        "result": "Gout microbiomes exhibited higher rare gene diversity scaling, lower dominant gene scaling, and reduced MAD compared to controls"
+        "hypothesis": "Gout microbiomes exhibit altered ecological structure compared to healthy controls",
+        "result": "Gout showed reduced inter-individual homogeneity at dominant taxa, expanded rare biosphere variation, and collapsed diversity capacity"
       },
       {
-        "hypothesis": "Functional pathways are differentially perturbed in gout microbiomes",
-        "result": "Increased CAZy scaling but decreased KEGG/KO pathway scaling in gout samples"
+        "hypothesis": "Functional pathways are differentially affected in gout dysbiosis",
+        "result": "CAZy (carbohydrate metabolism) scaling increased while essential KEGG/KO pathways decreased in gout patients"
       }
     ]
   },
@@ -81,24 +72,65 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-06-07",
     "category": "Structural Prediction",
-    "task": "Lightweight medical image segmentation with multi-scale context modeling",
-    "key_results": "SwiftMSeg achieved Dice scores of 0.896 (colonoscopy), 0.860 (pathology), 0.850 (ultrasound), 0.870 (MRI) with only 4.48M parameters (~53\u00d7 fewer than U-Net); statistically significant improvements (p < 0.001)",
-    "comments": "Exceptional parameter efficiency and cross-modal generalization, though moderate external dataset performance suggests domain adaptation remains a challenge.",
+    "task": "Lightweight multi-scale segmentation for diverse medical imaging modalities",
+    "key_results": "SwiftMSeg achieved Dice scores of 0.896 (colonoscopy), 0.860 (pathology), 0.850 (ultrasound), 0.870 (MRI) with ~53\u00d7 parameter reduction versus U-Net baseline (4.48M vs 31M parameters)",
+    "comments": "Excellent efficiency-performance trade-off with statistically significant improvements (p<0.001); external validation generalization remains modest, indicating potential domain-shift limitations.",
     "model_io": [
       {
-        "model": "SwiftMSeg (convolutional encoder + transformer local-global-local module + hierarchical decoder)",
+        "model": "SwiftMSeg (encoder-decoder with transformer local-global-local module)",
         "inputs": [
-          "medical images (colonoscopy, pathology, ultrasound, MRI)"
+          "Medical images (colonoscopy, pathology, ultrasound, MRI)"
         ],
         "outputs": [
-          "segmentation masks for anatomical structures (nuclei, polyps, tumors)"
+          "Segmentation masks (Dice score, Hausdorff distance, symmetric surface distance)"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Combining multi-scale refinement with transformer-based global context modeling improves boundary localization and contextual accuracy",
-        "result": "Lower Hausdorff distance (16.43 MRI, 33.89 ultrasound) and reduced asymmetric surface distance compared to baselines"
+        "hypothesis": "Transformer-based local-global-local context modeling improves boundary-context balance",
+        "result": "Achieved lower Hausdorff distances (16.43 MRI, 33.89 ultrasound) and improved boundary localization vs baselines"
+      },
+      {
+        "hypothesis": "Multi-scale progressive refinement enhances segmentation across diverse anatomical sizes",
+        "result": "Consistent high Dice scores across modalities (0.850-0.896) including tiny nuclei and large tumors"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41598-026-55343-w",
+    "source": "mathematics-and-computing",
+    "id": "10.1038/s41598-026-55343-w",
+    "title": "Computational analysis of radiative heat transfer and free convective flow over a vertical wavy surface with Lorentz forces",
+    "projectPage": "https://www.nature.com/articles/s41598-026-55343-w",
+    "journal": "Scientific Reports",
+    "publishedAt": "2026-06-07",
+    "category": "Analysis",
+    "task": "Computational analysis of hydromagnetic radiative free convection over wavy surfaces",
+    "key_results": "Radiation-conduction parameter enhances thermal boundary layer distribution; waviness amplitude reduces fluid velocity; Spectral Quasi-Linearization Method (SQLM) solutions validated against published results",
+    "comments": "Standard computational fluid dynamics study using SQLM; no novel numerical method but rigorous validation; physical insights (waviness trade-off) are useful for heat exchanger design.",
+    "model_io": [
+      {
+        "model": "Spectral Quasi-Linearization Method (SQLM) in Wolfram Mathematica",
+        "inputs": [
+          "wavy surface geometry (amplitude)",
+          "constant heat flux boundary condition",
+          "Lorentz force parameters",
+          "radiative heat transfer coefficients"
+        ],
+        "outputs": [
+          "velocity profiles, isotherms, streamlines, thermal distribution; radiation-conduction parameter effect; waviness amplitude sensitivity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Radiation-conduction parameter enhances thermal distribution in boundary layer",
+        "result": "Confirmed by numerical solutions and isothermal field analysis"
+      },
+      {
+        "hypothesis": "Waviness amplitude reduces fluid velocity due to increased surface friction",
+        "result": "Confirmed; velocity distribution shows inverse relationship with waviness"
       }
     ]
   },
@@ -111,34 +143,32 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-06-07",
     "category": "ML Theory",
-    "task": "Real-time cyberattack intrusion detection in smart grids via CNN\u2013BiLSTM\u2013ExtraTrees ensemble on meter data",
-    "key_results": "CNN\u2013BiLSTM\u2013ExtraTrees achieved 92.17% accuracy, 90.58% precision, 81.24% recall, 85.66% F1, 95.60% ROC-AUC with 12 ms inference latency on 72,073 labeled power-grid logs across 5 attack types",
-    "comments": "Comprehensive evaluation including imbalance-handling strategies, ablation studies (20.12 pp gain from bidirectionality), and statistical testing (McNemar p<0.001); addresses practical deployment constraints effectively.",
+    "task": "Real-time cyberattack detection in smart grids using CNN-BiLSTM with Extra Trees ensemble",
+    "key_results": "Accuracy 92.17% (\u00b10.27%), precision 90.58% (\u00b10.49%), recall 81.24% (\u00b10.86%), F1 85.66% (\u00b10.20%), ROC-AUC 95.60% (\u00b10.14%); 12 ms inference latency on 72,073 labeled power grid logs; bidirectional processing improved accuracy by 20.12 pp over unidirectional LSTM",
+    "comments": "Comprehensive treatment of class imbalance (2.49:1 ratio) and real-time constraints; BiLSTM backward pass effectively captures attack-evolution patterns; Extra Trees provides interpretability vs. Softmax.",
     "model_io": [
       {
-        "model": "CNN\u2013BiLSTM\u2013ExtraTrees with attention and class weighting",
+        "model": "CNN-BiLSTM-Extra Trees ensemble",
         "inputs": [
-          "128-dimensional smart meter measurements (voltage, current, frequency harmonics, multi-modal)",
-          "high-frequency time series of meter data"
+          "128-dimensional smart meter data (voltage, current, frequency harmonics) from 72,073 power grid logs; attack types: False Data Injection, DoS, replay, MITM, normal"
         ],
         "outputs": [
-          "attack/normal classification",
-          "accuracy, precision, recall, F1, ROC-AUC"
+          "attack class predictions; accuracy, precision, recall, F1, ROC-AUC; inference latency (12 ms)"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Bidirectional temporal modeling captures attack-evolution patterns better than unidirectional processing",
-        "result": "Confirmed: BiLSTM increased accuracy by 20.12 pp over unidirectional CNN-LSTM"
+        "hypothesis": "CNN extracts spatial features; BiLSTM captures bidirectional temporal dynamics; Extra Trees provides robust ensemble decision",
+        "result": "Confirmed; accuracy 92.17%, bidirectional processing +20.12 pp vs. unidirectional, Extra Trees +10.09 pp precision vs. standalone baseline"
       },
       {
-        "hypothesis": "ExtraTrees ensemble head provides more robust decisions than Softmax for class-imbalanced cyber-attack data",
-        "result": "Confirmed: ExtraTrees boosted precision by 10.09 pp over standalone baseline"
+        "hypothesis": "Weighted-learning strategy (vs. SMOTE, ADASYN, etc.) is Pareto-optimal for imbalanced smart meter data",
+        "result": "Confirmed via comparative analysis of 9 imbalance-handling strategies"
       },
       {
-        "hypothesis": "Weighted-learning strategy optimally balances class imbalance (2.49:1 ratio) compared to SMOTE variants",
-        "result": "Confirmed: weighted learning identified as Pareto-optimal choice via comprehensive comparative study against 9 imbalance-handling strategies"
+        "hypothesis": "12 ms inference latency supports utility-scale real-time deployment",
+        "result": "Confirmed; McNemar's tests (p<0.001) validate significant improvements over baselines"
       }
     ]
   },
@@ -151,30 +181,69 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-06-07",
     "category": "ML Theory",
-    "task": "Agricultural production forecasting via fractal-enhanced LSTM/Bi-LSTM",
-    "key_results": "LSTM with variable-scaling FIF achieved MAPE of 1.70% (Wheat), 1.95% (Maize), 5.06% (Millet); Bi-LSTM achieved 1.39% (Rice); Hurst exponent 0.777\u20130.875 with variable scaling",
-    "comments": "Strong empirical results on a real agricultural dataset, though comparison to non-fractal baselines and statistical significance testing (Wilcoxon, Diebold\u2013Mariano) strengthen claims; fractal augmentation appears domain-beneficial for volatile time series.",
+    "task": "Forecasting agricultural production using fractal-enhanced LSTM/Bi-LSTM models",
+    "key_results": "LSTM with variable-scaling FIF achieved MAPE of 1.70\u20135.06% across crops; Bi-LSTM best for Rice (MAPE 1.39%); Wilcoxon/Diebold\u2013Mariano tests confirm statistical significance",
+    "comments": "Well-motivated application of fractal interpolation as data augmentation; scaling factor design dominates architecture choice, reducing dimensionality of hyperparameter optimization.",
     "model_io": [
       {
-        "model": "LSTM / Bi-LSTM",
+        "model": "LSTM with variable-scaling Fractal Interpolation Function",
         "inputs": [
-          "annual crop production time series (1961\u20132023)",
-          "fractal-interpolated augmented data"
+          "annual production data 1961\u20132023 for Millet, Maize, Wheat, Rice"
         ],
         "outputs": [
-          "predicted annual production",
-          "MAPE, R\u00b2, error metrics"
+          "annual production forecasts; Hurst exponent, fractal dimension, MAPE, R\u00b2 scores"
+        ]
+      },
+      {
+        "model": "Bi-LSTM with variable-scaling FIF",
+        "inputs": [
+          "annual production data 1961\u20132023"
+        ],
+        "outputs": [
+          "annual production forecasts (best for Rice)"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Variable-scaling FIF produces rougher interpolation that better captures non-smooth features than constant-scaling FIF",
-        "result": "Confirmed: variable-scaling FIF yielded lower Hurst exponent (0.777\u20130.875) and higher fractal dimension (1.153\u20131.574), improving model performance"
+        "hypothesis": "Fractal interpolation with variable scaling factors better captures non-stationary agricultural time series than constant scaling",
+        "result": "Confirmed; variable FIF produced Hurst exponent 0.777\u20130.875 and higher fractal dimension (1.153\u20131.574), enabling superior learning"
       },
       {
-        "hypothesis": "Fractal interpolation improves recurrent network learning on agricultural time series",
-        "result": "Confirmed: models trained on fractal-interpolated data significantly outperformed those on original data across three of four crops"
+        "hypothesis": "Scaling factor choice is more dominant than LSTM vs. Bi-LSTM architecture selection",
+        "result": "Confirmed by comparative performance across crops"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41598-026-56011-9",
+    "source": "mathematics-and-computing",
+    "id": "10.1038/s41598-026-56011-9",
+    "title": "Machine learning- assisted remaining useful lifetime prediction of power electronic converters",
+    "projectPage": "https://www.nature.com/articles/s41598-026-56011-9",
+    "journal": "Scientific Reports",
+    "publishedAt": "2026-06-07",
+    "category": "ML Theory",
+    "task": "RUL prediction in power electronic converters using neural networks",
+    "key_results": ">99% accuracy in predicting degradation time evolution; deployable model reduced to matrices for microcontroller/FPGA implementation",
+    "comments": "Practical yet incremental application of NNs to compress statistical PDFs; strong experimental validation but limited novelty in ML methodology.",
+    "model_io": [
+      {
+        "model": "Neural Network",
+        "inputs": [
+          "degradation data from GaN HEMTs and AECs",
+          "probability density functions from accelerated aging tests"
+        ],
+        "outputs": [
+          "simplified matrix-based RUL prediction model",
+          "system-level survival probability"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "ML-assisted model can reduce computational burden while maintaining statistical accuracy",
+        "result": "Confirmed; NN successfully compressed complex PDF integrals into deployable matrices with >99% consistency"
       }
     ]
   },
@@ -187,25 +256,55 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-06-07",
     "category": "Algorithms",
-    "task": "Multi-objective robotic arm trajectory planning via improved CEMOPSO for precision assembly",
-    "key_results": "CEMOPSO increased assembly efficiency by 15.2%, reduced energy consumption by 20.4%, decreased impact by 26.4% versus baseline on pyrotechnic grain assembly task",
-    "comments": "Real engineering validation is valuable, but quantitative comparisons against other multi-objective optimizers and statistical testing are absent; improvements are substantial but generalization to other assembly tasks unclear.",
+    "task": "Multi-objective trajectory planning for robotic arm precision assembly via improved MOPSO",
+    "key_results": "CEMOPSO algorithm increased assembly efficiency by 15.2%, reduced energy consumption by 20.4%, decreased impact by 26.4% on pyrotechnic grain assembly",
+    "comments": "Engineering-focused optimization with practical manufacturing relevance; Chebyshev mapping and evolutionary elimination are incremental algorithmic refinements.",
     "model_io": [
       {
         "model": "CEMOPSO (Chebyshev-enhanced multi-objective PSO)",
         "inputs": [
-          "precision assembly task parameters (time, energy, mechanical impact constraints)"
+          "precision assembly task parameters; time, energy, mechanical impact constraints"
         ],
         "outputs": [
-          "optimized robotic arm trajectory",
-          "efficiency (pp), energy (kJ), impact (N)"
+          "optimal trajectory; efficiency (%\u0394=+15.2), energy consumption (%\u0394=-20.4), impact (%\u0394=-26.4)"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Chebyshev mapping and evolutionary elimination improve MOPSO performance for assembly",
-        "result": "Confirmed: CEMOPSO outperformed baseline in efficiency, energy, and impact metrics on pyrotechnic grain assembly"
+        "hypothesis": "Chebyshev mapping initialization and evolutionary elimination enhance MOPSO performance for precision assembly",
+        "result": "Confirmed; pyrotechnic grain assembly experiments validated substantial efficiency, energy, and impact improvements"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41598-026-56601-7",
+    "source": "mathematics-and-computing",
+    "id": "10.1038/s41598-026-56601-7",
+    "title": "Calibration method for the optical system of infrared CMOS-theodolite in astronomical measurement",
+    "projectPage": "https://www.nature.com/articles/s41598-026-56601-7",
+    "journal": "Scientific Reports",
+    "publishedAt": "2026-06-07",
+    "category": "Other",
+    "task": "Optical calibration for infrared CMOS-theodolite astronomical measurement system",
+    "key_results": "Daytime RMSE: 0.33\u2033 (longitude), 0.34\u2033 (latitude); Nighttime RMSE: 0.26\u2033 (longitude), 0.29\u2033 (latitude); method stably recovered principal point coordinates and camera parameters",
+    "comments": "Specialized calibration methodology leveraging two-face theodolite measurement to compensate for removed eyepiece and low CMOS resolution; incremental but domain-specific contribution.",
+    "model_io": [
+      {
+        "model": "Two-face calibration method for infrared CMOS-theodolite",
+        "inputs": [
+          "theodolite angle measurements (face I/II data)",
+          "CMOS image coordinates"
+        ],
+        "outputs": [
+          "principal point pixel coordinates; camera parameters; astronomical longitude/latitude with RMSE"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Two-face theodolite measurements enable high-precision recovery of optical parameters despite removed eyepiece and low pixel resolution",
+        "result": "Confirmed; daytime/nighttime RMSEs \u22640.34\u2033 demonstrate stability and reliability across environments"
       }
     ]
   },
@@ -218,75 +317,25 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-06-07",
     "category": "Algorithms",
-    "task": "Vision\u2013force collaborative robotic insertion of metallic valve components via staged sensing-reliability handover",
-    "key_results": "SVFC improved insertion success rate, reduced insertion time, and lowered peak contact forces versus baseline methods on clearance-fit and interference-fit tasks",
-    "comments": "Well-motivated staged framework addressing real physical challenges (specular reflection, depth loss), but quantitative metrics (success rate %, time reduction, force reduction) are stated qualitatively without numerical values or statistical analysis.",
+    "task": "Vision-force collaborative robotic insertion of metallic valve components",
+    "key_results": "Improved insertion success rate, reduced insertion time, lower peak contact forces vs. baselines; staged sensing handover from vision to force successfully manages pose error compression and residual centering",
+    "comments": "Hybrid sensing strategy elegantly exploits complementary modalities; force-based convergence criterion via RMS lateral forces is practical but heuristic.",
     "model_io": [
       {
-        "model": "SVFC (vision-force collaborative controller with spiral trajectory + variable-parameter admittance)",
+        "model": "SVFC (Staged Vision-Force Collaborative framework)",
         "inputs": [
-          "visual pose estimates (initial global error)",
-          "force/torque feedback signals (lateral, normal)"
+          "vision localization (metallic valve hole images)",
+          "contact force/torque measurements"
         ],
         "outputs": [
-          "insertion success/failure",
-          "insertion time (s)",
-          "peak contact force (N)"
+          "insertion success/failure; insertion time; peak contact force; RMS lateral force/torque for convergence"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Staged handover from vision-dominant alignment to force-dominant contact regulation reduces insertion failure and contact trauma",
-        "result": "Confirmed: SVFC improved success rate, time, and peak forces on representative clearance/interference-fit tasks versus baseline"
-      }
-    ]
-  },
-  {
-    "uid": "nature:10.1038/s41598-026-56601-7",
-    "source": "physics",
-    "id": "10.1038/s41598-026-56601-7",
-    "title": "Calibration method for the optical system of infrared CMOS-theodolite in astronomical measurement",
-    "projectPage": "https://www.nature.com/articles/s41598-026-56601-7",
-    "journal": "Scientific Reports",
-    "publishedAt": "2026-06-07",
-    "category": "Applied Physics",
-    "task": "High-precision optical calibration for infrared CMOS-theodolite astronomical measurement system",
-    "key_results": "Daytime RMSE \u2264 0.33\u2033 longitude, 0.34\u2033 latitude; nighttime RMSE \u2264 0.26\u2033 longitude, 0.29\u2033 latitude; method achieves stably calibrated parameters for low-resolution CMOS sensors",
-    "comments": "Innovative two-face measurement calibration approach addresses practical constraints of removed eyepiece and small field-of-view, with robust all-weather validation demonstrating operational maturity.",
-    "model_io": [
-      {
-        "model": "Infrared CMOS-theodolite astronomical measurement system",
-        "inputs": [
-          "theodolite angle measurement data (two-face)",
-          "target point positions",
-          "CMOS sensor pixel data"
-        ],
-        "outputs": [
-          "principal point pixel coordinates",
-          "camera intrinsic/extrinsic parameters",
-          "astronomical longitude/latitude"
-        ]
-      },
-      {
-        "model": "Two-face measurement calibration pipeline",
-        "inputs": [
-          "direction values (face I and II)",
-          "angle measurements"
-        ],
-        "outputs": [
-          "high-precision optical system calibration parameters"
-        ]
-      }
-    ],
-    "hypotheses": [
-      {
-        "hypothesis": "Two-face angle measurement provides sufficient constraints for precise principal point determination despite low pixel resolution",
-        "result": "Confirmed; achieved sub-arcsecond RMSE (0.26\u20130.34\u2033) in both daytime and nighttime conditions"
-      },
-      {
-        "hypothesis": "Method generalizes across diverse observational environments (daytime/nighttime)",
-        "result": "Confirmed; nighttime measurements slightly more accurate (0.26\u20130.29\u2033) than daytime (0.33\u20130.34\u2033)"
+        "hypothesis": "Vision compresses global pose error into force-recoverable local neighborhood; force takes over for residual centering and contact regulation",
+        "result": "Confirmed; three-phase protocol (coarse alignment, residual correction via Archimedean spiral, variable-parameter admittance insertion) improved success rate and reduced impact"
       }
     ]
   },
@@ -299,42 +348,27 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-06-07",
     "category": "Optics/Photonics",
-    "task": "Coherent orbital-angular-momentum transfer and dispersion control in Er\u00b3\u207a:YAG",
-    "key_results": "Complete OAM transfer with topological-charge preservation; optimal Er\u00b3\u207a concentration of 3% maximizes vortex-transfer efficiency",
-    "comments": "Solid theoretical and numerical framework using density-matrix formalism, though experimental validation of the concentration-dependent efficiency optimization would strengthen claims.",
+    "task": "Coherent orbital-angular-momentum transfer in Er\u00b3\u207a:YAG three-level system",
+    "key_results": "Complete phase and topological-charge preservation achieved; optimal Er\u00b3\u207a concentration of 3% maximizes vortex-transfer efficiency",
+    "comments": "The concentration-dependent nonlinear process enables both efficient vortex conversion and tunable dispersion engineering, though practical integration complexity remains unstated.",
     "model_io": [
       {
-        "model": "Er\u00b3\u207a:YAG three-level quantum system",
+        "model": "Density-matrix formalism with coupled Maxwell\u2013Bloch equations",
         "inputs": [
-          "vortex-carrying probe beam (OAM state)",
-          "Er\u00b3\u207a ion concentration"
+          "probe vortex beam",
+          "Er\u00b3\u207a-ion concentration",
+          "pump field"
         ],
         "outputs": [
-          "generated signal beam (OAM-preserved)",
-          "conversion efficiency",
+          "generated signal beam with transferred OAM",
           "absorption and dispersion spectra"
-        ]
-      },
-      {
-        "model": "Coupled Maxwell\u2013Bloch equations with density-matrix formalism",
-        "inputs": [
-          "probe and pump field parameters",
-          "Er\u00b3\u207a concentration"
-        ],
-        "outputs": [
-          "analytical expressions for probe/generated beams",
-          "phase and intensity distributions"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Sum-frequency nonlinear process transfers OAM with concentration-dependent efficiency",
-        "result": "Confirmed; 3% Er\u00b3\u207a concentration optimal; complete phase and topological-charge preservation observed"
-      },
-      {
-        "hypothesis": "Absorption and dispersion spectra indicate fast/slow propagation regimes selectable by concentration",
-        "result": "Supported; concentration-selectable transitions demonstrated through spectral analysis"
+        "hypothesis": "Vortex-carrying probe transfers OAM to signal beam through sum-frequency nonlinear process with phase preservation",
+        "result": "Confirmed; complete topological-charge preservation observed at 3% Er\u00b3\u207a concentration"
       }
     ]
   },
@@ -347,41 +381,27 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-06-07",
     "category": "Applied Physics",
-    "task": "Characterization of vorticity and secondary flow around bridge pier in sharp bends",
-    "key_results": "Peak vorticity observed at 84\u00b0 section (counterclockwise); peak secondary flow strength at 70\u00b0 section with 3 mm collar; 30% reduction in secondary flow strength when collar thickness increased from 0.06b to 0.24b",
-    "comments": "Practical engineering study with direct relevance to pier design, though the physical mechanisms explaining the non-monotonic secondary flow behavior between 70\u201380\u00b0 warrant deeper theoretical investigation.",
+    "task": "Flow dynamics and secondary circulation in bend-shaped channels with bridge piers",
+    "key_results": "Peak vorticity at 84\u00b0 section; 30% reduction in secondary flow strength with collar thickness increase from 0.06b to 0.24b; secondary flow peak at 70\u00b0 section",
+    "comments": "The experimental findings provide practical pier collar design guidance, though the mechanism linking collar geometry to flow suppression warrants further theoretical analysis.",
     "model_io": [
       {
-        "model": "180\u00b0 bend-shaped channel with oblong pier and variable collar",
+        "model": "Three-dimensional Vectrino velocimeter measurement",
         "inputs": [
-          "flow velocity field",
-          "collar thickness (3\u201312 mm)",
-          "bend angle (0\u2013180\u00b0)"
+          "180\u00b0 bend channel with oblong pier and variable collar thickness (0\u201312 mm)",
+          "equilibrium bed conditions"
         ],
         "outputs": [
-          "tangential velocity distribution",
-          "vorticity magnitude and direction",
-          "secondary flow strength"
-        ]
-      },
-      {
-        "model": "3D Vectrino velocimeter measurement system",
-        "inputs": [
-          "probe beam focusing at measurement points"
-        ],
-        "outputs": [
-          "three-component velocity data (equilibrium bed condition)"
+          "velocity profiles",
+          "vorticity distributions",
+          "secondary flow strength measurements"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Collar thickness reduces pier-induced secondary circulation strength",
-        "result": "Confirmed; increasing thickness from 0.06b to 0.24b reduced peak secondary flow strength by ~30%"
-      },
-      {
-        "hypothesis": "Pressure gradient and secondary flow intensity vary with bend position",
-        "result": "Confirmed; peak tangential velocity near convex bank; non-monotonic secondary flow variation between 70\u201380\u00b0 bend angles"
+        "hypothesis": "Increased collar thickness reduces secondary flow strength and curvature-induced circulation",
+        "result": "Confirmed; peak strength reduction of ~30% observed with collar thickness variation"
       }
     ]
   }
