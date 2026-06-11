@@ -269423,5 +269423,624 @@
         "result": "Confirmed; all configurations show 6-10% deviations"
       }
     ]
+  },
+  "hf:2605.11212": {
+    "category": "Agents/RL",
+    "task": "Reducing visual token overhead in computer-use agent trajectories",
+    "key_results": "46% average token reduction with 3% success rate improvement; performance continues improving with more history when redundancy removed",
+    "comments": "Strong practical contribution addressing a real scaling bottleneck, though gains are modest and limited to visual redundancy\u2014other inefficiencies may remain.",
+    "model_io": [
+      {
+        "model": "Qwen2.5-VL-7B with ReVision patch selector",
+        "inputs": [
+          "consecutive screenshots",
+          "interaction trajectories"
+        ],
+        "outputs": [
+          "reduced-token visual encoding",
+          "agent action"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Removing redundant visual patches while preserving spatial structure improves efficiency without harming performance",
+        "result": "Confirmed: 46% token reduction + 3% improvement"
+      },
+      {
+        "hypothesis": "History incorporation benefits computer-use agents when visual redundancy is controlled",
+        "result": "Confirmed: performance improves with more past observations"
+      }
+    ]
+  },
+  "hf:2606.11553": {
+    "category": "Systems",
+    "task": "Time-series forecasting and anomaly detection for wireless network telemetry",
+    "key_results": "18% MAE reduction over Toto baseline, 38% over SARIMA; F1=0.93 for anomaly detection; enables sub-second edge inference",
+    "comments": "Well-executed domain-specific foundation model showing clear value for bursty, zero-inflated signals, though evaluation limited to DHCP task.",
+    "model_io": [
+      {
+        "model": "APEX decoder-only transformer (269M Large / 10.5M Edge)",
+        "inputs": [
+          "10-channel multivariate network telemetry",
+          "192-step time windows"
+        ],
+        "outputs": [
+          "4-day forecasts",
+          "anomaly scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Network-native pre-training on production telemetry transfers better than generic foundation models",
+        "result": "Confirmed: outperforms Toto and SARIMA significantly"
+      },
+      {
+        "hypothesis": "Edge-deployable model enables practical on-device anomaly detection",
+        "result": "Confirmed: APEX-Edge achieves sub-second inference"
+      }
+    ]
+  },
+  "hf:2606.12385": {
+    "category": "LLM/Reasoning",
+    "task": "Auditing and reconstructing LLM dependency graphs from fragmented public artifacts",
+    "key_results": "1,060 source-verified dependencies recovered across 4 LLM releases; revealed multi-hop license obligations and train-eval coupling",
+    "comments": "Important transparency contribution that exposes ecosystem complexity, but utility depends on adoption by practitioners and release transparency from vendors.",
+    "model_io": [
+      {
+        "model": "ModSleuth (agentic system with LLM-based extraction and graph reasoning)",
+        "inputs": [
+          "public LLM release artifacts",
+          "documentation"
+        ],
+        "outputs": [
+          "dependency graphs",
+          "source-grounded evidence links"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Information extraction is tractable; the hard problem is dependency definition and artifact reconciliation",
+        "result": "Confirmed: developed formalization for direct/indirect dependencies and artifact identity resolution"
+      }
+    ]
+  },
+  "hf:2606.11482": {
+    "category": "LLM/Reasoning",
+    "task": "Modeling how social beliefs evolve in response to events",
+    "key_results": "SOTA on Kalshi prediction markets; outperforms time-series foundation models; demonstrates interpretability on 12k+ belief prediction tasks",
+    "comments": "Novel application leveraging prediction markets as ground truth, though Polymarket results only 'competitive' suggesting domain generalization challenges.",
+    "model_io": [
+      {
+        "model": "Social World Model (SWM) with state-transition learning",
+        "inputs": [
+          "temporal social data",
+          "event signals",
+          "market outcomes"
+        ],
+        "outputs": [
+          "belief evolution predictions",
+          "interpretable mechanisms"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LLMs can learn latent state-transition functions for social beliefs without explicit annotation",
+        "result": "Confirmed: achieved SOTA using evidence lower bound optimization"
+      }
+    ]
+  },
+  "hf:2606.10587": {
+    "category": "LLM/Reasoning",
+    "task": "Generating diverse, high-quality scientific hypotheses under validation budget constraints",
+    "key_results": "Consistent improvements in both hypothesis quality and diversity across molecular, equation, and algorithm discovery domains; robustness verified under expensive downstream validation",
+    "comments": "Well-motivated application of parallel tempering to hypothesis search; addresses a real scientific practice need but evaluation breadth across three domains may mask domain-specific limitations.",
+    "model_io": [
+      {
+        "model": "Evolutionary framework inspired by parallel tempering (LLM-based generator)",
+        "inputs": [
+          "domain context",
+          "validation feedback",
+          "temperature levels"
+        ],
+        "outputs": [
+          "diverse hypothesis set",
+          "quality scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-temperature evolutionary search improves diversity without sacrificing quality versus single-objective optimization",
+        "result": "Confirmed across three discovery domains"
+      },
+      {
+        "hypothesis": "Generated hypotheses remain robust under expensive downstream validation",
+        "result": "Confirmed"
+      }
+    ]
+  },
+  "hf:2606.04511": {
+    "category": "Systems",
+    "task": "Efficient long-context LLM inference via sparse decoupled attention",
+    "key_results": "1.25\u00d7 prefill speedup, 1.7\u00d7 decode speedup over offload baseline; 5.3\u00d7 higher decode throughput vs non-offload sparse; <0.5% parameter overhead",
+    "comments": "Solid engineering contribution with practical speedups, though limited to sparse-pretrained models and the accuracy matching rather than improvement suggests marginal gains.",
+    "model_io": [
+      {
+        "model": "SparDA (sparse attention with Forecast projection decoupled from Query/Key/Value)",
+        "inputs": [
+          "sparse-pretrained 8B LLM",
+          "long input sequences"
+        ],
+        "outputs": [
+          "token logits",
+          "KV cache predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Lookahead KV block prediction enables CPU-GPU prefetch overlap, reducing offload bottleneck",
+        "result": "Confirmed: 1.7\u00d7 decode speedup achieved"
+      },
+      {
+        "hypothesis": "Decoupled Forecast reduces selection overhead compared to multi-head selectors",
+        "result": "Confirmed: 1.25\u00d7 prefill speedup with <0.5% parameter cost"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-56708-x": {
+    "category": "Mechanobiology",
+    "task": "Identify compensatory gait biomechanics in chronic low back pain via mechanical energy analysis",
+    "key_results": "Significantly higher eccentric mechanical energy expenditure at ankle, hip, and low back in healthy controls (P\u22640.05); eccentric energy flow disruption indicates reduced mechanical efficiency in NSCLBP patients",
+    "comments": "The quasi-experimental design with small sample (n=14 per group) and male-only cohort limits generalizability; the mechanism linking eccentric energy deficits to pain generation remains unexplored.",
+    "model_io": [
+      {
+        "model": "3D motion analysis and inverse dynamics",
+        "inputs": [
+          "ankle joint kinematics",
+          "knee joint kinematics",
+          "hip joint kinematics",
+          "low back kinematics",
+          "ground reaction forces"
+        ],
+        "outputs": [
+          "concentric MEE",
+          "eccentric MEE",
+          "no-transfer MEE"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "NSCLBP patients show compensatory alterations in eccentric energy management during gait",
+        "result": "Confirmed: eccentric MEE significantly reduced at ankle, hip, low back in NSCLBP group"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55313-2": {
+    "category": "Organelles",
+    "task": "Investigate microwave-induced modulation of peptide intracellular distribution to mitochondria",
+    "key_results": "MW irradiation (2.45 GHz) increases cellular fluorescence of mitochondrial-targeting peptides; (Cha-r)2-R4 shows pronounced increase with maintained cell viability; enhanced colocalization with mitochondrial staining",
+    "comments": "Novel proof-of-concept for MW-mediated peptide delivery; quantitative mitochondrial function assays needed to confirm functional targeting.",
+    "model_io": [
+      {
+        "model": "HEK293/CHO cells; confocal microscopy; flow cytometry",
+        "inputs": [
+          "mitochondrial targeting peptides",
+          "MW irradiation",
+          "2.45 GHz"
+        ],
+        "outputs": [
+          "peptide fluorescence intensity",
+          "intracellular distribution",
+          "mitochondrial colocalization"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "MW irradiation enhances peptide delivery to mitochondrial regions",
+        "result": "Partially confirmed; increased fluorescence and colocalization observed; mechanism and functional impact remain unclear"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-56563-w": {
+    "category": "Cell Signaling",
+    "task": "Determine IL-33/ST2 pathway in orthodontic tooth movement via macrophage polarization",
+    "key_results": "IL-33 injection accelerates OTM, increases M1 macrophages (CD11b+Ly6C+), decreases reparative macrophages; promotes osteoclast differentiation; THRA activates IL-33 in fibroblasts",
+    "comments": "Mechanistic link between inflammatory signaling and bone remodeling; THRA identifies upstream regulator.",
+    "model_io": [
+      {
+        "model": "Orthodontic tooth movement mouse model; hPDLFs; CD14+ monocytes",
+        "inputs": [
+          "mechanical force",
+          "IL-33",
+          "ST2",
+          "THRA"
+        ],
+        "outputs": [
+          "M1 macrophage polarization",
+          "cathepsin K",
+          "osteoclast differentiation",
+          "tooth movement rate"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "IL-33/ST2 signaling drives OTM via M1 macrophage and osteoclast differentiation",
+        "result": "Confirmed; recombinant IL-33 accelerates movement; anti-ST2 reverses effects"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-56656-6": {
+    "category": "Apoptosis/Cell Death",
+    "task": "Elucidate Metrnl-ASC-NLRP3 interaction in inflammasome inhibition and UC amelioration",
+    "key_results": "Metrnl expression decreased in UC; overexpression inhibits ASC-NLRP3 binding, reduces IL-1\u03b2/pyroptosis; Metrnl knockout increases UC susceptibility; interactive relationship with ASC demonstrated by Co-IP",
+    "comments": "Direct protein-protein interference with inflammasome assembly offers specificity advantage over global signaling inhibition.",
+    "model_io": [
+      {
+        "model": "NCM460/FHC cells; DSS-induced colitis; Metrnl KO mice",
+        "inputs": [
+          "Metrnl",
+          "TNF-\u03b1",
+          "ATP/nigericin/alum",
+          "ASC",
+          "NLRP3",
+          "caspase-1"
+        ],
+        "outputs": [
+          "IL-1\u03b2",
+          "LDH",
+          "pyroptosis",
+          "inflammasome activation",
+          "colon tissue damage"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Metrnl inhibits NLRP3 inflammasome by preventing ASC-NLRP3 binding",
+        "result": "Confirmed; Metrnl interference accelerates pyroptosis; Metrnl overexpression reverses TNF-\u03b1 effects; Co-IP shows Metrnl-ASC interaction"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-74125-6": {
+    "category": "Single Cell",
+    "task": "Spatiotemporal characterization of minimal residual disease in BRCA1-deficient breast cancer",
+    "key_results": "Identified chemotherapy-tolerant EMT cancer cell population with conserved expression program; predicts adverse clinical outcomes; spatially localized in discrete anatomical niches",
+    "comments": "Multi-omics integration (scRNA-seq, spatial transcriptomics, imaging mass cytometry) is comprehensive; preclinical validation in models shows pharmacological targetability.",
+    "model_io": [
+      {
+        "model": "Multi-omics integration pipeline",
+        "inputs": [
+          "single-cell RNA-seq",
+          "spatial transcriptomics data",
+          "imaging mass cytometry images"
+        ],
+        "outputs": [
+          "EMT cancer cell states",
+          "spatial maps of residual disease",
+          "therapeutic vulnerabilities"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Distinct EMT-like epithelial-mesenchymal transition program confers chemotherapy tolerance and adverse outcomes",
+        "result": "Conserved EMT signature in human BRCA1-deficient tumors; correlates with adverse clinical outcomes; pharmacologically targetable"
+      }
+    ]
+  },
+  "nature:10.1038/s41538-026-00925-1": {
+    "category": "Other",
+    "task": "Systematic review of AI applications in food safety",
+    "key_results": "150+ peer-reviewed publications reviewed; framework includes research domain, application context, data collection, and AI technique; ASReview tool used for prioritization",
+    "comments": "Broad systematic review identifies landscape but lacks detailed benchmarking or quantitative performance metrics across applications.",
+    "model_io": [
+      {
+        "model": "ASReview (active learning screening tool)",
+        "inputs": [
+          "peer-reviewed publications on AI in food safety"
+        ],
+        "outputs": [
+          "prioritized paper selection",
+          "categorized framework"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-52345-6": {
+    "category": "Other",
+    "task": "Weed classification in early crop growth stages",
+    "key_results": "97% test accuracy with Adam optimizer; 96.5% with Adam+label smoothing; 95% with RMSProp on 3-class and 16-class weed datasets",
+    "comments": "Lightweight architecture is practical for field robotics, but comparison baselines and dataset details are sparse.",
+    "model_io": [
+      {
+        "model": "Lightweight CNN-SE-Transformer",
+        "inputs": [
+          "crop/weed images"
+        ],
+        "outputs": [
+          "weed class predictions (3 or 16 classes)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "SE modules and token-shrinking attention improve weed discrimination without sacrificing performance",
+        "result": "Adam optimizer achieved 97% accuracy; Grad-CAM visualization confirmed learned weed features"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-56455-z": {
+    "category": "Structural Prediction",
+    "task": "Mechanistic modeling of ion channel degeneracy in basal ganglia pacemaker neurons",
+    "key_results": "Inverse relationship between g_leak and g_HCN defines low-dimensional solution manifold; deviations explain abnormal excitability in Parkinson's disease; consistent with ion channel degeneracy principle",
+    "comments": "Elegant computational framework linking conductance balance to neuronal function; mechanistic insight on pathological dynamics but lacks experimental lesion validation.",
+    "model_io": [
+      {
+        "model": "Hodgkin-Huxley-like GPe neuron model with (g_leak, g_HCN) parameter scan",
+        "inputs": [
+          "leak conductance range",
+          "HCN conductance range",
+          "physiological constraints (firing rate, sag, trough)"
+        ],
+        "outputs": [
+          "equilibrium point stability",
+          "low-dimensional manifold equations",
+          "phase diagrams"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Compensatory coupling between leak and HCN conductances preserves excitability; imbalances drive pathological dynamics",
+        "result": "Robust inverse relationship g_leak \u2194 g_HCN; manifold captures ion channel degeneracy; deviations predict abnormal excitability"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-57399-0": {
+    "category": "Genomics",
+    "task": "Pharmacogenetic analysis of MC1R variants on melanocortin drug anti-inflammatory efficacy",
+    "key_results": "30 MC1R variants differentially affected cAMP and phospho-ERK signaling; loss-of-function presents as continuum; variant impact compound-dependent (LoF, no effect, or gain-of-function); red-hair variants associated with reduced drug efficacy",
+    "comments": "Highlights importance of pharmacogenetics in drug development; in silico prediction tools insufficient; responder/non-responder stratification enables personalized medicine.",
+    "model_io": [
+      {
+        "model": "Functional assays (cAMP/pERK signaling + whole-blood anti-inflammatory response)",
+        "inputs": [
+          "30 MC1R variants",
+          "nine melanocortin agonists",
+          "healthy volunteer samples"
+        ],
+        "outputs": [
+          "receptor signaling capacity (cAMP, pERK)",
+          "cytokine reduction (anti-inflammatory efficacy)",
+          "responder/non-responder classification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "MC1R genetic variants heterogeneously affect melanocortin drug efficacy independent of phototype",
+        "result": "LoF variants impacted signaling differentially by pathway; red-hair variants reduced efficacy; compound-specific variant effects"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-57521-2": {
+    "category": "Genomics",
+    "task": "Body weight trait genetics in male Dongfeng sika deer via genome-wide association",
+    "key_results": "12 genome-wide significant SNP loci mapped to 7 candidate genes (ERC2, LOC122708028, FHIT, CASP14, UBE3A, NRXN3, GABRA5); enrichment in GABA synaptic transmission and DNA repair pathways",
+    "comments": "GWAS identified plausible candidates (GABA signaling, DNA repair); functional validation and phenotypic mechanism require follow-up studies.",
+    "model_io": [
+      {
+        "model": "GWAS with mixed linear model",
+        "inputs": [
+          "266 five-year-old stag genotypes (whole-genome resequencing)",
+          "body weight phenotypes"
+        ],
+        "outputs": [
+          "SNP association p-values",
+          "candidate genes",
+          "GO/KEGG pathway enrichment"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Genetic variants in GABA synaptic and DNA repair pathways regulate body weight in male sika deer",
+        "result": "12 genome-wide significant loci; seven candidate genes; pathway enrichment in GABAergic transmission and cell cycle regulation"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55502-z": {
+    "category": "ML Theory",
+    "task": "Ceramic art design generation and aesthetic evaluation",
+    "key_results": "Multimodal semantic parsing + style-conditioned diffusion + aesthetic evaluator achieved FID = 28.35, IS = 10.46; aesthetic model scored SRCC = 0.891, PLCC = 0.903 against expert judgment on 21k+ annotated ceramic images",
+    "comments": "Well-integrated framework coupling diffusion generation with interpretable multi-dimensional aesthetic scoring; domain knowledge graph grounds semantic parsing; explicit acknowledgment of 2D limitations is honest.",
+    "model_io": [
+      {
+        "model": "Multimodal Semantic Parsing (Vision-Language Model + Domain KG)",
+        "inputs": [
+          "text briefs or reference images"
+        ],
+        "outputs": [
+          "structured design attributes"
+        ]
+      },
+      {
+        "model": "Style-Conditioned Diffusion Generation",
+        "inputs": [
+          "design attributes",
+          "style specification"
+        ],
+        "outputs": [
+          "ceramic surface-decoration images"
+        ]
+      },
+      {
+        "model": "Multi-Dimensional Aesthetic Quality Evaluator",
+        "inputs": [
+          "ceramic images"
+        ],
+        "outputs": [
+          "aesthetic quality scores (composition, color, texture, style)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-dimensional aesthetic decomposition with adaptive weighting outperforms monolithic scoring",
+        "result": "Confirmed; significantly higher correlation to expert judgment"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-56218-w": {
+    "category": "ML Theory",
+    "task": "Gearbox fault diagnosis using OVMD and KLIRVM",
+    "key_results": "OVMD-KLIRVM framework outperformed competing methodologies in diagnostic accuracy; adaptive kernel learning enables dynamic parameter adjustment",
+    "comments": "Orthogonalized VMD with Bessel basis functions is technically sound; incremental learning for streaming data is practical, though results lack quantitative metrics.",
+    "model_io": [
+      {
+        "model": "Orthogonalized VMD (OVMD) + Kernel Learning Incremental RVM",
+        "inputs": [
+          "gearbox vibration signals"
+        ],
+        "outputs": [
+          "fault type classifications"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-56755-4": {
+    "category": "ML Theory",
+    "task": "Predicting TTT diagrams in uranium alloys",
+    "key_results": "Hybrid shape-constrained + semi-empirical loss achieved physically consistent C-curves; identified U-Mo-Pt, Au, Ta, W, Fe as candidate alloys with enhanced kinetic stability",
+    "comments": "Physics-guided ML for materials discovery is exemplary; hybrid loss function balances accuracy and physical constraints; zero-shot predictions validated conceptually.",
+    "model_io": [
+      {
+        "model": "Physics-Regularized ML with Hybrid Loss",
+        "inputs": [
+          "alloy composition (U, Mo, X elements)"
+        ],
+        "outputs": [
+          "Time-Temperature-Transformation (TTT) diagrams",
+          "C-curve parameters"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Shape-constrained loss enforces physically realistic C-curve convexity while maintaining accuracy",
+        "result": "Confirmed; hybrid approach outperformed baseline MSE in physical consistency"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-56879-7": {
+    "category": "Statistics/Probability",
+    "task": "Demand characterization and consistency checking in bike-sharing systems",
+    "key_results": "Probabilistic framework with Gamma and Negative Binomial distributions provided calibrated 95% prediction intervals; identified timestamp misattribution errors validated by data provider",
+    "comments": "Principled probabilistic approach emphasizes uncertainty quantification and interpretability over pure predictive accuracy; external consistency check demonstrates practical data-quality utility.",
+    "model_io": [
+      {
+        "model": "Generative Probabilistic Framework (Gamma + Negative Binomial)",
+        "inputs": [
+          "trip distance",
+          "hourly trip counts",
+          "contextual features (day type, weather)"
+        ],
+        "outputs": [
+          "synthetic OD demand",
+          "95% prediction intervals",
+          "data consistency flags"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Probabilistic framework provides calibrated uncertainty estimates for dock-based BSS demand",
+        "result": "Confirmed; empirical coverage near nominal 95% level across scenarios"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-56949-w": {
+    "category": "ML Theory",
+    "task": "Road damage detection in complex street views",
+    "key_results": "DMSFNet (YOLOv11-based) achieved favorable trade-off between accuracy and efficiency on SVRDD, RDD2020, USRDD; group fusion block and multi-branch fusion improved multi-scale detection",
+    "comments": "Practical approach addressing real challenges (scale variation, slender damage morphology); group fusion and dynamic snake convolution are novel components; results demonstrate effectiveness on diverse datasets.",
+    "model_io": [
+      {
+        "model": "Dynamic Multi-Scale Fusion Network (DMSFNet)",
+        "inputs": [
+          "road surface images"
+        ],
+        "outputs": [
+          "damage location and class predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Group fusion blocks improve detection of multi-scale damage variations",
+        "result": "Confirmed via experiments on public datasets"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-57723-8": {
+    "category": "Analysis",
+    "task": "Electrochemical transport in 3D rhombic zero-depth pores",
+    "key_results": "FEM model validated with 2.75% MAE; derived predictive correlations for pore conductance; identified critical channel length and maximum electric field locations",
+    "comments": "Detailed numerical characterization with practical predictive correlations; validation against experiment is rigorous.",
+    "model_io": [
+      {
+        "model": "Finite Element Modeling (FEM)",
+        "inputs": [
+          "3D rhombic pore geometry parameters",
+          "electrolyte concentration",
+          "applied voltage"
+        ],
+        "outputs": [
+          "pore conductance",
+          "electric field distribution",
+          "particle dwell time"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Pore conductance varies linearly with diameter, vertex angle, and electrolyte concentration beyond critical channel length",
+        "result": "Confirmed; derived mathematical correlation provided"
+      }
+    ]
+  },
+  "nature:10.1038/s44334-026-00086-9": {
+    "category": "Analysis",
+    "task": "Layer-wise geometric error detection in additive manufacturing",
+    "key_results": "Rapid in-situ 3D scanning and signed distance evaluation completed in seconds over 350 cm\u00b3 volumes at 0.3 mm spatial resolution; validated on directed energy deposition arc (DED-Arc) AM",
+    "comments": "Novel embedded scanning methodology addresses temporal layer-by-layer evolution; efficient computational geometry (adaptively sampled distance functions) enables real-time analysis; agnostic to AM process is valuable.",
+    "model_io": [
+      {
+        "model": "3D Scanner + Temporal Merging + Signed Distance Field Analysis",
+        "inputs": [
+          "layer-wise point cloud scans"
+        ],
+        "outputs": [
+          "geometric deviation maps",
+          "error quantification per layer"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Embedded 3D scanning enables seconds-scale layer-wise error detection over large volumes",
+        "result": "Confirmed; 0.3 mm resolution over 350 cm\u00b3 volumes in realistic timeframes"
+      }
+    ]
   }
 }
