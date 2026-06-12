@@ -273171,5 +273171,822 @@
         "result": "Three testable hydrodynamic mechanisms identified; flow-bed interfaces proposed as multicellularity breeding grounds"
       }
     ]
+  },
+  "hf:2606.12730": {
+    "category": "LLM/Reasoning",
+    "task": "Evaluating when psychometric self-reports predict LLM behavior",
+    "key_results": "Theory of Planned Behavior achieves human-level coherence within conversations but Big 5 does not; coherence collapses across sessions when behavior is context-primed (sycophancy), but survives for training-shaped behaviors (implicit bias)",
+    "comments": "The shift from broad personality traits to task-specific behavioral instruments is pragmatic, though it raises questions about whether LLMs possess stable behavioral dispositions or merely context-responsive outputs.",
+    "model_io": [
+      {
+        "model": "11 frontier LLMs (unspecified models)",
+        "inputs": [
+          "psychometric prompts (Big 5, TPB)",
+          "behavioral task prompts",
+          "persona induction prompts"
+        ],
+        "outputs": [
+          "self-report responses",
+          "behavioral task responses"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Theory of Planned Behavior predicts LLM behavior better than Big 5 within shared conversations",
+        "result": "Confirmed; TPB reaches human-level coherence, Big 5 does not"
+      },
+      {
+        "hypothesis": "Self-report coherence persists across separate conversations for context-independent behaviors",
+        "result": "Confirmed for implicit bias; failed for sycophancy and context-primed behaviors"
+      }
+    ]
+  },
+  "hf:2606.13594": {
+    "category": "Agents/RL",
+    "task": "Dense latent communication and mind-reading alignment across heterogeneous LLM agents",
+    "key_results": "Dense KV-cache alignment achieves 2-3x lower compute than text communication while matching or exceeding it; outperforms prior heterogeneous baselines across 6 model directions and 12 benchmarks",
+    "comments": "The duality between sparse reasoning signals and dense contextual preservation is insightful, though real-world heterogeneous deployment still requires careful cache format standardization.",
+    "model_io": [
+      {
+        "model": "Qwen variants (3B, 4B, 8B, 14B) with cross-model cache transformation",
+        "inputs": [
+          "input context",
+          "sender agent's KV-cache",
+          "receiver agent state"
+        ],
+        "outputs": [
+          "transformed KV-cache",
+          "receiver predictions/generations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Context-aware transfer is driven by sparse reasoning signals while context-unaware transfer requires dense contextual preservation",
+        "result": "Confirmed via information-structure analysis and empirical performance patterns"
+      },
+      {
+        "hypothesis": "Two-phase training (reconstruction then generation) enables effective cross-model alignment",
+        "result": "Confirmed; method matches text communication at 2-3x lower compute"
+      }
+    ]
+  },
+  "hf:2606.13174": {
+    "category": "Agents/RL",
+    "task": "Compiling user corrections into runtime enforcement for coding agents",
+    "key_results": "TRACE reduces preference violations from 100% to 37.6% (in-distribution) and 2.0% (out-of-distribution) on ClawArena; outperforms memory-only approaches (Mem0: 57.5% violation rate)",
+    "comments": "Treating user corrections as compilable rules elegantly sidesteps the brittleness of semantic memory, though scaling to complex multi-constraint scenarios remains unexplored.",
+    "model_io": [
+      {
+        "model": "Coding agent (unspecified base LLM) + TRACE skill-layer pipeline",
+        "inputs": [
+          "task description",
+          "user correction text",
+          "agent execution history"
+        ],
+        "outputs": [
+          "mined atomic rules",
+          "compiled runtime checks",
+          "task completion"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Compiling user corrections into runtime rules reduces repeated preference violations better than memory alone",
+        "result": "Confirmed; TRACE achieves 37.6% violation vs Mem0's 57.5% on in-distribution tasks"
+      },
+      {
+        "hypothesis": "Rule compilation generalizes out-of-distribution with minimal overfitting",
+        "result": "Confirmed; OOD violation rate drops to 2.0%, suggesting rules capture generalizable constraints"
+      }
+    ]
+  },
+  "hf:2606.10423": {
+    "category": "Agents/RL",
+    "task": "Reliable and efficient generalist web navigation via structured page representation",
+    "key_results": "WebChallenger achieves 56.3% WebArena, 48.7% VisualWebArena, 51.0% Online-Mind2Web, 70.9% WorkArena using open-weight models; approaches proprietary systems at fraction of cost",
+    "comments": "PageMem's deterministic DOM-to-hierarchy approach is pragmatic, but the method's dependence on clean DOM structure may falter on JavaScript-heavy or malformed websites.",
+    "model_io": [
+      {
+        "model": "Off-the-shelf open-weight LLM (unspecified) + PageMem representation engine",
+        "inputs": [
+          "webpage HTML/DOM",
+          "task instruction",
+          "interaction history"
+        ],
+        "outputs": [
+          "action commands",
+          "element selections",
+          "text inputs"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Selective attention via section summarization reduces token overhead while preserving task-relevant detail",
+        "result": "Confirmed via performance on WebArena (56.3%) and VisualWebArena (48.7%)"
+      },
+      {
+        "hypothesis": "Persistent website memory and compound action workflows improve consistency",
+        "result": "Confirmed; 70.9% on WorkArena suggests strong performance on repetitive interaction patterns"
+      }
+    ]
+  },
+  "hf:2606.00467": {
+    "category": "Benchmark",
+    "task": "Evaluating LLM annotation reliability and the role of model-internalized priors",
+    "key_results": "66% of zero-shot errors resist correction (34.8% rescue rate); Definition-Specific Familiarity (DSF) shows partial r=+0.41 with performance, while memorization metrics fail to correlate",
+    "comments": "The finding that high-confidence errors are particularly resistant to correction suggests LLMs may be systematically overconfident in misaligned conceptualizations, with implications for trusted annotation pipelines.",
+    "model_io": [
+      {
+        "model": "Dense and MoE LLMs (unspecified variants)",
+        "inputs": [
+          "text samples",
+          "task definitions (aligned and misaligned)",
+          "corrective prompts"
+        ],
+        "outputs": [
+          "toxicity annotations",
+          "confidence scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Decision stickiness prevents correction of high-confidence zero-shot errors",
+        "result": "Confirmed; 66% of errors resist correction; high-confidence errors especially resistant"
+      },
+      {
+        "hypothesis": "Definition-Specific Familiarity (DSF) predicts performance better than surface-level memorization",
+        "result": "Confirmed; DSF partial r=+0.41 vs memorization metrics showing no positive correlation"
+      },
+      {
+        "hypothesis": "LLMs follow misaligned definitions while maintaining confidence unchanged",
+        "result": "Confirmed; misalignment does not reduce model confidence"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-73424-2": {
+    "category": "Structural Biology",
+    "task": "Elucidate pH-dependent activation mechanism and N-terminal gating in Na\u207a/H\u207a antiporter NhaA",
+    "key_results": "Cytoplasmic funnel progressively opens with increasing pH; N-terminal tail forms pH-sensitive plug at low pH and disengages at alkaline pH coinciding with activation; Na\u207a coordination visualized at binding site",
+    "comments": "Multi-method approach (cryo-EM, constant-pH MD) elegantly reveals coupled conformational transitions; structural basis for pH sensing and gating now clear.",
+    "model_io": [
+      {
+        "model": "Single-particle cryo-EM",
+        "inputs": [
+          "NhaA in lipid nanodiscs",
+          "pH range (physiological)",
+          "Na\u207a-bound and apo states"
+        ],
+        "outputs": [
+          "Conformational ensemble",
+          "N-terminal tail structure",
+          "Ion coordination geometry"
+        ]
+      },
+      {
+        "model": "Constant-pH molecular dynamics",
+        "inputs": [
+          "NhaA structure",
+          "pH conditions",
+          "Na\u207a ions"
+        ],
+        "outputs": [
+          "Protonation dynamics",
+          "Residue role identification",
+          "Activation mechanism"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "N-terminal tail acts as pH-gated plug controlling cytoplasmic access",
+        "result": "Confirmed\u2014tail forms dynamic plug at low pH, disengages at high pH correlating with activation"
+      },
+      {
+        "hypothesis": "Progressive funnel opening with pH enables substrate recognition",
+        "result": "Confirmed\u2014cytoplasmic funnel opening observed with increasing pH"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-74165-y": {
+    "category": "Computational Biophysics",
+    "task": "Assess reliability of enhanced-sampling MD methods across realistic biological systems",
+    "key_results": "Method performance is context-dependent; convergence metrics insufficient\u2014REUS, WT-MtD, WTM-eABF, OPES all show characteristic failures in realistic landscapes; cross-method validation necessary",
+    "comments": "Critical methodological contribution revealing that field-standard convergence diagnostics are insufficient; advocates for validation paradigm shift in the community.",
+    "model_io": [
+      {
+        "model": "Enhanced-sampling MD: REUS, WT-MtD, WTM-eABF, OPES",
+        "inputs": [
+          "Ligand binding systems",
+          "Conformational change systems",
+          "Kinase activation",
+          "Membrane permeation",
+          "Ion conduction"
+        ],
+        "outputs": [
+          "Free-energy profiles",
+          "Convergence metrics",
+          "Binding/activation kinetics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Method performance transfers across biological contexts",
+        "result": "Rejected\u2014performance is context-dependent with system-specific failure modes"
+      },
+      {
+        "hypothesis": "Convergence metrics ensure quantitative correctness",
+        "result": "Rejected\u2014self-consistency insufficient; cross-method validation required"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-74375-4": {
+    "category": "Structural Biology",
+    "task": "Expand triplex-forming oligonucleotide recognition to non-standard base pairs using synthetic genetic alphabet",
+    "key_results": "Identified \u226512 modular triads targeting standard, damaged, or AEGIS base pairs with nanomolar affinity at neutral pH; successfully detected oxidative lesions and AEGIS pairs in enzymatic constructs",
+    "comments": "Elegant expansion of molecular recognition repertoire, though practical scalability to complex genomic targets remains to be demonstrated.",
+    "model_io": [
+      {
+        "model": "Triplex-forming oligonucleotide (TFO) library screening",
+        "inputs": [
+          "120 base triad combinations",
+          "AEGIS nucleobases",
+          "duplex DNA targets (standard, damaged, synthetic)"
+        ],
+        "outputs": [
+          "12+ functional triads",
+          "Binding affinity (nanomolar)",
+          "pH-dependent stability"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "AEGIS nucleobases expand Hoogsteen pairing repertoire beyond natural bases",
+        "result": "Confirmed\u201412+ interchangeable triads identified targeting diverse base pairs"
+      },
+      {
+        "hypothesis": "Expanded TFOs function at neutral pH without acidic conditions",
+        "result": "Confirmed\u2014triads stable and functional at physiological pH"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-50650-8": {
+    "category": "Computational Biophysics",
+    "task": "Evaluate practical applications of iterating between all-atom and coarse-grained MD simulations",
+    "key_results": "Iterative AA/CG cycling helps soluble proteins escape metastable states via structural distortions; most reliable use is accelerating lipid mixing in membrane systems, not protein folding",
+    "comments": "Honest assessment of limitations reveals context-dependent utility\u2014cycling may actually hinder conformational sampling despite apparent help via noise-induced transitions.",
+    "model_io": [
+      {
+        "model": "Iterative multiscale MD (iMMD) in OpenMM",
+        "inputs": [
+          "All-atom structures",
+          "Coarse-grained mappings",
+          "Protein/lipid systems"
+        ],
+        "outputs": [
+          "Folding pathways",
+          "Membrane organization",
+          "Convergence/reliability metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Iterating AA/CG improves protein conformational sampling",
+        "result": "Partially confirmed\u2014helps escape metastable states but via artificial distortions, unreliable for general protein dynamics"
+      },
+      {
+        "hypothesis": "Iteration accelerates lipid mixing in membrane systems",
+        "result": "Confirmed\u2014most reliable application for membrane protein-lipid interactions"
+      }
+    ]
+  },
+  "nature:10.1038/s41387-026-00439-5": {
+    "category": "Apoptosis/Cell Death",
+    "task": "Characterize Fibrillin-1 protective mechanisms in high-glucose fibroblast injury",
+    "key_results": "Study focused on FBN1 role in diabetic fibroblast apoptosis and inflammation; mechanism involves autophagy activation",
+    "comments": "Abstract is incomplete; mechanism details (autophagy pathway, protein interactions) not specified but represents promising DFU therapeutic target.",
+    "model_io": [
+      {
+        "model": "Fibroblasts exposed to high glucose \u00b1 FBN1",
+        "inputs": [
+          "High glucose",
+          "Fibrillin-1",
+          "Autophagy machinery"
+        ],
+        "outputs": [
+          "Apoptosis rate",
+          "Inflammation markers",
+          "Cell viability"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "FBN1 reduces high-glucose-induced fibroblast apoptosis via autophagy activation",
+        "result": "Supported; mechanism details incomplete in abstract"
+      }
+    ]
+  },
+  "nature:10.1038/s41420-026-03158-z": {
+    "category": "Apoptosis/Cell Death",
+    "task": "Elucidate GPR84 role in influenza-induced lung inflammation via PANoptosis",
+    "key_results": "IAV upregulates GPR84; GPR84 deletion attenuates ZBP1-PANoptosome-mediated cell death and chemokine/DAMP release",
+    "comments": "Links a G-protein coupled receptor to a recently characterized programmed cell death pathway; GPR84 emerges as druggable target for pneumonia.",
+    "model_io": [
+      {
+        "model": "Mouse lung + IAV infection \u00b1 GPR84",
+        "inputs": [
+          "IAV",
+          "GPR84 expression",
+          "ZBP1"
+        ],
+        "outputs": [
+          "PANoptosis rate",
+          "Inflammatory chemokines",
+          "DAMPs",
+          "Lung inflammation severity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "GPR84 upregulation during IAV infection promotes ZBP1-PANoptosome assembly",
+        "result": "Confirmed; GPR84 deletion reduces PANoptosis and pneumonia severity"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-74127-4": {
+    "category": "Cell Division/Cycle",
+    "task": "Determine retrograde mitochondrial transport requirement for mitochondrial biogenesis in neuronal axons",
+    "key_results": "Axonal mitochondrial transport to cell body required for sustained biogenesis; retrograde feedback activates estrogen-related receptor (ERR) and nuclear expression of mitochondrial genes",
+    "comments": "Addresses unique challenge of maintaining mitochondria in spatially compartmentalized neurons; identifies ERR as key integrator of retrograde signaling.",
+    "model_io": [
+      {
+        "model": "Zebrafish neurons in vivo \u00b1 mitochondrial transport",
+        "inputs": [
+          "Axonal mitochondria",
+          "Retrograde transport (kinesin/dynein)",
+          "Mitochondrial content",
+          "ERR activation"
+        ],
+        "outputs": [
+          "Retrograde signaling",
+          "Nuclear mitochondrial gene expression",
+          "Mitochondrial biogenesis rate"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Retrograde mitochondrial transport couples axonal mitochondrial status to nuclear biogenesis via ERR",
+        "result": "Confirmed; transport disruption impairs mitochondrial biogenesis in distal axons"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-54912-3": {
+    "category": "Epigenetics",
+    "task": "Map alternative splicing landscape during osteoblast differentiation and validate proteomic changes",
+    "key_results": "Extensive splicing changes in RUNX2/TEAD1/CTNNB1/NFATC4 during early commitment; late-stage splicing in cytoskeletal/ECM/Golgi proteins; proteomics confirmed splicing in RNA processing/autophagy genes",
+    "comments": "Comprehensive integration of short/long-read RNA-seq with proteomics reveals splicing as coordinated regulatory layer during mesenchymal differentiation.",
+    "model_io": [
+      {
+        "model": "hMSC-TERT4 osteoblast differentiation \u00b1 splicing analysis",
+        "inputs": [
+          "Differentiation signals",
+          "RNA splicing machinery",
+          "RUNX2/TEAD1/CTNNB1/NFATC4",
+          "Cytoskeletal/ECM genes"
+        ],
+        "outputs": [
+          "Alternative splicing events",
+          "Isoform abundance",
+          "Protein isoforms",
+          "PTM variants",
+          "Osteoblastic phenotype"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Alternative splicing in transcriptional regulators and structural proteins coordinates osteoblast differentiation",
+        "result": "Confirmed; extensive multi-phase splicing landscape matches differentiation stages"
+      }
+    ]
+  },
+  "nature:10.1038/s41523-026-00980-7": {
+    "category": "Statistical Methods",
+    "task": "Risk stratification of radiation-induced breast fibrosis via subgroup-based ML approach",
+    "key_results": "Five-fold BF risk variation (17-83%); AUC 0.735 using only five features (RILA, two SNPs, two clinical variables); partition analysis identified three clinically meaningful risk groups",
+    "comments": "Novel subgroup-based approach successfully captures biological complexity ignored by additive models; relatively small feature set enables clinical deployment.",
+    "model_io": [
+      {
+        "model": "Partition analysis followed by ML refinement",
+        "inputs": [
+          "RILA",
+          "CTGF SNP",
+          "NBS1 SNP",
+          "BMI",
+          "hypertension"
+        ],
+        "outputs": [
+          "three risk groups",
+          "fibrosis probability"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Biologically-informed subgroup-based approach outperforms additive predictors for fibrosis risk",
+        "result": "Five-fold risk variation; AUC 0.735 with five features only"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-50199-6": {
+    "category": "Structural Prediction",
+    "task": "Identification of cannabichromevarin as measles virus F protein stabilizer via computational screening",
+    "key_results": "CBCV identified from 650K compound screening; MM-GBSA \u0394Gbind=-44.7 kcal/mol; stabilizes prefusion F protein conformation; ADMET profile excellent; FEL shows sharpest energy minimum",
+    "comments": "Rigorous computational pipeline with strong binding predictions; CBCV represents novel anti-measles scaffold; experimental validation needed.",
+    "model_io": [
+      {
+        "model": "Virtual screening + MD (1000 ns) + MM-GBSA/PBSA + DFT + ADMET",
+        "inputs": [
+          "650,000 compounds",
+          "MeV F protein structure"
+        ],
+        "outputs": [
+          "lead candidates (CBCV top)",
+          "binding free energies",
+          "toxicity profiles"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Minor cannabinoids stabilize MeV F protein in inactive prefusion state",
+        "result": "CBCV \u0394Gbind=-44.7 kcal/mol; induces conformational locking; excellent ADMET profile"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-51560-5": {
+    "category": "Statistical Methods",
+    "task": "Machine learning prediction of malignant intestinal obstruction risk",
+    "key_results": "AUC 0.84\u00b10.03 internal validation, Brier score 0.19; clinical translation reduced mechanical ventilation by 41%, antibiotic resistance 37\u219214%",
+    "comments": "Strong external validation and real-world clinical impact; dynamic enhancement ratio (TER) and cascade modeling demonstrate practical utility.",
+    "model_io": [
+      {
+        "model": "Lasso-Boruta feature selection",
+        "inputs": [
+          "tumor enhancement ratio",
+          "clinical variables"
+        ],
+        "outputs": [
+          "core feature set"
+        ]
+      },
+      {
+        "model": "XGBoost-Random Survival Forest cascade",
+        "inputs": [
+          "core features"
+        ],
+        "outputs": [
+          "MIO risk predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Dynamic tumor enhancement ratio improves MIO prediction over static models",
+        "result": "AUC 0.84\u00b10.03; 41% reduction in mechanical ventilation duration"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55397-w": {
+    "category": "Other",
+    "task": "Fast surface reconstruction of human brain MRI using deep learning",
+    "key_results": "DeepSCAN-based pipeline matches FreeSurfer with 11-min processing; highest agreement in human data and synthetic validation; suitable for high-throughput research",
+    "comments": "Solid benchmarking study with practical impact; identifies DeepSCAN as reliable accelerated alternative for research-grade MRI processing.",
+    "model_io": [
+      {
+        "model": "DeepSCAN, FastSurferCNN, QuickNAT (compared)",
+        "inputs": [
+          "structural brain MRI"
+        ],
+        "outputs": [
+          "brain segmentation",
+          "cortex parcellation",
+          "surface reconstruction"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "DeepSCAN achieves FreeSurfer-quality surface reconstruction in 11 minutes",
+        "result": "Highest agreement with FreeSurfer; suitable for high-throughput applications"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55928-5": {
+    "category": "Genomics",
+    "task": "Comparative genomic analysis of intraspecific diversity in Geobacillus stearothermophilus",
+    "key_results": "Two major genomic groups identified; food-associated strains have smaller genomes, natural habitat strains possess broader metabolic capabilities; substantial ecological divergence within species boundaries",
+    "comments": "Well-executed population genomics study; reveals underappreciated complexity within traditionally monolithic species definition.",
+    "model_io": [
+      {
+        "model": "Phylogenetic analysis and genome similarity measurement",
+        "inputs": [
+          "36 strain genomes"
+        ],
+        "outputs": [
+          "genomic groups",
+          "ecological classification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "G. stearothermophilus contains structured genomic groups reflecting ecological origin",
+        "result": "Two major groups; food strains have smaller genomes, natural habitat strains have broader metabolic capabilities"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-56361-4": {
+    "category": "Proteomics",
+    "task": "Identify therapeutic targets and generate novel anti-DDR1 human antibodies for breast cancer",
+    "key_results": "DDR1 selected from bioinformatics pipeline screening; novel human IgG1 antibodies generated via phage display; high-affinity binding and ADCC-mediated lysis demonstrated",
+    "comments": "Well-integrated target discovery and antibody engineering pipeline; DDR1 is validated target but clinical development required.",
+    "model_io": [
+      {
+        "model": "Multi-step bioinformatics pipeline",
+        "inputs": [
+          "TCGA tumor and normal breast tissue",
+          "differential expression analysis"
+        ],
+        "outputs": [
+          "candidate therapeutic targets (HER2, DDR1 prioritized)"
+        ]
+      },
+      {
+        "model": "Phage display + antibody reformatting",
+        "inputs": [
+          "naive human library",
+          "DDR1 antigen"
+        ],
+        "outputs": [
+          "human scFv",
+          "full-length human IgG1"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "DDR1 is dysregulated and therapeutically targetable in breast cancer",
+        "result": "High-affinity binding to native DDR1; ADCC-mediated lysis demonstrated"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-74296-2": {
+    "category": "Algorithms",
+    "task": "Accelerate kNN inference with adaptive neighborhood selection",
+    "key_results": "Real-time inference without accuracy loss; significantly faster than baselines across six datasets",
+    "comments": "HNSW graph structure elegantly decouples computational burden to training phase, though scalability to extremely high-dimensional spaces remains unexplored.",
+    "model_io": [
+      {
+        "model": "Adaptive HNSW-based kNN",
+        "inputs": [
+          "query embeddings"
+        ],
+        "outputs": [
+          "class predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Pre-computed voting in hierarchical layers enables real-time inference without accuracy degradation",
+        "result": "Confirmed across six benchmark datasets"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-54628-4": {
+    "category": "ML Theory",
+    "task": "Classify fine-grained aircraft types in remote sensing with explainability and trustworthiness assessment",
+    "key_results": "Transfer learning achieves 99.9% accuracy; Grad-CAM/LIME/RISE explanation consistency validated; MAST trustworthiness framework applied",
+    "comments": "Multi-method explainability (Grad-CAM, LIME, RISE) with spatial overlap metric is rigorous; background interference and bias detection strengthen interpretability.",
+    "model_io": [
+      {
+        "model": "EC-AT (transfer learning + explainability + MAST evaluation)",
+        "inputs": [
+          "remote sensing aircraft images (MAR20)"
+        ],
+        "outputs": [
+          "aircraft type predictions",
+          "explanation maps",
+          "trustworthiness scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Explanation consistency among Grad-CAM, LIME, RISE validates model trustworthiness",
+        "result": "Confirmed; high spatial overlap indicates robust decision-making"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55615-5": {
+    "category": "Other",
+    "task": "Optimize microwave excitation for non-destructive rebar detection in concrete",
+    "key_results": "Numerical model validated experimentally; robust framework for temperature-based rebar identification established",
+    "comments": "Integration of numerical simulation and physical validation is methodologically sound but paper lacks quantitative accuracy metrics.",
+    "model_io": [
+      {
+        "model": "Microwave thermography system (numerical + experimental)",
+        "inputs": [
+          "microwave excitation",
+          "antenna orientation",
+          "concrete structure with rebars"
+        ],
+        "outputs": [
+          "thermal surface patterns",
+          "rebar location estimates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Optimal excitation mode and antenna configuration enhance thermal contrast for rebar detection",
+        "result": "Consistency between simulation and experiments confirmed"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55970-3": {
+    "category": "ML Theory",
+    "task": "Develop Persian biomedical LLM for medical question-answering",
+    "key_results": "BioPars achieves ROUGE-L 29.99 (improvement over GPT-4 1.0), BERTScore 90.87, MoverScore 60.43, BLEURT 50.78 on BioParsQA dataset",
+    "comments": "First Persian biomedical QA LLM; evaluation metrics span multiple dimensions (factuality, semantic similarity); generalization beyond Persian medicine limited.",
+    "model_io": [
+      {
+        "model": "BioPars (fine-tuned biomedical LLM for Persian)",
+        "inputs": [
+          "biomedical questions"
+        ],
+        "outputs": [
+          "long-form medical answers"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Fine-tuning on BIOPARS-BENCH dataset improves Persian medical QA vs. general LLMs",
+        "result": "Confirmed; outperforms ChatGPT, Llama, Galactica"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-56436-2": {
+    "category": "Other",
+    "task": "Streamline medical insurance settlement via blockchain with anomaly detection and consensus",
+    "key_results": "Isolation Forest detects irregularities; Fleiss Kappa smart contracts resolve disputes; DPoS achieves 229.64 TPS, 3,095 gwei cost reduction",
+    "comments": "Integration of IF for anomaly detection and expert-panel consensus is governance-appropriate; blockchain scalability demonstrated.",
+    "model_io": [
+      {
+        "model": "Isolation Forest + Fleiss Kappa smart contract on DPoS blockchain",
+        "inputs": [
+          "medical expense claims",
+          "institutional records"
+        ],
+        "outputs": [
+          "anomaly flags",
+          "settlement decisions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Blockchain-based consensus with expert adjudication resolves expense disputes efficiently",
+        "result": "Confirmed; 229.64 TPS throughput achieved"
+      }
+    ]
+  },
+  "nature:10.1038/s41599-026-07859-9": {
+    "category": "Other",
+    "task": "Develop comprehensive ocean economy input-output framework",
+    "key_results": "19 ocean + 42 non-ocean industries; China's ocean economy transformed 2012\u20132020 from scale-driven to quality-oriented growth",
+    "comments": "Addresses critical gap in ocean economy statistical frameworks; methodology is replicable but lacks cross-national validation.",
+    "model_io": [
+      {
+        "model": "Input-output table compilation",
+        "inputs": [
+          "industry transaction data",
+          "production records"
+        ],
+        "outputs": [
+          "I-O matrix",
+          "structural indices"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Ocean economy structure evolved toward quality and efficiency (2012\u20132020)",
+        "result": "Confirmed via I-O decomposition"
+      }
+    ]
+  },
+  "nature:10.1038/s44260-026-00086-y": {
+    "category": "ML Theory",
+    "task": "Decompose company growth into trend and fluctuation components for prediction",
+    "key_results": "STIML integrating scaling models and data-driven residual learning; outperforms growth-model-only and pure ML baselines across 16 financial metrics",
+    "comments": "Novel physics-informed decomposition; relative importance of trend vs. fluctuation varies by company size and volatility, enhancing interpretability.",
+    "model_io": [
+      {
+        "model": "STIML (Scaling-Theory-Informed Machine Learning)",
+        "inputs": [
+          "financial indicators",
+          "company metadata"
+        ],
+        "outputs": [
+          "growth predictions",
+          "trend-fluctuation decomposition"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Company growth decomposes into robust trend and learnable fluctuation components",
+        "result": "Confirmed; trend stability across volatility levels supports hypothesis"
+      },
+      {
+        "hypothesis": "Macroeconomic variables contribute less than firm-level features",
+        "result": "Confirmed in average predictive performance"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55574-x": {
+    "category": "Condensed Matter",
+    "task": "Machine-learning guided optimization of coercivity in M-type strontium hexaferrite via processing-structure-property mapping",
+    "key_results": "XGBoost model achieves R\u00b2=0.970 test accuracy; UMAP heat map identifies optimal conditions: grain size 500-700 nm, K\u2081 2.5-3\u00d710\u2076 erg/cm\u00b3, reduced Ms (20-30 emu/g); simultaneous control of kinetics, microstructure, and intrinsic properties required",
+    "comments": "Comprehensive ML framework with physics validation demonstrates practical design rules; extraction of actionable microstructural targets valuable for permanent magnet development.",
+    "model_io": [
+      {
+        "model": "XGBoost + UMAP for M-type hexaferrite coercivity prediction",
+        "inputs": [
+          "processing temperature/time",
+          "grain size",
+          "saturation magnetization",
+          "magnetocrystalline anisotropy"
+        ],
+        "outputs": [
+          "coercivity prediction",
+          "design rules (5600 UMAP points)",
+          "optimal parameter windows"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Coercivity optimization requires simultaneous control of processing kinetics, microstructural length scales, and intrinsic magnetic parameters",
+        "result": "Confirmed; isolated optimization of single variables insufficient; XGBoost identifies complex multivariate dependencies"
+      }
+    ]
+  },
+  "nature:10.1038/s42005-026-02716-2": {
+    "category": "High Energy/Particle",
+    "task": "Positron beam cooling and pre-acceleration via surface-plasmon wakefield in dense plasma",
+    "key_results": "Peak energy 5.68 GeV with 10.3% relative energy spread at 10 mm; longitudinal capture efficiency exceeds 95%; accelerating gradient ~0.5 TV/m",
+    "comments": "Single-stage design is compact but energy spread and gradient are modest compared to conventional linacs; practical scalability remains to be demonstrated.",
+    "model_io": [
+      {
+        "model": "Dense plasma micro-tube with surface-plasmon wakefield",
+        "inputs": [
+          "positrons from pair production",
+          "electron layer oscillation"
+        ],
+        "outputs": [
+          "phase-space cooled positron beam",
+          "5.68 GeV energy",
+          "beam divergence reduction"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Nanometric electron layer oscillation sustains wakefield excitation for positron capture and acceleration",
+        "result": "Confirmed; >95% capture efficiency demonstrated in PIC simulations"
+      }
+    ]
+  },
+  "nature:10.1038/s44310-026-00134-4": {
+    "category": "Optics/Photonics",
+    "task": "Nanophotonic control of single-photon emission for quantum technologies",
+    "key_results": "Review of nanophotonic structures enabling on-chip scalability, flexible wavefront shaping, and dynamic emission control",
+    "comments": "Review paper providing landscape rather than novel quantitative results; useful for identifying key technical challenges.",
+    "model_io": [],
+    "hypotheses": []
   }
 }
