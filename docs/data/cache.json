@@ -281404,5 +281404,406 @@
         "result": "Confirmed; 125 kcps achievable with optimized protocols"
       }
     ]
+  },
+  "hf:2606.13044": {
+    "category": "Benchmark",
+    "task": "Testing AI reviewer robustness against presentation-only adversarial attacks",
+    "key_results": "75.1% attack success rate with +1.21/10 mean score gain using only presentation-level modifications; related-work repositioning and discussion expansion substantially outperform surface edits",
+    "comments": "Reveals a critical deployment risk that extends beyond traditional prompt injection\u2014the paper presentation itself becomes an exploitable optimization surface for AI reviewers.",
+    "model_io": [
+      {
+        "model": "AI reviewers (three mainstream systems)",
+        "inputs": [
+          "paper with modified presentation (abstract, framing, related work, discussion, narrative)"
+        ],
+        "outputs": [
+          "review scores and feedback"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "AI reviewers can be fooled by presentation-only changes while scientific evidence remains fixed",
+        "result": "Confirmed; 75.1% attack success rate achieved"
+      },
+      {
+        "hypothesis": "Presentation strategies that change interpretation (e.g., repositioning related work) outperform surface edits",
+        "result": "Confirmed; interpretation-altering strategies substantially more effective"
+      },
+      {
+        "hypothesis": "AI reviewers confuse appearance of addressing limitations with actual resolution",
+        "result": "Confirmed; unchanged evidence reinterpreted as stronger contribution"
+      }
+    ]
+  },
+  "hf:2606.12594": {
+    "category": "LLM/Reasoning",
+    "task": "Efficient formal theorem proving in Lean with limited compute",
+    "key_results": "Pythagoras-Prover-4B surpasses DeepSeek-Prover-V2-671B at 86.1% vs 82.4% on MiniF2F-Test with ~167x fewer parameters; 32B variant achieves 93.0% and solves 93/672 PutnamBench problems",
+    "comments": "The combination of curriculum learning, dynamic filtering, and Augmented Lean Formalisation demonstrates effective data and compute efficiency for formal reasoning.",
+    "model_io": [
+      {
+        "model": "Pythagoras-Prover (autoregressive 4B/32B and diffusion-based 4B)",
+        "inputs": [
+          "Lean theorem statements",
+          "proof context"
+        ],
+        "outputs": [
+          "Lean proof traces"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Curriculum learning from easy to hard proofs improves sample efficiency",
+        "result": "Confirmed through progressive skill acquisition strategy"
+      },
+      {
+        "hypothesis": "Augmented Lean Formalisation (ALF) expands training signal without full verification",
+        "result": "Confirmed; reduces surface-form reliance and improves generalization"
+      },
+      {
+        "hypothesis": "Small models with better training can match or exceed much larger models",
+        "result": "Confirmed; 4B matches or exceeds larger baselines"
+      }
+    ]
+  },
+  "hf:2606.14240": {
+    "category": "Benchmark",
+    "task": "Evaluating affordance reasoning from physical properties without object identity exposure",
+    "key_results": "~20-point performance gap between state-of-the-art LLMs and humans; KB-Anchored Rule Induction (KARI) improves open-source LLMs by up to 15.2 points",
+    "comments": "The 20-Questions formulation effectively prevents reliance on memorized object-affordance mappings and exposes genuine physical reasoning deficits in LLMs.",
+    "model_io": [
+      {
+        "model": "15 state-of-the-art LLMs + KARI pipeline",
+        "inputs": [
+          "yes/no questions about physical properties",
+          "knowledge base evidence"
+        ],
+        "outputs": [
+          "affordance prediction",
+          "affordance rules"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Exposing object identity allows models to rely on memorization rather than property reasoning",
+        "result": "Confirmed; Affordance20Q without identity exposure reveals substantial gaps"
+      },
+      {
+        "hypothesis": "Models fail to ask discriminating questions as games progress",
+        "result": "Confirmed via KL-based information-gain analysis"
+      },
+      {
+        "hypothesis": "Knowledge-base-grounded rule induction closes the reasoning gap",
+        "result": "Partially confirmed; KARI improves performance but KB coverage limits further gains"
+      }
+    ]
+  },
+  "hf:2606.01708": {
+    "category": "Agents/RL",
+    "task": "Best-action identification in stochastic minimax trees with two fidelity levels",
+    "key_results": "2FFS uses substantially fewer samples and computational operations than BAI-MCTS baselines; achieves polynomial-depth cost upper bound for general-depth trees",
+    "comments": "Addresses a practical tension in AI planning by adaptively balancing cheap biased heuristics against expensive accurate evaluations.",
+    "model_io": [
+      {
+        "model": "2FFS (two-fidelity tree-search algorithm)",
+        "inputs": [
+          "stochastic tree structure",
+          "cheap biased evaluations",
+          "expensive accurate evaluations"
+        ],
+        "outputs": [
+          "best-action identification with fixed confidence"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Adaptive allocation between cheap and expensive evaluations reduces sample complexity",
+        "result": "Confirmed; 2FFS outperforms baselines in sample efficiency"
+      },
+      {
+        "hypothesis": "Two-fidelity approach ensures fixed-confidence correctness",
+        "result": "Confirmed through theoretical proof"
+      }
+    ]
+  },
+  "hf:2606.05308": {
+    "category": "Benchmark",
+    "task": "Statistically reliable ranking evaluation combining human labels and LLM judgments",
+    "key_results": "Standard error of Precision@4 reduced from 4.45 to 3.50 (21% relative reduction) with 30 human + Claude 3 Sonnet labels; production system achieved +407 bps daily sales improvement",
+    "comments": "Prediction-Powered Inference provides provable unbiasedness regardless of LLM error profile, enabling practical cost-benefit optimization for ranking evaluation.",
+    "model_io": [
+      {
+        "model": "PRECISE (Prediction-Powered Inference for hierarchical metrics)",
+        "inputs": [
+          "small human-labeled set",
+          "large LLM-judged set",
+          "ranking evaluation queries"
+        ],
+        "outputs": [
+          "bias-corrected ranking metrics with confidence intervals"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "PPI produces unbiased ranking metric estimates despite LLM judge errors",
+        "result": "Confirmed; reduced output-space computation from O(2^|C|) to O(2^K)"
+      },
+      {
+        "hypothesis": "Hybrid human-LLM evaluation identifies best system variants efficiently",
+        "result": "Confirmed; A/B testing validated rankings from 100 human labels"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-58370-9": {
+    "category": "Membrane Biophysics",
+    "task": "Discover selective modulators of PANX1 membrane channel via native-like screening",
+    "key_results": "Identified hit compounds with selective PANX1 enrichment showing dose-dependent ion conductance inhibition; Cryo-EM reveals compound binding site on Salipro-PANX1 complex",
+    "comments": "Salipro lipid nanoparticles enable detergent-free screening of notoriously unstable membrane proteins, though in vitro-to-cellular translation remains to be demonstrated.",
+    "model_io": [
+      {
+        "model": "DNA-Encoded Library screening on PANX1 nanoparticles",
+        "inputs": [
+          "PANX1-Salipro nanoparticles",
+          "DEL compound library"
+        ],
+        "outputs": [
+          "hit compounds",
+          "binding affinities (SPR)",
+          "structure (cryo-EM)"
+        ]
+      },
+      {
+        "model": "Xenopus oocyte electrophysiology",
+        "inputs": [
+          "PANX1-expressing oocytes",
+          "candidate compounds"
+        ],
+        "outputs": [
+          "dose-response curves",
+          "IC50 values"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41467-026-74474-2": {
+    "category": "Statistical Methods",
+    "task": "Multimodal multi-task deep learning for NSCLC subtype, TNM staging, and survival prediction",
+    "key_results": "MM-DLS integrates PET/CT + clinical variables; AUC 0.86 for subtype, 0.86/0.86/0.88 for stages I-II/III/IV; consistent 1-/3-/5-year survival discrimination; 4,164 patients",
+    "comments": "Strong multi-task performance on multiple centers, but external validation across different institutions/imaging protocols not explicitly reported.",
+    "model_io": [
+      {
+        "model": "Multimodal, multi-task deep learning (MM-DLS)",
+        "inputs": [
+          "Pretreatment PET/CT images",
+          "Clinical variables (TNM staging candidate factors)"
+        ],
+        "outputs": [
+          "Histologic subtype (4-class)",
+          "TNM stage prediction",
+          "Survival risk (1/3/5-year)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Integrating PET/CT imaging + clinical data improves NSCLC subtyping, staging, and survival prediction vs imaging alone",
+        "result": "MM-DLS AUC 0.86 for subtype and all stage predictions; consistent survival discrimination across treatment regimens"
+      }
+    ]
+  },
+  "nature:10.1038/s41514-026-00430-5": {
+    "category": "Genomics",
+    "task": "Multi-trait genomic analysis decoding shared genetic architecture of pelvic floor disorders",
+    "key_results": "Two latent genetic factors (structural/anatomical prolapse, functional/urinary-bowel dysfunction); 267 significant genes (WNT4, LOXL1, ESR1, WT1, HNF1B, FGFR2); network ML improved prioritization; cross-ancestry validation supported",
+    "comments": "Systems-level genetic framework is comprehensive, but functional variants and mechanistic pathways remain largely unannotated.",
+    "model_io": [
+      {
+        "model": "Linkage disequilibrium score regression + Genomic Structural Equation Modeling + MAGMA gene-based analysis + network ML",
+        "inputs": [
+          "GWAS summary statistics (FinnGen R12, GWAS Catalog, Pan-UKBB)"
+        ],
+        "outputs": [
+          "Latent genetic factors",
+          "Gene prioritization (267 genes)",
+          "Pathway enrichment (ECM, urogenital development)",
+          "Cross-ancestry portability"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Pelvic floor disorders share underlying genetic architecture decomposed into structural and functional factors",
+        "result": "Two latent factors identified; MAGMA enriches ECM/urogenital pathways; WNT4 directionally concordant across ancestries"
+      }
+    ]
+  },
+  "nature:10.1038/s41522-026-01012-9": {
+    "category": "Other",
+    "task": "Review of synthetic microbial communities for studying diet-microbiota-function relationships",
+    "key_results": "Synthesized design principles, multi-omics approaches, and reporting standards for SynCom studies; identified future directions including multi-kingdom and AI-enabled systems",
+    "comments": "Scoping review provides comprehensive framework but lacks quantitative synthesis of study outcomes across designs.",
+    "model_io": [],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41538-026-00924-2": {
+    "category": "Statistical Methods",
+    "task": "Integration of dietary patterns and metabolomics with machine learning for metabolic syndrome risk",
+    "key_results": "71 differential metabolites identified; metabolomic risk score (OR=23.55); SVM fusion model AUC=0.820 (vs dietary+pattern-metabolites AUC=0.640-0.709); 2,810 subjects with n=400 metabolomics",
+    "comments": "Strong improvements in risk assessment via integration, but sample size imbalance (2,810 dietary vs 400 metabolomics) may introduce selection bias.",
+    "model_io": [
+      {
+        "model": "PCA-derived dietary patterns + LC-MS/MS metabolomics + SVM/XGBoost/RF fusion",
+        "inputs": [
+          "Dietary intake (FFQ)",
+          "Serum metabolites (LC-MS/MS, 71 differential)",
+          "Anthropometric/clinical measures"
+        ],
+        "outputs": [
+          "Metabolic syndrome classification",
+          "Risk score",
+          "Model AUC/predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Fusion of dietary patterns + metabolomic signatures improves MetS prediction over dietary patterns alone",
+        "result": "SVM fusion AUC 0.820 vs dietary+pattern-metabolites 0.640-0.709; metabolomic risk score OR=23.55"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-02880-3": {
+    "category": "Statistical Methods",
+    "task": "Scoping review of traditional and AI methods for malaria diagnostics",
+    "key_results": "AI (esp. deep learning) achieves expert-level accuracy on blood smear detection; increases throughput, reduces costs; challenges: annotation standards, regional representation gaps",
+    "comments": "Comprehensive review identifies translational barriers (dataset heterogeneity, geographic bias) that remain unresolved despite strong performance metrics.",
+    "model_io": [],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41534-026-01268-1": {
+    "category": "Other",
+    "task": "Heisenberg scaling restoration in quantum metrology via autonomous error correction",
+    "key_results": "If sufficient condition satisfied, AutoQEC can preserve HS over time interval 0 \u2264 t \u2264 T with additive error \u03f5 = O(\u03baT/Rc); required R decreases with increasing c",
+    "comments": "Theoretical contribution establishing conditions for HS preservation; practical implications for quantum sensing systems.",
+    "model_io": [
+      {
+        "model": "Autonomous Quantum Error Correction (AutoQEC) with ancilla-free scheme",
+        "inputs": [
+          "noisy quantum system",
+          "Lindblad operators"
+        ],
+        "outputs": [
+          "corrected quantum state",
+          "preserved Heisenberg scaling"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Commuting Lindblad operators enable AutoQEC to restore Heisenberg scaling",
+        "result": "Confirmed; sufficient condition identified for HS preservation with finite engineered dissipation"
+      }
+    ]
+  },
+  "nature:10.1038/s41545-026-00595-2": {
+    "category": "ML Theory",
+    "task": "Water contamination source localization under sensor faults",
+    "key_results": "~80% Top-10 source-region prioritization accuracy; CNN-LSTM achieves fault isolation and contamination differentiation",
+    "comments": "Practical advance for WDN monitoring; jointly modeling sensor faults and contamination is essential, though pinpointing exact nodes remains difficult.",
+    "model_io": [
+      {
+        "model": "Convolutional Autoencoder + CNN-LSTM",
+        "inputs": [
+          "faulty sensor measurements",
+          "chlorine-reactive contamination signals"
+        ],
+        "outputs": [
+          "fault detection",
+          "reconstructed signal",
+          "source region prioritization"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Joint modeling of sensor faults and contamination enables better source-region identification than treating them separately",
+        "result": "Confirmed; explicit fault-contamination differentiation achieves ~80% Top-10 accuracy"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-57349-w": {
+    "category": "ML Theory",
+    "task": "Fine-grained visual question answering via patch-level retrieval and LLM-based reranking",
+    "key_results": "Recall@1 = 0.8845 (MSCOCO); VQA F1 = 0.4353; 15% reduction in hallucination vs. conventional RAG; +7.5% retrieval gain",
+    "comments": "FG-RAG bridges semantic resolution gap via patch-level CLIP and joint retrieval-reranking; Score Alignment Strategy enables bidirectional feedback.",
+    "model_io": [
+      {
+        "model": "Patch-level CLIP + Dense Retriever + LLM Reranker",
+        "inputs": [
+          "query",
+          "image corpus",
+          "textual fragments"
+        ],
+        "outputs": [
+          "ranked image regions",
+          "VQA answer with reduced hallucination"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Fine-grained patch-level alignment improves retrieval precision for visual reasoning",
+        "result": "Confirmed; patch-level contrastive supervision enables 0.8845 Recall@1 on MSCOCO"
+      }
+    ]
+  },
+  "nature:10.1038/s41524-026-02181-z": {
+    "category": "Optics/Photonics",
+    "task": "Dual-tune second-harmonic generation and Rashba-Dresselhaus spin-splitting in chiral hybrid perovskites via halogen-site engineering",
+    "key_results": "Meta-substituted (S)-m-BrMBA2PbI4 exhibits SHG ~4.65\u00d7 KDP and largest Rashba\u2013Dresselhaus parameter (\u03b1=1.193 eV\u00b7\u00c5); mirror-symmetric spin polarization in enantiomers; ECM correlates with effects",
+    "comments": "Halogen site engineering tunes structural asymmetry; Electronic Chirality Measure provides useful molecular descriptor for chirality transfer and SHG/SOC tuning.",
+    "model_io": [
+      {
+        "model": "chiral organic-inorganic hybrid metal halide perovskite lead iodide",
+        "inputs": [
+          "bromine position (ortho/meta/para)",
+          "organic cation chirality"
+        ],
+        "outputs": [
+          "second-harmonic generation coefficient",
+          "Rashba-Dresselhaus parameter",
+          "spin polarization",
+          "electronic chirality measure"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Bromine substitution position tunes structural topology and chirality transfer, simultaneously enhancing SHG and Rashba-Dresselhaus splitting",
+        "result": "Confirmed: meta-position yields maximal SHG and SOC splitting; both scale with Electronic Chirality Measure"
+      }
+    ]
+  },
+  "nature:10.1038/s41535-026-00899-z": {
+    "category": "Condensed Matter",
+    "task": "Review non-relativistic spin splitting phenomena in antiferromagnets across spin configurations",
+    "key_results": "Identification rules and band structure signatures established for collinear, coplanar, and non-coplanar antiferromagnets; emerging functionalities highlighted",
+    "comments": "Review article noting features often overlooked away from high-symmetry directions; provides unified framework for spin splitting across diverse materials.",
+    "model_io": [],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41699-026-00713-1": {
+    "category": "Condensed Matter",
+    "task": "Review electronic crystallization phenomena in 2D van der Waals heterostructures",
+    "key_results": "Electronic crystals identified as prominent phases in moir\u00e9 superlattices with strong correlations and nontrivial topology; experimental platforms and measurement techniques summarized",
+    "comments": "Comprehensive review of electron crystallization in graphene and transition-metal dichalcogenides; highlights open questions and future directions for electronic crystal physics.",
+    "model_io": [],
+    "hypotheses": []
   }
 }
