@@ -293082,5 +293082,815 @@
         "result": "Superior PSNR and SSIM compared to spatial-only and conventional compressive sensing methods"
       }
     ]
+  },
+  "hf:2606.20536": {
+    "category": "Benchmark",
+    "task": "Quantifying reproducibility and randomness in FID metric for image generation evaluation",
+    "key_results": "Retraining models changes FID 3.2x more than resampling; lucky training seeds achieve 2x lower compute for same FID; FID coefficient of variation stays ~1-2% regardless of model size",
+    "comments": "Crucial finding that single-number FID reporting masks substantial variability; the recommended protocol treating <1.3% gaps as inconclusive will likely reshape generative model benchmarking practices.",
+    "model_io": [
+      {
+        "model": "SiT (Scalable Interpolant Transformers)",
+        "inputs": [
+          "class-conditional ImageNet 256x256 images",
+          "training seed",
+          "sampling seed"
+        ],
+        "outputs": [
+          "FID score",
+          "Inception features"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Training seed variance dominates sampling variance in FID",
+        "result": "Confirmed: 3.2x larger effect"
+      },
+      {
+        "hypothesis": "Increasing model size tightens FID spread",
+        "result": "Rejected: CoV remains in 1-2% band"
+      },
+      {
+        "hypothesis": "Classifier-free guidance tuning reduces seed sensitivity",
+        "result": "Confirmed: halves spread but reshuffles optimal seeds"
+      }
+    ]
+  },
+  "hf:2606.19334": {
+    "category": "Benchmark",
+    "task": "Creating machine-readable corpus and access layer for U.S. local ordinance codes",
+    "key_results": "9,239 cities/counties in raw corpus; county-harmonized layer covers 2,309 of 3,144 counties (~majority of U.S. population; ModernBERT classifiers trained to analyze legal opacity and paternalism",
+    "comments": "Addresses critical infrastructure gap in legal AI by converting unstructured ordinances to public resource; OCR-based approach pragmatic but quality variations across formats may limit downstream reliability.",
+    "model_io": [
+      {
+        "model": "ModernBERT-based classifiers",
+        "inputs": [
+          "OCR-processed ordinance text"
+        ],
+        "outputs": [
+          "legal dimension scores (opacity, paternalism, etc.)"
+        ]
+      },
+      {
+        "model": "OCR pipeline",
+        "inputs": [
+          "heterogeneous document formats"
+        ],
+        "outputs": [
+          "machine-readable ordinance text"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "hf:2606.17053": {
+    "category": "LLM/Reasoning",
+    "task": "Improving long-horizon reasoning and multimodal performance through context-aware reinforcement learning",
+    "key_results": "+2.2% average gain over GRPO on 5 long-horizon benchmarks; +1.8% across 12 VQA benchmarks; context-selection objective crucial (data augmentation alone yields negligible gains)",
+    "comments": "Elegant auxiliary objective design that grounds reasoning to evidence; the careful ablation against data-augmentation baselines strengthens claims about mechanism, though absolute gains are modest.",
+    "model_io": [
+      {
+        "model": "LLM with GRPO baseline",
+        "inputs": [
+          "query",
+          "answer",
+          "two contrastive contexts"
+        ],
+        "outputs": [
+          "context selection reward",
+          "final answer"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Contrastive context selection improves fine-grained grounding",
+        "result": "Confirmed: +2.2% on long-horizon, +1.8% on VQA"
+      },
+      {
+        "hypothesis": "Gains come from auxiliary objective rather than additional data",
+        "result": "Confirmed: data-augmentation baselines show minimal improvement"
+      }
+    ]
+  },
+  "hf:2606.18021": {
+    "category": "Medical",
+    "task": "Auditing and calibrating hallucinations in legal AI with typed error profiles and multi-agent debate",
+    "key_results": "38-40 percentage-point gap in error rates between obligation/numeric and temporal claims (aggregate 52% masks category-specific variation); debate pipeline reduces fabricated detections by 45%; matches commercial APIs with 4B parameters",
+    "comments": "Risk Direction Index is a practical deployment lever often missed by aggregate metrics; the typed debate calibration is well-motivated but sample-heavy validation (510 contracts, 249K instances) raises generalization questions.",
+    "model_io": [
+      {
+        "model": "LLM with typed hallucination profiling",
+        "inputs": [
+          "legal contract clauses"
+        ],
+        "outputs": [
+          "numeric/temporal/obligation/factual claims with confidence"
+        ]
+      },
+      {
+        "model": "Multi-agent debate pipeline",
+        "inputs": [
+          "initial extraction",
+          "skeptic challenges"
+        ],
+        "outputs": [
+          "calibrated claim scores",
+          "reduction in fabrications"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Aggregate hallucination rates hide category-specific failure modes",
+        "result": "Confirmed: 38-40pp gap between claim types"
+      },
+      {
+        "hypothesis": "Typed debate guided by diagnosis outperforms generic debate",
+        "result": "Confirmed: asymmetric gates reduce fabrications by 45%"
+      }
+    ]
+  },
+  "hf:2606.19602": {
+    "category": "Medical",
+    "task": "Clinical information extraction from heterogeneous patient records using agentic RAG with source grounding",
+    "key_results": "96.5% clinician acceptance of extractions across 7,326 judgments; per-type acceptance ranges 80-99%; deployed at University Medicine Essen on-premise",
+    "comments": "High acceptance rates suggest strong practical utility; retrospective validation by independent physicians is gold-standard, but sample composition and selection bias during deployment warrant careful monitoring.",
+    "model_io": [
+      {
+        "model": "Agentic RAG pipeline (ACIE)",
+        "inputs": [
+          "heterogeneous patient documents",
+          "structured data points",
+          "temporal reasoning requirements"
+        ],
+        "outputs": [
+          "grounded clinical extractions",
+          "source passage citations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Agentic RAG handles temporal and cross-document dependencies better than standard RAG",
+        "result": "Confirmed via deployment: 96.5% clinician acceptance"
+      }
+    ]
+  },
+  "hf:2606.15760": {
+    "category": "Benchmark",
+    "task": "Benchmarking framework for studying data manifold geometry with controlled testbed",
+    "key_results": "Extended dSprites/COIL-20 with dense sampling and axis-aligned transformations; finite-difference estimators recover curvature, reach, volume near ground-truth; assessed scaling of Genovese et al. and Fefferman et al. bounds",
+    "comments": "Bridges crucial theory-practice gap by providing calibrated geometry estimates; controlled setting valuable for validating assumptions, but synthetic manifolds may not capture pathologies of real data.",
+    "model_io": [
+      {
+        "model": "Finite-difference estimators",
+        "inputs": [
+          "manifold point clouds from dSprites/COIL-20"
+        ],
+        "outputs": [
+          "curvature",
+          "reach",
+          "volume estimates"
+        ]
+      },
+      {
+        "model": "\u03b2-VAE",
+        "inputs": [
+          "image data"
+        ],
+        "outputs": [
+          "layer-wise geometric properties"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Existing generalization bounds scale predictably with manifold properties",
+        "result": "Partial: bounds behavior assessed but variability observed across layers"
+      }
+    ]
+  },
+  "hf:2603.24624": {
+    "category": "Generative",
+    "task": "Synthesizing complex regular expressions from examples via divide-and-conquer decomposition",
+    "key_results": "ReSyn boosts accuracy across multiple synthesizers on real-world regex benchmarks; Set2Regex achieves state-of-the-art on challenging benchmark; captures permutation invariance of examples",
+    "comments": "Synthesizer-agnostic framework is elegant design pattern; Set2Regex's parameter efficiency suggests permutation-invariant architectures underexplored in synthesis, but evaluation on real-world complexity (nested unions, quantifiers) could be deeper.",
+    "model_io": [
+      {
+        "model": "ReSyn divide-and-conquer framework + Set2Regex synthesizer",
+        "inputs": [
+          "input-output example pairs"
+        ],
+        "outputs": [
+          "regular expression"
+        ]
+      },
+      {
+        "model": "Set2Regex",
+        "inputs": [
+          "unordered example set"
+        ],
+        "outputs": [
+          "permutation-invariant regex"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Decomposing complex regex synthesis into sub-problems improves performance",
+        "result": "Confirmed: significant accuracy gains across synthesizers"
+      },
+      {
+        "hypothesis": "Set2Regex's permutation invariance improves on complex benchmarks",
+        "result": "Confirmed: state-of-the-art on real-world benchmark"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-74518-7": {
+    "category": "Membrane Biophysics",
+    "task": "Define volatile anaesthetic binding site and mechanism on voltage-gated sodium channels",
+    "key_results": "X-ray crystallography reveals atomic-resolution VA binding site in NavMs in membrane-embedded hydrophobic pocket; sevoflurane displaces lipid; tyrosine substitution abolishes binding and sevoflurane-induced inactivation shift; VAs modulate both fast and slow inactivation in human Nav1.1",
+    "comments": "The lipid-displacement mechanism is elegant and explains VA specificity, though the generalizability to diverse VAs beyond sevoflurane requires further characterization.",
+    "model_io": [
+      {
+        "model": "NavMs prokaryotic VGSC",
+        "inputs": [
+          "Sevoflurane",
+          "other volatile anaesthetics"
+        ],
+        "outputs": [
+          "X-ray crystal structure",
+          "Functional modulation (inactivation shift)"
+        ]
+      },
+      {
+        "model": "Human neuronal VGSCs (Nav1.1, human VGSCs)",
+        "inputs": [
+          "Volatile anaesthetics"
+        ],
+        "outputs": [
+          "Inactivation modulation (fast and slow)",
+          "Functional effects"
+        ]
+      },
+      {
+        "model": "Alanine-substituted NavMs mutant",
+        "inputs": [
+          "Sevoflurane"
+        ],
+        "outputs": [
+          "Loss of binding",
+          "Loss of functional effect"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multiple VAs share a common binding site on VGSCs",
+        "result": "Confirmed; multiple VAs bind at same site on NavMs at clinically relevant concentrations"
+      },
+      {
+        "hypothesis": "VA binding site is in a membrane-embedded hydrophobic pocket",
+        "result": "Confirmed; crystal structure reveals pocket; lipid displacement observed"
+      },
+      {
+        "hypothesis": "Invariant tyrosine in binding pocket is critical for VA binding and function",
+        "result": "Confirmed; Y\u2192A substitution abolishes binding and sevoflurane-induced inactivation shift"
+      }
+    ]
+  },
+  "nature:10.1038/s41419-026-08997-3": {
+    "category": "Other",
+    "task": "Define PKM2 roles in photoreceptor and RPE metabolic homeostasis",
+    "key_results": "PKM2 essential for retinal structure/function; loss impairs glycolysis, ATP generation, and metabolic balance; RPE PKM2 deficiency decreases RPE65 and impairs 11-cis-retinal regeneration; rod PKM2 deletion in Abca4 mutants triggers early retinal degeneration",
+    "comments": "Demonstrates interdependence of photoreceptor-RPE metabolism through PKM2; provides insights into AMD pathogenesis but requires clarification of transcriptional vs. enzymatic contributions.",
+    "model_io": [
+      {
+        "model": "Conditional PKM2 knockout mice",
+        "inputs": [
+          "PKM2 deletion in retina/rods/RPE"
+        ],
+        "outputs": [
+          "impaired glycolysis",
+          "decreased ATP",
+          "photoreceptor/RPE disorganization"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "PKM2 is essential for maintaining retinal structure and function",
+        "result": "Confirmed; loss disrupts metabolism and visual cycle"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-74397-y": {
+    "category": "Epigenetics",
+    "task": "Define PERK-mediated alternative splicing program upon ER stress",
+    "key_results": "ER stress reshapes splicing landscape via de novo synthesis of core splicing factors; PERK activation drives CLK1/SRSF1-dependent signature of seven consistent splicing events; ERi-splice signature spans healthy and malignant tissues",
+    "comments": "Novel integration of translatomic and transcriptomic approaches revealing PERK-orchestrated splicing rewiring; CLK1/SRSF1 axis presents druggable target for stress-related pathologies.",
+    "model_io": [
+      {
+        "model": "Mammalian cells exposed to ER stress",
+        "inputs": [
+          "ER stress",
+          "PERK activation"
+        ],
+        "outputs": [
+          "de novo splicing factor synthesis",
+          "altered splicing landscape",
+          "ERi-splice signature"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "PERK activation drives CLK1/SRSF1-dependent alternative splicing upon ER stress",
+        "result": "Confirmed; signature spans mammalian cells, healthy and malignant tissues"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-74703-8": {
+    "category": "Cell Signaling",
+    "task": "Elucidate epicardial mechanosensing-fibroblast crosstalk in cardiac fibrosis",
+    "key_results": "Piezo1 in epicardial cells mediates Chemerin-Cmklr1 paracrine signaling to activate cardiac fibroblasts via Pi3k-Akt1-Pou3f1; Cmklr1 inhibitor \u03b1-NETA mitigates fibrosis",
+    "comments": "Defines a clear mechanotransduction-to-fibroblast activation axis; Cmklr1 inhibition offers therapeutic potential but in vivo efficacy requires confirmation.",
+    "model_io": [
+      {
+        "model": "Transverse aortic constriction mouse heart",
+        "inputs": [
+          "mechanical pressure",
+          "Piezo1 activation",
+          "epicardial cells"
+        ],
+        "outputs": [
+          "Chemerin secretion",
+          "fibroblast activation",
+          "cardiac fibrosis"
+        ]
+      },
+      {
+        "model": "Piezo1-knockout mice",
+        "inputs": [
+          "pressure overload"
+        ],
+        "outputs": [
+          "decreased fibrosis",
+          "reduced cardiac dysfunction"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Piezo1 couples epicardial mechanosensing to fibroblast activation",
+        "result": "Confirmed via Cmklr1-mediated paracrine pathway"
+      }
+    ]
+  },
+  "nature:10.1038/s41526-026-00615-y": {
+    "category": "Other",
+    "task": "Assess microgravity and radiation effects on articular cartilage homeostasis",
+    "key_results": "Mechanical unloading suppresses chondrocyte metabolism and matrix equilibrium; radiation and oxidative stress induce DNA damage, mitochondrial dysfunction, and senescence exacerbating matrix degradation",
+    "comments": "Review identifying integrated countermeasures but lacks quantitative data; limited translational evidence for space-specific interventions.",
+    "model_io": [],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41580-026-00982-0": {
+    "category": "Cell Signaling",
+    "task": "Characterize regulation and function of specialized membrane protrusions in intercellular communication",
+    "key_results": "Tunneling nanotubes, cytonemes, and migrasomes facilitate organelle and cargo exchange across tissues; common principles of formation, regulation, and specificity identified; dysregulation contributes to development, immunity, and disease",
+    "comments": "Comprehensive review unifying diverse cellular extensions; demonstrates need for integration into tissue organization models but mechanistic details remain incomplete.",
+    "model_io": [],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-57477-3": {
+    "category": "Apoptosis/Cell Death",
+    "task": "Develop graphene-collagen cryogel with apoptotic vesicles for hypertrophic scar modulation",
+    "key_results": "G-GEL(C) downregulated COL1A1 (p < 0.001), \u03b1-SMA (p < 0.001), Vimentin (p < 0.05) in HS-fibroblasts; ASCs-ApoVs reduced COL1A1/\u03b1-SMA/Vimentin; in vivo, combination decreased SEI (p < 0.05), reduced \u03b1-SMA (p < 0.0001), increased M2 macrophages",
+    "comments": "Multifactorial approach combining biomaterial properties with cell-derived vesicles; mechanism of apoptotic vesicle anti-fibrotic effects requires further investigation.",
+    "model_io": [
+      {
+        "model": "HS-derived fibroblasts",
+        "inputs": [
+          "G-GEL(C)",
+          "ASCs-ApoVs"
+        ],
+        "outputs": [
+          "reduced collagen/\u03b1-SMA/Vimentin",
+          "suppressed proliferation/migration"
+        ]
+      },
+      {
+        "model": "In vivo hypertrophic scar model",
+        "inputs": [
+          "G-GEL(C) + ASCs-ApoVs"
+        ],
+        "outputs": [
+          "decreased scar elevation index",
+          "reduced \u03b1-SMA",
+          "M2 macrophage polarization"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "G-GEL(C) functions as direct HS-fibroblast modulator and efficient ASCs-ApoV carrier",
+        "result": "Confirmed; combination generates potent anti-fibrotic effect"
+      }
+    ]
+  },
+  "nature:10.1038/s41514-026-00433-2": {
+    "category": "Evolutionary Biology",
+    "task": "Integrating immunosenescence mechanisms across multi-organ aging systems",
+    "key_results": "Frames immunosenescence as context-dependent mediator/amplifier/consequence; synthesizes niche mechanisms, immune-organ interactions, innate-adaptive remodeling, tissue axes; identifies senolytic/senomorphic therapeutic strategies",
+    "comments": "Comprehensive systems-level review, though causality between immunosenescence and organ-specific dysfunction remains largely correlative and warrants targeted intervention studies.",
+    "model_io": [
+      {
+        "model": "Conceptual framework integrating immunosenescence with multi-organ aging",
+        "inputs": [
+          "Immunologic data",
+          "Organ-specific dysfunction markers",
+          "Biomarker profiles"
+        ],
+        "outputs": [
+          "Multi-dimensional aging signatures",
+          "Therapeutic targets"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Immunosenescence mediates multi-organ dysfunction through bidirectional immune-tissue interactions",
+        "result": "Supported; review synthesizes evidence for context-dependent immune-organ axes"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-58267-7": {
+    "category": "Other",
+    "task": "Image stitching with enhanced small object detection using deep homography",
+    "key_results": "PSNR 26.36\u201326.42, SSIM 0.8414\u20130.8494 on benchmark datasets; model size 188 MB; 14.5 GFLOPs; significant improvements over baselines in small object alignment",
+    "comments": "Novel weighted loss for small object alignment is practical, but real-time performance on dynamic scenes remains unexplored.",
+    "model_io": [
+      {
+        "model": "YOLOv8 backbone with low-resolution enhancement, multi-scale extraction, deep homography module",
+        "inputs": [
+          "Image pairs from UDIS and MVS-Synth datasets"
+        ],
+        "outputs": [
+          "Stitched images",
+          "Homography matrices",
+          "Quality metrics (PSNR, SSIM)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Adaptive SE mechanism enhances small object detection in image stitching",
+        "result": "Confirmed; weighted loss function improved alignment accuracy in small object regions"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-58850-y": {
+    "category": "Other",
+    "task": "ECG arrhythmia classification using attention and Transformer architecture",
+    "key_results": "MSCA-TNet macro-average accuracies 93.97% (MIT-BIH) and 98.79% (INCART); overall accuracies 98.88% and 99.47%; combined DWT preprocessing and SMOTE-Tomek resampling",
+    "comments": "Strong performance on benchmarks, but cross-dataset generalization and real-world noisy ECG robustness require further evaluation.",
+    "model_io": [
+      {
+        "model": "MSCA-TNet hybrid architecture (DWT + Adaptive Channel Attention + Transformer)",
+        "inputs": [
+          "ECG signal segments",
+          "MIT-BIH and INCART datasets"
+        ],
+        "outputs": [
+          "Arrhythmia classification",
+          "Class probabilities"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Adaptive channel attention combined with Transformer improves arrhythmia classification",
+        "result": "Confirmed; MSCA-TNet achieved 98.88\u201399.47% overall accuracy"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-72485-7": {
+    "category": "Algorithms",
+    "task": "Control of contact-rich robot dynamics via Koopman linearization",
+    "key_results": "Enables convex MPC for legged locomotion; real-time control of dynamic manipulation; multiple contact transitions discoverable in real-time",
+    "comments": "Theoretically elegant approach subsumes contact-switching dynamics into globally-linear embedding; validates on legged and manipulation tasks.",
+    "model_io": [
+      {
+        "model": "Koopman operators with viscoelastic contact model",
+        "inputs": [
+          "robot state",
+          "contact configuration"
+        ],
+        "outputs": [
+          "optimal control inputs",
+          "predicted trajectories"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Viscoelastic contact dynamics enable Koopman linearization in embedding space",
+        "result": "Confirmed; enables convex MPC and real-time control strategies"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-51447-5": {
+    "category": "ML Theory",
+    "task": "Real-time prognostics for EV induction motors under dynamic loads",
+    "key_results": "99.9% fault diagnosis accuracy; RUL prediction MSE=0.25, RMSE=0.50; captures long-range temporal correlations",
+    "comments": "Strong empirical results using TAF-LSTM architecture; evaluation on multi-sensor data is practical but scope limited to single motor type.",
+    "model_io": [
+      {
+        "model": "TAF-LSTM (Temporal Attention Fusion Long Short-Term Memory)",
+        "inputs": [
+          "multi-sensor time-series from induction motors"
+        ],
+        "outputs": [
+          "fault diagnosis labels",
+          "remaining useful life predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Temporal attention mechanisms capture contextual fluctuations and transient faults better than traditional fusion methods",
+        "result": "Confirmed with 99.9% fault diagnosis and precise RUL predictions"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-57715-8": {
+    "category": "Algorithms",
+    "task": "Adaptive regulatory policy design for sports league competitive balance",
+    "key_results": "GAT-PPO achieves 32.7% balance improvement (EPL), 22.1% (NBA); significant outperformance vs baselines (p<0.01); contextual policy behavior confirmed",
+    "comments": "Novel application of GATs and RL to policy optimization; simulation-based with partial real-world validation pathway; fairness in evaluation protocol well-designed.",
+    "model_io": [
+      {
+        "model": "Graph Attention Network (GAT) + Proximal Policy Optimization (PPO)",
+        "inputs": [
+          "league graph (clubs as nodes, match outcomes/finances as edges)",
+          "multi-season data"
+        ],
+        "outputs": [
+          "regulatory actions (salary caps, revenue-sharing, draft parameters)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Graph-structured representation enables adaptive regulatory policies that improve competitive balance",
+        "result": "Confirmed with 32.7% balance improvement (EPL) and 22.1% (NBA) vs static baselines"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-58443-9": {
+    "category": "Algorithms",
+    "task": "Low-light object detection with adaptive enhancement and efficient architecture",
+    "key_results": "mAP@0.5=67.20% on ExDark dataset (+2.39% over YOLO11n); 5.8 GFLOPs (vs 6.3 baseline); competitive DarkFace performance",
+    "comments": "Targeted low-light optimization via adaptive gamma enhancement, attention-based feature interaction, and lightweight head; practical edge deployment.",
+    "model_io": [
+      {
+        "model": "TinyDark-YOLO (AGE + AIFI + LEHead modules)",
+        "inputs": [
+          "low-light images"
+        ],
+        "outputs": [
+          "object detections with bounding boxes and class labels"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Adaptive gamma enhancement and attention mechanisms improve small object detection in dark conditions",
+        "result": "Confirmed with 67.20% mAP@0.5 and reduced computational complexity"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-58774-7": {
+    "category": "Algorithms",
+    "task": "Energy-efficient multipath routing in WSNs via RL and hybrid metaheuristic optimization",
+    "key_results": "Packet delivery ratio 97.8%; total energy 320 J; throughput 72 kbps; hybrid WOA-GWO for cluster head selection; DRL for adaptive sleep scheduling",
+    "comments": "Comprehensive WSN framework combining reinforcement learning with hybrid whale-grey wolf optimization; practical energy efficiency gains.",
+    "model_io": [
+      {
+        "model": "DRL + hybrid WOA-GWO for cluster head selection + multipath routing",
+        "inputs": [
+          "WSN topology",
+          "residual energy",
+          "node proximity"
+        ],
+        "outputs": [
+          "cluster assignments",
+          "routing paths",
+          "sleep schedules"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "DRL-based adaptive sleep scheduling and WOA-GWO hybrid optimization improve energy efficiency and network lifespan",
+        "result": "Confirmed with 97.8% PDR, 320 J energy, and 72 kbps throughput"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-53789-6": {
+    "category": "Quantum",
+    "task": "Quantify entanglement in high-spin systems via stacked ensemble machine learning",
+    "key_results": "Ensemble regressor (NN + XGBoost + ExtraTrees) achieves high predictive accuracy for negativity across J=1/2,1,5; heteroscedastic error peaks at N\u22480.4\u20130.7; empirical scaling law links dataset size to dimensionality (2J+1)\u2074",
+    "comments": "Stacked ensemble approach provides robust uncertainty quantification, but raw density-matrix representation hits dimensionality ceiling beyond J=5.",
+    "model_io": [
+      {
+        "model": "Stacked ensemble (NN + XGBoost + ExtraTrees + CatBoost meta-learner)",
+        "inputs": [
+          "density-matrix features (real-coefficient pure states, Werner states)",
+          "spin quantum number J"
+        ],
+        "outputs": [
+          "negativity estimate",
+          "prediction uncertainty",
+          "residual error distribution"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Ensemble averaging mitigates individual model bias; heteroscedastic errors reflect genuine intermediate-regime complexity",
+        "result": "Confirmed; stacked ensemble shows consistent high accuracy with negligible run-to-run variance"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-57068-2": {
+    "category": "Applied Physics",
+    "task": "Design magnetorheological phase-change McKibben actuator with wireless induction heating",
+    "key_results": "70 N blocked force at 23 g mass; 48% higher force output than hyperelastic counterparts; 10\u201320 s heating times at 127\u2013150 kHz induction frequency",
+    "comments": "Wireless frequency-tuned actuation is innovative, though scalability to higher forces and durability under cyclic loading remain unaddressed.",
+    "model_io": [
+      {
+        "model": "MRE-based phase-change McKibben actuator (electromagnetic + thermal + structural)",
+        "inputs": [
+          "induction frequency (127-150 kHz)",
+          "magnetic field strength",
+          "ambient temperature"
+        ],
+        "outputs": [
+          "blocked force",
+          "heating/cooling time",
+          "displacement",
+          "actuator pressure"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Ferromagnetic particles enhance thermal response and force output of phase-change elastomer",
+        "result": "Confirmed; 48% force improvement vs. identical hyperelastic baseline"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-57655-3": {
+    "category": "Quantum",
+    "task": "Characterize harmonic generation in spin noise spectra under Raman drive",
+    "key_results": "Detection of first through fourth harmonics with relative amplitudes 10^\u22121 to 10^\u22124; parametrization enables precision magnetic sub-level energy spacing estimation",
+    "comments": "Demonstrates scalable precision metrology for complex spin dynamics, though extension to solid-state systems remains unexplored.",
+    "model_io": [
+      {
+        "model": "Hot Rb vapour under coherent Raman drive",
+        "inputs": [
+          "Raman beam intensity",
+          "probe beam intensity",
+          "atom density",
+          "magnetic field",
+          "drive frequency"
+        ],
+        "outputs": [
+          "spin noise correlations",
+          "harmonic amplitudes",
+          "magnetic sub-level energies"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Strong Raman drive induces equi-spaced harmonics parametrized by external fields and beam intensities",
+        "result": "Confirmed across multiple harmonic orders with measurable amplitude scaling"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-58015-x": {
+    "category": "Applied Physics",
+    "task": "Evaluate channel-engineered GAA FETs for sub-3 nm CMOS applications",
+    "key_results": "I-FET achieves highest I_ON and I_ON/I_OFF ratio; enhanced transconductance, f_max, and ring-oscillator frequency vs. nanosheet baseline; superior scalability under gate-length and inter-bridge variations",
+    "comments": "Comprehensive 3D TCAD + circuit-level validation is thorough, but fabrication feasibility at sub-3 nm remains undemonstrated.",
+    "model_io": [
+      {
+        "model": "C-FET, I-FET, NS-FET (calibrated 3D TCAD)",
+        "inputs": [
+          "gate voltage",
+          "drain voltage",
+          "temperature",
+          "geometry variations"
+        ],
+        "outputs": [
+          "I_ON",
+          "I_OFF",
+          "transconductance",
+          "f_max",
+          "ring-oscillator frequency"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Vertical inter-bridge channels enhance effective width and drive current",
+        "result": "Confirmed; I-FET shows superior I_ON and switching speed vs. NS-FET"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-58845-9": {
+    "category": "Optics/Photonics",
+    "task": "Design quad-band frequency-selective rasorber with enhanced angular stability",
+    "key_results": ">90% absorption at 2.14, 2.88, 6.02, 7.32 GHz with 4.54 GHz transmission band; angular stability to 50\u00b0 for both TE/TM with polarization insensitivity",
+    "comments": "Compact single-layer design eliminates resistors and offers practical integration, though validation limited to 15\u00d715 prototype.",
+    "model_io": [
+      {
+        "model": "FR4-substrate quad-band FSR (resonant absorber + FSS)",
+        "inputs": [
+          "electromagnetic waves (2-8 GHz)",
+          "incidence angle (0-50\u00b0)"
+        ],
+        "outputs": [
+          "absorption (>90%)",
+          "transmission (4.54 GHz)",
+          "angular response"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Four-fold rotational symmetry ensures polarization insensitivity across frequency bands",
+        "result": "Confirmed through equivalent circuit and effective-medium analysis"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-59143-0": {
+    "category": "Applied Physics",
+    "task": "Assess neutron shielding requirements for multi-ion radiotherapy workloads",
+    "key_results": "Carbon consistently produces largest neutron dose under physical-dose normalization; high-energy helium approaches carbon reference only under metallic-target conditions",
+    "comments": "Dose-defined workload approach more accurate than particle-number metrics but highlights ion-species and targeting-condition dependencies.",
+    "model_io": [
+      {
+        "model": "PHITS Monte Carlo neutron transport",
+        "inputs": [
+          "helium/carbon/oxygen/neon beams",
+          "shielding configurations",
+          "dose metrics (physical and RBE-weighted)"
+        ],
+        "outputs": [
+          "neutron effective dose",
+          "shielding effectiveness per unit dose"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Dose-normalized workloads better reflect clinical practice than particle-number metrics",
+        "result": "Confirmed; carbon remains conservative reference across RBE and physical dose normalizations"
+      }
+    ]
+  },
+  "nature:10.1038/s41699-026-00715-z": {
+    "category": "Condensed Matter",
+    "task": "Screen 2D materials for thermoelectric performance",
+    "key_results": "Sb2SeTe2 (p-type): 26 mW/mK\u00b2 power factor; GeTe and Sb2SnTe4 (n-type): 0.34 and 0.46 W/mK lattice thermal conductivity; 150/290 monolayers exceed 5\u00d710\u00b9\u00b9 W/mKs S\u00b2\u03c3/\u03c4",
+    "comments": "Large-scale ab-initio screening identifies promising candidates, but experimental validation of predicted performance is absent.",
+    "model_io": [
+      {
+        "model": "Ab-initio thermoelectric screening (290 exfoliable 2D materials)",
+        "inputs": [
+          "monolayer structures",
+          "band gap",
+          "atomic weight"
+        ],
+        "outputs": [
+          "S\u00b2\u03c3/\u03c4",
+          "lattice thermal conductivity",
+          "power factor",
+          "figure of merit"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Tetradymite structures dominate high-performance p-type 2D thermoelectrics",
+        "result": "Confirmed; Sb2SeTe2, Bi2STe2, Bi2SeTe2 identified as leading candidates"
+      }
+    ]
   }
 }
