@@ -304588,5 +304588,607 @@
         "result": "Confirmed: slip-flow formulation predicts 3% higher mass flow than no-slip due to reduced wall shear in rarefied regime"
       }
     ]
+  },
+  "hf:2606.22936": {
+    "category": "LLM/Reasoning",
+    "task": "Diagnosing premature commitment in LLM agents",
+    "key_results": "Step-4 hidden-state similarity predicts downstream behavioral consistency (r = -0.45 partial); runtime monitor detects inconsistent trajectories at AUROC 0.97; prompting intervention cuts behavioral variance by 28%",
+    "comments": "The paper identifies a genuine failure mode but honestly acknowledges that the diagnostic signal does not correlate with correctness and routing self-consistency compute helps only modestly.",
+    "model_io": [
+      {
+        "model": "ReAct agent (Llama-3.1-70B, Qwen-2.5-72B, Phi-3-14B)",
+        "inputs": [
+          "multi-hop reasoning question"
+        ],
+        "outputs": [
+          "final answer",
+          "hidden states at reasoning steps"
+        ]
+      },
+      {
+        "model": "Runtime monitor classifier",
+        "inputs": [
+          "hidden states"
+        ],
+        "outputs": [
+          "trajectory consistency prediction"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Cross-run hidden-state convergence at early reasoning steps indicates premature commitment",
+        "result": "Confirmed; representational commitment (hidden-state similarity) correlates with behavioral consistency"
+      },
+      {
+        "hypothesis": "Commitment signal tracks correctness",
+        "result": "Rejected; committed-wrong and committed-correct questions not separable by activation similarity"
+      }
+    ]
+  },
+  "hf:2606.23688": {
+    "category": "Vision",
+    "task": "4D dynamic object reconstruction from monocular video",
+    "key_results": "Lift4D improves over prior 4D reconstruction methods especially on challenging sequences with severe occlusions and non-rigid motion",
+    "comments": "The test-time optimization approach elegantly combines single-view 3D priors with video supervision and diffusion-based completion, though quantitative metrics are not reported in the abstract.",
+    "model_io": [
+      {
+        "model": "Adapted single-view 3D reconstruction model with causal latent conditioning",
+        "inputs": [
+          "video frames"
+        ],
+        "outputs": [
+          "temporally consistent per-frame 3D predictions"
+        ]
+      },
+      {
+        "model": "Deformable 3D Gaussian Splatting + view-conditioned diffusion prior",
+        "inputs": [
+          "initialized 3D representation",
+          "input video"
+        ],
+        "outputs": [
+          "refined 4D reconstruction"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Occlusion-aware optimization with diffusion priors improves reconstruction in occluded regions",
+        "result": "Confirmed; method recovers visible details and completes unobserved regions"
+      }
+    ]
+  },
+  "hf:2606.20891": {
+    "category": "Vision",
+    "task": "Video compositing and motion control via point tracking",
+    "key_results": "Achieves superior motion and reference control in unified model; enables multi-reference video generation and camera control for static and dynamic scenes",
+    "comments": "The spatially-aware point-track embeddings and lightweight adapter injection are clever engineering, but numerical comparisons against baselines are absent from the abstract.",
+    "model_io": [
+      {
+        "model": "Video diffusion transformer with point-track embedding adapter",
+        "inputs": [
+          "multiple reference images",
+          "reference-anchored point-tracks"
+        ],
+        "outputs": [
+          "generated video frames with composited content"
+        ]
+      },
+      {
+        "model": "Spatially-aware point-track encoder (coordinate-wise MLP + temporal pooling)",
+        "inputs": [
+          "point-track coordinate sequences"
+        ],
+        "outputs": [
+          "point-track embeddings"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Joint conditioning on multiple reference images and reference-anchored point-tracks enables precise compositing throughout the video",
+        "result": "Confirmed; method unifies content insertion and spatial-temporal motion control"
+      }
+    ]
+  },
+  "hf:2606.19603": {
+    "category": "Benchmark",
+    "task": "Comparing linear probes via Mahalanobis cosine similarity",
+    "key_results": "MCS to reference probe linearly predicts OOD AUROC (R\u00b2 = 0.98) across models and layers; proven in closed form for balanced Gaussian projections",
+    "comments": "Elegant theoretical result with clear mechanistic explanation, though applicability limited to balanced classes with Gaussian assumptions.",
+    "model_io": [
+      {
+        "model": "Linear probe classifier",
+        "inputs": [
+          "learned representations"
+        ],
+        "outputs": [
+          "classification decision"
+        ]
+      },
+      {
+        "model": "Mahalanobis cosine similarity metric",
+        "inputs": [
+          "two probe directions",
+          "test data covariance"
+        ],
+        "outputs": [
+          "task-aware similarity score"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "MCS linearly predicts OOD AUROC across models and layers",
+        "result": "Confirmed empirically and theoretically; both MCS and AUROC are sigmoid functions of SNR"
+      }
+    ]
+  },
+  "hf:2606.23496": {
+    "category": "LLM/Reasoning",
+    "task": "Unified framework for discrete text optimization",
+    "key_results": "30+ optimization recipes from 15+ optimizers and 15+ losses; controlled large-scale experiments reveal underadopted jailbreak techniques; optimizers successfully ported across domains",
+    "comments": "TROPT is valuable infrastructure but the abstract reports no novel algorithmic results\u2014it is a systems contribution enabling better empirical science.",
+    "model_io": [
+      {
+        "model": "Configurable discrete text optimizer (white-box to black-box)",
+        "inputs": [
+          "text prompt",
+          "model",
+          "objective specification"
+        ],
+        "outputs": [
+          "optimized text trigger"
+        ]
+      },
+      {
+        "model": "Target model (LLM or embedding model)",
+        "inputs": [
+          "generated or optimized text"
+        ],
+        "outputs": [
+          "model output for objective evaluation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Unifying optimizer interfaces enables systematic comparison and domain transfer",
+        "result": "Confirmed; framework permits controlled experiments and porting optimizers across jailbreak and corpus-poisoning domains"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-74543-6": {
+    "category": "Structural Biology",
+    "task": "Characterize drebrin binding to F-actin and its network-modulating mechanisms",
+    "key_results": "Single-particle cryo-EM reveals dual ABDs with conformational flexibility; multimodal interaction across multiple actin protomers; drebrin shares F-actin binding site with other regulatory proteins, explaining competitive displacement",
+    "comments": "The multimodal binding and flexible-loop architecture are well-resolved, but dynamic assembly kinetics and in vivo bundling propensity remain incompletely characterized.",
+    "model_io": [
+      {
+        "model": "Cryo-EM of drebrin:F-actin complex",
+        "inputs": [
+          "drebrin (ABD1, flexible loop, ABD2)",
+          "F-actin filament"
+        ],
+        "outputs": [
+          "3D structure",
+          "inter-protomer interface modifications",
+          "binding site geometry",
+          "competitive displacement sites"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Drebrin's two ABDs adopt multiple conformations and relative positions on F-actin",
+        "result": "Confirmed; ABD1 exhibits two conformations; flexible loop allows multimodal positioning along filament"
+      },
+      {
+        "hypothesis": "Drebrin stabilizes F-actin through modification of longitudinal inter-protomer interfaces",
+        "result": "Confirmed; subdomain contacts and cross-protomer binding explain stabilization properties"
+      }
+    ]
+  },
+  "nature:10.1038/s41418-026-01786-7": {
+    "category": "Cell Division/Cycle",
+    "task": "Elucidate USP21-mediated NuMA deubiquitylation in spindle orientation",
+    "key_results": "USP21 removes K63-linked ubiquitylation of NuMA at K1330/K1335, promoting LGN binding and cortical recruitment; Usp21 KO causes spindle misorientation and epithelial defects",
+    "comments": "Identifies ubiquitin-dependent NuMA-LGN recruitment as spindle orientation mechanism, with implications for tissue architecture and wound healing.",
+    "model_io": [
+      {
+        "model": "Usp21 knockout mice",
+        "inputs": [],
+        "outputs": [
+          "corneal epithelial development",
+          "renal tubule morphology",
+          "skin wound healing",
+          "spindle orientation"
+        ]
+      },
+      {
+        "model": "cultured cells with USP21 manipulation",
+        "inputs": [],
+        "outputs": [
+          "spindle orientation",
+          "NuMA-LGN interaction",
+          "NuMA ubiquitylation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "USP21-mediated NuMA deubiquitylation regulates spindle orientation",
+        "result": "Confirmed; Usp21 KO stabilizes K63-ubiquitylated NuMA and causes spindle misorientation"
+      },
+      {
+        "hypothesis": "NuMA deubiquitylation permits LGN binding and cortical localization",
+        "result": "Confirmed; USP21 promotes NuMA-LGN interaction and cortical recruitment"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-59563-y": {
+    "category": "Cell Signaling",
+    "task": "Associate RIPK4 with melanoma metabolic reprogramming and invasion",
+    "key_results": "RIPK4 knockout impairs mitochondrial respiration and glycolysis (HK2, GLUT1); reduces 3D invasion; partial restoration by AKT phosphorylation",
+    "comments": "Links RIPK4 to AKT-independent metabolic control in melanoma, suggesting multi-mechanism RIPK4 biology beyond canonical signaling.",
+    "model_io": [
+      {
+        "model": "RIPK4-KO A375 and WM266.4 cells \u00b1 RIPK4 re-expression",
+        "inputs": [],
+        "outputs": [
+          "mitochondrial respiration (OCR)",
+          "glycolysis (ECAR)",
+          "HK2/GLUT1 expression",
+          "AKT phosphorylation"
+        ]
+      },
+      {
+        "model": "3D spheroid and matrix invasion assays",
+        "inputs": [],
+        "outputs": [
+          "invasive protrusions",
+          "intravascular invasion"
+        ]
+      },
+      {
+        "model": "NOD/SCID xenografts with lung metastases",
+        "inputs": [],
+        "outputs": [
+          "RIPK4 expression",
+          "GLUT1 in metastases"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "RIPK4 drives melanoma metabolic reprogramming and invasion",
+        "result": "Confirmed; RIPK4 KO reduces OCR, ECAR, and invasion; partial AKT-dependent restoration"
+      },
+      {
+        "hypothesis": "AKT-GLUT1 axis is primary RIPK4 mechanism",
+        "result": "Partially supported; RIPK4 re-expression restores AKT phosphorylation and partially rescues HK2/GLUT1, but metabolic flux not fully recovered"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-57402-8": {
+    "category": "Statistical Methods",
+    "task": "Early Alzheimer's disease prediction from structural MRI",
+    "key_results": "Median AUC-ROC 0.951, accuracy 0.872, recall 0.923, F1 0.811 across 200 runs on 1,093 subjects",
+    "comments": "Ensemble soft-voting with VGG16 transfer learning is robust; person-wise stratification prevents data leakage, though MRI-only approach may miss cognitive biomarkers.",
+    "model_io": [
+      {
+        "model": "Ensemble (SVM, RF, ANN) with VGG16 features",
+        "inputs": [
+          "Structural MRI (2D slices)",
+          "OASIS-3 dataset"
+        ],
+        "outputs": [
+          "AD conversion prediction",
+          "Risk probability"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Ensemble classification of VGG16 features achieves higher predictive power than single models",
+        "result": "Confirmed; ensemble AUC-ROC 0.951"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-58262-y": {
+    "category": "Statistical Methods",
+    "task": "Pearl millet leaf disease segmentation, classification, and severity estimation",
+    "key_results": "Dice 97.8%, IoU 95.6%, classification accuracy 98.3%, F1 98.2%; Grad-CAM interpretability enhanced",
+    "comments": "Adaptive Disease Severity Index (ADSI) is novel for quantifying progression; Swin Transformer with ResUNet++ decoder well-justified for fine-grained segmentation.",
+    "model_io": [
+      {
+        "model": "ASA-SAN (Swin+ResUNet++, Adaptive Severity Index)",
+        "inputs": [
+          "Pearl millet leaf images"
+        ],
+        "outputs": [
+          "Disease mask segmentation",
+          "Disease classification",
+          "Severity score"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Adaptive channel attention and dual-stream classification improve disease discrimination",
+        "result": "Confirmed; outperformed state-of-the-art methods"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-58725-2": {
+    "category": "Statistical Methods",
+    "task": "College student psychological state prediction using optimized LSTM",
+    "key_results": "93.64% accuracy, 9.33% and 6.63% improvement over standard LSTM and WOA-LSTM respectively",
+    "comments": "Chaotic whale optimization with LSTM is effective but relies on synthetic Kaggle dataset; real-world validation on diverse student populations needed.",
+    "model_io": [
+      {
+        "model": "CNWOA-LSTM",
+        "inputs": [
+          "Student behavioral features",
+          "Learning interaction data",
+          "Psychological assessment indicators"
+        ],
+        "outputs": [
+          "Psychological state classification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Chaotic initialization and niche operators in WOA improve LSTM hyperparameter optimization",
+        "result": "Confirmed; CNWOA-LSTM surpassed other meta-heuristic approaches"
+      }
+    ]
+  },
+  "nature:10.1038/s41698-026-01573-0": {
+    "category": "Statistical Methods",
+    "task": "Pan-cancer immunotherapy response prediction from gene expression using consistency learning and residual networks",
+    "key_results": "ImmuGT-ConRes integrates contrastive learning, dual-branch augmentation, multi-scale convolution; superior predictive performance with interpretable gene weight ranking",
+    "comments": "Pooled data from 40+ cohorts strengthens generalizability; attention-weighted gene rankings enable target discovery; quantitative benchmarks against existing methods not provided in abstract.",
+    "model_io": [
+      {
+        "model": "ImmuGT-ConRes (contrastive residual networks)",
+        "inputs": [
+          "Gene expression data (multi-cohort)",
+          "Immunotherapy response labels"
+        ],
+        "outputs": [
+          "Response probability",
+          "Gene importance scores (attention)",
+          "Target rankings"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Contrastive learning with multi-scale residual architecture improves immunotherapy response prediction",
+        "result": "Confirmed; superior performance demonstrated; interpretability via attention mechanism"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-02871-4": {
+    "category": "Other",
+    "task": "Perspective on causal inference and digital twins in clinical trials",
+    "key_results": "Framework combining causal inference and digital twins to support trial design, recruitment, monitoring, and translation",
+    "comments": "Forward-looking perspective lacking quantitative validation; implementation challenges in regulatory adoption not addressed.",
+    "model_io": [],
+    "hypotheses": [
+      {
+        "hypothesis": "Causal inference and digital twins can reduce trial timelines, costs, and improve generalizability",
+        "result": "Proposed but not empirically demonstrated"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-02923-9": {
+    "category": "Other",
+    "task": "Video frame interpolation for coronary angiography using latent flow matching to reduce radiation exposure",
+    "key_results": "Angio-FILM synthesizes 15 FPS from 7.5 FPS inputs; Visual Turing test accuracy 54% (p=0.107) and 49% (p=0.749); QCA MAE 0.180 mm in minimal lumen diameter",
+    "comments": "Generative AI for clinical video interpolation shows promise; non-significant VTT results indicate real/synthetic indistinguishability; minimal anatomical deviation (0.180 mm) clinically acceptable.",
+    "model_io": [
+      {
+        "model": "Angio-FILM (latent flow matching)",
+        "inputs": [
+          "Low-frame-rate coronary angiography (7.5 FPS)"
+        ],
+        "outputs": [
+          "Interpolated high-temporal-resolution video (15 FPS)",
+          "Frame predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Latent flow matching interpolation maintains anatomical fidelity while increasing temporal resolution",
+        "result": "Confirmed; VTT and QCA validation support clinical feasibility"
+      }
+    ]
+  },
+  "nature:10.1038/s42005-026-02723-3": {
+    "category": "Statistics/Probability",
+    "task": "relate generation time to infection time distribution in epidemics",
+    "key_results": "Weibull shape parameter \u03b1>1 for most respiratory epidemics; Markovian case (\u03b1=1) provides conservative upper bound on basic reproduction number",
+    "comments": "Elegant simplification showing non-Markovian complexity may be unnecessary when \u03b1>1; practical value depends on robustness of this distribution assumption across diverse diseases.",
+    "model_io": [
+      {
+        "model": "Weibull distribution analysis",
+        "inputs": [
+          "published generation time distributions"
+        ],
+        "outputs": [
+          "shape parameter \u03b1",
+          "epidemic thresholds"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "generation time Weibull shape \u03b1 implies similar infection time shape",
+        "result": "confirmed; \u03b1>1 for nearly all surveyed respiratory epidemics"
+      }
+    ]
+  },
+  "nature:10.1038/s44260-026-00085-z": {
+    "category": "ML Theory",
+    "task": "detect malicious information operations from behavioral policies",
+    "key_results": "policy-based classifiers macro-F1 94.9% vs 91.2% for text embeddings in distinguishing trolls; earlier detection from short traces",
+    "comments": "Behavioral policy modeling is more resilient than content analysis; excellent insight but evaluation limited to Reddit's IRA dataset\u2014generalization to other platforms uncertain.",
+    "model_io": [
+      {
+        "model": "sequential decision process classifiers",
+        "inputs": [
+          "user activity sequences (38M steps from 12K Reddit users)"
+        ],
+        "outputs": [
+          "malicious actor label"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "behavioral policies encode more stable manipulation signals than content",
+        "result": "macro-F1 94.9% for policy vs 91.2% for text; degrade gracefully under evasion"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-73507-0": {
+    "category": "Quantum",
+    "task": "Identify optimal quantum measurements using state symmetries",
+    "key_results": "State symmetries systematically determine optimal measurements saturating Cram\u00e9r-Rao bound; graph states with local measurements achieve Heisenberg-scaling precision; stabilizer codes offer noise resilience with local accessibility",
+    "comments": "Elegant symmetry-based framework unifies metrology optimization but requires careful selection of probe states for practical implementation.",
+    "model_io": [
+      {
+        "model": "Graph states and stabilizer codes",
+        "inputs": [
+          "parameter encoding",
+          "local measurement constraints",
+          "noise models"
+        ],
+        "outputs": [
+          "optimal measurement basis",
+          "achievable precision scaling",
+          "error correction capability"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Local state symmetries enable construction of optimal local measurements",
+        "result": "Demonstrated explicitly for graph states with analytical and numerical validation"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-74237-z": {
+    "category": "Condensed Matter",
+    "task": "Design relaxor ferroelectrics through engineered phase competition",
+    "key_results": "PbMg\u2080.\u2085W\u2080.\u2085O\u2083 films show dielectric relaxation from antiferroelectric-ferroelectric phase competition despite full cation ordering; identified new polar phase at low temperature",
+    "comments": "Novel paradigm decouples relaxor behavior from compositional disorder, enabling rational design via phase engineering rather than doping strategies.",
+    "model_io": [
+      {
+        "model": "Epitaxial thin films (PbMg\u2080.\u2085W\u2080.\u2085O\u2083)",
+        "inputs": [
+          "temperature",
+          "substrate strain"
+        ],
+        "outputs": [
+          "polarization",
+          "dielectric constant",
+          "phase transitions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Phase competition between polar and antipolar phases produces relaxor behavior in ordered materials",
+        "result": "Confirmed via polarization switching and dielectric dispersion measurements"
+      }
+    ]
+  },
+  "nature:10.1038/s41534-026-01275-2": {
+    "category": "Quantum",
+    "task": "Develop quantum algorithm for alchemical free energy calculations in drug design",
+    "key_results": "Super-polynomial runtime scaling improvements in Liouvillian simulation precision; quadratic particle-scaling advantage vs. prior algorithms; fully quantum thermodynamic integration avoids entropy estimation subroutines",
+    "comments": "Promising algorithmic advances for drug discovery, but practical implementation on near-term devices uncertain; comparison with state-of-the-art classical methods (FEP) on realistic systems needed.",
+    "model_io": [
+      {
+        "model": "Quantum algorithm for free energy differences",
+        "inputs": [
+          "initial/final molecular systems",
+          "Liouvillian operator specification",
+          "electronic forces on nuclear/electronic DoF"
+        ],
+        "outputs": [
+          "free energy difference",
+          "binding affinity estimate"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Quantum Liouvillian approach achieves super-polynomial precision scaling",
+        "result": "Confirmed analytically; quadratic particle-scaling advantage demonstrated"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-56593-4": {
+    "category": "Condensed Matter",
+    "task": "Correlate irradiation defects with thermomechanical properties in uranium nitride",
+    "key_results": "Defect-dependent elastic moduli decrease; Vickers hardness declines monotonically; Poisson's ratio and Pugh's ratio increase with defects; Schottky formation energies strongly environment-dependent; thermal conductivity and melting point reduced by defects; CTE increases sharply with temperature",
+    "comments": "Systematic DFT study valuable for fuel design but limited to point defects; extended defects (dislocations, grain boundaries) and radiation-induced transmutation require investigation.",
+    "model_io": [
+      {
+        "model": "UN with point defects (Schottky vacancies, antisites) under thermal/mechanical load",
+        "inputs": [
+          "defect type and concentration",
+          "temperature",
+          "stoichiometry (U-rich/N-rich/stoichiometric)",
+          "strain"
+        ],
+        "outputs": [
+          "elastic constants",
+          "hardness",
+          "thermal conductivity",
+          "melting point",
+          "thermal expansion"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Point defects systematically degrade thermomechanical properties",
+        "result": "Confirmed; elastic moduli, hardness, and thermal conductivity all decline with defect incorporation"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-57450-0": {
+    "category": "Applied Physics",
+    "task": "Characterize material elastic properties using pressurized tube deformation",
+    "key_results": "For sufficiently long and slender tubes, volumetric deformation vs. (transmural load/dimensionless thickness) collapses onto universal curve; enables shear modulus estimation from single manometer experiment",
+    "comments": "Simple and practical approach, but applicability limited to elastic materials with small deformations; nonlinear regime unexplored.",
+    "model_io": [
+      {
+        "model": "Flexible pressurized tube (neo-Hookean material)",
+        "inputs": [
+          "transmural pressure",
+          "tube geometry (length, thickness, radius)",
+          "shear modulus"
+        ],
+        "outputs": [
+          "volumetric deformation",
+          "tube shape"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Dimensionless tube deformation depends only on transmural load ratio for sufficiently long/slender tubes",
+        "result": "Confirmed; experimental validation with two materials"
+      }
+    ]
   }
 }
