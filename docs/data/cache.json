@@ -311658,5 +311658,852 @@
     "comments": "Comprehensive review synthesizing approaches from machine learning and dynamical systems; lacks concrete guidance on method selection for specific biological applications.",
     "model_io": [],
     "hypotheses": []
+  },
+  "hf:2606.25306": {
+    "category": "Vision",
+    "task": "Fine-grained evaluation of physical plausibility in text-to-video generation",
+    "key_results": "PQSG achieves higher correlation with human judgments than prior work; Sora 2 and Veo 3 rank higher than Wan 2.1 on physical realism",
+    "comments": "The graph-based question hierarchy with logical dependencies is elegant, but evaluation relies on human annotation which limits scalability of the FinePhyEval dataset.",
+    "model_io": [
+      {
+        "model": "Vision-Language Model (VLM)",
+        "inputs": [
+          "video frames",
+          "physics-based prompt",
+          "in-context examples"
+        ],
+        "outputs": [
+          "hierarchical question graph",
+          "fine-grained physical plausibility scores"
+        ]
+      },
+      {
+        "model": "Text-to-Video models (Sora 2, Veo 3, Wan 2.1)",
+        "inputs": [
+          "text prompt"
+        ],
+        "outputs": [
+          "generated video"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "VLM-generated questions with graph-based logical dependencies correlate better with human judgments than prior evaluation methods",
+        "result": "Confirmed: PQSG shows higher overall correlations than prior work"
+      },
+      {
+        "hypothesis": "VLMs can generate human-like questions but fall short in answering them",
+        "result": "Confirmed: models create human-like questions but underperform humans on question-answering"
+      }
+    ]
+  },
+  "hf:2606.25013": {
+    "category": "LLM/Reasoning",
+    "task": "Understanding whether thinking tokens improve LLM safety through deliberation",
+    "key_results": "Refusal/compliance outcome is predictable from first token (0.84-0.95 AUROC) before thinking; 74% of text-level deliberations occur when response distribution already locked",
+    "comments": "Challenges the intuitive assumption that reasoning tokens enable safer deliberation, revealing behavior is more prefix completion than genuine deliberative revision.",
+    "model_io": [
+      {
+        "model": "Reasoning models (GPT-OSS, Qwen, Olmo, Phi families)",
+        "inputs": [
+          "safety-critical prompt"
+        ],
+        "outputs": [
+          "thinking tokens",
+          "refusal or compliance response"
+        ]
+      },
+      {
+        "model": "Trained probe head",
+        "inputs": [
+          "first token hidden representation"
+        ],
+        "outputs": [
+          "refusal/compliance prediction"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Thinking tokens enable deliberative safety consideration before response generation",
+        "result": "Rejected: outcome predictable before thinking; behavior is prefix completion not deliberation"
+      },
+      {
+        "hypothesis": "Safety interventions induce real deliberation in reasoning models",
+        "result": "Rejected: interventions mainly shift to over-refusal while suppressing deliberation signals"
+      }
+    ]
+  },
+  "hf:2606.22953": {
+    "category": "Agents/RL",
+    "task": "Measuring whether LLM agents maintain plans as persistent state or rely on context retention",
+    "key_results": "Plan signal decays 4.1x in single action-observation step on Llama-3.1-70B; probe-based detection shows plans are context-resident not persistent; naive plan eviction cuts ALFWorld success by 34.7pp",
+    "comments": "The reasoning-trace confound discovery is subtle but crucial; the layer-wise probe analysis elegantly demonstrates information decay independent of explanation interpretability.",
+    "model_io": [
+      {
+        "model": "Llama-3.1-70B LLM agent",
+        "inputs": [
+          "task context",
+          "plan",
+          "action-observation steps"
+        ],
+        "outputs": [
+          "hidden states",
+          "agent actions"
+        ]
+      },
+      {
+        "model": "Layer-L32 probe classifier",
+        "inputs": [
+          "hidden state representation"
+        ],
+        "outputs": [
+          "plan signal presence (cosine distance)"
+        ]
+      },
+      {
+        "model": "DeepSeek-R1-Distill-Llama-70B reasoning model",
+        "inputs": [
+          "task trajectory with/without thinking traces"
+        ],
+        "outputs": [
+          "plan signal encoding (AUROC 0.748-1.000)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LLM agents maintain plans as persistent internal state across steps",
+        "result": "Rejected: plans decay 4.1-12.4x after first step; agents depend on context retention"
+      },
+      {
+        "hypothesis": "Reasoning models encode plan information differently than non-reasoning models",
+        "result": "Confirmed: R1-specific probes reach AUROC 1.0 vs 0.748 for transferred probes; different hidden-state direction"
+      }
+    ]
+  },
+  "hf:2606.11445": {
+    "category": "LLM/Reasoning",
+    "task": "Training models to forecast LRM behavior on new inputs without explanation methods",
+    "key_results": "Behavior Forecasters outperform GPT-5.4 and Claude Opus by 4.6-5.4 percentage points; fine-tuning backbone and initializing from target LRM both necessary",
+    "comments": "Creative alternative to interpretability that treats behavior forecasting as a learnable task; limited evaluation to two behavior prediction tasks raises questions about generalization.",
+    "model_io": [
+      {
+        "model": "Large Reasoning Model (LRM)",
+        "inputs": [
+          "query"
+        ],
+        "outputs": [
+          "reasoning trajectory"
+        ]
+      },
+      {
+        "model": "Behavior Forecaster (fine-tuned LRM backbone)",
+        "inputs": [
+          "single reasoning trajectory"
+        ],
+        "outputs": [
+          "forecast of answer repetition probability",
+          "forecast of answer change when input modified"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Behavior Forecasters trained on LRM trajectories outperform zero-shot LLM readers at predicting LRM behavior",
+        "result": "Confirmed: trained forecasters exceed GPT-5.4 and Claude Opus performance at lower inference cost"
+      },
+      {
+        "hypothesis": "End-to-end fine-tuning and initialization from target LRM are necessary for strong forecasting performance",
+        "result": "Confirmed: both ablations show necessity for strong performance"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-74627-3": {
+    "category": "Protein Dynamics",
+    "task": "Determine how \u03b1-synuclein sequence modifications affect phase separation and amyloid aggregation",
+    "key_results": "Sequence truncations have stronger effects on condensate thermodynamics and amyloid formation than familial point mutations; only G51D among tested variants (A30P, H50Q, G51D, A53T) reduces amyloid propensity; \u03b1-Syn C-terminal domain regulates condensate fusion and nucleic acid partitioning",
+    "comments": "The discovery that truncations dominate over point mutations is significant for understanding Parkinson's disease pathogenesis, but the mechanism distinguishing G51D from other variants remains unclear.",
+    "model_io": [
+      {
+        "model": "Phase separation and aggregation assays",
+        "inputs": [
+          "Wild-type \u03b1-synuclein",
+          "Truncated variants",
+          "Familial point mutations (A30P, H50Q, G51D, A53T)",
+          "DNA-peptide coacervates"
+        ],
+        "outputs": [
+          "Condensate thermodynamics",
+          "Material properties",
+          "Amyloid fibril formation kinetics",
+          "Coacervate dissolution/assembly behavior"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Sequence truncations have stronger effects on condensate behavior than point mutations",
+        "result": "Confirmed: truncations drive rapid gelation and immediate amyloid formation; point mutations show minimal effects"
+      },
+      {
+        "hypothesis": "\u03b1-Syn C-terminal domain is critical for regulating multicomponent condensate properties",
+        "result": "Confirmed: C-terminal domain controls condensate fusion and nucleic acid partitioning"
+      }
+    ]
+  },
+  "nature:10.1038/s41524-026-02201-y": {
+    "category": "Computational Biophysics",
+    "task": "Characterize crystallization pathways across systems with different interaction origins",
+    "key_results": "Both point-particle and hard-polyhedra systems follow identical multistep crystallization pathways and form the same crystal polymorphs despite fundamentally different interaction mechanisms (isotropic pair potentials vs. entropic forces)",
+    "comments": "The mapping to an effective Zetterling-like potential is promising but remains incomplete in mechanistically explaining why such different systems converge on identical pathways.",
+    "model_io": [
+      {
+        "model": "Molecular dynamics simulations",
+        "inputs": [
+          "Point particles with isotropic pair potentials",
+          "Hard polyhedra with entropic interactions"
+        ],
+        "outputs": [
+          "Crystal polymorphs",
+          "Multistep crystallization pathways",
+          "Local structure evolution"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Systems with different interaction origins can share crystallization pathways if mapped to equivalent effective potentials",
+        "result": "Confirmed: hard particle system interactions map to effective Zetterling-like pairwise potential"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-60070-3": {
+    "category": "Computational Biophysics",
+    "task": "Elucidate electronic structure\u2013activity relationships of adenosine A2A receptor antagonists and map to neuronal excitability",
+    "key_results": "Istradefylline exhibits balanced electronic profile (HOMO-LUMO gap \u0394E = 3.53 eV); derivative II\u20132\u20134 shows enhanced flexibility (gap 3.48 eV, highest softness); structural modification of exocyclic C=C into rigid purine framework may improve photostability",
+    "comments": "The exploratory mapping of electronic descriptors to neuronal excitability is conceptual only and requires experimental validation; computational results lack receptor-level validation.",
+    "model_io": [
+      {
+        "model": "DFT and TD-DFT quantum chemical analysis",
+        "inputs": [
+          "Istradefylline",
+          "Adenosine derivatives",
+          "Frontier molecular orbital calculations"
+        ],
+        "outputs": [
+          "Frontier molecular orbitals",
+          "HOMO-LUMO gaps",
+          "Global reactivity descriptors",
+          "Excitation properties"
+        ]
+      },
+      {
+        "model": "Topological wavefunction analysis",
+        "inputs": [
+          "Electron density distributions"
+        ],
+        "outputs": [
+          "MEP maps",
+          "NCI/RDG analysis",
+          "ELF and LOL descriptors",
+          "NBO interactions"
+        ]
+      },
+      {
+        "model": "Exploratory descriptor-based multi-scale neuronal excitability mapping",
+        "inputs": [
+          "Chemical softness",
+          "Polarizability",
+          "Dipole moment",
+          "Electrostatic potential"
+        ],
+        "outputs": [
+          "Simulated neuronal excitability profiles"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Balanced electronic properties (moderate orbital gap, extended \u03c0-delocalization) correlate with A2AR antagonist activity",
+        "result": "Supported: istradefylline exhibits \u0394E = 3.53 eV and balanced donor\u2013acceptor interactions"
+      },
+      {
+        "hypothesis": "Rigid purine framework limits conformational flexibility and improves photostability",
+        "result": "Proposed but unvalidated: requires experimental confirmation"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-59187-2": {
+    "category": "Development",
+    "task": "Investigate asprosin overexpression effects on aortic pathology in Marfan syndrome",
+    "key_results": "Asprosin overexpression in VSMCs did not alter VCAM1 or MMP9 expression; TNF-\u03b1-stimulated cells showed minimal IL-6 changes; in mgR/mgR Marfan mice, asprosin overexpression did not affect aortic diameter, elastin integrity, or inflammatory/EMT markers",
+    "comments": "Negative result suggesting asprosin's glucogenic role may be insufficient to compensate for fibrillin-1 deficiency in aortic disease; alternative or complementary pathogenic mechanisms require investigation.",
+    "model_io": [
+      {
+        "model": "human and murine VSMCs with asprosin overexpression",
+        "inputs": [
+          "asprosin overexpression",
+          "TNF-\u03b1 stimulation"
+        ],
+        "outputs": [
+          "VCAM1, MMP9, IL-6 expression"
+        ]
+      },
+      {
+        "model": "mgR/mgR Marfan mouse model with endothelial-targeted AAV-asprosin",
+        "inputs": [
+          "asprosin overexpression"
+        ],
+        "outputs": [
+          "aortic diameter",
+          "elastin integrity",
+          "inflammatory markers (mRNA, protein)",
+          "EMT markers (mRNA, protein)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Asprosin overexpression ameliorates aortic aneurysm phenotype in Marfan syndrome",
+        "result": "Not supported; asprosin overexpression had no significant effect on aortic pathology"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-59288-y": {
+    "category": "Epigenetics",
+    "task": "Identify SUV39H1 mutations in X-linked cornification disorder phloiokeratosis in dogs",
+    "key_results": "Four independent SUV39H1 variants identified in seven affected dogs; X-chromosomal semi-dominant inheritance; heterozygous females displayed Blaschko-like lesion patterns; histopathology revealed pronounced epidermal hyperkeratosis; SUV39H1 mediates H3K9 methylation required for normal keratinocyte differentiation",
+    "comments": "First evidence linking SUV39H1 deficiency to heritable skin disease; the discrepancy with Suv39h1\u2212/\u2212 mice (which have normal skin) suggests species-specific effects or the importance of hypomorphic vs. null mutations.",
+    "model_io": [
+      {
+        "model": "affected and unaffected dogs from four independent families",
+        "inputs": [],
+        "outputs": [
+          "SUV39H1 variant genotypes",
+          "lesion distribution patterns",
+          "epidermal hyperkeratosis (histology)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "SUV39H1 loss-of-function variants impair keratinocyte differentiation via reduced H3K9 methylation",
+        "result": "Supported; SUV39H1 variants segregate with phloiokeratosis phenotype"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-59337-6": {
+    "category": "Cell Signaling",
+    "task": "Investigate collagen-CD44-YAP1 axis driving PD-L1 overexpression and immunosuppression in keloid fibroblasts",
+    "key_results": "Keloid tissues showed collagen accumulation, increased CD4+ T, CD86+ macrophages, and FOXP3+ Treg infiltration, with reduced CD8+ T cells and elevated PD-L1 in fibroblasts; collagen I stimulation upregulated PD-L1, YAP1, and p-YAP1 in primary keloid fibroblasts; mechanism involves CD44 binding and YAP1 activation",
+    "comments": "The study elegantly links extracellular matrix composition to local immunosuppression through CD44-YAP1 signaling; however, direct evidence for collagen-CD44 binding and the contribution of other YAP1 upstream signals would strengthen the mechanism.",
+    "model_io": [
+      {
+        "model": "keloid and normal skin tissue samples",
+        "inputs": [],
+        "outputs": [
+          "collagen accumulation",
+          "immune cell infiltration (CD4+, CD8+, CD86+, FOXP3+)",
+          "CD44, \u03b1-SMA, PDGFR, PD-L1 expression"
+        ]
+      },
+      {
+        "model": "primary keloid fibroblasts",
+        "inputs": [
+          "collagen I"
+        ],
+        "outputs": [
+          "PD-L1, YAP1, p-YAP1 expression"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Collagen deposition activates fibroblast CD44-YAP1 signaling to promote PD-L1 expression and local immunosuppression",
+        "result": "Supported; collagen stimulation upregulated PD-L1 and YAP1 activation; immune phenotyping supports immunosuppression"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-59885-x": {
+    "category": "Epigenetics",
+    "task": "Evaluate sodium crotonate protection against diabetic cardiomyopathy via H3K18 crotonylation",
+    "key_results": "Sodium crotonate elevated global and H3K18 crotonylation levels; reduced cardiac inflammation, fibrosis, and injury in DCM models; ACSS2 inhibition reversed H3K18cr and protective effects in vitro",
+    "comments": "The finding links an emerging PTM (lysine crotonylation) to cardioprotection, but causality remains to be established\u2014NaCr's glucose-lowering activity may confound the mechanism.",
+    "model_io": [
+      {
+        "model": "high-fat diet-induced DCM rat model",
+        "inputs": [
+          "sodium crotonate",
+          "high-fat diet"
+        ],
+        "outputs": [
+          "cardiac inflammation markers",
+          "fibrosis markers",
+          "H3K18cr levels",
+          "cardiac injury parameters"
+        ]
+      },
+      {
+        "model": "AC16 cardiomyocytes induced with high glucose + palmitic acid",
+        "inputs": [
+          "sodium crotonate",
+          "ACSS2 inhibitor",
+          "high glucose + palmitic acid"
+        ],
+        "outputs": [
+          "H3K18cr levels",
+          "inflammation markers",
+          "ACSS2 expression"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Sodium crotonate protects against DCM via ACSS2-dependent H3K18 crotonylation",
+        "result": "Supported in vitro; in vivo causality and independence from glucose-lowering effects require clarification"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-74727-0": {
+    "category": "Genomics",
+    "task": "Identification and characterization of archaeal hibernation factors (Sri proteins) protecting ribosomes",
+    "key_results": "Four Sri proteins (SriA-SriD) bind ribosomes in tandem; deletion impairs growth recovery and depletes small subunit; cryo-EM structures show conserved protein-protein interfaces; Sri broadly distributed across archaeal phyla",
+    "comments": "Structural and functional characterization is rigorous, but biological significance of hibernation (e.g., nutrient limitation conditions tested) and evolutionary conservation merit deeper exploration.",
+    "model_io": [
+      {
+        "model": "Sri protein-ribosome complex structural/functional analysis",
+        "inputs": [
+          "Methanosarcina acetivorans sri operon",
+          "cryo-EM structures",
+          "deletion mutants",
+          "protein synthesis assays"
+        ],
+        "outputs": [
+          "ribosome hibernation factor identification",
+          "protein-protein interaction networks",
+          "phylogenetic distribution"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Sri proteins form a distinct family of archaeal hibernation factors that protect ribosomes through tandem binding",
+        "result": "Four Sri proteins identified, cryo-EM shows tandem binding with conserved interfaces; deletions impair stationary-phase recovery"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-57337-0": {
+    "category": "Structural Prediction",
+    "task": "Structure-function characterization of Smc3 head domain loop in cohesin complex integrity",
+    "key_results": "Flexible loop in Smc3 head domain is essential for Scc1 interaction and cohesin stability; loop deletion destabilizes protein and reduces chromatin enrichment; enables reclassification of CdLS-associated variants of unknown significance",
+    "comments": "Functional mapping is biochemically sound, but clinical reclassification of VUS requires prospective validation in patient cohorts.",
+    "model_io": [
+      {
+        "model": "Smc3 cohesin complex structural analysis",
+        "inputs": [
+          "Smc3 protein structure",
+          "loop region mutations",
+          "Scc1 interaction data"
+        ],
+        "outputs": [
+          "loop stability predictions",
+          "protein-protein interaction strength",
+          "chromatin enrichment levels"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Flexible loop mediates critical Scc1-Smc3 interactions necessary for cohesin function",
+        "result": "Loop deletion and mutations destabilize protein and reduce chromatin enrichment, confirming functional necessity"
+      },
+      {
+        "hypothesis": "CdLS-associated Smc3 variants can be functionally classified through loop characterization",
+        "result": "Identified previously unclassified VUS as likely pathogenic based on loop disruption mechanism"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-59478-8": {
+    "category": "Single Cell",
+    "task": "Aggregating XAI explanations to extract spectral-spatial patterns in resting-state EEG classification",
+    "key_results": "Spectral CNN achieves 95.81% test accuracy; averagedLIME aggregation reveals stable, robust, reproducible cross-subject saliency maps consistent with EEG slowing in Alzheimer's; uncovers localized spatial-spectral structures beyond averaged EEG",
+    "comments": "Elegant methodology for transforming black-box CNN into hypothesis-generating framework; robustness validated across CV folds and complementary XAI methods (SHAP, Grad-CAM), though limited to single disease-normal contrast.",
+    "model_io": [
+      {
+        "model": "Four CNN architectures + averagedLIME/SHAP/Grad-CAM XAI",
+        "inputs": [
+          "resting-state EEG signals (temporal unaligned)",
+          "frequency spectrograms"
+        ],
+        "outputs": [
+          "Alzheimer's vs. normal classification",
+          "aggregated saliency maps (spectral-spatial patterns)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Aggregated XAI explanations reveal generalizable spectral-spatial patterns learned by CNNs beyond individual predictions",
+        "result": "averagedLIME patterns stable across folds, reproduced established EEG slowing, and revealed novel localized structures via consensus with SHAP/Grad-CAM"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-59543-2": {
+    "category": "Statistical Methods",
+    "task": "All-cause mortality prediction in older Colombian adults using advanced ML on administrative health data",
+    "key_results": "XGBoost achieves AUC 0.92 (2-year), 0.89 (1-year); diagnoses, medications, hospitalization patterns most predictive; operational variables (provider/insurer) negligible; demonstrates feasibility in middle-income setting",
+    "comments": "Excellent discrimination performance with rich real-world data, but F1-scores indicate moderate classification balance; unclear if model addresses key barriers (calibration drift, demographic fairness) mentioned in introduction.",
+    "model_io": [
+      {
+        "model": "Five ML classifiers (RF, MLP, CatBoost, XGBoost, LightGBM, Bayesian regression, TabTransformer)",
+        "inputs": [
+          "ICD-10 diagnoses",
+          "prescribed medications",
+          "procedures",
+          "care modalities",
+          "provider/insurer IDs"
+        ],
+        "outputs": [
+          "all-cause mortality probability",
+          "1/2-year survival predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Administrative health data sufficiently captures mortality risk in older Colombian adults using advanced ML",
+        "result": "XGBoost achieved AUC 0.92; diagnoses/medications/hospitalization patterns dominate vs. operational variables"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-59872-2": {
+    "category": "Genomics",
+    "task": "Multi-epitope DNA/mRNA vaccine design against Human metapneumovirus structural proteins",
+    "key_results": "28 epitopes (B-cell/MHC-I/MHC-II) selected from six HMPV structural proteins; chimeric constructs show high antigenicity, no toxicity/allergenicity; strong TLR-2 binding (-318.19 kJ/mol); immune simulations predict robust responses; codon-optimized for Homo sapiens expression",
+    "comments": "Rigorous epitope selection and in silico validation, but no experimental immunogenicity testing; HMPV-specific validation lacking (only generic TLR predictions shown).",
+    "model_io": [
+      {
+        "model": "Immunoinformatics reverse vaccinology pipeline",
+        "inputs": [
+          "HMPV structural protein sequences",
+          "IEDB epitope prediction",
+          "allergenicity/toxicity assessment"
+        ],
+        "outputs": [
+          "multi-epitope construct (DNA/mRNA)",
+          "codon-optimized gene",
+          "TLR binding predictions",
+          "immune simulation responses"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-epitope DNA/mRNA vaccines incorporating PADRE/\u03b2-defensin adjuvants elicit protective immune responses against HMPV",
+        "result": "28 epitopes identified with favorable physicochemical properties; immune simulations predict robust humoral/cellular responses"
+      }
+    ]
+  },
+  "nature:10.1038/s41698-026-01580-1": {
+    "category": "Genomics",
+    "task": "Deep learning MRI radiomics for rectal cancer recurrence risk prediction and tumor subtyping",
+    "key_results": "Three radiomics-based deep learning subtypes (RDLSs) identified; RDLS1 (immune-excluded) shows poor prognosis, RDLS2 (lymphocyte-rich) favorable; recurrence risk scoring (RRS) improves 5-year RFS AUC from 0.799\u21920.834 (training), 0.780\u21920.825 (external); molecular profiling validates phenotypes",
+    "comments": "Rigorous multicenter study (n=2060) with comprehensive molecular validation (scRNA, bulk RNA, imaging); integration of deep learning with biology exceptional, though clinical adoption requires prospective randomized validation.",
+    "model_io": [
+      {
+        "model": "Deep learning radiomic feature extraction + CCA unsupervised clustering + Cox regression",
+        "inputs": [
+          "multi-center MRI (T1/T2/DWI)",
+          "RNA-seq (bulk/single-cell)",
+          "histopathology",
+          "clinical outcomes"
+        ],
+        "outputs": [
+          "radiomics-based deep learning subtypes (RDLS1/2/3)",
+          "recurrence risk score (RRS)",
+          "5-year RFS predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Deep learning-extracted radiomic features define biologically distinct tumor subtypes predictive of recurrence",
+        "result": "Three RDLSs identified with validated immune phenotypes (scRNA/bulk RNA); RRS improved recurrence prediction across cohorts"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-02823-y": {
+    "category": "Genomics",
+    "task": "Spatial prediction of recurrent glioma from multi-parametric MRI using machine learning",
+    "key_results": "Test AUROC 0.74\u00b10.08 for recurrent tumors, 0.99\u00b10.01 for normal brain; prediction map volumetrics significantly associated with survival; demonstrates feasibility of spatial heterogeneity mapping",
+    "comments": "Robust evaluation with histopathological confirmation is valuable, but sample size (254 patches, 56 patients) limits generalization; uncertainty-performance correlation interesting but mechanistically unclear.",
+    "model_io": [
+      {
+        "model": "Machine learning classifier on MRI patches",
+        "inputs": [
+          "multi-parametric MRI phenotypes (T1/T2/perfusion/diffusion)",
+          "spatial coordinates",
+          "tissue samples"
+        ],
+        "outputs": [
+          "recurrence probability maps",
+          "uncertainty estimates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Spatially varying MRI phenotypes can predict histologically confirmed recurrence with clinically relevant accuracy",
+        "result": "Achieved AUROC 0.74 with uncertainty correlated to model performance; prediction volumes associated with survival"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-02898-7": {
+    "category": "Statistical Methods",
+    "task": "Systematic evaluation of cuffless blood pressure monitoring approaches and methodological framework development",
+    "key_results": "Unified taxonomy relating surrogate signals, modeling paradigms, and calibration strategies; identifies key deployment barriers (protocol realism, calibration drift, population diversity, fairness); proposes model-card reporting framework",
+    "comments": "Comprehensive systematic review providing important methodological guidance, but lacks evaluation of specific algorithms on standardized benchmarks.",
+    "model_io": [
+      {
+        "model": "Cuffless BP monitoring systems (various)",
+        "inputs": [
+          "wearable sensor signals",
+          "PPG",
+          "ECG",
+          "electrochemical signals"
+        ],
+        "outputs": [
+          "blood pressure estimates",
+          "calibration parameters"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Diverse sensing modalities and algorithms produce incomparable results due to lack of standardization",
+        "result": "Developed unified taxonomy and reporting framework to enable evidence synthesis and clinical translation"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-59467-x": {
+    "category": "Algorithms",
+    "task": "Adaptive anesthesia depth control via 2-DOF DNN-gain scheduling",
+    "key_results": "DNN-based gain scheduling with genetic algorithm optimization; maintains BIS 40\u201360 range; robust across 13 patient categories",
+    "comments": "Patient-specific personalization via offline DNN precomputation is practical; simulation-only validation\u2014clinical trials absent.",
+    "model_io": [
+      {
+        "model": "2-DOF parallel PID + DNN gain scheduler (GA-optimized)",
+        "inputs": [
+          "patient parameters, BIS feedback"
+        ],
+        "outputs": [
+          "anesthetic drug infusion rate"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "DNN gain scheduling improves robustness vs fixed PID across patient diversity",
+        "result": "Confirmed in simulations"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-59769-0": {
+    "category": "Algorithms",
+    "task": "Chaotic image encryption via deep CNN-based key generator and elliptic curves",
+    "key_results": "Deep-CNN-CKG MP-MP-EC scheme generates dynamic S-boxes via cascaded 2D sine-cosine chaotic map; security analysis validates robustness",
+    "comments": "Integrating deep learning with elliptic curve cryptography is novel; actual encryption speed/resource usage benchmarks absent.",
+    "model_io": [
+      {
+        "model": "Deep CNN + cascaded 2D SC\u00b3 chaotic map + elliptic curves",
+        "inputs": [
+          "plaintext image, chaotic parameters"
+        ],
+        "outputs": [
+          "encrypted image, dynamic S-boxes"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Deep CNN keystream improves unpredictability vs traditional chaos",
+        "result": "Confirmed via security analysis"
+      }
+    ]
+  },
+  "nature:10.1038/s42005-026-02711-7": {
+    "category": "ML Theory",
+    "task": "Physics discovery from noisy data via stochastic inverse framework",
+    "key_results": "SIP framework reduces coefficient error ~80% vs seven baseline methods; achieves perfect structural identification in 7/10 test scenarios",
+    "comments": "KL divergence minimization on posterior distributions is principled; handling combined system variability + measurement noise is realistic; limited to 10 test cases.",
+    "model_io": [
+      {
+        "model": "Stochastic Inverse Physics (SIP) framework with KL divergence",
+        "inputs": [
+          "noisy observations, dynamical system equations with uncertain coefficients"
+        ],
+        "outputs": [
+          "posterior coefficient distributions, discovered governing equations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Joint treatment of system variability + measurement noise improves discovery",
+        "result": "Confirmed: 80% error reduction vs baselines"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-74491-1": {
+    "category": "Quantum",
+    "task": "Generate and characterize all nine families of four-qubit entanglement in silicon donor spins",
+    "key_results": "Preparation of all canonical 4-qubit entanglement families; multiparticle Bell inequality violations; observation of noise-induced entanglement dynamics (distillable \u2192 bound \u2192 separable)",
+    "comments": "Complete entanglement classification with hardware-efficient circuits; joint measurement reveals bound entanglement resource.",
+    "model_io": [
+      {
+        "model": "Silicon donor spin qubits with native multi-qubit operations and advanced overlapping tomography",
+        "inputs": [
+          "hardware-efficient quantum circuits",
+          "four-qubit control sequences"
+        ],
+        "outputs": [
+          "entanglement families",
+          "Bell inequality values",
+          "entanglement robustness under qubit loss"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Genuine multiparticle nonlocality exists in 4-qubit GHZ states in silicon",
+        "result": "Confirmed: Significant violations of multiparticle Bell-type inequalities observed"
+      }
+    ]
+  },
+  "nature:10.1038/s41535-026-00915-2": {
+    "category": "Condensed Matter",
+    "task": "Achieve antiferromagnetic half-metallic and topological phases in sliding bilayer altermagnets",
+    "key_results": "Ferrovalley states in V\u2082OSSe exhibit spin-dependent interlayer hopping creating direct gap in one valley and band inversion in opposite valley; intrinsic antiferromagnetic half-metals and Chern insulators identified",
+    "comments": "Spin-dependent hopping is universal in sliding altermagnet bilayers; sliding direction enables switching between half-metals with opposite spin polarization.",
+    "model_io": [
+      {
+        "model": "Sliding bilayer altermagnets (V\u2082OSSe) studied via first-principles and effective Hamiltonian methods",
+        "inputs": [
+          "ferrovalley states",
+          "spin-dependent interlayer hopping parameters",
+          "sliding direction"
+        ],
+        "outputs": [
+          "antiferromagnetic half-metal phases",
+          "topological Chern invariants",
+          "gapless surface states"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Ferrovalley states in sliding altermagnets produce intrinsic antiferromagnetic half-metals via spin-dependent band inversion",
+        "result": "Confirmed: Direct gap in one spin channel and band inversion in opposite channel achieved in V\u2082OSSe"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-58354-9": {
+    "category": "Applied Physics",
+    "task": "Optimize CO\u2082 phase transition catapult for lightweight UAV ejection with reduced overload",
+    "key_results": "8.8 kg UAV accelerated to 25 m/s with peak acceleration 1077.7 m/s\u00b2; optimization reduces peak acceleration by 31.98% to 733 m/s\u00b2; simulation errors 2.35% (exit velocity), 3.68% (acceleration)",
+    "comments": "Thermodynamic model validated experimentally; parameter optimization (CO\u2082 filling density, valve diameter, launch tube volume) achieves safe ejection with maintained velocity.",
+    "model_io": [
+      {
+        "model": "Thermodynamic CO\u2082 phase transition catapult with 115 mL system and ejection dynamics simulation",
+        "inputs": [
+          "CO\u2082 filling parameters",
+          "valve diameter",
+          "launch tube initial volume"
+        ],
+        "outputs": [
+          "exit velocity (25 m/s)",
+          "peak acceleration (733 m/s\u00b2 optimized)",
+          "overload reduction (31.98%)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "CO\u2082 filling density has greatest impact on exit velocity; valve diameter dominates peak acceleration control",
+        "result": "Confirmed: Parameter optimization reduces overload by 31.98% while maintaining exit velocity"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-59673-7": {
+    "category": "Applied Physics",
+    "task": "Characterize large-scale 18 GHz propagation in indoor corridor with LoS-NLoS transition",
+    "key_results": "LoS path loss exponent 2.29; NLoS corner diffraction loss 41.07 dB; median NLoS excess loss ~43 dB; receiver height and transmitter distance significantly influence attenuation",
+    "comments": "Detailed corner diffraction analysis reveals waveguide-like post-corner regime (exponent 0.72); 3GPP standard underestimates NLoS attenuation in corridor geometry.",
+    "model_io": [
+      {
+        "model": "18 GHz indoor corridor propagation with five path loss models (CI, FI, ABG, DS, 2S-DS)",
+        "inputs": [
+          "transmitter-receiver geometry",
+          "90\u00b0 junction",
+          "receiver heights (0.61, 1.30, 1.91 m)",
+          "transmitter distances (39.4, 19.7, 9.9 m)"
+        ],
+        "outputs": [
+          "path loss exponents",
+          "corner diffraction loss",
+          "large-scale attenuation statistics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Corner junction produces discrete diffraction loss with post-corner waveguide-like propagation",
+        "result": "Confirmed: Two-slope model reveals post-corner exponent 0.72 vs. pre-corner exponent comparable to LoS"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-59749-4": {
+    "category": "Applied Physics",
+    "task": "Optimize ignition timing for elliptical rotary engine combustion under variable speeds",
+    "key_results": "Optimal ignition timing: 20\u00b0CA BTDC (3000 r/min), 25\u00b0CA BTDC (5000 r/min), 35\u00b0CA BTDC (7000 r/min); peak acceleration 1077.7 m/s\u00b2 reduced to 733 m/s\u00b2 via optimization",
+    "comments": "CFD model validated against experiments; speed-dependent timing optimization necessary for maximum indicated power and thermal efficiency.",
+    "model_io": [
+      {
+        "model": "CFD simulation of elliptical rotary engine combustion dynamics with ignition timing variation",
+        "inputs": [
+          "rotary speeds (3000, 5000, 7000 r/min)",
+          "ignition timing advance (\u00b0CA BTDC)",
+          "fuel-air mixture"
+        ],
+        "outputs": [
+          "airflow velocity",
+          "turbulent kinetic energy",
+          "cylinder pressure/temperature",
+          "indicated power",
+          "indicated thermal efficiency"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Advancing ignition timing increases combustion speed and reaction intensity; effect varies nonlinearly with rotary speed",
+        "result": "Confirmed: Nonlinear relationship between IT and peak pressure observed; optimal IT varies with rotary speed"
+      }
+    ]
+  },
+  "nature:10.1038/s41599-026-08091-1": {
+    "category": "Mathematical Physics",
+    "task": "Resolve numerical transcendence of noema with phenomenological supervenience",
+    "key_results": "Argument that mental states about imaginary entities, necessary beings, and modal properties vastly exceed possible physical states, incompatible with supervenience principle; proposes trialism over dualism",
+    "comments": "Philosophical argument grounded in cardinality of intentional objects; claims require precise formal definition of noema and supervenience relation.",
+    "model_io": [],
+    "hypotheses": [
+      {
+        "hypothesis": "Numerical transcendence of noema incompatible with standard supervenience principle",
+        "result": "Argued: Excess of mental states over physical substrate requires non-standard ontology or trialism"
+      }
+    ]
   }
 }
