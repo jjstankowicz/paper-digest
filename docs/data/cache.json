@@ -320474,5 +320474,883 @@
         "result": "Challenged: fundamental operational hurdles identified; alternative architecture proposed"
       }
     ]
+  },
+  "hf:2606.18112": {
+    "category": "Agents/RL",
+    "task": "Scalable parameterized navigation model for agentic systems",
+    "key_results": "State-of-the-art on major navigation benchmarks; scales from 2B to 8B parameters; strong zero-shot generalization to real-world robots",
+    "comments": "The parameterized interface design (task modes + observation parameters) is elegant for composing complex behaviors, though real-world validation details are sparse.",
+    "model_io": [
+      {
+        "model": "Qwen-RobotNav (2B-8B parameters)",
+        "inputs": [
+          "multi-camera visual observations",
+          "navigation instructions",
+          "task mode parameter",
+          "observation parameters (token budget, camera weights)"
+        ],
+        "outputs": [
+          "action sequences",
+          "navigation decisions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Training-time randomization over task modes and observation parameters enables robust zero-shot inference-time reconfiguration",
+        "result": "Confirmed; model handles diverse task modes without architectural modification"
+      },
+      {
+        "hypothesis": "Co-training with vision-language data prevents collapse into reactive action-sequence mappers",
+        "result": "Confirmed; multi-task training develops shared spatial-planning substrate"
+      }
+    ]
+  },
+  "hf:2606.17846": {
+    "category": "Agents/RL",
+    "task": "Generalizable robotic manipulation foundation model via alignment and scale",
+    "key_results": "Ranks 1st in RoboChallenge with 20% relative improvement; 38,100-hour pretraining corpus; emergent capabilities including zero-shot instruction following and cross-embodiment transfer",
+    "comments": "Impressive scale and real-world validation across multiple platforms, but the human-to-robot synthesis pipeline's generalization limits remain unclear.",
+    "model_io": [
+      {
+        "model": "Qwen-RobotManip (Vision-Language-Action foundation model built on Qwen-VL)",
+        "inputs": [
+          "egocentric hand demonstrations",
+          "robot visual observations",
+          "manipulation instructions",
+          "multi-source manipulation datasets"
+        ],
+        "outputs": [
+          "robot trajectories",
+          "manipulation actions",
+          "object interaction predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Unified alignment across representation, motion, and behavioral dimensions enables coherent multi-source training at scale",
+        "result": "Confirmed; alignment framework allows absorption of 38,100 hours of heterogeneous data"
+      },
+      {
+        "hypothesis": "Standard benchmarks fail to capture pretraining quality; OOD evaluation is more informative",
+        "result": "Supported; model shows strong performance on RoboChallenge and OOD settings despite lower standard benchmark scores"
+      }
+    ]
+  },
+  "hf:2606.24893": {
+    "category": "Agents/RL",
+    "task": "Evaluation framework for test-time continual learning in long-horizon agents",
+    "key_results": "Procedurally generates open-ended text games; identifies critical limits in agent exploration, knowledge acquisition, and memory retention; top agents remain far below human performance",
+    "comments": "Novel evaluation paradigm that challenges the test-train separation assumption, though results mainly highlight gaps rather than solutions.",
+    "model_io": [
+      {
+        "model": "Diverse agent paradigms (various base models)",
+        "inputs": [
+          "procedurally generated text game states",
+          "interactive instructions",
+          "world entities and dynamics"
+        ],
+        "outputs": [
+          "agent actions",
+          "exploration traces",
+          "knowledge acquisition metrics",
+          "episodic memory contents"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Short-term memory mechanisms benefit multiple agent paradigms in test-time continual learning",
+        "result": "Confirmed; short-term memory is identified as important component across paradigms"
+      },
+      {
+        "hypothesis": "Performance scales with stronger base models but substantial headroom for improvement exists",
+        "result": "Confirmed; even top agents remain well below human performance in long-horizon settings"
+      }
+    ]
+  },
+  "hf:2604.20920": {
+    "category": "LLM/Reasoning",
+    "task": "Simplified sparse attention for long-context inference without architectural changes",
+    "key_results": "Outperforms sparse-attention baselines on LongBench; surpasses full attention by 5.7+ points in RAG; H-SSA achieves 32x compression with log-linear complexity",
+    "comments": "Clever approach using gist tokens to avoid KV cache overhead, though the continued pretraining requirement and generalization to non-retrieval tasks need exploration.",
+    "model_io": [
+      {
+        "model": "Language model with gist-token continued pretraining",
+        "inputs": [
+          "long sequences interleaved with gist tokens",
+          "query tokens",
+          "context chunks"
+        ],
+        "outputs": [
+          "next-token predictions",
+          "selective chunk unfolding",
+          "sparse attention scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Gist tokens can pack chunk-important information via restricted attention masks during pretraining",
+        "result": "Confirmed; model learns to encode information into gist tokens for efficient retrieval"
+      },
+      {
+        "hypothesis": "Query-relevant selective unfolding filters noise better than full attention in RAG",
+        "result": "Confirmed; SSA outperforms full attention after continued pretraining by 5.7+ points"
+      }
+    ]
+  },
+  "hf:2606.25610": {
+    "category": "Vision",
+    "task": "Benchmark for tokenization strategies in scientific foundation models",
+    "key_results": "Evaluated 4 tokenization methods (Affine, AIM, JetFormer, VQ-VAE) on 640K galaxy images; JetFormer best for reconstruction, VQ-VAE best for physical property prediction; reconstruction and representation quality are decoupled",
+    "comments": "Rigorous scientific benchmark using independently measured physical properties, but limited to single domain (astronomy); results suggest no universally optimal tokenization.",
+    "model_io": [
+      {
+        "model": "AstroPT backbone with 4 tokenization variants",
+        "inputs": [
+          "galaxy images from DESI Legacy Survey"
+        ],
+        "outputs": [
+          "reconstructed images",
+          "physical property predictions",
+          "learned representations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Different tokenization strategies exhibit trade-offs between reconstruction fidelity and representation quality",
+        "result": "Confirmed; no single method consistently best across all evaluation metrics"
+      },
+      {
+        "hypothesis": "Reconstruction quality and learned representation quality are independent",
+        "result": "Confirmed; high reconstruction (JetFormer) does not guarantee strong property prediction"
+      }
+    ]
+  },
+  "hf:2606.20970": {
+    "category": "Vision",
+    "task": "Expert routing for multi-modal social reasoning in omni-modal video understanding",
+    "key_results": "59.38% accuracy on OmniSocialBench; 15.33pp improvement over proprietary baselines, 26.77pp over open-source omni-baselines; largest gains on audio-visual coordination and temporal grounding",
+    "comments": "Schema-guided routing is well-motivated for social reasoning, though the contribution of route-aware RL versus supervised fine-tuning alone is unclear.",
+    "model_io": [
+      {
+        "model": "CogniRoute (Mixture-of-Experts framework)",
+        "inputs": [
+          "social video frames",
+          "audio track",
+          "text questions",
+          "cross-modal relation schema",
+          "reasoning demand labels",
+          "temporal scope annotations"
+        ],
+        "outputs": [
+          "question answers",
+          "expert routing decisions",
+          "modality-consistent reasoning traces",
+          "temporal evidence spans"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Cognitive schema factorization (cross-modal relation, reasoning demand, temporal scope) enables better expert routing",
+        "result": "Confirmed; schema-guided training improves accuracy and reasoning consistency"
+      },
+      {
+        "hypothesis": "Route-aware RL jointly optimizing token generation and expert allocation improves temporal grounding",
+        "result": "Confirmed; largest improvements on temporally grounded social inference tasks"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-74806-2": {
+    "category": "Computational Biophysics",
+    "task": "Characterize metabolon assembly mechanics and substrate channeling in CoQ biosynthesis",
+    "key_results": "Metabolon clustering and metabolic flux exhibit sigmoidal responses to protein interaction strength; protein proximity rather than spatial organization is necessary for substrate channeling",
+    "comments": "The phase-transition framework elegantly connects structure to function, though the generalizability to other metabolons remains to be established.",
+    "model_io": [
+      {
+        "model": "Coarse-grained molecular dynamics simulation",
+        "inputs": [
+          "COQ enzyme sequences",
+          "protein-protein interaction strengths"
+        ],
+        "outputs": [
+          "metabolon clustering degree",
+          "substrate channeling efficiency",
+          "flux measurements"
+        ]
+      },
+      {
+        "model": "Biochemical perturbation experiments",
+        "inputs": [
+          "COQ enzymes",
+          "interaction network disruptions",
+          "randomized interaction networks"
+        ],
+        "outputs": [
+          "CoQ production efficiency",
+          "metabolic flux"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Complete metabolon clustering enhances substrate channeling and flux",
+        "result": "Confirmed; sigmoidal relationship between clustering and flux observed"
+      },
+      {
+        "hypothesis": "Defined spatial organization is required for channeling",
+        "result": "Refuted; proximity alone is sufficient"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-74910-3": {
+    "category": "Development",
+    "task": "Identify transcriptional regulation of pericyte transition to fibrotic state in pulmonary fibrosis",
+    "key_results": "FOXF1 downregulated in fibrotic pericytes; pericyte-specific Foxf1 deletion worsens bleomycin-induced fibrosis (reduced survival, impaired lung function); Foxf1 overexpression attenuates fibrosis and improves survival; FOXF1 transcriptionally activates ID3 to suppress fibroblast activation",
+    "comments": "The identification of a fibrosis-associated pericyte cluster via scRNAseq is valuable, though the mechanistic link between FOXF1\u2192ID3\u2192IL8/CXCL1 suppression and fibroblast inhibition could be more rigorously established.",
+    "model_io": [
+      {
+        "model": "Bleomycin-induced pulmonary fibrosis mouse model",
+        "inputs": [
+          "pericyte-specific Foxf1 deletion",
+          "pericyte-specific Foxf1 overexpression"
+        ],
+        "outputs": [
+          "lung function",
+          "survival",
+          "fibrotic remodeling",
+          "body weight loss"
+        ]
+      },
+      {
+        "model": "Single-cell RNA-seq of human fibrotic lungs",
+        "inputs": [
+          "pulmonary fibrosis tissue"
+        ],
+        "outputs": [
+          "fibrosis-associated pericyte cluster",
+          "FOXF1 expression"
+        ]
+      },
+      {
+        "model": "In vitro pericyte cultures",
+        "inputs": [
+          "FOXF1 modulation"
+        ],
+        "outputs": [
+          "ID3 expression",
+          "fibroblast activation",
+          "IL8 secretion",
+          "CXCL1 secretion"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "FOXF1 is downregulated in fibrotic pericytes",
+        "result": "Confirmed via scRNAseq analysis"
+      },
+      {
+        "hypothesis": "Pericyte FOXF1 suppression promotes pulmonary fibrosis",
+        "result": "Confirmed; deletion worsens fibrosis, overexpression attenuates it"
+      },
+      {
+        "hypothesis": "FOXF1 prevents pericyte-to-fibrotic transition via ID3 and cytokine regulation",
+        "result": "Supported; FOXF1 activates ID3 and reduces IL8/CXCL1 secretion"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-60161-1": {
+    "category": "Cell Signaling",
+    "task": "Investigate non-canonical lncRNA-H19/miR-212-5p regulation of KLF4 in homocysteine-induced VSMC dysfunction",
+    "key_results": "Hcy upregulates lncRNA-H19 and miR-212-5p in VSMCs; lncRNA-H19 directly binds miR-212-5p to downregulate KLF4 expression independent of ceRNA mechanism; promotes VSMC hyperproliferation, migration, and decreased apoptosis",
+    "comments": "The claim of non-canonical ceRNA-independent regulation is intriguing but mechanistically underdeveloped; the direct lncRNA-miRNA interaction requires structural validation beyond binding assays.",
+    "model_io": [
+      {
+        "model": "HHcy ApoE\u207b/\u207b mice and cultured VSMCs",
+        "inputs": [
+          "homocysteine",
+          "lncRNA-H19 modulation",
+          "miR-212-5p inhibition"
+        ],
+        "outputs": [
+          "miR-212-5p expression",
+          "lncRNA-H19 expression",
+          "KLF4 expression",
+          "VSMC proliferation",
+          "migration",
+          "apoptosis"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Hcy triggers upregulation of lncRNA-H19 and miR-212-5p in VSMCs",
+        "result": "Confirmed in both in vitro and in vivo models"
+      },
+      {
+        "hypothesis": "lncRNA-H19 directly binds miR-212-5p in a non-ceRNA sponge mechanism",
+        "result": "Supported by molecular interaction assays; proposed as non-canonical mechanism"
+      }
+    ]
+  },
+  "nature:10.1038/s42003-026-10555-8": {
+    "category": "Cell Signaling",
+    "task": "Determine cathepsin G and neutrophil elastase roles in Leishmania infantum control via TLR-mediated cytokine induction",
+    "key_results": "NE and CG activate TLR2/TLR3/TLR4 to induce IFN-\u03b1 and TNF-\u03b1 in macrophages; in vivo, NE/CG promote IL-12, NO, and CCL2 production but unexpectedly increase splenic parasitism; CG-deficient mice show impaired Ly6Chi myeloid recruitment and reduced parasite burden",
+    "comments": "The paradoxical in vivo finding that serine proteases promote parasite control in vitro but increase systemic parasitism in vivo suggests tissue-specific or immune cell context-dependent effects not fully explained.",
+    "model_io": [
+      {
+        "model": "Macrophage cell lines and CG/NE-deficient mice",
+        "inputs": [
+          "Leishmania infantum",
+          "NE inhibitors",
+          "CG inhibitors",
+          "TLR ligands"
+        ],
+        "outputs": [
+          "IFN-\u03b1 secretion",
+          "TNF-\u03b1 secretion",
+          "IL-12 production",
+          "nitric oxide",
+          "CCL2",
+          "parasite burden",
+          "Ly6Chi cell recruitment"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "NE and CG control L. infantum via TLR-dependent IFN-\u03b1/TNF-\u03b1 induction",
+        "result": "Confirmed in macrophage cultures"
+      },
+      {
+        "hypothesis": "NE/CG are required for anti-parasitic immune responses in vivo",
+        "result": "Partially confirmed; NE/CG necessary for inflammatory cytokine production but promote systemic infection"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-55834-w": {
+    "category": "Statistical Methods",
+    "task": "Compact gene signature discovery for liver preservation transcriptomics",
+    "key_results": "AUC 0.959-0.965 within-cohort; poor cross-dataset transfer (balanced accuracy 0.500); high transfer within reperfusion-focused cohorts (AUC 0.99-1.00)",
+    "comments": "Demonstrates context-specific signatures with convergent biology in reperfusion cohorts; cross-cohort portability severely limited, requiring tailored assays.",
+    "model_io": [
+      {
+        "model": "Elastic Net + XGBoost in nested cross-validation",
+        "inputs": [
+          "full transcriptomes"
+        ],
+        "outputs": [
+          "compact gene panels",
+          "AUC",
+          "cross-dataset transferability"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Full transcriptomes can be compressed to compact panels without performance loss",
+        "result": "Confirmed within cohorts (AUC 0.959-0.965); rejected across cohorts"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-56644-w": {
+    "category": "Other",
+    "task": "Target recognition in blurred/occluded terahertz images",
+    "key_results": "Precision 79.3% (vs 66.7% baseline), Recall 80.6%, mAP50 83.7%; OCA mechanism with Focal-EIoU loss",
+    "comments": "Image enhancement preprocessing and loss function engineering are key; evaluation limited to lab datasets.",
+    "model_io": [
+      {
+        "model": "EOF-YOLOv5 with OCA attention and Focal-EIoU loss",
+        "inputs": [
+          "terahertz images"
+        ],
+        "outputs": [
+          "bounding boxes",
+          "precision",
+          "recall",
+          "mAP50"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-57487-1": {
+    "category": "Other",
+    "task": "Paddy leaf disease detection and classification",
+    "key_results": "99.07% accuracy via IGT-YOLO; B-CLAHE preprocessing improves contrast; 3.21%, 5.25%, 1.98% gains over CNN, DeepRice, FasterR-CNN",
+    "comments": "Strong results but evaluation likely on limited dataset; real-world field generalization and temporal robustness not demonstrated.",
+    "model_io": [
+      {
+        "model": "YOLO-LEAFNET (YOLOv8 + IGT optimization)",
+        "inputs": [
+          "paddy leaf images"
+        ],
+        "outputs": [
+          "disease classification",
+          "accuracy",
+          "recall",
+          "F1 score"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-57911-6": {
+    "category": "Statistical Methods",
+    "task": "Epileptic seizure detection from EEG signals",
+    "key_results": "99.538% accuracy on Bonn dataset, 97.801% on CHB-MIT; 100% sensitivity with 2.474/h false detection rate",
+    "comments": "Hybrid CNN-Transformer with LSTM achieves strong performance but lacks prospective clinical validation and real-world deployment evidence.",
+    "model_io": [
+      {
+        "model": "IIRB-HybridFormer",
+        "inputs": [
+          "EEG signals"
+        ],
+        "outputs": [
+          "seizure/non-seizure classification",
+          "sensitivity",
+          "false detection rate"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-58089-7": {
+    "category": "Other",
+    "task": "Multi-person athlete pose estimation in complex sports scenes",
+    "key_results": "AP50 improvement 5.7-16.9% in multi-person scenarios; MPJPE decrease 5.2-9.2 pixels in dynamic scenarios; Recall improvement 4.8-9.3% under occlusion",
+    "comments": "Comprehensive three-module architecture (STGCN-IS, DSTformer, BCQ) shows strong benchmark results; lacks evaluation on specialized sports technique validation.",
+    "model_io": [
+      {
+        "model": "STG-DB Net (STGCN-IS + DSTformer + BCQ)",
+        "inputs": [
+          "video frames",
+          "action templates"
+        ],
+        "outputs": [
+          "pose keypoints",
+          "AP50",
+          "MPJPE",
+          "Recall"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-58738-x": {
+    "category": "Structural Prediction",
+    "task": "Semantic segmentation of crops and weeds in UAV imagery",
+    "key_results": "ResNet-34 backbone achieves mean Dice 0.9198; NAFNet deblurring improves blurred subset by 27.7%; full model 24.4M parameters",
+    "comments": "Counterintuitive finding that ResNet-34 outperforms deeper variants suggests capacity saturation; deblurring module is critical for real-world UAV data.",
+    "model_io": [
+      {
+        "model": "UNet-ResNet with NAFNet deblurring",
+        "inputs": [
+          "UAV images"
+        ],
+        "outputs": [
+          "semantic segmentation masks",
+          "Dice score",
+          "mean Dice Score"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Deeper ResNet encoders improve segmentation accuracy",
+        "result": "Rejected; ResNet-34 outperforms ResNet-50/101, indicating capacity saturation"
+      },
+      {
+        "hypothesis": "Deblurring improves segmentation on motion-blurred imagery",
+        "result": "Confirmed; 27.7% relative improvement on blurred test subset"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-58789-0": {
+    "category": "Statistical Methods",
+    "task": "Demographic-aware autism spectrum disorder classification from sMRI",
+    "key_results": "84.25% gender-based accuracy, 88.07% age-based, 71.58% joint classification; OptABC optimization outperforms manual tuning",
+    "comments": "Metaheuristic optimization is effective but joint age-gender classification introduces complexity; limited to ABIDE dataset, external validation needed.",
+    "model_io": [
+      {
+        "model": "CNN models optimized via OptABC algorithm",
+        "inputs": [
+          "structural MRI data"
+        ],
+        "outputs": [
+          "ASD classification",
+          "accuracy by demographic group"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Age-aware modeling improves discrimination over gender-based classification",
+        "result": "Confirmed; 88.07% vs 84.25% accuracy"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-58892-2": {
+    "category": "Structural Prediction",
+    "task": "Multimodal lung cancer detection from CT-PET and clinical data",
+    "key_results": "Accuracy 96.5% (vs 88.2% CT-only), AUC 0.982; 8.3% absolute accuracy gain; attention mechanism contributes 9% improvement",
+    "comments": "Comprehensive multimodal fusion with strong performance; limited to single institution; generalization to diverse imaging protocols unclear.",
+    "model_io": [
+      {
+        "model": "Attention-guided multimodal framework (CNN + clinical encoder + fusion)",
+        "inputs": [
+          "CT images",
+          "PET images",
+          "electronic health records"
+        ],
+        "outputs": [
+          "tumor classification",
+          "accuracy",
+          "AUC-ROC",
+          "F1-score"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Attention-based fusion improves over baseline CT-only model",
+        "result": "Confirmed; 8.3 percentage point accuracy improvement"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-59234-y": {
+    "category": "Structural Prediction",
+    "task": "Real-time ultrasound image segmentation via cloud-edge collaboration",
+    "key_results": "Near real-time inference on edge devices; maintains high accuracy while reducing latency; favorable accuracy-speed balance",
+    "comments": "Dynamic routing strategy is novel; actual edge device deployment validation missing, limiting practical impact assessment.",
+    "model_io": [
+      {
+        "model": "CEA-Net with lightweight encoder and dynamic inference routing",
+        "inputs": [
+          "ultrasound images"
+        ],
+        "outputs": [
+          "segmentation masks",
+          "inference latency",
+          "segmentation accuracy"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-59359-0": {
+    "category": "Genomics",
+    "task": "Genomic characterization of lignocellulolytic Bacillus subtilis strain YE16",
+    "key_results": "98.63% ANI to B. subtilis reference; 43 strain-specific genes; 95 GHs, 83 GTs, 38 CBMs; 18 biosynthetic gene clusters identified",
+    "comments": "First report from yak dung niche; genomically distinct strain with no major virulence determinants; functional validation of CAZymes pending.",
+    "model_io": [
+      {
+        "model": "Whole-genome sequencing and comparative genomics",
+        "inputs": [
+          "genomic DNA"
+        ],
+        "outputs": [
+          "taxonomy assignment",
+          "strain-specific genes",
+          "CAZyme inventory",
+          "biosynthetic clusters"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-59682-6": {
+    "category": "Genomics",
+    "task": "Novel bacterial species characterization from brackish lake sediments",
+    "key_results": "Two novel species in Lacipirellulaceae family; genomes 5.6-6.0 Mbp; distinct biosynthetic gene cluster portfolios",
+    "comments": "Comprehensive phylogenomic and genomic characterization; biochemical and physiological properties require further investigation.",
+    "model_io": [
+      {
+        "model": "16S rRNA phylogenetic analysis + whole-genome sequencing",
+        "inputs": [
+          "bacterial isolates",
+          "genomic DNA"
+        ],
+        "outputs": [
+          "species assignment",
+          "phylogenetic placement",
+          "genome features"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-59947-0": {
+    "category": "Proteomics",
+    "task": "Molecular property prediction via hierarchical pooling GNNs",
+    "key_results": "Pharmacophore-based graph reduction achieved comparable accuracy to full graphs; XAI revealed divergent internal learning strategies",
+    "comments": "Study demonstrates that different GNN architectures may achieve same performance through fundamentally different feature learning pathways.",
+    "model_io": [
+      {
+        "model": "Hierarchical pooling GNNs with pharmacophore features",
+        "inputs": [
+          "molecular graphs"
+        ],
+        "outputs": [
+          "compound classification predictions",
+          "feature importance maps"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Pharmacophore-based reduction and complete graphs produce equivalent predictions",
+        "result": "Confirmed; comparable accuracy with different internal mechanisms"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-60089-6": {
+    "category": "Statistical Methods",
+    "task": "Facial emotion recognition in videos",
+    "key_results": "93.6% frame-level accuracy, 98.1% video-level accuracy via temporal aggregation",
+    "comments": "Majority voting aggregation is simple but effective; lacks multimodal fusion and advanced temporal modeling.",
+    "model_io": [
+      {
+        "model": "VGG16 CNN + majority voting temporal aggregation",
+        "inputs": [
+          "video frames"
+        ],
+        "outputs": [
+          "emotion classification",
+          "frame-level and video-level predictions"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-60202-9": {
+    "category": "Statistical Methods",
+    "task": "Perioperative risk stratification via lightweight explainable model",
+    "key_results": "External validation AUC 0.912, Brier 0.070, Hosmer-Lemeshow P=0.227; outperforms ASA-only (0.656) and logistic benchmark (0.895)",
+    "comments": "Strong external validation on geographically distinct cohort; practical EHR integration demonstrated but effectiveness after active deployment unproven.",
+    "model_io": [
+      {
+        "model": "LiteSurgFormer (MLP-attention)",
+        "inputs": [
+          "patient demographics",
+          "disease factors",
+          "procedure variables",
+          "surgical team data"
+        ],
+        "outputs": [
+          "30-day adverse event risk",
+          "AUC",
+          "calibration metrics"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-56215-z": {
+    "category": "ML Theory",
+    "task": "Privacy-preserving federated intrusion detection via optimized spiking neural networks",
+    "key_results": "GBOA_SR-ShuffleNet achieves 96.48% accuracy, 95.63% mAP, 96.93% recall, 3.15% FAR on intrusion detection; SHAP provides interpretability",
+    "comments": "Comprehensive metrics but lacks ablation isolating GBOA optimization gain; spiking neural network application to IDS underexplored in literature.",
+    "model_io": [
+      {
+        "model": "GBOA_SR-ShuffleNet with DKN feature fusion and bootstrapping augmentation",
+        "inputs": [
+          "normalized IoT network traffic, imbalanced attack and normal samples"
+        ],
+        "outputs": [
+          "attack/normal classification, feature importance via SHAP"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Gradient boosting optimization of spiking residual networks under non-IID data improves robustness and generalization in federated intrusion detection",
+        "result": "96.48% accuracy, 95.63% mAP, 96.93% recall achieved across distributed nodes with heterogeneous data"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-58856-6": {
+    "category": "Other",
+    "task": "Seated VR locomotion interface balancing immersion and physical load",
+    "key_results": "Leg-swing provides significantly higher immersion than joystick with similar physical effort; reports lower physical load than seated WIP with comparable immersion",
+    "comments": "User study validates design trade-offs; small sample and single-session evaluation limits generalizability across user populations.",
+    "model_io": [
+      {
+        "model": "Leg-swing interface with pressure sensor-based speed/lean inference",
+        "inputs": [
+          "seat pressure distribution measurements"
+        ],
+        "outputs": [
+          "locomotion velocity, leaning angle"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Leg-swinging locomotion achieves intermediate balance between joystick (low immersion) and seated WIP (high load)",
+        "result": "Leg-swing perceived as significantly more immersive than joystick with similar effort; lower physical load than seated WIP with comparable immersion"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-58890-4": {
+    "category": "ML Theory",
+    "task": "Unknown attack identification in power grid edge device memory forensics",
+    "key_results": "99.9% recognition accuracy for malicious attacks; 99.99% classification accuracy for unknown attack types using gradient boosting on memory image features",
+    "comments": "Exceptional accuracy claims but evaluated only on synthetic or limited attack samples; generalization to truly novel zero-day attacks unclear.",
+    "model_io": [
+      {
+        "model": "Interpretability model + gradient boosting classifier",
+        "inputs": [
+          "memory forensic images with process behavior patterns and kernel objects"
+        ],
+        "outputs": [
+          "attack type classification, unknown attack detection"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Memory-side characteristics (process patterns, kernel objects) enable distinguishing unknown attacks from known attacks",
+        "result": "99.99% classification accuracy for unknown malicious attacks on memory images"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-60154-0": {
+    "category": "ML Theory",
+    "task": "Thermal fault diagnosis for circuit breakers via instance segmentation and KDE",
+    "key_results": "Improved instance segmentation achieves 0.793 mask mAP (vs. 0.667 baseline), +18.9% relative improvement, FLOPs reduced 0.9G; thermal fault diagnosis effective for hot-spot localization",
+    "comments": "Practical smart-grid application; KDE thermal analysis is interpretable but limited to industrial rule-based thresholds.",
+    "model_io": [
+      {
+        "model": "Improved instance segmentation + KDE probability density + mean filtering",
+        "inputs": [
+          "thermal/infrared images of circuit breakers"
+        ],
+        "outputs": [
+          "breaker instance masks, temperature probability density, fault diagnosis and localization"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Instance segmentation combined with KDE-based temperature analysis enables automatic thermal fault diagnosis and hot-spot localization",
+        "result": "Improved instance segmentation achieves 0.793 mask mAP; algorithm effectively identifies thermal faults per industrial rules"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-60347-7": {
+    "category": "ML Theory",
+    "task": "Underwater object detection with improved YOLOv11",
+    "key_results": "SFL-YOLO achieves 85.4% mAP@0.5 on URPC2020 (+1.6% vs. YOLOv11n), 85.7% mAP@0.5 on RUOD (+1.1%); 4.50M parameters, 142 FPS real-time",
+    "comments": "Well-motivated architectural choices (SCTC, FARU, LDMDH) address underwater-specific challenges; robustness on diverse underwater scenes beyond URPC/RUOD unvalidated.",
+    "model_io": [
+      {
+        "model": "SFL-YOLO (SCTC strided downsampling, FARU upsampling, LDMDH detection head)",
+        "inputs": [
+          "underwater images with low contrast, light scattering, small/blurred objects"
+        ],
+        "outputs": [
+          "object detections with class labels and confidence scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Content-aware spatial-channel rearrangement and degradation-aware modulation improve underwater object detection accuracy",
+        "result": "85.4% mAP@0.5 on URPC2020, 85.7% on RUOD with real-time performance (142 FPS)"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-74925-w": {
+    "category": "Optics/Photonics",
+    "task": "Demonstrate achromatic neutron lens for full-field microscopy",
+    "key_results": "First demonstration of achromatic neutron lens overcoming chromatic aberration in polychromatic beams; enables high-resolution neutron microscopy without sample-detector distance constraints",
+    "comments": "This breakthrough addresses a long-standing limitation in neutron optics and opens new possibilities for materials characterization at micron-scale resolution.",
+    "model_io": [
+      {
+        "model": "Neutron achromatic lens optical system",
+        "inputs": [
+          "polychromatic neutron beam",
+          "neutron wavelengths"
+        ],
+        "outputs": [
+          "focused neutron image",
+          "spatial resolution",
+          "magnification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Achromatic lens design can correct chromatic aberration inherent to compound refractive lenses and Fresnel zone plates",
+        "result": "Confirmed; lens enables full-field neutron microscopy with improved resolution and flexibility in detection system design"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-58427-9": {
+    "category": "Condensed Matter",
+    "task": "Band gap engineer K\u2082AgSbX\u2086 (X=Cl,F,I) double perovskites for photovoltaic and thermoelectric applications",
+    "key_results": "K\u2082AgSbI\u2086 bandgap 0.97 eV (mBJ+SOC) with ZT>1.0 at high temperature; K\u2082AgSbF\u2086 bandgap 4.017 eV; carrier effective mass in I-compound lowest at 0.204m\u2080",
+    "comments": "Halide substitution provides effective tuning of electronic, optical and thermoelectric properties; K\u2082AgSbI\u2086 emerges as strongest candidate for solar/IR applications.",
+    "model_io": [
+      {
+        "model": "DFT study with GGA and mBJ functionals",
+        "inputs": [
+          "lattice parameters",
+          "atomic positions",
+          "halide type"
+        ],
+        "outputs": [
+          "band structure",
+          "optical properties",
+          "elastic constants",
+          "thermoelectric figure of merit"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Iodine substitution reduces bandgap and enhances thermoelectric performance compared to Cl and F compounds",
+        "result": "Confirmed; K\u2082AgSbI\u2086 shows lowest bandgap (0.97 eV) and highest ZT (>1.0), optimal for visible/IR optoelectronics"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-74998-7": {
+    "category": "Gene Regulation",
+    "task": "Characterizing developmental differences in neonatal versus adult MR1T cell repertoires and bacterial recognition",
+    "key_results": "Neonatal MR1T cells show greater TCR diversity but reduced bacterial recognition, diminished cytotoxic gene expression, and decreased \u03b2 chain contribution to MR1 binding versus adult cells",
+    "comments": "Single-cell TCR/RNA integration provides mechanistic insight into neonatal immunodeficiency, though functional restoration strategies remain unclear.",
+    "model_io": [
+      {
+        "model": "Single-cell RNA-seq and TCR repertoire analysis",
+        "inputs": [
+          "cord blood MR1T cells",
+          "adult blood MR1T cells",
+          "MR1/5-OP-RU tetramers"
+        ],
+        "outputs": [
+          "TCR sequences",
+          "gene expression profiles",
+          "bacterial recognition capacity",
+          "TCR-MR1 binding affinity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Neonatal and adult MR1T cells differ in TCR structural features affecting pathogen recognition",
+        "result": "Structural analysis revealed reduced \u03b2 chain contribution to TCR-MR1 interface in neonatal MAIT TCRs"
+      },
+      {
+        "hypothesis": "TCR diversity inversely correlates with functional maturation in MR1T cells",
+        "result": "Greater TCR diversity in neonatal cells associated with reduced cytotoxic/proinflammatory gene expression"
+      }
+    ]
   }
 }
