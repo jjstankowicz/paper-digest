@@ -324578,5 +324578,979 @@
         "result": "Confirmed; functional domains recovered for both regulatory modalities"
       }
     ]
+  },
+  "hf:2606.29957": {
+    "category": "Benchmark",
+    "task": "Evaluate coding agents in interactive multi-turn user sessions",
+    "key_results": "Frontier agents achieve higher final success rates while requiring fewer corrective interventions; benchmark reconstructed from 11,260 real sessions into 109 verifiable tasks",
+    "comments": "Addresses a critical gap between static benchmarks and real interactive coding assistance, though simulator fidelity to human feedback patterns remains a potential limitation.",
+    "model_io": [
+      {
+        "model": "Frontier coding agents (e.g., Claude, GPT-4)",
+        "inputs": [
+          "task description",
+          "user feedback across turns",
+          "repository context"
+        ],
+        "outputs": [
+          "code changes",
+          "intermediate solutions"
+        ]
+      },
+      {
+        "model": "LLM-based user simulator",
+        "inputs": [
+          "agent progress",
+          "original session context"
+        ],
+        "outputs": [
+          "corrective feedback",
+          "clarifications"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Stronger agents achieve higher success rates and require fewer interventions",
+        "result": "Confirmed across frontier models tested"
+      }
+    ]
+  },
+  "hf:2606.27755": {
+    "category": "Vision",
+    "task": "Analyze architectural redundancy in Vision-Language-Action robotic models",
+    "key_results": "Language backbones are highly redundant (removing 50% of LLM blocks improved OpenVLA-OFT from 95.0% to 98.3%); vision and action pathways show less tolerance to removal",
+    "comments": "Reveals significant capacity misallocation in current VLA architectures, though findings may be specific to standard manipulation tasks without complex compositional instructions.",
+    "model_io": [
+      {
+        "model": "Vision-Language-Action models (OpenVLA-OFT, others)",
+        "inputs": [
+          "robotic images",
+          "language instructions",
+          "state context"
+        ],
+        "outputs": [
+          "action predictions",
+          "control signals"
+        ]
+      },
+      {
+        "model": "GateProbe sensitivity metric",
+        "inputs": [
+          "transformer blocks",
+          "downstream action loss"
+        ],
+        "outputs": [
+          "block importance rankings"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Language backbones are redundant for standard robotic manipulation",
+        "result": "Confirmed; half of LLM blocks removable without performance loss"
+      },
+      {
+        "hypothesis": "Vision and action pathways are less redundant than language",
+        "result": "Confirmed; these components show lower recoverability post-removal"
+      }
+    ]
+  },
+  "hf:2501.18916": {
+    "category": "LLM/Reasoning",
+    "task": "Optimize programs using LLM with retrieval-augmented search",
+    "key_results": "RAS achieves 2.06\u00d7 improvement over prior blackbox methods for C++ optimization; Python runtime improved by 10.27 percentile; AEGIS produces 1.37\u00d7 better edits",
+    "comments": "Clever insight that natural language descriptions outperform source code for retrieval, though generalization to domain-specific optimizations is unclear.",
+    "model_io": [
+      {
+        "model": "LLM (unspecified, blackbox)",
+        "inputs": [
+          "slow program code",
+          "retrieved in-context examples",
+          "natural language description"
+        ],
+        "outputs": [
+          "optimized code candidate",
+          "beam search alternatives"
+        ]
+      },
+      {
+        "model": "AEGIS decomposer",
+        "inputs": [
+          "training example pairs (slow-fast)"
+        ],
+        "outputs": [
+          "atomic edit sequences"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Natural language retrieval outperforms source-code-based retrieval",
+        "result": "Confirmed; significantly better guidance for beam search"
+      },
+      {
+        "hypothesis": "Atomic edits improve interpretability and performance",
+        "result": "Confirmed; 1.37\u00d7 improvement with smaller edit magnitude"
+      }
+    ]
+  },
+  "hf:2606.27409": {
+    "category": "Agents/RL",
+    "task": "Model belief propagation stability in multi-agent LLM systems with delayed verification",
+    "key_results": "Spectral analysis yields closed-form stability threshold (inverse golden ratio for delay-2); greedy placement achieves (1-1/e)-approximation for corrector budget allocation; experiments confirm oscillation predictions",
+    "comments": "Elegant theoretical framework connecting delay dynamics to stability, but real-world applicability depends on whether agent networks exhibit the modeled consensus dynamics.",
+    "model_io": [
+      {
+        "model": "Multi-agent LLM consensus system (graph-based)",
+        "inputs": [
+          "agent beliefs",
+          "grounded corrector signals",
+          "verification delay"
+        ],
+        "outputs": [
+          "converged or oscillating belief states"
+        ]
+      },
+      {
+        "model": "Grounded Laplacian spectral analysis",
+        "inputs": [
+          "network topology",
+          "delay parameters"
+        ],
+        "outputs": [
+          "stability threshold",
+          "corrector placement recommendations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Delayed verification destabilizes consensus into oscillation",
+        "result": "Confirmed across five open models; dose-delay threshold identified"
+      },
+      {
+        "hypothesis": "Grounded factual answering eliminates instability via absorbing boundaries",
+        "result": "Confirmed; instability specific to signed-belief tasks"
+      }
+    ]
+  },
+  "hf:2606.23885": {
+    "category": "Vision",
+    "task": "Improve multimodal LLMs through fine-grained head-wise representation alignment",
+    "key_results": "HeRA improves performance across 18 benchmarks; aligning least-aligned heads yields largest gains; reduces visual hallucinations by curbing linguistic bias",
+    "comments": "Counterintuitive finding that misaligned heads benefit most from alignment is interesting, though theoretical explanation of why this occurs remains unexplored.",
+    "model_io": [
+      {
+        "model": "Multimodal LLM (MLLM with Transformer attention heads)",
+        "inputs": [
+          "image patches",
+          "text tokens"
+        ],
+        "outputs": [
+          "aligned representations",
+          "vision-centric predictions"
+        ]
+      },
+      {
+        "model": "MKNN metric & contrastive alignment",
+        "inputs": [
+          "attention head representations",
+          "vision encoder representations"
+        ],
+        "outputs": [
+          "alignment scores",
+          "differentiable alignment loss"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Head-wise alignment outperforms layer-level alignment",
+        "result": "Confirmed; consistent improvements across 18 benchmarks"
+      },
+      {
+        "hypothesis": "Aligning least-aligned heads produces largest gains",
+        "result": "Confirmed; counterintuitive but consistent finding"
+      },
+      {
+        "hypothesis": "Fine-grained alignment reduces visual hallucinations",
+        "result": "Confirmed; HeRA naturally curbs over-reliance on linguistic priors"
+      }
+    ]
+  },
+  "nature:10.1038/s42003-026-10531-2": {
+    "category": "Membrane Biophysics",
+    "task": "Quantify how ciliary dynamics and morphology regulate mass transport in black coral colonies",
+    "key_results": "Species deploy distinct morphology-cilia combinations balancing exchange surface area and ventilation; internal skeletal spines shape cilia-driven circulation",
+    "comments": "Multi-scale integration from polyp to colony is comprehensive, though causality between morphology-driven flow and ecological specialization remains correlative.",
+    "model_io": [
+      {
+        "model": "black coral colony hydrodynamics",
+        "inputs": [
+          "colony morphology",
+          "ciliary beat patterns",
+          "skeletal architecture"
+        ],
+        "outputs": [
+          "flow velocity fields",
+          "oxygen gradients",
+          "mass transport rates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Ciliary morphology-driven flow shapes mass transport and metabolic exchange",
+        "result": "Confirmed: species-specific cilia-morphology combinations optimize both surface exchange and ventilation efficiency"
+      },
+      {
+        "hypothesis": "Skeletal spines enhance internal circulation via cilia-driven flow",
+        "result": "Confirmed: visualization shows strong internal connectivity shaped by spine geometry"
+      }
+    ]
+  },
+  "nature:10.1038/s44182-026-00099-8": {
+    "category": "Mechanobiology",
+    "task": "Optimize aquatic robot swimming efficiency through dynamic joint stiffness control",
+    "key_results": "89% thrust improvement for drag-based swimming, 19% improvement for body-caudal fin propulsion via stiffness modulation",
+    "comments": "Leveraging differentiable simulation for trajectory optimization is elegant, though validation remains limited to a single fish-inspired platform.",
+    "model_io": [
+      {
+        "model": "discrete variational mechanics multi-rigid-body dynamics",
+        "inputs": [
+          "joint stiffness profiles",
+          "hydrodynamic forces"
+        ],
+        "outputs": [
+          "thrust",
+          "trajectory"
+        ]
+      },
+      {
+        "model": "robotic swimming platform (POSM mechanism)",
+        "inputs": [
+          "optimized joint stiffness commands"
+        ],
+        "outputs": [
+          "swimming speed",
+          "thrust measurements"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Coordinated online stiffness variation improves swimming efficiency",
+        "result": "Confirmed: up to 89% thrust improvement for drag-based and 19% for BCF propulsion"
+      }
+    ]
+  },
+  "nature:10.1038/s41419-026-09048-7": {
+    "category": "Cell Division/Cycle",
+    "task": "Elucidate KLHL14 function in thyroid epithelial identity and senescence regulation",
+    "key_results": "KLHL14 depletion triggers senescence and EMT-like phenotype; TGF-\u03b2 inhibition restores growth and epithelial markers",
+    "comments": "Context-dependent oncogene/suppressor function demonstrated in organoid system with clear mechanistic pathway.",
+    "model_io": [
+      {
+        "model": "Thyroid organoids",
+        "inputs": [
+          "KLHL14",
+          "TGF-\u03b2 signaling"
+        ],
+        "outputs": [
+          "Epithelial identity",
+          "Senescence markers",
+          "EMT markers",
+          "Cell plasticity",
+          "Migratory capacity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "KLHL14 maintains thyroid epithelial identity",
+        "result": "Confirmed: KLHL14 essential for organoid development and epithelial phenotype"
+      },
+      {
+        "hypothesis": "TGF-\u03b2 mediates KLHL14-depletion phenotype",
+        "result": "Confirmed: TGF-\u03b2 inhibition restores growth and reduces senescence/EMT markers"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-74870-8": {
+    "category": "Cell Division/Cycle",
+    "task": "Establish STAG2 as primary orchestrator of post-mitotic genome refolding and STAG1 compensatory role",
+    "key_results": "STAG2 depletion impairs G1 genome remodeling and transcriptional refiring; STAG1 depletion has negligible effects; co-depletion causes synergistic loop loss; STAG2 processivity constrained by CTCF roadblocks not distance",
+    "comments": "Elegant temporal dissection of cohesin paralog functions with mechanistic insights into processivity regulation.",
+    "model_io": [
+      {
+        "model": "Human cells with STAG1/STAG2 depletion",
+        "inputs": [
+          "STAG1",
+          "STAG2",
+          "cohesin",
+          "CTCF"
+        ],
+        "outputs": [
+          "Structural loops (euchromatic/heterochromatic)",
+          "Enhancer-promoter contacts",
+          "Transcriptional activity",
+          "Chromatin architecture"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "STAG2 is primary regulator of post-mitotic genome refolding",
+        "result": "Confirmed: STAG2 depletion impairs early-G1 loop formation and transcriptional refiring"
+      },
+      {
+        "hypothesis": "STAG1 provides compensatory support",
+        "result": "Confirmed: STAG1 depletion alone has minimal effects; co-depletion shows synergy"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-75010-y": {
+    "category": "Apoptosis/Cell Death",
+    "task": "Establish SPOP/CHD1 as genetic determinants of ferroptosis susceptibility in prostate cancer",
+    "key_results": "SPOP mutations enhance GPX4-inhibitor ferroptosis efficacy; CHD1 deletion impairs ferroptosis; SPOP and CHD1 antagonistically regulate MYC-ACSL4 axis; cholesterol-lowering agents restore ACSL4 and re-sensitize SPOP/CHD1 co-deficient tumors",
+    "comments": "Identifies biomarker-driven combinatorial strategy for ferroptosis therapy; context-dependent vulnerabilities require genetic profiling.",
+    "model_io": [
+      {
+        "model": "Genetically engineered human and murine PCa models",
+        "inputs": [
+          "SPOP",
+          "CHD1",
+          "GPX4 inhibitors",
+          "ferroptosis inducers",
+          "cholesterol-lowering agents"
+        ],
+        "outputs": [
+          "ACSL4 expression",
+          "Ferroptosis sensitivity",
+          "MYC-ACSL4 axis",
+          "Tumor response"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "SPOP mutations enhance ferroptosis susceptibility via ACSL4",
+        "result": "Confirmed: SPOP mutations increase MYC-ACSL4 and GPX4-inhibitor sensitivity"
+      },
+      {
+        "hypothesis": "CHD1 deletion impairs ferroptosis by suppressing ACSL4",
+        "result": "Confirmed: CHD1 deletion reduces ACSL4 and ferroptosis efficacy"
+      },
+      {
+        "hypothesis": "Cholesterol metabolism modulation restores ferroptosis sensitivity",
+        "result": "Confirmed: Cholesterol-lowering agents re-sensitize SPOP/CHD1 co-deficient tumors"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-75033-5": {
+    "category": "Cell Division/Cycle",
+    "task": "Determine distinct roles of Plk1 coactivators in cell and centrosome cycle transitions",
+    "key_results": "Bora drives mitotic entry and centrosome maturation; Cep192/Cenexin regulate centriole disengagement and S-phase origin firing with Aurora A",
+    "comments": "Elegantly dissects substrate specificity in Plk1 signaling through genetic separation of functions.",
+    "model_io": [
+      {
+        "model": "Human cells (HeLa)",
+        "inputs": [
+          "Bora",
+          "Cep192",
+          "Cenexin",
+          "Plk1",
+          "Aurora A"
+        ],
+        "outputs": [
+          "Mitotic entry",
+          "DNA-damage recovery",
+          "Centrosome maturation",
+          "Centriole disengagement",
+          "Origin firing"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Bora is primary Plk1 activator for G2 transitions",
+        "result": "Confirmed: Bora controls mitotic entry, DNA-damage recovery, centrosome maturation"
+      },
+      {
+        "hypothesis": "Cep192/Cenexin regulate centriole disengagement",
+        "result": "Confirmed: These coactivators mainly control disengagement"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-74983-0": {
+    "category": "Statistical Methods",
+    "task": "Develop hybrid machine learning force field combining physics-based and learned corrections for molecular simulation",
+    "key_results": "Residual Learning Force Field reduces trade-offs between reliability/efficiency/accuracy; stable across drug-like molecules, dimers, torsional profiles, biomolecules",
+    "comments": "Physics-informed ML approach balances interpretability and performance; three-step training ensures complementary contributions; enables practical drug discovery simulations.",
+    "model_io": [
+      {
+        "model": "Residual Learning Force Field (hybrid ML-physics)",
+        "inputs": [
+          "Molecular structures",
+          "Reference quantum/experimental data"
+        ],
+        "outputs": [
+          "Energy predictions",
+          "Force estimates",
+          "Molecular dynamics trajectories"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Combining physics-based bonded terms with learned corrections improves force field accuracy across diverse molecular systems",
+        "result": "Confirmed: accurate and stable predictions on drug-like molecules, dimers, torsional profiles, and biomolecular simulations"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-58176-9": {
+    "category": "Statistical Methods",
+    "task": "Non-invasive hemoglobin estimation from photoplethysmogram signals using machine learning",
+    "key_results": "XGBoost outperforms other models; R\u00b2 = 0.9862 (t-PPG), 0.9812 (i-PPG); RMSE = 0.0489, 0.0329 g/dL respectively",
+    "comments": "Smartphone-based i-PPG shows comparable performance to clinical device (t-PPG), enabling point-of-care applications; small sample size (n=21) limits clinical validation.",
+    "model_io": [
+      {
+        "model": "XGBoost, Decision Trees, Boosted Trees, NTanH",
+        "inputs": [
+          "PPG signals (t-PPG, i-PPG)",
+          "Optical attenuation features",
+          "Demographic data"
+        ],
+        "outputs": [
+          "Hemoglobin concentration estimates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "XGBoost regression on optical attenuation features predicts hemoglobin more accurately than other algorithms",
+        "result": "Confirmed: XGBoost achieves highest R\u00b2 and lowest RMSE across both signal types"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-59007-7": {
+    "category": "Other",
+    "task": "Sleep/wake scoring and circadian rhythm analysis from actigraphic data with open-source GUI software",
+    "key_results": "ADA software implements classical algorithms and Universal Filter Approach; analysis of 87 weekly recordings reveals circadian descriptors cluster into period and strength groups",
+    "comments": "Practical open-source tool addressing gap in accessible actigraphic analysis; Python library enables extensibility for research applications.",
+    "model_io": [
+      {
+        "model": "ADA (Actigraphic Data Analyser)",
+        "inputs": [
+          "Raw actigraphic data (GENEActiv, ActiGraph, MESA)",
+          "Epoch collapse parameters"
+        ],
+        "outputs": [
+          "Sleep/wake scoring",
+          "Circadian rhythm metrics (DFA, cosinor, IS, IV, M10, L5)",
+          "Daily sleep profiles",
+          "Fragmentation indices"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Circadian descriptors segregate into period-related vs. rhythm-strength groups based on correlation analysis",
+        "result": "Confirmed: k-means clustering on correlation matrix shows distinct grouping of cosinor variants vs. other metrics"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-60016-9": {
+    "category": "Statistical Methods",
+    "task": "Federated learning for imbalanced IoMT healthcare data with synthetic data generation and BiLSTM threat detection",
+    "key_results": "F-BEGAN achieves 94.78% (UNSW-NB15) and 95.90% (NSL-KDD) accuracy; F1-scores of 94.88% and 98.70% for minority-class attacks",
+    "comments": "GAN-based federated approach effectively balances data scarcity and privacy; privacy guarantees of federated setup not quantitatively demonstrated.",
+    "model_io": [
+      {
+        "model": "F-BEGAN (GAN + Federated Learning + BiLSTM)",
+        "inputs": [
+          "Imbalanced IoMT sensor data (UNSW-NB15, NSL-KDD)",
+          "Attack/normal class labels"
+        ],
+        "outputs": [
+          "Synthetic minority-class samples",
+          "Attack classification predictions",
+          "Threat type labels"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "GAN-generated synthetic data improves detection of minority-class threats in federated settings",
+        "result": "Confirmed: superior accuracy and F1-scores for minority classes vs. baseline methods"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-60131-7": {
+    "category": "Evolutionary Biology",
+    "task": "Establish curated DNA barcode database for Austrian mosquito species including Anopheles maculipennis complex",
+    "key_results": "304 cytochrome c oxidase (mtCOI) barcodes from 40 species across 7 genera; three An. maculipennis complex members detected; sequences submitted to NCBI/BOLD",
+    "comments": "Molecular barcoding improves taxonomic resolution beyond morphology; reference database enables future NGS-based identification and vector surveillance applications.",
+    "model_io": [
+      {
+        "model": "DNA barcoding with sequence comparison to reference databases",
+        "inputs": [
+          "Mosquito specimens (Austrian collections)",
+          "mtCOI gene sequences"
+        ],
+        "outputs": [
+          "Species identifications",
+          "Phylogenetic placements",
+          "Reference barcode library (NCBI, BOLD)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "DNA barcoding enables accurate differentiation of Anopheles maculipennis complex members in Austria",
+        "result": "Confirmed: three species (An. daciae, An. maculipennis s.s., An. messeae) distinguished via mtCOI sequence analysis"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-60281-8": {
+    "category": "Statistical Methods",
+    "task": "Predict in-stent restenosis risk from post-procedural angiography using mask-guided deep learning",
+    "key_results": "Mask-guided DenseNet-121 achieves AUC 0.885, AUPRC 0.912 on independent external test; overcomes shortcut learning in full-image baseline models",
+    "comments": "Mask guidance prevents artifact exploitation and ensures stent-region focus; Grad-CAM confirms precise attention patterns; addresses critical clinical need for ISR stratification.",
+    "model_io": [
+      {
+        "model": "Mask-guided DenseNet-121 for ISR prediction",
+        "inputs": [
+          "Post-procedural digital subtraction angiography (DSA) frames",
+          "Vessel region masks"
+        ],
+        "outputs": [
+          "ISR risk predictions",
+          "Probability scores",
+          "Attention visualizations (Grad-CAM)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Mask-guided spatial attention prevents shortcut learning and improves ISR prediction accuracy",
+        "result": "Confirmed: mask strategy overcomes full-image baseline artifacts and achieves superior AUC/AUPRC with robust calibration"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-60359-3": {
+    "category": "Other",
+    "task": "Low-light image enhancement using Retinex decomposition with attention mechanism and dark-only training",
+    "key_results": "UALIE outperforms state-of-the-art on public benchmarks; trains only on paired dark instances without normal-light references",
+    "comments": "Practical approach reducing annotation burden by eliminating need for reference images; U-Net fusion architecture effectively captures multi-level information.",
+    "model_io": [
+      {
+        "model": "UALIE (U-Net with attention for low-light enhancement)",
+        "inputs": [
+          "Low-light images"
+        ],
+        "outputs": [
+          "Enhanced images",
+          "Illumination component",
+          "Reflectance component"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Learning from dark instance pairs only enables effective low-light enhancement without normal-light references",
+        "result": "Confirmed: UALIE achieves competitive performance without requiring well-lit reference images"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-58031-x": {
+    "category": "Algorithms",
+    "task": "Secure data sharing in smart grid using combined keys in trusted environments",
+    "key_results": "Blockchain-based model with dynamic trust certificates and AES-128 combined-key encryption; trustworthiness model effective at intercepting unauthorized access with stable coupling under increasing concurrent users",
+    "comments": "Practical security framework combining blockchain, trust computation, and cryptography; good integration but cryptographic novelty limited to timestamp/random-based key generation.",
+    "model_io": [
+      {
+        "model": "Blockchain + trustworthiness model (user misconduct + service frequency) + AES-128 with dynamic combined keys",
+        "inputs": [
+          "data sharing requests, user access history, key seed matrix, timestamps, random numbers"
+        ],
+        "outputs": [
+          "access permissions, encrypted/decrypted data"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Combined dynamic keys integrated with AES-128 provide superior encryption security and access control for smart grid data sharing",
+        "result": "Effectively intercepts unauthorized access; uniform character frequency distribution in ciphertexts; stable under concurrent load"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-58207-5": {
+    "category": "Algorithms",
+    "task": "Bayesian network structure learning with budget and spectral diagnostics",
+    "key_results": "BAPS reduces SHD by 20.6% (Asia), 14.9% (Insurance), 8.3% (Barley); credibility interval width contracts 69-73% under increasing Dirichlet concentration",
+    "comments": "Integrates classical QUBO optimization with modern uncertainty quantification; repair mechanism is pragmatic but adds complexity.",
+    "model_io": [
+      {
+        "model": "BAPS (budget-controlled QUBO + DAG repair + spectral diagnostics)",
+        "inputs": [
+          "observational data"
+        ],
+        "outputs": [
+          "directed acyclic graph (Bayesian network structure)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Global edge budget with spectral diagnostics and credibility assessment improves Bayesian network structure learning under sparsity and uncertainty",
+        "result": "20-26% SHD reduction; 69-73% credibility contraction; highest BIC gain with comparable predictive performance"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-58705-6": {
+    "category": "Analysis",
+    "task": "Magnetically insulated vacuum diode: existence of solutions and bifurcation analysis",
+    "key_results": "Existence of nonnegative solutions proven via coupled Fredholm integral equations; bifurcation analysis characterizes regime transitions and provides quantitative insulation-spacing estimates",
+    "comments": "Rigorous mathematical treatment combining existence proofs with numerical bifurcation analysis; provides foundational framework for high-power vacuum diode design.",
+    "model_io": [
+      {
+        "model": "Singularly perturbed 1.5-dimensional Vlasov\u2013Maxwell reduced to nonlinear singular system for electric/magnetic potentials and effective potential \u03b8(x)",
+        "inputs": [
+          "boundary conditions, system parameters (charge density, magnetic field)"
+        ],
+        "outputs": [
+          "electric potential, magnetic potential, free boundary position x*, bifurcation diagrams"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Transcritical and saddle-node bifurcations characterize transition to magnetically insulated regime in vacuum diode",
+        "result": "Existence and uniqueness of solutions established; bifurcation analysis identifies critical parameter thresholds and insulation spacing"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-59707-0": {
+    "category": "Algorithms",
+    "task": "Consensus-based data aggregation in wireless sensor networks with adaptive power control",
+    "key_results": "Metropolis competitive under fixed-range symmetric communication; LVP yields more stable aggregation under LINT-based adaptive power with comparable network lifetime and energy efficiency",
+    "comments": "Well-motivated problem coupling topology control with aggregation; simulation-based evaluation solid but lacks real-world WSN experiments.",
+    "model_io": [
+      {
+        "model": "Metropolis and Local Voting Protocol (LVP) under LINT transmission power control",
+        "inputs": [
+          "local sensor measurements, network topology from adaptive power control"
+        ],
+        "outputs": [
+          "aggregated network estimate"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Aggregation protocol performance depends on communication regime; Metropolis favors symmetric fixed-range, LVP excels under adaptive power",
+        "result": "Relative performance validated in simulation; LVP more stable under LINT with comparable network lifetime"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-59840-w": {
+    "category": "Algorithms",
+    "task": "Image steganography with adaptive LSB embedding and Snake algorithm optimization",
+    "key_results": "PSNR 54-61 dB, SSIM >0.99998, AUC 0.49-0.53 against CNN steganalysis; complete lossless recovery of hidden data",
+    "comments": "Strong imperceptibility and robustness metrics, though AUC near 0.5 suggests steganalysis difficulty may partly reflect randomness rather than true robustness.",
+    "model_io": [
+      {
+        "model": "Snake Optimization Algorithm-guided adaptive LSB with AES-GCM",
+        "inputs": [
+          "cover images, secret data"
+        ],
+        "outputs": [
+          "stego images with embedded encrypted data"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Attention-guided adaptive bit embedding guided by Snake algorithm improves steganographic imperceptibility and robustness",
+        "result": "PSNR 54-61 dB, SSIM >0.99998, effective evasion of steganalysis (AUC 0.49-0.53)"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-59954-1": {
+    "category": "Algorithms",
+    "task": "IoT-based roof garden monitoring and crop recommendation",
+    "key_results": "Random Forest achieves 92% prediction accuracy and 95% irrigation efficiency",
+    "comments": "Practical end-to-end system design with real-time monitoring, though modest ML component and limited technical novelty.",
+    "model_io": [
+      {
+        "model": "Random Forest (soil moisture, pH, temperature, humidity, rainfall inputs)",
+        "inputs": [
+          "sensor measurements from roof garden"
+        ],
+        "outputs": [
+          "planting feasibility and crop recommendations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Random Forest on multi-sensor IoT data achieves high accuracy for crop recommendation and irrigation optimization",
+        "result": "92% prediction accuracy, 95% irrigation efficiency demonstrated"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-60445-6": {
+    "category": "ML Theory",
+    "task": "Spam detection in low-resource Kazakh language",
+    "key_results": "XLM-R achieves macro-F1 of 0.99 with LoRA fine-tuning; zero-shot accuracy inconsistent but supervised learning yields >0.99 accuracy across all tested models",
+    "comments": "Demonstrates practical value of parameter-efficient fine-tuning for resource-constrained NLP tasks, though relies on relatively small labeled dataset.",
+    "model_io": [
+      {
+        "model": "bert-base-multilingual-cased, distilbert-base-multilingual-cased, xlm-roberta",
+        "inputs": [
+          "Kazakh spam email text"
+        ],
+        "outputs": [
+          "spam/ham classification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Zero-shot multilingual LLMs generalize well to low-resource Kazakh spam classification",
+        "result": "Inconsistent zero-shot performance; significant class imbalance issues"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-74457-3": {
+    "category": "Condensed Matter",
+    "task": "Demonstrating hydrodynamic emergence in deterministic chaotic circuits",
+    "key_results": "Classical deterministic circuits exhibit Gibbs relaxation, exact Euler equations, shocks, diffusion, and KPZ super-diffusion; methods generalize to higher dimensions and quantum circuits",
+    "comments": "Novel platform bridging microscopic deterministic dynamics and macroscopic hydrodynamics with direct experimental realization, though limited to 1D proof-of-concept",
+    "model_io": [
+      {
+        "model": "1D deterministic chaotic circuits",
+        "inputs": [
+          "initial microscopic configurations"
+        ],
+        "outputs": [
+          "hydrodynamic fields",
+          "Euler equations",
+          "shock structures",
+          "diffusion profiles"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Universal hydrodynamics can emerge from deterministic chaotic circuits independent of microscopic details",
+        "result": "Confirmed through observation of characteristic hydrodynamic behavior including relaxation and KPZ dynamics"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-74615-7": {
+    "category": "Optics/Photonics",
+    "task": "Bayesian deconvolution for image reconstruction without regularization parameter tuning",
+    "key_results": "DeBayes framework provides stable convergence without user-tuned cutoffs; infers full posterior distributions; achieves minimal noise amplification on mitochondrial network imaging",
+    "comments": "Physics-informed alternative to Richardson-Lucy with principled noise modeling; stable convergence without ad hoc regularization is significant practical advantage",
+    "model_io": [
+      {
+        "model": "Bayesian deconvolution framework (DeBayes)",
+        "inputs": [
+          "blurred image",
+          "point spread function",
+          "noise sources"
+        ],
+        "outputs": [
+          "posterior distribution over object",
+          "reconstructed image"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Joint modeling of accurate noise sources and physical image formation yields stable deconvolution without iteration cutoffs",
+        "result": "Confirmed; DeBayes converges stably with minimal artifact amplification"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-75039-z": {
+    "category": "Astrophysics/Cosmology",
+    "task": "Characterizing slow-mode shock propagation in solar flare loops",
+    "key_results": "Slow shocks formed by post-reconnection downflow-evaporation collisions propagate toward chromosphere at speeds ~10\u2013100 km/s; Fe XXI line diagnostic signatures include sharp velocity shifts and asymmetric broadening",
+    "comments": "3D MHD modeling combined with spectral diagnostics provides mechanistic insight into energy transport; results advance standard flare models but validation on additional solar events would strengthen conclusions",
+    "model_io": [
+      {
+        "model": "3D magnetohydrodynamic simulation of solar flare loops",
+        "inputs": [
+          "magnetic reconnection dynamics",
+          "chromospheric evaporation flows"
+        ],
+        "outputs": [
+          "slow-mode shock velocity profiles",
+          "density/temperature structures"
+        ]
+      },
+      {
+        "model": "EUV spectroscopy (Fe XXI 1354 \u00c5 line)",
+        "inputs": [
+          "flare loop radiation"
+        ],
+        "outputs": [
+          "Doppler velocity profiles",
+          "line broadening signatures"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Normal slow shocks recurrently form in flare loops and facilitate energy release",
+        "result": "Confirmed via MHD modeling and spectroscopic signatures of shock fronts"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-58349-6": {
+    "category": "Optics/Photonics",
+    "task": "Lead-free CsSnI\u2083/GaN heterojunction photodetector with broadband dual-mode operation",
+    "key_results": "CsSnI\u2083/GaN hybrid shows broadband UV-to-IR photoresponse; self-powered mode: 0.11 A/W responsivity, 7.5\u00d710\u00b9\u2070 Jones detectivity, 100.4 dB LDR; biased mode: 4.3 A/W, 8\u00d710\u00b9\u00b2 Jones detectivity; compact heterointerface with suppressed recombination",
+    "comments": "Lead-free stable perovskite on large-scale GaN substrate is promising for sustainable photodetectors; dual-mode operation and broadband response are significant practical advantages",
+    "model_io": [
+      {
+        "model": "CsSnI\u2083/GaN heterojunction photodetector",
+        "inputs": [
+          "incident photons (UV-IR)",
+          "external bias voltage"
+        ],
+        "outputs": [
+          "photocurrent",
+          "photoresponsivity",
+          "detectivity",
+          "spectral response"
+        ]
+      },
+      {
+        "model": "Density functional theory electronic structure",
+        "inputs": [
+          "CsSnI\u2083/GaN heterostructure geometry"
+        ],
+        "outputs": [
+          "band alignment",
+          "carrier transport properties"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Well-defined heterointerface and suppressed recombination enable efficient broadband self-powered and biased operation",
+        "result": "Confirmed; dual-mode photoresponse with high detectivity; shorter carrier lifetime vs. pure CsSnI\u2083"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-58502-1": {
+    "category": "Optics/Photonics",
+    "task": "Polarization converting metasurface design for enhanced radar cross section reduction",
+    "key_results": "Single anisotropic meta-atom rotated to implement 1-bit and 2-bit coding; 2-bit configuration achieves significantly deeper RCS reduction via finer phase quantization at 3.81 GHz and 6.35 GHz",
+    "comments": "Efficient phase quantization strategy and simple design are practical strengths; demonstration limited to two frequencies, scalability to broader bands unclear",
+    "model_io": [
+      {
+        "model": "Polarization converting metasurface with spatial coding",
+        "inputs": [
+          "meta-atom orientation",
+          "incident EM wave"
+        ],
+        "outputs": [
+          "converted polarization",
+          "phase distribution",
+          "scattered field"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "2-bit spatial coding achieves deeper RCS suppression than 1-bit via improved phase quantization",
+        "result": "Confirmed; 2-bit configuration demonstrates significantly enhanced scattering diffusion"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-59341-w": {
+    "category": "Condensed Matter",
+    "task": "Enhancing SOI-LDMOSFET performance via surface groove field redistribution",
+    "key_results": "Surface groove technique reduces peak field intensity and improves figure-of-merit by 70%, achieving 4.8 MW/cm\u00b2",
+    "comments": "Simple fabrication-compatible technique with significant performance gain; 2D simulation results require experimental validation to confirm manufacturing feasibility",
+    "model_io": [
+      {
+        "model": "SOI-LDMOSFET with surface groove in drift region",
+        "inputs": [
+          "groove geometry",
+          "doping profiles"
+        ],
+        "outputs": [
+          "electric field distribution",
+          "breakdown voltage",
+          "figure-of-merit"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Surface groove redistributes electric field lines uniformly, reducing peak field and improving device metrics",
+        "result": "Confirmed via 2D simulation; 70% figure-of-merit improvement"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-60122-8": {
+    "category": "Condensed Matter",
+    "task": "Electrocapillary bridge formation from oil-in-oil emulsions under electric fields",
+    "key_results": "Silicone-castor oil emulsions form multiple liquid bridges under lower electric fields than pure oils; bridge number increases with castor-oil fraction; threshold field exhibits non-monotonic dependence on mixing ratio; primary bridges have core-shell structure",
+    "comments": "Dispersed-droplet modification of electrocapillary instabilities is a non-trivial finding; core-shell structure suggests complex interfacial dynamics worth further investigation",
+    "model_io": [
+      {
+        "model": "Oil-in-oil emulsion confined between ITO electrodes",
+        "inputs": [
+          "DC electric field",
+          "emulsion mixing ratio"
+        ],
+        "outputs": [
+          "bridge formation dynamics",
+          "bridge structure",
+          "induction time"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Dispersed droplets in emulsions modify electrocapillary instabilities and facilitate bridge formation in nonpolar oils",
+        "result": "Confirmed; multiple bridges form at lower fields than pure oils; non-monotonic threshold field dependence"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-60300-8": {
+    "category": "Applied Physics",
+    "task": "Characterizing turbulence structure changes in vortex settling tanks under variable flow rates",
+    "key_results": "Doubling flow rate increases wall-region velocity 3\u00d7, turbulence intensity 2\u00d7; highest turbulence at tank outlet; tank efficiency unchanged despite structural degradation",
+    "comments": "Practical validation of turbulence scaling; however, the decoupling between turbulence intensity rise and efficiency suggests dominant settling mechanism remains clarification",
+    "model_io": [
+      {
+        "model": "Vortex settling tank with directed pipe inlet",
+        "inputs": [
+          "flow rates (baseline and 2\u00d7)",
+          "tank geometry"
+        ],
+        "outputs": [
+          "velocity distributions",
+          "turbulence intensity profiles",
+          "spatial gradients"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Doubling flow rate increases turbulence intensity and velocity gradients, negatively impacting tank performance",
+        "result": "Partially confirmed; turbulence increased but efficiency not significantly degraded"
+      }
+    ]
   }
 }
