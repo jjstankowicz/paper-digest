@@ -328009,5 +328009,684 @@
         "result": "Confirmed; three-order-of-magnitude speedup achieved with preserved accuracy"
       }
     ]
+  },
+  "hf:2606.29985": {
+    "category": "LLM/Reasoning",
+    "task": "Measuring strategy-level diversity in LLM mathematical reasoning",
+    "key_results": "Surface-level diversity metrics are unreliable proxies for approach-level diversity; approach-diverse candidate sets improve test-time scaling, but direct optimization via LLM judge rewards causes exploitation rather than genuine strategy broadening",
+    "comments": "Identifies an important mismatch between what current metrics measure and what actually matters for reasoning diversity, though leaves the core optimization problem unsolved.",
+    "model_io": [
+      {
+        "model": "LLM judge (human-calibrated)",
+        "inputs": [
+          "mathematical solutions",
+          "problem context"
+        ],
+        "outputs": [
+          "approach-level diversity scores",
+          "strategy classifications"
+        ]
+      },
+      {
+        "model": "RLVR policy",
+        "inputs": [
+          "math problems",
+          "diversity rewards"
+        ],
+        "outputs": [
+          "solution candidates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Surface-level diversity metrics reliably indicate approach-level diversity",
+        "result": "False - substantial divergence observed between the two"
+      },
+      {
+        "hypothesis": "Approach-diverse candidates improve test-time scaling",
+        "result": "True - approach-diverse sets showed improvements"
+      },
+      {
+        "hypothesis": "Direct optimization of approach-level diversity via judge rewards works",
+        "result": "False - model exploits judge preferences instead of broadening strategies"
+      }
+    ]
+  },
+  "hf:2606.30406": {
+    "category": "LLM/Reasoning",
+    "task": "Integrating multiple domain-specialized capabilities in LLM post-training",
+    "key_results": "MOPD outperforms Mix-RL, Cascade RL, and Off-Policy Finetune baselines on Qwen3-30B; deployed in MiMo-V2-Flash demonstrating industrial-scale viability",
+    "comments": "Practical solution leveraging on-policy distillation to solve a real multi-domain capability integration problem, with proven deployment at scale.",
+    "model_io": [
+      {
+        "model": "Domain-specialized RL teachers",
+        "inputs": [
+          "domain-specific training data"
+        ],
+        "outputs": [
+          "specialized policies"
+        ]
+      },
+      {
+        "model": "Student LLM + distillation",
+        "inputs": [
+          "teacher outputs",
+          "student rollouts"
+        ],
+        "outputs": [
+          "integrated multi-capability LLM"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "On-policy distillation from multiple teachers preserves domain capabilities better than off-policy methods",
+        "result": "True - inherits nearly all teacher capabilities while avoiding exposure bias"
+      },
+      {
+        "hypothesis": "Independent domain teacher development reduces cross-domain coupling",
+        "result": "True - enables parallel development"
+      }
+    ]
+  },
+  "hf:2606.19297": {
+    "category": "Vision",
+    "task": "Measuring commonsense and world knowledge retention in Vision-Language-Action models",
+    "key_results": "VLAs show solid performance on simple concepts but larger gaps on richer semantic categories vs source VLMs; VQA co-training improves knowledge retention; answer-relevant signals peak in middle layers",
+    "comments": "Clever action-grounded evaluation protocol reduces control confounds, though the finding that knowledge attenuates in upper VLA layers suggests fundamental tension between task adaptation and knowledge preservation.",
+    "model_io": [
+      {
+        "model": "VLA models (7 tested) + VLM baselines (9 tested)",
+        "inputs": [
+          "visual observations",
+          "natural language questions",
+          "object placement actions"
+        ],
+        "outputs": [
+          "action selections",
+          "knowledge judgments"
+        ]
+      },
+      {
+        "model": "Layerwise intent probing",
+        "inputs": [
+          "VLA hidden activations"
+        ],
+        "outputs": [
+          "answer-relevant signal localization"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "VLAs retain commonsense knowledge comparably to source VLMs",
+        "result": "Partially true - solid on simple concepts but degrades on rich semantic categories"
+      },
+      {
+        "hypothesis": "VQA co-training improves knowledge retention",
+        "result": "True - observed association with better retention"
+      }
+    ]
+  },
+  "hf:2606.30599": {
+    "category": "Generative",
+    "task": "Instruction-based video editing with multi-task and structural manipulations",
+    "key_results": "Goku dataset: 2M instruction-aligned video pairs covering complex edits; Goku-Edit achieves +8% improvement over baselines; Goku-Bench includes 1,000 human-verified test cases with 7 novel metrics",
+    "comments": "Ambitious scale and scope addressing real-world complexity beyond appearance editing, though the synthetic data quality and generalization to out-of-distribution edits remains to be fully validated.",
+    "model_io": [
+      {
+        "model": "Data synthesis pipeline",
+        "inputs": [
+          "complex editing instructions"
+        ],
+        "outputs": [
+          "video editing pairs"
+        ]
+      },
+      {
+        "model": "Goku-Edit (MLLM text encoder + dual-branch architecture)",
+        "inputs": [
+          "video frames",
+          "editing instructions",
+          "mask guidance"
+        ],
+        "outputs": [
+          "edited video"
+        ]
+      },
+      {
+        "model": "Goku-Bench evaluation",
+        "inputs": [
+          "model outputs",
+          "reference videos"
+        ],
+        "outputs": [
+          "instruction-following scores on 7 editing-specific metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Decoupled dual-branch design (mask + appearance) better handles structural control than unified approaches",
+        "result": "True - achieves +8% improvement over baselines"
+      }
+    ]
+  },
+  "hf:2606.22207": {
+    "category": "Agents/RL",
+    "task": "Grounded word learning and lexical consensus in artificial agents",
+    "key_results": "Perceptual distance predicts acquisition accuracy (partial R\u00b2=0.245, p<1e-7) while semantic distance adds no explanatory power; perceptual-coherence gradient from native categories to disjunctive concepts; exemplar-based mechanisms outperform centroid prototypes",
+    "comments": "Well-controlled pre-registered dissociation study revealing that frozen visual geometry fundamentally constrains lexical grounding independent of semantic factors, highlighting a limitation that may require representational adaptation to overcome.",
+    "model_io": [
+      {
+        "model": "Lexical learners + DINOv2 embeddings",
+        "inputs": [
+          "visual images",
+          "Carroll-style nonce words"
+        ],
+        "outputs": [
+          "word-concept mappings",
+          "generalization judgments"
+        ]
+      },
+      {
+        "model": "Exemplar vs. centroid prototypes",
+        "inputs": [
+          "learned word representations"
+        ],
+        "outputs": [
+          "label-to-image retrieval rankings"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Semantic distance governs word acquisition difficulty",
+        "result": "False - perceptual distance dominates (R\u00b2=0.245 vs. R\u00b2=0.002)"
+      },
+      {
+        "hypothesis": "Naming and retrieval use the same underlying mechanism",
+        "result": "False - exemplar-based mechanisms excel at retrieval while not necessarily optimizing naming"
+      },
+      {
+        "hypothesis": "Frozen perceptual geometry suffices for arbitrary lexical grounding",
+        "result": "False - geometry enables grounding but limits acquisition without representational adaptation"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10706-1": {
+    "category": "Structural Biology",
+    "task": "Determine structural basis of congenital myasthenia-associated acetylcholine receptor defects and drug mechanisms",
+    "key_results": "Cryo-EM structures reveal fast-channel mutations uncouple agonist binding from gating; slow-channel mutations stabilize abnormally widened desensitized pore; reboxetine selectively blocks desensitized receptors independent of mutation",
+    "comments": "Exceptional work bridging patient mutations to atomic mechanism and identifying repurposing potential; the mutation-independent efficacy of reboxetine is particularly valuable for therapeutic development.",
+    "model_io": [
+      {
+        "model": "Acetylcholine receptor complexes (fast-channel and slow-channel CMS mutants)",
+        "inputs": [
+          "cryo-EM imaging",
+          "site-directed mutagenesis",
+          "drug treatments (positive modulators, quinidine, fluoxetine, reboxetine)"
+        ],
+        "outputs": [
+          "mutant receptor structures",
+          "gating kinetics",
+          "drug binding modes",
+          "channel open/close times"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Fast-channel mutations uncouple agonist binding from gating; positive modulators restore function via cryptic allosteric site",
+        "result": "Confirmed; mutation-specific allosteric site identified enabling selective pharmacological rescue"
+      },
+      {
+        "hypothesis": "Slow-channel mutations stabilize abnormally widened desensitized pore; blockers restore normal kinetics",
+        "result": "Confirmed; reboxetine acts as selective desensitized-state pore blocker independent of specific mutation"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10621-5": {
+    "category": "Diagnostics",
+    "task": "Establish harmonized standards for medical genome sequencing across clinical contexts",
+    "key_results": "Identified common technical challenges (e.g., low-frequency variant detection) across germline, tumor, cell-free DNA, and gene therapy sequencing; proposed synchronization framework for genome data quality standards",
+    "comments": "Primarily a standards/policy recommendation paper rather than experimental validation; implementation success will depend on cross-community adoption.",
+    "model_io": [],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41586-026-10729-8": {
+    "category": "Bioprocessing",
+    "task": "Improve synthetic mRNA translation efficiency and accuracy by optimizing nucleotide modifications",
+    "key_results": "N4-acetylcytidine (ac4C) achieved ~2-fold faster translation elongation than m1\u03a8, higher protein yields, and reduced +1 frameshifting while maintaining equivalent immunosuppression across cell lines and mouse liver",
+    "comments": "Elegantly demonstrates that translation kinetics, not just stability/immunogenicity, critically determines mRNA therapeutic efficacy; ac4C addresses a real fidelity problem with current industry standard.",
+    "model_io": [
+      {
+        "model": "synthetic mRNA therapeutics in lipid nanoparticles",
+        "inputs": [
+          "N4-acetylcytidine-modified mRNA",
+          "N1-methylpseudouridine-modified mRNA"
+        ],
+        "outputs": [
+          "protein yield",
+          "translation elongation rate",
+          "ribosome density",
+          "frameshifting frequency",
+          "inflammatory cytokine response"
+        ]
+      },
+      {
+        "model": "single-molecule imaging",
+        "inputs": [
+          "ac4C-mRNA",
+          "m1\u03a8-mRNA"
+        ],
+        "outputs": [
+          "ribosome density per mRNA",
+          "translation elongation kinetics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "ac4C reduces immunogenicity similarly to m1\u03a8",
+        "result": "Confirmed; ac4C suppressed inflammatory responses equivalently across cultured cells, dendritic cells, and mouse liver"
+      },
+      {
+        "hypothesis": "ac4C improves translation fidelity over m1\u03a8",
+        "result": "Confirmed; ac4C reduced ribosomal frameshifting and premature termination compared to m1\u03a8-modified mRNA"
+      },
+      {
+        "hypothesis": "Translation elongation rate limits protein output",
+        "result": "Confirmed; ~2-fold faster elongation with ac4C correlated with higher protein yields and reduced collision-induced quality control engagement"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10726-x": {
+    "category": "Cell Signaling",
+    "task": "Identify OsALA5-mediated saturated phosphatidylcholine flipping as heat tolerance mechanism",
+    "key_results": "Heat exposure triggers rapid OsALA5-dependent flipping of saturated phosphatidylcholine to cytoplasmic leaflet, stabilizing membrane fluidity; rare OsALA5 haplotype confers heat tolerance and yield stability in field trials",
+    "comments": "The molecular trigger for OsALA5 activation during heat stress is not identified; structural insights into P4-ATPase conformational changes during lipid flipping are lacking.",
+    "model_io": [
+      {
+        "model": "Rice (Oryza sativa) protoplasts and leaf cells",
+        "inputs": [
+          "heat stress (35-42\u00b0C)",
+          "OsALA5/OsALIS2 gene constructs",
+          "P4-ATPase inhibitors"
+        ],
+        "outputs": [
+          "plasma membrane fluidity",
+          "saturated PC distribution (leaflet-resolved)",
+          "ion leakage",
+          "cell viability",
+          "electrolyte conductivity"
+        ]
+      },
+      {
+        "model": "Arabidopsis thaliana and Saccharomyces cerevisiae expressing OsALA5",
+        "inputs": [
+          "heat stress",
+          "orthologous P4-ATPases"
+        ],
+        "outputs": [
+          "membrane fluidity",
+          "heat tolerance",
+          "growth recovery"
+        ]
+      },
+      {
+        "model": "Rice field trials (multi-year, multi-location)",
+        "inputs": [
+          "OsALA5 rare haplotype",
+          "heat/drought stress",
+          "irrigation"
+        ],
+        "outputs": [
+          "grain yield",
+          "heat tolerance index"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "OsALA5-mediated saturated PC flipping stabilizes membrane fluidity during heat stress",
+        "result": "Confirmed; heat exposure triggered rapid OsALA5-dependent saturated PC enrichment in cytoplasmic leaflet"
+      },
+      {
+        "hypothesis": "Saturated PC flipping prevents ion leakage and cell death under heat stress",
+        "result": "Confirmed; OsALA5 activity mitigated heat-induced hyperfluidization and ion leakage"
+      },
+      {
+        "hypothesis": "Rare OsALA5 haplotype confers enhanced heat tolerance and agronomic yield",
+        "result": "Confirmed in multi-year, multi-location field trials"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10574-9": {
+    "category": "Other",
+    "task": "Construct virtual yeast integrating multimodal biological data with AI-driven autonomous experimentation",
+    "key_results": "Eight function-centred modules coordinated via LLM orchestration layer; closed-loop learning pipeline enables hypothesis generation and biosynthetic optimization",
+    "comments": "Ambitious conceptual framework for computational cellular simulation; operationalization and validation of autonomous design-test cycles remain to be demonstrated.",
+    "model_io": [
+      {
+        "model": "LLM-coordinated multi-module AI system (genetic, metabolic, structural modules) with closed-loop learning",
+        "inputs": [
+          "mechanistic knowledge",
+          "subcellular architecture data",
+          "dynamic cellular states"
+        ],
+        "outputs": [
+          "cellular behavior predictions",
+          "hypothesis prioritization",
+          "autonomous experimental designs"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "AI-driven virtual cell integrating multimodal data enables autonomous optimization of biosynthetic pathways",
+        "result": "Framework established for hypothesis generation and target discovery supporting synthetic biology"
+      }
+    ]
+  },
+  "nature:10.1038/s41597-026-07617-1": {
+    "category": "Genomics",
+    "task": "Generate high-quality chromosome-scale reference genome for Phlebotomus perniciosus sand fly",
+    "key_results": "143 Mb genome with 48 Mb scaffold N50; 95% BUSCO completeness; 12,492 protein-coding genes; complete mitochondrial genome",
+    "comments": "Critical resource for understanding leishmaniasis vector biology; metabolic analysis revealing carboxylic acid dependency is noteworthy for host-pathogen interactions.",
+    "model_io": [
+      {
+        "model": "Oxford Nanopore long-read sequencing with Canu/Flye assembly and annotation",
+        "inputs": [
+          "DNA from P. perniciosus sand flies"
+        ],
+        "outputs": [
+          "complete chromosome-scale genome assembly",
+          "annotated genes",
+          "metabolic pathway predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "High-quality genome assembly enables identification of unique metabolic features in P. perniciosus",
+        "result": "Identified carboxylic acid fermentation metabolism with citrate lyase complex and glycerol-3-phosphate uptake"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-58999-6": {
+    "category": "Other",
+    "task": "Small-target detection in UAV imagery using improved YOLOv11s",
+    "key_results": "mAP@0.5 of 45.5%, mAP@0.5:0.95 of 27.8%; 7.0 and 5.0 percentage point improvements over baseline YOLOv11s",
+    "comments": "Strong architectural improvements for small object detection, though applicability beyond aerial/drone settings unclear.",
+    "model_io": [
+      {
+        "model": "MSCSM-YOLOv11s with multi-scale dilated convolution and channel-spatial modules",
+        "inputs": [
+          "UAV aerial images"
+        ],
+        "outputs": [
+          "small target bounding boxes and classifications"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-scale dilated convolution and channel-spatial attention enhance small-object detection",
+        "result": "6.8\u20137.0 percentage point improvements in precision and mAP@0.5"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-56237-7": {
+    "category": "ML Theory",
+    "task": "RGB-D salient object detection with multi-modal feature interaction for industrial weld inspection",
+    "key_results": "MIFNet: MAE 0.0623 (2.8% improvement), strong S-measure/E-measure on public datasets; Defect_F 0.823 on custom weld dataset",
+    "comments": "Cross-modal attention + SE-enhanced feature interaction blocks capture RGB-D complementarity; ablation quantifies 15 component variants.",
+    "model_io": [
+      {
+        "model": "MIFNet (Multi-modal Interaction and Fusion Network with ResNet-34 backbone)",
+        "inputs": [
+          "RGB images",
+          "depth maps"
+        ],
+        "outputs": [
+          "salient object segmentation masks"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Cross-modal adaptive attention + learnable gated fusion exploits RGB-D complementarity for improved SOD and weld defect detection",
+        "result": "2.8% MAE improvement on public datasets; 0.823 Defect_F on industrial weld images"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-59250-y": {
+    "category": "ML Theory",
+    "task": "Urban traffic flow prediction via coupled dynamic graph learning and multi-scale temporal attention",
+    "key_results": "ST-GNNFormer: 7.5% MAE improvement at 60-min horizon vs. 8 baselines on METR-LA, PEMS-BAY, PEMS04, PEMS08; competitive computational efficiency",
+    "comments": "Adaptive dynamic graph + spatial/temporal transformers with cross-scale fusion model road network heterogeneity and periodicity; ablation confirms module contributions.",
+    "model_io": [
+      {
+        "model": "ST-GNNFormer (Adaptive Dynamic Graph Learning + SGT + TMST + CSF)",
+        "inputs": [
+          "historical traffic flow",
+          "road network topology"
+        ],
+        "outputs": [
+          "future traffic flow predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Coupled spatial-temporal learning with adaptive graph topology captures structural and temporal dependencies better than independent components",
+        "result": "7.5% MAE improvement on four benchmarks; visualization reveals physically meaningful attention patterns"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-59881-1": {
+    "category": "Algorithms",
+    "task": "Imbalanced classification via geometry-aware oversampling using convex hulls and Delaunay triangulation",
+    "key_results": "CHDS consistently outperforms 15 resampling methods across 28 imbalanced datasets (AUC, F1, G-mean, Recall metrics)",
+    "comments": "Boundary-oriented + Dirichlet-distribution sampling within safe triangular regions; ablation validates component contributions.",
+    "model_io": [
+      {
+        "model": "CHDS (Convex Hull Delaunay Sampling)",
+        "inputs": [
+          "imbalanced dataset with minority class samples"
+        ],
+        "outputs": [
+          "synthetic minority samples for balanced training"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Geometric space modeling via convex hulls + Delaunay triangulation generates more representative synthetic samples than distance-based methods",
+        "result": "Consistent improvements in AUC, F1, G-mean, Recall across 28 datasets vs. 15 baselines"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10424-8": {
+    "category": "Neural Circuits",
+    "task": "Link transcriptomic cell types to morphology, physiology, and long-range axonal projections in visual cortex",
+    "key_results": "Defined 17 morphoelectric\u2013transcriptomic types from 1,528 patch-seq neurons; gene expression and anatomical location predict individual neuron projection targets; identified multimodal signatures for L5 IT and ET neurons including interhemispheric projections",
+    "comments": "This multimodal taxonomy elegantly bridges transcriptomics to circuit connectivity, though the predictive power for projection targets across the full dataset and generalization to other brain regions should be quantified more explicitly.",
+    "model_io": [
+      {
+        "model": "mouse visual cortex excitatory neurons",
+        "inputs": [
+          "single-cell transcriptomics (scRNAseq)",
+          "patch-clamp electrophysiology",
+          "local morphology",
+          "whole-neuron axonal reconstructions"
+        ],
+        "outputs": [
+          "morphoelectric\u2013transcriptomic cell types (17 types)",
+          "projection target predictions",
+          "cross-modality gene\u2013phenotype associations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Transcriptomic variation correlates with morphological and electrophysiological phenotypes within and across cell types",
+        "result": "Confirmed: gene expression patterns map to morphoelectric properties across 17 defined types"
+      },
+      {
+        "hypothesis": "Gene expression and cell location predict individual neuron projection targets",
+        "result": "Confirmed: multimodal signatures enable projection target prediction; L5 IT and ET neurons show novel multimodal signatures including interhemispheric connectivity patterns"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10671-9": {
+    "category": "Neurodegeneration",
+    "task": "Identify cortical circuit dysfunction in Huntington's disease and test therapeutic intervention",
+    "key_results": "VIP-inhibitory neurons and corticostriatal neurons show hypoactivity in HD models; optogenetic VIP-IN activation restored activity levels and ameliorated motor deficits for days post-stimulation",
+    "comments": "The persistence of behavioral improvements after brief optogenetic stimulation is striking and suggests circuit-level homeostatic mechanisms, though long-term efficacy and translation to chronic therapies remain open questions.",
+    "model_io": [
+      {
+        "model": "R6/2 transgenic HD mouse; zQ175DN knock-in HD mouse",
+        "inputs": [
+          "optogenetic VIP-IN activation"
+        ],
+        "outputs": [
+          "motor cortex neuronal activity (calcium imaging)",
+          "motor deficit severity",
+          "CStr neuron activity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "VIP-inhibitory neuron hypoactivity contributes to motor deficits in HD",
+        "result": "Confirmed: marked VIP-IN hypoactivity observed in two HD models; correlates with downstream CStr neuron dysfunction"
+      },
+      {
+        "hypothesis": "Restoring VIP-IN activity ameliorates HD motor phenotypes",
+        "result": "Confirmed: optogenetic VIP-IN activation restored CStr activity and improved motor performance with multi-day persistence"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10699-x": {
+    "category": "Development",
+    "task": "Understand transcriptional mechanisms governing sensorimotor-to-association cortical axis development",
+    "key_results": "Identified competing 'pericentral' and 'central' transcriptomic programs that establish S\u2013A organization; PLXNC1 and SEMA7A show repulsive axon guidance between primary and association areas",
+    "comments": "The MIND model elegantly unifies developmental patterning across species, though direct causal manipulation of competing programs in vivo would strengthen mechanistic claims.",
+    "model_io": [
+      {
+        "model": "multispecies cortical development (mouse, ferret, human)",
+        "inputs": [
+          "transcriptomic programs",
+          "thalamocortical inputs",
+          "axon guidance cues"
+        ],
+        "outputs": [
+          "S\u2013A axis organization",
+          "primary sensorimotor area identity",
+          "association network patterning"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Pericentral and central programs compete spatially to pattern the S\u2013A axis",
+        "result": "Confirmed: pericentral programs induced at poles progress inward; central programs exclude pericentral identity in primary areas"
+      },
+      {
+        "hypothesis": "PLXNC1/SEMA7A mediate repulsive interactions between hierarchical projection types",
+        "result": "Confirmed: receptor\u2013ligand pair exhibits repulsive axon guidance between primary and association corticocortical axons"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10720-3": {
+    "category": "Astrophysics/Cosmology",
+    "task": "Measure backreaction of stimulated Hawking radiation in optical analogue and identify generation mechanism",
+    "key_results": "Identified simple, direct Hawking radiation generation process; observed experimental backreaction onto the field; findings suggest mechanism applicable to gravitational black holes",
+    "comments": "Novel experimental evidence for quantum gravity analogy, but optical-to-gravitational analogy has known limitations (e.g., no true singularity).",
+    "model_io": [
+      {
+        "model": "Fibre-optical event horizon analogue",
+        "inputs": [
+          "light pulse",
+          "optical medium parameters"
+        ],
+        "outputs": [
+          "Hawking radiation emission",
+          "backreaction field signature"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Hawking radiation arises from simple direct process (not cascaded) and exhibits measurable backreaction",
+        "result": "Confirmed both theoretically and experimentally"
+      },
+      {
+        "hypothesis": "Optical analogue generation mechanism applies to gravitational black holes",
+        "result": "Suggested by theory; direct gravitational verification impossible with current methods"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-51291-7": {
+    "category": "Applied Physics",
+    "task": "Predict underwater vibroacoustic response of bolted versus embedded composite-steel joints",
+    "key_results": "Embedded joint exhibits higher vibration transmission loss; shifts structural resonances higher; acoustic power difference small at high frequencies despite higher stiffness",
+    "comments": "Practical engineering validation, but sensitivity saturation at high frequencies suggests diminishing returns for stiffness increases.",
+    "model_io": [
+      {
+        "model": "Experimentally calibrated acoustic\u2013structure coupling",
+        "inputs": [
+          "joint type (bolted/embedded)",
+          "frequency",
+          "fluid loading"
+        ],
+        "outputs": [
+          "vibration transmission loss",
+          "structural resonance frequency",
+          "radiated sound power"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Embedded joint stiffness exceeds bolted joint, raising resonance frequencies",
+        "result": "Confirmed; medium-frequency acoustic response differs markedly"
+      },
+      {
+        "hypothesis": "Joint stiffness dominates acoustic radiation at all frequencies",
+        "result": "Refuted; low-frequency response dominated by global modes, high-frequency insensitive to further stiffness increase"
+      }
+    ]
+  },
+  "nature:10.1038/s43246-026-01253-3": {
+    "category": "Condensed Matter",
+    "task": "Grow near-single-domain superconducting aluminium films for quantum circuits",
+    "key_results": "Twin-domain ratios 0.00005 (19.4 nm) and 0.0003 (9.6 nm)\u2014lowest reported; FWHM values 0.55\u00b0 and \u03b8-rocking-curve 0.018\u00b0; critical temperatures approaching bulk",
+    "comments": "Exceptional materials quality, but scalability and reproducibility across different foundries remain critical for widespread quantum device fabrication.",
+    "model_io": [
+      {
+        "model": "Molecular beam epitaxy of Al on GaAs(111)A",
+        "inputs": [
+          "Al film thickness (9.6\u201319.4 nm)",
+          "substrate temperature",
+          "deposition rate"
+        ],
+        "outputs": [
+          "twin-domain ratio",
+          "FWHM",
+          "critical temperature",
+          "surface roughness"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Single-domain Al films suppress decoherence channels from twin boundaries",
+        "result": "Structure confirmed via X-ray diffraction and electron microscopy; critical temperature near bulk values supports improved coherence"
+      }
+    ]
   }
 }
