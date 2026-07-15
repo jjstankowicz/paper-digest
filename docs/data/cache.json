@@ -368716,5 +368716,979 @@
         "result": "proposed but not empirically demonstrated in the abstract"
       }
     ]
+  },
+  "hf:2607.10400": {
+    "category": "Benchmark",
+    "task": "Controlled evaluation of VLM long-context visual document understanding",
+    "key_results": "Uncovered sharp degradation with document length, middle-third positional sensitivity (8.3pp decline), and chart comprehension breakdown; frontier models score 21-28/100 on long documents",
+    "comments": "Synthetic benchmarks with controlled factors are valuable but may not fully capture real-world document complexity and user intent variations.",
+    "model_io": [
+      {
+        "model": "seven frontier VLMs (unspecified)",
+        "inputs": [
+          "synthetic long documents with varying length/layout/modality",
+          "questions"
+        ],
+        "outputs": [
+          "answers",
+          "accuracy metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "VLMs degrade predictably with document length",
+        "result": "confirmed - sharp degradation observed"
+      },
+      {
+        "hypothesis": "Model performance is uniform across document positions",
+        "result": "rejected - middle third systematically harder for 5/6 models"
+      }
+    ]
+  },
+  "hf:2607.05382": {
+    "category": "Generative",
+    "task": "Agentic visual generation with world-knowledge grounding via search",
+    "key_results": "Frontier generators collapse from benchmark performance to 21-28/100 on knowledge-grounded requests; teach-then-search co-training produces monotonic improvement",
+    "comments": "The identified knowledge boundary is model-specific and evolving, making the co-training discovery approach pragmatic but potentially difficult to scale across different generators.",
+    "model_io": [
+      {
+        "model": "frontier open visual generators + search agents",
+        "inputs": [
+          "unbounded user prompts",
+          "search results (from co-training)"
+        ],
+        "outputs": [
+          "generated images"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Naive search improves visual generation for out-of-distribution requests",
+        "result": "rejected - naive search injects noise and fails indiscriminately"
+      },
+      {
+        "hypothesis": "Co-training discovers generator-specific knowledge boundaries",
+        "result": "confirmed - teach-then-search framework enables recursive improvement"
+      }
+    ]
+  },
+  "hf:2607.12450": {
+    "category": "Vision",
+    "task": "Unified vision model via RGB in-and-out formulation for diverse visual tasks",
+    "key_results": "Single model achieves competitive zero-shot performance on both dense understanding (segmentation, depth) and dense-conditioned generation (pose-to-image) without task-specific fine-tuning",
+    "comments": "RGB encoding of structured outputs (masks, depth) is elegant but may lose semantic information; generalization to more complex visual phenomena needs validation.",
+    "model_io": [
+      {
+        "model": "RINO (generic image editing backbone)",
+        "inputs": [
+          "RGB images",
+          "structured visual signals (masks, depth as RGB)",
+          "text prompts"
+        ],
+        "outputs": [
+          "RGB images",
+          "RGB-encoded predictions (depth/segmentation maps)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Diverse visual tasks can be unified via RGB-to-RGB formulation",
+        "result": "confirmed - single model handles segmentation, depth, pose-to-image zero-shot"
+      }
+    ]
+  },
+  "hf:2607.11562": {
+    "category": "Vision",
+    "task": "Document-oriented visual-text pretraining for document AI tasks",
+    "key_results": "MonkeyOCRv2 0.7B frozen encoder surpasses 3B baseline by 2.8% on MDPBench; improves five document analysis tasks consistently; outperforms CLIP/DINO/SAM on document understanding",
+    "comments": "Document-specific pretraining is effective but the comparison to CLIP/DINO (natural image models) may not be entirely fair; generalization to non-document visual tasks unstated.",
+    "model_io": [
+      {
+        "model": "MonkeyOCRv2 (visual-text pretrained encoder)",
+        "inputs": [
+          "document images (113M corpus, 17 languages)",
+          "text transcriptions"
+        ],
+        "outputs": [
+          "visual embeddings",
+          "text predictions",
+          "document reconstructions"
+        ]
+      },
+      {
+        "model": "Frozen MonkeyOCRv2 + lightweight LM",
+        "inputs": [
+          "document images"
+        ],
+        "outputs": [
+          "parsed document structure",
+          "document understanding answers"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Character-level visual perception improves document image analysis",
+        "result": "confirmed - consistent improvements across text recognition, detection, tampering, segmentation"
+      },
+      {
+        "hypothesis": "Document-pretrained encoder outperforms natural-image pretraining for document tasks",
+        "result": "confirmed - beats CLIP/DINO/SAM with 11\u00d7 smaller encoder"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-61693-2": {
+    "category": "Mechanobiology",
+    "task": "Evaluate neutron radiation relative biological effectiveness (RBE) in 3D tissue models versus 2D cultures",
+    "key_results": [
+      "3D models show lower radiation sensitivity than 2D monolayers, better matching clinical tissue resistance",
+      "Dose-dependent extracellular matrix thinning observed at \u226525 Gy in neutron-irradiated 3D tissues"
+    ],
+    "comments": "The shift from 2D to 3D culture for RBE assessment is practically important for clinical translation, though the mechanistic basis for differential sensitivity and the relationship between ECM damage and cell death remain incompletely characterized.",
+    "model_io": [
+      {
+        "model": "3D tissue-mimicking culture system",
+        "inputs": [
+          "normal human cells",
+          "neutron irradiation (variable doses, up to \u226525 Gy)"
+        ],
+        "outputs": [
+          "cell viability/death",
+          "extracellular matrix thickness",
+          "relative biological effectiveness estimate"
+        ]
+      },
+      {
+        "model": "2D monolayer culture (control)",
+        "inputs": [
+          "normal human cells",
+          "neutron irradiation"
+        ],
+        "outputs": [
+          "colony formation assay",
+          "RBE estimate (overestimated vs. clinical)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "3D tissue dimensionality and microenvironment reduce apparent radiation sensitivity compared to 2D",
+        "result": "Confirmed: 3D models show greater radioresistance and better clinical correlation"
+      },
+      {
+        "hypothesis": "Neutron damage includes structural ECM injury beyond cell death",
+        "result": "Confirmed: dose-dependent ECM thinning at high doses independent of cell viability endpoints"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10789-w": {
+    "category": "Cell/Gene Therapy",
+    "task": "Overcome ADC resistance in heterogeneous tumors through in vivo bioorthogonal antibody-ADC assembly",
+    "key_results": "Improved antitumor activity versus standard ADC monotherapy in HER2/EGFR co-expressing tumors; efficacy in low, ultralow, negative or heterogeneous antigen expression settings",
+    "comments": "Elegant use of click chemistry to bypass single-antigen dependency, though clinical translation of in vivo ligation timing and efficiency remains to be demonstrated.",
+    "model_io": [
+      {
+        "model": "in vivo bioorthogonal ligation platform",
+        "inputs": [
+          "antibody conjugate (trans-cyclooctene modified)",
+          "ADC conjugate (tetrazine modified)",
+          "tumor with variable HER2/EGFR expression"
+        ],
+        "outputs": [
+          "functional antibody-ADC complex",
+          "reduced tumor growth",
+          "enhanced cytotoxic delivery"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-target engagement (HER2 + EGFR) via in vivo click ligation improves efficacy in heterogeneous tumors resistant to single-antigen ADCs",
+        "result": "Confirmed; antibody-ADC click outperformed monotherapy and combination controls in low/heterogeneous antigen expression models"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-75502-x": {
+    "category": "Epigenetics",
+    "task": "Define SIRT5-SUCLG2 desuccinylation axis in ovarian aging",
+    "key_results": "SIRT5 desuccinylates SUCLG2 at K93/K101 enhancing TCA function; SUCLG2 hypersuccinylation increases H4K8ac and metabolism-related genes; SUCLG2 desuccinylation mutant gene therapy ameliorates aging in vivo",
+    "comments": "Mechanistically sophisticated mito-nuclear crosstalk model; connects mitochondrial metabolism to histone acetylation and senescence.",
+    "model_io": [
+      {
+        "model": "Ovarian tissue and cells (mouse, aging)",
+        "inputs": [
+          "SIRT5",
+          "SUCLG2",
+          "acetyl-CoA",
+          "senescence signals"
+        ],
+        "outputs": [
+          "SUCLG2 succinylation status",
+          "H4K8ac levels",
+          "mitochondrial function",
+          "senescence markers"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Impaired SIRT5-mediated desuccinylation drives ovarian aging",
+        "result": "SUCLG2 hypersuccinylation identified as key driver; desuccinylation enhances SUCLG2 stability and TCA function"
+      },
+      {
+        "hypothesis": "SUCLG2 hypersuccinylation increases acetyl-CoA leading to H4K8ac and metabolic compensation",
+        "result": "Acetyl-CoA accumulation increases H4K8ac and metabolism-related gene expression; excess acetyl-CoA accelerates aging"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10790-3": {
+    "category": "Cell Signaling",
+    "task": "Establish metabolite glues as endogenous purine sensing and chemotherapeutic response mechanism",
+    "key_results": "Purine nucleotides act as molecular glues tethering PPAT (rate-limiting purine biosynthesis enzyme) to NUDT5 inhibitor, enabling purine-level sensing and feedback control; thiopurine chemotherapeutics glue same complex with distinct orientations for enhanced function; metabolite-glue pocket adjusts conformation for variable compound binding",
+    "comments": "Novel concept of endogenous metabolite glues as nutrient sensing mechanism; elegant mechanistic explanation for thiopurine efficacy and therapeutic potential of manipulating metabolite-protein interactions.",
+    "model_io": [
+      {
+        "model": "Purine biosynthesis pathway (PPAT-NUDT5 complex)",
+        "inputs": [
+          "purine nucleotides",
+          "thiopurine chemotherapeutics",
+          "PPAT",
+          "NUDT5"
+        ],
+        "outputs": [
+          "PPAT-NUDT5 complex formation",
+          "purine biosynthesis inhibition",
+          "cellular purine levels"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Purine nucleotides serve as molecular glues enabling PPAT-NUDT5 complex formation for feedback sensing",
+        "result": "Confirmed with structural and biochemical characterization of metabolite-glue mechanism"
+      },
+      {
+        "hypothesis": "Thiopurine chemotherapeutics exploit metabolite-glue pocket plasticity for enhanced potency",
+        "result": "Thiopurines glue PPAT-NUDT5 in distinct orientations with greater potency; metabolite-glue pocket accommodates structural variations"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-61914-8": {
+    "category": "Development",
+    "task": "Identify sperm chromatin subpopulations linked to embryo development outcomes after ICSI",
+    "key_results": "Three sperm subpopulations identified via ROS and chromatin parameters; subpopulation 2 (moderate ROS, high protamination, decondensed chromatin) positively associated with blastocyst rate (P=0.012) and good-quality blastocysts (P=0.028); subpopulation 3 (high ROS, poor protamination) linked to delayed development (P=0.016)",
+    "comments": "Multiparametric flow cytometry approach identifies functional heterogeneity within sperm populations; retained chromatin overcondensation capacity may confer developmental competence.",
+    "model_io": [
+      {
+        "model": "Cryopreserved human sperm (ICSI cycles with PGT-A, n=47)",
+        "inputs": [
+          "Chromomycin A3 (protamination)",
+          "dibromobimane (condensation)",
+          "H2DCFDA (ROS)",
+          "viability"
+        ],
+        "outputs": [
+          "sperm subpopulations",
+          "fertilization rate",
+          "blastocyst development",
+          "aneuploidy rate"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Sperm subpopulations can be identified based on chromatin and ROS parameters",
+        "result": "Principal component and cluster analyses identified three distinct subpopulations"
+      },
+      {
+        "hypothesis": "Sperm subpopulation 2 quality correlates with improved blastocyst development",
+        "result": "Percentage of subpopulation 2 positively associated with total (P=0.012) and good-quality blastocysts (P=0.028)"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-75427-5": {
+    "category": "Single Cell",
+    "task": "Comprehensive characterization of lung aging via single-cell and spatial transcriptomics",
+    "key_results": "Identified senescence, proliferation decline, and myeloid-T cell dysregulation with age (184 SC + 70 spatial samples); machine learning-predicted biological age; biomarkers for disease risk",
+    "comments": "Rich cellular mechanistic insights; myeloid-T cell cross-talk particularly interesting but causal manipulation experiments and pathway validation needed.",
+    "model_io": [
+      {
+        "model": "Integrated single-cell and spatial transcriptomics analysis",
+        "inputs": [
+          "lung parenchyma from 184 samples (single-cell), 70 samples (spatial)"
+        ],
+        "outputs": [
+          "cell-type compositions",
+          "gene expression modules",
+          "aging hallmarks",
+          "predicted biological age"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Cell-type specific senescence and aberrant immune cross-talk drive lung aging pathophysiology",
+        "result": "Confirmed; alveolar senescence, macrophage reduction, T cell expansion and exhaustion observed; myeloid-T cell dysregulation increased chemotaxis/activation"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10780-5": {
+    "category": "Genomics",
+    "task": "Joint Bayesian modeling of longitudinal EHR, polygenic risk, and disease signatures for discovery",
+    "key_results": "ALADYNOULLI recovered 21 replicable disease signatures (80% cross-cohort preservation) across 683k+ patients, 348 diseases, 52 years; 151 genome-wide significant loci in signature-GWAS; outperformed PCE/PREVENT/Gail for disease prediction",
+    "comments": "Impressive scalability and biological validation (familial hypercholesterolaemia, clonal haematopoiesis enrichment); corrects selection bias via likelihood weighting, but latent disease ontology remains statistical without external gold standard.",
+    "model_io": [
+      {
+        "model": "ALADYNOULLI Bayesian Generative Model",
+        "inputs": [
+          "longitudinal EHR diagnoses",
+          "age trajectories",
+          "polygenic risk scores"
+        ],
+        "outputs": [
+          "latent disease signatures",
+          "patient-specific loadings",
+          "replicable biological subtypes",
+          "GWAS associations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Joint modeling of EHR longitudinal dynamics and polygenic risk recovers interpretable disease signatures and improves prediction",
+        "result": "Confirmed; 21 replicable signatures with high composition preservation; rare variants in LDLR/TTN/BRCA2 align with disease specificity; 10-year prediction outperforms clinical risk scores"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10781-4": {
+    "category": "Genomics",
+    "task": "Creating genome-wide enhancer-gene regulatory interaction encyclopedia via predictive modeling",
+    "key_results": "ENCODE-rE2G: 92M+ enhancer-gene interactions across 1,458 biosamples/369 cell-types; benchmarked on 10,356 CRISPR pairs, 30k+ fine-mapped eQTLs, 569 GWAS variants; identified enhancer-enhancer synergy and promoter class as regulatory features",
+    "comments": "Exceptional resource combining perturbation, genetics, and prediction; iterative model refinement via CRISPR demonstrates principled benchmarking, though mechanistic basis of enhancer synergy remains largely empirical.",
+    "model_io": [
+      {
+        "model": "ENCODE-rE2G Predictive Model",
+        "inputs": [
+          "enhancer activity",
+          "3D chromatin contacts",
+          "promoter sequences",
+          "enhancer sequences",
+          "cell-type context"
+        ],
+        "outputs": [
+          "enhancer-gene regulatory interaction probabilities",
+          "target gene predictions",
+          "disease variant annotations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Machine learning on chromatin, 3D contact, and genetic perturbation data predicts enhancer-gene regulation better than individual features alone",
+        "result": "Confirmed; state-of-the-art performance; beyond activity/contacts, promoter class and enhancer synergy guide communication; 92M interactions reveal global regulatory complexity"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-59401-1": {
+    "category": "Evolutionary Biology",
+    "task": "Predicting mouse social behavior from ultrasonic vocalizations using deep learning",
+    "key_results": "First deep learning system correlating USVs to behavior; asymmetric cross-genotype generalization (WT\u2192KO successful, KO\u2192WT failed)",
+    "comments": "Novel application of USV analysis; asymmetric generalization suggests KO mice have different spectrotemporal communication patterns, but mechanistic basis unexplored.",
+    "model_io": [
+      {
+        "model": "Deep Neural Network for USV-Behavior Prediction",
+        "inputs": [
+          "ultrasonic vocalization spectrograms from wild-type and p50 KO mice"
+        ],
+        "outputs": [
+          "behavioral state predictions",
+          "cross-genotype generalization metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "USV spectrotemporal patterns encode behavioral state differentially between genotypes",
+        "result": "Confirmed; WT-trained models generalize to KO but not vice versa, indicating KO distribution shift"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-02988-6": {
+    "category": "Single Cell",
+    "task": "Unified multi-task learning for comprehensive gait phenotyping from wearable sensors",
+    "key_results": "H-MTL achieved 85.0\u00b14.1% screening accuracy across 10 gait tasks with 0.61M parameters (14-fold reduction); selective cross-dataset transfer with motor-severity gains",
+    "comments": "Elegant coherence-aware architecture enforces clinical diagnostic hierarchy; limited transfer to demographic tasks suggests task-specific feature learning constraints.",
+    "model_io": [
+      {
+        "model": "H-MTL (Hierarchical Multi-Task Learning)",
+        "inputs": [
+          "inertial measurement unit accelerometer/gyroscope signals from 260 subjects"
+        ],
+        "outputs": [
+          "pathological screening",
+          "disease classification",
+          "severity scores",
+          "demographic estimates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Hierarchical consistency loss improves multi-task coherence and parameter efficiency for gait phenotyping",
+        "result": "Confirmed; 14-fold parameter reduction with maintained 85% accuracy; cross-dataset validation shows selective transfer"
+      }
+    ]
+  },
+  "nature:10.1038/s42003-026-10687-x": {
+    "category": "Genomics",
+    "task": "Label-free mitochondrial segmentation and metabolic imaging via conditional diffusion model",
+    "key_results": "RedoxSegNet achieved <6% segmentation error vs. stained images; revealed metabolic heterogeneity within/between mitochondria; captured FCCP-induced fragmentation dynamically",
+    "comments": "Elegant solution to phototoxicity/photobleaching; conditional diffusion for cross-modality reconstruction is innovative, though validation limited to engineered stress conditions.",
+    "model_io": [
+      {
+        "model": "RedoxSegNet (conditional diffusion model)",
+        "inputs": [
+          "NAD(P)H autofluorescence from two-photon microscopy"
+        ],
+        "outputs": [
+          "mitochondrial segmentation masks",
+          "optical redox ratios",
+          "morphological parameters"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "NAD(P)H autofluorescence encodes sufficient information for label-free mitochondrial reconstruction via diffusion models",
+        "result": "Confirmed; <6% error; heterogeneous metabolic responses captured under FCCP stress"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-58803-5": {
+    "category": "ML Theory",
+    "task": "EEG motor imagery classification via dynamic spatio-temporal GNN",
+    "key_results": "DST-GNN outperforms baseline methods; captures spatial interactions and temporal patterns from multi-channel EEG",
+    "comments": "Dynamic graph formulation is novel for EEG but evaluation limited to single public dataset; generalization across subjects unclear.",
+    "model_io": [
+      {
+        "model": "Dynamic Spatial-Temporal Graph Neural Network (DST-GNN)",
+        "inputs": [
+          "multi-channel EEG signals (motor imagery)"
+        ],
+        "outputs": [
+          "hierarchical spatial-temporal representations",
+          "motor imagery class"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Graph readout mechanism enables comprehensive feature aggregation",
+        "result": "DST-GNN achieved competitive classification performance vs. baselines"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-59831-x": {
+    "category": "ML Theory",
+    "task": "CNN-based feature descriptors for image retrieval via transfer learning",
+    "key_results": "mAP 85.9% on benchmark datasets (Oxford5k, Paris6k, Holidays); 2048\u2192128 dimensional PCA compression",
+    "comments": "Standard transfer learning + PCA approach; reproducible but incremental contribution with no novelty in architecture design.",
+    "model_io": [
+      {
+        "model": "ResNet/VGG transfer learning with PCA + attention pooling",
+        "inputs": [
+          "image datasets (Oxford5k, Paris6k, Holidays)"
+        ],
+        "outputs": [
+          "128-d feature descriptors"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "PCA dimensionality reduction preserves retrieval accuracy while improving efficiency",
+        "result": "128-d features achieved 85.9% mAP with improved storage and speed"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-60711-7": {
+    "category": "Statistics/Probability",
+    "task": "Bayesian calibration of rheological parameters for slope displacement prediction",
+    "key_results": "Posterior predictions from fractional Burgers model reproduce GNSS monitoring data; clearer decomposition of elastic/viscous/temporal components",
+    "comments": "MCMC inference is standard but fractional Burgers model interpretation is insightful for time-dependent materials.",
+    "model_io": [
+      {
+        "model": "Bayesian calibration via MCMC (fractional Burgers analytical solution)",
+        "inputs": [
+          "GNSS displacement monitoring data",
+          "prior parameter distributions"
+        ],
+        "outputs": [
+          "posterior parameter distributions",
+          "predictive displacement"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Fractional Burgers model provides better mechanical interpretability than classical Burgers",
+        "result": "Fractional model clearer decomposed delayed elasticity, viscous deformation, and temporal nonlinearity"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-61680-7": {
+    "category": "ML Theory",
+    "task": "Anomaly object detection and tracking from surveillance video",
+    "key_results": "EnWC-DBiLSTM achieves 98.226% accuracy, 1.774 EER, 98.111% sensitivity, 99.551% specificity on ShanghaiTech dataset",
+    "comments": "High accuracy but only one dataset; wolf optimization and bidirectional LSTM combination is incremental without clear novelty.",
+    "model_io": [
+      {
+        "model": "Enhanced Wolf Crocuta-Deep Bidirectional LSTM (EnWC-DBiLSTM)",
+        "inputs": [
+          "surveillance video frames (ShanghaiTech campus)"
+        ],
+        "outputs": [
+          "anomaly object detection",
+          "tracking trajectories"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Enhanced Wolf Crocuta optimization improves convergence speed in bidirectional LSTM",
+        "result": "EnWC-DBiLSTM achieved 98.226% accuracy on intrusion detection"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-61825-8": {
+    "category": "Algorithms",
+    "task": "Post-quantum secure password-based authentication",
+    "key_results": "Registration latency 0.88 ms, authentication latency 0.96 ms; security reduction to M-LWE hardness",
+    "comments": "Transparent key rotation is practical, but real-world deployment scalability against current quantum threats remains unproven.",
+    "model_io": [
+      {
+        "model": "Module-LWE password authentication scheme",
+        "inputs": [
+          "password",
+          "user credentials",
+          "server secret"
+        ],
+        "outputs": [
+          "authentication token",
+          "session key"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "M-LWE hardness provides quantum-resistant security for password authentication",
+        "result": "Formal security proof in RoR framework established"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-62107-z": {
+    "category": "ML Theory",
+    "task": "ML prediction of electrical conductivity in perovskite materials",
+    "key_results": "Random Forest with non-orbital compositional descriptors achieves best performance; compact mixed descriptor set preserves 90%+ accuracy",
+    "comments": "Band gap alone insufficient; physically motivated descriptors outperform SISSO symbolic regression, suggesting nonlinear relationships dominate.",
+    "model_io": [
+      {
+        "model": "Random Forest, SISSO regression",
+        "inputs": [
+          "DFT band gap",
+          "compositional descriptors",
+          "orbital descriptors",
+          "SOAP fingerprints"
+        ],
+        "outputs": [
+          "DFT-derived transport conductivity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Non-orbital compositional descriptors are sufficient for conductivity prediction",
+        "result": "Random Forest with compositional descriptors achieved best overall performance"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-62149-3": {
+    "category": "ML Theory",
+    "task": "4D radar-vision perception via physics-aware generative fusion with Mamba",
+    "key_results": "Complex-Flow Mamba achieves SOTA mAP/NDS on VoD and K-Radar; jamming suppression gain 0.88 under extreme electronic pressure",
+    "comments": "Signal-physics layer processing of complex phase coherence is novel; addresses radar vulnerability to ISRJ and sparse targets.",
+    "model_io": [
+      {
+        "model": "Complex-Flow Mamba (bi-directional Mamba-2 SSD backbone + Complex Latent Diffusion Module)",
+        "inputs": [
+          "4D millimeter-wave radar echoes (complex-domain)",
+          "camera images"
+        ],
+        "outputs": [
+          "3D object detection (mAP, NDS)",
+          "jamming-robust perception"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Complex phase correction via generative prior mitigates ISRJ interference",
+        "result": "CLDM maintained jamming suppression gain 0.88 under extreme electronic pressure"
+      }
+    ]
+  },
+  "nature:10.1038/s41599-026-08307-4": {
+    "category": "Statistics/Probability",
+    "task": "Predict secondary students' ICT self-efficacy from individual factors",
+    "key_results": "RFR best performance; ICT-related characteristics domain most influential; 311,522 students across 52 countries (PISA 2022)",
+    "comments": "Large international sample strengthens generalizability; SHAP interpretation aligns with Bandura's social cognitive theory.",
+    "model_io": [
+      {
+        "model": "Random Forest Regression (RFR), SVM, XGBoost",
+        "inputs": [
+          "37 individual-level variables (demographics, ICT characteristics, usage, educational factors)",
+          "PISA 2022 survey data"
+        ],
+        "outputs": [
+          "ICT self-efficacy score",
+          "feature importance (SHAP)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "ICT-related characteristics domain contributes most significantly to ICT self-efficacy",
+        "result": "RFR identified top 15 predictors; ICT-characteristics domain ranked highest"
+      }
+    ]
+  },
+  "nature:10.1038/s43246-026-01267-x": {
+    "category": "ML Theory",
+    "task": "Retrieval-augmented generation for polymer biodegradability knowledge extraction",
+    "key_results": "GraphRAG achieves higher precision; VectorRAG provides broader recall on 1000+ PHA papers",
+    "comments": "Complementary trade-offs between approaches; domain validation by chemist strengthens credibility but generalization to other polymers unclear.",
+    "model_io": [
+      {
+        "model": "VectorRAG (dense semantic)",
+        "inputs": [
+          "PHA literature corpus (1000+ papers)"
+        ],
+        "outputs": [
+          "paragraph embeddings",
+          "semantic similarity scores"
+        ]
+      },
+      {
+        "model": "GraphRAG (knowledge graph)",
+        "inputs": [
+          "structured scientific facts",
+          "entity relationships"
+        ],
+        "outputs": [
+          "canonicalized knowledge graph",
+          "multi-hop reasoning paths"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Graph-based retrieval improves precision through explicit entity disambiguation",
+        "result": "GraphRAG achieved higher precision than VectorRAG"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10668-4": {
+    "category": "Neural Circuits",
+    "task": "Characterizing neural code structure across cortical hierarchy during complex cognition",
+    "key_results": "Categorical representations rare within regions but organized categorically at whole-cortex scale; all cortical areas achieve maximal separability via high-dimensional diverse responses rather than categorical population structure",
+    "comments": "The scale-dependence finding reconciles conflicting views on neural coding, though the functional advantage of diversity over categorical structure for actual behavior remains somewhat implicit.",
+    "model_io": [
+      {
+        "model": "International Brain Laboratory Brainwide Map dataset",
+        "inputs": [
+          "neural activity from 14,000+ units across 43 cortical regions during complex task"
+        ],
+        "outputs": [
+          "selectivity measures",
+          "separability indices",
+          "anatomical connectivity patterns"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Cortical neurons are organized into functionally distinct categorical populations",
+        "result": "Categorical representations are rare within regions; diversity and high-dimensional separability predominate"
+      },
+      {
+        "hypothesis": "Neural selectivity structure reflects anatomical connectivity at whole-cortex scale",
+        "result": "Confirmed: categorical organization at cortex-wide scale mirrors anatomical organization"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10772-5": {
+    "category": "Cognition/Behavior",
+    "task": "Identifying chemical signals mediating reproductive suppression in eusocial mammals",
+    "key_results": "Isopropyl myristate (enriched in queens) suppresses reproduction in non-breeders via altered prolactin and progesterone; chemical withdrawal triggers reproductive competition; compound present across Fukomys species at levels proportional to reproductive skew",
+    "comments": "This elegant work bridges insect and mammalian eusociality through a single chemical cue, though the downstream neural/endocrine integration of olfactory signal to reproductive suppression remains partially uncharacterized.",
+    "model_io": [
+      {
+        "model": "Naked mole-rat and Fukomys mole-rat colonies",
+        "inputs": [
+          "isopropyl myristate exposure",
+          "chemical detection by olfactory neurons"
+        ],
+        "outputs": [
+          "prolactin and progesterone levels",
+          "reproductive status",
+          "aggression and dominance behavior"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "A chemical signal from queens regulates reproductive hierarchy in naked mole-rats",
+        "result": "Isopropyl myristate identified as queen odor that suppresses reproduction in non-breeders"
+      },
+      {
+        "hypothesis": "Chemical signal is necessary for maintaining reproductive suppression",
+        "result": "Withdrawal of isopropyl myristate from queenless colonies triggered aggression and reproductive competition"
+      },
+      {
+        "hypothesis": "Chemical signal level correlates with reproductive skew across mole-rat species",
+        "result": "Isopropyl myristate levels in breeding females correlate with degree of reproductive skew across species"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10793-0": {
+    "category": "Neurodegeneration",
+    "task": "Identifying shared cell-type signatures of Alzheimer's disease across population groups",
+    "key_results": "Cell-type-specific clusters associated with AD across Latin, White, and African American populations; six distinct molecular subgroups of cognitively impaired individuals identified spanning all populations; continuous gene programs in astrocytes/oligodendrocytes reveal disease associations not captured by discrete clustering",
+    "comments": "The identification of population-shared AD signatures is valuable, but the study's cross-sectional post-mortem design limits inference of causality or temporal disease progression.",
+    "model_io": [
+      {
+        "model": "Single-nucleus RNA sequencing and ATAC-seq",
+        "inputs": [
+          "cortical and subcortical brain tissue from post-mortem samples across three population groups"
+        ],
+        "outputs": [
+          "cell-type clusters",
+          "discrete molecular programs",
+          "continuous gene-expression factors",
+          "disease-phenotype associations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Cell-type signatures associated with AD differ across population groups",
+        "result": "Multiple shared signatures identified (microglial, astrocytic, neuronal subtypes) across all three populations"
+      },
+      {
+        "hypothesis": "Neuropathology alone captures cognitive impairment heterogeneity in AD",
+        "result": "Six molecular subgroups of cognitively impaired individuals identified that are not distinguished by neuropathology but by shared molecular signatures"
+      }
+    ]
+  },
+  "nature:10.1038/s41524-026-02222-7": {
+    "category": "Condensed Matter",
+    "task": "Predict vibrational electron energy-loss spectra via machine learning interatomic potentials",
+    "key_results": [
+      "PySlice automates vibrational EELS prediction from atomic structures without per-system potential development",
+      "Enables spectrum images, phonon dispersions, and spectral diffraction from unified workflow"
+    ],
+    "comments": "Open-source TACAW implementation eliminates potential-development bottleneck; GPU acceleration practical; materials screening and EELS training data generation enabled.",
+    "model_io": [
+      {
+        "model": "PySlice (TACAW + universal ML potentials + GPU electron scattering)",
+        "inputs": [
+          "atomic structure"
+        ],
+        "outputs": [
+          "momentum-energy resolved EELS",
+          "phonon dispersion",
+          "spectrum images"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Universal ML potentials eliminate per-material parameterization while maintaining TACAW accuracy",
+        "result": "Confirmed across canonical materials; scalable workflow established"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10709-y": {
+    "category": "Quantum",
+    "task": "Realize universal topological quantum gates via braiding and fusion of non-Abelian anyons",
+    "key_results": [
+      "Prepared 54-qubit ground state of S\u2083 quantum double on Quantinuum H2",
+      "Fusion as computational primitive renders minimally non-Abelian topological states universal"
+    ],
+    "comments": "Landmark demonstration that S\u2083 supports scalable universal gate set; magic state preparation validates approach, but logical error rates not reported.",
+    "model_io": [
+      {
+        "model": "S\u2083 quantum double topological state on H2 processor",
+        "inputs": [
+          "qubit initialization",
+          "braiding operations",
+          "fusion measurements"
+        ],
+        "outputs": [
+          "logical information encoding",
+          "universal gate implementation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Anyon fusion combined with braiding enables universal computation in S\u2083 topological order",
+        "result": "Confirmed; topological magic state prepared"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10758-3": {
+    "category": "High Energy/Particle",
+    "task": "Determine magnetic character of low-energy gamma-ray strength function enhancement in \u2077\u2070Zn",
+    "key_results": [
+      "Low-energy \u03b3-ray strength function enhancement is of magnetic nature",
+      "Directly impacts element nucleosynthesis and nuclear structure understanding"
+    ],
+    "comments": "Resolves longstanding question about \u03b3SF enhancements; implications for r-process nucleosynthesis quantitatively not detailed.",
+    "model_io": [
+      {
+        "model": "Experimental gamma-ray spectroscopy on \u2077\u2070Zn",
+        "inputs": [
+          "nuclear excitation energy"
+        ],
+        "outputs": [
+          "gamma-ray strength function"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Low-energy \u03b3SF enhancement arises from magnetic (vs electric) multipole transitions",
+        "result": "Confirmed via experiment"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10782-3": {
+    "category": "Quantum",
+    "task": "Engineer quantum many-body photonic transport via plasmonic metacrystals with forbidden quantum statistical bands",
+    "key_results": [
+      "Room-temperature quantum material selectively transmits multiphoton fields based on quantum statistics",
+      "Forbidden bands suppress or drive fields toward accessible statistical states"
+    ],
+    "comments": "Novel paradigm: plasmonic meta-atoms encode quantum statistics into photonic dispersion; scalability to macroscopic systems and practical coherence-sensitive applications unclear.",
+    "model_io": [
+      {
+        "model": "Plasmonic metacrystal (nanoantenna meta-atoms)",
+        "inputs": [
+          "multiphoton field statistics"
+        ],
+        "outputs": [
+          "allowed/forbidden statistical bands",
+          "selective transmission/suppression"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Meta-atom geometry and arrangement determine quantum statistical bands enabling coherence-sensitive transport",
+        "result": "Confirmed; room-temperature platform demonstrated"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10804-0": {
+    "category": "Condensed Matter",
+    "task": "Program fracture resistance in mechanical metamaterials via elastic instabilities",
+    "key_results": [
+      "Controlled inelastic zone manipulation enables intrinsic-to-extrinsic fracture transition",
+      "Up to one-order-of-magnitude increase in fracture energy via instability design"
+    ],
+    "comments": "Paradigm shift from passive observation to active instability-controlled fracture; bridges previously disconnected failure modes elegantly.",
+    "model_io": [
+      {
+        "model": "Pseudoplastic metamaterial with tunable inelastic zone + fracture mechanics",
+        "inputs": [
+          "elastic instability parameters",
+          "metamaterial architecture"
+        ],
+        "outputs": [
+          "fracture energy",
+          "fracture behavior transition"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Elastic instabilities enable extrinsic toughening mechanisms (crack bridging, etc.) in metamaterials",
+        "result": "Confirmed; one-order-of-magnitude energy increase demonstrated"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-60705-5": {
+    "category": "Condensed Matter",
+    "task": "Deconvolve surface and bulk contributions to Mg-related blue band in GaN via chemical etching",
+    "key_results": [
+      "Blue-band comprises two components: planar state (~2.68 eV, minor) and defect-anchored state (~2.82 eV, dominant)",
+      "States arise from surface/interface, not bulk Mg complexes; threading dislocations host defect-anchored state"
+    ],
+    "comments": "Elegant chemical-map methodology distinguishes planar from defect-localized states; HF passivation efficiently eliminates defect signature.",
+    "model_io": [
+      {
+        "model": "Surface photovoltage spectroscopy + selective wet etching + XPS + SIMS",
+        "inputs": [
+          "GaN Mg-doped sample",
+          "etchants (HCl, HF, H\u2083PO\u2084)"
+        ],
+        "outputs": [
+          "blue-band transitions",
+          "Mg-O phase depth profile",
+          "defect localization"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Mg-O segregation at surface and threading dislocation cores produces blue-band, not bulk Mg complexes",
+        "result": "Confirmed; etching-induced polarity inversion and fluorine passivation demonstrate surface origin"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-61885-w": {
+    "category": "Applied Physics",
+    "task": "Optimize cantilever-based MEMS switch performance via dielectric material selection",
+    "key_results": [
+      "HfO\u2082 coating achieves fastest response (10\u201340 \u00b0C), 0.122 pF capacitance, 9.1 V pull-in voltage",
+      "Optimal beam dimensions: longer length, smaller width/thickness"
+    ],
+    "comments": "COMSOL parametric study rigorous; frequency response, power dissipation, and switching lifetime under repeated cycling not characterized.",
+    "model_io": [
+      {
+        "model": "Electromechanical MEMS switch (COMSOL)",
+        "inputs": [
+          "dielectric material (Al\u2082O\u2083, La\u2082O\u2083, TiO\u2082, SiO\u2082, HfO\u2082)",
+          "beam geometry",
+          "applied voltage (1\u201315.1 V)"
+        ],
+        "outputs": [
+          "response time",
+          "capacitance",
+          "pull-in voltage",
+          "thermal performance"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "HfO\u2082 combines thermal stability and low dielectric loss to minimize response time and enable stable actuation",
+        "result": "Confirmed; outperforms other materials"
+      }
+    ]
   }
 }
