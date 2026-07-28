@@ -404694,5 +404694,593 @@
         "result": "Confirmed; width-dependence matches coherence length scaling"
       }
     ]
+  },
+  "hf:2607.23370": {
+    "category": "Benchmark",
+    "task": "Bitcoin price direction prediction using regime-aware multi-modal fusion",
+    "key_results": "RAML achieves macro-F1 of 0.5474 (3h) and 0.5513 (6h) with AUC of 0.5084 at 3 hours; ablation confirms all components necessary; static concatenation F1 collapses to 0.14 at 6 hours",
+    "comments": "The regime-aware gating mechanism is intuitive and well-motivated by behavioral finance, but F1 scores near 0.55 suggest limited practical predictive power on sub-daily Bitcoin price movements.",
+    "model_io": [
+      {
+        "model": "BiLSTM with regime-aware fusion gate",
+        "inputs": [
+          "OHLCV technical features (24h rolling window)",
+          "FinBERT sentiment embeddings from Reddit"
+        ],
+        "outputs": [
+          "binary price direction prediction (up/down)"
+        ]
+      },
+      {
+        "model": "Learnable sigmoid gate conditioned on volatility regime",
+        "inputs": [
+          "sentiment embedding",
+          "price embedding",
+          "24h rolling volatility"
+        ],
+        "outputs": [
+          "adaptive fusion weights"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Sentiment is more predictive during volatile market regimes than calm ones",
+        "result": "Confirmed: adaptive weighting outperforms static concatenation, with F1 collapse when reverting to static fusion at 6h"
+      },
+      {
+        "hypothesis": "Regime detection and adaptive gating are necessary components",
+        "result": "Confirmed: ablation study shows all components contribute; removing any causes performance degradation"
+      }
+    ]
+  },
+  "hf:2607.21606": {
+    "category": "Generative",
+    "task": "Improving compositional text-to-image generation in diffusion models",
+    "key_results": "TILT improves compositional alignment over baselines while preserving image quality; achieves closed-form tilted target distribution with principled guidance steps; hybrid strategy balances two guidance approaches",
+    "comments": "The intrinsic reward formulation grounded in mode overlap is elegant and training-free, though quantitative metrics on T2ICompBench are not explicitly reported in the abstract.",
+    "model_io": [
+      {
+        "model": "Diffusion model with test-time reward-guided sampling (TILT)",
+        "inputs": [
+          "compositional text prompt",
+          "base diffusion model"
+        ],
+        "outputs": [
+          "image faithful to complex compositional prompt"
+        ]
+      },
+      {
+        "model": "Intrinsic reward function",
+        "inputs": [
+          "joint concept distribution",
+          "single-concept distributions"
+        ],
+        "outputs": [
+          "KL-constrained guidance signal"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Compositional failures stem from overlap between joint and single-concept distributions",
+        "result": "Supported: reward design based on this interpretation yields improved compositional alignment"
+      },
+      {
+        "hypothesis": "Hybrid guidance strategy balances two distinct concept distribution interaction approaches",
+        "result": "Confirmed: hybrid approach produces stronger performance than either individual strategy"
+      }
+    ]
+  },
+  "nature:10.1038/s41420-026-03280-y": {
+    "category": "Apoptosis/Cell Death",
+    "task": "Elucidate miR-195-5p regulation of apoptotic signaling in colorectal cancer",
+    "key_results": "miR-195-5p targets XIAP, BCL2, and BIRC5 (Survivin); overexpression reduced target transcripts/proteins and enhanced caspase-3/7 activation, DNA fragmentation, and Annexin V+ populations; validated in AOM/DSS mouse model",
+    "comments": "The multi-target apoptosis regulation via a single miRNA presents attractive therapeutic potential if delivery challenges are overcome.",
+    "model_io": [
+      {
+        "model": "CRC cell lines; AOM/DSS mouse model",
+        "inputs": [
+          "miR-195-5p overexpression"
+        ],
+        "outputs": [
+          "XIAP/BCL2/BIRC5 expression",
+          "caspase-3/7 activity",
+          "DNA fragmentation",
+          "Annexin V+ cells",
+          "colonic tissue markers (in vivo)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "miR-195-5p suppresses apoptosis resistance in CRC by targeting the XIAP/BCL2/Survivin network",
+        "result": "Confirmed; miR-195-5p overexpression reduces all three targets and enhances apoptotic markers"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-61708-y": {
+    "category": "Development",
+    "task": "Engineer 3D bioprinted vascularized human placental models recapitulating gestational progression",
+    "key_results": "3D bioprinted placental barrier models using primary trophoblasts and stroma recapitulate early and late-stage placental physiology: barrier function, nutrient uptake, transporter activity, and hormone secretion; 96-well transwell format enables high-throughput screening",
+    "comments": "High-fidelity in vitro placental model addresses major bottleneck in pregnancy research and drug/toxicant testing.",
+    "model_io": [
+      {
+        "model": "3D bioprinted human placenta barrier (hPB) tissue; 96-well transwell format",
+        "inputs": [
+          "primary human trophoblasts",
+          "primary human stroma cells",
+          "test therapeutics/hazardous agents"
+        ],
+        "outputs": [
+          "barrier function",
+          "nutrient uptake kinetics",
+          "transporter activity",
+          "hormone secretion",
+          "developmental stage signatures"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-63397-z": {
+    "category": "Cell Signaling",
+    "task": "Determine multi-modal antidiabetic mechanisms of tempol in streptozotocin-induced type 1 diabetes",
+    "key_results": "Tempol significantly reduced fasting blood glucose, increased serum insulin, improved glucose-insulin homeostasis; enhanced AMPK and insulin expression; attenuated pro-apoptotic signaling; increased CD34+ progenitor recruitment; upregulated glucose transporters (liver, muscle)",
+    "comments": "Multi-target antidiabetic approach via AMPK, anti-apoptosis, and progenitor recruitment is comprehensive; translation to humans requires further validation.",
+    "model_io": [
+      {
+        "model": "STZ-induced T1DM male Wistar rats",
+        "inputs": [
+          "tempol (100 mg/kg/day, 4 weeks)"
+        ],
+        "outputs": [
+          "fasting blood glucose",
+          "serum insulin",
+          "AMPK/insulin expression",
+          "pancreatic histology",
+          "apoptotic markers",
+          "CD34+ cell frequency",
+          "glucose transporter expression (liver, muscle)",
+          "oxidative stress markers",
+          "inflammatory cytokines"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Tempol exerts multimodal antidiabetic effects via AMPK activation, anti-apoptotic signaling, progenitor recruitment, and glucose transporter upregulation",
+        "result": "Confirmed; all four mechanisms validated in STZ-T1DM model"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-64261-w": {
+    "category": "Cell Signaling",
+    "task": "Profile curcuminoid-induced proteome changes and geroprotective mechanisms in aging dogs",
+    "key_results": "135-day curcuminoid supplementation altered 2,224 proteins (1,154 differentially expressed); enhanced autophagy and repair while suppressing inflammation and coagulation; upregulated JAK-STAT and mTOR negative regulators; improved oxidative stress markers",
+    "comments": "Comprehensive proteomics demonstrates curcuminoids modulate inflammaging and metabolic pathways; translational relevance pending human validation.",
+    "model_io": [
+      {
+        "model": "aging dogs (plasma shotgun proteomics)",
+        "inputs": [
+          "curcuminoid supplementation (135 days)"
+        ],
+        "outputs": [
+          "differential protein expression (2,224 proteins)",
+          "malondialdehyde levels",
+          "glutathione redox status",
+          "pathway enrichment (autophagy, metabolism, inflammation)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Curcuminoids mitigate inflammaging by modulating JAK-STAT and mTOR signaling",
+        "result": "Confirmed; upregulated PIAS2/SOCS2 (JAK-STAT inhibitors) and stress-response regulators (SESN2, ULK1)"
+      }
+    ]
+  },
+  "nature:10.1038/s42003-026-10730-x": {
+    "category": "Apoptosis/Cell Death",
+    "task": "Elucidate H. pylori VacA-mediated ferroptosis suppression in gastric cancer and therapeutic implications",
+    "key_results": "VacA suppresses ferroptosis by binding KEAP1/p62, blocking KEAP1 degradation, preventing NRF2 nuclear translocation and HMOX1 transcription; reduced Fe2+ accumulation; HMOX1 overexpression enhances cisplatin cytotoxicity; Hemin + cisplatin improves survival in H. pylori-induced murine GC model",
+    "comments": "Identifies ferroptosis as targetable resistance mechanism in H. pylori-associated gastric cancer; HMOX1 induction is promising therapeutic angle.",
+    "model_io": [
+      {
+        "model": "gastric cancer cell lines; CDX and H. pylori-induced mouse GC model",
+        "inputs": [
+          "H. pylori VacA",
+          "RSL3/Erastin",
+          "cisplatin",
+          "HMOX1 overexpression",
+          "Hemin (HMOX1 inducer)"
+        ],
+        "outputs": [
+          "ferroptosis markers (Fe2+, lipid peroxidation)",
+          "NRF2 nuclear localization",
+          "HMOX1 expression",
+          "cell death/apoptosis",
+          "survival (in vivo)",
+          "tumor burden"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "H. pylori VacA suppresses ferroptosis via KEAP1 stabilization and NRF2/HMOX1 axis inhibition",
+        "result": "Confirmed; VacA prevents ferroptosis; HMOX1 induction overcomes suppression and enhances cisplatin efficacy"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-64063-0": {
+    "category": "Structural Prediction",
+    "task": "Numerical simulation of iridocorneal angle impact on aqueous humor flow after ICL placement",
+    "key_results": "IA narrowing alone negligible (0.02\u20130.04 Pa); TM porosity reduction (0.39\u21920.20) increased mean pressure gradient >1.5-fold; angle-related flow enhancement 472% at larger angles",
+    "comments": "Multi-scale CFD coupling OCT imaging with TM representative volume element reveals TM pore deformation as mechanical mechanism linking IA narrowing to IOP elevation.",
+    "model_io": [
+      {
+        "model": "Multi-scale CFD (macroscopic anterior segment + TM RVE)",
+        "inputs": [
+          "OCT-derived iridocorneal angle geometry",
+          "trabecular meshwork microstructure"
+        ],
+        "outputs": [
+          "aqueous humor velocity fields",
+          "pressure gradients",
+          "TM porosity changes",
+          "intraocular pressure estimates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Iridocorneal angle narrowing increases aqueous outflow resistance via TM pore deformation",
+        "result": "Confirmed; TM porosity loss and channelized flow explain IOP elevation despite modest angle changes"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-64177-5": {
+    "category": "Statistical Methods",
+    "task": "Time series classification using topological Euler characteristic signatures",
+    "key_results": "ECS-based classifier achieved 98% accuracy on ECG5000 with O(n+R\u00b7T) complexity vs. 62% for PH-based method; AdaBoost extension 98.6%; strong results on TwoLeadECG (94.1%) and Epilepsy2 (92.6%)",
+    "comments": "ECS provides computationally efficient, spatiotemporal, inherently interpretable alternative to persistent homology; comparison with PH method is literature-based rather than head-to-head reimplemented benchmark.",
+    "model_io": [
+      {
+        "model": "Euler Characteristic Surfaces (ECS) + classifiers",
+        "inputs": [
+          "ECG and EEG time series from UCR/UEA archive"
+        ],
+        "outputs": [
+          "ECS-based feature representation",
+          "topological classification labels",
+          "stability proofs"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Euler characteristic surfaces capture nontrivial topological differences in time series",
+        "result": "Confirmed; ECS stable under perturbations and superior to PH-based methods on benchmark datasets"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-64237-w": {
+    "category": "Statistical Methods",
+    "task": "Contrast-based spike detection in biosignals",
+    "key_results": "Contrast Spike Detector (CSD) exceeded 99% accuracy, precision, recall, and F1-score on synthetic and real datasets; outperformed other spike detection methods",
+    "comments": "Histogram-difference-based contrast extraction with adaptive thresholding offers simple, interpretable alternative to deep learning; suitable for online and hardware implementation.",
+    "model_io": [
+      {
+        "model": "Contrast Spike Detector (CSD)",
+        "inputs": [
+          "intracellular and extracellular recordings"
+        ],
+        "outputs": [
+          "spike detection labels",
+          "action potential timing"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Contrast-based histogram analysis discriminates spikes from background noise",
+        "result": "Confirmed; adaptive threshold derived from contrast signal achieves >99% performance on benchmarks"
+      }
+    ]
+  },
+  "nature:10.1038/s41534-026-01279-y": {
+    "category": "Other",
+    "task": "Provable quantum machine learning advantage from general computational advantages",
+    "key_results": "Constructs supervised learning tasks offering provable QML advantage beyond Shor-based constructions; hardness proven for polynomial-time classical methods",
+    "comments": "Theoretical contribution extending QML advantage beyond structure-specific algorithms; no experimental validation provided.",
+    "model_io": [],
+    "hypotheses": [
+      {
+        "hypothesis": "General quantum computational advantages can be exploited for provably advantageous supervised learning",
+        "result": "Confirmed theoretically; constructive proof for broad function class"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-60197-3": {
+    "category": "Algorithms",
+    "task": "System-dependent performance analysis of metaheuristic algorithms for directional overcurrent relay coordination",
+    "key_results": "HO best for radial distribution (0.0705\u20130.0677 s), BES best for microgrid (0.4246 s); no algorithm universally superior across topologies",
+    "comments": "Comprehensive evaluation across 3 network types, 2 fault modes, 4 algorithms with statistical rigor; demonstrates algorithm selection is topology-dependent.",
+    "model_io": [
+      {
+        "model": "HO, BES, CDO, TTO (metaheuristic optimization for DOCR)",
+        "inputs": [
+          "relay settings",
+          "fault scenarios (3PH, L-G)",
+          "network topology"
+        ],
+        "outputs": [
+          "primary relay operating time",
+          "CTI constraint satisfaction"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Single metaheuristic algorithm achieves best DOCR coordination across all power system topologies",
+        "result": "Rejected; performance is system-dependent (HO for radial, BES for microgrid)"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-62648-3": {
+    "category": "ML Theory",
+    "task": "Multi-class PV fault detection from thermal images",
+    "key_results": "DenseNet121 achieves 98.7% accuracy; minor performance differences among top models (DenseNet121, CNN+Transformer, ResNet50)",
+    "comments": "Comprehensive multi-architecture comparison on 2401 real UAV thermal images; practical tool, though high baseline accuracy suggests limited fault complexity.",
+    "model_io": [
+      {
+        "model": "DenseNet121, ResNet50, CNN+Transformer, etc. (11 models)",
+        "inputs": [
+          "thermal images from PV panels"
+        ],
+        "outputs": [
+          "fault class (healthy, hotspot, bypass, string)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "DenseNet121 outperforms other architectures for multi-class PV fault classification",
+        "result": "Confirmed; 98.7% accuracy, but performance differences among top models are small"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-64057-y": {
+    "category": "ML Theory",
+    "task": "Financial distress prediction via graph neural networks with hyperparameter optimization",
+    "key_results": "MSWO-tuned SE-HG-GNN achieves superior accuracy and interpretability vs. default configurations; SHAP analysis enhances explainability",
+    "comments": "Integrates attention, GRUs, and modified metaheuristic tuning; imbalanced dataset handling via Focal Loss is standard, but specific accuracy metric not quantified in abstract.",
+    "model_io": [
+      {
+        "model": "SE-HG-GNN (heterogeneous GNN + GRU + attention) tuned by MSWO",
+        "inputs": [
+          "imbalanced financial data"
+        ],
+        "outputs": [
+          "financial distress probability",
+          "feature importance (SHAP)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Meta-heuristic hyperparameter tuning improves GNN performance on imbalanced financial data",
+        "result": "Confirmed; superior accuracy and interpretability vs. defaults"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-64092-9": {
+    "category": "Other",
+    "task": "Diagnosis and mitigation of spectral collapse in heterogeneous fleet anomaly detection",
+    "key_results": "GAP yields negligible effect in 96.7% of model\u00d7detector combinations (median Cohen's d = -0.004); meaningful improvement confined to CNN+OC-SVM",
+    "comments": "Rigorous statistical testing (10,000 permutations, Benjamini\u2013Hochberg correction) demonstrates architecture-conditional preprocessing effects; findings challenge universal normalization.",
+    "model_io": [
+      {
+        "model": "Geometric Approximation Protocol (coordinate-wise median, IQR norm, whitening PCA)",
+        "inputs": [
+          "pre-trained audio representations (14 architectures \u00d7 3 SNR \u00d7 16 machines)"
+        ],
+        "outputs": [
+          "preprocessed embeddings",
+          "anomaly scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Robust preprocessing (GAP) universally mitigates spectral collapse in anomaly detection",
+        "result": "Rejected; effect is architecture-conditional, meaningful only for CNNs with OC-SVM"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-64107-5": {
+    "category": "Other",
+    "task": "Cybersecurity situational awareness prediction in high school students",
+    "key_results": "Environmental support, comprehension, and educational intervention are main factors; student competence moderately predicted by structural and predictive models",
+    "comments": "Hybrid approach combining Situational Awareness Theory with SEM and ML; generalization beyond single school population unclear.",
+    "model_io": [
+      {
+        "model": "Structural equation modeling + predictive analytics + SHAP",
+        "inputs": [
+          "survey responses on perception, awareness, comprehension, projection"
+        ],
+        "outputs": [
+          "Cybersecurity Outcome Competence prediction",
+          "factor contributions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Educational intervention and environmental support are primary drivers of cybersecurity competence in students",
+        "result": "Confirmed; individual knowledge insufficient without institutional support"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-64141-3": {
+    "category": "Other",
+    "task": "Sensitivity analysis of cluster cable current-carrying capacity correction factor",
+    "key_results": "FEM model achieves \u00b16% error under double-circuit conditions; correction factor negatively correlated with circuit number, positively with spacing",
+    "comments": "Practical engineering tool improving thermal circuit modeling; identifies key factors (spacing, arrangement) for cable design, though limited to 110 kV XLPE.",
+    "model_io": [
+      {
+        "model": "Finite element simulation + thermal circuit model + correction factor extraction",
+        "inputs": [
+          "cable geometry",
+          "operating conditions",
+          "circuit configuration"
+        ],
+        "outputs": [
+          "ampacity correction factor",
+          "thermal characteristics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "FEM-derived correction factors improve cable ampacity prediction vs. conventional models",
+        "result": "Confirmed; \u00b16% error acceptable for engineering design"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-64454-3": {
+    "category": "Other",
+    "task": "S-Box design via 8D hyperchaotic map for encryption",
+    "key_results": "Achieves nonlinearity 111.75, SAC 0.5, BIC-NL 103.4, DP 0.0391, LP 0.125; image encryption yields entropy 7.999, NPCR 99.63%, UACI 33.42%",
+    "comments": "Comprehensive statistical validation and side-channel resistance; strong cryptographic properties, though comparison to state-of-the-art limited to paper claims.",
+    "model_io": [
+      {
+        "model": "8D hyperchaotic map \u2192 key-dependent dynamic S-Box \u2192 color image encryption",
+        "inputs": [
+          "encryption key",
+          "plaintext image"
+        ],
+        "outputs": [
+          "S-Box",
+          "ciphertext image"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "8D hyperchaotic S-Box achieves cryptographic strength comparable to state-of-the-art",
+        "result": "Confirmed via statistical tests (nonlinearity, SAC, BIC, DP, LP) and image encryption metrics"
+      }
+    ]
+  },
+  "nature:10.1038/s41599-026-08531-y": {
+    "category": "Algorithms",
+    "task": "Portfolio optimization under cardinality and budget constraints",
+    "key_results": "Enhanced ACO yields 10\u201315% average Sharpe ratio improvement and 5\u20137% maximum drawdown reduction vs. PSO/GA",
+    "comments": "Hybrid approach combining discrete optimization (ACO) with continuous optimization (QP) is sound, but evaluation limited to 20 S&P 500 stocks.",
+    "model_io": [
+      {
+        "model": "ACO + Quadratic Programming (with EWMA/GARCH covariance)",
+        "inputs": [
+          "historical daily returns",
+          "cardinality constraints",
+          "no-short-sell constraints"
+        ],
+        "outputs": [
+          "asset selection",
+          "optimal weights",
+          "Sharpe ratio",
+          "maximum drawdown"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Dynamic risk estimation via EWMA/GARCH improves portfolio robustness across market regimes",
+        "result": "Confirmed; robust performance in bull and bear markets"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-75968-9": {
+    "category": "Quantum",
+    "task": "Generate ultracold Bose-Einstein condensate mixtures on mobile platforms in microgravity",
+    "key_results": "High-flux generation of \u2074\u00b9K\u2013\u2078\u2077Rb BEC mixtures on sounding rocket; characterized release dynamics via magnetic field decay model; established benchmark for mobile ultracold gas experiments",
+    "comments": "Successful demonstration of quantum gas production on CubeSat-scale platforms; extension to space-based tests of equivalence principle and fundamental physics is promising.",
+    "model_io": [
+      {
+        "model": "Integrated BEC mixture apparatus in Einstein-Elevator/sounding rocket",
+        "inputs": [
+          "laser cooling sequence",
+          "trap currents and decay profile",
+          "release time"
+        ],
+        "outputs": [
+          "BEC density profile",
+          "free-expansion dynamics",
+          "intra/interspecies interaction signatures"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Magnetic field decay during release critically affects observable interaction signatures; dedicated switch-off protocol enables accurate characterization",
+        "result": "Confirmed via comparison of ground and free-fall experiments with field decay modeling"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-63901-5": {
+    "category": "Quantum",
+    "task": "Enhance security of coherent one-way QKD via Bell inequality monitoring",
+    "key_results": "Maximum secure distance extended from <20 km to ~259 km by replacing coherence monitoring with CHSH violation monitoring; broader attack detection capability demonstrated",
+    "comments": "Significant security improvement via elegant physical principle, though practical implementation and overhead of Bell test certification in deployed systems requires clarification.",
+    "model_io": [
+      {
+        "model": "Modified coherent one-way QKD with Bell test monitoring",
+        "inputs": [
+          "quantum states from sender",
+          "detector measurements"
+        ],
+        "outputs": [
+          "sifted key",
+          "CHSH parameter",
+          "secure key rate",
+          "maximum secure distance"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "CHSH violation monitoring detects broader class of attacks than coherence checking alone",
+        "result": "Confirmed; secure distance extended to ~259 km in simulations"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-64033-6": {
+    "category": "Optics/Photonics",
+    "task": "Design tunable broadband THz polarization converter for 6G applications",
+    "key_results": "Achieved PCR > 0.9 across four frequency bands (0.95\u20133.0 THz); enabled linear-to-circular and circular-to-linear conversion with dynamic switching via graphene chemical potential tuning",
+    "comments": "Practical design with good angular stability (\u00b160\u00b0), though experimental demonstration of full tuning range and integration into 6G systems remains outstanding.",
+    "model_io": [
+      {
+        "model": "Graphene\u2013perovskite metasurface polarization converter",
+        "inputs": [
+          "THz radiation",
+          "graphene chemical potential",
+          "incident angle",
+          "polarization state"
+        ],
+        "outputs": [
+          "transmitted polarization state",
+          "conversion ratio",
+          "frequency response"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Tunable graphene enables dynamic polarization conversion across multiple THz bands",
+        "result": "Confirmed via FDTD simulation and equivalent-circuit modeling"
+      }
+    ]
   }
 }
