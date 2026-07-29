@@ -408394,5 +408394,492 @@
         "result": "Confirmed via MTF analysis and imaging experiments showing 17.3% resolution gain and improved peripheral performance"
       }
     ]
+  },
+  "hf:2607.25970": {
+    "category": "Agents/RL",
+    "task": "Code optimization via reinforcement learning",
+    "key_results": "Improved strict top-50% pass@1 from 18.0% to 31.3% (Qwen 2.5 7B) and 30.7% to 50.4% (CWM 32B); 125% relative improvement at stricter percentiles for CWM 32B",
+    "comments": "The work credibly addresses practical RL challenges (noise, sparsity, instability) in optimization, though absolute performance (~50%) and human-relative speed (14% vs 28%) remain modest.",
+    "model_io": [
+      {
+        "model": "GRPO-based code generation + RL",
+        "inputs": [
+          "problem statement"
+        ],
+        "outputs": [
+          "optimized code solution with execution time"
+        ]
+      },
+      {
+        "model": "Offline simulator",
+        "inputs": [
+          "code configurations"
+        ],
+        "outputs": [
+          "predicted execution speed"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Adding execution time to reward signal improves optimization",
+        "result": "Yes, but requires careful measurement calibration and reward composition to avoid RL failure"
+      },
+      {
+        "hypothesis": "Robust optimization RL improves over RLVR when sandbox degrades",
+        "result": "Yes, 100\u2013200% improvement depending on evaluation criterion"
+      }
+    ]
+  },
+  "hf:2607.19712": {
+    "category": "Systems",
+    "task": "Optimize reward model inference for RLHF pipelines",
+    "key_results": "C++ ONNX Runtime engine matched PyTorch reference to 5.7e-6 (CPU) and 4.2e-3 (GPU) error; beat all baselines on CPU with non-overlapping confidence intervals; batching strategy mattered more than language/runtime choice",
+    "comments": "Rigorous systems work with repeated runs, but GPU results favored torch.compile\u2014indicating that batching and resource contention dominate single-engine optimizations.",
+    "model_io": [
+      {
+        "model": "C++ ONNX Runtime inference engine",
+        "inputs": [
+          "rollout batch"
+        ],
+        "outputs": [
+          "reward scores"
+        ]
+      },
+      {
+        "model": "PyTorch eager / torch.compile / FastAPI baseline",
+        "inputs": [
+          "rollout batch"
+        ],
+        "outputs": [
+          "reward scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "C++ native inference is faster than PyTorch for reward scoring",
+        "result": "True on CPU decisively; on GPU, torch.compile matched or exceeded it"
+      },
+      {
+        "hypothesis": "Batching strategy has larger impact than language/runtime choice",
+        "result": "Confirmed; batching mattered more than expected in practice"
+      }
+    ]
+  },
+  "hf:2607.17674": {
+    "category": "LLM/Reasoning",
+    "task": "Decompose latent reasoning strategies in language models",
+    "key_results": "Variational objective recovers latent codes aligned with distinct reference strategies while preserving base model response distribution; posterior collapse mitigated via fractional information gain",
+    "comments": "Novel approach to strategy disentanglement; benchmarking on algorithmic tasks is strong, but transferability to general reasoning tasks remains unclear.",
+    "model_io": [
+      {
+        "model": "Router r_\u03d5(z|x) + Generator g_\u03d5(y|x,z)",
+        "inputs": [
+          "input x"
+        ],
+        "outputs": [
+          "strategy latent z",
+          "response y"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Standard variational inference collapses posterior by not routing information through z",
+        "result": "Yes; base model already represents p_\u03b8(y|x) without incentive to use z"
+      },
+      {
+        "hypothesis": "Fractional information gain and high-surprisal token concentration recover strategies",
+        "result": "Yes, latent codes align with reference strategies while preserving model distribution"
+      }
+    ]
+  },
+  "hf:2607.25108": {
+    "category": "Medical",
+    "task": "Domain-shift robust biomedical image analysis via offline policy-guided expert routing",
+    "key_results": "OPERA improves performance and calibration across 9 datasets (fundus, X-ray, CT, MRI, multimodal) against 30+ baselines in classification, segmentation, and multimodal settings; no expert retraining required",
+    "comments": "Practical and comprehensive evaluation addressing real deployment constraints (distribution shift, label scarcity); offline policy learning avoids gradient updates to experts, enabling test-time adaptation.",
+    "model_io": [
+      {
+        "model": "Expert routing policy (offline learned from validation set)",
+        "inputs": [
+          "unlabeled test image"
+        ],
+        "outputs": [
+          "expert weight assignment"
+        ]
+      },
+      {
+        "model": "Heterogeneous specialist agents ensemble",
+        "inputs": [
+          "image",
+          "expert weights"
+        ],
+        "outputs": [
+          "classification / segmentation output"
+        ]
+      },
+      {
+        "model": "Distribution-aware batch-level adaptation",
+        "inputs": [
+          "test batch statistics"
+        ],
+        "outputs": [
+          "adjusted class weights"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Offline policy-guided routing without expert retraining handles distribution shift",
+        "result": "Yes, consistent improvement across 9 datasets without gradient updates"
+      },
+      {
+        "hypothesis": "Instance-level routing via inter-model agreement and entropy improves allocation",
+        "result": "Yes, complementary routing mechanisms improve performance and calibration"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-75534-3": {
+    "category": "Cell Signaling",
+    "task": "Investigate transfer of CD19 and functional properties between immune cell types via trogocytosis and phagocytosis",
+    "key_results": "B cells transfer CD19 to T cells via trogocytosis; CD19+ T cells show enhanced activation and encephalitogenic potential; T cells and myeloid cells gain functional B cell properties; inebilizumab depletes CD19+ T cells in CNS demyelination patients",
+    "comments": "The functional transfer of B cell properties to T cells and myeloid cells raises important considerations for interpreting CD19 as a lineage marker and for therapeutic targeting with anti-CD19 antibodies.",
+    "model_io": [
+      {
+        "model": "B-T cell co-cultures and EAE model; human CNS demyelination patients",
+        "inputs": [
+          "B-T cell interaction",
+          "CD19 transfer",
+          "IgM transfer",
+          "apoptotic B cell phagocytosis"
+        ],
+        "outputs": [
+          "CD19+ T cells",
+          "T cell activation/differentiation",
+          "encephalitogenic potential",
+          "myeloid cell functions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "B cells transfer CD19 to T cells via trogocytosis",
+        "result": "confirmed; CD19+ T cells show enhanced pro-inflammatory features"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-75679-1": {
+    "category": "Organelles",
+    "task": "Elucidate how ISCs optimize Golgi morphology and orientation to enhance niche signal reception",
+    "key_results": "ISCs orient Golgi laterally toward Paneth cells and divide into multiple stacks; lateral orientation requires Akap9 and increases receptor transport efficiency; Akap9 reduction in aged ISCs impairs response",
+    "comments": "This elegant work demonstrates that stem cell microarchitecture is actively tuned to match niche topology, providing a mechanistic explanation for age-related decline in tissue regeneration.",
+    "model_io": [
+      {
+        "model": "Small intestinal Lgr5+ stem cells in epithelial niche",
+        "inputs": [
+          "niche architecture",
+          "Akap9"
+        ],
+        "outputs": [
+          "Golgi morphology/orientation",
+          "receptor transport",
+          "tissue renewal capacity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "ISCs regulate Golgi orientation to match niche architecture and optimize signal reception",
+        "result": "confirmed; lateral orientation increases transport efficiency"
+      },
+      {
+        "hypothesis": "Akap9 is required for niche-dependent Golgi remodeling in ISCs",
+        "result": "confirmed; Akap9 reduction impairs aging-associated response"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-61839-2": {
+    "category": "Other",
+    "task": "Optimize culture conditions for human corneal epithelial cell line and characterize EV-mediated wound repair",
+    "key_results": "DMEM/F12 with FBS optimal for IM-HCEpiC; cells express corneal markers (CK3, CK12, ZO-1); EVs promote wound closure and Ki67 expression",
+    "comments": "The simplified protocol and cost-effectiveness are valuable for accessibility, though direct comparison with primary corneal epithelial cells would strengthen validation of model fidelity.",
+    "model_io": [
+      {
+        "model": "IM-HCEpiC cultured in optimized media and conditions",
+        "inputs": [
+          "DMEM/F12 + FBS",
+          "oxidative stress",
+          "antioxidants"
+        ],
+        "outputs": [
+          "corneal epithelial markers",
+          "EVs",
+          "wound closure",
+          "proliferation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "IM-HCEpiC-derived EVs promote corneal wound repair",
+        "result": "confirmed; EVs increase wound closure and Ki67"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-63843-y": {
+    "category": "Apoptosis/Cell Death",
+    "task": "Characterize dose- and temporal-dependent testicular injury and recovery from phthalate exposure",
+    "key_results": "DBP/DEHP (100-400 mg/kg) cause dose-dependent oxidative stress (glutathione depletion, increased NO/lipid peroxidation) and testicular damage; 400 mg/kg shows 100% damaged tubules with depressed Johnsen scores; dose-dependent recovery from 50-70 days",
+    "comments": "The temporal recovery pattern suggests that lower phthalate doses allow some tissue repair, though persistent damage at higher doses indicates a dose threshold for permanent injury in the developing germline.",
+    "model_io": [
+      {
+        "model": "Immature Swiss albino mice exposed to DBP/DEHP",
+        "inputs": [
+          "dibutyl phthalate",
+          "di(2-ethylhexyl) phthalate",
+          "doses 100-400 mg/kg"
+        ],
+        "outputs": [
+          "oxidative markers (glutathione, NO, lipid peroxidation)",
+          "testicular histology",
+          "Johnsen scores",
+          "Caspase-3/NF-\u03baB expression"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Phthalate exposure induces dose-dependent testicular injury via oxidative stress and inflammation",
+        "result": "confirmed; increased Caspase-3 and NF-\u03baB suggest apoptotic/inflammatory involvement"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-64051-4": {
+    "category": "Statistical Methods",
+    "task": "EEG intellectual property protection via digital watermarking",
+    "key_results": "Effective copyright tracing while maintaining EEG data usability (specific robustness metrics not quantified in abstract)",
+    "comments": "Novel closed-loop embedding-authentication system is creative; practical deployment barriers (watermark imperceptibility thresholds, adversarial robustness) underexplored.",
+    "model_io": [
+      {
+        "model": "DWSM (wavelet-based watermarking + statistical hypothesis testing)",
+        "inputs": [
+          "EEG signals"
+        ],
+        "outputs": [
+          "watermarked EEG + authentication labels"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Adaptive wavelet-based watermarking with hash algorithm enables robust copyright protection while preserving EEG signal utility",
+        "result": "Demonstrated effective authentication on SEED-IV and THU-RSVP datasets"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-64389-9": {
+    "category": "Statistical Methods",
+    "task": "Pollution-dependent cognitive function prediction from routine blood tests",
+    "key_results": "0.70 accuracy for general cognition tertile classification; mean corpuscular haemoglobin predictive of poor cognition; atmospheric pollutants (lead, CO, PM) consistently improved model performance",
+    "comments": "Integration of brain imaging, blood biomarkers, and environmental exposure data is novel; cross-sectional design limits causal inference.",
+    "model_io": [
+      {
+        "model": "Random forest classification",
+        "inputs": [
+          "457 features: brain imaging, blood markers (457 total), atmospheric pollutant levels, socioeconomic measures"
+        ],
+        "outputs": [
+          "cognitive performance tertile classification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Routine blood markers (anaemia indicators) combined with atmospheric pollution exposure predict individual cognitive function through pollution-dependent mechanisms",
+        "result": "Identified mean corpuscular haemoglobin and atmospheric pollutants as significant predictors; negative correlation between MCH and pollution levels"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-03057-8": {
+    "category": "Evolutionary Biology",
+    "task": "Mechanistic modeling of tau propagation via network connectivity",
+    "key_results": "FC dominates tau accumulation in subcortical/insular/frontotemporal regions; SC prevails in occipital/parietal/limbic areas; tau propagation shifts from FC-mediated to SC-constrained as disease advances",
+    "comments": "Multi-layer graph diffusion model reveals dynamic pathway switching; regional gene expression and sex/APOE modulation provide mechanistic insights for stratified intervention.",
+    "model_io": [
+      {
+        "model": "Multi-layer graph diffusion model",
+        "inputs": [
+          "longitudinal neuroimaging (structural/functional connectivity)",
+          "tau PET",
+          "single-cell RNA-seq",
+          "genetic data (APOE, sex)"
+        ],
+        "outputs": [
+          "tau propagation pathways",
+          "connectivity-phenotype associations",
+          "patient trajectories"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Functional and structural connectivity differentially govern tau propagation across brain regions and disease stages; disease progression linked to pathway switching and genetic modulation",
+        "result": "Identified regionally asymmetric FC/SC dominance; discovered FC-to-SC propagation shift with disease stage; validated in independent cohort"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-75730-1": {
+    "category": "Algorithms",
+    "task": "Fast-forward prediction of lattice Boltzmann dynamics via physics-informed neural operators",
+    "key_results": "Framework predicts LBE evolution over large time jumps without step-by-step integration; discretization-invariant and lattice-agnostic; validates on vortex shedding, ligament breakup, bubble adhesion",
+    "comments": "Clever embedding of kinetic structure constraints and global equivariance; accelerates LBE simulation substantially.",
+    "model_io": [
+      {
+        "model": "Physics-informed neural operator (moment-matching constraints, equivariance-preserving)",
+        "inputs": [
+          "Single-particle distribution functions (PDFs) at coarse grid resolution"
+        ],
+        "outputs": [
+          "PDF evolution over multiple timesteps; moment fields; flow predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Physics-informed neural operators bypass explicit collision-kernel solution while preserving kinetic structure",
+        "result": "Confirmed; discretization-invariant and formulation-agnostic; applicable across flow regimes"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-64232-1": {
+    "category": "Analysis",
+    "task": "Exact solutions for Burgers-type equations via neural network symbolic computation",
+    "key_results": "Rich set of exact solutions derived for 1D, 2D, 3D coupled Burgers equations; diverse activation functions generate rare solutions with reduced parameter complexity",
+    "comments": "Embedding symbolic computation in neural architecture is creative; solutions rigorously verified by substitution.",
+    "model_io": [
+      {
+        "model": "Neural network-based symbolic method with diverse activation functions",
+        "inputs": [
+          "Burgers-type equation specification"
+        ],
+        "outputs": [
+          "Exact solution form; network weights/biases; 3D/contour/heatmap visualizations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Varied activation functions in neural trial functions yield more diverse exact solutions for Burgers equations",
+        "result": "Confirmed; method produces rare solutions while maintaining parameter parsimony"
+      }
+    ]
+  },
+  "nature:10.1038/s41599-026-08376-5": {
+    "category": "Algorithms",
+    "task": "Portfolio optimization for new energy sector via network theory and DDPG",
+    "key_results": "Low-centrality DDPG portfolios outperform full-sample portfolios in risk control and returns; complex networks quantify asset interdependencies",
+    "comments": "Novel integration of network analysis with RL for finance; practical significance depends on market validation beyond simulation.",
+    "model_io": [
+      {
+        "model": "Multi-layer complex network + DDPG",
+        "inputs": [
+          "Stock prices, risk correlations, node centrality measures"
+        ],
+        "outputs": [
+          "Portfolio allocation weights, risk/return metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Low-centrality strategies via DDPG achieve better risk diversification than full-sample portfolios",
+        "result": "Confirmed; low-centrality DDPG portfolios show superior risk-return profiles"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-75828-6": {
+    "category": "Condensed Matter",
+    "task": "Stabilize fluctuating electronic nematic order via Casimir energy",
+    "key_results": "Orientation-dependent Casimir energy 10\u00b3 times larger than other stabilization mechanisms; applied to quantum Hall stripes in birefringent cavities",
+    "comments": "Novel vacuum-engineering approach to electronic ordering, though experimental realization of the proposed birefringent setup remains to be demonstrated.",
+    "model_io": [
+      {
+        "model": "Electromagnetic cavity with birefringent crystal",
+        "inputs": [
+          "fluctuating nematic order",
+          "cavity geometry"
+        ],
+        "outputs": [
+          "Casimir energy",
+          "order stabilization"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Anisotropic electromagnetic zero-point energy can stabilize fluctuating phases",
+        "result": "Casimir energy provides dominant stabilization mechanism in proposed setup"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-61646-9": {
+    "category": "Condensed Matter",
+    "task": "Characterize sliding-dependent anharmonic phonon scattering in Janus bilayers",
+    "key_results": "Asymmetric Si-Ge interface PES landscape enhances low-frequency acoustic phonon scattering; 10% in-plane thermal conductivity suppression; harmonic phonons largely unchanged",
+    "comments": "Establishes microscopic link between interfacial geometry and thermal transport, though mechanism limited to specific interface composition.",
+    "model_io": [
+      {
+        "model": "Janus MoSiGeN\u2084 bilayer with sliding interface",
+        "inputs": [
+          "interface composition",
+          "stacking configuration",
+          "strain"
+        ],
+        "outputs": [
+          "interfacial PES curvature",
+          "phonon scattering rate",
+          "thermal conductivity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Interfacial PES landscape governs anharmonic phonon response",
+        "result": "Si-Ge asymmetry enhances low-frequency scattering and reduces thermal conductivity by 10%"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-63585-x": {
+    "category": "Applied Physics",
+    "task": "Model magnetohydrodynamic ureteral flow with suspended nanoparticles and electromagnetic therapy",
+    "key_results": "Nanoparticles slow main flow; slip effects amplify edge motion, skin friction, pressure changes; Weissenberg parameter increase enhances fluid speed but decays heat transfer; ANN model achieves high correlation and low MSE",
+    "comments": "First study coupling ureteral peristalsis, EM forces, viscous heating, thermodiffusion, and wall slip in two-phase non-Newtonian flow; neural network surrogate enables rapid treatment optimization.",
+    "model_io": [
+      {
+        "model": "FDM solver for MHD Williamson nanofluid in ureter-like tube + ANN via Levenberg-Marquardt backpropagation",
+        "inputs": [
+          "magnetic strength (0-5)",
+          "magnetic parameter (0-5)",
+          "Weissenberg (0.1-1.5)",
+          "suspension (0-0.6)",
+          "Prandtl (0.7-7.0)"
+        ],
+        "outputs": [
+          "velocity profile",
+          "temperature field",
+          "nanoparticle distribution",
+          "skin friction",
+          "Nusselt number"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Magnetic therapy combined with Soret thermodiffusion modulates urine-nanoparticle transport",
+        "result": "ANN surrogate accurately predicts flow characteristics, enabling optimization for targeted drug delivery and urinary infection treatment"
+      }
+    ]
   }
 }
