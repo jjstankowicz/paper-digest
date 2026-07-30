@@ -410730,5 +410730,912 @@
         "result": "Confirmed; trions form without optical excitation"
       }
     ]
+  },
+  "hf:2607.27146": {
+    "category": "Agents/RL",
+    "task": "Training small LMs for whole-lifecycle software engineering via source-free program synthesis",
+    "key_results": "Qwen3.6-27B fine-tuned on MindForge trajectories: ProgramBench 37.98%\u219249.51%; RepoZero-C2Rust +31.00pts, DeepSWE +14.16pts, SWE-bench Verified +5.04pts",
+    "comments": "Clever source-free environment construction sidesteps lack of training data, but gains taper across downstream benchmarks suggesting limited generalization beyond the curated distribution.",
+    "model_io": [
+      {
+        "model": "GLM-5.2 (teacher)",
+        "inputs": [
+          "program specification",
+          "documentation"
+        ],
+        "outputs": [
+          "program synthesis trajectory"
+        ]
+      },
+      {
+        "model": "Qwen3.6-27B (student)",
+        "inputs": [
+          "trajectory data from MindForge environments"
+        ],
+        "outputs": [
+          "generated code"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Whole-lifecycle training environments improve from-scratch program synthesis",
+        "result": "Confirmed: 1%\u219249.51% pass rate on ProgramBench with appropriate training data"
+      }
+    ]
+  },
+  "hf:2607.26410": {
+    "category": "LLM/Reasoning",
+    "task": "Agentic speech recognition with bounded memory-based correction",
+    "key_results": "Voice Memory reduces WER from 8.36%\u21927.52% across HyPoradise domains; over-correction error reduced from 64%\u219235%; air-travel commands 8.40%\u21923.40%, CHiME-4 12.69%\u219210.46%",
+    "comments": "The listener-thinker split is elegant and auditable, but the held-out set for score-gating evaluation details and transfer robustness across corrector types warrant deeper investigation.",
+    "model_io": [
+      {
+        "model": "Frozen corrector + memory.md",
+        "inputs": [
+          "ASR hypothesis",
+          "per-domain memory"
+        ],
+        "outputs": [
+          "accept/abstain decision"
+        ]
+      },
+      {
+        "model": "Score-gated optimizer (asynchronous)",
+        "inputs": [
+          "held-out score",
+          "memory.md"
+        ],
+        "outputs": [
+          "bounded memory edits"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Restraint (abstaining from correction) reduces over-correction errors vs. unconstrained GER",
+        "result": "Confirmed: over-correction reduced to 35% vs 64% baseline"
+      }
+    ]
+  },
+  "hf:2607.26055": {
+    "category": "Agents/RL",
+    "task": "Real-time reactive flow policies for robotic manipulation via latency-adaptive diffusion",
+    "key_results": "\u03c0R\u00b2 achieves ~4\u00d7 faster replanning (~25Hz on A5000 GPU); simulation success +23%, real-world +30% vs baseline; 40ms closed-loop latency on xArm6+XHand",
+    "comments": "Splitting conditioning into fast proprioceptive and slow vision channels is pragmatic, but dependence on diffusion forcing architecture limits broader applicability and the 40ms latency may still be insufficient for very fast dynamic tasks.",
+    "model_io": [
+      {
+        "model": "GR00T-N1.7 + \u03c0R\u00b2 (flow-based diffusion)",
+        "inputs": [
+          "proprioception (fast)",
+          "vision-language features (slow)",
+          "in-flight actions"
+        ],
+        "outputs": [
+          "latency-adaptive action chunks"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Per-position noise scheduling enables reactive closed-loop control within action chunks",
+        "result": "Confirmed: 4\u00d7 faster replanning with 23\u201330% success improvement in simulation and real-world tasks"
+      }
+    ]
+  },
+  "hf:2607.26811": {
+    "category": "Generative",
+    "task": "Coordinating mode coverage and mode seeking in autoregressive video distillation",
+    "key_results": "DistillAlign with Wan-1.3B teacher outperforms DMD baseline with Wan-14B teacher; improves generation quality, coverage, and diversity; distributional metric reveals hidden initialization gaps",
+    "comments": "The distributional evaluation protocol is insightful, revealing that visual metrics (VBench) alone miss mode collapse; however, the paper lacks absolute performance numbers and comparison to recent video distillation methods.",
+    "model_io": [
+      {
+        "model": "DMD + Consistency Distillation (joint)",
+        "inputs": [
+          "teacher video distribution",
+          "student initialization"
+        ],
+        "outputs": [
+          "refined student video distribution"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Alignment of initialization and DMD target distributions improves downstream refinement",
+        "result": "Confirmed: mode-covering initialization preserves broader support and enables better DMD convergence"
+      },
+      {
+        "hypothesis": "Reverse-KL mode seeking alone reduces coverage and diversity in late training",
+        "result": "Confirmed: joint DMD + consistency distillation constraint restores coverage"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-76103-4": {
+    "category": "Mechanobiology",
+    "task": "Enhance intranasal drug delivery to brain by reversibly opening nasal mucosal barrier with ultrasound",
+    "key_results": "33.38-fold increase in aPD-L1 brain accumulation; 40% tumor reduction and extended survival in orthotopic GBM mice",
+    "comments": "LIPUS-mediated NMB disruption is a promising non-invasive approach, though the two-hour delivery window may limit clinical applicability.",
+    "model_io": [
+      {
+        "model": "orthotopic glioblastoma mouse model",
+        "inputs": [
+          "iRGD-aPD-L1 & carvedilol @ macrophage-derived extracellular vesicles (iMPC)",
+          "low-intensity pulsed ultrasound (LIPUS)"
+        ],
+        "outputs": [
+          "aPD-L1 concentration in GBM region",
+          "tumor volume",
+          "mouse survival",
+          "T-cell activation state",
+          "immune memory"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LIPUS reversibly disrupts tight junction proteins to open NMB and facilitate intranasal drug delivery",
+        "result": "33.38-fold increase in aPD-L1 brain accumulation confirmed"
+      },
+      {
+        "hypothesis": "Co-delivery of carvedilol (\u03b2-blocker) reduces T-cell exhaustion while aPD-L1 enhances anti-tumor activity",
+        "result": "T-cell reactivation led to 40% tumor reduction and extended survival"
+      }
+    ]
+  },
+  "nature:10.1038/s41580-026-00991-z": {
+    "category": "Protein Dynamics",
+    "task": "Reconcile structural snapshots with dynamic assembly mechanism of gene regulation complexes",
+    "key_results": "Gene regulation emerges from transient, kinetically controlled assemblies rather than static structures; kinetic rates govern molecular interactions more than equilibrium affinities",
+    "comments": "This perspective synthesizes structural and dynamic data but lacks primary experimental evidence; it serves as a conceptual framework requiring further empirical validation through time-resolved studies.",
+    "model_io": [
+      {
+        "model": "gene regulation complex assembly (ribosome biogenesis, spliceosome, transcription factor ensembles)",
+        "inputs": [
+          "ribonucleoprotein components",
+          "transcription factors with intrinsically disordered regions",
+          "small RNAs",
+          "regulatory proteins"
+        ],
+        "outputs": [
+          "assembly/disassembly kinetics",
+          "component exchange rates",
+          "transient complex populations",
+          "functional activity over time"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Gene regulation complexes function through dynamic, reversible assembly with component exchange rather than stable modular architectures",
+        "result": "Single-molecule and live-cell imaging reveal fluid, continuously exchanging assemblies with activity tuned by kinetic control"
+      },
+      {
+        "hypothesis": "Intrinsically disordered regions in transcription factors enable specificity through kinetic principles",
+        "result": "Kinetic principles govern fidelity, adaptability, and robustness of cellular processes"
+      }
+    ]
+  },
+  "nature:10.1038/s41388-026-03896-5": {
+    "category": "Cell Signaling",
+    "task": "Identify organ-specific glycosyltransferase signatures governing PDAC metastatic tropism and survival",
+    "key_results": "Transcriptomic screen identifies GCNT3 enrichment in liver-tropic and B3GNT3 in lung-tropic PDAC cells; mutually exclusive GT expression validated in human metastatic specimens; GCNT3/B3GNT3 loss impairs proliferation/survival in respective metastatic organ niches in vitro, ex vivo, and in vivo",
+    "comments": "Unbiased screen coupled to functional validation elegantly links glycosylation to organotropism; organ-specific dependencies suggest GT-targeted therapies, though broader applicability to other metastatic adenocarcinomas remains untested.",
+    "model_io": [
+      {
+        "model": "PDAC cell lines (liver- vs. lung-tropic) transcriptomics",
+        "inputs": [
+          "metastatic site origin"
+        ],
+        "outputs": [
+          "glycosyltransferase expression profiles",
+          "GCNT3 and B3GNT3 levels"
+        ]
+      },
+      {
+        "model": "PDAC cells \u00b1 GCNT3/B3GNT3 knockout + in vivo metastasis assays",
+        "inputs": [
+          "GCNT3 or B3GNT3 depletion"
+        ],
+        "outputs": [
+          "organ-specific colonization",
+          "proliferation in organ-matched niches",
+          "survival in vivo"
+        ]
+      },
+      {
+        "model": "Human PDAC metastatic specimens (liver and lung lesions)",
+        "inputs": [
+          "tissue source"
+        ],
+        "outputs": [
+          "GCNT3 enrichment",
+          "B3GNT3 enrichment",
+          "glycoproteome remodeling"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "GCNT3 and B3GNT3 mediate organ-specific glycoproteome remodeling enabling metastatic adaptation",
+        "result": "Loss of GCNT3 or B3GNT3 impairs survival in liver or lung, respectively, via dysregulated glycoproteome"
+      },
+      {
+        "hypothesis": "Distinct GT expression patterns couple to EMT and organ-niche interactions",
+        "result": "Proteomic profiling reveals GT-dependent glycosylation of EMT and cell-adhesion proteins in metastatic cells"
+      }
+    ]
+  },
+  "nature:10.1038/s41388-026-03927-1": {
+    "category": "Other",
+    "task": "Establish RMRP-mediated metabolic reprogramming and lactylation feedback circuit driving bladder cancer invasion",
+    "key_results": "lncRNA RMRP upregulated in MIBC; RMRP binds PDHX weakening PDHX-DLD interaction, impairing PDC function and shifting pyruvate to lactate; lactate promotes p300-dependent IGF2BP1 lactylation (K272/K561) enhancing its stability; stabilized IGF2BP1 stabilizes RMRP, creating positive feedback loop",
+    "comments": "Innovative multi-layer feedback mechanism integrating RNA-protein, metabolic rewiring, and epigenetic PTM (lactylation); establishes novel lactylation-driven feedback paradigm, though clinical relevance and therapeutic targetability of RMRP or feedback intermediates require validation.",
+    "model_io": [
+      {
+        "model": "MIBC cell lines with RMRP knockdown/overexpression",
+        "inputs": [
+          "RMRP",
+          "PDHX",
+          "DLD",
+          "pyruvate"
+        ],
+        "outputs": [
+          "PDC function",
+          "lactate production",
+          "IGF2BP1 lactylation",
+          "IGF2BP1 stability",
+          "invasion phenotype"
+        ]
+      },
+      {
+        "model": "Biochemical assays and mass spectrometry",
+        "inputs": [
+          "RMRP RNA",
+          "PDHX protein",
+          "IGF2BP1",
+          "lactate",
+          "p300"
+        ],
+        "outputs": [
+          "RMRP-PDHX binding",
+          "IGF2BP1 lactylation sites (K272/K561)",
+          "ubiquitin-mediated degradation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "RMRP-PDHX interaction impairs PDC function to favor glycolytic lactate production",
+        "result": "RMRP binding weakens PDHX-DLD interaction, reducing PDH activity and increasing lactate synthesis"
+      },
+      {
+        "hypothesis": "Lactate-driven p300-dependent IGF2BP1 lactylation stabilizes both IGF2BP1 and RMRP in a positive feedback loop",
+        "result": "IGF2BP1 lactylation at K272/K561 protects from ubiquitin-mediated degradation; stabilized IGF2BP1 binds and stabilizes RMRP"
+      }
+    ]
+  },
+  "nature:10.1038/s41419-026-09131-z": {
+    "category": "Cell Signaling",
+    "task": "Characterize rewired signaling architecture upon ERK-MyD88 complex disruption in cancer",
+    "key_results": "ERK-MyD88 inhibition activates integrated stress response driving FADD-independent caspase-8 apoptosis in p62-ubiquitin aggregates and assembles MyD88-IRAK1/4 Myddosomes producing proinflammatory chemokines independently of TLR/IL-1R",
+    "comments": "Elegant demonstration of signaling hub rewiring; mechanistic link between caspase activation and chemokine secretion is clear, though cell-autonomous vs. paracrine contributions to immunogenicity need clarification.",
+    "model_io": [
+      {
+        "model": "Cancer cell lines with ERK-MyD88 complex inhibitor",
+        "inputs": [
+          "ERK-MyD88 small molecule inhibitor",
+          "ERK",
+          "MyD88",
+          "FADD"
+        ],
+        "outputs": [
+          "caspase-8 activation",
+          "apoptosis",
+          "chemokine secretion (TNF\u03b1, IL-6, IL-8)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "ERK-MyD88 disruption activates integrated stress response independent of classical TLR/IL-1R pathways",
+        "result": "IRAK1/4-MyD88 Myddosomes form and produce proinflammatory chemokines without upstream receptor activation"
+      },
+      {
+        "hypothesis": "p62-ubiquitin aggregates serve as signaling hubs for caspase-8 recruitment",
+        "result": "FADD-independent caspase-8 activation occurs within ubiquitin aggregates, driving apoptosis"
+      }
+    ]
+  },
+  "nature:10.1038/s41420-026-03269-7": {
+    "category": "Apoptosis/Cell Death",
+    "task": "Establish mitophagy-mtDNA release axis linking ionizing radiation to immunogenic cell death",
+    "key_results": "IR triggers mitophagy (Parkin/BNIP3 upregulation) coupled to mtDNA cytosolic release and ICD hallmarks (calreticulin, HMGB1, ATP, IFN-\u03b2); mitophagy inhibition attenuates immunogenicity; Parkin overexpression enhances ICD and reduces tumor burden post-IR",
+    "comments": "Mechanistic connection between mitochondrial dynamics and immune activation is well-supported in pancreatic cancer models; therapeutic translational potential for radiosensitization is promising.",
+    "model_io": [
+      {
+        "model": "Pancreatic cancer cell lines (KPC, PANC-1) with IR \u00b1 mitophagy modulators",
+        "inputs": [
+          "ionizing radiation",
+          "Parkin",
+          "BNIP3",
+          "mitophagy inhibitors"
+        ],
+        "outputs": [
+          "mitochondrial damage",
+          "autophagy flux",
+          "mtDNA release",
+          "calreticulin exposure",
+          "HMGB1 translocation",
+          "ATP/IFN-\u03b2 secretion"
+        ]
+      },
+      {
+        "model": "Murine pancreatic cancer allografts",
+        "inputs": [
+          "Parkin overexpression",
+          "ionizing radiation"
+        ],
+        "outputs": [
+          "tumor burden",
+          "survival",
+          "immune infiltration"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Mitophagy-dependent mtDNA release activates immune signaling critical for IR-induced ICD",
+        "result": "mtDNA replication blockade reverses mitophagy-amplified ICD marker expression"
+      },
+      {
+        "hypothesis": "Parkin overexpression enhances mitophagy-coupled immunogenicity to improve radiosensitivity",
+        "result": "Parkin-overexpressing tumors show reduced burden and extended survival post-IR"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-75972-z": {
+    "category": "Statistical Methods",
+    "task": "Statistical validation of LLM-inferred gene functions via embeddings",
+    "key_results": "Text embeddings capture 88.7-92.5% of Gene Ontology biological processes and 98.6% of canonical pathways; gene-function associations achieve 95.2-98.4% sensitivity and 72.7-84.3% specificity",
+    "comments": "Addresses genuine need for quantitative validation of qualitative LLM predictions, though embedding quality depends heavily on training data completeness.",
+    "model_io": [
+      {
+        "model": "Text embedding models (OpenAI text-embedding-3-large, Google gemini-embedding-001, others)",
+        "inputs": [
+          "Gene descriptions",
+          "Function descriptions"
+        ],
+        "outputs": [
+          "Vector embeddings",
+          "Statistical association scores"
+        ]
+      },
+      {
+        "model": "DEGEmbedR R package",
+        "inputs": [
+          "Differentially expressed gene lists"
+        ],
+        "outputs": [
+          "Functional hypotheses",
+          "Prioritized gene-function associations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LLM-derived embeddings can statistically validate gene-function relationships better than conventional enrichment analysis",
+        "result": "Confirmed; framework outperforms confidence-based inference and enrichment analysis in distinguishing biological signal from noise"
+      }
+    ]
+  },
+  "nature:10.1038/s41514-026-00459-6": {
+    "category": "Evolutionary Biology",
+    "task": "Mechanistic linking of frailty, neutrophilia, and accelerated epigenetic aging via myeloid dysfunction",
+    "key_results": "Mendelian randomization supports frailty\u2192neutrophilia\u2192aging pathway (indirect effect 0.309, P<0.001); BLUE module 529-gene signature enriched in myeloid cells (503/513 genes); B3 score correlates with frailty index (r=0.272) and epigenetic aging (r=0.306)",
+    "comments": "Integrates multiple evidence streams (epidemiology, genetics, transcriptomics, single-cell data) to propose myeloid 'programmatic adaptive failure' mechanism; causality remains to be established.",
+    "model_io": [
+      {
+        "model": "WGCNA (weighted gene co-expression network analysis)",
+        "inputs": [
+          "Gene expression data (NHANES)"
+        ],
+        "outputs": [
+          "BLUE module (529 genes)"
+        ]
+      },
+      {
+        "model": "Mendelian randomization (two-step)",
+        "inputs": [
+          "Frailty, neutrophil count, epigenetic aging GWAS summary statistics"
+        ],
+        "outputs": [
+          "Causal pathway estimates"
+        ]
+      },
+      {
+        "model": "Single-cell transcriptomics integration",
+        "inputs": [
+          "External single-cell data"
+        ],
+        "outputs": [
+          "Cell-type distribution patterns across myeloid populations"
+        ]
+      },
+      {
+        "model": "FIRE-AI (prototype)",
+        "inputs": [
+          "Inflammatory threshold",
+          "B3 score",
+          "Network pharmacology"
+        ],
+        "outputs": [
+          "Risk stratification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Frailty drives neutrophilia, which accelerates epigenetic aging through myeloid dysfunction",
+        "result": "Supported by Mendelian randomization; myeloid gene module identified and validated in single-cell data"
+      },
+      {
+        "hypothesis": "Shared biological processes link myeloid dysfunction to both frailty and aging",
+        "result": "Partially supported; BLUE module enriched in metabolic/oxidative stress pathways"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-60690-9": {
+    "category": "Structural Prediction",
+    "task": "Computational identification of phytochemical antifungal candidates against Trichophyton rubrum",
+    "key_results": "Cryptoxanthin shows highest binding affinity (-8.7 kcal/mol) for key targets; delphinidin most stable (RMSD 4.07 \u00c5) in 200 ns MD simulations; MM-GBSA binding affinities -53.18 to -64.00 kcal/mol",
+    "comments": "Comprehensive in silico pipeline (docking, ADMET, MD, FEA) but lacks experimental validation; delphinidin and chalcones identified as promising scaffolds.",
+    "model_io": [
+      {
+        "model": "Target selection and structural modeling",
+        "inputs": [
+          "T. rubrum protein sequences"
+        ],
+        "outputs": [
+          "4 extracellular protein structures"
+        ]
+      },
+      {
+        "model": "Molecular docking",
+        "inputs": [
+          "Protein structures",
+          "Phytochemical ligands"
+        ],
+        "outputs": [
+          "Binding affinity scores (kcal/mol)"
+        ]
+      },
+      {
+        "model": "ADMET analysis",
+        "inputs": [
+          "Candidate compounds"
+        ],
+        "outputs": [
+          "Absorption, bioavailability, toxicity profiles"
+        ]
+      },
+      {
+        "model": "Molecular dynamics simulations (200 ns)",
+        "inputs": [
+          "Protein-ligand complexes"
+        ],
+        "outputs": [
+          "RMSD values",
+          "Interaction stability metrics"
+        ]
+      },
+      {
+        "model": "MM-GBSA free energy calculations",
+        "inputs": [
+          "MD trajectories"
+        ],
+        "outputs": [
+          "Binding free energies (\u0394Gbind)"
+        ]
+      },
+      {
+        "model": "PCA and DCCM analyses",
+        "inputs": [
+          "MD trajectories"
+        ],
+        "outputs": [
+          "Conformational dynamics, ligand-specific effects"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Phytochemicals can achieve stable, favorable binding to T. rubrum extracellular proteins without human off-targets",
+        "result": "Supported; delphinidin, chalcones, anthocyanins show high affinity and stability; carotenoids rejected for poor pharmacokinetics"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-60900-4": {
+    "category": "Single Cell",
+    "task": "Cross-cancer characterization of premetastatic liver niche epithelial-immune crosstalk",
+    "key_results": "Identified hepatocyte-like malignant epithelial state enriched in liver metastases co-expressing hepatic genes, oncogenic transcripts (MYC/KRAS); CCL3-CCR1 axis links epithelial cells to RGS1+/LILRB5+ macrophages; composition and T-cell associations differ between primary and metastatic sites",
+    "comments": "Pancancer single-cell atlas reveals conserved metastatic niche features; CellChat and spatial imaging provide orthogonal validation.",
+    "model_io": [
+      {
+        "model": "Single-cell RNA-seq integration and analysis",
+        "inputs": [
+          "Primary tumors and liver metastases (12 cancer types)",
+          "Normal tissues",
+          "Lymph node samples"
+        ],
+        "outputs": [
+          "Cell states",
+          "Ligand-receptor interactions (CellChat)",
+          "Epithelial-immune associations"
+        ]
+      },
+      {
+        "model": "Multiplex immunofluorescence spatial validation",
+        "inputs": [
+          "Tissue sections"
+        ],
+        "outputs": [
+          "Spatial proximity of epithelial and macrophage populations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Epithelial cells undergo hepatocyte-like differentiation in liver metastases",
+        "result": "Confirmed; distinct state enriched in metastases with hepatic gene co-expression and oncogenic transcripts"
+      },
+      {
+        "hypothesis": "Specific epithelial-immune signaling axes (CCL3-CCR1) mediate premetastatic niche formation",
+        "result": "Supported; predicted signaling validated by spatial proximity analysis"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-61807-w": {
+    "category": "Genomics",
+    "task": "Standardization of pre-analytical factors for liquid biopsy circulating nucleic acid recovery",
+    "key_results": "Streck RNA Complete BCT supports better cfDNA/cfRNA preservation than K3-EDTA (lower cellular contamination); MagMAX cfDNA and Zymo cfRNA kits show high recovery; delayed processing, freeze-thaw cycles, and tube underfilling decrease yield and increase variability",
+    "comments": "Systematic framework for evaluating pre-analytical quality; findings emphasize standardization critical for clinical translation of liquid biopsy.",
+    "model_io": [
+      {
+        "model": "Pre-analytical evaluation pipeline",
+        "inputs": [
+          "Blood collection tubes",
+          "Extraction methods",
+          "Storage/transport conditions"
+        ],
+        "outputs": [
+          "cfDNA/cfRNA yield",
+          "Contamination levels",
+          "Biomarker measurement variability"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Collection tube type and extraction method significantly affect cfDNA/cfRNA recovery",
+        "result": "Confirmed; Streck BCT and MagMAX/Zymo kits outperform alternatives"
+      },
+      {
+        "hypothesis": "Pre-analytical variation (storage, freeze-thaw, fill volume) influences downstream measurements",
+        "result": "Confirmed; delayed processing and reduced fill volumes decrease yield and increase contamination"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-64178-4": {
+    "category": "Network Biology",
+    "task": "Tumor-type-specific analysis of ITPRIPL1 as immune-associated prognostic biomarker in gastrointestinal cancers",
+    "key_results": "ITPRIPL1 upregulated across gastrointestinal cancers but prognostic significance tumor-specific (strong in STAD, weak in others); high expression unfavorable in gastric cancer, favorable in immunotherapy cohorts; associated with immune pathways and genomic instability",
+    "comments": "Highlights importance of tumor-specific validation; ITPRIPL1 enriched in T cells with context-dependent survival associations.",
+    "model_io": [
+      {
+        "model": "Integrative analysis pipeline",
+        "inputs": [
+          "Bulk transcriptomics (STAD, COAD, READ, ESCA)",
+          "Single-cell RNA-seq",
+          "Immunotherapy cohort data"
+        ],
+        "outputs": [
+          "ITPRIPL1 expression profiles",
+          "Prognostic associations",
+          "Immune pathway enrichments"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "ITPRIPL1 has consistent prognostic relevance across gastrointestinal malignancies",
+        "result": "Rejected; prognostic significance is highly tumor-type-specific, strongest in STAD"
+      },
+      {
+        "hypothesis": "ITPRIPL1 expression correlates with immunotherapy response",
+        "result": "Supported exploratorily; higher expression associated with favorable outcomes in pretreatment immunotherapy cohorts"
+      }
+    ]
+  },
+  "nature:10.1038/s41698-026-01614-8": {
+    "category": "Single Cell",
+    "task": "Pan-cancer characterization of NK cell heterogeneity and remodeling during immunotherapy",
+    "key_results": "Identified immunosuppressive CSF1+ NK subset promoting M2 macrophage polarization and associated with poor overall survival; dynamic NK-cell state remodeling observed during immune checkpoint inhibitor therapy",
+    "comments": "Comprehensive atlas across 11 cancer types reveals tissue-specific NK regulation; CSF1+ subset is novel finding with therapeutic implications.",
+    "model_io": [
+      {
+        "model": "Single-cell transcriptomics integration",
+        "inputs": [
+          "NK cells from 11 cancer types (tumors, blood, tissues, lymph nodes)"
+        ],
+        "outputs": [
+          "NK cell subtype identities",
+          "Functional states",
+          "Cell-cell communication networks"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "NK cell subtypes and functional states vary by tissue context and primary vs. metastatic sites",
+        "result": "Confirmed; context-dependent remodeling of cytotoxicity, inhibitory signaling, stromal communication"
+      },
+      {
+        "hypothesis": "CSF1+ NK cells mediate immunosuppression through macrophage polarization",
+        "result": "Supported; CSF1+ NK subset associated with poor survival and predicted M2 polarization signaling"
+      },
+      {
+        "hypothesis": "NK cell state transitions correlate with immunotherapy response",
+        "result": "Supported; dynamic remodeling observed during ICI therapy with potential mechanistic links"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-60531-9": {
+    "category": "ML Theory",
+    "task": "Predict next occupation in career trajectories using adaptive talent dynamics planner with multi-agent modeling",
+    "key_results": "On KARRIEREWEGE: 0.241 Acc@1, 0.562 Recall@10, 0.421 NDCG@10; 2.7 pp NDCG improvement over CAREER baseline; fewer parameters and FLOPs",
+    "comments": "Novel multi-agent perspective on career prediction; uncertainty-aware refinement and taxonomy fusion are well-motivated; limited to supervised ESCO task.",
+    "model_io": [
+      {
+        "model": "Multi-agent adaptive talent dynamics planner (constraint-driven optimizer, agent-based collaborator, uncertainty evaluator)",
+        "inputs": [
+          "ESCO occupation sequences",
+          "job-title texts",
+          "career histories"
+        ],
+        "outputs": [
+          "next occupation prediction",
+          "ranking scores",
+          "uncertainty estimates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-agent modeling with ESCO embeddings, temporal encoding, and uncertainty regularization improves next-occupation prediction",
+        "result": "Confirmed; achieves state-of-the-art with improved parameter efficiency"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-61485-8": {
+    "category": "Other",
+    "task": "Implement distributed multimodal biometric authentication (3D face + 3D ear) using blockchain and IPFS",
+    "key_results": "Feature extraction 120\u2013300 ms; IPFS upload 200\u2013600 ms; blockchain transaction 0.5\u20131 s (117,519 gas); resistant to replay, interception, template tampering; irreversible, revocable, unlinkable",
+    "comments": "Solid blockchain-biometric integration; decentralized design eliminates single points of failure; gas costs and latency acceptable for enrollment but slower for real-time auth.",
+    "model_io": [
+      {
+        "model": "Multimodal biometric system (3D face + 3D ear) with IPFS + smart contracts",
+        "inputs": [
+          "3D facial/ear scans",
+          "biometric templates"
+        ],
+        "outputs": [
+          "IPFS Content Identifiers",
+          "blockchain transaction hashes",
+          "authentication proofs"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Blockchain + IPFS + smart contracts enable verifiable, immutable, privacy-preserving biometric authentication",
+        "result": "Confirmed; system resistant to standard attacks with acceptable latency/cost"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-63489-w": {
+    "category": "Algorithms",
+    "task": "Design hybrid frequency-domain CFAR detectors for spectrum sensing in cognitive radio networks under jamming and develop countermeasures",
+    "key_results": "First-Order Difference CFAR achieves P\u2090\u22481 at SNR=3dB under 50% sweep coverage; order-statistic variants best for jamming resilience; algorithm-aware comb-sweep countermeasure induces near-unity false alarms, restoring spectrum governance",
+    "comments": "Novel dual-use security paradox: spectrum-sensing resilience enables unauthorized spectrum access; countermeasure exploits CFAR reference dependencies, creating policy enforcement lever.",
+    "model_io": [
+      {
+        "model": "Eleven hybrid CFAR architectures adapted from radar literature to frequency-domain spectrum sensing",
+        "inputs": [
+          "power spectral density samples (APCO P25 PU, OFDMA SU)",
+          "reference windows",
+          "jamming patterns"
+        ],
+        "outputs": [
+          "detection decisions",
+          "false alarm rates",
+          "CFAR algorithm vulnerabilities"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "First-Order Difference CFAR and order-statistic variants resist barrage/swept-FM jamming via global sorting and statistical jump detection",
+        "result": "Confirmed; P\u2090\u22481 at 3dB SNR under 50% sweep coverage"
+      },
+      {
+        "hypothesis": "Algorithm-aware comb-sweep countermeasure can enforce spectrum governance without sacrificing PU protection",
+        "result": "Confirmed; induces denial plateau (-5 to -1 dB JSR) while maintaining PU detection"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-63738-y": {
+    "category": "Algorithms",
+    "task": "Design finite-time fault-tolerant control for underactuated USVs with rotatable thrusters and event-triggered inputs",
+    "key_results": "Finite-time convergence to bounded error neighborhood; reduced network bandwidth via multi-channel event-triggering; improved fault compensation under actuator coupling",
+    "comments": "Theoretically grounded control design; simulation validation only; practical marine deployment would require experimental sea trials.",
+    "model_io": [
+      {
+        "model": "Dynamic compensation controller with finite-time disturbance observer and event-triggered mechanism",
+        "inputs": [
+          "thruster fault signals",
+          "USV state measurements",
+          "reference trajectory"
+        ],
+        "outputs": [
+          "control commands",
+          "tracking error bounds",
+          "network update triggers"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Finite-time disturbance observer with event-triggered control reduces bandwidth while maintaining fault tolerance",
+        "result": "Confirmed; converges to bounded neighborhood in finite time with lower communication overhead"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-64004-x": {
+    "category": "Other",
+    "task": "Formal verification of integrity attacks on connected medical devices in battlefield field hospitals using stochastic models",
+    "key_results": "Patient-ID swapping reaches empirical unsafe reachability 0.297 (95% CI 0.284\u20130.310); combined adaptive attacker 0.384; synthesized gateway policy reduces from 0.392 to 0.119 (69.6% relative reduction)",
+    "comments": "Novel application of formal methods to cyber-physical medical systems; Monte Carlo with 5000 trajectories provides empirical evidence, not clinical validation; model-based findings support defensive design principles.",
+    "model_io": [
+      {
+        "model": "Stochastic clinical\u2013cyber system with bounded reachability analysis and strategy synthesis (PRISM-games)",
+        "inputs": [
+          "patient state dynamics",
+          "communication patterns",
+          "attacker actions",
+          "defense policies"
+        ],
+        "outputs": [
+          "unsafe reachability bounds",
+          "synthesized defense strategies",
+          "workflow burden metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Formal verification and synthesized gateway policies reduce model-estimated unsafe reachability under integrity attacks",
+        "result": "Confirmed; 69.6% relative reduction in synthetic scenarios with tractable verification times"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-64327-9": {
+    "category": "ML Theory",
+    "task": "Develop ANN-based model for predicting axial capacity of short CFDSST columns with explainable AI and GUI tool",
+    "key_results": "ANN model: R\u00b2=0.99, RMSE=207.74, MAPE=4.62%, a\u2082\u2080=0.97; outperforms existing design provisions; SHAP+PDP provide interpretability; Excel-based GUI enables user-friendly design",
+    "comments": "Excellent prediction accuracy and explainability; comprehensive 296-specimen database; practical engineering tool but generalization to long columns not addressed.",
+    "model_io": [
+      {
+        "model": "ANN (8 inputs: geometric/material properties) with SHAP explanation and PDP analysis",
+        "inputs": [
+          "outer/inner tube diameters",
+          "thicknesses",
+          "concrete/steel strength"
+        ],
+        "outputs": [
+          "axial capacity prediction",
+          "feature importance",
+          "nonlinear effect curves"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "ANN with explainable AI (SHAP/PDP) provides accurate, interpretable capacity prediction superior to design code equations",
+        "result": "Confirmed; R\u00b2=0.99 with practical GUI deployment feasibility"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-59494-8": {
+    "category": "Astrophysics/Cosmology",
+    "task": "Measure sensitivity of external magnetic field to toroidal current column cross-section in tokamak plasma",
+    "key_results": "Poloidal magnetic field outside current column is sensitive to cross-sectional area; Angle of Invariance in Change (AICH) empirically confirmed within predicted angular range",
+    "comments": "Experimental validation of numerical predictions in ADITYA-U is important for plasma diagnostics but results appear limited to specific geometry.",
+    "model_io": [
+      {
+        "model": "ADITYA-U tokamak plasma with toroidal current column",
+        "inputs": [
+          "current column circular cross-section",
+          "toroidal geometry"
+        ],
+        "outputs": [
+          "poloidal magnetic field distribution",
+          "AICH (angle of invariance)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Poloidal field is sensitive to current column cross-section except at specific angles",
+        "result": "Confirmed: AICH falls within expected angular range independent of current magnitude"
+      }
+    ]
+  },
+  "nature:10.1038/s42005-026-02705-5": {
+    "category": "Condensed Matter",
+    "task": "Establish bulk-boundary correspondence in projected operator spectra beyond conventional band topology",
+    "key_results": "Topological invariant guarantees gapless boundary states in either energy or projected operator spectrum; feature-energy complementarity reveals boundary phenomena missed by traditional approaches",
+    "comments": "Generalizing bulk-boundary correspondence to operator spectra is conceptually elegant but practical verification in topological materials remains to be demonstrated.",
+    "model_io": [
+      {
+        "model": "Projected operator spectrum framework",
+        "inputs": [
+          "manifold projector P",
+          "observable operator O"
+        ],
+        "outputs": [
+          "topological invariant",
+          "boundary state signature"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Projected spectrum can encode topological information absent in energy spectrum under weak symmetry breaking",
+        "result": "Confirmed: feature-energy complementarity uncovers overlooked boundary phenomena"
+      }
+    ]
+  },
+  "nature:10.1038/s42005-026-02797-z": {
+    "category": "Condensed Matter",
+    "task": "Connect crystal chirality to electronic topology in 3D chiral crystals via bonding analysis",
+    "key_results": "Asymmetric valence electron distributions directly visualized; 3D Su-Schrieffer-Heeger model shows chiral bonding creates multifold fermions with doubled topological invariants; control via chirality reversal or electron filling",
+    "comments": "Real-space bonding picture is intuitive and eV-scale mechanism avoids spin-orbit coupling; extension to metamaterials is interesting but still largely theoretical.",
+    "model_io": [
+      {
+        "model": "Synchrotron X-ray diffraction + first-principles DFT + 3D SSH model",
+        "inputs": [
+          "cubic chiral crystals (CoSi, FeSi)",
+          "crystal structure",
+          "electron filling"
+        ],
+        "outputs": [
+          "valence electron distribution",
+          "bonding network",
+          "multifold fermion signature",
+          "topological invariant"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Chiral bonding network generates multifold topological fermions without requiring spin-orbit coupling",
+        "result": "Confirmed: eV-scale mechanism enables room-temperature topology"
+      },
+      {
+        "hypothesis": "Topological properties controllable via chirality reversal or electron filling",
+        "result": "Confirmed: two distinct switching routes identified"
+      }
+    ]
   }
 }
