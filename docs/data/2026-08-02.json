@@ -1,5 +1,37 @@
 [
   {
+    "uid": "nature:10.1038/s41525-026-00603-x",
+    "source": "computational-biology",
+    "id": "10.1038/s41525-026-00603-x",
+    "title": "IMPACT: an open-source workflow for unified variant interpretation using phenotype-driven filtering",
+    "projectPage": "https://www.nature.com/articles/s41525-026-00603-x",
+    "journal": "Nature Portfolio",
+    "publishedAt": "2026-08-02",
+    "category": "Genomics",
+    "task": "Unified interpretation of multi-variant classes in whole-genome sequencing via phenotype-driven filtering",
+    "key_results": "Deafness cohort: 565 prioritized variants (512 non-incidental); epilepsy cohort: 126 prioritized variants (103 non-incidental); 100% deafness and 87.8% epilepsy participants had candidate variants",
+    "comments": "Strengths: harmonizes SNVs, indels, SVs, CNVs in interactive interface; ACMG-aligned classification is clinically relevant. Limitation: UK Biobank cohorts modest in size; requires external validation.",
+    "model_io": [
+      {
+        "model": "IMPACT (phenotype-configurable pipeline with R Shiny interface)",
+        "inputs": [
+          "whole-genome sequencing data",
+          "phenotype definitions"
+        ],
+        "outputs": [
+          "prioritized variant list",
+          "ACMG-aligned pathogenic/VUS classifications"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Phenotype-aware filtering across variant classes identifies pathogenic and candidate variants relevant to deafness and epilepsy",
+        "result": "100% deafness and 87.8% epilepsy participants carried \u22651 candidate variant; identified compound heterozygotes spanning variant classes"
+      }
+    ]
+  },
+  {
     "uid": "nature:10.1038/s41598-026-62737-3",
     "source": "computational-biology",
     "id": "10.1038/s41598-026-62737-3",
@@ -8,33 +40,33 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-08-02",
     "category": "Structural Prediction",
-    "task": "Lung cancer detection from CT images",
-    "key_results": "92.55% accuracy, 91.38% recall, 90.89% precision, 89.79% F1-score",
-    "comments": "Hybrid approach combining MobileNet, Deep Kronecker Networks, and harmonic analysis shows strong performance but lacks external validation or comparison with state-of-the-art methods.",
+    "task": "Lung cancer detection from CT images using hybrid deep learning",
+    "key_results": "92.55% accuracy, 91.38% recall, 90.89% precision, F1-score 89.79%",
+    "comments": "Strong performance metrics but lacks independent validation on external datasets and no comparison with state-of-the-art methods.",
     "model_io": [
       {
-        "model": "KMFHNet (Kronecker Mobile Forwarded Harmonic Network)",
+        "model": "KMFHNet (MobileNet + Deep Kronecker Network + Harmonic Analysis)",
         "inputs": [
           "CT lung images"
         ],
         "outputs": [
-          "lung cancer detection (binary/multi-class)"
+          "lung cancer detection (binary classification)"
         ]
       },
       {
-        "model": "DRI-Net (Tversky-Dense-Res-Inception Net)",
+        "model": "DRI-Net (Dense-Res-Inception with Tversky Loss)",
         "inputs": [
-          "preprocessed CT images"
+          "CT lung images"
         ],
         "outputs": [
-          "segmented lung lobes"
+          "lung lobe segmentation masks"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Integration of higher-order feature interactions via Deep Kronecker Networks improves lung cancer detection",
-        "result": "High accuracy metrics achieved (92.55%)"
+        "hypothesis": "Higher-order feature interactions via Kronecker networks improve cancer detection over standard CNNs",
+        "result": "Achieved 92.55% accuracy on validation set"
       }
     ]
   },
@@ -46,34 +78,25 @@
     "projectPage": "https://www.nature.com/articles/s41598-026-64403-0",
     "journal": "Scientific Reports",
     "publishedAt": "2026-08-02",
-    "category": "Statistical Methods",
-    "task": "Prediction of bacterial and viral pathogen concentrations in membrane bioreactors",
-    "key_results": "Improved generalization of predictions across aerobic and anaerobic MBRs at multiple sites; validated against WGAN baseline",
-    "comments": "Lifelong learning with ensemble sequential data augmentation addresses nonstationarity well, but specific quantitative accuracy metrics are not provided.",
+    "category": "Network Biology",
+    "task": "Prediction of bacterial and viral pathogen concentrations in membrane bioreactors via lifelong learning",
+    "key_results": "Accurate and generalizable prediction across aerobic/anaerobic MBRs and unseen wastewater matrices; outperformed WGAN baseline",
+    "comments": "Ensemble sequential data augmentation with lifelong learning is novel; validation across multiple pathogen types (bacteria, viruses, specific phages) strengthens claims.",
     "model_io": [
       {
-        "model": "EnSDA with lifelong learning",
+        "model": "EnSDA + Lifelong Learning Ensemble",
         "inputs": [
-          "physicochemical parameters (aerobic/anaerobic MBR)"
+          "physicochemical parameters (AeMBR/AnMBR systems)"
         ],
         "outputs": [
-          "bacterial cell and viral particle concentrations"
-        ]
-      },
-      {
-        "model": "Wasserstein GAN (comparison baseline)",
-        "inputs": [
-          "physicochemical parameters"
-        ],
-        "outputs": [
-          "pathogen concentration predictions"
+          "bacterial cell, total virus, adenovirus, PMMV, coliphage, CrAssphage concentrations"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Lifelong learning combined with ensemble sequential data augmentation enables generalizable prediction across unseen MBRs and wastewater matrices",
-        "result": "EnSDA maintained robust performance across unseen treatment facilities and both aerobic/anaerobic systems"
+        "hypothesis": "Lifelong learning with data augmentation improves generalization across unseen MBRs and wastewater matrices",
+        "result": "Maintained prediction performance and robustness on unseen treatment facilities"
       }
     ]
   },
@@ -86,12 +109,12 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-08-02",
     "category": "Statistical Methods",
-    "task": "Classification of glycemic states from breath spectra using CNN",
-    "key_results": "86.6% balanced accuracy (\u00b14.0%), >92% specificity; robust to instrumental drift without alignment",
-    "comments": "First CNN application to ion mobility spectrometry breath data with physiologically interpretable saliency maps, though small cohort (n=10) limits generalizability.",
+    "task": "Classification of glycemic states from breath spectra using alignment-free CNN",
+    "key_results": "86.6% (\u00b14.0%) mean balanced accuracy; specificity >92% across all classes; robust to instrumental drift",
+    "comments": "Proof-of-concept with small cohort (n=10); physiologically interpretable saliency maps strengthen findings but external validation needed for clinical utility.",
     "model_io": [
       {
-        "model": "Convolutional Neural Network",
+        "model": "Convolutional Neural Network (alignment-free)",
         "inputs": [
           "GC-IMS breath spectra (minimally preprocessed)"
         ],
@@ -102,12 +125,12 @@
     ],
     "hypotheses": [
       {
-        "hypothesis": "CNN can classify glycemic states from breath spectra without alignment preprocessing despite instrumental drift",
-        "result": "Mean balanced accuracy 86.6% with stable performance across retention time variability"
+        "hypothesis": "CNN can classify glycemic states from breath VOCs without spectral alignment despite instrumental drift",
+        "result": "86.6% balanced accuracy maintained despite retention time variability"
       },
       {
-        "hypothesis": "CNNs are more robust to spectral drift than traditional machine learning methods",
-        "result": "CNN maintained performance without alignment while traditional models required extensive preprocessing"
+        "hypothesis": "Network identifies physiologically relevant breath markers (acetone, isoprene, 2-propanol)",
+        "result": "Saliency maps confirmed metabolic markers associated with glycemic dysregulation"
       }
     ]
   },
@@ -121,8 +144,8 @@
     "publishedAt": "2026-08-02",
     "category": "Statistical Methods",
     "task": "ECG-based sleep apnea detection using spiking neural networks with FPGA implementation",
-    "key_results": "95.83% accuracy (subject-independent 5-fold CV), 94.53% mean accuracy on cross-dataset testing; 16 ms latency, 0.07 J energy consumption on FPGA",
-    "comments": "Well-engineered framework combining spike-based deep learning with hardware implementation, though temporal spike encoding novelty relative to standard CNNs is incremental.",
+    "key_results": "95.83% accuracy (subject-independent 5-fold CV); 94.53% cross-dataset accuracy (UCDDB); 16 ms latency, 14.53 FPS/W power efficiency on FPGA",
+    "comments": "Comprehensive hardware implementation with quantization and latency reporting is excellent; temporal spike encoding removes handcrafted feature dependence, addressing key limitation of prior work.",
     "model_io": [
       {
         "model": "IPSO-SpikeApneaNet (sparse spiking CNN + self-attention + spike-BiGRU)",
@@ -130,27 +153,18 @@
           "single-lead ECG signals"
         ],
         "outputs": [
-          "sleep apnea classification (apneic/normal)"
-        ]
-      },
-      {
-        "model": "FPGA accelerator (Xilinx Zynq-7000 XC7Z035)",
-        "inputs": [
-          "quantized model (INT8)"
-        ],
-        "outputs": [
-          "real-time apnea detection"
+          "sleep apnea classification (presence/absence)"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Improved Portia spider optimization enhances hyperparameter tuning and generalization across subjects",
-        "result": "95.83% accuracy with strong cross-dataset generalization (94.53% on UCDDB)"
+        "hypothesis": "Spike-based encoding and improved Portia spider optimization improve generalization across subjects and datasets",
+        "result": "95.83% subject-independent accuracy; 94.53% cross-dataset accuracy on UCDDB"
       },
       {
-        "hypothesis": "Spike-based encoding with spiking neural networks reduces computational complexity for edge deployment",
-        "result": "16 ms latency, 62.50 FPS, 14.53 FPS/W efficiency on FPGA with lower resource utilization than PSO baseline"
+        "hypothesis": "FPGA quantization and hardware acceleration enable real-time, power-efficient edge inference",
+        "result": "16 ms latency, 0.07 J energy consumption, 62.50 FPS throughput"
       }
     ]
   },
@@ -164,25 +178,25 @@
     "publishedAt": "2026-08-02",
     "category": "ML Theory",
     "task": "Deepfake image detection via confidence-calibrated adaptive ensemble",
-    "key_results": "97.8% accuracy on 192,000 authentic and manipulated images; significantly outperforms individual detectors and static fusion baselines",
-    "comments": "Novel reliability-aware adaptive fusion is promising, but evaluation limited to image domain; robustness to new synthesis methods not thoroughly tested.",
+    "key_results": "97.8% overall accuracy on 192,000 images; heterogeneous ensemble with reliability-aware fusion outperforms individual detectors and static baselines",
+    "comments": "The confidence-calibrated adaptive fusion mechanism is novel, but evaluation is limited to intra-dataset conditions; cross-dataset robustness remains untested.",
     "model_io": [
       {
-        "model": "DeepFakeBuster: heterogeneous ensemble fusing 5 detector types (spatial, boundary, noise, semantic, frequency-domain) with confidence-calibrated adaptive fusion",
+        "model": "DeepFakeBuster: adaptive ensemble with reliability-aware fusion (MLP-Mixer)",
         "inputs": [
-          "192,000 authentic and manipulated images"
+          "image pixels",
+          "heterogeneous detector outputs (spatial, boundary, noise, semantic, frequency)"
         ],
         "outputs": [
-          "Binary deepfake classification",
-          "Forensic analysis heatmaps",
-          "Accuracy, precision, recall metrics"
+          "binary deepfake/authentic classification",
+          "forensic analysis visualization"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Reliability-aware adaptive fusion outperforms static ensemble averaging",
-        "result": "Confirmed: 97.8% accuracy; significant improvement over individual detectors and static baselines"
+        "hypothesis": "Confidence-calibrated adaptive fusion outperforms static averaging and individual detectors",
+        "result": "Confirmed: 97.8% ensemble accuracy vs lower individual and baseline performance"
       }
     ]
   },
@@ -195,26 +209,31 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-08-02",
     "category": "Algorithms",
-    "task": "Gas detector optimization with reduced CFD simulations using kinetic theory and voting logic",
-    "key_results": "Mathematical model estimates flammable cloud volume with accuracy comparable to CFD while significantly reducing computational time and simulations required",
-    "comments": "Practical industrial application but lacks quantitative metrics (e.g., number of simulations saved, runtime reduction factors) in the abstract.",
+    "task": "Gas detector placement optimization using kinetic theory and Monte Carlo simulation",
+    "key_results": "Mathematical model predicts flammable cloud volume with CFD-comparable accuracy while reducing CFD simulation count; 2-of-N voting improves system reliability",
+    "comments": "The reduction in CFD computational burden is valuable for industrial applications, though the paper lacks quantitative metrics on CFD savings and does not specify accuracy thresholds.",
     "model_io": [
       {
-        "model": "Kinetic theory-based mathematical model with Monte Carlo simulations and set covering optimization with 2-of-N voting constraints",
+        "model": "Kinetic theory-based mathematical model with Monte Carlo simulation and set covering optimization",
         "inputs": [
-          "Limited CFD simulation results",
-          "Dimensional equations"
+          "limited CFD simulation results",
+          "dimensional equations",
+          "gas properties"
         ],
         "outputs": [
-          "Flammable cloud volume estimates",
-          "Exceedance curves with risk criterion"
+          "estimated flammable cloud volume",
+          "detector placement configuration"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Kinetic theory model with exceedance curves approximates CFD results while reducing computational burden",
-        "result": "Confirmed: accuracy comparable to CFD with fewer simulations; 2-of-N voting improves system reliability"
+        "hypothesis": "Kinetic theory model with limited CFD data can estimate flammable cloud volume comparably to full CFD",
+        "result": "Confirmed: model achieves comparable accuracy while reducing CFD simulations"
+      },
+      {
+        "hypothesis": "2-of-N voting logic improves gas detection system reliability",
+        "result": "Confirmed: voting constraint enhances detector reliability in optimization"
       }
     ]
   },
@@ -226,32 +245,32 @@
     "projectPage": "https://www.nature.com/articles/s41598-026-64637-y",
     "journal": "Scientific Reports",
     "publishedAt": "2026-08-02",
-    "category": "Other",
-    "task": "Mixing of shear-thinning fluids in 2D unsteady chaotic mixer with protocol optimization",
-    "key_results": "Continuous modulation 29%-39% faster mixing than alternating modulation; alternating saves 9%-25% energy; final mixture rheology governed by more viscous fluid",
-    "comments": "Rigorous numerical study balancing practical trade-offs but limited to 2D; 3D effects and scalability to industrial-scale mixers not addressed.",
+    "category": "Analysis",
+    "task": "Mixing optimization of two shear-thinning fluids in unsteady 2D chaotic mixer",
+    "key_results": "Continuous modulation 29-39% faster mixing than alternating modulation; alternating modulation saves 9-25% energy; final mixture rheology governed by more viscous fluid",
+    "comments": "The trade-off analysis between mixing speed and energy efficiency is practical for industrial design, but evaluation is limited to two stirring protocols and does not explore hybrid or adaptive strategies.",
     "model_io": [
       {
-        "model": "2D two-rod chaotic mixer with CFD simulations comparing continuous vs. alternating modulation protocols",
+        "model": "Numerical simulation of 2D two-rod chaotic mixer with CMand ALT protocols",
         "inputs": [
-          "Two shear-thinning fluids with distinct power-law indices",
-          "Stirring protocols"
+          "two shear-thinning fluids with distinct rheological properties",
+          "mixer geometry and stirring protocol"
         ],
         "outputs": [
-          "Mixing index",
-          "Energy consumption",
-          "Final fluid rheological properties"
+          "mixing index over time",
+          "energy consumption",
+          "final fluid rheological properties"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Continuous modulation achieves faster mixing than alternating modulation in shear-thinning fluids",
-        "result": "Confirmed: 29%-39% reduction in mixing time"
+        "hypothesis": "Continuous modulation achieves faster mixing than alternating modulation",
+        "result": "Confirmed: 29-39% reduction in mixing time"
       },
       {
         "hypothesis": "Alternating modulation is more energy efficient than continuous modulation",
-        "result": "Confirmed: 9%-25% energy savings with ALT protocol"
+        "result": "Confirmed: 9-25% energy savings"
       }
     ]
   },
@@ -264,25 +283,98 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-08-02",
     "category": "ML Theory",
-    "task": "Multi-class student performance prediction with federated learning and privacy",
-    "key_results": "Accuracy improved from 0.9432 to 0.9516, F1 score from 0.9428 to 0.9522 using adaptive noise differential privacy; average information entropy 0.6472 on OULAD dataset",
-    "comments": "Strong empirical results but lacks theoretical analysis of privacy-utility trade-offs or convergence guarantees for the federated setting.",
+    "task": "Student performance prediction with privacy-preserving federated learning",
+    "key_results": "Accuracy improved from 0.9432 to 0.9516, F1 score from 0.9428 to 0.9522 using adaptive noise differential privacy",
+    "comments": "Adaptive DP noise achieves marginal gains over standard DP (information entropy 0.6472 vs 0.6406) while protecting privacy, though the practical significance of <1% accuracy improvement warrants scrutiny.",
     "model_io": [
       {
         "model": "9-layer CNN with federated learning and adaptive noise differential privacy",
         "inputs": [
-          "Open University Learning Analytics Dataset (OULAD) student records"
+          "student learning analytics data from OULAD"
         ],
         "outputs": [
-          "Multi-class performance predictions",
-          "Accuracy, precision, F1 score, information entropy metrics"
+          "predicted student performance class",
+          "privacy-differential signals"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Adaptive noise DP improves prediction accuracy compared to traditional DP",
-        "result": "Confirmed: accuracy 0.9516 vs 0.9432, though entropy comparable (0.6472 vs 0.6406)"
+        "hypothesis": "Adaptive noise DP improves both accuracy and privacy over traditional DP",
+        "result": "Confirmed: higher accuracy (0.9516 vs 0.9432) with comparable entropy (0.6472 vs 0.6406)"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41598-026-65079-2",
+    "source": "mathematics-and-computing",
+    "id": "10.1038/s41598-026-65079-2",
+    "title": "A dual-domain spatio-temporal and frequency framework for robust deepfake detection",
+    "projectPage": "https://www.nature.com/articles/s41598-026-65079-2",
+    "journal": "Scientific Reports",
+    "publishedAt": "2026-08-02",
+    "category": "ML Theory",
+    "task": "Deepfake video detection via dual-domain spatio-temporal and frequency analysis",
+    "key_results": "Intra-dataset: strong performance; cross-dataset: accuracy 50.41-62.21%, AUC 0.4776-0.7613; substantial generalization gap",
+    "comments": "DSTF-Net elegantly combines wavelet and transformer approaches, but the large cross-dataset performance drop (>30% accuracy) severely limits real-world deployment without domain adaptation.",
+    "model_io": [
+      {
+        "model": "DSTF-Net: dual-branch architecture (WaveFormer + SFormer) with MLP-Mixer fusion",
+        "inputs": [
+          "32-frame video sequences of face-aligned frames"
+        ],
+        "outputs": [
+          "binary deepfake/authentic video classification",
+          "video-level embedding"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Dual-domain (frequency + spatio-temporal) analysis improves intra-dataset deepfake detection",
+        "result": "Confirmed for intra-dataset; refuted for cross-dataset without fine-tuning (>30% accuracy drop)"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41598-026-65151-x",
+    "source": "mathematics-and-computing",
+    "id": "10.1038/s41598-026-65151-x",
+    "title": "Research on a roof weighting parameter mining system using support resistance manifestation information",
+    "projectPage": "https://www.nature.com/articles/s41598-026-65151-x",
+    "journal": "Scientific Reports",
+    "publishedAt": "2026-08-02",
+    "category": "Algorithms",
+    "task": "Automated roof-weighting parameter extraction from hydraulic-support resistance data",
+    "key_results": "Two-parameter clustering algorithm achieved 8.81% relative deviation in periodic weighting intervals; automated system deployed at coal mine working face 23,203",
+    "comments": "The two-parameter clustering algorithm outperforms DBSCAN (8.81% vs 9.66% deviation) and eliminates manual subjectivity, though 8-9% error margins may be significant for safety-critical mining operations.",
+    "model_io": [
+      {
+        "model": "Two-parameter clustering algorithm with data gridding and Flask system",
+        "inputs": [
+          "monitored hydraulic-support resistance data from coal mine"
+        ],
+        "outputs": [
+          "identified roof-weighting regions",
+          "periodic weighting intervals",
+          "noise points"
+        ]
+      },
+      {
+        "model": "DBSCAN (comparative method)",
+        "inputs": [
+          "resistance data"
+        ],
+        "outputs": [
+          "roof-weighting regions",
+          "periodic intervals"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Two-parameter clustering without pre-specified cluster count achieves comparable accuracy to DBSCAN",
+        "result": "Confirmed: 8.81% vs 9.66% relative deviation; proposed method is more automated"
       }
     ]
   },
@@ -294,31 +386,32 @@
     "projectPage": "https://www.nature.com/articles/s41598-026-65335-5",
     "journal": "Scientific Reports",
     "publishedAt": "2026-08-02",
-    "category": "Statistics/Probability",
-    "task": "Predicting driver pupil diameter in tunnels via explainable machine learning with feature importance analysis",
-    "key_results": "GWO-XGBoost achieves R\u00b2=0.914, MAPE=7.15% on test set; visibility identified as dominant factor, followed by color temperature, road illuminance, geometric parameters",
-    "comments": "Well-designed field study with interpretability via SHAP, though causality claims require careful interpretation; visibility-driven compensation model provides theoretical grounding.",
+    "category": "ML Theory",
+    "task": "Driver pupil diameter prediction in road tunnels using GWO-XGBoost with SHAP interpretability",
+    "key_results": "GWO-XGBoost achieved R\u00b2 0.914, MAPE 7.15% on test set; visibility identified as primary driver of pupil response; visibility-driven compensation model provides nonlinear relationship interpretation",
+    "comments": "The integration of hyperparameter optimization, feature attribution, and psychophysiological validation is thorough; SHAP analysis bridges data-driven and mechanistic understanding, supporting tunnel lighting design.",
     "model_io": [
       {
-        "model": "GWO-XGBoost optimized via grey wolf optimizer; interpretability via SHAP analysis; visibility-driven compensation model",
+        "model": "GWO-XGBoost with SHAP-based interpretability",
         "inputs": [
-          "Tunnel visibility, illuminance (road/sidewall), color temperature, distance, curvature radius, external time, eye-tracking pupil diameter"
+          "visibility, illuminance, color temperature, tunnel geometry, external time",
+          "eye-tracking pupil diameter measurements"
         ],
         "outputs": [
-          "Pupil diameter predictions",
-          "Feature importance scores (SHAP)",
-          "Nonlinear relationships, interaction effects"
+          "predicted pupil diameter",
+          "feature importance scores",
+          "SHAP interaction plots"
         ]
       }
     ],
     "hypotheses": [
       {
         "hypothesis": "GWO-based hyperparameter optimization outperforms grid and random search",
-        "result": "Confirmed: R\u00b2=0.914, MAPE=7.15% on test set; better than baseline models"
+        "result": "Confirmed: R\u00b2 0.914 and MAPE 7.15% superior to baseline methods"
       },
       {
-        "hypothesis": "Visibility is the primary driver of pupil response in tunnels",
-        "result": "Confirmed by SHAP analysis; visibility dominant, followed by color temperature and illuminance"
+        "hypothesis": "Visibility is the dominant factor in pupil response, followed by color temperature and illuminance",
+        "result": "Confirmed by SHAP analysis; visibility-driven compensation model high goodness-of-fit"
       }
     ]
   },
@@ -331,21 +424,18 @@
     "journal": "Nature Portfolio",
     "publishedAt": "2026-08-02",
     "category": "Condensed Matter",
-    "task": "Observe field-free superconducting diode effect in iron-based superconductor",
-    "key_results": [
-      "Robust nonreciprocal supercurrent in FeTe0.55Se0.45 at zero magnetic field",
-      "Second harmonic response amplitude comparable to first harmonic near Tc"
-    ],
-    "comments": "Strain/polarization-induced symmetry breaking mechanism avoids need for heterostructures, enabling practical device applications.",
+    "task": "Realize field-free superconducting diode effect in single material",
+    "key_results": "Robust nonreciprocal critical supercurrent in FeTe0.55Se0.45 with second harmonic response comparable to first harmonic near Tc; maintains polarity under large positive/negative magnetic fields with even-in-field symmetry",
+    "comments": "Local strain/polarization-induced symmetry breaking rather than conventional mechanisms (finite-momentum pairing or magnetochiral anisotropy) appears responsible, suggesting iron-based superconductors are promising platforms for practical applications.",
     "model_io": [
       {
-        "model": "FeTe0.55Se0.45 thin flakes",
+        "model": "FeTe0.55Se0.45 thin flakes superconductor",
         "inputs": [
           "applied current (forward/reverse directions)",
-          "magnetic field (0 to large \u00b1B)"
+          "magnetic field (zero and finite strength)"
         ],
         "outputs": [
-          "critical supercurrent Ic",
+          "critical supercurrent (directionally dependent)",
           "second harmonic voltage response",
           "nonreciprocal transport signal"
         ]
@@ -353,12 +443,12 @@
     ],
     "hypotheses": [
       {
-        "hypothesis": "Finite-momentum pairing or magnetochiral anisotropy origin",
-        "result": "Ruled out; even-in-field symmetry incompatible with these mechanisms"
+        "hypothesis": "Field-free SDE originates from finite-momentum pairing or magnetochiral anisotropy",
+        "result": "Ruled out based on even-in-field symmetry and persistence at zero field"
       },
       {
-        "hypothesis": "Local strain/polarization-induced symmetry breaking generates SDE",
-        "result": "Confirmed as primary mechanism after excluding device geometry, thermal effects, chiral domains, extrinsic magnetic order"
+        "hypothesis": "Local strain/polarization breaks inversion and time-reversal symmetries to enable field-free SDE",
+        "result": "Supported by systematic exclusion of device geometry, thermal gradients, chiral domains, and extrinsic magnetic order"
       }
     ]
   }
