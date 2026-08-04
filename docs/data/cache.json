@@ -424643,5 +424643,402 @@
         "result": "Confirmed in hardware-in-the-loop simulations (50\u201380% rates); real-world validation qualitative due to lack of ground-truth labels"
       }
     ]
+  },
+  "hf:2607.28887": {
+    "category": "LLM/Reasoning",
+    "task": "Measuring and mitigating deletion avoidance in LLM code editing",
+    "key_results": "Deletion recall maxes at 71.7% across leading models; retrofitting tests with deletion checks drops performance from 63.2% to 41.9%; teaching deletion in post-training recovers 80.5% success",
+    "comments": "The Guard-and-Go pattern reveals a fundamental training gap rather than capability ceiling, but even with targeted fixes, deletion remains harder than addition for LLMs.",
+    "model_io": [
+      {
+        "model": "GPT-4, Claude, Gemini, o1, etc. (five frontier models)",
+        "inputs": [
+          "code context",
+          "bug description or test"
+        ],
+        "outputs": [
+          "patched code"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Models systematically avoid deleting code even when patches require removal",
+        "result": "Confirmed; deletion recall <72%, with 29% of patches using Guard-and-Go wrapping instead"
+      },
+      {
+        "hypothesis": "Providing exact line spans helps deletion performance",
+        "result": "Partially confirmed; nearly eliminates incomplete deletion but only raises success to 80.5% due to over-deletion and substitution"
+      },
+      {
+        "hypothesis": "Deletion avoidance is undertrained rather than incapable",
+        "result": "Supported; post-training interventions reduce avoidance and improve code-editing performance"
+      }
+    ]
+  },
+  "hf:2608.01462": {
+    "category": "Medical",
+    "task": "Per-modality failure analysis in multimodal clinical AI under missing modalities",
+    "key_results": "Framework recovers planted modality dominance and complementarity on synthetic data; on MIMIC-IV cardiac cohort, dropping echocardiogram doubles error and echo-ECG overlap bounds feasible cohort size",
+    "comments": "The distinction between loud (monitorable) and silent failures is clinically critical but the framework is validated primarily on synthetic ground truth; real-world applicability depends on whether silent failures manifest in practice.",
+    "model_io": [
+      {
+        "model": "Mask-aware probe (model-agnostic)",
+        "inputs": [
+          "N modality embeddings",
+          "modality masks",
+          "labels"
+        ],
+        "outputs": [
+          "per-example failure taxonomy",
+          "modality complementarity matrix",
+          "loud-vs-silent dropout profile"
+        ]
+      },
+      {
+        "model": "EchoJEPA + HuBERT-ECG (frozen embeddings)",
+        "inputs": [
+          "echocardiogram",
+          "ECG"
+        ],
+        "outputs": [
+          "LVEF prediction",
+          "HFrEF gate classification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "A model-agnostic framework can attribute deployment errors to specific modalities without retraining",
+        "result": "Confirmed on planted synthetic data; recovers modality dominance and complementary subsets across seeds"
+      },
+      {
+        "hypothesis": "Echo dropout has larger error impact than ECG dropout in cardiac prediction",
+        "result": "Confirmed; dropping echo nearly doubles error on LVEF and HFrEF gate tasks"
+      }
+    ]
+  },
+  "hf:2607.29377": {
+    "category": "Agents/RL",
+    "task": "Zero-token memory operations for long-horizon LLM agent interactions",
+    "key_results": "Achieves competitive performance on long-memory and long-context QA benchmarks while eliminating LLM calls from memory ops; reduces memory-operation time by 57.6% vs. fastest baseline",
+    "comments": "Trading intermediate LLM generation for deterministic graph traversal is elegant, but depends on retrieved traces being sufficient; unclear how gracefully it handles noise or incomplete interaction histories.",
+    "model_io": [
+      {
+        "model": "Zero-Mem (entity\u2013context graph + temporal hierarchy)",
+        "inputs": [
+          "interaction traces",
+          "user query"
+        ],
+        "outputs": [
+          "retrieved context",
+          "supporting relations"
+        ]
+      },
+      {
+        "model": "Final-QA reader (LLM, only stage invoking LLM)",
+        "inputs": [
+          "user query",
+          "retrieved context from Zero-Mem"
+        ],
+        "outputs": [
+          "answer"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Structured memory access can avoid LLM-token costs by organizing traces deterministically",
+        "result": "Confirmed; competitive QA performance without token-consuming memory operations"
+      },
+      {
+        "hypothesis": "Entity\u2013context and temporal views are complementary for long-horizon retrieval",
+        "result": "Supported by ablations showing both views contribute; query-dependent weighting improves performance"
+      }
+    ]
+  },
+  "hf:2608.01862": {
+    "category": "LLM/Reasoning",
+    "task": "Staged post-training for enterprise question answering over proprietary knowledge",
+    "key_results": "32B model raises acceptable-answer rate from 52.76% (baseline) to 80.06% (SFT) to 91.51% (after RL); residual-error sampling outperforms random by 2.97\u20133.11 points; general-benchmark average drops 5.17 points",
+    "comments": "The trade-off between proprietary-domain knowledge and general instruction-following is clear and measurable, but no ablation isolates the contribution of each post-training stage independently.",
+    "model_io": [
+      {
+        "model": "32B LLM backbone",
+        "inputs": [
+          "proprietary documents",
+          "general data (replay)",
+          "user questions"
+        ],
+        "outputs": [
+          "enterprise answers"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Supervised fine-tuning on task-oriented supervision from documents significantly improves domain performance",
+        "result": "Confirmed; SFT alone lifts AAR from 52.76% to 80.06%"
+      },
+      {
+        "hypothesis": "Residual-error sampling during RL outperforms uniform or size-matched random sampling",
+        "result": "Confirmed; residual-error sampling gains 3.11 and 2.97 points over full-pool and size-matched baselines"
+      },
+      {
+        "hypothesis": "General-data replay during SFT mitigates catastrophic forgetting",
+        "result": "Partially supported; general-benchmark average still drops 5.17 points, concentrated in instruction following"
+      }
+    ]
+  },
+  "hf:2608.01397": {
+    "category": "Agents/RL",
+    "task": "Geometry-aware world modeling for embodied policy learning",
+    "key_results": "SG-WAM on 0.9B model achieves 98.5% success on LIBERO and 73% on LIBERO-Plus; outperforms baselines in both in-distribution and out-of-distribution real-world evaluations",
+    "comments": "Jointly optimizing latent prediction, geometric grounding, and action generation in policy space is principled, but the modest 0.9B scale and lack of large-scale pretraining make transfer potential unclear.",
+    "model_io": [
+      {
+        "model": "SG-WAM (Self-Guided World Predictor with learnable dynamics tokens)",
+        "inputs": [
+          "image observations",
+          "robot actions"
+        ],
+        "outputs": [
+          "future latent states",
+          "action predictions"
+        ]
+      },
+      {
+        "model": "Policy backbone (image-token representations)",
+        "inputs": [
+          "image observations"
+        ],
+        "outputs": [
+          "geometry-aware policy representation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Prediction targets from exponential moving average policy copy provide stable, action-aligned supervision",
+        "result": "Supported implicitly by strong LIBERO results; joint optimization of latent prediction and action generation succeeds end-to-end"
+      },
+      {
+        "hypothesis": "Geometric grounding of image-token representations improves out-of-distribution generalization",
+        "result": "Partially confirmed; outperforms baselines in OOD real-world evaluations, but quantitative OOD gains not explicitly reported"
+      }
+    ]
+  },
+  "nature:10.1038/s41418-026-01838-y": {
+    "category": "Organelles",
+    "task": "Delineate the RAB32-USP13 axis in mitochondrial protein import and NSCLC progression",
+    "key_results": "RAB32 promotes TOM40 mitochondrial localization and mitochondrial protein homeostasis; USP13 deubiquitinates K48-linked polyubiquitin chains on RAB32 to prevent degradation; RAB32 and USP13 knockout inhibits NSCLC progression in xenograft and autochthonous models",
+    "comments": "The study establishes a mechanistic link between a protein quality control axis and cancer progression, though the upstream regulation of RAB32-USP13 and tissue-specific effects warrant further investigation.",
+    "model_io": [
+      {
+        "model": "NSCLC cells (RAB32/USP13 knockout)",
+        "inputs": [
+          "RAB32, USP13"
+        ],
+        "outputs": [
+          "TOM40 mitochondrial localization, mitochondrial protein import, mitochondrial dysfunction markers"
+        ]
+      },
+      {
+        "model": "Xenograft and autochthonous NSCLC mouse models",
+        "inputs": [
+          "RAB32 knockout, USP13 knockout, USP13 reconstitution (WT or catalytically inactive)"
+        ],
+        "outputs": [
+          "tumor growth, NSCLC progression"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "RAB32 facilitates TOM40-mediated mitochondrial protein import to support NSCLC progression",
+        "result": "RAB32 knockout impaired TOM40 localization and inhibited tumor growth in xenograft and autochthonous models"
+      },
+      {
+        "hypothesis": "USP13 stabilizes RAB32 through K48-deubiquitination",
+        "result": "USP13 knockout destabilized RAB32, impaired mitochondrial function, and inhibited NSCLC progression; restored by WT but not catalytically inactive USP13"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-76292-y": {
+    "category": "Single Cell",
+    "task": "Integrate multi-omics data to identify molecular subgroups of corticotroph pituitary neuroendocrine tumors",
+    "key_results": "Four robust molecular subgroups with distinct clinicopathological features; distinguishable by SSTR1/GATA3/SSTR5 immunohistochemistry; integrated model shows significant prognostic utility",
+    "comments": "Large cohort (270 samples) and multi-omics integration (epigenome/transcriptome/proteome) provide strong foundation, but prospective validation needed.",
+    "model_io": [
+      {
+        "model": "Multi-omics integrative clustering",
+        "inputs": [
+          "270 corticotroph PitNET samples (111 internal, 159 external)",
+          "Epigenome",
+          "Transcriptome",
+          "Proteome"
+        ],
+        "outputs": [
+          "Four molecular subgroups",
+          "Immunohistochemistry markers",
+          "Prognostic classifier"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Molecular subgroups reflect distinct clinicopathological features",
+        "result": "Confirmed; four subgroups show robust separation with distinct characteristics"
+      },
+      {
+        "hypothesis": "SSTR1/GATA3/SSTR5 markers distinguish molecular subgroups by microscopy",
+        "result": "Confirmed; markers differentially express across subgroups"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-64661-y": {
+    "category": "Statistical Methods",
+    "task": "Joint optimization of CNN architecture and training strategy for colorectal histology classification",
+    "key_results": "COOT-CNN achieved 96.72% accuracy, 96.71% macro-F1; statistically significant improvements over ResNet-50, EfficientNet-B0, Swin-T with fewer parameters",
+    "comments": "Metaheuristic jointly optimizes 12+ design dimensions but external/patient-level validation required before clinical deployment.",
+    "model_io": [
+      {
+        "model": "COOT metaheuristic for architecture/training co-optimization",
+        "inputs": [
+          "Colorectal histology patches",
+          "Binary classification labels"
+        ],
+        "outputs": [
+          "Optimized CNN architecture",
+          "Training strategy parameters",
+          "Confidence scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Joint architecture-training optimization outperforms hand-tuned baselines",
+        "result": "Confirmed; COOT-CNN achieves higher accuracy and F1 than comparison networks"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-64707-1": {
+    "category": "Genomics",
+    "task": "Genomic and structural analysis of dacB variants conferring cephalosporin resistance in P. aeruginosa",
+    "key_results": "dacB mutations (Y264C, G444D, A394P-T428P) destabilize PBP4; cefoperazone shows highest binding affinity (-7.3 kcal/mol); in vitro MIC analysis confirms cefoperazone activity",
+    "comments": "MD simulations and MMPBSA calculations provide mechanistic insight, but experimental validation limited to MIC; crystallographic evidence would strengthen claims.",
+    "model_io": [
+      {
+        "model": "WGS analysis, MD simulations, molecular docking, MIC testing",
+        "inputs": [
+          "208 P. aeruginosa clinical isolates",
+          "dacB variants",
+          "PBP4 structure",
+          "Antibiotic library"
+        ],
+        "outputs": [
+          "nsSNP predictions",
+          "Structural flexibility measures",
+          "Docking energies",
+          "MIC values"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "dacB mutations destabilize PBP4 and increase structural flexibility",
+        "result": "Confirmed by MD simulations; mutations correlate with resistance mechanism"
+      },
+      {
+        "hypothesis": "Cefoperazone shows highest binding affinity among tested antibiotics",
+        "result": "Confirmed; docking and in vitro MIC support superiority"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-65379-7": {
+    "category": "Evolutionary Biology",
+    "task": "Characterize swappability of amino acid homorepeats in orthologous proteins",
+    "key_results": "99,386 non-swappable and 5,018 swappable overlapping homorepeats detected across 8.7M orthologous pairs; polyD/E enriched in ribosomal biogenesis, polyA/S show divergent specialization",
+    "comments": "Demonstrates tension between positional conservation and sequence flexibility, with functional consequences for protein evolution.",
+    "model_io": [
+      {
+        "model": "Homorepeat overlap detection and classification",
+        "inputs": [
+          "17.4M orthologous protein pairs from OrthoMCL (695 species)"
+        ],
+        "outputs": [
+          "Swappable/non-swappable homorepeat categories",
+          "Functional enrichment annotations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Swappable homorepeats are functionally interchangeable across lineages",
+        "result": "polyD and polyE show functional equivalence in ribosomal biogenesis despite sequence differences"
+      },
+      {
+        "hypothesis": "Non-swappable homorepeats indicate lineage-specific functional specialization",
+        "result": "polyA and polyS exhibit divergent enrichment patterns, suggesting specialized roles"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-63917-x": {
+    "category": "Other",
+    "task": "Design of humanoid dexterous robotic hand with tendon-linkage actuation",
+    "key_results": "15 active, 5 passive DOF; 4.9 N fingertip force; reproduced 16 Cutkosky grasp types; 8\u201317.7% improvement over commercial OHand in trajectory and morphology",
+    "comments": "Well-engineered mechanical system with comprehensive experimental validation; preload mechanism yields 1.7\u20134.7\u00d7 improvement in grasping specific object categories.",
+    "model_io": [
+      {
+        "model": "REL Hand (hybrid tendon-linkage system)",
+        "inputs": [
+          "Motor commands",
+          "sensor feedback (pressure, IMU)"
+        ],
+        "outputs": [
+          "Grasp configurations",
+          "fingertip forces",
+          "object manipulation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Hybrid tendon-linkage actuation enables compact, biomimetic grasping",
+        "result": "Successfully reproduced 16 Cutkosky grasps; 8% trajectory correlation improvement"
+      },
+      {
+        "hypothesis": "Fingertip preload mechanism enhances grasping robustness",
+        "result": "1.9\u20134.7\u00d7 performance improvement across object categories"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-65229-6": {
+    "category": "ML Theory",
+    "task": "Predicting leprosy reactions using machine learning with Bayesian networks and explainability",
+    "key_results": "NBN achieved AUC=0.761 (test), sensitivity=0.441, specificity=0.92; XGB superior discrimination (AUC=0.772) but lower sensitivity (0.251); family history, education, detection mode key predictors",
+    "comments": "SHAP-based feature importance ranking; Bayesian model preferable for resource-limited settings where sensitivity prioritized; 12.85% leprosy reaction rate in dataset.",
+    "model_io": [
+      {
+        "model": "Naive Bayesian Networks and XGBoost",
+        "inputs": [
+          "3,316 newly diagnosed leprosy patients (1985\u20132023)"
+        ],
+        "outputs": [
+          "Leprosy reaction probability",
+          "feature importance rankings"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Bayesian networks provide interpretable leprosy reaction prediction for resource-limited settings",
+        "result": "AUC=0.761; high sensitivity (0.441) for minimal missed cases"
+      },
+      {
+        "hypothesis": "Family history and education are top predictors",
+        "result": "SHAP analysis ranked family history and education as dominant features"
+      }
+    ]
   }
 }
