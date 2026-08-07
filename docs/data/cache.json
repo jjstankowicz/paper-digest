@@ -436266,5 +436266,652 @@
         "result": "Confirmed via LTEM and REXS; double sine-Gordon model validated"
       }
     ]
+  },
+  "hf:2608.05798": {
+    "category": "Generative",
+    "task": "Multimodal tokenization for latent diffusion models",
+    "key_results": "KVAE tokenizers match or surpass frontier models (Wan-2.2, HunyuanVideo-1.5, FLUX.2) on PSNR, LPIPS, PESQ, Frechet Distance, and CLIP/CLAP scores across audio, image, and video modalities",
+    "comments": "Comprehensive engineering contribution sharing training details and ablations, though primarily an incremental improvement over existing tokenizer designs rather than a novel architectural insight.",
+    "model_io": [
+      {
+        "model": "KVAE-Audio (VAE)",
+        "inputs": [
+          "audio signal (48 kHz)"
+        ],
+        "outputs": [
+          "compressed tokens (50 Hz, 64 channels)"
+        ]
+      },
+      {
+        "model": "KVAE-3D (causal video VAE)",
+        "inputs": [
+          "video frames"
+        ],
+        "outputs": [
+          "compressed tokens (4x16x16 or 4x8x8)"
+        ]
+      },
+      {
+        "model": "KVAE-2D (image VAE)",
+        "inputs": [
+          "images"
+        ],
+        "outputs": [
+          "compressed tokens (8x compression, 32 channels)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Specialized tokenizer design improves both reconstruction and generation quality for text-conditioned diffusion",
+        "result": "Confirmed: KVAE matches or exceeds frontier models on multiple metrics"
+      }
+    ]
+  },
+  "hf:2608.05784": {
+    "category": "Agents/RL",
+    "task": "Screen activity compilation for agent memory and replay",
+    "key_results": "Deterministic compiler reduces 128,756 frames (51 days) to 86x smaller context blocks in 68 ms; agents achieve 98.4% accuracy on activity questions vs 66-80% for LLM summaries; identifies delegable routine recurrence at 9.0% in-sample, 7.7% out-of-sample",
+    "comments": "Clever insight that agent memory should encode what users did (screen activity) rather than what they said; the zero-model deterministic pipeline and empirical cost measurements (R, h parameters) are valuable, though applicability depends on screen capture feasibility.",
+    "model_io": [
+      {
+        "model": "Activity Frame Compiler (deterministic pipeline)",
+        "inputs": [
+          "raw screen capture stream"
+        ],
+        "outputs": [
+          "typed activity frames with metadata (app, site, timing, input volume)"
+        ]
+      },
+      {
+        "model": "Agent reasoning (unspecified LLM)",
+        "inputs": [
+          "compiled activity block or LLM summary"
+        ],
+        "outputs": [
+          "answers to questions about user activity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Deterministic compilation of screen activity into structured frames improves agent reasoning accuracy",
+        "result": "Confirmed: 98.4% accuracy vs 66-80% for LLM summaries of same capture"
+      },
+      {
+        "hypothesis": "Routine recurrence and overhead can be measured from passive human activity",
+        "result": "Confirmed: measured R (60-343x) and delegable recurrence (7.7% OOS)"
+      }
+    ]
+  },
+  "hf:2608.01049": {
+    "category": "Vision",
+    "task": "World modeling for dense, chaotic urban environments",
+    "key_results": "FactorJEPA improves future-latent accuracy (Future-frame L1), causal intervention sensitivity (Causal L1), and robustness to reduced visual evidence (Mask-ratio slope); method rankings replicate across 2B and 1B V-JEPA 2.1 backbones (\u03c1=0.895-0.978); DENSEWORLD-115k dataset with 1,000 hours across 22 cities",
+    "comments": "Addresses an important underexplored regime (crowded Global South urban scenes) with thoughtful architectural factorization (layout-agent-interaction), though the motion-information trade-off suggests inherent modeling limits in this regime.",
+    "model_io": [
+      {
+        "model": "FactorJEPA (modified V-JEPA 2.1)",
+        "inputs": [
+          "video frames from crowded urban scenes"
+        ],
+        "outputs": [
+          "factored future predictions: layout, entities, interactions"
+        ]
+      },
+      {
+        "model": "V-JEPA 2.1 backbone (ViT-g, 2B and 1B variants)",
+        "inputs": [
+          "video tokens"
+        ],
+        "outputs": [
+          "latent embeddings"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Factorizing future predictions into layout, entities, and interactions preserves dense interaction dynamics better than monolithic latents",
+        "result": "Confirmed: FactorJEPA improves Future-frame L1, Causal L1, and Mask-ratio slope robustness across backbones"
+      },
+      {
+        "hypothesis": "Visibility gates and separated subspaces mitigate shortcuts from partial observability",
+        "result": "Supported: improved performance under heterogeneity and occlusion, though motion-information trade-off persists"
+      }
+    ]
+  },
+  "nature:10.1038/s41388-026-03933-3": {
+    "category": "Epigenetics",
+    "task": "Characterizing IGF2BP3 regulation of RNA isoforms and modifications in pancreatic cancer",
+    "key_results": "IGF2BP3 expressed >95% PDAC tumors; regulates 863 RNA isoforms (enhanced) and 389 (suppressed); m6A/m5C/\u03c8 modifications in 97% transcripts; IGF2BP3 knockdown suppresses stem cell proliferation/induces apoptosis",
+    "comments": "m6A-reading protein as master regulator of PDAC RNA regulon; IGF2BP3 targeting shows therapeutic promise but faces delivery challenges.",
+    "model_io": [
+      {
+        "model": "pancreatic ductal adenocarcinoma (PDAC) primary tumors and organoids",
+        "inputs": [
+          "IGF2BP3",
+          "m6A",
+          "m5C",
+          "pseudouridine",
+          "RNA isoforms"
+        ],
+        "outputs": [
+          "gene expression",
+          "RNA splicing",
+          "RNA modification patterns",
+          "cancer stem cell proliferation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "IGF2BP3 regulates PDAC malignancy through RNA isoform and modification control",
+        "result": "confirmed; knockdown elicits apoptosis in organoids"
+      }
+    ]
+  },
+  "nature:10.1038/s41420-026-03239-z": {
+    "category": "Epigenetics",
+    "task": "Elucidating ESM1/DNMT3A-mediated epigenetic suppression of ID3 in cervical cancer metastasis",
+    "key_results": "ESM1 overexpression correlates with poor prognosis; ESM1 upregulates DNMT3A causing ID3 promoter hypermethylation; ESM1 depletion reduces lung metastasis 70\u201380%, restores ID3",
+    "comments": "Clean epigenetic axis with functional validation; therapeutic demethylation approach is promising but may face specificity challenges.",
+    "model_io": [
+      {
+        "model": "cervical cancer cells + in vivo xenograft/metastasis models",
+        "inputs": [
+          "ESM1",
+          "DNMT3A",
+          "DNA methylation",
+          "demethylating agents"
+        ],
+        "outputs": [
+          "ID3 expression",
+          "proliferation",
+          "migration",
+          "invasion",
+          "metastasis"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "ESM1 suppresses ID3 via DNMT3A-mediated promoter hypermethylation",
+        "result": "confirmed in cells and in vivo; demethylation rescues ID3"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-75503-w": {
+    "category": "Organelles",
+    "task": "Characterizing vacuolar apical compartments in lumen formation",
+    "key_results": "VACs deliver preassembled apical surface to AMIS via exocytic fusion; PatJ coordinates lumen initiation with apical junction assembly",
+    "comments": "Elegant integration of quantitative microscopy and proximity proteomics to mechanistically link organelle transport to epithelial morphogenesis.",
+    "model_io": [
+      {
+        "model": "3D epithelial lumen formation in culture",
+        "inputs": [
+          "apical cargo",
+          "VACs",
+          "PatJ"
+        ],
+        "outputs": [
+          "nascent lumen",
+          "microvilli-rich cortex"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Large apical precursor organelles deliver bulk apical membrane",
+        "result": "confirmed via VAC identification and exocytic fusion"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-63900-6": {
+    "category": "Epigenetics",
+    "task": "Characterizing Snf2 chromatin remodeler role in meiotic transcription and DSB formation",
+    "key_results": "Snf2 essential for meiotic gene expression (early/middle); loss increases Spo11 chromatin binding and DSB formation; no effect on crossovers or SC assembly",
+    "comments": "Functional dissociation between DSB induction and recombination outcome is notable; mechanistic link between Snf2 activity and Spo11 turnover merits further study.",
+    "model_io": [
+      {
+        "model": "S. cerevisiae budding yeast meiosis",
+        "inputs": [
+          "Snf2 (SWI/SNF ATPase)",
+          "chromatin remodeling"
+        ],
+        "outputs": [
+          "meiotic gene expression",
+          "Spo11-DNA binding",
+          "DSB formation",
+          "NDC80 isoform ratios"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Snf2 regulates meiotic transcriptional reprogramming and DSB formation",
+        "result": "confirmed; Snf2 fine-tunes but not eliminates DSBs"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-64787-z": {
+    "category": "Cell Division/Cycle",
+    "task": "Quantifying neighborhood vs. lineage effects on cell cycle duration",
+    "key_results": "Stochastic cellular automata modeling reveals generational history dictates HeLa proliferation more than local neighborhood; inherited information >2x impact",
+    "comments": "Novel integration of microfluidic tracking with computational modeling; cell-line-specific findings may not generalize.",
+    "model_io": [
+      {
+        "model": "HeLa cervical cancer cells + stochastic cellular automata",
+        "inputs": [
+          "local neighborhood",
+          "lineage/generational history",
+          "time-lapse microscopy data"
+        ],
+        "outputs": [
+          "cell cycle duration",
+          "proliferation rate"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Cellular Allee effect driven by inherited vs. local factors",
+        "result": "confirmed; generational history dominates for HeLa"
+      }
+    ]
+  },
+  "nature:10.1038/s42003-026-10686-y": {
+    "category": "Cell Signaling",
+    "task": "Elucidating N-linked EP3\u03b1 glycosylation requirement for platelet homeostasis",
+    "key_results": "EP3\u03b1 N16/N193 glycosylation enhances Gi coupling, cAMP/Ca\u00b2\u207a flux; glycosylation-deficient mutants impair U46619/ADP/thrombin aggregation; attenuate FeCl3 thrombosis by 60\u201370%",
+    "comments": "Glycosylation as a modulator of GPCR signaling is well-established but detailed mechanisms in platelet physiology remain valuable.",
+    "model_io": [
+      {
+        "model": "platelet function assays and in vivo thrombosis model (FeCl3)",
+        "inputs": [
+          "EP3\u03b1",
+          "N-linked glycosylation",
+          "PGE2",
+          "Gi coupling"
+        ],
+        "outputs": [
+          "cAMP",
+          "Ca2+ flux",
+          "platelet aggregation",
+          "thrombin-induced clot retraction",
+          "arterial thrombosis"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "EP3\u03b1 N-glycosylation sustains Gi-mediated platelet inhibition",
+        "result": "confirmed; glycosylation mutants impair PGE2 signaling"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-64102-w": {
+    "category": "Other",
+    "task": "Windows PE malware detection via static-opcode fusion",
+    "key_results": "Mamba hybrid model: ROC-AUC 0.978, PR-AUC 0.979, F1 0.961; TPR 0.811 at FPR 10^-2",
+    "comments": "Learned gating of static and opcode sequence features outperforms constant fusion; Mamba encoders excel at low false-positive operating points critical for deployment.",
+    "model_io": [
+      {
+        "model": "Gated static-opcode fusion (Mamba/GRU/Transformer encoders)",
+        "inputs": [
+          "PE/capa-style static features",
+          "bounded opcode sequences"
+        ],
+        "outputs": [
+          "malware classification",
+          "threat probability scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Learned gate fusion outperforms constant channel-wise fusion for malware detection",
+        "result": "Confirmed; learned gate achieves higher performance at aggregate and low-FPR points"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-65879-6": {
+    "category": "Genomics",
+    "task": "Transcriptomic biomarkers and mechanisms of dapagliflozin treatment response in type 2 diabetes",
+    "key_results": "137 DEGs identified; machine learning selected TAS2R60, GPLD1, GPR42 as candidate features; GPR42 shows highest network connectivity and immune cell correlation",
+    "comments": "Multi-algorithm ML consensus (LASSO, Random Forest, Boruta) improves robustness; SGLT2 inhibitor treatment links to immune remodeling via candidate transcriptomic signatures.",
+    "model_io": [
+      {
+        "model": "LASSO/Random Forest/Boruta feature selection + network analysis",
+        "inputs": [
+          "paired pre-/post-dapagliflozin transcriptomic profiles from T2DM patients"
+        ],
+        "outputs": [
+          "candidate feature genes (TAS2R60, GPLD1, GPR42)",
+          "TF-mRNA-miRNA regulatory networks",
+          "immune cell infiltration estimates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Dapagliflozin treatment induces specific transcriptomic and immune signatures",
+        "result": "Supported; candidate genes identified and linked to immune memory cell abundance"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-03101-7": {
+    "category": "Other",
+    "task": "Review of foundation models and datasets for ECG/PPG waveform analysis",
+    "key_results": "Identified open ECG/PPG FMs enabling data-efficient, task-agnostic cardiovascular analysis across multiple clinical applications",
+    "comments": "Foundation models offer promising generalization but hampered by reliance on homogeneous pretraining data and lack of standardized evaluation frameworks.",
+    "model_io": [],
+    "hypotheses": []
+  },
+  "nature:10.1038/s43856-026-01836-8": {
+    "category": "Statistical Methods",
+    "task": "Scalable deep mixed-effects learning for high-dimensional multimodal biomarker integration and disease outcome prediction",
+    "key_results": "Framework described for integrating multi-modal biomarkers with complex outcome prediction; addresses noise and weak individual signals",
+    "comments": "Abstract incomplete but indicates novel mixed-effects architecture for handling heterogeneous biomarker data structures common in precision medicine.",
+    "model_io": [],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-64562-0": {
+    "category": "Algorithms",
+    "task": "Meta-optimized beamforming and adaptive clustering for LIS-aided mmWave MIMO-NOMA",
+    "key_results": "Modified Seagull Optimization Algorithm (MSOA) achieves sum-rate=56.8 bps/Hz, Jain's Fairness Index=0.91, 15% energy efficiency improvement; outage probability=8\u00d710\u207b\u2074 at 30 dB SNR vs. GA/PSO/K-Medoids baselines",
+    "comments": "Dual-stage optimization (hybrid beamforming + SNR-aware clustering) effectively addresses dynamic mmWave conditions; NYUSIM-based channel modeling realistic.",
+    "model_io": [
+      {
+        "model": "Modified Seagull Optimization (MSOA)",
+        "inputs": [
+          "mmWave channel characteristics",
+          "user SNR/spatial correlation/distance"
+        ],
+        "outputs": [
+          "hybrid analog-digital beamforming weights"
+        ]
+      },
+      {
+        "model": "Adaptive SNR-Aware Clustering",
+        "inputs": [
+          "beamforming output",
+          "user SNR distribution"
+        ],
+        "outputs": [
+          "dynamically grouped user clusters for NOMA"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "MSOA outperforms GA/PSO for dynamic LIS beamforming",
+        "result": "Confirmed; superior sum-rate and fairness metrics"
+      },
+      {
+        "hypothesis": "SNR-aware clustering improves NOMA efficiency",
+        "result": "Confirmed; 15% energy efficiency gain over non-adaptive clustering"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-65361-3": {
+    "category": "Algorithms",
+    "task": "Scalable trust-aware SFC placement via subjective logic RL",
+    "key_results": "SRTPP-SFC achieves higher service acceptance, reliability, and trustworthiness than baselines; maintains low end-to-end latency and efficient resource utilization; bidirectional trust mechanism with subjective logic and Actor\u2013Critic RL",
+    "comments": "Addresses critical security gap in edge computing by incorporating trustworthiness into SFC placement; combines statistical trust models with adaptive RL effectively.",
+    "model_io": [
+      {
+        "model": "Subjective Logic Trust Calculator",
+        "inputs": [
+          "direct interaction history",
+          "indirect recommendations",
+          "node reputation"
+        ],
+        "outputs": [
+          "bidirectional trust scores"
+        ]
+      },
+      {
+        "model": "Actor\u2013Critic RL Agent",
+        "inputs": [
+          "trust scores",
+          "node reliability",
+          "resource availability",
+          "network conditions"
+        ],
+        "outputs": [
+          "SFC placement decisions"
+        ]
+      },
+      {
+        "model": "LSTM VNF Sharing Module",
+        "inputs": [
+          "VNF reuse patterns"
+        ],
+        "outputs": [
+          "resource-efficient sharing decisions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Trust-aware placement improves service reliability",
+        "result": "Confirmed; higher service acceptance and reliability than baselines"
+      },
+      {
+        "hypothesis": "Bidirectional trust mechanism prevents compromised node deployment",
+        "result": "Implied confirmed; framework demonstrates improved trustworthiness"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-65545-x": {
+    "category": "Other",
+    "task": "Parameter and hidden-state inference in mean-field neural network models",
+    "key_results": "Differential evolution with synchronization-based loss removes dependence on unknown initial conditions; reliable parameter recovery demonstrated for periodic oscillations and chaotic collective dynamics in moderate-size networks",
+    "comments": "Bridges data-driven inference with mean-field theory; synchronization approach elegantly handles hidden state initialization; applicability to large networks remains unclear.",
+    "model_io": [
+      {
+        "model": "Mean-Field Model",
+        "inputs": [
+          "known governing equations structure"
+        ],
+        "outputs": [
+          "macroscopic dynamics (firing rate, membrane potential)"
+        ]
+      },
+      {
+        "model": "Parameter Estimator (Differential Evolution)",
+        "inputs": [
+          "scalar observable time series",
+          "finite network data"
+        ],
+        "outputs": [
+          "estimated parameters",
+          "reconstructed hidden state dynamics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Synchronization-based loss enables robust inference without initial condition knowledge",
+        "result": "Confirmed; reliable recovery in periodic and chaotic regimes"
+      },
+      {
+        "hypothesis": "Parameter recovery works for moderate network sizes",
+        "result": "Confirmed; tested on quadratic integrate-and-fire networks"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-65819-4": {
+    "category": "Algorithms",
+    "task": "Dataflow architecture for efficient real-time image interpolation",
+    "key_results": "Interpolation-oriented dataflow design achieves 67.32% execution time reduction vs. baseline dataflow; processing-array utilization 65.72%; outperforms hand-written CUDA and NPP library kernels in measured configurations",
+    "comments": "Addresses GPU SIMT limitations (branch divergence, irregular memory) via dataflow execution model; customized vectorized paths and double-buffered memory effectively optimize interpolation.",
+    "model_io": [
+      {
+        "model": "Dataflow Execution Engine (DFU-I)",
+        "inputs": [
+          "image data",
+          "interpolation coordinates/weights"
+        ],
+        "outputs": [
+          "interpolated image regions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Dataflow paradigm outperforms SIMT for interpolation",
+        "result": "Confirmed; 67.32% speedup and higher PE utilization"
+      },
+      {
+        "hypothesis": "Double-buffered memory overlaps computation with data movement",
+        "result": "Confirmed by ablation; key architectural mechanism"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-65884-9": {
+    "category": "ML Theory",
+    "task": "Low-altitude target trajectory classification via wavelet packet CNN",
+    "key_results": "WPCN achieves 99.63%\u00b10.19% mean accuracy on 5-class low-altitude trajectory dataset under 1 m noise; outperforms LSTM (99.33%), Transformer (99.00%), ROCKET (99.00%); lightweight variant (54K params) achieves LSTM-level performance at fraction of cost",
+    "comments": "Wavelet packet decomposition effectively captures multi-scale motion patterns; depthwise separable convolution enables edge deployment; statistically significant over UCR benchmark.",
+    "model_io": [
+      {
+        "model": "Wavelet Packet Transform",
+        "inputs": [
+          "trajectory features (8 dimensions \u00d7 256 frames: position, velocity, heading, acceleration)"
+        ],
+        "outputs": [
+          "frequency-domain representations (75\u00d732)"
+        ]
+      },
+      {
+        "model": "1D Residual CNN",
+        "inputs": [
+          "wavelet packet coefficients"
+        ],
+        "outputs": [
+          "multi-scale motion pattern features"
+        ]
+      },
+      {
+        "model": "Classifier",
+        "inputs": [
+          "extracted features"
+        ],
+        "outputs": [
+          "target class (drone/balloon/bird/etc.)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Wavelet packet decomposition improves accuracy over raw trajectories",
+        "result": "Confirmed; +0.30 pp gain with 2.4\u00d7 training speedup"
+      },
+      {
+        "hypothesis": "WPCN outperforms LSTM for trajectory classification",
+        "result": "Confirmed; superior accuracy and significantly lower training cost"
+      },
+      {
+        "hypothesis": "Inter-class separation improves after WPT",
+        "result": "Confirmed by DBA/DTW analysis; 19.6% improvement"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-76523-2": {
+    "category": "Condensed Matter",
+    "task": "Demonstrate giant negative photomagnetism in defect-engineered perovskite via three-dimensional alterlattice motif",
+    "key_results": "La\u2080.\u2084Ca\u2080.\u2084TiO\u2083\u208b\u03b4 alterlattice shows 51.7% susceptibility decrease at 2 K, 1 T under 473 nm illumination; photo-induced short-range antiferromagnetic correlations develop below 19 K via anisotropic strain-guided defect-mediated transport",
+    "comments": "Novel structural motif and strong photomagnetism, but the mechanism linking strain fields to long-range order requires further confirmation.",
+    "model_io": [
+      {
+        "model": "Photo-excited La\u2080.\u2084Ca\u2080.\u2084TiO\u2083\u208b\u03b4 alterlattice with defect-mediated transport",
+        "inputs": [
+          "473 nm laser illumination",
+          "temperature",
+          "magnetic field"
+        ],
+        "outputs": [
+          "magnetic susceptibility",
+          "short-range antiferromagnetic correlations",
+          "spin-dilute to AFM state transition"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Anisotropic strain fields guide defect-mediated photocarrier transport toward AFM order",
+        "result": "Confirmed; photo-induced correlations correlate with strain topology"
+      }
+    ]
+  },
+  "nature:10.1038/s41524-026-02270-z": {
+    "category": "Condensed Matter",
+    "task": "Optimize skyrmion creation in Fe\u2083GeTe\u2082 monolayers via deep reinforcement learning-guided field-temperature protocols",
+    "key_results": "DRL-trained agent identifies optimized field-temperature path with higher skyrmion formation success rate than fixed-temperature sweeps; generated skyrmions exhibit longer lifetimes due to isotropic shape and equilibrium size near local energy minimum; minimized dissipated work bounds Kullback\u2013Leibler divergence",
+    "comments": "Physics-informed DRL framework streamlines non-trivial protocol design, but scalability to larger magnetic systems and generalization across material platforms need validation.",
+    "model_io": [
+      {
+        "model": "Deep Reinforcement Learning (DRL) agent optimizing magnetic field-temperature protocol",
+        "inputs": [
+          "Fe\u2083GeTe\u2082 monolayer",
+          "sequence of (field, temperature) actions",
+          "reward signal (skyrmion formation success, lifetime)"
+        ],
+        "outputs": [
+          "optimized field-temperature trajectory",
+          "skyrmion state"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "DRL discovers non-trivial protocols superior to simple field sweeps",
+        "result": "Confirmed; optimized path increases success rate and lifetime"
+      },
+      {
+        "hypothesis": "Minimizing dissipated work stabilizes skyrmions near equilibrium",
+        "result": "Confirmed; low-work protocols yield long-lived, isotropic skyrmions"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-62962-w": {
+    "category": "Mathematical Physics",
+    "task": "Develop generalized entropy framework for graph structural complexity via topological indices",
+    "key_results": "Parametric entropy functional proves O(log n/n) convergence rates; Hybrid Structural Entropy (HSE) achieves R\u00b2 > 0.94 in alkane boiling-point prediction (C\u2085\u2013C\u2089); HSE discriminates between graph families better than individual indices",
+    "comments": "Rigorous mathematical framework with experimental QSPR validation, though biological/chemical applicability beyond alkanes is untested.",
+    "model_io": [
+      {
+        "model": "Entropy functional applied to Helm, Fan, and Friendship graphs",
+        "inputs": [
+          "graph order n",
+          "topological indices (Zagreb, Sombor, Randi\u0107, Nirmala, etc.)"
+        ],
+        "outputs": [
+          "Shannon entropy",
+          "Hybrid Structural Entropy (HSE)",
+          "convergence bounds"
+        ]
+      },
+      {
+        "model": "QSPR regression for alkane properties",
+        "inputs": [
+          "entropy measures from C\u2085\u2013C\u2089 alkane isomers"
+        ],
+        "outputs": [
+          "predicted boiling points"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "All index-based entropies converge with rate O(log n/n) as n \u2192 \u221e",
+        "result": "Proven rigorously for Helm, Fan, and Friendship graphs"
+      },
+      {
+        "hypothesis": "Hybrid Structural Entropy discriminates graph families better than single indices",
+        "result": "Confirmed via QSPR with R\u00b2 > 0.94"
+      }
+    ]
   }
 }
