@@ -8,29 +8,32 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-08-16",
     "category": "Organelles",
-    "task": "Characterizing age- and amyloid-dependent changes in glial waste-handling structures",
-    "key_results": "PAS granules increased with age and amyloid pathology; extraparenchymal IgM+ granules declined with age; IgM+ astrocytes increased robustly with aging and amyloid, co-expressing complement C3",
-    "comments": "Study identifies architectural remodeling of brain waste management with aging/Alzheimer's pathology, though causal mechanisms linking complement engagement to functional outcomes remain unclear.",
+    "task": "Characterizing age and amyloid-dependent changes in brain waste management structures",
+    "key_results": "PAS-positive granules increased with age and amyloid pathology; extraparenchymal IgM+ granules declined with age; IgM+ astrocytes increased robustly with aging and more abundant in APP/PS1 mice",
+    "comments": "The shift from early extraparenchymal to late intracellular waste handling is intriguing, but causality between structural remodeling and cognitive decline remains unestablished.",
     "model_io": [
       {
-        "model": "APPswe/PS1dE9 transgenic mice and C57BL/6 controls at 3, 6, 12, 22 months",
+        "model": "APPswe/PS1dE9 transgenic mice and C57BL/6 controls (female)",
         "inputs": [
-          "age",
-          "amyloid pathology"
+          "age (3, 6, 12, 22 months)",
+          "amyloid pathology status"
         ],
         "outputs": [
-          "PAS+ polyglucosan granule density",
+          "PAS-positive polyglucosan granule abundance",
           "extraparenchymal IgM+ granule abundance",
-          "IgM+ astrocyte frequency",
-          "C3 co-expression",
-          "regional distribution (hippocampus, piriform cortex)"
+          "IgM+ astrocyte population",
+          "C3 complement co-expression"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Glial waste-handling pathways shift from extraparenchymal to intracellular with aging and amyloid",
-        "result": "EP granules declined with age while intracellular PAS granules and IgM+ astrocytes increased, supporting architectural remodeling"
+        "hypothesis": "Aging increases intracellular waste sequestration in the brain",
+        "result": "PAS granules increased markedly with age, particularly in hippocampus and piriform cortex"
+      },
+      {
+        "hypothesis": "Amyloid pathology enhances glial waste-handling responses",
+        "result": "IgM+ astrocytes consistently more abundant in APP/PS1 mice; co-express complement C3 indicating complement-engaged reactive phenotype"
       }
     ]
   },
@@ -43,31 +46,44 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-08-16",
     "category": "Apoptosis/Cell Death",
-    "task": "Targeting pancreatic cancer mitochondria with artemisinin-dye conjugate",
-    "key_results": "DZ-ART1 accumulated 5-10 fold more in cancer vs normal cells; suppressed tumor growth and prolonged survival in KPC, syngeneic, and PDX models without normal tissue toxicity",
-    "comments": "Novel mitochondria-targeting strategy combines therapeutic and diagnostic imaging, though clinical translation from preclinical models remains to be validated.",
+    "task": "Targeting pancreatic cancer mitochondria with artemisinin conjugate",
+    "key_results": "DZ-ART1 accumulated 5-10 fold more in cancer vs. normal cells; suppressed tumor growth and prolonged survival in KPC transgenic, syngeneic, and PDX models without normal tissue toxicity",
+    "comments": "The mitochondria-dependent mechanism is elegant, but translation to human PDAC requires phase I clinical validation given the modest selectivity window.",
     "model_io": [
       {
-        "model": "PDAC cell lines and transgenic/syngeneic/PDX tumor models",
+        "model": "PDAC cell lines (eight lines tested)",
         "inputs": [
-          "DZ-ART1 (artemisinin-carbocyanine conjugate)",
+          "DZ-ART1 (artemisinin-heptamethine carbocyanine conjugate)"
+        ],
+        "outputs": [
+          "cell viability",
+          "ATP levels",
+          "reactive oxygen species",
+          "mitochondrial bioenergetics"
+        ]
+      },
+      {
+        "model": "KPC transgenic, syngeneic, and patient-derived xenograft (PDX) mouse models",
+        "inputs": [
+          "DZ-ART1",
           "chemotherapy agents"
         ],
         "outputs": [
-          "cell survival/cytotoxicity",
-          "ATP depletion",
-          "ROS production",
-          "tumor growth rate",
-          "metastasis suppression",
-          "survival",
-          "near-infrared imaging signal"
+          "tumor growth suppression",
+          "metastasis reduction",
+          "survival prolongation",
+          "near-infrared imaging localization"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "DZ-ART1 functions through mitochondria-dependent mechanism",
-        "result": "Mitochondrial depletion decreased DZ-ART1 uptake and cytotoxicity, confirming mitochondrial dependence"
+        "hypothesis": "Mitochondrial targeting with DZ-ART1 disrupts cancer cell bioenergetics",
+        "result": "Mitochondrial depletion decreased DZ-ART1 uptake and cytotoxicity, confirming mitochondria-dependent action"
+      },
+      {
+        "hypothesis": "DZ-ART1 synergizes with standard chemotherapy",
+        "result": "Increased lethal effect of chemotherapies in vitro and in vivo"
       }
     ]
   },
@@ -80,27 +96,72 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-08-16",
     "category": "Algorithms",
-    "task": "Filter unsafe MES commands using constrained matrix zonotopes to ensure system-level safety",
-    "key_results": "Empirical physical-safety rate 0.985, semantic-violation rate 0.058, erroneous-release rate 0.012, recovery time 23.6\u00b16.1 s on 6,427 field decisions across three production lines",
-    "comments": "Hybrid semantic-physical filtering trades off marginally higher safety margins in one metric for robustness across multiple safety dimensions; field validation on real 42-day production data strengthens credibility.",
+    "task": "Filter unsafe manufacturing execution commands using constrained matrix zonotopes",
+    "key_results": "Empirical physical-safety rate 0.985, semantic violation rate 0.058, recovery time 23.6\u00b16.1 s on 6,427 station-level decisions; hybrid semantic\u2013physical approach balances competing safety metrics",
+    "comments": "Real-world field replay validation is strong, but the trade-off between physical safety and semantic compliance is metric-dependent, suggesting no universally optimal configuration.",
     "model_io": [
       {
-        "model": "Constrained Matrix Zonotope (CMZ) filter + semantic module",
+        "model": "Constrained matrix zonotope (CMZ) filter with semantic module",
         "inputs": [
-          "MES rules (Boolean combinations of bounded linear predicates)",
-          "system state",
-          "action candidates",
-          "production mode"
+          "MES rules (finite Boolean combinations of linear predicates)",
+          "production states, actions, modes",
+          "equipment commands"
         ],
         "outputs": [
-          "filtered safe action command"
+          "filtered action (feasible command subset)",
+          "semantic violation flags",
+          "physical-safety verdicts"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Projection-based CMZ filtering reduces semantic violations relative to pure CMZ",
-        "result": "Confirmed; hybrid approach achieved more balanced trade-off with lower manual intervention"
+        "hypothesis": "Projection-based CMZ filtering with semantic modules reduces semantic violations and manual intervention relative to pure CMZ",
+        "result": "Confirmed; reduced semantic violations, manual intervention and recovery time at slight cost to empirical physical-safety metrics"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41598-026-66576-0",
+    "source": "mathematics-and-computing",
+    "id": "10.1038/s41598-026-66576-0",
+    "title": "Self-evolving multimodal digital twin for health-aware and safety-aware intelligence in electric vehicle lithium-ion batteries",
+    "projectPage": "https://www.nature.com/articles/s41598-026-66576-0",
+    "journal": "Scientific Reports",
+    "publishedAt": "2026-08-16",
+    "category": "Other",
+    "task": "Estimate EV lithium-ion battery state and detect faults via self-evolving multimodal digital twin",
+    "key_results": "Simulation RMSE: SOC 0.0525, core temperature 0.4049 K, capacity 234.92 C, ohmic resistance 0.01078 \u03a9; anomaly detection F1-score 0.8716; aging validation RMSE: voltage 0.081 V, SOC 0.0297, SOH 0.0231",
+    "comments": "Integration of impedance-derived sensing with Unscented Kalman Filter and self-evolving trust allocation is thorough, but validation limited to simulation and lab aging data without in-vehicle field testing.",
+    "model_io": [
+      {
+        "model": "Self-evolving multimodal digital twin (UKF + dual-network electrical/thermal models + health-evolution rules + anomaly accumulation layer)",
+        "inputs": [
+          "voltage, current, temperature, impedance-derived measurements",
+          "stress-dependent health evolution rules",
+          "process-noise inflation bounds"
+        ],
+        "outputs": [
+          "SOC estimate",
+          "core/surface temperature",
+          "capacity and ohmic resistance",
+          "anomaly risk scores",
+          "fault-oriented safety decisions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Impedance-derived measurement channel improves estimation accuracy over voltage/current/temperature alone",
+        "result": "Confirmed; self-evolving trust-allocation strategy dynamically redistributes confidence based on innovation consistency"
+      },
+      {
+        "hypothesis": "Bounded process-noise inflation enhances estimator adaptability under persistent model\u2013measurement mismatch",
+        "result": "Confirmed; framework maintains low RMSE across simulation and aging validation"
+      },
+      {
+        "hypothesis": "Hierarchical anomaly/thermal-risk accumulation enables fault-oriented safety decisions",
+        "result": "Confirmed; detection accuracy 0.9017, recall 1.0, F1-score 0.8716 on simulated faults"
       }
     ]
   },
@@ -113,38 +174,37 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-08-16",
     "category": "ML Theory",
-    "task": "Estimate learner knowledge states from heterogeneous events (videos, exercises, comments) with temporal decay",
-    "key_results": "DHGKT-Core achieves test AUC 0.8529 vs. 0.8318 for exercise-only and 0.7508 for multi-behavior fusion baseline; video behavior course-dependent (improves 3/4 courses)",
-    "comments": "Transparent event-driven decay mechanism outperforms generic graph convolution; semantic and social graph extensions show marginal/unreliable gains, questioning their necessity.",
+    "task": "Estimate learner knowledge evolution from multi-behavior events (video, exercise, comments) in online courses",
+    "key_results": "DHGKT-Core achieves test AUC 0.8529 vs. 0.8318 for exercise-only variant and 0.7508 for unstructured multi-behavior fusion; video contribution is course-dependent (improvement in 3/4 courses)",
+    "comments": "The finding that graph-topology aggregation variants yield negligible AUC gains suggests the principal value lies in transparent event-driven decay rather than learned graph structure, limiting the contribution's novelty.",
     "model_io": [
       {
         "model": "Dynamic Heterogeneous Graph-Structured Knowledge Tracing (DHGKT-Core)",
         "inputs": [
-          "learner identifiers",
-          "exercise responses",
-          "video-watch events (duration)",
-          "concept annotations",
-          "optional comments"
+          "learner events (video watch, exercise attempt, comments)",
+          "video duration",
+          "exercise prediction error",
+          "concept-video semantic weights"
         ],
         "outputs": [
           "concept-mastery vector per learner",
           "exercise performance prediction",
-          "AUC on test set"
+          "knowledge state evolution"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Exponential temporal decay of knowledge improves prediction over static embeddings",
-        "result": "Confirmed for 3/4 courses; decay alone explains most gains without graph semantics"
+        "hypothesis": "Exponential temporal decay applied before each event improves state estimation over exercise-only baselines",
+        "result": "Confirmed; AUC 0.8529 vs. 0.8318"
       },
       {
-        "hypothesis": "Video exposure signal (duration-aware) universally improves performance",
-        "result": "Partially rejected; video helped 3 courses but degraded performance on C_801420"
+        "hypothesis": "Video-behavior exposure signal is universally beneficial across courses",
+        "result": "Refuted; video improved 3 courses but reduced performance on C_801420"
       },
       {
-        "hypothesis": "Semantic concept-video weighting and social extensions improve AUC",
-        "result": "Rejected; no reliable additional gains; topology-aggregation variants produced negligible changes"
+        "hypothesis": "Learnable topology-aggregation and semantic/social extensions provide reliable gains",
+        "result": "Refuted; negligible AUC changes across variants"
       }
     ]
   },
@@ -157,31 +217,70 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-08-16",
     "category": "Other",
-    "task": "Predict maximum gas temperature rise in bifurcated tunnel fires as function of bifurcation angle",
-    "key_results": "Empirical model \u0394Tmax/T0 = (5.855 + 1.921sin\u03b8)Q*^(2/3) shows temperature increases with bifurcation angle; longitudinal decay follows double-exponential model in main tunnel",
-    "comments": "Fire Dynamics Simulator validation on realistic geometry; practical applicability to urban tunnel safety design, though limited to 30\u201390\u00b0 range and 5\u201330 MW fires.",
+    "task": "Quantify bifurcation angle effects on ceiling temperature and decay in tunnel fires",
+    "key_results": "Empirical model \u0394Tmax/T0 = (5.855 + 1.921sin\u03b8)Q*2/3 validated across 30\u00b0\u201390\u00b0 angles and 5\u201330 MW; temperature decay follows double-exponential model with angle-dependent decay parameters",
+    "comments": "High-fidelity FDS simulations provide practical fire-safety tools, but the empirical model's generalization to untested angles and fire types remains uncertain.",
     "model_io": [
       {
         "model": "Fire Dynamics Simulator (FDS)",
         "inputs": [
-          "bifurcation angle (30\u00b0, 45\u00b0, 60\u00b0, 90\u00b0)",
-          "heat release rate (5\u201330 MW)"
+          "bifurcation angle \u03b8 (30\u00b0, 45\u00b0, 60\u00b0, 90\u00b0)",
+          "heat release rate Q (5\u201330 MW)",
+          "tunnel geometry"
         ],
         "outputs": [
-          "maximum ceiling gas temperature rise \u0394Tmax",
+          "maximum ceiling temperature rise \u0394Tmax",
           "longitudinal temperature distribution",
-          "decay parameters"
+          "temperature decay parameters"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Dimensionless relationship \u0394Tmax/T0 \u221d kQ*^(2/3) remains valid but k depends on geometry",
-        "result": "Confirmed; proportionality constant varies with sin\u03b8 per empirical model"
+        "hypothesis": "Classic dimensionless relationship \u0394Tmax/T0 \u221d kQ*2/3 remains valid with geometry-dependent proportionality constant",
+        "result": "Confirmed; k varies with bifurcation angle as (5.855 + 1.921sin\u03b8)"
       },
       {
-        "hypothesis": "Temperature decay in branch tunnel modulated differently than main tunnel",
-        "result": "Confirmed; branch tunnel decay characteristics strongly dependent on bifurcation angle"
+        "hypothesis": "Temperature decay in main tunnel follows exponential model; branch tunnel decay is modulated by bifurcation angle",
+        "result": "Confirmed; double-exponential model fits main tunnel; branch tunnel decay parameters are sin\u03b8-dependent"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41598-026-67112-w",
+    "source": "mathematics-and-computing",
+    "id": "10.1038/s41598-026-67112-w",
+    "title": "Biomechanically-constrained generative adversarial networks for motion skill simulation and error correction in virtual training systems",
+    "projectPage": "https://www.nature.com/articles/s41598-026-67112-w",
+    "journal": "Scientific Reports",
+    "publishedAt": "2026-08-16",
+    "category": "ML Theory",
+    "task": "Generate biomechanically plausible motor-skill corrections via constrained GANs for virtual training",
+    "key_results": "Constraint-aware GAN identifies technique faults with 89.4% accuracy; reduces injury-weighted violation-severity by 76% vs. vanilla GAN; post-feedback trials rated 23.7% higher by coaches",
+    "comments": "Strong empirical validation on three sports skills, but lack of a concurrent control group for within-session improvements limits causal inference strength.",
+    "model_io": [
+      {
+        "model": "Biomechanically-constrained GAN with dual-pathway discriminator and hierarchical error detection",
+        "inputs": [
+          "motion-capture sequences (45 participants; basketball free throws, squats, jumps)",
+          "biomechanical constraint rules",
+          "learner proficiency level"
+        ],
+        "outputs": [
+          "corrected motion trajectory",
+          "technique fault annotations (89.4% accuracy)",
+          "adaptive feedback scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Dual-pathway discriminator (perceptual + biomechanical correctness) enforces physiological plausibility during generation",
+        "result": "Confirmed; constraint-aware model reduces frame-wise violation rate from 18.7% to 2.7% vs. vanilla GAN"
+      },
+      {
+        "hypothesis": "Hierarchical error-detection module improves fault identification and feedback tailoring",
+        "result": "Confirmed; post-feedback trials rated 23.7% higher by blind expert coaches"
       }
     ]
   },
@@ -193,35 +292,30 @@
     "projectPage": "https://www.nature.com/articles/s41598-026-67295-2",
     "journal": "Scientific Reports",
     "publishedAt": "2026-08-16",
-    "category": "ML Theory",
-    "task": "Benchmark ML and hybrid ensemble models for power system anomaly detection with interpretability",
-    "key_results": "Stacking Hybrid achieves accuracy 0.9994, Voting Hybrid 0.9989, Gradient Boosting 0.9962; all models detect abrupt and gradual anomalies",
-    "comments": "Impressive metrics but likely on a single curated dataset; hybrid ensembles dominate, though framework emphasizes relative comparison over absolute superiority; SHAP/LIME integration aids interpretability.",
+    "category": "Statistics/Probability",
+    "task": "Benchmark ML and hybrid ensemble models for power-system anomaly detection with interpretability",
+    "key_results": "Stacking Hybrid achieves 0.9994 accuracy; Gradient Boosting reaches 0.9962; hybrid models outperform single classifiers; SHAP and LIME provide instance- and global-level feature importance",
+    "comments": "All models achieve near-ceiling accuracy (>0.99), raising questions about dataset difficulty and the practical relevance of marginal performance differences.",
     "model_io": [
       {
         "model": "Random Forest, Logistic Regression, SVM-RBF, KNN, Gradient Boosting, Voting Hybrid, Stacking Hybrid",
         "inputs": [
-          "voltage",
-          "current",
-          "load",
-          "frequency",
-          "power factor",
-          "Total Harmonic Distortion (THD)"
+          "voltage, current, load, frequency, power factor, THD measurements"
         ],
         "outputs": [
-          "anomaly classification (binary)",
-          "feature importance (SHAP/LIME)"
+          "anomaly classification (binary or multi-class)",
+          "SHAP/LIME explanations"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Hybrid ensemble approaches outperform single base models",
-        "result": "Confirmed; Stacking Hybrid and Voting Hybrid achieve highest accuracy (0.9994, 0.9989)"
+        "hypothesis": "Hybrid ensemble methods (Voting, Stacking) outperform individual classifiers",
+        "result": "Confirmed; Stacking Hybrid 0.9994 vs. best single model (Gradient Boosting) 0.9962"
       },
       {
-        "hypothesis": "All models can detect both abrupt cyber-physical anomalies and gradual drift",
-        "result": "Confirmed across voltage sags, harmonic spikes, and operational drift patterns"
+        "hypothesis": "Models detect both abrupt anomalies (cyber spikes, voltage sags) and subtle drift patterns",
+        "result": "Confirmed; framework handles both abrupt and gradual anomalies"
       }
     ]
   },
@@ -234,18 +328,19 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-08-16",
     "category": "Optics/Photonics",
-    "task": "Design microwave metamaterial biosensor for refractive index sensing of biological media",
-    "key_results": "Sensitivity of 600 MHz/RIU, quality factor 22.46, figure of merit 5.34 at 2.1 GHz resonance frequency",
-    "comments": "The sensor demonstrates competitive performance for label-free detection, though practical integration with fluidic handling systems and extended biological sample testing are needed.",
+    "task": "Design and validate a microwave metamaterial biosensor for label-free refractive index sensing of biological media",
+    "key_results": "Sensitivity of 600 MHz/RIU, quality factor of 22.46, figure of merit of 5.34 at 2.1 GHz resonance frequency; validated for blood and hemoglobin-equivalent dielectric properties",
+    "comments": "Promising compact platform with strong field localization, but limited to microwave frequencies; actual biological fluid measurements and comparison with established techniques remain absent.",
     "model_io": [
       {
-        "model": "Surface-resonant microstrip metamaterial biosensor",
+        "model": "Surface-resonant microstrip metamaterial sensor",
         "inputs": [
-          "biological-equivalent dielectric media (blood-, hemoglobin-related materials)",
-          "refractive index variations"
+          "rectangular resonators",
+          "biological-equivalent media (blood, hemoglobin analogs)",
+          "analyte refractive index"
         ],
         "outputs": [
-          "resonance frequency shifts",
+          "resonance frequency shift",
           "sensitivity (MHz/RIU)",
           "quality factor",
           "figure of merit"
@@ -254,12 +349,8 @@
     ],
     "hypotheses": [
       {
-        "hypothesis": "Rectangular resonators enhance electromagnetic confinement and field\u2013matter interaction",
-        "result": "Confirmed; optimized structure achieves strong field localization and stable resonance under different material loading conditions"
-      },
-      {
-        "hypothesis": "Resonance frequency shift correlates with refractive index change of analytes",
-        "result": "Confirmed; systematic parametric analysis demonstrates sensing mechanism validity for biological-equivalent media"
+        "hypothesis": "Electromagnetic field confinement in rectangular resonators enhances field\u2013matter interaction and refractive index sensitivity",
+        "result": "Confirmed; optimized geometry achieves 600 MHz/RIU sensitivity with stable resonance under variable material loading"
       }
     ]
   }
