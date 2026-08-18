@@ -465942,5 +465942,546 @@
         "result": "Confirmed: ML correction term derived from COMSOL simulations essential for accuracy"
       }
     ]
+  },
+  "hf:2608.14606": {
+    "category": "Benchmark",
+    "task": "Evaluating LLMs as synthetic survey respondents using psychometric criteria",
+    "key_results": "LLMs reproduce qualitative relationships but Gaussian-copula baseline outperforms all 37 LLMs on sample-driven metrics; inter-LLM similarity (0.73) exceeds human similarity; synthetic-trained regressors lose validity on held-out humans (R\u00b2 -0.18 vs 0.28)",
+    "comments": "Rigorous psychometric audit demonstrating LLMs are not drop-in replacements despite plausible individual responses; memorization plays no role in performance ranking.",
+    "model_io": [
+      {
+        "model": "37-model lineup (OpenAI, Anthropic, Google, open-weight families)",
+        "inputs": [
+          "respondent profiles",
+          "persona-disclosure levels",
+          "demographic attributes"
+        ],
+        "outputs": [
+          "survey responses across 68 items/12 subscales"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LLMs preserve joint distribution and latent structure of human survey data",
+        "result": "False\u2014qualitative directions match but quantitative similarity (PSS) beaten by statistical baselines"
+      },
+      {
+        "hypothesis": "Memorization drives leaderboard performance",
+        "result": "False\u2014recall-PSS rank correlation is 0.00"
+      },
+      {
+        "hypothesis": "Gender and role effects transfer proportionally from humans",
+        "result": "Partially\u2014education effects (0.56) dominate gender (0.12) and role (0.18); counterfactual swaps show LLMs overweight education"
+      }
+    ]
+  },
+  "hf:2608.16320": {
+    "category": "Vision",
+    "task": "Streaming video understanding with token-level post-training optimization",
+    "key_results": "StreamOPD raises StreamingBench from 77.9% to 83.9% (within 0.3 of 9B teacher); ST-CueGate achieves 71.9% on OVO-Bench and 64.9% on Video-MME; on-policy self-distillation retains most gains",
+    "comments": "Clever recipe combining thinking-mode OPD with instruct-mode deployment; key insight that RL with verifiable rewards fails on streaming tasks due to think-then-answer artifacts.",
+    "model_io": [
+      {
+        "model": "StreamOPD (on-policy distillation with spatio-temporal gating)",
+        "inputs": [
+          "streaming video prefix",
+          "teacher model trajectories"
+        ],
+        "outputs": [
+          "video understanding predictions"
+        ]
+      },
+      {
+        "model": "ST-CueGate (teacher likelihood aggregation)",
+        "inputs": [
+          "cue vs no-cue teacher likelihood ratios"
+        ],
+        "outputs": [
+          "reweighted OPD response scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Verifiable-reward RL is effective for streaming video understanding",
+        "result": "False\u2014encourages long think-then-answer generations, destabilizes training"
+      },
+      {
+        "hypothesis": "Post-training alone can match inference-time memory/retrieval systems",
+        "result": "True\u2014OPD closes gap to teacher and improves benchmarks consistently"
+      },
+      {
+        "hypothesis": "Self-distillation retains OPD gains without teacher privilege",
+        "result": "Partially true\u2014lifts HLD above both student and teacher baseline"
+      }
+    ]
+  },
+  "hf:2608.14639": {
+    "category": "Systems",
+    "task": "Ensuring valid per-field selective risk control for document extraction with LLM-based systems",
+    "key_results": "Diagnoses three failure modes (document clustering design effect 1.84\u20132.45, score-refit leakage, tie-mass pathology); Mondrian Learn-then-Test achieves PAC certificates with 0.060 coverage at 0.068 risk (cluster-corrected); human audit confirms 1.3% realized risk vs 10% budget",
+    "comments": "Methodologically rigorous approach to selective risk in ML pipelines; reveals that naive procedures violate their stated guarantees on real data due to clustering and refit leakage.",
+    "model_io": [
+      {
+        "model": "claude-sonnet-5 document extraction",
+        "inputs": [
+          "CORD receipt documents (n=800)"
+        ],
+        "outputs": [
+          "extracted field values with scores"
+        ]
+      },
+      {
+        "model": "Mondrian Learn-then-Test (binomial certification)",
+        "inputs": [
+          "field extraction scores",
+          "ground truth labels"
+        ],
+        "outputs": [
+          "PAC-certified risk-controlled thresholds"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Naive fit/val split restores selective-risk control under clustering",
+        "result": "Partially\u2014restores coverage (0.318) but realized risk exceeds \u03b1 in 47.5% of resplits"
+      },
+      {
+        "hypothesis": "Conditioning on document provenance taxonomy improves risk control",
+        "result": "True on sonnet (p<1e-4) but does not replicate on haiku/qwen; pooled thresholds win on higher-accuracy corpora"
+      },
+      {
+        "hypothesis": "Per-group PAC certificates can match document-level guarantees",
+        "result": "Partially\u2014cluster-corrected Mondrian achieves best empirical coverage but remains conservative vs held-out haiku baseline"
+      }
+    ]
+  },
+  "nature:10.1038/s41419-026-09191-1": {
+    "category": "Apoptosis/Cell Death",
+    "task": "Determine the role of ER stress and Cryaa in photoreceptor apoptosis in X-linked Retinitis Pigmentosa",
+    "key_results": "rd9 mouse retinas exhibited ER stress, UPR activation, and photoreceptor apoptosis; Cryaa knockdown directly induced ER stress and UPR; proteomic analysis identified UPR and protein folding pathways enriched with Cryaa downregulation",
+    "comments": "The identification of Cryaa as a critical ER stress regulator in XLRP pathology represents a novel therapeutic perspective for this inherited retinopathy.",
+    "model_io": [
+      {
+        "model": "rd9 mouse retinas",
+        "inputs": [
+          "RPGR mutation"
+        ],
+        "outputs": [
+          "ER stress markers",
+          "UPR activation",
+          "photoreceptor apoptosis",
+          "Cryaa expression",
+          "mitochondrial ultrastructure"
+        ]
+      },
+      {
+        "model": "661W photoreceptor cells",
+        "inputs": [
+          "Cryaa knockdown"
+        ],
+        "outputs": [
+          "ER stress markers",
+          "UPR activation"
+        ]
+      },
+      {
+        "model": "mouse embryonic fibroblast (MEF) cells",
+        "inputs": [
+          "rd9 mutation"
+        ],
+        "outputs": [
+          "ER and mitochondrial ultrastructure",
+          "apoptosis"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Cryaa reduction drives ER stress and UPR activation leading to photoreceptor apoptosis in XLRP",
+        "result": "Cryaa knockdown directly induced ER stress and UPR activation in 661W cells"
+      }
+    ]
+  },
+  "nature:10.1038/s41523-026-01036-6": {
+    "category": "Structural Prediction",
+    "task": "Benchmarking pathology foundation models for HER2 amplification and CEP17 polysomy prediction",
+    "key_results": "PFM-based CLAM achieved AUC >0.80 in equivocal cases (vs. 0.60 for ResNet-50); CEP17 polysomy predicted with AUC 0.756 from H&E",
+    "comments": "Demonstrates scalable auxiliary tool for resolving diagnostically challenging cases; cost-effective alternative to expensive confirmatory testing.",
+    "model_io": [
+      {
+        "model": "CLAM multiple-instance learning with feature encoders (12 PFMs, ImageNet baseline)",
+        "inputs": [
+          "2393 whole slide images across 4 cohorts",
+          "FISH ground truth"
+        ],
+        "outputs": [
+          "HER2 amplification prediction",
+          "CEP17 polysomy status",
+          "AUC discrimination metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Pathology foundation models capture subtle morphological features better than ImageNet-pretrained models",
+        "result": "H-optimus-1 and UNI2-H features achieved AUC >0.80 in equivocal cases; feasibility of CEP17 direct prediction validated"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-03085-4": {
+    "category": "Statistical Methods",
+    "task": "AI-ECG model for pre-imaging risk stratification of coronary artery disease",
+    "key_results": "Vessel-specific discrimination across internal/external cohorts; integration with pre-test probability improved reclassification; model-risk groups showed clear MACE separation in follow-up",
+    "comments": "Waveform and attribution analysis reveals physiologically meaningful ECG features; prospective validation needed.",
+    "model_io": [
+      {
+        "model": "AI-ECG foundation model fine-tuned to CCTA outcomes",
+        "inputs": [
+          "12-lead ECG signals"
+        ],
+        "outputs": [
+          "vessel-specific stenosis probability",
+          "risk stratification (low/intermediate/high)",
+          "MACE prediction"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "ECG patterns encode information predictive of coronary stenosis and future cardiovascular events",
+        "result": "Model discrimination consistent across vessels; improved rule-out and reclassification vs. guideline-based pre-test probability"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-46651-2": {
+    "category": "Other",
+    "task": "Variational quantum eigensolver ansatz design for long-range XY model ground state simulation",
+    "key_results": "Inhomogeneous RxxRyy ansatz achieves high fidelity across phase diagram with 2-layer depth; homogeneous version also competitive; trade-offs between expressibility and trainability identified",
+    "comments": "Systematic comparison of VQE ansatzes on NISQ hardware; findings motivate Hamiltonian-tailored circuit design but limited to XY model.",
+    "model_io": [
+      {
+        "model": "VQE with parametric entanglers (CRx, Rxx, RxxRyy)",
+        "inputs": [
+          "long_range_XY_Hamiltonian"
+        ],
+        "outputs": [
+          "ground_state_energy_estimate"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Inhomogeneous parameter sharing improves shallow-circuit VQE performance for long-range XY model",
+        "result": "Confirmed; 2-layer inhomogeneous RxxRyy achieves high accuracy; homogeneous variants show good performance with smoother optimization landscape"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-63812-5": {
+    "category": "ML Theory",
+    "task": "Triple-path hybrid deep learning for analog modulation classification",
+    "key_results": "Mean accuracy 94.5% across all SNRs; at \u221210 dB: 73.7% (+33.7 pp vs. EMD-SVM), at 0 dB: 99.4%; ensemble (5 seeds) contributes +22.9 pp at \u221210 dB; BiGRU path most critical (\u221231.2 pp when removed)",
+    "comments": "Comprehensive architecture with EMD, GASF-SE-CNN, and BiGRU paths; cross-path attention static (non-SNR-adaptive); Doppler validation shows 76\u201380% accuracy, highlighting sensitivity to phase rotation.",
+    "model_io": [
+      {
+        "model": "Triple-path ensemble: EMD-SVM + GASF-SE-CNN + BiGRU with Cross-Path Attention Gating",
+        "inputs": [
+          "modulated_signal_AM_PM_FM_SSB"
+        ],
+        "outputs": [
+          "modulation_class"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-path fusion with attention gating improves low-SNR modulation classification robustness",
+        "result": "Confirmed; 73.7% accuracy at \u221210 dB with BiGRU path dominant; ensemble achieves 100% at 20 dB; Doppler sensitivity (76\u201380%) under realistic fading"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-64226-z": {
+    "category": "ML Theory",
+    "task": "ConvLSTM surrogate modeling for granular wave propagation",
+    "key_results": "ConvLSTM reproduces wavefront evolution and particle motion for billiard break; captures compaction front location in weak-shock granular ensemble with smoothed pore-scale features",
+    "comments": "Explicitly framed as surrogate for rendered RGB fields, not physical field prediction; fine pore-scale feature loss acknowledged as significant limitation for some applications.",
+    "model_io": [
+      {
+        "model": "ConvLSTM with overlapping sliding windows",
+        "inputs": [
+          "pressure_field_sequences_from_FLAG_hydrocode"
+        ],
+        "outputs": [
+          "predicted_rendered_pressure_field_RGB_images"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "ConvLSTM can predict pressure field image sequences from mesoscale hydrocode simulations",
+        "result": "Partially confirmed; dominant wavefront captured but pore-scale features smoothed; model should be interpreted as RGB surrogate rather than conservative state surrogate"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-64606-5": {
+    "category": "ML Theory",
+    "task": "Multiple Polynomial Regression for nanofluid thermophysical property prediction and Pareto optimization",
+    "key_results": "MPR model: MARD \u22121.6% (DV), 0.403% (TC), \u22120.0206% (SHC), \u22120.0516% (D); NSGA-II + TOPSIS identifies optimal \u03c6=0.3484%, T=78.63\u00b0C; MEW suggests \u03c6=0.1082%, T=78.19\u00b0C",
+    "comments": "Hybrid ML-optimization-MCDM framework is comprehensive; TOPSIS and MEW reveal preference sensitivity; R\u00b2 values for MPR model not fully reported.",
+    "model_io": [
+      {
+        "model": "Multiple Polynomial Regression + NSGA-II + TOPSIS/MEW",
+        "inputs": [
+          "temperature",
+          "nanoparticle_volume_fraction"
+        ],
+        "outputs": [
+          "dynamic_viscosity",
+          "thermal_conductivity",
+          "specific_heat",
+          "density",
+          "pareto_front"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-objective Pareto optimization identifies superior nanofluid configurations balancing TC, SHC, DV, and D",
+        "result": "Confirmed; TOPSIS identifies \u03c6=0.3484%, T=78.63\u00b0C as optimal; MARD values <1% for MPR across all properties"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-66404-5": {
+    "category": "ML Theory",
+    "task": "Machine learning modeling of BBOT solubility in supercritical CO2",
+    "key_results": "GPR model achieves R\u00b2 = 0.9983, MSE = 0.002; K-J semi-empirical correlation: MARD 8.308%; GPR outperforms Gaussian process, SVR, and four correlations",
+    "comments": "Rigorous comparison of semi-empirical and ML approaches; GPR superior predictive accuracy but interpretability limited; experimental range 12\u201330 MPa, 313\u2013343 K.",
+    "model_io": [
+      {
+        "model": "Gaussian Process Regression (GPR) vs. K-J correlation vs. SVR",
+        "inputs": [
+          "pressure_12to30MPa",
+          "temperature_313to343K"
+        ],
+        "outputs": [
+          "BBOT_molar_solubility"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Machine learning models outperform semi-empirical correlations for SC-CO2 solubility prediction",
+        "result": "Confirmed; GPR achieves R\u00b2 = 0.9983 vs. K-J correlation MARD 8.308%"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-66552-8": {
+    "category": "ML Theory",
+    "task": "Deep reinforcement learning for successive interference cancellation optimization in NOMA-UAV networks",
+    "key_results": "DRL-optimized SIC converges after 150k episodes; outperforms heuristic methods with higher success rates, lower BER, enhanced throughput; UAV mobility optimization reduces Doppler impacts",
+    "comments": "DRL integration with interference mapping and UAV dynamics is novel; 250k episode training overhead and deployment complexity not fully addressed.",
+    "model_io": [
+      {
+        "model": "Deep Q-Network (DQN) for SIC optimization",
+        "inputs": [
+          "interference_maps",
+          "UAV_motion",
+          "load_variations"
+        ],
+        "outputs": [
+          "SIC_decoding_order",
+          "power_allocation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "DRL learns optimal SIC ordering and power control in NOMA-UAV networks",
+        "result": "Confirmed; DRL-optimized approach outperforms heuristics in spectral efficiency, latency, and power consumption after ~150k episodes"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-66589-9": {
+    "category": "ML Theory",
+    "task": "Automated leaf counting for medicinal orchid Dendrobium nobile using YOLOv5",
+    "key_results": "YOLOv5l integrated into DnLC desktop app; 354-image validation: DiC \u22120.95\u00b11.45, |DiC| 1.15\u00b11.30, MAE 1.10, MSE 3.00, MAPE 8.44%, PA 43.91%",
+    "comments": "Multi-view 360\u00b0 image acquisition cleverly addresses occlusion; YOLOv5l selected via Average Rank approach; CVPPP metrics show close agreement with manual counts.",
+    "model_io": [
+      {
+        "model": "YOLOv5l object detector + GUI application",
+        "inputs": [
+          "multi_view_D.nobile_plant_images_16frames_360deg"
+        ],
+        "outputs": [
+          "leaf_detections",
+          "leaf_count_estimate"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "YOLOv5l can accurately detect and count leaves in non-rosette Dendrobium nobile despite occlusion and complex architecture",
+        "result": "Confirmed; MAE 1.10 leaves with MAPE 8.44% on validation set; multi-view approach mitigates occlusion effects"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-66590-2": {
+    "category": "Algorithms",
+    "task": "Two-stage path fitting for expressway toll collection accuracy improvement",
+    "key_results": "Minimum-toll baseline + multi-dimensional anomaly detection improves accuracy 33.9%; reduces billing deviation 88.3% vs. shortest-path; confidence metric shows Pearson r = \u22120.87 with actual error",
+    "comments": "Practical framework addressing real toll-network problem; six anomaly types systematically defined and mathematically modeled; generalization to other road networks unclear.",
+    "model_io": [
+      {
+        "model": "Two-stage path fitting: baseline (minimum-toll) + optimized (anomaly detection)",
+        "inputs": [
+          "gantry_toll_data",
+          "network_topology"
+        ],
+        "outputs": [
+          "fitted_path",
+          "confidence_score"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-dimensional anomaly detection improves path fitting accuracy in toll networks",
+        "result": "Confirmed; 33.9% accuracy improvement and 88.3% reduction in billing deviation vs. baseline methods"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-66658-z": {
+    "category": "Other",
+    "task": "Hydrodynamic characterization of ILCA6 sailing dinghy in waves",
+    "key_results": "CFD simulations show added wave resistance exhibits pronounced dependence on wavelength and speed; heave/pitch responses increase with wavelength ratio 0.5\u20132.0; validation matches experimental data",
+    "comments": "Comprehensive CFD study with validated methodology; narrow focus on single boat class limits broader applicability to other dinghies.",
+    "model_io": [
+      {
+        "model": "CFD (RANS) simulation of ILCA6 hull",
+        "inputs": [
+          "sailing_speed_2to6ms",
+          "wavelength_to_length_ratio_0.5to2.0"
+        ],
+        "outputs": [
+          "total_resistance",
+          "added_wave_resistance",
+          "heave_RAO",
+          "pitch_RAO"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "CFD predictions of added wave resistance and motions match experimental measurements",
+        "result": "Confirmed; good agreement validates numerical method for hydrodynamic analysis of racing dinghies"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-66898-z": {
+    "category": "Algorithms",
+    "task": "Hierarchical heterogeneous UAV swarms for post-disaster casualty detection and task allocation",
+    "key_results": "Utility-driven greedy algorithm improves survivor confirmation while reducing false positives/missed detections; regional load-aware coordination mitigates task imbalance",
+    "comments": "Two-tier architecture (relay vs. search) is sensible; simulation-only validation limits real-world applicability; communication constraints not fully explored.",
+    "model_io": [
+      {
+        "model": "Utility-driven hierarchical cooperative greedy task allocator",
+        "inputs": [
+          "detection_uncertainty",
+          "energy_consumption",
+          "communication_feasibility",
+          "opportunity_costs"
+        ],
+        "outputs": [
+          "task_allocation_decisions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Hierarchical architecture with utility-driven allocation balances rescue efficiency and energy consumption",
+        "result": "Confirmed in simulation; regional load-aware coordination reduces task imbalance across uneven survivor distributions"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-67146-0": {
+    "category": "ML Theory",
+    "task": "Machine learning calibration of UAV downwash effects on air quality sensors",
+    "key_results": "Tree-based ensemble algorithms reduce NO2 measurement error to inter-sensor variability; PM2.5 maintains strong agreement within downwash region without calibration",
+    "comments": "Practical solution to UAV-sensor interference; selective calibration per pollutant type is pragmatic; integration of meteorological and seasonal variables improves nonlinear modeling.",
+    "model_io": [
+      {
+        "model": "Tree-based ensemble (Random Forest / Gradient Boosting)",
+        "inputs": [
+          "UAV_hover_downwash_fields",
+          "meteorological_variables",
+          "seasonal_features"
+        ],
+        "outputs": [
+          "calibrated_NO2_concentration",
+          "calibrated_PM2.5"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Machine learning calibration alleviates UAV downwash-induced NO2 measurement errors",
+        "result": "Confirmed; tree-based methods reduce NO2 error to inter-sensor variability; PM2.5 shows inherent robustness"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-76583-4": {
+    "category": "Condensed Matter",
+    "task": "Gate-imprinted and light-erasable non-volatile control of superconductivity via interface engineering",
+    "key_results": "Gate cycling promotes superconductivity with memory retention; optical illumination at cryogenic T erases effect; emergent polar-nanoregion reorientation and oxygen vacancy trapping identified",
+    "comments": "Novel interplay between superconducting interface and quantum paraelectric lattice opens pathway for memory-integrated superconductors, though mechanism remains incompletely characterized.",
+    "model_io": [
+      {
+        "model": "AlO\u2093/KTaO\u2083 heterostructure with two-dimensional superconductivity",
+        "inputs": [
+          "electrostatic gate voltage cycling",
+          "optical illumination at T<5K"
+        ],
+        "outputs": [
+          "superconducting transition temperature",
+          "critical current",
+          "carrier density"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Superconductivity controlled only by electrostatic gating",
+        "result": "Refuted; polar-nanoregion and vacancy dynamics essential"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-64740-0": {
+    "category": "Astrophysics/Cosmology",
+    "task": "Quantify fracture-induced seismic anisotropy and attenuation via integrated VSP tomography and viscoelastic rock physics",
+    "key_results": "Azimuthal velocity and Q-factor variations mapped to fracture orientation; P-wave velocity max parallel to fractures, min in fracture-normal direction; quality factor varies 82\u2013100 in reservoir vs. 125\u2013170 above",
+    "comments": "Framework successfully demonstrates azimuthal attenuation as robust fracture geometry indicator, though applicability beyond carbonate systems unclear.",
+    "model_io": [
+      {
+        "model": "Naturally fractured carbonate reservoir via layered HTI viscoelastic model",
+        "inputs": [
+          "zero-offset and single-offset VSP data",
+          "formation microimager (FMI) logs"
+        ],
+        "outputs": [
+          "azimuthal P/S-wave velocities",
+          "interval quality factors",
+          "synthetic multi-azimuth VSP wavefields",
+          "fracture orientation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Seismic velocity anisotropy alone sufficient to characterize fractures",
+        "result": "Refined; azimuthal attenuation provides complementary and more robust fracture indicator"
+      }
+    ]
   }
 }
