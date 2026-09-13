@@ -8,33 +8,28 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-09-13",
     "category": "Computational Biophysics",
-    "task": "Model non-monotonic dose-response curves for PD-L1 checkpoint inhibitors in T-cell co-culture",
-    "key_results": "Estimated Cmax_resp (maximal safe concentration) and EC50 (potency) from luminescence trajectories; model explains non-monotonic response across full dose range by separating target-specific activation from concentration-dependent toxicity",
-    "comments": "The approach elegantly addresses a common drug screening challenge, though validation against independent datasets and comparison to empirical fitting methods would strengthen claims of mechanistic superiority.",
+    "task": "Mathematical modeling of non-monotonic dose-response in PD-L1 checkpoint inhibition",
+    "key_results": "Model estimates Cmax_resp (optimal therapeutic concentration) and EC50 values from luminescence data; discriminates target-specific bioactivity from concentration-dependent toxicity across dose range",
+    "comments": "The non-monotonic response (biphasic curve) is mechanistically captured, making this valuable for drug optimization, though validation against additional immunotherapy targets would strengthen generalizability.",
     "model_io": [
       {
-        "model": "Ordinary differential equation system for T-cell reactivation kinetics",
+        "model": "System of ordinary differential equations (ODE)",
         "inputs": [
-          "Compound concentration (multiple dose levels)",
-          "Luminescence signal measurements (time-series per dose)",
-          "Co-culture experimental data (T-cells + target cells + PD-L1 blocking compound)"
+          "Luminescence signal measurements (multiple time points)",
+          "Compound concentrations (dose range)",
+          "Co-culture conditions (T-cell + target cells)"
         ],
         "outputs": [
-          "Cmax_resp (optimal safe concentration)",
+          "Cmax_resp (maximum safe concentration)",
           "EC50 (potency parameter)",
-          "Fitted luminescence trajectories",
-          "Parameter estimates (via Monte Carlo)"
+          "Fitted luminescence trajectories"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Non-monotonic dose response arises from competition between T-cell activation (low dose) and compound-induced toxicity (high dose)",
-        "result": "Model successfully fits non-monotonic luminescence curves and distinguishes target-specific from non-specific effects"
-      },
-      {
-        "hypothesis": "Mechanistic ODE model enables more reliable Cmax_resp and EC50 extraction than empirical curve-fitting alone",
-        "result": "Model provides coherent parameter estimates across entire dose range, supporting rational optimization strategies"
+        "hypothesis": "Non-monotonic dose response arises from concentration-dependent toxicity competing with target-specific T-cell activation",
+        "result": "Model successfully explains biphasic luminescence curves and enables separation of efficacy from toxicity parameters"
       }
     ]
   },
@@ -46,28 +41,26 @@
     "projectPage": "https://www.nature.com/articles/s41598-026-67333-z",
     "journal": "Scientific Reports",
     "publishedAt": "2026-09-13",
-    "category": "Statistical Methods",
-    "task": "Automated diagnosis of acute lymphoblastic leukemia from blood smear images using vision transformer-CNN fusion",
-    "key_results": "ConfuNetHMA achieves 100% classification accuracy on ALL dataset, 97.39% on C-NMC dataset, ROC-AUC 0.994 for ALL subtype differentiation; integrates meta-attention fusion, vision transformer, CNN, and meta-learning-inspired optimizer selection",
-    "comments": "Perfect classification accuracy on one dataset is noteworthy but warrants skepticism given dataset size; explainability integration (Grad-CAM, LIME, SHAP, Integrated Gradients) is commendable for clinical adoption.",
+    "category": "Structural Prediction",
+    "task": "Automated acute lymphoblastic leukemia diagnosis from blood smears via vision-CNN fusion",
+    "key_results": "ConfuNetHMA achieved 100% accuracy on ALL dataset, 97.39% on C-NMC; ROC-AUC = 0.994 for ALL subtype differentiation; Grad-CAM + LIME/SHAP/Integrated Gradients provide concordant explainability aligned with hematological criteria",
+    "comments": "100% accuracy on one dataset suggests potential overfitting or dataset-specific bias; clinical deployment requires external prospective validation.",
     "model_io": [
       {
-        "model": "ConfuNetHMA: vision transformer + CNN with meta-attention fusion + meta-learning optimizer selection module",
+        "model": "ConfuNetHMA (Vision Transformer + CNN with meta-attention fusion)",
         "inputs": [
-          "peripheral blood smear images"
+          "Peripheral blood smear images"
         ],
         "outputs": [
           "ALL classification",
-          "ALL subtype differentiation",
-          "Grad-CAM saliency maps",
-          "LIME, SHAP, Integrated Gradients feature importance"
+          "Explainability heatmaps (Grad-CAM, LIME, SHAP, Integrated Gradients)"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Meta-attention fusion of global (transformer) and local (CNN) features improves ALL diagnosis accuracy",
-        "result": "Confirmed; model achieves near-perfect classification and high explainability agreement"
+        "hypothesis": "Fusion of global (ViT) and local (CNN) feature representations via meta-attention improves ALL diagnostic accuracy",
+        "result": "Confirmed; achieved near-perfect classification on benchmark datasets"
       }
     ]
   },
@@ -80,29 +73,35 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-09-13",
     "category": "Genomics",
-    "task": "Tissue-specific gene expression atlas and transcriptomic database for Indian black chicken breed",
-    "key_results": "KadakExpress database catalogs 39,679 genes, 383,176 gene-to-GO associations, 5,727 Reactome pathway annotations across 16 Kadaknath tissues; 302 unique genes in brain, 1,608 unique genes across all tissues; quality control performed via FastQC",
-    "comments": "Comprehensive transcriptomic resource valuable for breed conservation and functional genomics; downstream functional validation and disease-resistance pathway characterization recommended.",
+    "task": "Tissue-specific gene expression atlas and database for Indian black chicken (Kadaknath)",
+    "key_results": "39,679 genes cataloged across 16 tissues; 3,83,176 gene-to-GO associations; 5,727 Reactome pathway annotations; 302 unique genes in brain, 1,608 across all tissues; database (KadakExpress) provides searchable resource for breed-specific genomics",
+    "comments": "Valuable community resource but lacks functional validation or association with economically important traits (pigmentation, disease resistance) promised in introduction.",
     "model_io": [
       {
-        "model": "RNA-seq transcriptomics pipeline: quality control (FastQC) \u2192 mapping \u2192 transcript quantification \u2192 tissue-specific expression classification \u2192 pathway annotation",
+        "model": "RNA-seq transcriptomics pipeline",
         "inputs": [
-          "Kadaknath chicken RNA-seq reads (16 tissues)",
-          "reference genome"
+          "mRNA from 16 Kadaknath tissues"
         ],
         "outputs": [
-          "39,679 genes",
-          "tissue-specific gene expression profiles",
-          "GO annotations (BP/MF/CC)",
-          "Reactome pathway assignments",
-          "searchable database"
+          "Gene expression profiles",
+          "Tissue-specific gene signatures"
+        ]
+      },
+      {
+        "model": "Gene annotation (GO, Reactome, functional enrichment)",
+        "inputs": [
+          "Expression data",
+          "Reference databases"
+        ],
+        "outputs": [
+          "KadakExpress database (searchable gene/pathway annotations)"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Multi-tissue transcriptomic profiling identifies tissue-enriched genes and pathways underlying Kadaknath breed traits (black meat pigmentation, disease resistance, adaptation)",
-        "result": "Supported; database established with comprehensive annotations; specific pathway/trait associations to be explored via future mechanistic studies"
+        "hypothesis": "Systematic transcriptomic profiling of Kadaknath tissues enables identification of breed-specific genetic mechanisms underlying economically important traits",
+        "result": "Partial; database successfully catalogs tissue-specific expression but lacks phenotype-genotype association studies"
       }
     ]
   },
@@ -115,28 +114,25 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-09-13",
     "category": "Statistical Methods",
-    "task": "Medical image denoising of retinal fundus images using noise-aware residual U-Net",
-    "key_results": "NAR-UNet achieves PSNR 37.99 dB (STARE, 5-fold CV), PSNR 40.46 dB (Messidor), SSIM 0.946\u20130.953, pixel accuracy 0.9963\u20130.9990; hybrid loss combines MSE, SSIM, and Sobel-based gradient loss",
-    "comments": "Strong image-quality metrics; however, downstream impact on DR diagnosis/lesion detection not evaluated, limiting assessment of clinical utility.",
+    "task": "Adaptive noise-aware image denoising for retinal fundus images",
+    "key_results": "NAR-UNet achieved mean PSNR = 37.99 dB (STARE), 40.46 dB (Messidor); SSIM = 0.946\u20130.953; pixel accuracy = 0.9963\u20130.9990; outperformed state-of-the-art on denoising metrics",
+    "comments": "Study evaluates denoising performance in isolation without demonstrating impact on downstream DR diagnosis or lesion detection\u2014a significant limitation for clinical utility.",
     "model_io": [
       {
-        "model": "NAR-UNet: light-weight U-Net with adaptive noise module and attention mechanisms; trained with hybrid loss (MSE + SSIM + Sobel gradient)",
+        "model": "NAR-UNet (Noise-Aware Residual U-Net)",
         "inputs": [
-          "noisy retinal fundus images",
-          "clean reference images"
+          "Noisy retinal fundus images",
+          "Adaptive noise module"
         ],
         "outputs": [
-          "denoised images",
-          "PSNR",
-          "SSIM",
-          "pixel accuracy"
+          "Denoised retinal images (image quality metrics)"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Adaptive noise injection and attention-based U-Net architecture improve retinal image denoising",
-        "result": "Confirmed; NAR-UNet outperforms state-of-the-art denoising methods on STARE and Messidor datasets"
+        "hypothesis": "Adaptive noise injection and residual U-Net architecture improve retinal image denoising",
+        "result": "Confirmed on STARE and Messidor; generalizability demonstrated across datasets"
       }
     ]
   },
@@ -148,30 +144,38 @@
     "projectPage": "https://www.nature.com/articles/s41598-026-70193-2",
     "journal": "Scientific Reports",
     "publishedAt": "2026-09-13",
-    "category": "Statistical Methods",
-    "task": "Fractional-order eco-epidemiological modeling with neural network approximation",
-    "key_results": "Caputo fractional-order S-I-P model with fear effects shows smoother, more stable dynamics than integer-order case; feedforward neural network trained via Levenberg-Marquardt achieves high accuracy in solution approximation",
-    "comments": "Hybrid framework is technically sound but practical applicability to real biological systems requires parameter estimation and validation against empirical data.",
+    "category": "Evolutionary Biology",
+    "task": "Fractional-order eco-epidemiological modeling with fear and refuge effects",
+    "key_results": "Caputo fractional-order S\u2013I\u2013P model shows smoother, more stable dynamics than integer-order; feedforward neural network approximates solutions with high accuracy; fractional order substantially affects system behavior",
+    "comments": "The hybrid numerical-neural approach is practical, but the biological interpretability of fractional derivatives in predator-prey ecology remains contested.",
     "model_io": [
       {
-        "model": "Fractional-order S-I-P eco-epidemiological model (Caputo derivatives) + feedforward neural network (Levenberg-Marquardt training)",
+        "model": "Fractional-order S\u2013I\u2013P differential equations (Caputo)",
         "inputs": [
-          "prey density",
-          "predator density",
-          "infected individuals",
-          "fear effect parameters"
+          "Population densities",
+          "Infection rates",
+          "Fear effects",
+          "Refuge parameters"
         ],
         "outputs": [
-          "population dynamics trajectories",
-          "neural network approximation of solutions",
-          "mean square error"
+          "Population dynamics trajectories",
+          "Equilibrium stability analysis"
+        ]
+      },
+      {
+        "model": "Feedforward neural network (Levenberg-Marquardt training)",
+        "inputs": [
+          "Numerical solutions from Gr\u00fcnwald-Letnikov scheme"
+        ],
+        "outputs": [
+          "Approximated population dynamics"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Fractional-order formulation better captures memory-dependent biological interactions",
-        "result": "Supported; fractional-order system exhibits smoother, more stable behavior than integer-order analog"
+        "hypothesis": "Fractional-order formulation better captures memory-dependent biological interactions than integer-order",
+        "result": "Confirmed; fractional model shows smoother, more stable behavior in simulations"
       }
     ]
   },
@@ -184,26 +188,26 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-09-13",
     "category": "Statistical Methods",
-    "task": "Motor imagery and execution EEG decoding via source-space projection and transformer neural networks",
-    "key_results": "PRSEPTransformer-EEG achieves 99.53% accuracy on BCI Competition IV 2a (Beta band), 98.29% on BCI2000 four-class imagery, exceeding prior reported results; source-space sLORETA projection combined with squeeze-excitation residual blocks and transformer encoder",
-    "comments": "Strong empirical results across three datasets and electrode configurations; architectural advantage over prior work is clear, though computational cost and real-time feasibility on embedded BCI systems not reported.",
+    "task": "Motor intention decoding from EEG via source-space localization and Transformers",
+    "key_results": "PRSEPTransformer-EEG achieved 99.53% accuracy on BCI Competition IV 2a, 98.29% on BCI2000 four-class imagery; source-space sLORETA projection combined with squeeze-excitation residual blocks and Transformer outperformed sensor-space approaches",
+    "comments": "Exceptional accuracy suggests potential over-optimization to benchmark datasets; generalization to clinical populations with artifacts requires validation.",
     "model_io": [
       {
-        "model": "PRSEPTransformer-EEG: preprocessing \u2192 sLORETA source localization \u2192 squeeze-excitation residual blocks + positional-encoding transformer encoder",
+        "model": "PRSEPTransformer-EEG (sLORETA source localization + SE-ResBlocks + Transformer)",
         "inputs": [
-          "scalp EEG signals (gel-based, water-based, dry electrodes)",
-          "electrode coordinates"
+          "Scalp EEG (gel, water, dry electrodes)",
+          "Motor imagery/execution paradigm"
         ],
         "outputs": [
-          "motor intention classification (motor imagery or execution)",
-          "accuracy, F1-score across frequency bands"
+          "Motor intention classification",
+          "Beta-band activity maps"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Source-space projection combined with temporal attention improves motor EEG decoding accuracy and generalization",
-        "result": "Confirmed; source-space model outperforms sensor-space on high-density recordings; sparse electrode configurations benefit from sensor-level features"
+        "hypothesis": "Source-space reconstruction (sLORETA) combined with Transformer attention improves motor imagery decoding over sensor-space models",
+        "result": "Confirmed; source-space models outperform sensor-space on high-density recordings"
       }
     ]
   },
@@ -215,31 +219,38 @@
     "projectPage": "https://www.nature.com/articles/s41598-026-70963-y",
     "journal": "Scientific Reports",
     "publishedAt": "2026-09-13",
-    "category": "Other",
-    "task": "Network pharmacology and in silico investigation of linalool therapeutic potential in triple-negative breast cancer",
-    "key_results": "Linalool shows 30% TNBC cell viability inhibition at 100 \u00b5g/mL, DPPH IC\u2085\u2080 = 51.87 \u00b1 0.56 \u00b5g/mL (antioxidant); 34 common linalool-TNBC targets identified via SuperPred/GeneCard; docking affinity: TOP2A \u22125.108 kcal/mol, COX-1 \u22125.345 kcal/mol, NRF2 \u22123.329 kcal/mol; molecular dynamics confirms conformational stability",
-    "comments": "Integrated in vitro-in silico workflow is systematic; however, moderate in vitro cytotoxicity and predicted binding affinities suggest linalool is preliminary candidate requiring mechanistic and functional validation.",
+    "category": "Genomics",
+    "task": "Network pharmacology and in silico mechanistic analysis of linalool in triple-negative breast cancer",
+    "key_results": "Linalool showed 30% cell viability inhibition at 100 \u00b5g/mL, IC\u2085\u2080 = 51.87 \u00b1 0.56 \u00b5g/mL (DPPH); network pharmacology identified 34 common linalool-TNBC targets; docking showed good binding affinity for TOP2A (-5.108), COX-1 (-5.345), NRF-2 (-3.329 kcal/mol); MD simulations confirmed conformational stability",
+    "comments": "Multi-level integration is thorough, but moderate in vitro cytotoxicity and lack of in vivo validation limit therapeutic potential assessment.",
     "model_io": [
       {
-        "model": "Network pharmacology (SuperPred, GeneCard) \u2192 compound-target-pathway network (Cytoscape) \u2192 molecular docking (GLIDE) \u2192 MD simulations",
+        "model": "Network pharmacology (SuperPred, GeneCards, Cytoscape)",
         "inputs": [
-          "linalool structure (SMILES)",
-          "TNBC target genes",
-          "ChEMBL bioactivity data"
+          "Linalool structure",
+          "TNBC disease gene signatures"
         ],
         "outputs": [
-          "TNBC cell viability (%)",
-          "antioxidant/anti-inflammatory IC\u2085\u2080",
-          "34 common targets",
-          "docking scores (kcal/mol)",
-          "MD trajectories"
+          "Compound-target-pathway network",
+          "Hub genes, GO/KEGG enrichment"
+        ]
+      },
+      {
+        "model": "Molecular docking + MD simulations",
+        "inputs": [
+          "Linalool 3D structure",
+          "Target protein structures"
+        ],
+        "outputs": [
+          "Binding affinities",
+          "Conformational stability metrics"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Linalool modulates TNBC-related molecular pathways through multi-target mechanism involving TOP2A, COX-1, NRF2",
-        "result": "Partially supported; in silico evidence suggests pathway involvement, but in vitro cytotoxicity is modest and functional validation absent"
+        "hypothesis": "Linalool modulates TNBC-related pathways via TOP2A, COX-1, and NRF-2 engagement with favorable binding stability",
+        "result": "Supported; docking and MD confirm binding affinity and conformational stability, though functional validation pending"
       }
     ]
   },
@@ -251,27 +262,148 @@
     "projectPage": "https://www.nature.com/articles/s41598-026-71072-6",
     "journal": "Scientific Reports",
     "publishedAt": "2026-09-13",
-    "category": "Network Biology",
-    "task": "Explainable multimodal EEG-based depression detection using graph neural networks",
-    "key_results": "Hybrid GCN-GAT model achieves 94.8 \u00b1 7.5% accuracy and MCC 0.907 \u00b1 0.134 on multimodal EEG; integrated explainability shows high agreement between Integrated Gradients and GradientSHAP",
-    "comments": "Rigorous leakage-controlled evaluation and heterogeneity auditing strengthen findings; substantial cohort and modality dependence limits generalizability claims.",
+    "category": "Statistical Methods",
+    "task": "Explainable multimodal EEG-based depression detection with graph learning",
+    "key_results": "GCN-GAT hybrid model achieved 94.8 \u00b1 7.5% accuracy and MCC = 0.907 \u00b1 0.134; integrated leakage-controlled evaluation with multi-method explainability; substantial cohort and modality dependence observed",
+    "comments": "The methodological rigor (strict train-fold harmonization, multiple explainability methods) is commendable, but heterogeneity caution limits generalizability claims.",
     "model_io": [
       {
-        "model": "Hybrid GCN-GAT framework with subject-level population graph",
+        "model": "Subject-level multimodal GCN-GAT population graph",
         "inputs": [
-          "multimodal EEG features",
-          "inter-subject relationship graph"
+          "Multimodal EEG features",
+          "Inter-subject relationship graph"
         ],
         "outputs": [
-          "depression classification",
-          "feature importance via Integrated Gradients, GradientSHAP, Permutation Feature Importance"
+          "MDD classification",
+          "Explainability (Integrated Gradients, GradientSHAP, Permutation Feature Importance)"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Subject-level relational modeling with controlled multimodal contribution improves depression detection",
-        "result": "Confirmed; integrated framework achieves high accuracy with explicit heterogeneity assessment"
+        "hypothesis": "Subject-level relational modeling with leakage-controlled evaluation improves depression classification reliability",
+        "result": "Confirmed; 94.8% accuracy with controlled heterogeneity assessment"
+      },
+      {
+        "hypothesis": "Dataset harmonization reduces linear but not nonlinear dataset-specific structure",
+        "result": "Confirmed; train-fitted harmonization attenuated linear separability but nonlinear structure remained"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41598-026-71076-2",
+    "source": "computational-biology",
+    "id": "10.1038/s41598-026-71076-2",
+    "title": "GCCA-trans: a hybrid segmentation network with guided criss-cross attention for early-stage head and neck tumors in CT images",
+    "projectPage": "https://www.nature.com/articles/s41598-026-71076-2",
+    "journal": "Scientific Reports",
+    "publishedAt": "2026-09-13",
+    "category": "Structural Prediction",
+    "task": "Early-stage head-and-neck tumor segmentation via CNN-Transformer hybrid",
+    "key_results": "GCCA-Trans with guided cyclic cross-attention and squeeze-enhanced axial attention achieved consistent improvements over state-of-the-art on ES-HNT and SegRap2023 datasets; addresses small, low-contrast lesion segmentation",
+    "comments": "Limited dataset size (138 patients) and lack of quantitative segmentation metrics (Dice, IoU) in abstract hinder independent assessment of performance gains.",
+    "model_io": [
+      {
+        "model": "GCCA-Trans (CNN-Transformer with Guided Criss-Cross Attention)",
+        "inputs": [
+          "Contrast-enhanced CT scans"
+        ],
+        "outputs": [
+          "Early-stage HNT segmentation masks"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Guided cyclic cross-attention at skip connections enhances small tumor region representation in hybrid CNN-Transformer models",
+        "result": "Confirmed; GCCA-Trans outperformed baselines on small, low-contrast lesions"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41598-026-71167-0",
+    "source": "computational-biology",
+    "id": "10.1038/s41598-026-71167-0",
+    "title": "Molecular targeting of DNA metabolism by brown algae metabolites in Mycobacterium chelonae: computational analysis via DFT and MD simulations",
+    "projectPage": "https://www.nature.com/articles/s41598-026-71167-0",
+    "journal": "Scientific Reports",
+    "publishedAt": "2026-09-13",
+    "category": "Structural Prediction",
+    "task": "Structure-based virtual screening of brown algae metabolites against Mycobacterium chelonae XTP pyrophosphatase",
+    "key_results": "Glide screening of 1200 Phaeophyceae metabolites identified 10 candidates (binding affinity -7.662 to -6.7 kcal/mol); CMNPD27817 passed ADMET filtering; DFT confirmed electronic stability and charge-transfer; MD simulations showed sustained ligand-protein association in hydrophobic pocket",
+    "comments": "Rigorous computational pipeline but absence of experimental binding or antimicrobial validation limits translational significance.",
+    "model_io": [
+      {
+        "model": "Molecular docking (Glide) + ADMET filtering",
+        "inputs": [
+          "1200 Phaeophyceae metabolites",
+          "M. chelonae XTP pyrophosphatase protein structure"
+        ],
+        "outputs": [
+          "Ranked binding affinities",
+          "ADMET compliance annotations"
+        ]
+      },
+      {
+        "model": "Density Functional Theory (DFT) analysis",
+        "inputs": [
+          "Top candidate structures (CMNPD27817)"
+        ],
+        "outputs": [
+          "Electronic stability",
+          "Charge-transfer properties"
+        ]
+      },
+      {
+        "model": "Molecular Dynamics simulations",
+        "inputs": [
+          "Ligand-protein complex"
+        ],
+        "outputs": [
+          "Binding stability metrics",
+          "Interaction trajectory"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Brown algae metabolites can selectively inhibit M. chelonae XTP pyrophosphatase with favorable ADMET and binding stability",
+        "result": "Partially supported; CMNPD27817 identified as lead candidate with promising computational metrics, but experimental validation required"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41598-026-71244-4",
+    "source": "computational-biology",
+    "id": "10.1038/s41598-026-71244-4",
+    "title": "Robust multi-label ECG classification: a deep learning framework for concurrent arrhythmias with clinical generalizability",
+    "projectPage": "https://www.nature.com/articles/s41598-026-71244-4",
+    "journal": "Scientific Reports",
+    "publishedAt": "2026-09-13",
+    "category": "Statistical Methods",
+    "task": "Multi-label ECG arrhythmia classification with interpretability",
+    "key_results": "ResCGT-Net achieved F1 = 0.8226 on CPSC 2018; gender-stratified analysis showed females with higher arrhythmic signal (F1: 0.8209 vs. 0.7265, p<0.01); Transformer attention provides clinically relevant segment highlighting",
+    "comments": "The sex-stratified validation is clinically valuable but the causal basis (biological vs. diagnostic bias) remains unclear.",
+    "model_io": [
+      {
+        "model": "ResCGT-Net (CNN-BiGRU-Transformer with residual connections)",
+        "inputs": [
+          "Single-lead ECG signal"
+        ],
+        "outputs": [
+          "Multi-label arrhythmia classifications",
+          "Attention weights for interpretability"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Combining CNN-extracted features, temporal BiGRU, and Transformer attention improves multi-label classification and interpretability",
+        "result": "Confirmed; achieved state-of-the-art F1 with diagnostically relevant attention patterns"
+      },
+      {
+        "hypothesis": "Females exhibit more pronounced arrhythmic ECG features than males",
+        "result": "Confirmed in dataset (p<0.01); suggests sex-aware diagnostic thresholds may be warranted"
       }
     ]
   },
@@ -284,26 +416,25 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-09-13",
     "category": "Statistical Methods",
-    "task": "Parameter-efficient fine-tuning strategies for ECG foundation model generalization",
-    "key_results": "Selective PEFT outperforms full fine-tuning on out-of-domain ECG data; optimal strategy depends on scenario-specific characteristics",
-    "comments": "Addresses practical overfitting risk in foundation models with limited downstream data, though comparative gains appear modest on in-domain tasks.",
+    "task": "Parameter-efficient fine-tuning strategies for ECG foundation models",
+    "key_results": "Selective PEFT outperforms full fine-tuning on out-of-domain data; partial fine-tuning and BitFit showed superior generalization across multiple downstream ECG tasks",
+    "comments": "The study highlights an often-overlooked aspect of transfer learning\u2014that architectural adaptation strategy matters as much as model capacity for limited-data domains.",
     "model_io": [
       {
-        "model": "Self-DANA ECG foundation model with selective PEFT strategies (partial fine-tuning, BitFit, LayerNorm tuning, linear probing)",
+        "model": "Self-DANA foundation model with PEFT variants",
         "inputs": [
-          "ECG signals",
-          "downstream task labels"
+          "ECG signals"
         ],
         "outputs": [
-          "classification predictions",
-          "generalization metrics on in-domain and out-of-domain data"
+          "Disease classifications",
+          "Generalization metrics (in-domain and out-of-domain)"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Selective PEFT reduces overfitting compared to full fine-tuning",
-        "result": "Confirmed; PEFT improves generalization especially on out-of-domain ECG data"
+        "hypothesis": "Selective PEFT reduces overfitting compared to full fine-tuning on limited ECG data",
+        "result": "Confirmed; selective PEFT improved out-of-domain generalization"
       }
     ]
   },
@@ -316,26 +447,57 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-09-13",
     "category": "Statistical Methods",
-    "task": "Inter-patient ECG beat classification on raw 1-lead signal without handcrafted feature extraction",
-    "key_results": "SVM classifier on 64 raw ECG samples + RR interval achieves 90.8% overall accuracy (inter-patient DS1/DS2 evaluation); normal beats F1 = 0.95, ventricular ectopic F1 = 0.73; model size 680 KB, inference latency 0.297 ms per beat on CPU",
-    "comments": "Practical edge-device implementation with minimal preprocessing; supraventricular ectopic beat misclassification consistent with literature, but clinical utility for arrhythmia screening not quantified.",
+    "task": "Minimalist 1-lead ECG beat classification for resource-constrained edge devices",
+    "key_results": "SVM on compressed raw ECG (64 samples/beat + RR interval) achieved 90.8% inter-patient accuracy on AAMI 5-class; F1 = 0.95 (normal), 0.73 (ventricular ectopic); model size 680 KB, inference latency 0.297 ms/beat",
+    "comments": "Impressive resource efficiency, but inter-patient evaluation inherently easier than temporal-prospective validation; supraventricular ectopic beat misclassification remains a clinical limitation.",
     "model_io": [
       {
-        "model": "SVM (RBF kernel) trained on compressed raw ECG beats (64 samples) + strictly causal RR interval values",
+        "model": "Support Vector Machine (RBF kernel)",
         "inputs": [
-          "1-lead ECG signal (MIT-BIH), R-peak detected beat segments"
+          "Compressed raw ECG beat segment (64 samples)",
+          "Causal RR interval"
         ],
         "outputs": [
-          "AAMI beat class (5 classes: N, S, V, F, Q)",
-          "overall accuracy",
-          "per-class F1-scores"
+          "AAMI 5-class beat classification"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Minimal raw ECG samples and beat-timing information suffice for inter-patient ventricular ectopic beat detection without handcrafted morphological features",
-        "result": "Confirmed; 90.8% inter-patient accuracy achieved with 64 samples/beat, demonstrating sufficiency of local R-peak vicinity and RR intervals"
+        "hypothesis": "Raw ECG samples near R-peak plus beat-timing information sufficient for reliable inter-patient ventricular ectopic detection without handcrafted features",
+        "result": "Confirmed; 90.8% accuracy without morphological feature engineering on MIT-BIH dataset"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41598-026-71518-x",
+    "source": "computational-biology",
+    "id": "10.1038/s41598-026-71518-x",
+    "title": "Quality and reliability of cancer pain management information on short-video platforms in China: a cross-sectional content analysis",
+    "projectPage": "https://www.nature.com/articles/s41598-026-71518-x",
+    "journal": "Scientific Reports",
+    "publishedAt": "2026-09-13",
+    "category": "Other",
+    "task": "Quality and reliability assessment of cancer pain management information on Chinese short-video platforms",
+    "key_results": "194 videos analyzed (JAMA median = 3.0, mDISCERN = 2.0, GQS = 3.0 indicating moderate quality); Douyin videos showed significantly higher engagement (median likes 179 vs. 13, p<0.001) than Red Note; weak/no correlation between quality scores and engagement; medical professionals authored 80.4%",
+    "comments": "Important critique of digital health misinformation, but the disconnect between high uploader credentials and moderate quality scores deserves deeper investigation of content accuracy mechanisms.",
+    "model_io": [
+      {
+        "model": "Content quality assessment framework",
+        "inputs": [
+          "Short-video cancer pain content",
+          "JAMA/mDISCERN/GQS criteria"
+        ],
+        "outputs": [
+          "Quality scores",
+          "Engagement metrics (likes, comments, shares)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Higher-quality cancer pain information correlates with greater user engagement on short-video platforms",
+        "result": "Rejected; weak/no correlation between JAMA/mDISCERN scores and engagement; GQS showed only weak positive correlation"
       }
     ]
   },
@@ -347,29 +509,38 @@
     "projectPage": "https://www.nature.com/articles/s41598-026-71590-3",
     "journal": "Scientific Reports",
     "publishedAt": "2026-09-13",
-    "category": "Genomics",
-    "task": "Integrative systems genetics identification of cryopreservation-sensitive genes in human sperm",
-    "key_results": "AKAP4 identified as central hub in short-term cryostress network; RT-qPCR confirms significant AKAP4 transcript reduction post-cryopreservation; network analysis reveals cryostress-responsive pathways in cytoskeletal organization, phosphorylation signaling, proteostasis, and DNA repair; AKAP4 shows purifying selection and mammalian conservation",
-    "comments": "Well-integrated multi-omics approach (transcriptomics, network modeling, population genetics, structural annotation) identifies biologically plausible hub gene; functional validation of AKAP4 involvement in cryoinjury remains pending.",
+    "category": "Network Biology",
+    "task": "Systems-level identification of cryopreservation-sensitive genes and networks in human sperm",
+    "key_results": "AKAP4 identified as central hub gene in short-term cryostress network; transcript abundance significantly reduced post-cryopreservation; AKAP4 shows evolutionary constraint, mammalian conservation, testis-specific enrichment, and functional connectivity to flagellar/cAMP-PKA motility pathways",
+    "comments": "Integrative multi-omics approach is rigorous, but causal role of AKAP4 downregulation in cryoinjury requires functional validation.",
     "model_io": [
       {
-        "model": "Transcriptomic analysis (GSE225320) \u2192 protein-protein interaction network \u2192 co-expression analysis \u2192 population genetics \u2192 comparative genomics",
+        "model": "Transcriptomics + network analysis (protein-protein interaction, co-expression)",
         "inputs": [
-          "human sperm RNA-seq (fresh vs. cryopreserved)",
-          "publicly available transcriptomic and proteomic datasets"
+          "RNA-seq from cryopreserved sperm (GSE225320)",
+          "Independent transcriptomic/proteomic datasets"
         ],
         "outputs": [
-          "AKAP4 transcript abundance",
-          "cryostress-responsive gene networks",
-          "hub gene identification",
-          "phylogenetic conservation scores"
+          "Cryostress-responsive gene networks",
+          "Hub gene identification (AKAP4)"
+        ]
+      },
+      {
+        "model": "Population genetics + comparative genomics",
+        "inputs": [
+          "Human AKAP4 sequence",
+          "Mammalian orthologs"
+        ],
+        "outputs": [
+          "Purifying selection metrics",
+          "Conservation/constraint annotations"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "AKAP4 is a network hub and cryopreservation-sensitive biomarker for sperm motility pathways",
-        "result": "Supported; AKAP4 downregulated post-cryopreservation, functionally connected to flagellar architecture and cAMP/PKA signaling, evolutionarily conserved under purifying selection"
+        "hypothesis": "AKAP4 is a central regulatory hub in cryostress response networks and evolutionarily constrained",
+        "result": "Confirmed; AKAP4 identified as hub with strong purifying selection and mammalian conservation"
       }
     ]
   },
@@ -382,28 +553,36 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-09-13",
     "category": "Statistical Methods",
-    "task": "Machine learning workflow for prioritizing selective CDK2 kinase inhibitors",
-    "key_results": "Extra Trees models trained on CDK1/2/4/6/7/9 bioactivity data (7,067 records, 4,879 unique compounds); CDK2 model MAE = 0.523, R\u00b2 = 0.607; predicted CDK2 selectivity margin enriches CDK2-biased compounds with ROC-AUC 0.921 (retrospective), 0.888 \u00b1 0.061 (scaffold held-out); MM-GBSA rescoring identifies one compound with convergent CDK2 preference",
-    "comments": "Well-designed selectivity-aware pipeline combining machine learning, chemoinformatics, and molecular modeling; modest R\u00b2 suggests predictions require downstream validation.",
+    "task": "Selectivity-aware machine learning for CDK2-biased kinase inhibitor prioritization",
+    "key_results": "Extra Trees models trained on 4,879 compounds achieved CDK2 model MAE = 0.523, R\u00b2 = 0.607; predicted selectivity margin (ROC-AUC = 0.921) outperformed potency alone for CDK2-bias enrichment; MM-GBSA rescoring identified one compound with convergent CDK2 preference",
+    "comments": "The workflow is methodologically sound and reproducible, but lacks experimental validation of predicted CDK2-selective compounds.",
     "model_io": [
       {
-        "model": "Extra Trees multi-target kinase activity prediction (RDKit descriptors + Morgan fingerprints) \u2192 selectivity margin calculation \u2192 scaffold-guided generation \u2192 docking (SP/XP) \u2192 MM-GBSA rescoring",
+        "model": "Extra Trees multi-target activity predictors (RDKit + Morgan fingerprints)",
         "inputs": [
-          "ChEMBL CDK bioactivity data",
-          "SMILES strings"
+          "Compound structures",
+          "ChEMBL IC50 data (CDK1/2/4/6/7/9)"
         ],
         "outputs": [
-          "predicted IC50 (CDK2, CDK1/4/6/7/9)",
-          "selectivity margin",
-          "221 CDK2-biased candidates",
-          "binding affinity scores (kcal/mol)"
+          "CDK2 potency predictions",
+          "CDK selectivity margins"
+        ]
+      },
+      {
+        "model": "Molecular docking + MM-GBSA rescoring",
+        "inputs": [
+          "Generated sulfonamide analogs"
+        ],
+        "outputs": [
+          "Docking poses",
+          "Binding energy predictions"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Predicted selectivity margin better enriches CDK2-biased compounds than predicted potency alone",
-        "result": "Confirmed; selectivity-aware workflow identifies CDK2-favored analogs with high retroactive and cross-validated enrichment"
+        "hypothesis": "CDK2 selectivity margin (predicted activity difference vs. off-targets) better identifies CDK2-biased compounds than potency alone",
+        "result": "Confirmed; selectivity margin recovered measured CDK2-bias more effectively (ROC-AUC 0.921 vs. lower for potency)"
       }
     ]
   },
@@ -416,26 +595,24 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-09-13",
     "category": "Algorithms",
-    "task": "Limited-angle tomographic reconstruction of thin-slab objects",
-    "key_results": "Iterative algorithms (SIRT, CGLS, ASD-POCS, ML-EM) improve contrast-to-noise under sparse LAT data; increasing scan angle most effective for ghosting reduction; trade-off between algorithmic sophistication and angular coverage",
-    "comments": "Comprehensive algorithmic review; the finding that increasing scan angle dominates over algorithmic choice underscores fundamental LAT limitations and provides practical guidance for industrial CT.",
+    "task": "Limited-angle tomography reconstruction via iterative algorithms",
+    "key_results": "IR algorithms (SART, CGLS, ASD-POCS, ML-EM) improve contrast-to-noise under sparse data; increasing scan angle most effective for artifact mitigation",
+    "comments": "Thorough algorithmic comparison (algebraic, least-squares, compressed-sensing, statistical); honest finding that expanding angular coverage remains best strategy.",
     "model_io": [
       {
-        "model": "IR algorithms: SIRT, CGLS, ASD-POCS, ML-EM",
+        "model": "SART, CGLS, ASD-POCS, ML-EM iterative reconstruction; FBP baseline",
         "inputs": [
-          "limited-angle sinogram data (thin-slab phantoms: printed circuit boards, aluminum disc)"
+          "limited-angle CT projections (thin-slab objects like PCBs)"
         ],
         "outputs": [
-          "reconstructed 3D volumes",
-          "contrast-to-noise metrics",
-          "artifact-spread functions"
+          "reconstructed cross-sections; contrast-to-noise and ghosting metrics"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Iterative reconstruction algorithms outperform filtered backprojection (FBP) in contrast-to-noise under sparse angular coverage",
-        "result": "IR algorithms improved performance; ML-EM and ASD-POCS reduced ghosting vs. FBP; increasing total scan angle was most effective mitigation"
+        "hypothesis": "Statistical and compressed-sensing IR methods reduce artifacts better than algebraic approaches",
+        "result": "Partially confirmed; ML-EM and ASD-POCS reduce ghosting vs FBP, but fundamental LAT limitation persists"
       }
     ]
   },
@@ -448,38 +625,24 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-09-13",
     "category": "Statistics/Probability",
-    "task": "Predicting emergency contraception utilization in Ethiopia via machine learning and explainable AI",
-    "key_results": "SMOTE + Logistic Regression best model (AUC-ROC 0.85, Recall 0.85, Precision 0.72) on 2,334 women (4.4% prevalence); emergency contraception awareness (heard_emergency) strongest predictor, followed by media exposure and health facility discussions; recent reproductive events linked to non-use",
-    "comments": "Excellent application of SMOTE for class imbalance and SHAP for interpretability in reproductive health; finding that knowledge gaps dominate over socioeconomic factors has strong policy implications.",
+    "task": "Emergency contraception utilization prediction and interpretability in Ethiopia",
+    "key_results": "Logistic Regression on SMOTE-balanced data: AUC-ROC 0.85, Recall 0.85, Precision 0.72; emergency contraception awareness strongest predictor, followed by media exposure and health facility counseling",
+    "comments": "Addresses class imbalance (4.4% prevalence) with SMOTE; SHAP interpretation reveals knowledge gaps over socioeconomic factors; actionable insights for targeted interventions.",
     "model_io": [
       {
-        "model": "Eight ML algorithms (Logistic Regression, decision trees, ensemble methods, etc.) with SMOTE balancing",
+        "model": "Eight ML algorithms (Logistic Regression, SVM, RF, GBM, etc.) on SMOTE-balanced PMA Ethiopia 2023 data",
         "inputs": [
-          "PMA Ethiopia 2023 survey data (2,334 women)",
-          "emergency contraception awareness",
-          "media exposure",
-          "health facility discussions",
-          "sociodemographic factors"
+          "2,334 women; past-year emergency contraception use, demographics, awareness, media exposure, health facility contact"
         ],
         "outputs": [
-          "past-year emergency contraception use predictions"
-        ]
-      },
-      {
-        "model": "SHAP explainability",
-        "inputs": [
-          "best model (Logistic Regression on SMOTE)"
-        ],
-        "outputs": [
-          "feature importance rankings",
-          "actionable intervention levers"
+          "EC use classification; SHAP feature importance; class imbalance addressed via SMOTE"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Knowledge (emergency contraception awareness) is a stronger predictor of use than socioeconomic or geographic factors; media exposure and quality health-system contact are key complementary drivers",
-        "result": "AUC-ROC 0.85 (Recall 0.85, Precision 0.72); emergency contraception awareness ranked first; media/health facility contact crucial; static demographics poor predictors"
+        "hypothesis": "Knowledge gaps are stronger predictors of EC non-use than socioeconomic/geographic factors",
+        "result": "Confirmed; EC awareness ranks first; media and health counseling secondary drivers; static demographics poor predictors"
       }
     ]
   },
@@ -492,33 +655,24 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-09-13",
     "category": "ML Theory",
-    "task": "Prediction of CO\u2082 frosting temperature in natural gas mixtures",
-    "key_results": "GBDT with Bayesian Probability Improvement (BPI) hyperparameter tuning: R\u00b2 0.9903, MSE 1.75%; SHAP confirmed thermodynamic consistency (increased CO\u2082/pressure raise frosting T; methane lowers it)",
-    "comments": "Excellent integration of domain physics with ML interpretation; BPI's superiority over other hyperparameter methods is well-motivated for this narrowly-constrained regression task.",
+    "task": "CO\u2082 frosting temperature prediction in natural gas mixtures",
+    "key_results": "GBDT with Bayesian parameter improvement achieves R\u00b2=0.9903, MSE=1.75%; SHAP confirms thermodynamic consistency",
+    "comments": "Strong interpretable ML example; Bayesian tuning identified as superior to grid search; SHAP validation of physical plausibility is commendable.",
     "model_io": [
       {
-        "model": "GBDT with Bayesian Probability Improvement (BPI) tuning",
+        "model": "Gradient Boosting Decision Tree (GBDT) with Bayesian Probability Improvement hyperparameter tuning",
         "inputs": [
-          "CO\u2082 concentration, system pressure, methane concentration, 430 experimental data points"
+          "CO\u2082 concentration, CH\u2084 concentration, system pressure (430 experimental points)"
         ],
         "outputs": [
-          "CO\u2082 frosting temperature predictions"
-        ]
-      },
-      {
-        "model": "SHAP explainability",
-        "inputs": [
-          "GBDT model predictions"
-        ],
-        "outputs": [
-          "feature importance, thermodynamic consistency verification"
+          "frosting temperature predictions; SHAP feature importance"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "BPI hyperparameter tuning outperforms alternatives by balancing exploration and exploitation, preventing overfitting in cryogenic phase transition prediction",
-        "result": "GBDT-BPI achieved R\u00b2 0.9903 with thermodynamically-consistent SHAP attributions"
+        "hypothesis": "Hyperparameter-optimized GBDT predictions align with thermodynamic principles (partial pressure, fugacity)",
+        "result": "Confirmed; SHAP shows CO\u2082 and pressure increase frosting temp, CH\u2084 decreases it\u2014consistent with physical theory"
       }
     ]
   },
@@ -531,37 +685,24 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-09-13",
     "category": "ML Theory",
-    "task": "Thermal performance optimization of ZrO\u2082-nanofluid oscillating heat pipes via RSM and machine learning",
-    "key_results": "Response Surface Methodology + Box\u2013Behnken design on thermal resistance (TR) and heat transfer coefficient (HTC); KNN, SVM, XGBoost models compared; optimal conditions: ~2 wt.% ZrO\u2082, 80% fill ratio, 35 W heat input \u2192 TR 1.03\u00b0C/W, HTC ~222 W/m\u00b2\u00b7\u00b0C; heat input and fill ratio dominant factors",
-    "comments": "Well-structured experimental-ML pipeline; ANOVA identifies dominant factors, though the relatively weak effect of nanoparticle concentration (1\u20133 wt.%) may indicate limited scope of investigation.",
+    "task": "Thermal performance optimization of ZrO\u2082-nanofluid oscillating heat pipes",
+    "key_results": "Optimal condition: 2 wt.% ZrO\u2082, 80% fill ratio, 35 W input \u2192 min TR 1.03 \u00b0C/W, max HTC 222 W/m\u00b2\u00b7\u00b0C; ML models (KNN, SVM, XGBoost) validated via Box-Behnken RSM",
+    "comments": "Integration of RSM experimental design with ML prediction models (KNN, SVM, XGBoost); heat input and fill ratio dominant; nanoparticle concentration effect minor in range tested.",
     "model_io": [
       {
-        "model": "Box\u2013Behnken experimental design + RSM",
+        "model": "KNN, SVM, XGBoost thermal performance predictors trained on Box-Behnken design (430 points)",
         "inputs": [
-          "ZrO\u2082 concentration (1\u20133 wt.%)",
-          "fill ratio (40\u201380%)",
-          "heat input (15\u201335 W)"
+          "ZrO\u2082 concentration (1\u20133 wt.%), fill ratio (40\u201380%), heat input (15\u201335 W)"
         ],
         "outputs": [
-          "thermal resistance",
-          "heat transfer coefficient"
-        ]
-      },
-      {
-        "model": "ML models: KNN, SVM, XGBoost",
-        "inputs": [
-          "experimental thermal performance data"
-        ],
-        "outputs": [
-          "TR and HTC predictions",
-          "model performance comparison"
+          "thermal resistance, heat transfer coefficient; ANOVA and RSM sensitivity analysis"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Heat input and fill ratio are the dominant factors influencing OHP thermal performance; nanoparticle concentration has less significance",
-        "result": "ANOVA and RSM confirmed dominance of heat input and fill ratio; XGBoost outperformed KNN and SVM; optimum at 2 wt.% ZrO\u2082, 80% fill, 35 W"
+        "hypothesis": "ML models combined with RSM enable accurate prediction and optimization of nanofluid OHP thermal performance",
+        "result": "Confirmed; optimal settings identified; heat input and fill ratio confirmed as dominant parameters via ANOVA"
       }
     ]
   },
@@ -573,52 +714,25 @@
     "projectPage": "https://www.nature.com/articles/s41598-026-69867-8",
     "journal": "Scientific Reports",
     "publishedAt": "2026-09-13",
-    "category": "Other",
-    "task": "Multi-sensor hazard assessment and risk quantification in dynamic construction environments",
-    "key_results": "Credibility-weighted evidence fusion (Jousselme distance) achieves F1 0.862\u20130.842 vs. 0.743 (Dempster\u2013Shafer); spatial-semantic 3D model with occlusion correction: grade-agreement 0.848 vs. 0.749; adaptive warning reduces miss rate 0.251\u21920.168; end-to-end latency \u2264437 ms@500 nodes",
-    "comments": "Comprehensive real-time framework addressing conflicting sensor inputs and spatial reasoning; validation on reproducible benchmarks and simulated scenarios strengthens claims, though field deployment metrics (false positive rate, user trust) remain unmeasured.",
+    "category": "Algorithms",
+    "task": "Multi-sensor fusion for real-time hazard assessment in construction sites",
+    "key_results": "Jousselme-distance fusion achieves F1=0.862; spatial-semantic model (F1=0.848) outperforms non-spatial (0.749); adaptive warnings reduce miss rate 0.251\u21920.168",
+    "comments": "Novel credibility-weighted fusion and spatial occlusion modeling; end-to-end latency 437 ms at scale is practical; framework well-grounded in evidence theory.",
     "model_io": [
       {
-        "model": "Credibility-weighted evidence fusion (Jousselme distance)",
+        "model": "Jousselme-distance evidence fusion with spatial-semantic risk quantification and adaptive warning strategy",
         "inputs": [
-          "multi-modal sensor readings (conflicting evidence)"
+          "multi-modal sensor data; 3D building geometry; construction phase context"
         ],
         "outputs": [
-          "fused hazard probability"
-        ]
-      },
-      {
-        "model": "Spatial-semantic risk quantification with 3D building representation",
-        "inputs": [
-          "fused hazard probability",
-          "3D spatial geometry",
-          "component occlusion masks"
-        ],
-        "outputs": [
-          "spatially-grounded risk quantification"
-        ]
-      },
-      {
-        "model": "Adaptive 4-level warning strategy (exponential moving average self-correction)",
-        "inputs": [
-          "construction phase",
-          "temporal context",
-          "historical warning performance"
-        ],
-        "outputs": [
-          "dynamic warning thresholds",
-          "safety decisions"
+          "hazard risk grades; 4-level warnings (adapted by phase and history)"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Jousselme distance-based fusion outperforms classical Dempster\u2013Shafer under high-conflict sensor inputs",
-        "result": "Fusion F1 0.862\u20130.842 vs. 0.743; spatial model with occlusion correction achieved grade-agreement 0.848 vs. 0.749"
-      },
-      {
-        "hypothesis": "Adaptive warning thresholds reduce dynamic risk evolution miss rates compared to static thresholds",
-        "result": "Adaptive strategy reduced miss rate from 0.251 to 0.168"
+        "hypothesis": "Credibility-weighted fusion and spatial semantics improve robustness and sensitivity vs classical Dempster-Shafer",
+        "result": "Confirmed; fusion achieves F1 0.862 vs 0.743 baseline; spatial model grade-agreement 0.848 vs 0.749"
       }
     ]
   },
@@ -631,36 +745,24 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-09-13",
     "category": "ML Theory",
-    "task": "Automated agricultural equipment identification from images",
-    "key_results": "98.72% Top-1 accuracy on 18,742-image dataset of 12 machinery types; outperforms EfficientNet-B4, Vision Transformers, and AMTNet",
-    "comments": "The Mixture of Experts routing mechanism with Refined Addax metaheuristic optimization is well-motivated for agricultural imagery, though the 98.72% figure should be validated on held-out test sets separate from the public dataset partition.",
+    "task": "Agricultural equipment classification from images",
+    "key_results": "98.72% Top-1 accuracy on 12-class machinery dataset; outperforms EfficientNet-B4, Vision Transformers, AMTNet",
+    "comments": "Mixture of Experts with hyperparameter optimization shows strong results but comparison baselines lack full ablation details.",
     "model_io": [
       {
-        "model": "MoEffNet (Mixture of Experts + EfficientNet)",
+        "model": "MoEffNet (Mixture of Experts + EfficientNet + RAOA)",
         "inputs": [
-          "agricultural equipment images"
+          "agricultural machinery images (18,742 images, 12 classes)"
         ],
         "outputs": [
-          "equipment class predictions",
-          "Grad-CAM attention maps"
-        ]
-      },
-      {
-        "model": "Refined Addax Optimization Algorithm (RAOA)",
-        "inputs": [
-          "EfficientNet scaling coefficients",
-          "router temperature",
-          "learning rate"
-        ],
-        "outputs": [
-          "optimized hyperparameters"
+          "class predictions with 98.72% accuracy"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Dynamic routing via Mixture of Experts improves feature extraction for machinery subclasses under occlusion and environmental variability",
-        "result": "MoEffNet achieved 98.72% accuracy and outperformed baselines; Grad-CAM showed focus on discriminative machinery parts"
+        "hypothesis": "Mixture of Experts routing with optimized EfficientNet scaling improves intra-class and inter-class discrimination",
+        "result": "Confirmed; 98.72% Top-1 accuracy and Grad-CAM shows focus on discriminative parts vs background"
       }
     ]
   },
@@ -673,26 +775,54 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-09-13",
     "category": "Algorithms",
-    "task": "Adaptive protection setting optimization in distribution networks with overlapping fast-tripping zones",
-    "key_results": "Constrained multi-objective particle swarm optimization resolves protection mismatches; adaptive sectionalizing circuit-breaker placement addresses dead-zone problem via MATLAB validation",
-    "comments": "The framework is solid for power systems but lacks public benchmark datasets and comparative validation against heuristic or industrial baselines.",
+    "task": "Power system protection setting optimization under distributed generation",
+    "key_results": "Multi-objective PSO with K-means clustering resolves protection mismatches; circuit breaker repositioning strategy addresses 'dead zone' problem",
+    "comments": "Practical power-systems engineering contribution but lacks comparative benchmarks against traditional heuristics or other metaheuristics.",
     "model_io": [
       {
-        "model": "Constrained multi-objective backbone PSO + K-means clustering",
+        "model": "Constrained multi-objective PSO with K-means clustering; circuit breaker optimizer",
         "inputs": [
-          "fault clearing time, protection sensitivity, load impact constraints",
-          "upstream/downstream protection coordination"
+          "distribution network topology, fault scenarios, coordination constraints"
         ],
         "outputs": [
-          "optimal protection settings",
-          "sectionalizing breaker locations"
+          "optimal protection settings (thresholds, time delays); CB locations"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Multi-objective PSO with K-means clustering effectively resolves protection setting mismatches in overlapping fast-tripping zones",
-        "result": "Method adapted to different distribution network structures and enhanced protection system performance in complex environments"
+        "hypothesis": "Bio-inspired PSO combined with unsupervised learning can resolve protection setting conflicts in radial networks",
+        "result": "Confirmed in MATLAB simulation; method adapts to different topologies and improves overall protection performance"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41598-026-71082-4",
+    "source": "mathematics-and-computing",
+    "id": "10.1038/s41598-026-71082-4",
+    "title": "A semantic\u2013kinematic mapping framework for user-centered transfer-assist nursing robot design",
+    "projectPage": "https://www.nature.com/articles/s41598-026-71082-4",
+    "journal": "Scientific Reports",
+    "publishedAt": "2026-09-13",
+    "category": "Other",
+    "task": "Semantic-kinematic affective design framework for transfer-assist nursing robot",
+    "key_results": "9 core dynamic semantic descriptors, 140 keyframes extracted; FEA validates structural feasibility; user study indicates positive perceived qualities",
+    "comments": "Novel hybrid quantitative-qualitative design pathway; KJ clustering and OpenPose keypoint extraction innovative for affective robotics; user validation limited (preliminary study).",
+    "model_io": [
+      {
+        "model": "Semantic descriptor-motion mapping via OpenCV, OpenPose, AHP weighting",
+        "inputs": [
+          "user semantic expectations; motion video samples; upper-limb keypoint annotations"
+        ],
+        "outputs": [
+          "motion contours, design-element weights, robot concept CAD"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Dynamic semantic lexicon + kinematic mapping + AHP enables user-centered affective robot design",
+        "result": "Indicated in preliminary evaluation; structural feasibility confirmed but comparative validation of framework effectiveness lacking"
       }
     ]
   },
@@ -705,45 +835,24 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-09-13",
     "category": "ML Theory",
-    "task": "Multi-stage advanced persistent threat detection and malware attribution via Mamba state-space and Kolmogorov-Arnold networks",
-    "key_results": "MambaKAN-APT on DAPT 2020 network-flow benchmark (macro-F1 ~0.758 XGBoost vs. deep models competitive); CyberScienceLab malware attribution (balanced): MambaKAN macro-F1 ~0.959 vs. XGBoost n-gram ~0.954 (paired t p=0.59, statistically tied); SHAP identifies flow/opcode n-grams as discriminative",
-    "comments": "Methodologically transparent: authors report competitive XGBoost baselines and statistical ties rather than over-claiming sequential advantage. Combining Mamba SSMs and KAN is novel; the honest reporting of results (especially macro-F1 parity on balanced task) builds credibility.",
+    "task": "Multistage APT detection and malware attribution via Mamba SSMs and Kolmogorov-Arnold Networks",
+    "key_results": "MambaKAN-APT on CyberScienceLab: macro-F1 \u22480.959 (malware attribution); on DAPT 2020: macro-F1 0.758 (comparable to XGBoost 0.758); SHAP interpretability identifies discriminative features",
+    "comments": "Novel KAN+Mamba combination; transparent reporting of XGBoost competitiveness on tabular data; linear O(L) complexity of Mamba vs quadratic Transformers; reproducibility emphasis commendable.",
     "model_io": [
       {
-        "model": "MambaKAN-APT (Kolmogorov-Arnold Networks + Mamba SSM)",
+        "model": "MambaKAN-APT (KAN Feature Encoder + Mamba SSM blocks + dual-pooling head + Focal Loss)",
         "inputs": [
-          "DAPT 2020: network-flow 64 CICFlowMeter features across 5 attack phases",
-          "CyberScienceLab: disassembled opcode sequences from 5 threat-actor groups"
+          "DAPT 2020 network flows (86,691 flows, 64 CICFlowMeter features); CyberScienceLab APT malware (1,428 samples, opcode sequences)"
         ],
         "outputs": [
-          "APT attack phase detection",
-          "malware family attribution"
-        ]
-      },
-      {
-        "model": "SHAP explainability",
-        "inputs": [
-          "MambaKAN predictions"
-        ],
-        "outputs": [
-          "per-feature importance",
-          "discriminative opcode/flow statistics"
-        ]
-      },
-      {
-        "model": "Focal Loss for class imbalance (DAPT 2020: 73.5% normal traffic)",
-        "inputs": [
-          "class-imbalanced logits"
-        ],
-        "outputs": [
-          "reweighted classification loss"
+          "multi-stage attack phase detection; malware family attribution; SHAP feature importance"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Mamba SSM + KAN architecture with selective state-space recurrence and learnable B-spline activations models long-range temporal APT sequences with linear O(L) complexity",
-        "result": "DAPT 2020 macro-F1 competitive with XGBoost (0.758); CyberScienceLab macro-F1 ~0.959, statistically tied with XGBoost (p=0.59); SHAP identified flow and opcode n-grams as influential"
+        "hypothesis": "Selective state-space recurrence (Mamba) with learnable B-spline activations (KAN) capture sequential APT dependencies and nonlinear feature transforms",
+        "result": "Partially confirmed; macro-F1 0.959 on CyberScienceLab (sequential task), but statistically tied with XGBoost baseline on DAPT 2020 (tabular task)"
       }
     ]
   },
@@ -756,25 +865,24 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-09-13",
     "category": "ML Theory",
-    "task": "Well-log lithology classification under realistic deployment conditions",
-    "key_results": "Row-level validation F1-macro 0.81\u20130.93 overstates unseen-well reliability (LOWOCV: 0.31\u20130.45); per-well mean 0.187\u20130.245 on 12-class taxonomy; metric choice and well-level evaluation critical",
-    "comments": "This paper provides essential methodological guidance: the vast gap between row-level and well-level metrics exposes a common but problematic evaluation mismatch in deployed geoscience models.",
+    "task": "Well-log lithology classification with deployment-relevant validation",
+    "key_results": "Row-level F1 (0.81\u20130.93) vs leave-one-well-out F1 (0.31\u20130.45); per-well mean F1 0.187\u20130.245; metric choice impacts rankings",
+    "comments": "Critical work exposing validation mismatch between research and deployment; reveals fundamental reliability claims issue in geosciences ML.",
     "model_io": [
       {
-        "model": "Tree classifiers with context-aware and numeric features",
+        "model": "Decision tree variants (numeric baselines vs context-aware configs)",
         "inputs": [
-          "well-log curves from 118 wells (Norwegian Continental Shelf)"
+          "well-log curves from 118 wells on Norwegian Continental Shelf"
         ],
         "outputs": [
-          "lithology class predictions",
-          "per-well and per-class diagnostics"
+          "12-class lithology predictions under row-level vs LOWOCV splitting"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Row-level validation substantially overestimates field deployment generalization to unseen wells",
-        "result": "Leave-one-well-out F1-macro 0.31\u20130.45 vs. row-level 0.81\u20130.93; minority-class, mixed-lithology, and per-well failures persistent across configurations"
+        "hypothesis": "Row-level validation substantially overstates unseen-well reliability in lithology prediction",
+        "result": "Confirmed; F1-macro drops 0.50+ points under strict LOWOCV; persistent minority-class and mixed-lithology failures across wells"
       }
     ]
   },
@@ -786,39 +894,25 @@
     "projectPage": "https://www.nature.com/articles/s41598-026-71374-9",
     "journal": "Scientific Reports",
     "publishedAt": "2026-09-13",
-    "category": "Other",
-    "task": "Vibration serviceability assessment and mitigation of through-truss steel footbridges under pedestrian excitation",
-    "key_results": "Free-vibration calibration confirms numerical models; all vertical/longitudinal modes in critical range; under dense traffic, vertical acceleration >2.50 m/s\u00b2 (unacceptable) in all bridges; TMD achieves 83% vertical acceleration reduction for critical traffic class; frequency-detuned TMD yields 61\u201386% reduction across traffic classes",
-    "comments": "Rigorous experimental-numerical coupling with practical mitigation strategies; the frequency-detuned TMD design is a valuable engineering contribution for varying pedestrian masses.",
+    "category": "Algorithms",
+    "task": "Vibration serviceability assessment and mitigation of through-truss footbridges",
+    "key_results": "TMD reduces max vertical acceleration 83% for critical traffic; frequency-detuned TMD yields 61\u201386% reduction across traffic classes; pier stiffness modification addressed longitudinal modes",
+    "comments": "Well-executed structural dynamics work; experimental modal calibration strengthens FE models; practical mitigation strategy tested on real cases.",
     "model_io": [
       {
-        "model": "Finite element model (FEM) with experimental calibration",
+        "model": "FE models of steel through-truss footbridges with TMD and pier stiffness optimization",
         "inputs": [
-          "structural geometry",
-          "material properties",
-          "measured natural frequencies from free-vibration tests"
+          "pedestrian excitation loads; structural parameters; varying traffic densities"
         ],
         "outputs": [
-          "modal properties",
-          "maximum accelerations under pedestrian excitation"
-        ]
-      },
-      {
-        "model": "Tuned mass damper (TMD) and pier stiffness optimization",
-        "inputs": [
-          "critical pedestrian traffic class",
-          "varying pedestrian masses"
-        ],
-        "outputs": [
-          "optimized TMD parameters",
-          "maximum acceleration reduction (%)"
+          "natural frequencies, max accelerations, mitigation performance (% reduction)"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "TMD tuned to critical traffic class reduces maximum vertical acceleration by >80%; frequency-detuned TMD maintains 61\u201386% reduction across varying pedestrian masses",
-        "result": "Single-tuned TMD: 83% reduction for critical class; frequency-detuned TMD: 61\u201386% across all examined conditions"
+        "hypothesis": "Tuned mass dampers and pier stiffness modification mitigate vertical and longitudinal vibrations within service limits",
+        "result": "Confirmed; TMD achieves 83% reduction for critical class; frequency-detuned design maintains 61\u201386% across variable traffic"
       }
     ]
   },
@@ -831,24 +925,54 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-09-13",
     "category": "Statistics/Probability",
-    "task": "Comparative evaluation of machine learning methods for financial market forecasting",
-    "key_results": "Ensemble methods (RF, GBM) capture nonlinear dynamics better; Ridge/Lasso excel on stable, high-correlation markets; no single algorithm dominates across VIX, S&P 500, gold, NG-F, Brent-F",
-    "comments": "The finding of heterogeneous performance is sound but unsurprising; the paper would benefit from deeper analysis of which market properties (volatility clustering, regime switches) trigger method switching.",
+    "task": "Financial market forecasting with heterogeneous models",
+    "key_results": "Substantial performance heterogeneity across markets; Ridge/Lasso excel in stable markets; RF/GBM capture nonlinear dynamics",
+    "comments": "Honest analysis acknowledging no single winner; practical framework but lacks statistical significance testing across comparisons.",
     "model_io": [
       {
-        "model": "Ridge, Lasso, RF, Bagging, GBM",
+        "model": "Ridge, Lasso, Random Forest, Bagging, Gradient Boosting Machine",
         "inputs": [
-          "monthly financial time series (Jan 2000\u2013Jul 2025)"
+          "VIX, S&P500, gold prices, NG-F, Brent-F monthly data (2000-2025)"
         ],
         "outputs": [
-          "VIX, S&P 500, gold price, NG-F, Brent-F forecasts"
+          "volatility/price forecasts evaluated by MAE, MSE, R\u00b2"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Ensemble methods provide greater flexibility in nonlinear market interactions than linear regularized methods",
-        "result": "RF and GBM outperformed Ridge and Lasso on markets with complex dynamics; Ridge/Lasso dominated stable markets with high predictor correlation"
+        "hypothesis": "Model performance depends on interaction between algorithm characteristics and market structure",
+        "result": "Confirmed; ensemble methods dominate volatile nonlinear markets; linear models excel where predictors are correlated"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41598-026-71420-6",
+    "source": "mathematics-and-computing",
+    "id": "10.1038/s41598-026-71420-6",
+    "title": "LLM-guided headline rewriting for clickability enhancement without clickbait",
+    "projectPage": "https://www.nature.com/articles/s41598-026-71420-6",
+    "journal": "Scientific Reports",
+    "publishedAt": "2026-09-13",
+    "category": "ML Theory",
+    "task": "Headline rewriting for engagement without clickbait",
+    "key_results": "Dual-guide decoding achieves higher faithfulness and lower induced clickbait than DExperts and GeDi baselines; human study confirms improvements",
+    "comments": "Clever dual control mechanism (negative + positive guidance) addresses real editorial concern; framing clickbait as amplification rather than category is insightful.",
+    "model_io": [
+      {
+        "model": "LLM with clickbait scorer and engagement-attribute guide models",
+        "inputs": [
+          "neutral news headlines"
+        ],
+        "outputs": [
+          "rewritten headlines with controlled engagement attributes and bounded clickbait"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Two independent lightweight guides provide selective engagement strengthening while restraining clickbait",
+        "result": "Confirmed; ablation shows guides exert independent opposite effects; dual approach outperforms single-axis decoding methods"
       }
     ]
   },
@@ -861,28 +985,152 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-09-13",
     "category": "ML Theory",
-    "task": "Portfolio optimization with investor adoption willingness via Transformer",
-    "key_results": "TransAWP shows lower prediction errors, stronger explanatory power, and stable output vs. traditional models; balances return stability and psychological preferences on 2018\u20132023 multi-source financial data",
-    "comments": "Incorporating behavioral signals is pragmatic, but the paper lacks quantitative metrics (Sharpe ratio, max drawdown, out-of-sample returns) to validate claimed advantages over standard Markowitz or momentum baselines.",
+    "task": "Portfolio optimization integrating investor adoption behavior",
+    "key_results": "TransAWP achieves lower prediction errors, stronger explanatory power, stable outputs; captures market trends and risk adjustments",
+    "comments": "Behavior-driven adaptive weighting is conceptually sound but empirical results (2018\u20132023) lack quantitative performance metrics vs baselines.",
     "model_io": [
       {
         "model": "TransAWP (Transformer-based Adaptive Willingness Portfolio)",
         "inputs": [
-          "market price sequences",
-          "macroeconomic indicators",
-          "asset risk characteristics",
-          "investor willingness signals"
+          "market prices, macroeconomic indicators, asset risk characteristics, investor willingness signals"
         ],
         "outputs": [
-          "adaptive investment weights",
-          "portfolio predictions"
+          "dynamic portfolio weights with return stability"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Integrating investor adoption willingness into Transformer-based portfolio optimization improves both return prediction accuracy and risk-adjusted stability",
-        "result": "TransAWP demonstrated lower prediction errors and more stable output features; captures market trends and adapts to risk adjustments"
+        "hypothesis": "Transformer-based integration of market dynamics and behavioral signals improves portfolio robustness",
+        "result": "Indicated in evaluation but specific quantitative improvements vs traditional PO models not explicitly reported"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41598-026-71936-x",
+    "source": "mathematics-and-computing",
+    "id": "10.1038/s41598-026-71936-x",
+    "title": "Privacy-provisioned-permission-aware RAG in cloud using identity and access management, trust and large-language models (PPPARITL)",
+    "projectPage": "https://www.nature.com/articles/s41598-026-71936-x",
+    "journal": "Scientific Reports",
+    "publishedAt": "2026-09-13",
+    "category": "ML Theory",
+    "task": "Privacy-aware retrieval-augmented generation in cloud with IAM and trust",
+    "key_results": "PPPARITL achieves 95.84% authorization accuracy and reduced False Access Rate vs baselines; CKKS homomorphic encryption protects embeddings; trust-based permission filtering",
+    "comments": "Novel integration of RAG with IAM, homomorphic encryption, and trust scoring; DoS sanitization layer added; balances retrieval quality with access control but scalability to large KS unclear.",
+    "model_io": [
+      {
+        "model": "PPPARITL (RAG + CKKS encryption + RRAC gate + Trust scorer + LLM)",
+        "inputs": [
+          "user queries, IAM policies, ACL mappings, Knowledge Source (structured/unstructured), behavioral context"
+        ],
+        "outputs": [
+          "authorized privileged retrieval results; LLM reasoning with explainability; trust scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Homomorphic encryption + role-resource-action gates + trust scoring secure RAG without compromising retrieval relevance",
+        "result": "Confirmed; 95.84% authorization accuracy; trust-oriented permission filtering maintains explainability"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41598-026-70471-z",
+    "source": "physics",
+    "id": "10.1038/s41598-026-70471-z",
+    "title": "Probing sub-nanosecond timing properties of micron-scale transition edge sensors via a parallel SQUID-semiconductor readout scheme",
+    "projectPage": "https://www.nature.com/articles/s41598-026-70471-z",
+    "journal": "Scientific Reports",
+    "publishedAt": "2026-09-13",
+    "category": "Quantum",
+    "task": "Sub-nanosecond timing measurement of micron-scale transition edge sensors using parallel SQUID-semiconductor readout",
+    "key_results": "Achieved timing jitter below 200 ps (vs. several nanoseconds for conventional SQUID readout) under high-photon-number irradiation",
+    "comments": "Single-photon timing measurement remains unachieved, limiting immediate applicability to photon-number-resolving quantum state generation.",
+    "model_io": [
+      {
+        "model": "Parallel SQUID-HEMT readout system for micron-scale TES",
+        "inputs": [
+          "near-infrared laser irradiation (photon numbers)",
+          "TES biased near transition edge"
+        ],
+        "outputs": [
+          "energy measurement (SQUID)",
+          "timing measurement with sub-200 ps jitter (HEMT)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Parallel SQUID-semiconductor decoupling enables faster timing resolution than SQUID alone",
+        "result": "Timing jitter reduced to <200 ps; decoupling scheme allows independent energy and timing channels"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41598-026-70829-3",
+    "source": "physics",
+    "id": "10.1038/s41598-026-70829-3",
+    "title": "Detailed energy analysis of a structure coupled with linear absorber or nonlinear energy sink under seismic ground motion",
+    "projectPage": "https://www.nature.com/articles/s41598-026-70829-3",
+    "journal": "Scientific Reports",
+    "publishedAt": "2026-09-13",
+    "category": "Applied Physics",
+    "task": "Energy analysis of seismic-excited structures with linear or nonlinear vibration absorbers",
+    "key_results": "NES outperforms TMD for El Centro and Northridge earthquakes; TMD transfers more energy under Kobe earthquake; energy-based framework quantifies absorber performance under continuous seismic input",
+    "comments": "The comparison is earthquake-specific; results suggest absorber selection depends on ground motion characteristics rather than universal superiority of either approach.",
+    "model_io": [
+      {
+        "model": "9-story structure coupled to TMD or NES under seismic excitation",
+        "inputs": [
+          "ground acceleration time histories (Kobe, El Centro, Northridge)",
+          "structure mass/stiffness",
+          "absorber parameters (TMD damping or NES nonlinearity)"
+        ],
+        "outputs": [
+          "structural energy content",
+          "energy transfer ratio",
+          "energy dissipation by absorber"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Nonlinear energy sink outperforms tuned mass damper for certain earthquake ground motions",
+        "result": "NES superior for El Centro and Northridge; TMD superior for Kobe; earthquake type determines optimal absorber selection"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41598-026-71316-5",
+    "source": "physics",
+    "id": "10.1038/s41598-026-71316-5",
+    "title": "Magneto-inductive waveguiding using a step-defect line in a reconfigurable digital metasurface for wireless power transmission",
+    "projectPage": "https://www.nature.com/articles/s41598-026-71316-5",
+    "journal": "Scientific Reports",
+    "publishedAt": "2026-09-13",
+    "category": "Optics/Photonics",
+    "task": "Magneto-inductive waveguiding for wireless power transmission via reconfigurable metasurface",
+    "key_results": "Transmission coefficients S21 = 0.76 (1:1 ratio) and 0.4 (1:8 ratio); operates at 11 MHz and 13.56 MHz with sub-wavelength mechanism",
+    "comments": "The step-defect design effectively suppresses reflections, though absolute efficiency and power levels are not quantified in the abstract.",
+    "model_io": [
+      {
+        "model": "8\u00d78 reconfigurable digital metasurface with dual-resonance unit cells",
+        "inputs": [
+          "electromagnetic wave at 11-13.56 MHz",
+          "receiver position on metasurface"
+        ],
+        "outputs": [
+          "magneto-inductive wave propagation patterns",
+          "transmission coefficient S21"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Step-defect configuration reduces impedance mismatch and reflection losses",
+        "result": "Experimentally validated; enhanced transmission efficiency at arbitrary receiver positions"
       }
     ]
   },
@@ -895,32 +1143,27 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-09-13",
     "category": "Optics/Photonics",
-    "task": "Development of narrow-band green phosphors with tunable decay dynamics",
-    "key_results": "Green emission at 548 nm with 83.5% color purity; maximum intensity at 7 mol% Ho3+ doping concentration",
-    "comments": "The work successfully incorporates Ho3+ into a garnet lattice without phase impurities, but the paper focuses on synthesis and characterization rather than demonstrating novel decay dynamics tuning mechanisms.",
+    "task": "Development of Ho\u00b3\u207a-doped germanium garnet narrow-band green phosphor with tunable decay dynamics",
+    "key_results": "Intense green emission at 548 nm (color purity 83.5%) with maximum intensity at 7 mol% Ho\u00b3\u207a doping; near-infrared band at 758 nm also observed",
+    "comments": "The narrow-band emission and tunable decay properties are promising for display applications, though specific decay time constants are not provided in the abstract.",
     "model_io": [
       {
-        "model": "Ho3+-doped NaY2Ga2InGe2O12 garnet phosphor",
+        "model": "Ho\u00b3\u207a-doped NaY\u2082Ga\u2082InGe\u2082O\u2081\u2082 garnet synthesized via solid-state reaction",
         "inputs": [
-          "Ho3+ dopant ions",
-          "453 nm blue light excitation"
+          "453 nm blue light excitation",
+          "varying Ho\u00b3\u207a doping concentration (mol%)"
         ],
         "outputs": [
-          "Green emission at 548 nm",
-          "Near-infrared emission at 758 nm",
-          "Luminescence intensity",
-          "Color purity (83.5%)"
+          "green emission intensity at 548 nm",
+          "near-IR emission at 758 nm",
+          "color purity"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Ho3+ ions substitute at dodecahedral Y3+ sites without lattice distortion",
-        "result": "Confirmed by X-ray diffraction and X-ray photoelectron spectroscopy"
-      },
-      {
-        "hypothesis": "Green emission originates from 5S2/5F4 \u2192 5I8 transition of Ho3+",
-        "result": "Supported by observed emission at 548 nm under 453 nm excitation"
+        "hypothesis": "Ho\u00b3\u207a successfully substitutes at Y\u00b3\u207a dodecahedral sites without lattice distortion or impurity phases",
+        "result": "Confirmed by XRD and XPS; optimal doping at 7 mol% yields maximum green emission"
       }
     ]
   }
