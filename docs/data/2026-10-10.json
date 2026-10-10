@@ -8,26 +8,40 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-10-10",
     "category": "Statistical Methods",
-    "task": "Differential diagnosis of asthma vs COPD using lung sound analysis",
-    "key_results": "95.75% classification accuracy on pooled dataset (AIIMS Raipur + ICBHI 2017 + KAUH); successfully distinguished asthma and COPD from healthy controls using acoustic biomarkers",
-    "comments": "Subject-wise train/test split appropriately prevents data leakage, but external validation on truly independent cohorts would strengthen clinical applicability claims.",
+    "task": "Differential diagnosis of asthma and COPD from lung sound recordings",
+    "key_results": "95.75% classification accuracy on pooled dataset combining AIIMS Raipur, ICBHI 2017, and KAUH datasets",
+    "comments": "The subject-wise train/test split prevents recording-level leakage, though external validation on truly independent cohorts would strengthen clinical applicability claims.",
     "model_io": [
       {
         "model": "AVMD-ST (Attention-Variational Mode Decomposition Spectrogram Transformer)",
         "inputs": [
-          "lung sound recordings",
-          "respiratory audio signals"
+          "lung sound recordings (audio)"
         ],
         "outputs": [
           "disease classification (healthy/asthma/COPD)",
           "classification probability"
         ]
+      },
+      {
+        "model": "FIR filter + VMD + Mel-spectrogram + AST",
+        "inputs": [
+          "raw respiratory sound signals"
+        ],
+        "outputs": [
+          "intrinsic mode functions (IMFs)",
+          "Mel-spectrograms",
+          "attention-weighted features"
+        ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "FIR-filtered VMD-derived intrinsic mode functions can isolate clinically significant respiratory features (wheezes, crackles) for improved classification",
-        "result": "Achieved 95.75% accuracy, demonstrating effective feature isolation and Transformer-based temporal dependency capture"
+        "hypothesis": "VMD-derived IMFs can isolate clinically significant acoustic components (wheezes, crackles) for improved disease discrimination",
+        "result": "Achieved 95.75% accuracy, demonstrating effective separation of COPD and asthma phenotypes"
+      },
+      {
+        "hypothesis": "Transformer self-attention can capture long-range temporal dependencies in non-stationary respiratory sounds",
+        "result": "Model successfully detected subtle acoustic variations across three disease states"
       }
     ]
   },
@@ -40,23 +54,12 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-10-10",
     "category": "Proteomics",
-    "task": "Predicting Long COVID risk using acute phase blood proteins across cohorts and platforms",
-    "key_results": "FGF2 and PRDX3 proteins did not reliably improve prediction beyond age and sex; optimism-corrected Brier score difference was +0.00342 (95% CI: -0.00608 to +0.02834) in Su cohort and +0.01093 (-0.01721 to +0.03882) in transferred Zurich model",
-    "comments": "The finding of negligible predictive gain combined with platform-dependent protein standardization highlights critical challenges in cross-cohort proteomic model translation for clinical risk prediction.",
+    "task": "Prediction of Long COVID risk from acute-phase blood proteins",
+    "key_results": "FGF2 and PRDX3 added minimal predictive value (Brier difference +0.00342 in Su cohort, +0.01093 when transferred to Zurich); both models overpredicted risk in external cohort",
+    "comments": "The null result is clinically important\u2014protein standardization dependence on target cohort and lack of cross-platform/cross-cohort generalization suggest these biomarkers are not suitable for clinical deployment without substantial methodological improvements.",
     "model_io": [
       {
-        "model": "Predictive model C0 (baseline)",
-        "inputs": [
-          "age",
-          "sex"
-        ],
-        "outputs": [
-          "Long COVID risk prediction",
-          "Brier score"
-        ]
-      },
-      {
-        "model": "Predictive model C2 (protein-augmented)",
+        "model": "Logistic regression for Long COVID prediction",
         "inputs": [
           "age",
           "sex",
@@ -64,19 +67,19 @@
           "PRDX3 protein level"
         ],
         "outputs": [
-          "Long COVID risk prediction",
+          "Long COVID risk probability",
           "Brier score"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Acute-phase FGF2 and PRDX3 levels improve Long COVID prediction beyond demographic factors",
-        "result": "No reliable improvement; inconclusive and inconsistent performance across Su and Zurich cohorts with overlapping confidence intervals"
+        "hypothesis": "FGF2 and PRDX3 measured during acute COVID-19 improve Long COVID prediction beyond age and sex",
+        "result": "No reliable improvement; optimism-corrected Brier difference inconclusive with 95% confidence intervals crossing zero"
       },
       {
-        "hypothesis": "Fixed protein-assay mappings and within-cohort standardization enable cross-platform model transfer",
-        "result": "Failed; transferred models overpredicted risk in Zurich and standardization pipeline was deemed not ready for individualized patient prediction"
+        "hypothesis": "Protein model trained on Su/INCOV cohort transfers to Zurich without outcome-based refitting",
+        "result": "Model failed to transfer; overpredicted Zurich risk and intercept updating did not resolve inconclusive differences"
       }
     ]
   },
@@ -89,35 +92,37 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-10-10",
     "category": "Algorithms",
-    "task": "Antenna design optimization for WBAN biomedical applications using surrogate modelling and multi-objective optimization",
-    "key_results": "Compact antenna (0.2968\u03bb\u2080mm \u00d7 0.318\u03bb\u2080mm) at 3.18 GHz with impedance bandwidth 3.10\u20133.285 GHz; excellent agreement between simulated and fabricated results",
-    "comments": "Hybrid ANN+Bayesian approach is systematic; comparison of NSGA-II, MOPSO, GWO, and BO+GPR provides useful guidance, though specific performance metrics across optimizers are not quantified.",
+    "task": "Antenna design optimization for WBAN biomedical applications at 3.18 GHz",
+    "key_results": "Compact antenna 0.2968\u03bb\u2080 \u00d7 0.318\u03bb\u2080 mm with impedance bandwidth 3.10\u20133.285 GHz; excellent agreement between simulated and fabricated results",
+    "comments": "Multi-stage hybrid approach (regression + ANN + four optimization algorithms) is thorough but computationally intensive; practical validation on FR-4 substrate strengthens claims.",
     "model_io": [
       {
-        "model": "Non-linear regression with correlation analysis (Pearson/Spearman)",
+        "model": "Non-linear regression with Pearson/Spearman correlation analysis",
         "inputs": [
           "50 patch design samples"
         ],
         "outputs": [
-          "surrogate model for reflection coefficient",
-          "featured design parameters"
+          "surrogate model for reflection coefficient; feature-selected design parameters"
         ]
       },
       {
-        "model": "ANN + optimization (NSGA-II, MOPSO, GWO, BO+GPR)",
+        "model": "ANN with NSGA-II, MOPSO, GWO, BO+GPR optimization",
         "inputs": [
-          "design parameter space"
+          "design parameters (selected via regression)"
         ],
         "outputs": [
-          "optimized DGS structure",
-          "antenna impedance and resonance"
+          "optimized Defected Ground Structure (DGS) antenna design"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Bayesian optimization with Gaussian process regression outperforms evolutionary algorithms for antenna DGS tuning",
-        "result": "Achieved optimized compact design suitable for WBAN; surrogate modelling reduced computational cost vs. full EM simulation"
+        "hypothesis": "Non-linear regression with correlation filtering improves surrogate model accuracy over standard techniques",
+        "result": "Surrogate modelling demonstrated on 50 samples; selected most significant design parameters"
+      },
+      {
+        "hypothesis": "Bayesian optimization with GPR outperforms evolutionary methods (NSGA-II, MOPSO, GWO) for antenna DGS optimization",
+        "result": "BO+GPR included in comparison but relative performance not quantitatively detailed in abstract"
       }
     ]
   },
@@ -130,46 +135,47 @@
     "journal": "Nature Communications",
     "publishedAt": "2026-10-10",
     "category": "Quantum",
-    "task": "Enhancing superconducting qubit fidelity via nonreciprocal diodes in twisted materials",
+    "task": "Design nonreciprocal superconducting diodes to reduce back-scattering noise in qubits",
     "key_results": [
-      "1\u00b0 twist in NbSe2 achieves 27.6% diode efficiency enhancement over pristine devices",
-      "Intermediate efficiency (27.6%) demonstrated as optimal for preserving qubit anharmonicity and two-level system stability"
+      "27.6% diode efficiency achieved with 1\u00b0 twist in NbSe2",
+      "Sub-maximal rectification shown to be optimal for preserving qubit anharmonicity and fidelity"
     ],
-    "comments": "Counter-intuitive finding that sub-optimal rectification outperforms maximal efficiency for quantum information processing; practical design guidance for twisted superconductor applications.",
+    "comments": "Counter-intuitive finding that perfect rectification degrades quantum information storage; suggests sweet spot exists between noise suppression and qubit coherence.",
     "model_io": [
       {
-        "model": "Twisted NbSe2 quantum diode under magnetic fields",
+        "model": "Twisted NbSe2 superconductor under magnetic fields",
         "inputs": [
           "in-plane magnetic field",
           "out-of-plane magnetic field",
           "twist angle (1\u00b0)"
         ],
         "outputs": [
-          "rectification efficiency (27.6%)",
-          "back-scattering suppression",
-          "qubit fidelity metric"
+          "diode efficiency (27.6%)",
+          "nonreciprocal signal propagation",
+          "back-scattering suppression"
         ]
       },
       {
-        "model": "Quantum simulation",
+        "model": "Quantum simulations of anharmonic qubits",
         "inputs": [
-          "diode efficiency values",
-          "anharmonicity parameter"
+          "diode efficiency parameter",
+          "environmental noise coupling strength"
         ],
         "outputs": [
-          "qubit coherence preservation",
-          "two-level system stability"
+          "qubit fidelity",
+          "two-level system stability",
+          "anharmonicity preservation"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Maximal rectification efficiency improves qubit fidelity",
-        "result": "Rejected; intermediate efficiency proves superior for preserving anharmonicity and two-level dynamics"
+        "hypothesis": "Maximal rectification efficiency improves qubit performance",
+        "result": "Rejected; intermediate efficiency (27.6%) is optimal for fidelity"
       },
       {
-        "hypothesis": "1\u00b0 twist enhances diode efficiency in NbSe2",
-        "result": "Confirmed; 27.6% efficiency improvement achieved"
+        "hypothesis": "Twist angle enhances nonreciprocal response in NbSe2",
+        "result": "Confirmed; 1\u00b0 twist yields measurable efficiency enhancement"
       }
     ]
   }
