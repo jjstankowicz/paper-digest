@@ -657694,5 +657694,590 @@
         "result": "Verified; achieves minimal circuit footprint with competitive power"
       }
     ]
+  },
+  "hf:2610.25525": {
+    "category": "Agents/RL",
+    "task": "Early stopping for coding agents via failure prediction",
+    "key_results": "4.5% cost reduction on SWE-bench Verified while preserving 99% of successful runs; up to 31% savings on Pro subset; 1-2 orders of magnitude lower cost per check than general-purpose judges",
+    "comments": "Elegant approach leveraging outcome supervision to train a lightweight external monitor, though the 1% failure rate on successful runs may be problematic for critical applications.",
+    "model_io": [
+      {
+        "model": "StopLoss (fine-tuned language model monitor)",
+        "inputs": [
+          "recent tool steps from trajectory window"
+        ],
+        "outputs": [
+          "failure probability score"
+        ]
+      },
+      {
+        "model": "GPT/Claude executors (SWE agents)",
+        "inputs": [
+          "code generation tasks"
+        ],
+        "outputs": [
+          "tool actions, verification outcomes"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Outcome-labeled local windows enable failure prediction at lower cost than general-purpose judges",
+        "result": "Confirmed; StopLoss achieves 1-2 orders of magnitude cost reduction per check"
+      },
+      {
+        "hypothesis": "Threshold calibration on successful runs prevents reducing solve rate",
+        "result": "Confirmed; 99% of successful runs preserved on Verified, 99%+ on Pro"
+      }
+    ]
+  },
+  "hf:2610.22512": {
+    "category": "LLM/Reasoning",
+    "task": "Predicting privileged information effectiveness for self-distillation in agentic settings",
+    "key_results": "KL-based metric \u0394d^{-}_{err} predicts PI effectiveness more reliably than PI utility; effective PI improves GRPO baseline; thinking models show less consistent gains from PI",
+    "comments": "Systematic evaluation is valuable but the diversity of PI constructions (16 configurations) makes generalization challenging; information leakage confounding PI utility is an important observation.",
+    "model_io": [
+      {
+        "model": "Student LLMs (varying scale and reasoning mode)",
+        "inputs": [
+          "multi-turn trajectories with privileged information"
+        ],
+        "outputs": [
+          "task completions"
+        ]
+      },
+      {
+        "model": "PI generators (more/less capable models)",
+        "inputs": [
+          "trajectories (actions, observations, reasoning)"
+        ],
+        "outputs": [
+          "privileged information in 16 configurations"
+        ]
+      },
+      {
+        "model": "KL-based metrics (D and \u0394d^{-}_{err})",
+        "inputs": [
+          "PI candidates, model distributions"
+        ],
+        "outputs": [
+          "utility prediction scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "PI effectiveness depends on content, generation source, and student model scale/reasoning mode",
+        "result": "Confirmed; information-dense trajectories and capable generators yield larger gains; thinking models show inconsistent benefits"
+      },
+      {
+        "hypothesis": "KL-based metrics track post-training performance better than PI utility due to information leakage",
+        "result": "Confirmed; \u0394d^{-}_{err} metric enables task-specific PI selection improving performance"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-75134-7": {
+    "category": "Apoptosis/Cell Death",
+    "task": "Determine eriocitrin's anti-tumor mechanism in androgen-independent prostate cancer",
+    "key_results": "Eriocitrin suppressed DU145 proliferation and induced concentration-dependent apoptosis; inhibited PI3K/AKT/mTOR pathway; reversed EMT through E-cadherin upregulation",
+    "comments": "In vitro evidence is solid but limited to one cell line; no in vivo validation or pharmacokinetic data provided.",
+    "model_io": [
+      {
+        "model": "Prostate cancer cell screening",
+        "inputs": [
+          "Eriocitrin",
+          "multiple prostate cancer cell lines"
+        ],
+        "outputs": [
+          "DU145 sensitivity",
+          "proliferation inhibition",
+          "apoptosis induction"
+        ]
+      },
+      {
+        "model": "Signaling pathway analysis",
+        "inputs": [
+          "Eriocitrin-treated DU145 cells"
+        ],
+        "outputs": [
+          "PI3K/AKT/mTOR activation status",
+          "E-cadherin expression",
+          "EMT markers"
+        ]
+      },
+      {
+        "model": "Migration/invasion assay",
+        "inputs": [
+          "Eriocitrin",
+          "DU145 cells"
+        ],
+        "outputs": [
+          "migratory capacity",
+          "invasion potential"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Eriocitrin inhibits PI3K/AKT/mTOR signaling to suppress androgen-independent prostate cancer growth",
+        "result": "Confirmed; pathway inhibition and apoptosis induction demonstrated"
+      },
+      {
+        "hypothesis": "Eriocitrin reverses EMT to impair cell migration and invasion",
+        "result": "Supported; E-cadherin upregulation and reduced migratory/invasive phenotype observed"
+      }
+    ]
+  },
+  "nature:10.1038/s41538-026-01209-4": {
+    "category": "Proteomics",
+    "task": "Discovery of fungal-derived saltiness-modulating peptides via AI-guided workflow",
+    "key_results": "6 candidate peptides synthesized; AHDQY most salty in deionized water; ANSDL most effective saltiness enhancer in low-salt system; protected HUVECs against high-salt injury",
+    "comments": "Integrative pipeline combining ML embeddings, electronic tongue, and molecular dynamics is comprehensive; cellular protective effects are preliminary and require dose-response and mechanistic validation.",
+    "model_io": [
+      {
+        "model": "ESM-3 embedding + FT-Transformer classifier",
+        "inputs": [
+          "fungal proteome sequences"
+        ],
+        "outputs": [
+          "taste-active peptide predictions"
+        ]
+      },
+      {
+        "model": "Electronic tongue (gustometer)",
+        "inputs": [
+          "synthetic peptide solutions"
+        ],
+        "outputs": [
+          "taste intensity measurements"
+        ]
+      },
+      {
+        "model": "Molecular docking + MD simulation",
+        "inputs": [
+          "peptide structures",
+          "TMC4 receptor structure"
+        ],
+        "outputs": [
+          "binding affinity",
+          "interaction stability"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "ESM-3 embeddings outperform Uni-Mol and MolCLR for taste-peptide classification",
+        "result": "Confirmed; ESM-3 selected for screening"
+      },
+      {
+        "hypothesis": "Identified peptides form stable interactions with TMC4 and exert cytoprotective effects",
+        "result": "Supported by MD simulations and HUVEC experiments; ANSDL and AHDQY most promising"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-71384-7": {
+    "category": "Single Cell",
+    "task": "Automated classification of mosquito larvae species from imaging",
+    "key_results": "98.97% accuracy on MosquitoLarvae-7400 dataset; 99.50% on MLMI-2024 anatomical-level imaging",
+    "comments": "Hybrid CNN-ViT with attention mechanisms shows strong performance, but real-world robustness across field conditions and species diversity remains to be demonstrated.",
+    "model_io": [
+      {
+        "model": "LarvaFormer (CNN + Vision Transformer + attention)",
+        "inputs": [
+          "larval microscopy images"
+        ],
+        "outputs": [
+          "species classification (4 or anatomical level categories)"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-72450-w": {
+    "category": "Other",
+    "task": "Structure-based discovery of phytochemical prolactin receptor inhibitors for male breast cancer",
+    "key_results": "Withaferin A (AutoDock Vina: -8.8 kcal/mol) and quercetin (-8.7 kcal/mol) identified as top PRLR binders; withaferin A showed superior pose persistence in 500-ns MD; quercetin exhibited cleaner ADMET profile",
+    "comments": "Comprehensive computational workflow including MD simulations and ADMET predictions; however, lack of experimental cell-based validation limits interpretation of predicted inhibitory activity.",
+    "model_io": [
+      {
+        "model": "Molecular docking (AutoDock Vina, HDOCK)",
+        "inputs": [
+          "PRLR crystal structure (PDB 4I18)",
+          "18 phytochemical compounds"
+        ],
+        "outputs": [
+          "binding affinity scores; ranked inhibitors"
+        ]
+      },
+      {
+        "model": "Molecular dynamics simulation (500 ns)",
+        "inputs": [
+          "PRLR-ligand complexes (withaferin A, quercetin)"
+        ],
+        "outputs": [
+          "pose stability; interaction energy trajectories"
+        ]
+      },
+      {
+        "model": "DFT analysis + ADMET prediction",
+        "inputs": [
+          "phytochemical structures"
+        ],
+        "outputs": [
+          "HOMO-LUMO gap; pharmacokinetic properties"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Withaferin A forms more stable PRLR interactions than quercetin",
+        "result": "Supported by MD simulations; withaferin A showed closer and more persistent binding-pocket proximity"
+      },
+      {
+        "hypothesis": "Quercetin exhibits superior ADMET properties compared to withaferin A",
+        "result": "Confirmed; quercetin showed cleaner toxicity profile and zero Lipinski violations"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-74606-0": {
+    "category": "Genomics",
+    "task": "Pan-cancer analysis of ANGPT4 as prognostic biomarker associated with tumor microenvironment in kidney renal clear cell carcinoma",
+    "key_results": "ANGPT4 dysregulated across cancers; elevated in KIRC predictive of favorable prognosis; positively correlated with immune/stromal cells; primarily expressed in fibroblasts; three compounds identified (clofibrate, MS.275, AH.6809)",
+    "comments": "Comprehensive pan-cancer and single-cell analysis is thorough; however, functional validation of ANGPT4's role in TME remodeling and efficacy testing of predicted compounds are lacking.",
+    "model_io": [
+      {
+        "model": "Pan-cancer differential expression + survival analysis",
+        "inputs": [
+          "bulk RNA-seq from multiple cancer types"
+        ],
+        "outputs": [
+          "ANGPT4 dysregulation; prognostic association"
+        ]
+      },
+      {
+        "model": "scRNA-seq + spatial transcriptomics",
+        "inputs": [
+          "single-cell and spatial transcriptome data"
+        ],
+        "outputs": [
+          "ANGPT4 expression in fibroblasts and TME context"
+        ]
+      },
+      {
+        "model": "Drug sensitivity profiling + Connectivity Map screening",
+        "inputs": [
+          "ANGPT4-related transcriptional signatures"
+        ],
+        "outputs": [
+          "candidate compounds (clofibrate, MS.275, AH.6809)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "ANGPT4 expression correlates with favorable prognosis and TME remodeling in KIRC",
+        "result": "Confirmed; elevated ANGPT4 associated with favorable clinical outcomes and immune/stromal enrichment"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76769-2": {
+    "category": "Genomics",
+    "task": "Identification and validation of PDLIM1 as a therapeutic target in acute myeloid leukaemia",
+    "key_results": "PDLIM1 markedly upregulated in AML (SMD = 0.91); enhanced proliferation/invasion/migration in overexpressed AML cells; A-770041 predicted as top inhibitor candidate",
+    "comments": "Comprehensive bioinformatics pipeline including WGCNA, scRNA-seq, and molecular docking; however, experimental validation is limited to cell lines without in vivo xenograft or patient-derived xenograft models.",
+    "model_io": [
+      {
+        "model": "WGCNA + machine learning (feature selection)",
+        "inputs": [
+          "bulk RNA-seq AML vs control samples"
+        ],
+        "outputs": [
+          "PDLIM1-related gene modules; co-expression networks"
+        ]
+      },
+      {
+        "model": "scRNA-seq analysis",
+        "inputs": [
+          "single-cell transcriptome data"
+        ],
+        "outputs": [
+          "PDLIM1 enrichment in leukemia stem cells"
+        ]
+      },
+      {
+        "model": "Molecular docking (AutoDock Vina)",
+        "inputs": [
+          "PDLIM1 protein structure",
+          "compound library"
+        ],
+        "outputs": [
+          "binding affinity predictions; ranked candidates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "PDLIM1 is upregulated in AML and associated with LSC properties",
+        "result": "Confirmed; scRNA-seq shows enrichment in LSC and AML populations"
+      },
+      {
+        "hypothesis": "PDLIM1 inhibition reduces AML cell proliferation and invasion",
+        "result": "Supported by CCK8 and Transwell assays upon overexpression; direct inhibition not tested"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76837-7": {
+    "category": "Genomics",
+    "task": "Identification of disulfidptosis-related gene signature for endometriosis diagnosis",
+    "key_results": "Five-gene signature (BTBD2, SLC4A2, SSC5D, LPPR2, SRGAP2C) identified via XGBoost; external validation and RT-qPCR support diagnostic utility",
+    "comments": "Machine learning approach is rigorous with multiple algorithms compared; however, validation sample sizes are not detailed and functional roles of signature genes in endometriosis remain unexplored.",
+    "model_io": [
+      {
+        "model": "Consensus clustering + WGCNA",
+        "inputs": [
+          "bulk RNA-seq from GSE51981 (endometriosis vs control)"
+        ],
+        "outputs": [
+          "disulfidptosis-associated molecular subtypes; co-expression modules"
+        ]
+      },
+      {
+        "model": "XGBoost, SVM, random forest, logistic regression",
+        "inputs": [
+          "disulfidptosis-related genes"
+        ],
+        "outputs": [
+          "five-gene diagnostic signature"
+        ]
+      },
+      {
+        "model": "RT-qPCR validation",
+        "inputs": [
+          "patient endometrial tissue samples"
+        ],
+        "outputs": [
+          "gene expression levels (fold-change)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Disulfidptosis-related genes show distinct expression patterns and immune infiltration between EM subtypes",
+        "result": "Confirmed; two molecular subtypes identified with differential immune features"
+      },
+      {
+        "hypothesis": "Five-gene signature improves EM diagnosis over individual genes",
+        "result": "Confirmed in external validation and calibration analyses"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76979-8": {
+    "category": "Statistical Methods",
+    "task": "Neonatal mortality risk prediction under extreme class imbalance with calibration and explainability",
+    "key_results": "L2-regularized logistic regression AUC 0.955; captured 87.8% deaths at 97.3% specificity; K-means cluster contained 89.3% deaths in 6.7% of cohort",
+    "comments": "Principled approach to class imbalance with probability calibration and unsupervised phenotyping; external stress test on deceased neonates only permits sensitivity assessment; prospective validation essential before clinical deployment.",
+    "model_io": [
+      {
+        "model": "L2-regularized logistic regression, LightGBM",
+        "inputs": [
+          "60 perinatal clinical features (development cohort: 61,517 neonates)"
+        ],
+        "outputs": [
+          "neonatal mortality risk score; binary predictions"
+        ]
+      },
+      {
+        "model": "Unsupervised phenotyping (UMAP, K-means, Isolation Forest, Apriori)",
+        "inputs": [
+          "high-risk neonates (unlabeled)"
+        ],
+        "outputs": [
+          "high-risk phenotypes; mortality-enriched clusters"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Well-regularized models provide calibrated mortality predictions despite extreme class imbalance",
+        "result": "Confirmed; logistic regression achieved AUROC 0.955 with good calibration"
+      },
+      {
+        "hypothesis": "Unsupervised clustering identifies high-risk phenotypes enriched for mortality outcomes",
+        "result": "Confirmed; K-means cluster captured 89.3% of deaths in 6.7% of cohort"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-72720-7": {
+    "category": "ML Theory",
+    "task": "LLM agent responsiveness under mid-task perturbations in synthetic environments",
+    "key_results": "ReAct achieves highest pooled reward (0.544); Plan-and-Execute leads on tool planning (0.711) but collapses on constraints (0.114); no monotone dose\u2013response",
+    "comments": "Rigorous factorial benchmark design with graded severity; architectural trade-offs clearly exposed, though synthetic environments limit real-world applicability.",
+    "model_io": [
+      {
+        "model": "ReAct, Reflexion, Plan-and-Execute agent architectures",
+        "inputs": [
+          "tool-planning, debugging, or constraint-planning tasks with mid-episode perturbations"
+        ],
+        "outputs": [
+          "task performance reward",
+          "recovery trajectory"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Agent architectures differ in responsiveness to mid-task goal changes and tool denial",
+        "result": "Confirmed; ReAct robust overall; Plan-and-Execute domain-specific"
+      },
+      {
+        "hypothesis": "Explicit perturbation notices improve recovery",
+        "result": "Rejected; no significant improvement in mean reward"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-73024-6": {
+    "category": "Statistics/Probability",
+    "task": "Short-term forecasting and quality control of particulate air-quality index in urban\u2013industrial settings",
+    "key_results": "1-h forecast R\u00b2 0.857\u20130.920; 6-h R\u00b2 0.551\u20130.641; 24-h R\u00b2 0.270\u20130.335; Gradient Boosting reduces RMSE 5.8\u20136.3% (1h), 15.3\u201317.2% (6h), 12.4\u201313.0% (24h) vs. persistence",
+    "comments": "Chronological validation and explicit contemporaneous-vs.-future separation are methodologically rigorous; provisional data reconstruction due to PM2.5/PM10 inconsistency limits confidence.",
+    "model_io": [
+      {
+        "model": "k-NN, Random Forest, Decision Tree, Gradient Boosting, AdaBoost, Neural Network",
+        "inputs": [
+          "206,184 half-hourly particulate observations (2020\u20132023) from 3 Belgian sites"
+        ],
+        "outputs": [
+          "particulate air-quality index forecast (1h, 6h, 24h horizons)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Tree-based models (especially Gradient Boosting) improve short-term forecasting vs. persistence",
+        "result": "Confirmed; gains diminish with forecast horizon"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-73721-2": {
+    "category": "Algorithms",
+    "task": "Spatio-temporal graph attention network for predicting economic impact of sports events",
+    "key_results": "ST-GAT reduces RMSE ~25% vs. STGCN at 6-month horizon; Graph WaveNet comparison shows provisional edge (p = 0.032, non-robust to Bonferroni); Suzhou, Foshan, Langfang emerge as predictive hubs",
+    "comments": "Learned inter-regional coupling and directional synergy matrices are interpretable; forecasting tool only\u2014does not estimate causal effects; policy-alignment perturbations motivate but cannot substitute causal tests.",
+    "model_io": [
+      {
+        "model": "ST-GAT (spatio-temporal graph attention with synergy regularization)",
+        "inputs": [
+          "monthly regional activity index (card transactions + night-light intensity), 96 prefectures, 2014\u20132024"
+        ],
+        "outputs": [
+          "activity forecasts",
+          "learned attention weights",
+          "directional synergy matrix"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Learned inter-regional coupling outperforms fixed gravity-based priors",
+        "result": "Confirmed; ~25% RMSE reduction over STGCN"
+      },
+      {
+        "hypothesis": "Legacy half-life correlates with pre-event fixed-asset investment",
+        "result": "Observed; mechanistic confounding possible"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76577-8": {
+    "category": "ML Theory",
+    "task": "Interpretable synthetic benchmark for low-strain pile integrity testing via machine learning",
+    "key_results": "Random Forest morphology accuracy 0.810\u00b10.010, sign accuracy 0.858\u00b10.002; signed-severity R\u00b2 0.626\u00b10.008; short defects facilitate recognition; severity difficulty non-monotonic",
+    "comments": "Stratified benchmark design (A0\u2013A8) isolates confounders rigorously; synthetic-only validation limits field applicability\u2014independent real or high-fidelity numerical validation essential before deployment.",
+    "model_io": [
+      {
+        "model": "Random Forest, Ridge Regression, Logistic Regression, profile MLP on 68-dim reflectogram profiles",
+        "inputs": [
+          "90,900 synthetic reflectograms (pile integrity testing) with controlled defect morphology/axial extent/severity/attenuation"
+        ],
+        "outputs": [
+          "defect morphology class",
+          "sign classification",
+          "severity regression estimate"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Short defects facilitate morphology recognition; severity difficulty is non-monotonic",
+        "result": "Confirmed; depends jointly on axial length, morphology, and representational limits"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-73074-w": {
+    "category": "Applied Physics",
+    "task": "Investigate transient vorticity and pressure pulsations in variable-speed vane-type multiphase pump",
+    "key_results": "During acceleration, circumferential vorticity strengthens and axial/radial components extend wider; strongest pressure pulsations near pressure-surface inlet; pressure pulsation amplitude decreases along flow direction with time lag relative to speed change",
+    "comments": "Detailed transient analysis useful for pump design but complex flow interactions limit generalizability to other multiphase systems.",
+    "model_io": [
+      {
+        "model": "Multiphase pump CFD simulation (variable-speed condition)",
+        "inputs": [
+          "rotational speed time-profile",
+          "inlet flow rate",
+          "impeller geometry"
+        ],
+        "outputs": [
+          "vorticity field evolution",
+          "pressure distribution",
+          "pressure pulsation spectra"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Rotational speed changes significantly affect vorticity distribution intensity and spatial extent",
+        "result": "Confirmed; acceleration strengthens circumferential component; deceleration reduces overall intensity with delayed adjustment"
+      },
+      {
+        "hypothesis": "Pressure pulsations exhibit position-dependent response and phase lag to speed variation",
+        "result": "Confirmed; strongest pulsations at pressure-surface inlet; consistent time lag observed during acceleration and deceleration"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76926-7": {
+    "category": "Applied Physics",
+    "task": "Compare semiconductive vs. insulating nanoparticle additives for transformer mineral oil",
+    "key_results": "TiO\u2082 maximum AC breakdown improvement 22.16% at 0.10 wt%; SiO\u2082 maximum improvement 15.00% at 0.01 wt%; TiO\u2082 incurs larger viscosity and DC conductivity penalty; performance trade-off between dielectric strengthening and charge transport depends on electronic character",
+    "comments": "Controlled head-to-head comparison reveals concentration-dependent selection map, but long-term stability, thermal performance, and oil-paper aging must be assessed before deployment.",
+    "model_io": [
+      {
+        "model": "Nanofluid preparation and characterization (TiO\u2082 and SiO\u2082 in mineral oil)",
+        "inputs": [
+          "nanoparticle type",
+          "loading concentration (0.01-0.10 wt%)",
+          "temperature (30-90\u00b0C)"
+        ],
+        "outputs": [
+          "kinematic viscosity",
+          "moisture content",
+          "AC breakdown voltage",
+          "relative permittivity",
+          "DC conductivity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Semiconductive TiO\u2082 produces larger dielectric enhancement than insulating SiO\u2082",
+        "result": "Confirmed; 22.16% vs 15.00% at respective optimal concentrations"
+      },
+      {
+        "hypothesis": "Optimal nanoparticle loading differs between electronic classes",
+        "result": "Confirmed; TiO\u2082 optimizes at 0.10 wt%, SiO\u2082 at 0.01 wt%"
+      },
+      {
+        "hypothesis": "Semiconductive additives incur larger conductivity penalty",
+        "result": "Confirmed; TiO\u2082 produces larger DC conductivity increase than SiO\u2082"
+      }
+    ]
   }
 }
