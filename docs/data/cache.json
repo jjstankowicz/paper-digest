@@ -661877,5 +661877,809 @@
         "result": "Confirmed through parameter sensitivity analysis; specific quantitative results presented graphically"
       }
     ]
+  },
+  "hf:2610.28069": {
+    "category": "Agents/RL",
+    "task": "Improve coding agent training by co-adapting policy and execution harness",
+    "key_results": "9.8, 12.6, and 6.4 percentage point improvements over GRPO on SWE-bench Verified, Multilingual, and Pro respectively; evolved tools and hooks persist 7.7 pp gains even when removed at deployment",
+    "comments": "Novel insight that the harness itself is trainable; the model-harness pair design is interesting but introduces deployment complexity requiring tool/hook removal.",
+    "model_io": [
+      {
+        "model": "9B base policy with adaptive harness",
+        "inputs": [
+          "coding task",
+          "repair trajectories",
+          "interaction logs"
+        ],
+        "outputs": [
+          "code solution",
+          "pass@1 metric"
+        ]
+      },
+      {
+        "model": "frozen teacher (mechanism-level skills)",
+        "inputs": [
+          "flawed repair strategies"
+        ],
+        "outputs": [
+          "task-specific skills"
+        ]
+      },
+      {
+        "model": "evolving teacher (tools and hooks)",
+        "inputs": [
+          "interaction problems",
+          "pass rate feedback"
+        ],
+        "outputs": [
+          "adapted tools and hooks"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Adapting harness during RL improves performance over fixed harness",
+        "result": "Confirmed with 6.4-12.6 pp gains across benchmarks"
+      },
+      {
+        "hypothesis": "Mechanism-level skills remain beneficial after removal at evaluation",
+        "result": "Confirmed; skill gains persist after removal"
+      },
+      {
+        "hypothesis": "Re-evolving tools/hooks outperforms early freezing",
+        "result": "Confirmed; dynamic evolution better than static frozen version"
+      }
+    ]
+  },
+  "hf:2610.28388": {
+    "category": "Agents/RL",
+    "task": "Credit assignment for long-horizon LLM agent tasks via self-generated signals",
+    "key_results": "37.0 and 36.2 point improvements on BrowseComp-Plus for Qwen 8B and 32B; 8.5 and 5.6 point gains over strongest baselines; 4.9 pp on GAIA, 4.7 pp on xBench-DeepSearch",
+    "comments": "Self-generated citations as credit signals is elegant, though depends on model's ability to produce meaningful summaries and cite correctly.",
+    "model_io": [
+      {
+        "model": "policy model with citation mechanism",
+        "inputs": [
+          "task prompt",
+          "trajectory history"
+        ],
+        "outputs": [
+          "action",
+          "summary with citations to earlier turns"
+        ]
+      },
+      {
+        "model": "intra-group rescaler",
+        "inputs": [
+          "cited actions from successful and failed rollouts"
+        ],
+        "outputs": [
+          "rescaled credit weights"
+        ]
+      },
+      {
+        "model": "advantage reweighter",
+        "inputs": [
+          "rescaled credit weights"
+        ],
+        "outputs": [
+          "updated advantage estimates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Self-generated credit via citations provides useful signal for selecting critical actions",
+        "result": "Confirmed; credit weights correlate with action importance"
+      },
+      {
+        "hypothesis": "Intra-group rescaling removes undeserved credit and emphasizes critical actions",
+        "result": "Confirmed; rescaling especially important on failed rollouts"
+      },
+      {
+        "hypothesis": "Dense supervision from sparse rewards improves long-horizon credit assignment",
+        "result": "Confirmed; 37 pp improvements demonstrate effectiveness"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11096-0": {
+    "category": "Cell/Gene Therapy",
+    "task": "Develop multimodal precision diagnostics for pig-to-human xenotransplantation immune monitoring",
+    "key_results": "Recent breakthroughs prevented hyperacute rejection; identified antibody-mediated, T cell-mediated, and innate immune rejection as remaining challenges",
+    "comments": "This is a review synthesizing challenges rather than presenting new experimental data; multimodal diagnostics are proposed but not yet fully instantiated.",
+    "model_io": [
+      {
+        "model": "Multimodal precision diagnostic framework",
+        "inputs": [
+          "xenograft tissue samples",
+          "immune markers",
+          "histopathology"
+        ],
+        "outputs": [
+          "subclinical injury detection",
+          "rejection prediction"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Advanced diagnostics can enable early detection of immune-mediated injury before clinical manifestation",
+        "result": "Proposed as critical need; conventional monitoring lacks required sensitivity"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11192-1": {
+    "category": "Bioprocessing",
+    "task": "Accelerate biodegradation of compostable polyesters in deep-sea environments",
+    "key_results": "Enzyme-embedded polyesters achieved near-complete degradation at 757 m depth within 5 months; coastal films with 0.1 wt% enzyme showed rapid degradation; maintained mechanical properties of parent polymers",
+    "comments": "Elegant solution combining protein engineering with polymer chemistry; the enzyme stability and long-term performance at extreme depths warrants further validation.",
+    "model_io": [
+      {
+        "model": "Thermal enzyme-embedding process",
+        "inputs": [
+          "compostable polyester (PBS/PBSA/PCL/PBAT)",
+          "plastic-degrading enzyme",
+          "thermal conditions"
+        ],
+        "outputs": [
+          "enzyme-embedded polyester films"
+        ]
+      },
+      {
+        "model": "Deep-sea degradation system",
+        "inputs": [
+          "enzyme-embedded polyester",
+          "seawater",
+          "pressure/temperature/depth conditions"
+        ],
+        "outputs": [
+          "degradation rate",
+          "low-molecular-mass products",
+          "biochemical oxygen demand"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Thermally embedded enzymes retain activity and accelerate polyester degradation across depth gradients (2\u20135503 m)",
+        "result": "Confirmed; near-complete degradation at 757 m in 5 months; moderate degradation observed at 5503 m"
+      },
+      {
+        "hypothesis": "Enzyme embedding does not compromise mechanical properties of parent polymers",
+        "result": "Confirmed; mechanical properties similar to enzyme-free polyesters"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11317-6": {
+    "category": "Protein Engineering",
+    "task": "Design enantioselective artificial metalloenzyme photocatalysts",
+    "key_results": "De novo designed scaffolds bind metal polypyridine photocatalysts with high enantioselectivity; evolved proteins support diverse light-driven reactions with high catalyst turnover and recycling",
+    "comments": "Combines computational protein design with directed evolution to solve a long-standing challenge in asymmetric photocatalysis, though practical scalability remains to be demonstrated.",
+    "model_io": [
+      {
+        "model": "Generative protein design",
+        "inputs": [
+          "metal polypyridine photocatalyst structure"
+        ],
+        "outputs": [
+          "de novo protein scaffolds"
+        ]
+      },
+      {
+        "model": "Directed evolution",
+        "inputs": [
+          "designed scaffolds",
+          "substrate",
+          "light"
+        ],
+        "outputs": [
+          "evolved enantioselective photocatalysts"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Protein environment extends photocatalyst excited-state lifetime and organizes substrate positioning",
+        "result": "Confirmed by spectroscopic studies; protein controls stereoselectivity and energy transfer"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-78546-1": {
+    "category": "Cell Signaling",
+    "task": "Develop 2D-PELSA to map ligand-protein interactions and identify E2-GPX4 engagement in ferroptosis",
+    "key_results": "2D-PELSA identifies 1288 E2-responsive peptides and 24 candidate targets; GPX4 identified as E2-engaged ferroptosis regulator (EC50 2.4 \u00b5M, downregulated by micromolar E2); chronic micromolar E2 induces lipid reprogramming, peroxidation, iron-dependent cell death partially rescued by ferrostatin-1/deferoxamine",
+    "comments": "Novel dose-resolved method resolves weak endogenous ligand interactions with enhanced quantitation; E2-GPX4 axis suggests unexpected hormone-ferroptosis link with therapeutic implications.",
+    "model_io": [
+      {
+        "model": "2D-PELSA (BT474 lysates) and human cells",
+        "inputs": [
+          "17\u03b2-estradiol (E2)",
+          "dose-dependent proteolysis"
+        ],
+        "outputs": [
+          "conformotypic peptide signatures",
+          "target identification",
+          "local binding affinity (EC50)",
+          "GPX4 engagement",
+          "lipid peroxidation",
+          "ferroptotic cell death"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "2D-PELSA maps E2 target landscape via dose-resolved structural remodeling",
+        "result": "Confirmed; 24 candidate targets identified with EC50 values"
+      },
+      {
+        "hypothesis": "E2 engages GPX4 and promotes ferroptosis",
+        "result": "Confirmed; GPX4 downregulation and lipid peroxidation observed"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-78845-7": {
+    "category": "Cell Signaling",
+    "task": "Characterize TFE3-NDD cellular pathology and metabolic dysfunction",
+    "key_results": "Patient fibroblasts show profound OXPHOS rewiring, paradoxical lysosomal expansion with functional failure (impaired acidification, defective protease maturation), and destabilized cell-ECM interface; TFE3-NDD shares ferroptosis-resistance signature with TFE3-dependent cancers",
+    "comments": "Comprehensive characterization linking chronic transcription factor dysregulation to broad homeostatic collapse, but mechanistic interventions remain to be tested.",
+    "model_io": [
+      {
+        "model": "patient-derived TFE3-NDD fibroblasts",
+        "inputs": [
+          "mutant TFE3 (constitutively nuclear)",
+          "metabolic substrates"
+        ],
+        "outputs": [
+          "OXPHOS flux",
+          "lysosomal pH",
+          "protease maturation",
+          "cathepsin K secretion",
+          "focal adhesion dynamics",
+          "ferroptosis resistance"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Chronic TFE3 activation drives metabolic rigidity via OXPHOS upregulation",
+        "result": "Confirmed; cells vulnerable to energy failure"
+      },
+      {
+        "hypothesis": "Expanded lysosomes retain functional defects despite size increase",
+        "result": "Confirmed; impaired acidification and protease maturation observed"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10733-y": {
+    "category": "Organelles",
+    "task": "Define inter-organellar communication mechanism for mitochondrial quality control",
+    "key_results": "Stress-induced mitochondrial protein aggregates (SIMPAs) formed under proteostatic stress; GRP75 coordinates SIMPA biogenesis and activates ER-unfolded protein response via MAM contact sites; SIMPA signaling cascade preserves mitochondrial integrity in cellular and liver disease models",
+    "comments": "Novel mechanistic insight into protein condensate-mediated organellar crosstalk, though in vivo validation limited to liver models.",
+    "model_io": [
+      {
+        "model": "cellular and liver disease model systems",
+        "inputs": [
+          "proteostatic stress",
+          "damaged mitochondrial proteins"
+        ],
+        "outputs": [
+          "SIMPA formation",
+          "GRP75-dependent signaling",
+          "ER-UPR activation",
+          "SIMPA clearance",
+          "mitochondrial integrity metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "GRP75 coordinates SIMPA formation and inter-organellar signaling",
+        "result": "Confirmed via quantitative proteomics and correlative EM"
+      },
+      {
+        "hypothesis": "SIMPA-mediated ER-UPR activation clears protein aggregates",
+        "result": "Confirmed; targeted clearance observed"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11152-9": {
+    "category": "Epigenetics",
+    "task": "Map cold-induced BH2 metabolic network linking to longevity and proteostasis",
+    "key_results": "Cold upregulates CAT-4 (GCH1), increasing BH2; BH2 transported muscle\u2192distal tissues, converted to BH4 via DHFR-1; BH4 cofactor for PAH-1 promotes tyrosine synthesis extending lifespan; BH2/tyrosine supplementation reduces polyQ, TDP-43, FUS protein aggregation in human cells",
+    "comments": "Elegant multi-tissue signaling circuit with translatable human relevance, though mechanism of transport and tissue-specific conversion kinetics need further characterization.",
+    "model_io": [
+      {
+        "model": "C. elegans cold-exposed and human cells",
+        "inputs": [
+          "cold temperature (or CAT-4/GCH1 upregulation)",
+          "BH2 or tyrosine"
+        ],
+        "outputs": [
+          "BH2 synthesis",
+          "BH4 levels",
+          "tyrosine biosynthesis",
+          "protein aggregation (polyQ, TDP-43, FUS)",
+          "lifespan",
+          "proteostasis markers"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Cold activates BH2 synthesis via CAT-4",
+        "result": "Confirmed; BH2 production increased"
+      },
+      {
+        "hypothesis": "BH2 transport and conversion to BH4 preserves proteostasis",
+        "result": "Confirmed; aggregation suppressed in polyQ and ALS models"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11188-x": {
+    "category": "Cell Division/Cycle",
+    "task": "Elucidate WEE1 function in G0/G1 cell cycle re-entry independent of CDK inhibition",
+    "key_results": "WEE1 phosphorylates CDH1 (FZR1) to oppose APC/CCDH1 activity; WEE1 loss delays S phase entry, impairs G1/S transition, causes abnormal p21 accumulation and p21-dependent G2 arrest; APC/CCDH1 or p21 reduction sensitizes to WEE1 inhibition; both pathways downregulated in acquired resistance",
+    "comments": "Reveals unexpected G0/G1-specific WEE1 mechanism distinct from canonical G2 checkpoint control, explaining clinical toxicity; resistance mechanisms identified for improved therapeutic strategies.",
+    "model_io": [
+      {
+        "model": "cycling and quiescent mammalian cells",
+        "inputs": [
+          "WEE1 loss or inhibition",
+          "G0/G1 phase"
+        ],
+        "outputs": [
+          "CDH1 phosphorylation",
+          "APC/CCDH1 activity",
+          "p21 levels",
+          "S phase entry",
+          "G1/S transition kinetics",
+          "G2 arrest markers"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "WEE1 phosphorylates CDH1 to promote G0/G1 progression",
+        "result": "Confirmed; CDH1 phosphorylation impairs APC/CCDH1 activity"
+      },
+      {
+        "hypothesis": "WEE1 inhibition causes p21-dependent G2 arrest in G0/G1 phase",
+        "result": "Confirmed; p21 reduction rescues proliferation"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-73503-w": {
+    "category": "Cell Signaling",
+    "task": "Evaluate mannose-targeted DCA-loaded nanoliposomes for M2-macrophage polarization modulation",
+    "key_results": "Targeted nanoliposomes: 155.1\u00b10.34 nm diameter, PDI 0.28, -12.8\u00b10.6 mV zeta potential, 82.94% encapsulation efficiency; concentration-dependent cytotoxicity (IC50 13.47 \u00b5M); at 20 \u00b5M for 48 h, CD206+ cells decreased from 76.8\u00b12.31% to 21.7\u00b11.98%, CD80+ cells increased from 18.6\u00b11.72% to 68.3\u00b12.54%",
+    "comments": "Promising M2-to-M1 macrophage polarization shift, but 20 \u00b5M exceeds IC50 making cytotoxicity contribution unclear; independent biological replicates and viability-matched experiments needed for mechanistic validation.",
+    "model_io": [
+      {
+        "model": "THP-1-derived M2-like macrophages",
+        "inputs": [
+          "mannose-targeted DCA nanoliposomes (0\u2013100 \u00b5M)",
+          "DCA-loaded formulations"
+        ],
+        "outputs": [
+          "cell viability (MTT)",
+          "CD206 expression",
+          "CD80 expression",
+          "cytotoxicity (IC50)",
+          "cellular uptake",
+          "nanoliposome properties (diameter, PDI, zeta potential, EE%)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Mannose-targeted DCA nanoliposomes enhance cell uptake in M2 macrophages",
+        "result": "Confirmed qualitatively by DiI fluorescence"
+      },
+      {
+        "hypothesis": "DCA-loaded nanoliposomes shift M2 toward M1 polarization",
+        "result": "Partially confirmed; CD206 downregulation and CD80 upregulation observed but partly due to selective cytotoxicity"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-75644-4": {
+    "category": "Cell Signaling",
+    "task": "Characterize pexidartinib effects on stromal-immune cell crosstalk in TGCT",
+    "key_results": "Pexidartinib suppressed IL-6, IL-8 across subtypes; IFN\u03b3 most sensitive (10 \u00b5M), IL-6/IL-17/IL-1\u03b2 required 25\u201350 \u00b5M; TNF increased at 25 \u00b5M and failed to decline at 50 \u00b5M; qualitative reduction in PBMC aggregation at high doses",
+    "comments": "Dose-dependent immunomodulation demonstrated, but TNF elevation raises concerns for immune reprogramming with unclear long-term consequences; formal image quantification lacking.",
+    "model_io": [
+      {
+        "model": "TGCT synoviocytes \u00b1 PBMCs co-culture",
+        "inputs": [
+          "TNF + IL-17",
+          "pexidartinib (0\u201350 \u00b5M)"
+        ],
+        "outputs": [
+          "IL-6, IL-8, IFN\u03b3, IL-17, IL-1\u03b2, TNF secretion",
+          "PBMC viability",
+          "PBMC aggregation",
+          "synoviocyte viability"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Pexidartinib suppresses pro-inflammatory cytokines in stromal-immune crosstalk",
+        "result": "Partially confirmed; IL-6, IL-8, IFN\u03b3 suppressed but TNF paradoxically elevated"
+      },
+      {
+        "hypothesis": "High-dose pexidartinib reduces PBMC aggregation",
+        "result": "Confirmed qualitatively; quantification pending"
+      }
+    ]
+  },
+  "nature:10.1038/s42003-026-11122-x": {
+    "category": "Development",
+    "task": "Elucidate FSH extragonadal role in corneal stromal collagen degradation and keratoconus",
+    "key_results": "FSH low in KC patients; FSH supplementation inhibits MAP kinase signaling\u2192decreased MMP2 activity\u2192increased collagen accumulation; FSH increases pro-inflammatory cytokine secretion\u2192macrophage polarization and migration; FSH regulates HDAC1-miR-29b feedback loop; dual role via MAP Kinase-MMP2 axis and HDAC1-miR-29b pathway",
+    "comments": "Novel extragonadal FSH function in corneal homeostasis; counterintuitive pro-inflammatory cytokine effect suggests context-dependent immune regulation relevant to stromal disease progression.",
+    "model_io": [
+      {
+        "model": "3D collagen hydrogels, co-culture models, patient tears",
+        "inputs": [
+          "FSH supplementation",
+          "TNF + IL-17",
+          "PBMC co-culture"
+        ],
+        "outputs": [
+          "MMP2 activity",
+          "collagen levels",
+          "pro-inflammatory cytokine secretion",
+          "macrophage polarization",
+          "HDAC1 expression",
+          "miR-29b levels",
+          "NF-Y interaction"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "FSH inhibits MAP kinase signaling to reduce collagen degradation",
+        "result": "Confirmed; MMP2 activity decreased"
+      },
+      {
+        "hypothesis": "FSH regulates HDAC1-miR-29b feedback loop in keratoconus",
+        "result": "Confirmed via ChIP and overexpression studies"
+      }
+    ]
+  },
+  "nature:10.1038/s41522-026-01182-6": {
+    "category": "Genomics",
+    "task": "AI-assisted discovery and optimization of MCR inhibitors for rumen methane reduction",
+    "key_results": "Virtual screening of 23M molecules \u2192 26 candidates \u2192 4 hits; optimized lead PZON achieved IC50 0.24 \u03bcM; suppressed methane 73\u201398% across ruminant microbiomes; metatranscriptomic validation confirmed reduced MCR expression",
+    "comments": "Excellent hit-to-lead workflow and mechanistic validation; in vivo efficacy and safety in production animals remain to be demonstrated.",
+    "model_io": [
+      {
+        "model": "AI virtual screening + structure-guided optimization + metatranscriptomics",
+        "inputs": [
+          "23M molecules",
+          "MCR protein structure",
+          "Rumen microbiome RNA-seq"
+        ],
+        "outputs": [
+          "IC50 values",
+          "Methane suppression (%)",
+          "MCR transcript abundance"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "AI-discovered MCR inhibitors reduce methanogenesis across diverse rumen microbiomes",
+        "result": "PZON (IC50 0.24 \u03bcM) suppressed methane 73\u201398%; metatranscriptomics confirmed reduced MCR and methanogen transcription"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-75544-7": {
+    "category": "Structural Prediction",
+    "task": "MRI radiomics + multimodal features for alcohol-related risk prediction in firefighters",
+    "key_results": "Multimodal CatBoost achieved AUC 0.743 (held-out test); mean AUC 0.681 \u00b1 0.054 across 10 training runs; cortical features showed larger group differences but subcortical features (thalamic, ventricular) ranked highest in SHAP importance",
+    "comments": "Important methodological lesson: group-level effect sizes and model-derived importance diverge significantly\u2014highlights need for careful interpretation of biomarker stability.",
+    "model_io": [
+      {
+        "model": "CatBoost with MRI radiomics + demographics + cognition + lab features",
+        "inputs": [
+          "Structural MRI (n=686 firefighters)",
+          "AUDIT scores",
+          "Demographics",
+          "Cognitive tests",
+          "Blood biomarkers"
+        ],
+        "outputs": [
+          "Alcohol-risk probability",
+          "SHAP feature importance",
+          "AUROC"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Group-level structural associations and model-derived predictive importance show consistent correspondence",
+        "result": "Weak feature-level correlation (r=0.22), no region-level correspondence (r=0.03); cortical vs. subcortical discordance emphasizes model-context dependence"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76379-y": {
+    "category": "Statistical Methods",
+    "task": "Delphi consensus development of reporting guidelines for AI diagnostic models in Chinese medicine",
+    "key_results": "Multidisciplinary expert panel (n=31) achieved consensus on TRAPODS-CM checklist through 2 rounds (domain consensus Kendall's W 0.487\u20130.498, item consensus W 0.349 in final round)",
+    "comments": "Methodologically sound Delphi study; TRAPODS-CM addresses genuine gap in CM-specific AI reporting, though impact on model quality remains unproven.",
+    "model_io": [
+      {
+        "model": "Delphi consensus process",
+        "inputs": [
+          "Expert panel ratings (1\u20135 Likert scale)",
+          "Prior systematic review",
+          "Existing guidelines"
+        ],
+        "outputs": [
+          "TRAPODS-CM checklist with domains and items"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multidisciplinary Delphi consensus can develop CM-specific AI diagnostic reporting guidelines",
+        "result": "Panel converged on TRAPODS-CM after 2 rounds; addresses unique features of CM diagnostic approaches"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76735-y": {
+    "category": "Structural Prediction",
+    "task": "Micro-CT morphometric analysis and classification of root canal systems in three-rooted mandibular molars",
+    "key_results": "Vertucci Type I dominant in distal (92.9%) and distolingual (100%) roots; 50% of mesial roots non-classifiable; Ahmed et al. coding system classified all canals; accessory canals in 92.9% of samples (86.9% apical third); patent type 66.3%",
+    "comments": "Well-executed anatomical study providing classification framework; Malaysian population specificity limits generalizability.",
+    "model_io": [
+      {
+        "model": "Micro-CT segmentation + 3D reconstruction + morphometric analysis",
+        "inputs": [
+          "Extracted three-rooted mandibular molars (n=70)"
+        ],
+        "outputs": [
+          "Root canal configuration (Vertucci/Ahmed classification)",
+          "Accessory canal location/type",
+          "3D morphometric data"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Ahmed et al. coding system provides superior classification of complex canals vs. Vertucci system",
+        "result": "Ahmed system classified all canals; Vertucci unable to classify 50% of mesial roots; accessory canals highly prevalent (92.9%)"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76895-x": {
+    "category": "Other",
+    "task": "Automated segmentation of histologic zones in distraction osteogenesis using self-configuring U-Net",
+    "key_results": "U-Net segmentation most reliable for fibrous interzone (Dice 0.76 H&E, 0.75 pentachrome), microcolumn zone (Dice 0.63\u20130.57), remodeling zone (Dice 0.29\u20130.44); pentachrome multi-class yielded most coherent results",
+    "comments": "Practical workflow for histologic compartment analysis; limited performance on late-stage remodeling zone due to variable/ambiguous morphology highlights challenge of tissue classification.",
+    "model_io": [
+      {
+        "model": "2D U-Net with 5-fold cross-validation",
+        "inputs": [
+          "H&E and pentachrome-stained sections from rat distraction osteogenesis"
+        ],
+        "outputs": [
+          "Segmentation masks (fibrous interzone, microcolumn, remodeling zones)",
+          "Dice/precision/recall metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Deep learning segmentation reproducibly delineates histologic compartments in distraction osteogenesis",
+        "result": "Fibrous and microcolumn zones reliably segmented (Dice 0.63\u20130.76); remodeling zone challenging (Dice 0.29\u20130.44); pentachrome multi-class optimal"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77007-5": {
+    "category": "Proteomics",
+    "task": "Multi-target, multi-pathway mechanism of astragaloside IV against spinal cord injury via integrated pharmacology and metabolomics",
+    "key_results": "Network pharmacology identified IL6, IL1B, AKT1, TNF, PTGS2 as key targets; in vivo BBB score and functional improvement confirmed; MD simulations showed stable AKT1 binding (\u0394G -27.17\u00b13.21 kcal/mol); metabolomics revealed upregulation of energy/nucleotide/amino acid metabolism, downregulation of lipid metabolism",
+    "comments": "Comprehensive systems pharmacology approach; however, multiple targets and pathways make mechanistic specificity unclear and clinical translation uncertain.",
+    "model_io": [
+      {
+        "model": "Network pharmacology + in vivo SCI model + molecular docking + MD + metabolomics",
+        "inputs": [
+          "Astragaloside IV structure",
+          "Spinal cord tissue (knockout/WT mice)",
+          "Plasma metabolites"
+        ],
+        "outputs": [
+          "Target predictions",
+          "Signaling pathways",
+          "Binding affinity",
+          "BBB/Rivlin scores",
+          "Metabolomic signatures"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Astragaloside IV activates neuroprotective pathways via multiple targets and metabolic reprogramming",
+        "result": "Network pharmacology predicted 5 key targets; in vivo validation confirmed functional improvement; metabolomics revealed multi-pathway engagement"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-78717-0": {
+    "category": "Algorithms",
+    "task": "Joint optimization of topology and role assignment in multi-agent systems via tensor contraction",
+    "key_results": "Polynomial complexity guarantee under Tucker compression; optimal leader emerges intrinsically from tensor algebra; substantially better scaling than exhaustive search",
+    "comments": "Novel tensor-algebraic formulation elegantly unifies multi-agent control and graph theory, though empirical validation is limited to simulation.",
+    "model_io": [],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-76183-8": {
+    "category": "Algorithms",
+    "task": "Multi-scenario CVaR-controlled stochastic bidding for renewable energy spot-market participation",
+    "key_results": "Stochastic bidding reduces deviation penalties vs. deterministic baseline; CVaR model accepts small expected-revenue concession for lower tail shortfall and less volatile profit",
+    "comments": "Framework logically combines scenario reduction and risk metrics; out-of-sample validation is encouraging but practical deployment requires measured market data.",
+    "model_io": [
+      {
+        "model": "Fast-forward scenario selection + CVaR risk control + stochastic optimization",
+        "inputs": [
+          "Temporally correlated generation and price trajectories"
+        ],
+        "outputs": [
+          "Day-ahead bids",
+          "Revenue",
+          "Tail shortfall",
+          "Profit volatility"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Stochastic bidding with CVaR control reduces downside revenue risk",
+        "result": "Confirmed; lower tail shortfall with modest expected-revenue trade-off"
+      }
+    ]
+  },
+  "nature:10.1038/s41534-026-01390-0": {
+    "category": "Quantum",
+    "task": "Improve quantum state purity and squeezing via acausal post-processing through quantum state smoothing",
+    "key_results": "10.3% \u00b1 1.6% improvement in state purification and 7.6% \u00b1 2.6% squeezing restoration over causal filtering",
+    "comments": "Experimental validation of smoothing advantage is modest but consistent; practical benefit depends on availability of full measurement records post-experiment.",
+    "model_io": [
+      {
+        "model": "Optical parametric oscillator with dual homodyne detection",
+        "inputs": [
+          "observed and unobserved quadrature measurements"
+        ],
+        "outputs": [
+          "smoothed quantum state",
+          "purity",
+          "squeezing parameter"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Acausal smoothing recovers lost coherence better than causal filtering",
+        "result": "Confirmed; purity improvement 10.3% \u00b1 1.6%"
+      },
+      {
+        "hypothesis": "Smoothing assumptions about environment-information conversion affect recovery",
+        "result": "Supported by experimental demonstration of scenario-dependence"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76765-6": {
+    "category": "Applied Physics",
+    "task": "Optimize vibration frequency selection for vibratory soil-cutting equipment via resonance analysis",
+    "key_results": "First-order soil natural frequency 29.5 Hz (damping ratio 0.142); recommended frequency range 0.75f\u2080\u20131.414f\u2080; maximum 14.66% drag reduction",
+    "comments": "Thorough experimental characterization with multiple analysis methods; practical utility limited by soil-parameter variability and site-specific calibration needs.",
+    "model_io": [
+      {
+        "model": "Soil SDOF resonance model",
+        "inputs": [
+          "vibration frequency",
+          "amplitude"
+        ],
+        "outputs": [
+          "amplitude magnification factor",
+          "soil displacement"
+        ]
+      },
+      {
+        "model": "Spatial-spectrum bulldozer plate prototype",
+        "inputs": [
+          "excitation frequency",
+          "amplitude level"
+        ],
+        "outputs": [
+          "drag reduction rate",
+          "detachment performance"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Resonance frequency balances vibration intensity and frequency adaptability",
+        "result": "Confirmed; empirical and amplitude-factor methods identify narrow bands"
+      },
+      {
+        "hypothesis": "Wider frequency band improves equipment adaptability at reduced intensity",
+        "result": "Confirmed; \u03b2=1 criterion gives widest band (0\u20131.414f\u2080)"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76871-5": {
+    "category": "Applied Physics",
+    "task": "Determine optimal vibration frequency range for acoustic emission monitoring in landslide waveguides",
+    "key_results": "Soil natural frequency f\u2080 = 29.5 Hz; recommended frequency band 0.75f\u2080\u20131.414f\u2080; drag reduction of 14.66% for optimized spatial-spectrum plates",
+    "comments": "Systematic experimental study with practical engineering value, though the frequency selection depends heavily on soil properties that may vary in situ.",
+    "model_io": [
+      {
+        "model": "Single-degree-of-freedom resonance model",
+        "inputs": [
+          "waveguide diameter",
+          "wall thickness",
+          "soil condition"
+        ],
+        "outputs": [
+          "attenuation coefficient",
+          "resonance frequency band"
+        ]
+      },
+      {
+        "model": "Spatial-spectrum bulldozing plate",
+        "inputs": [
+          "excitation frequency",
+          "amplitude"
+        ],
+        "outputs": [
+          "drag force",
+          "soil detachment performance"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Surrounding-medium condition has largest effect on attenuation",
+        "result": "Confirmed; soil condition > outer diameter > wall thickness"
+      },
+      {
+        "hypothesis": "Best drag reduction occurs near soil natural frequency",
+        "result": "Confirmed; optimal relative drag reduction 14.66%"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-78917-8": {
+    "category": "Synthetic Circuits",
+    "task": "Secure in vivo DNA data storage with compression and obfuscation",
+    "key_results": "10-ary Huffman coding optimizes compressibility; multi-population system with decoy clones maintains stable genomic payloads across extended culture",
+    "comments": "Clever use of biological noise tolerance and population heterogeneity for security, though practical scalability to clinically relevant data volumes remains unclear.",
+    "model_io": [
+      {
+        "model": "DNA CODEC encoding-decoding pipeline",
+        "inputs": [
+          "data payload",
+          "degenerate base alphabet",
+          "CRISPR integration coordinates"
+        ],
+        "outputs": [
+          "compressed encoded sequence",
+          "genomic integration",
+          "decoded data",
+          "obfuscation via decoy clones"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Heterogeneous decoy populations mask true payload sequence information",
+        "result": "Obfuscation maintained across replication and population drift"
+      },
+      {
+        "hypothesis": "10-ary Huffman coding with degenerate bases balances compressibility and noise robustness",
+        "result": "Decoding accuracy preserved despite biological and technical noise"
+      }
+    ]
   }
 }
