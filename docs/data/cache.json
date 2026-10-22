@@ -666058,5 +666058,284 @@
         "result": "Phosphatidylglycerol is conditionally essential with mechanistic link to potassium transport"
       }
     ]
+  },
+  "hf:2610.28940": {
+    "category": "Generative",
+    "task": "Fast streaming voice style conversion with text-based control",
+    "key_results": "2x latency reduction to 520ms, strongest target style fidelity across VSC, voice design, and voice editing tasks",
+    "comments": "The shift from mel-spectrogram context to compact style embeddings is clever for enabling text control, though the paper doesn't clarify how well style fidelity translates to perceptual quality.",
+    "model_io": [
+      {
+        "model": "Few-step pixel MeanFlow + text-conditioned flow matching",
+        "inputs": [
+          "source utterance",
+          "target style embedding",
+          "optional natural language prompt"
+        ],
+        "outputs": [
+          "converted mel-spectrogram",
+          "styled audio"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Self Forcing feedback improves robustness under streaming inference",
+        "result": "Maintained conversion quality while reducing latency to 520ms"
+      },
+      {
+        "hypothesis": "Text-conditioned flow matching can enable voice design and instruction-based editing",
+        "result": "Achieved strongest fidelity on both voice design and voice editing tasks"
+      }
+    ]
+  },
+  "hf:2610.23344": {
+    "category": "LLM/Reasoning",
+    "task": "Self-improving language models via learned proposal generation",
+    "key_results": "Qwen 3.8-27B outperforms GPT-6-sol with 33% lower data-generation cost; generalizes to unseen model families",
+    "comments": "Using a frozen research world model as reward is pragmatic but risks distributional drift; periodic real-execution grounding is essential.",
+    "model_io": [
+      {
+        "model": "LM2LM (policy LLM) + Research World Model (reward predictor)",
+        "inputs": [
+          "model architecture",
+          "experimental records",
+          "improvement proposals"
+        ],
+        "outputs": [
+          "LM improvement proposals",
+          "predicted gains",
+          "measured outcomes"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "RL training with RWM predictions can scale verifier feedback without expensive real evaluation",
+        "result": "33% lower data-generation cost while matching or exceeding GPT-6-sol performance"
+      },
+      {
+        "hypothesis": "Periodic real-execution validation maintains feedback reliability despite policy optimization",
+        "result": "LM2LM generalizes to unseen model families without distribution collapse"
+      }
+    ]
+  },
+  "hf:2610.28679": {
+    "category": "Benchmark",
+    "task": "Evaluating LLM agent verifier generation for output validation",
+    "key_results": "222 tasks with 4,993 test cases; normalized accuracy 10.6\u201362.1; false rejections often from overly restrictive verifiers",
+    "comments": "The finding that agents test solutions sharing verifiers' mistaken assumptions reveals a fundamental circularity in self-verification that benchmarks alone cannot resolve.",
+    "model_io": [
+      {
+        "model": "19 LLM models in agent harness",
+        "inputs": [
+          "task instruction",
+          "environment",
+          "solution attempts"
+        ],
+        "outputs": [
+          "executable verifier",
+          "verification outcomes (accept/reject)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Verifiers consistently reject invalid solutions more reliably than accepting valid ones",
+        "result": "Confirmed; false rejections dominate due to overly restrictive verification logic"
+      },
+      {
+        "hypothesis": "Verifier4Verifier audits can catch unreliable source verifiers and test suites",
+        "result": "Case studies reveal unsupported assumptions about solution formats survive self-testing"
+      }
+    ]
+  },
+  "hf:2610.30066": {
+    "category": "Generative",
+    "task": "Improving training efficiency of uniform diffusion language models via recursive looping",
+    "key_results": "2.8\u20133.3x fewer training FLOPs for matching NLL; 9.8% lower perplexity at matched NFE budget; 12% fewer inference loops with selective sampling",
+    "comments": "The iso-FLOP gains are substantial but modest perplexity improvements suggest diminishing returns; applicability beyond OpenWebText/FineWeb-Edu unclear.",
+    "model_io": [
+      {
+        "model": "Looped Uniform Diffusion Language Model (selective recursive Transformer layers)",
+        "inputs": [
+          "corrupted token sequences",
+          "context with unreliable tokens"
+        ],
+        "outputs": [
+          "denoised text",
+          "validation NLL",
+          "generation perplexity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Selective looping improves UDLM training efficiency under iso-FLOP budget",
+        "result": "2.8\u20133.3x FLOP reduction for matching validation NLL"
+      },
+      {
+        "hypothesis": "Sampling smaller loop counts more frequently reduces inference cost without accuracy loss",
+        "result": "12% fewer loops during inference with uniform sampling as baseline"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-74365-y": {
+    "category": "Other",
+    "task": "Training-free skin lesion edge detection via multi-bitplane fusion",
+    "key_results": "SLCD achieved F1-score 0.718, Jaccard 0.575, MCC 0.733 on SIEDT dataset; outperformed traditional edge detectors and deep learning approaches",
+    "comments": "Practical lightweight alternative requiring no training, though performance gains over traditional methods appear incremental.",
+    "model_io": [
+      {
+        "model": "SLCD (Haar wavelet + morphology + MSB bitplane fusion)",
+        "inputs": [
+          "dermoscopic images"
+        ],
+        "outputs": [
+          "skin lesion edge maps"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-bitplane edge fusion improves extraction of fine texture boundaries over single-plane methods",
+        "result": "Achieved best-reported F1-score and MCC on SIEDT benchmark"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-74415-5": {
+    "category": "Statistical Methods",
+    "task": "Schizophrenia classification from resting-state EEG with explainability",
+    "key_results": "EEGNet outperformed 3D-CNN (LOSO: F1 0.767, AUC 0.797 vs. kappa 0.011); SHAP and Grad-CAM identified contributing EEG channels; small cohort (28 subjects) with bootstrap CIs quantified uncertainty",
+    "comments": "Rigorous validation with participant-level splits; small sample size and contradictory channel rankings between XAI methods suggest limited generalization confidence.",
+    "model_io": [
+      {
+        "model": "EEGNet (channel-wise convolution-RNN)",
+        "inputs": [
+          "19-channel EEG epochs (250 Hz)"
+        ],
+        "outputs": [
+          "schizophrenia classification"
+        ]
+      },
+      {
+        "model": "SHAP + Grad-CAM",
+        "inputs": [
+          "EEGNet activations"
+        ],
+        "outputs": [
+          "channel/region importance rankings"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "EEGNet better captures schizophrenia-related EEG signatures than 3D-CNN",
+        "result": "EEGNet superior under Stratified Group 5-Fold (F1 0.695, AUC 0.757) vs. 3D-CNN (kappa 0.011)"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-74498-0": {
+    "category": "Other",
+    "task": "Explainable papillary thyroid carcinoma classification via ontology-guided neuro-symbolic CNN-Transformer",
+    "key_results": "Hybrid ConvNeXtV2-Swin Transformer achieved 96.19% accuracy, 96.16% sensitivity, ROC-AUC 0.9702; external test 91.4% accuracy; ontology-guided post-hoc interpretation aligned with cytopathology",
+    "comments": "Strong performance with interpretability via Grad-CAM and ontological reasoning; neuro-symbolic approach appropriately positions model as decision support rather than expert replacement.",
+    "model_io": [
+      {
+        "model": "ConvNeXtV2-Swin Transformer hybrid",
+        "inputs": [
+          "cytological images"
+        ],
+        "outputs": [
+          "PTC classification",
+          "Grad-CAM activations"
+        ]
+      },
+      {
+        "model": "Ontology-guided interpretation module",
+        "inputs": [
+          "attention/activation maps"
+        ],
+        "outputs": [
+          "pathology-informed semantic interpretation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Hybrid CNN-Transformer + ontology captures complementary fine-grained and contextual morphology",
+        "result": "ConvNeXtV2-Swin achieved 96.19% accuracy with interpretable cytopathology alignment"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76105-8": {
+    "category": "Network Biology",
+    "task": "Knowledge graph embedding for link prediction in complex networks",
+    "key_results": "RGaKE outperformed baselines on FB15K-237, WN18RR, YAGO-10, KINSHIP benchmarks; randomized perturbation + global-aware module improved link prediction accuracy",
+    "comments": "Technical contribution to KG embedding; experimental gains modest and limited novelty over existing architectures.",
+    "model_io": [
+      {
+        "model": "RGaKE (randomized + global-aware KG embedding)",
+        "inputs": [
+          "knowledge graph triples"
+        ],
+        "outputs": [
+          "entity/relation embeddings",
+          "link prediction scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Randomized perturbation embeddings capture relational diversity better than single arrangements",
+        "result": "RGaKE showed superior link prediction on benchmark datasets"
+      }
+    ]
+  },
+  "nature:10.1038/s44259-026-00287-4": {
+    "category": "Genomics",
+    "task": "Automated knowledge graph construction for antibiotic resistance discovery",
+    "key_results": "AResDB integrated 8570 papers; AResKG contains 52.1M triples across 14 entity and 27 relation types; outperformed existing KGs in gene-antibiotic resistance prediction",
+    "comments": "Demonstrates scalable LLM-powered knowledge extraction, though reliance on automated mining may introduce annotation errors despite curation.",
+    "model_io": [
+      {
+        "model": "LLM-powered text mining pipeline",
+        "inputs": [
+          "full-text publications and supplementary materials"
+        ],
+        "outputs": [
+          "AResDB (curated database)",
+          "AResKG (knowledge graph)"
+        ]
+      },
+      {
+        "model": "Machine learning classifiers",
+        "inputs": [
+          "AResKG triples"
+        ],
+        "outputs": [
+          "gene-antibiotic resistance predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LLM-mined knowledge graphs improve resistance mechanism discovery over manual curation",
+        "result": "AResKG-based ML methods outperformed existing knowledge graphs"
+      }
+    ]
+  },
+  "nature:10.1038/s41599-026-09517-6": {
+    "category": "Other",
+    "task": "Supply chain information sharing and C2M strategy optimization",
+    "key_results": "Moderate C2M efficiency incentivizes platform information sharing; mutual benefit emerges when efficiency is balanced",
+    "comments": "Game-theoretic modeling integrates green services and C2M; theoretical framework lacks empirical validation; insights counter conventional wisdom.",
+    "model_io": [],
+    "hypotheses": [
+      {
+        "hypothesis": "At moderate C2M investment efficiency, platforms prefer information sharing",
+        "result": "Confirmed via game-theoretic analysis; creates mutually beneficial outcome"
+      }
+    ]
   }
 }
