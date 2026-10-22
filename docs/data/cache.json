@@ -665193,5 +665193,870 @@
         "result": "Confirmed via theoretical analysis"
       }
     ]
+  },
+  "hf:2610.28905": {
+    "category": "Agents/RL",
+    "task": "Hidden message passing between diffusion language model agents",
+    "key_results": "Removing messages eliminates +63.6 to +100.0 point advantages; single late transfer reaches 87.8% vs. 80.8% with matched communication; content substitution causes \u221234.0 point effect on QASC",
+    "comments": "Novel finding that timing of information transfer outweighs frequency suggests diffusion models' continuous state space enables efficient late-stage communication, though practical applicability to real-world multi-agent systems remains unclear.",
+    "model_io": [
+      {
+        "model": "Diffusion language model (sender + receiver)",
+        "inputs": [
+          "denoising trajectory",
+          "compressed hidden message (4 signed vectors)"
+        ],
+        "outputs": [
+          "revised text completion",
+          "received agent's denoised states"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "One diffusion agent can pass compact hidden messages that the receiver uses",
+        "result": "Confirmed: message removal and substitution show causal effects on performance"
+      },
+      {
+        "hypothesis": "Timing of message transfer matters more than frequency",
+        "result": "Confirmed: single late transfer (87.8%) outperforms four recurrent exchanges (80.8%)"
+      }
+    ]
+  },
+  "hf:2610.28909": {
+    "category": "Agents/RL",
+    "task": "Accelerating deep research with diffusion language models",
+    "key_results": "Diffusion backbone achieves ~6\u00d7 end-to-end speedup; dFast mode provides 1.99\u00d7 median speedup for decomposition; strongest diffusion instance ranks above commercial systems on public leaderboard",
+    "comments": "Swapping backbone while holding agentic scaffold fixed isolates diffusion's contribution, but the 100-task benchmark may not capture edge cases where autoregressive planning proves essential.",
+    "model_io": [
+      {
+        "model": "Diffusion language model (dLLM) vs. autoregressive backbone",
+        "inputs": [
+          "research task",
+          "retrieved evidence"
+        ],
+        "outputs": [
+          "planning subqueries",
+          "long-form report"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Diffusion backbone reduces latency vs. autoregressive in multi-stage research",
+        "result": "Confirmed: 6\u00d7 speedup driven by order-of-magnitude reductions in planning and writing"
+      },
+      {
+        "hypothesis": "dFast (early subquery extraction) maintains report quality while improving speed",
+        "result": "Confirmed: 1.99\u00d7 speedup with best RACE rubric score among three configurations"
+      }
+    ]
+  },
+  "hf:2610.22659": {
+    "category": "Medical",
+    "task": "Privacy-capability tradeoff in training on synthetic medical records",
+    "key_results": "Privacy-aware rewriting outperforms naive paraphrasing and DP-SGD in privacy-capability balance; more capable rewriting models reduce downstream leakage but test-time compute gains inconsistent",
+    "comments": "Canary-based leakage probing is principled, but canaries may not capture all privacy risks; the non-monotonic held-out fit relationship warrants deeper investigation into model capacity and memorization.",
+    "model_io": [
+      {
+        "model": "Language model (finetuning + rewriting variants)",
+        "inputs": [
+          "sensitive medical records",
+          "rewriting instructions (uniqueness-aware or naive)"
+        ],
+        "outputs": [
+          "synthetic records",
+          "canary leakage signals"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Privacy-aware rewriting offers better capability-privacy tradeoff than DP-SGD",
+        "result": "Confirmed: privacy-aware rewriting achieves more favorable balance across multiple rewriting models"
+      },
+      {
+        "hypothesis": "More capable rewriting models reduce downstream privacy leakage",
+        "result": "Partially confirmed: generally true but held-out fit does not improve monotonically"
+      }
+    ]
+  },
+  "hf:2610.24771": {
+    "category": "Agents/RL",
+    "task": "Preserving design intent across multi-artifact projects at scale",
+    "key_results": "Design Anything satisfies 85.0\u201392.5% of brief constraints with DeepSeek/GPT models, exceeding same-model baselines by 14.4\u201315.4% overall and 23.0\u201325.1% on 24-artifact tasks; professional designers prefer complete deliverable sets",
+    "comments": "Graph-based intent-execution binding is a clever abstraction, but evaluation relies on rule-based constraint checking rather than subjective design quality; scalability beyond 24 artifacts unexplored.",
+    "model_io": [
+      {
+        "model": "LLM (DeepSeek V4.1 Flash High / GPT-5.6 Sol High)",
+        "inputs": [
+          "design brief",
+          "task contract (constraints/decisions)",
+          "intent-execution graph",
+          "prior deliverables"
+        ],
+        "outputs": [
+          "design artifacts",
+          "constraint satisfaction signals"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Explicit intent-execution graph improves constraint satisfaction over baselines",
+        "result": "Confirmed: 14.4\u201315.4% improvement; 23.0\u201325.1% on largest tasks"
+      },
+      {
+        "hypothesis": "Design Anything generalizes across 19 design domains",
+        "result": "Confirmed: leads or ties in 18 of 19 domains per model"
+      }
+    ]
+  },
+  "hf:2610.30113": {
+    "category": "Benchmark",
+    "task": "Evaluating LLM agents on end-to-end quantitative trading research",
+    "key_results": "GPT-6 Astra ranks highest but no model beats equal-weight market in sealed 2024 test period; benchmark includes realistic trading constraints and market impact",
+    "comments": "Honest negative result (models underperform baseline) strengthens the benchmark's credibility, though the 2024 market regime may disadvantage certain strategies; generalization to other markets/assets unclear.",
+    "model_io": [
+      {
+        "model": "LLM agents (9 frontier models including GPT-6 Astra)",
+        "inputs": [
+          "market hypothesis",
+          "2022\u20132023 historical data",
+          "feedback loops"
+        ],
+        "outputs": [
+          "feature engineering code",
+          "stock-scoring signals",
+          "frozen strategy for 2024 evaluation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LLMs can complete the iterative quantitative research loop end-to-end",
+        "result": "Partially confirmed: models generate strategies but none beat equal-weight baseline on sealed 2024 data"
+      }
+    ]
+  },
+  "hf:2610.29934": {
+    "category": "Agents/RL",
+    "task": "Multi-agent coordination via continuous theory-of-mind tokens",
+    "key_results": "ToM2Vec shows consistent improvements over baselines across 5 environments (Overcooked-AI, negotiation, Decrypto, Hanabi, Collab Escape/Capture); generalizes to unseen partner models including GPT-5.4; latent encoding critical (text-based reasoning degrades performance)",
+    "comments": "Training supervision from actual partner thoughts is a strong signal but limits applicability to settings where ground truth thoughts are unavailable; the abstract reasoning nature of latent tokens is demonstrated but their interpretability remains limited.",
+    "model_io": [
+      {
+        "model": "LLM agent with ToM2Vec latent reasoning module",
+        "inputs": [
+          "partner's actual thoughts (train-time)",
+          "partner model outputs (test-time)"
+        ],
+        "outputs": [
+          "continuous ToM tokens (reasoning budget)",
+          "conditioned agent actions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Latent reasoning in rich space improves multi-agent coordination vs. text-based ToM",
+        "result": "Confirmed: consistent improvements across diverse environments; performance drops when reasoning expressed in text"
+      },
+      {
+        "hypothesis": "ToM tokens encode partner beliefs/desires rather than task-specific info and generalize across partner families",
+        "result": "Confirmed: tokens improve direct answer accuracy on partner mental states; generalize to unseen proprietary models"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-78936-5": {
+    "category": "Single Molecule",
+    "task": "Map 3D spatial organization of FG-nucleoporins in living cell NPCs",
+    "key_results": "Resolved all 11 mammalian FG-Nups with stratified architecture: 5 central FG-Nups forming annular structure with ~40 nm core, 6 peripheral FG-Nups extending 80-130 nm cytoplasmic and 60-100 nm nucleoplasmic; passive diffusion uses FG-poor central corridor while facilitated transport uses peripheral FG-rich pathways",
+    "comments": "Elegant integration of live-cell tracking with 3D reconstruction reveals functional compartmentalization of the NPC barrier, though the dynamic sampling captures time-averaged conformations that may obscure rapid conformational fluctuations.",
+    "model_io": [
+      {
+        "model": "Nuclear pore complex in live mammalian cells",
+        "inputs": [
+          "Live cells",
+          "FG-nucleoporins (Nup62, Nup58, Nup54, Nup45, Nup50, Nup98, Nup153, Nup214, Nup88, Nup75, Nup160)",
+          "Transport cargo (passive diffusion and facilitated transport substrates)"
+        ],
+        "outputs": [
+          "3D spatial maps of individual FG-Nups",
+          "Conformational states (open/closed) for Nup214 and Nup153",
+          "Transport route preferences (central vs. peripheral pathways)",
+          "Spatial coordinates: annular region dimensions, axial extension lengths"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "FG-Nups form a uniform disordered meshwork barrier",
+        "result": "Rejected; revealed stratified architecture with central annular core and peripheral dynamic caps"
+      },
+      {
+        "hypothesis": "Passive and facilitated transport use distinct spatial routes through NPC",
+        "result": "Confirmed; passive diffusion traverses central FG-poor corridor, facilitated transport uses peripheral FG-rich pathways"
+      }
+    ]
+  },
+  "nature:10.1038/s41419-026-09328-2": {
+    "category": "Cell Division/Cycle",
+    "task": "Elucidate the m6A-independent role of ALKBH5 in spindle assembly during oocyte meiosis",
+    "key_results": "ALKBH5 catalytic activity was dispensable for spindle restoration; ALKBH5 competes with KIF22 for PJA1 E3 ligase binding to prevent KIF22 proteasomal degradation; Alkbh5-/- oocytes showed abnormal spindle morphology",
+    "comments": "This work elegantly separates enzymatic from non-enzymatic functions, though the physiological significance of spindle defects for oocyte viability in vivo remains to be established.",
+    "model_io": [
+      {
+        "model": "Mouse oocytes (wild-type and Alkbh5-/-)",
+        "inputs": [
+          "ALKBH5 protein",
+          "wild-type and H205A catalytic mutant Alkbh5",
+          "KIF22 protein",
+          "PJA1 E3 ligase"
+        ],
+        "outputs": [
+          "spindle morphology",
+          "KIF22 protein stability",
+          "ubiquitination levels",
+          "meiotic maturation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "ALKBH5 m6A-demethylase activity is required for spindle assembly",
+        "result": "Refuted: catalytically dead ALKBH5-H205A restored spindle morphology"
+      },
+      {
+        "hypothesis": "ALKBH5 stabilizes KIF22 protein by competing for PJA1 binding",
+        "result": "Confirmed: ALKBH5 loss promotes PJA1-mediated KIF22 ubiquitination and degradation"
+      }
+    ]
+  },
+  "nature:10.1038/s41584-026-01442-x": {
+    "category": "Organelles",
+    "task": "Review the role of primary cilia in fibrosis regulation and potential therapeutic targeting",
+    "key_results": "Primary cilia dysregulation contributes to fibrosis across multiple organs; cilia function as signaling hubs for Toll-like receptors, morphogens, and growth factors regulating tissue remodeling; pharmacological modulation of cilia may offer therapeutic approach for fibrotic diseases",
+    "comments": "While the review builds a compelling case for ciliary involvement in fibrosis, most evidence remains correlative; mechanistic in vivo validation and druggability of cilia are key barriers to translation.",
+    "model_io": [
+      {
+        "model": "Fibrotic tissues and disease models",
+        "inputs": [
+          "primary cilia",
+          "Toll-like receptor signaling",
+          "morphogen/growth factor signaling"
+        ],
+        "outputs": [
+          "tissue remodeling markers",
+          "fibrosis progression",
+          "tissue repair responses"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Dysregulated primary cilia function drives fibrosis across multiple organs",
+        "result": "Supported by emerging evidence; requires further mechanistic validation"
+      }
+    ]
+  },
+  "nature:10.1038/s44573-026-00015-z": {
+    "category": "Apoptosis/Cell Death",
+    "task": "Review redox homeostasis alterations in cancer therapy resistance and therapeutic strategies to disrupt redox balance",
+    "key_results": "Cancer cells strengthen antioxidant capacity (glutathione, thioredoxin) and dysregulate transcriptional regulators (NRF2, HIF-1\u03b1, NF-\u03baB) to counteract ROS-inducing therapies; ROS influence proliferation, apoptosis evasion, angiogenesis, metastasis; combination redox-targeting with standard therapy may enhance efficacy",
+    "comments": "The review comprehensively synthesizes redox biology in cancer resistance, though clinical translation remains constrained by selectivity issues and acquired resistance mechanisms.",
+    "model_io": [
+      {
+        "model": "Cancer cells and tumors under therapeutic pressure",
+        "inputs": [
+          "anticancer therapies (ROS-generating)",
+          "antioxidant system modulators",
+          "transcriptional regulators",
+          "ERO1\u03b1/protein disulfide isomerase inhibitors"
+        ],
+        "outputs": [
+          "ROS levels",
+          "antioxidant capacity",
+          "cell survival/death",
+          "proliferation",
+          "apoptosis",
+          "angiogenesis",
+          "metastasis"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Cancer cells escape ROS-inducing therapies by upregulating antioxidant systems",
+        "result": "Confirmed: tumor cells strengthen glutathione and thioredoxin pathways and dysregulate redox-sensitive transcription factors"
+      },
+      {
+        "hypothesis": "Redox-targeting combination therapy can overcome single-agent resistance",
+        "result": "Supported experimentally; clinical translation limited by selectivity and emergence of resistance"
+      }
+    ]
+  },
+  "nature:10.1038/s41531-026-01566-7": {
+    "category": "Single Cell",
+    "task": "Discovery of exosomal miRNA signature for Parkinson's disease using cross-cohort consensus feature selection",
+    "key_results": "69-miRNA consensus signature: Random Forest AUC 0.952; 63-protein signature AUC 0.611 (lower inter-platform reproducibility); signature traced to CNS and immune compartments; mitochondrial dysfunction and complement suppression converged across omics",
+    "comments": "Cross-cohort consensus and multi-omics validation strengthen biomarker robustness; single-cell tracing to B/CD4+ T cells provides mechanistic insight into immune dysregulation.",
+    "model_io": [
+      {
+        "model": "Consensus feature selection (5 methods integrated)",
+        "inputs": [
+          "multi-dataset exosomal miRNA and proteomic profiles"
+        ],
+        "outputs": [
+          "robust biomarker panels"
+        ]
+      },
+      {
+        "model": "Classification ensemble (4 models)",
+        "inputs": [
+          "miRNA/protein signatures"
+        ],
+        "outputs": [
+          "PD classification scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Exosomal miRNAs from CNS and immune compartments reflect mitochondrial and immune pathology in PD",
+        "result": "Tissue origin profiling and single-cell validation traced signatures; enrichment analysis highlighted mitochondrial and complement pathways"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-70177-2": {
+    "category": "Genomics",
+    "task": "Network toxicology and transcriptomics integration to prioritize molecular targets in aspartame-related breast carcinogenesis",
+    "key_results": "46 overlapping APM-breast cancer targets identified; 5 core targets (prioritized by multi-algorithm ML) show differential expression across subtypes; SHAP revealed stable feature importance; clinical validation via TCGA",
+    "comments": "Computational prioritization is hypothesis-generating; in vitro and in vivo experimental mechanistic studies essential to establish causality between APM exposure and identified pathways.",
+    "model_io": [
+      {
+        "model": "Multi-algorithm machine learning (ensemble)",
+        "inputs": [
+          "226 APM targets",
+          "1973 breast cancer genes",
+          "overlapping candidates"
+        ],
+        "outputs": [
+          "5 core prioritized targets"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "APM-induced molecular targets converge on cell proliferation, migration, and cancer-associated pathways",
+        "result": "46 overlapping targets enriched in TNF, IL-17, transcriptional misregulation; 5 core targets show stable diagnostic performance and differential expression across TCGA subtypes"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-75083-1": {
+    "category": "Genomics",
+    "task": "Early dose stratification 4h post-ionizing radiation exposure using peripheral blood transcriptomics",
+    "key_results": "215 DEGs identified; LASSO model with CDKN1A and CD70: AUC-ROC 0.88; with additional DDB2: AUC-ROC 1.00 for low vs. high-dose discrimination; 7 biomarkers showed dose-dependent changes across multiple disease cohorts",
+    "comments": "Fast turnaround (4h) and high cross-dataset specificity are practical advantages over cytogenetic assays; three-gene panel shows promise but requires prospective validation in accident scenarios.",
+    "model_io": [
+      {
+        "model": "LASSO logistic regression",
+        "inputs": [
+          "peripheral blood transcriptomics at 4h post-irradiation"
+        ],
+        "outputs": [
+          "dose category classification (low vs. high)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Radioinduced transcriptomics at 4h enables accurate dose classification",
+        "result": "7 genes (AEN, CD70, CDKN1A, DDB2, FDXR, PCNA, VPREB3) showed specificity to IR across independent disease cohorts; 3-gene model achieved AUC-ROC 1.00 on training data"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-75529-6": {
+    "category": "Statistical Methods",
+    "task": "Hybrid optimization-based feature selection for PCOS prediction with stacking classification",
+    "key_results": "ACOBO (Ant Colony \u2013 Butterfly Optimization) identified stable feature subset; stacking with AdaBoost meta-classifier achieved 95.64% accuracy on PCOS prediction",
+    "comments": "Robustness checks via Spearman/Kendall rank correlation and Jensen-Shannon divergence strengthen stability claims; SMOTE addresses class imbalance appropriately.",
+    "model_io": [
+      {
+        "model": "Hybrid ACOBO optimization",
+        "inputs": [
+          "clinical and patient characteristic features"
+        ],
+        "outputs": [
+          "stable feature subset"
+        ]
+      },
+      {
+        "model": "Stacking ensemble",
+        "inputs": [
+          "selected features",
+          "base learner predictions"
+        ],
+        "outputs": [
+          "PCOS risk prediction"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-76102-x": {
+    "category": "Other",
+    "task": "Streaming intrusion detection in medical IoT networks with explainability",
+    "key_results": "TAPX-Net achieved 0.9541 recall at 1% FPR, 0.8963 zero-day recall; processes 108.7 windows/sec on CPU with 98.8% within 10ms latency",
+    "comments": "Window-causal design and Integrated Gradients validation strengthen claims; generalization across datasets via adaptation demonstrates practical robustness.",
+    "model_io": [
+      {
+        "model": "TAPX-Net",
+        "inputs": [
+          "network traffic windows (multivariate temporal sequences)"
+        ],
+        "outputs": [
+          "intrusion/benign classification, patch-level explanations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Integrated Gradients better tracks causal ablation than attention weights",
+        "result": "IG showed closer alignment to causal input-level ablation across attack classes"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76171-y": {
+    "category": "Genomics",
+    "task": "Cross-corpus consensus feature selection for language-invariant Parkinson's disease detection from speech",
+    "key_results": "Dual-stream framework (acoustic + spectrogram); cross-corpus consensus identified 7-8 stable biomarkers; achieved language-invariant classification with strong generalization; cross-lingual validation on withheld corpora demonstrated robustness",
+    "comments": "Rigorous cross-corpus and cross-lingual validation addresses major generalization challenge in speech-based PD screening; feature-stability focus is pragmatic and novel.",
+    "model_io": [
+      {
+        "model": "Acoustic consensus stream",
+        "inputs": [
+          "handcrafted acoustic descriptors (156 features)"
+        ],
+        "outputs": [
+          "cross-corpus stable biomarker subset"
+        ]
+      },
+      {
+        "model": "Spectrogram attention stream (CBAM-ResNet + ViT + Grad-CAM)",
+        "inputs": [
+          "log-Mel spectrogram images"
+        ],
+        "outputs": [
+          "consensus saliency mask",
+          "pooled image features"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Cross-corpus consensus features generalize better than language-specific models",
+        "result": "Monolingual, multilingual, and cross-lingual paradigms all showed improved generalization; effect-size consistency validated across derivation and held-out corpora"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77212-2": {
+    "category": "Other",
+    "task": "Multimodal AI framework for personalized athlete monitoring and injury-risk forecasting",
+    "key_results": "Athlete-AI integrates wearable, motion, pose, and literature-derived athlete data; F1-score 86.6% when all features included, 72.8% when label-defining variables removed; simulation-based evaluation on benchmark datasets",
+    "comments": "Comprehensive multimodal architecture is promising; acknowledged limitation of simulation-only validation (no real athlete prospective data) is critical caveat\u2014clinical/practical deployment premature.",
+    "model_io": [
+      {
+        "model": "Athlete-AI multimodal framework",
+        "inputs": [
+          "wearable sensor data",
+          "human motion/pose features",
+          "literature athlete variables (workload, fatigue, recovery)"
+        ],
+        "outputs": [
+          "injury-risk classification",
+          "adaptive training recommendations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multimodal integration improves injury-risk prediction over single modality",
+        "result": "F1-score degradation when label-defining variables removed (86.6\u219272.8%) suggests multimodal signals capture injury risk; negative controls showed feature-only performance comparable to shuffled labels"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77532-3": {
+    "category": "Genomics",
+    "task": "Construction of four-gene glycolysis-associated risk model for HCC with TME characterization",
+    "key_results": "Four-gene model (CBX1, DNMT1, GAS2L3, KPNA2); independent prognostic factor; correlated with advanced stage, high TMB, immunosuppressive TME; knockdown of CBX1/GAS2L3 suppressed proliferation/migration in vitro",
+    "comments": "Convergent computational and experimental evidence strengthens model; glycolysis focus is mechanistically relevant to HCC metabolism; clinical validation in independent prospective cohort remains essential.",
+    "model_io": [
+      {
+        "model": "WGCNA + machine learning (LASSO, RF, SVM-RFE)",
+        "inputs": [
+          "760 glycolysis-associated genes"
+        ],
+        "outputs": [
+          "four-gene risk model"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Glycolysis-associated genes predict HCC prognosis and immune microenvironment composition",
+        "result": "Risk score correlated with advanced AJCC stage, TMB, Tregs, and M0 macrophages; low-risk group showed enhanced immune activity"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-61668-3": {
+    "category": "ML Theory",
+    "task": "Privacy-preserving cross-organizational federated transfer learning with causal discovery",
+    "key_results": "43% improvement in cross-domain generalization robustness; 93.7% collaborative utility retention under privacy constraints",
+    "comments": "Combines causal inference with federated learning credibly, though evaluation limited to multi-enterprise ecosystems without detailed comparison to non-causal baselines.",
+    "model_io": [
+      {
+        "model": "Distributed causal discovery + federated transfer learning",
+        "inputs": [
+          "organizational data streams",
+          "privacy sensitivity profiles"
+        ],
+        "outputs": [
+          "cross-domain predictions",
+          "causal structure estimates",
+          "privacy-protected parameters"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Causal enhancement improves federated transfer learning robustness",
+        "result": "43% improvement over conventional federated transfer learning"
+      },
+      {
+        "hypothesis": "Adaptive privacy architecture maintains utility under constraints",
+        "result": "93.7% utility retention with membership inference near random baseline"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-73459-x": {
+    "category": "Statistics/Probability",
+    "task": "VAR implementation effects on disciplinary rates and goal-scoring dynamics in Turkish Super League",
+    "key_results": "Yellow cards reduced 13% (IRR=0.87, p<0.001); red cards unchanged; added-time goal rate increased 71% (IRR=1.71, p<0.001); overall goals stable",
+    "comments": "Twelve-season study with negative binomial GLM and quasi-binomial regression for temporal/binomial outcomes is methodologically sound; actual added-time duration unavailable limits causal inference.",
+    "model_io": [
+      {
+        "model": "Generalized linear model (negative binomial, quasi-binomial)",
+        "inputs": [
+          "seasonal aggregates of 12 seasons (6 pre-VAR, 6 post-VAR); match count offsets"
+        ],
+        "outputs": [
+          "IRR for card counts",
+          "OR for added-time goal probability"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "VAR reduces caution-based disciplinary actions",
+        "result": "Yellow cards -13%, total cards -12%, card points -12% post-VAR; red cards unchanged"
+      },
+      {
+        "hypothesis": "VAR increases proportion of goals in added-time",
+        "result": "Added-time goals +71%; first-half added-time +192%, second-half +41%; overall goals stable"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-74713-y": {
+    "category": "Algorithms",
+    "task": "Comparison of data-driven LSTM and physics-guided networks for fractional LCR circuit modeling",
+    "key_results": "fPINN test RMSE 2.15\u00d710\u207b\u2074 \u00b1 2.04\u00d710\u207b\u2074 vs. LSTM 0.01537 \u00b1 0.00369; fPINN substantially outperforms data-only approaches",
+    "comments": "Synthetic, noise-free data on one parameter set and short extrapolation interval limit practical applicability; comparison between teacher-forced and autonomous LSTM rollout shows expected degradation.",
+    "model_io": [
+      {
+        "model": "fPINN (physics-informed neural network with fractional residual)",
+        "inputs": [
+          "synthetic charge response time series (Sumudu-Adomian reference)"
+        ],
+        "outputs": [
+          "predicted charge, residual loss"
+        ]
+      },
+      {
+        "model": "LSTM (teacher-forced and autonomous)",
+        "inputs": [
+          "charge sequence windows"
+        ],
+        "outputs": [
+          "one-step and multi-step charge predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Fractional physics constraint improves generalization over integer-order residual",
+        "result": "fPINN RMSE 2.15\u00d710\u207b\u2074 vs. integer-order 0.05414; 2.15\u00d710\u207b\u00b3\u00d7 improvement factor"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-75132-9": {
+    "category": "Algorithms",
+    "task": "Lightweight frequency-wavelet feature fusion for robust scene text detection",
+    "key_results": "YOLO-FWF achieves 86.8% mAP50, 64.2% mAP50:95 on Roboflow text dataset with 2.89M params, 6.7 GFLOPs; outperforms YOLO11n",
+    "comments": "Frequency-domain + wavelet decomposition + angle alignment fusion is well-motivated; evaluation limited to Roboflow datasets; standard public benchmarks (ICDAR, SVT) not included.",
+    "model_io": [
+      {
+        "model": "YOLO-FWF (C3k2_FrequencyCM + C2PSA_WDAM + Fourier angle alignment)",
+        "inputs": [
+          "scene text images (Roboflow datasets)"
+        ],
+        "outputs": [
+          "text bounding boxes",
+          "confidence scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Frequency-domain feature enhancement + wavelet-guided attention improves text stroke sensitivity",
+        "result": "Outperforms YOLO11n on Roboflow; orientation-aware fusion captures inclined/curved text"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77062-y": {
+    "category": "ML Theory",
+    "task": "Tree-based ensemble meta-learners for asphaltene onset pressure and precipitation prediction",
+    "key_results": "Stacking-Huber (AOP): R\u00b2=0.991, MAPE=1.65%; Blending-Huber (precipitation): R\u00b2=0.988, MAE=0.0298; margins over best base learners small",
+    "comments": "Comprehensive ensemble comparison (XGBoost/RF/LightGBM/Extra Trees) with rigorous holdout testing; main challenge is inter-source data mixing during split, limiting generalization claims.",
+    "model_io": [
+      {
+        "model": "Stacking/Blending ensembles (XGBoost, RF, LightGBM, Extra Trees base; Huber meta)",
+        "inputs": [
+          "483 AOP, 408 precipitation measurements from literature; C1-C10+ composition, pressure, temperature"
+        ],
+        "outputs": [
+          "asphaltene onset pressure predictions",
+          "precipitation amount estimates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Ensemble meta-learners outperform base learners on asphaltene prediction",
+        "result": "Stacking-Huber and Blending-Huber achieve highest R\u00b2 and MAPE/MAE; margins small but consistent"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77353-4": {
+    "category": "Other",
+    "task": "Regional synergetic effects of ice-snow tourism via BERT embeddings and economic analysis",
+    "key_results": "F1-score 0.87, outperforms Llama-3-70B baselines; Harbin identified as 'absolute core' (centrality 4.52); three synergetic zones mapped",
+    "comments": "Integration of BERT embeddings with regional network analysis is novel; validation against expert consensus (\u03ba=0.84) adds credibility, though limited to single case study.",
+    "model_io": [
+      {
+        "model": "BERT neural network + regional synergy intensity model",
+        "inputs": [
+          "~12,000 consumer reviews",
+          "multidimensional statistical data from 15 regional nodes"
+        ],
+        "outputs": [
+          "synergy intensity scores",
+          "regional network topology",
+          "centrality measures"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "BERT embeddings + structured indicators predict synergetic relationships",
+        "result": "F1-score 0.87, significantly outperforms Llama-3-70B and ablation variants"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77360-5": {
+    "category": "Algorithms",
+    "task": "Label-scarce cross-domain segmentation of geological fractures from UAV imagery",
+    "key_results": "GRNet achieves IoU 66.84% on source (GeoCrack), 58.96\u00b13.64% on target (RockCrack) post fine-tuning; wavelet+deformable attention improves thin-feature capture",
+    "comments": "Rigorous five-fold CV and fold-dependent analysis; fine-tuning margins over source-only small, indicating limited domain gap or target-domain benefit plateau.",
+    "model_io": [
+      {
+        "model": "GRNet (deformable large-kernel attention + spatial-channel squeeze-excitation)",
+        "inputs": [
+          "UAV photogrammetric imagery (GeoCrack source, RockCrack target)"
+        ],
+        "outputs": [
+          "pixel-level fracture segmentation maps",
+          "feature-space representations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Target-domain fine-tuning outperforms source-only transfer on fracture segmentation",
+        "result": "Fine-tuning achieves mean IoU 58.96\u00b13.64% vs. source-only; improvement modest and fold-dependent"
+      }
+    ]
+  },
+  "nature:10.1038/s41599-026-09540-7": {
+    "category": "Statistics/Probability",
+    "task": "Linguistic analysis of phishing SMS to inform advisory design for vulnerable populations",
+    "key_results": "Identified clause types, modality, and conjunctive use as manipulation vectors; SFL-driven advisories inform design for elderly and NESB groups",
+    "comments": "Small corpus (106 messages) with qualitative SFL analysis; no quantitative validation of proposed advisory effectiveness on target populations.",
+    "model_io": [
+      {
+        "model": "Systemic-Functional Linguistics analysis",
+        "inputs": [
+          "106 phishing SMS",
+          "legitimate organizational SMS"
+        ],
+        "outputs": [
+          "linguistic feature taxonomy",
+          "manipulation tactic classifications"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Specific clause types and modality create urgency/authority in phishing",
+        "result": "High modality, conjunctive use, and temporal markers identified as key manipulation features"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-78802-4": {
+    "category": "Condensed Matter",
+    "task": "Enhancing spin-defect emission via van der Waals photon-ratchet",
+    "key_results": "Photoluminescence enhancement up to 45\u00d7 at 4 K; preserved ODMR contrast; improved magnetic field sensitivity",
+    "comments": "Photon-ratcheting mechanism via interlayer optical coupling enables defect emission enhancement while maintaining quantum properties.",
+    "model_io": [
+      {
+        "model": "PbI\u2082\u2013hBN heterostructure with V_B\u207b defects",
+        "inputs": [
+          "optical excitation",
+          "magnetic field"
+        ],
+        "outputs": [
+          "photoluminescence intensity",
+          "ODMR contrast",
+          "magnetic sensitivity"
+        ]
+      },
+      {
+        "model": "ab initio calculations",
+        "inputs": [
+          "band alignment",
+          "spectral overlap"
+        ],
+        "outputs": [
+          "photon-ratchet mechanism",
+          "interlayer coupling"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Fluorescence resonance energy transfer and nonlinear polarization drive V_B\u207b excitation",
+        "result": "confirmed; 45\u00d7 PL enhancement with minimal electronic/spin hybridization"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11312-x": {
+    "category": "Condensed Matter",
+    "task": "Current-driven rotation and conductance enhancement in helicene molecular machines",
+    "key_results": "100% directional rotation preference; current enhancement above voltage threshold; conductance increase tunable by mechanical stretching",
+    "comments": "Novel molecular rotor demonstrates perfect unidirectionality and significant current modulation, though practical device scalability remains unclear.",
+    "model_io": [
+      {
+        "model": "helicene molecule between electrode tips",
+        "inputs": [
+          "applied voltage",
+          "mechanical deformation"
+        ],
+        "outputs": [
+          "cyclic molecular motion",
+          "junction current"
+        ]
+      },
+      {
+        "model": "DFT calculations",
+        "inputs": [
+          "molecular geometry",
+          "current-induced forces"
+        ],
+        "outputs": [
+          "rotation mechanism",
+          "conducting configurations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Current-induced forces cause cyclic rotation",
+        "result": "confirmed by calculations and 100% directional preference"
+      },
+      {
+        "hypothesis": "Rotation enables highly conducting configurations",
+        "result": "confirmed; current enhancement onset tuned by compression/stretching"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-74682-2": {
+    "category": "Mathematical Physics",
+    "task": "Solving Thomas-Fermi equation via hybrid q-calculus and neural networks",
+    "key_results": "q-ANN lower RMSE than PINN in 42/45 runs; median RMSE 0.004127 vs PINN 0.015044; outperforms classical hard-constrained ANN in 44/45 cases",
+    "comments": "q-deformation reduces boundary conditions effectively, though initialization sensitivity and ~100\u00d7 computational slowdown vs vectorized PINN remain limitations.",
+    "model_io": [
+      {
+        "model": "q-calculus + neural network for Thomas-Fermi equation",
+        "inputs": [
+          "ionization degree",
+          "q-deformation parameter (<1)"
+        ],
+        "outputs": [
+          "ion potential",
+          "RMSE",
+          "residual"
+        ]
+      },
+      {
+        "model": "benchmark comparisons",
+        "inputs": [
+          "same problem instances"
+        ],
+        "outputs": [
+          "q-ANN, PINN, hard-constrained ANN predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "q-deformation combines terminal conditions into fewer constraints",
+        "result": "confirmed; lowers RMSE vs PINN and classical ANN"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-78840-y": {
+    "category": "Gene Regulation",
+    "task": "Map genetic suppressors of essential genes genome-wide using transposon sequencing",
+    "key_results": "Sup-seq identified 53 suppressors for seven essential genes in S. pneumoniae; discovered cryptic transcriptional regulator controlling chaperones and ribosomal proteins; revealed conditional essentiality of phosphatidylglycerol linked to potassium transport",
+    "comments": "Elegant transposon-barcode approach reveals mechanistic diversity of suppression; limited to bacterial model but adaptable to other species for antimicrobial target discovery.",
+    "model_io": [
+      {
+        "model": "Sup-seq (transposon-sequencing with random DNA barcodes)",
+        "inputs": [
+          "essential gene knockout targets",
+          "transposon insertion library"
+        ],
+        "outputs": [
+          "barcode-mapped suppressor mutations",
+          "insertion locations and orientations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Phosphatidylglycerol synthesis is universally essential",
+        "result": "Phosphatidylglycerol is conditionally essential with mechanistic link to potassium transport"
+      }
+    ]
   }
 }
