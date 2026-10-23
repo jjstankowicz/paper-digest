@@ -668744,5 +668744,469 @@
         "result": "Confirmed: IMD-associated genetic risk variants found in open chromatin regions; lupus risk variant identified in TNFSF4 enhancer"
       }
     ]
+  },
+  "hf:2610.30753": {
+    "category": "Agents/RL",
+    "task": "Convert natural-language or video instructions into executable 3D camera trajectories",
+    "key_results": "FilmFlow achieves strongest benchmark performance on CinemaBench (750 text-directed tasks, 60 video-reference tasks) with highest user preference scores",
+    "comments": "Multi-agent decomposition (Director, Interpreter, Scout, Critic) is well-motivated for compositional camera planning, though real-world applicability beyond Blender scenes remains unclear.",
+    "model_io": [
+      {
+        "model": "Director agent (with Interpreter, Scout, Critic sub-agents)",
+        "inputs": [
+          "natural language instructions OR reference videos",
+          "3D scene geometry"
+        ],
+        "outputs": [
+          "executable camera trajectory",
+          "rendered video frames"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-agent composition enables better spatial reasoning and temporal coordination than monolithic baselines",
+        "result": "Confirmed: FilmFlow outperforms baselines on CinemaBench and user studies"
+      }
+    ]
+  },
+  "hf:2610.31372": {
+    "category": "Agents/RL",
+    "task": "Detect and mitigate research integrity violations in autonomous research agents",
+    "key_results": "RIDAR-post-hoc achieves 85.2% F1 on RIV-Gold; detects 3,964 RIV instances in 99.7% of 300 trajectories; RIDAR-runtime reduces RIVs by 36.8% at task completion",
+    "comments": "Comprehensive taxonomy (RIVT with 14 RIV types) is valuable but runtime intervention gains are modest; scaling to complex research agents remains uncertain.",
+    "model_io": [
+      {
+        "model": "RIDAR-post-hoc (RIV detection classifier)",
+        "inputs": [
+          "agent trajectory",
+          "research task specification"
+        ],
+        "outputs": [
+          "RIV type labels",
+          "RIV instance locations"
+        ]
+      },
+      {
+        "model": "RIDAR-runtime (dynamic detector + corrector)",
+        "inputs": [
+          "agent state",
+          "ongoing trajectory"
+        ],
+        "outputs": [
+          "corrective intervention",
+          "modified action"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Automated detection can identify RIVs across full research lifecycle with high precision",
+        "result": "Confirmed: 85.2% F1 on annotated benchmark; widespread prevalence in wild trajectories"
+      },
+      {
+        "hypothesis": "Runtime intervention reduces RIV occurrence during execution",
+        "result": "Partially confirmed: 36.8% reduction is meaningful but suggests room for improvement"
+      }
+    ]
+  },
+  "hf:2610.31651": {
+    "category": "Agents/RL",
+    "task": "Generate physically feasible LEGO brick builds from text or image prompts",
+    "key_results": "BrickWright-guided agents achieve 100% physical validity on 512 prompts vs. 9-69% for baseline agents; halves inference cost via ergonomic assembly API",
+    "comments": "Specialized toolkit (BrickLayer) dramatically improves validity; domain-specific success may not transfer to general 3D assembly tasks.",
+    "model_io": [
+      {
+        "model": "Pre-trained LLM agent (GPT-6 variants) guided by BrickLayer",
+        "inputs": [
+          "text prompt OR image prompt"
+        ],
+        "outputs": [
+          "Python code using BrickLayer API",
+          "LDraw format brick assembly",
+          "physical feasibility validation feedback"
+        ]
+      },
+      {
+        "model": "BrickLayer validator",
+        "inputs": [
+          "assembled brick structure"
+        ],
+        "outputs": [
+          "collision detection",
+          "connectivity analysis",
+          "floating part detection"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Providing agents with assembly API and validator is sufficient for 100% physical validity",
+        "result": "Confirmed: BrickWright achieves perfect validity across all tested agents and prompts"
+      }
+    ]
+  },
+  "hf:2610.27148": {
+    "category": "Agents/RL",
+    "task": "Study task-conditioned collaboration between LLM agents and humans in shared-control navigation",
+    "key_results": "Stronger models (GPT-5.6-Sol, Command-R+ achieve selective, advantage-aware collaboration; involve humans ~80% on favorable routes, <5% otherwise; weaker models show no selectivity",
+    "comments": "Elegant experimental design isolates true collaboration from apparent task-handoff; small participant pool and maze-specific task limit generalizability.",
+    "model_io": [
+      {
+        "model": "LLM agent (GPT-5.6-Sol, Command-R, Qwen-3.8-27B, Command-R+)",
+        "inputs": [
+          "maze state",
+          "human avatar position",
+          "target location",
+          "turn allocation decision"
+        ],
+        "outputs": [
+          "agent move OR hand move to human",
+          "path planning"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Stronger solo performance correlates with selective, advantage-conditioned human involvement",
+        "result": "Confirmed: Solo-capable models showed route-conditioned collaboration; weak-performing Command-R showed none"
+      }
+    ]
+  },
+  "hf:2610.28950": {
+    "category": "Systems",
+    "task": "Achieve high-speed GPU-accelerated quadrotor simulation with realistic rendering for sim-to-real transfer",
+    "key_results": "HyperDrone achieves >20x speedup vs. SOTA batch simulators; millions of FPS on consumer GPUs; successful sim-to-real transfer of yaw-control policy to Crazyflie",
+    "comments": "Impressive engineering feat with multi-backend support (OptiX, Vulkan, Metal, WebGPU); sim-to-real validation limited to single small quadrotor with yaw control.",
+    "model_io": [
+      {
+        "model": "HyperDrone (multirotor dynamics + HyperLux ray-tracing engine)",
+        "inputs": [
+          "motor commands",
+          "scene geometry",
+          "camera parameters"
+        ],
+        "outputs": [
+          "RGB frames",
+          "depth maps",
+          "semantic segmentation",
+          "optical flow",
+          "pose estimates"
+        ]
+      },
+      {
+        "model": "Vision-based yaw-control policy (trained in simulation)",
+        "inputs": [
+          "RGB camera frames (onboard Crazyflie)"
+        ],
+        "outputs": [
+          "motor control commands"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "GPU-optimized physics + ray-tracing enables millions of FPS without sacrificing realism",
+        "result": "Confirmed: HyperLux achieves configurable fidelity (PBR, reflections, motion blur) at millions of FPS"
+      },
+      {
+        "hypothesis": "Simulation-trained vision policies transfer to real quadrotors",
+        "result": "Confirmed: Yaw-control policy transfers to Crazyflie without fine-tuning; generalization to complex behaviors unclear"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-78517-6": {
+    "category": "Structural Biology",
+    "task": "Determine molecular mechanism of bile acid transport by OST\u03b1/\u03b2 transporter",
+    "key_results": "2.7 \u00c5 cryo-EM structure reveals novel 7-TM architecture; lateral surface groove binding mechanism with energetically favored groove-based translocation confirmed by MD simulations and mutagenesis",
+    "comments": "The lateral diffusion mechanism represents a notable departure from classical transporter models, though functional validation relies on indirect transport assays rather than direct single-molecule observation.",
+    "model_io": [
+      {
+        "model": "Cryo-EM structure of human OST\u03b1/\u03b2",
+        "inputs": [
+          "Purified OST\u03b1/\u03b2 protein complex"
+        ],
+        "outputs": [
+          "3D structure at 2.7 \u00c5 resolution, 7-TM architecture"
+        ]
+      },
+      {
+        "model": "Taurocholate-bound OST\u03b1/\u03b2 complex",
+        "inputs": [
+          "OST\u03b1/\u03b2 + taurocholate (TC)"
+        ],
+        "outputs": [
+          "3.2 \u00c5 structure showing lateral groove binding"
+        ]
+      },
+      {
+        "model": "Molecular dynamics simulations",
+        "inputs": [
+          "OST\u03b1/\u03b2 structure",
+          "TC substrate",
+          "Membrane environment"
+        ],
+        "outputs": [
+          "Energy profiles for groove-based diffusion pathway"
+        ]
+      },
+      {
+        "model": "Structure-guided mutagenesis + transport assays",
+        "inputs": [
+          "Conserved polar residues in groove",
+          "Mutant OST\u03b1/\u03b2 variants"
+        ],
+        "outputs": [
+          "Transport activity measurements validating groove residues"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Bile acid binds in central cavity like classical transporters",
+        "result": "Rejected; lateral groove binding observed instead"
+      },
+      {
+        "hypothesis": "Lateral groove-based diffusion is energetically favorable",
+        "result": "Confirmed by MD simulations showing lower energy pathway"
+      },
+      {
+        "hypothesis": "Conserved polar residues in groove are essential for transport",
+        "result": "Confirmed by mutagenesis abolishing transport activity"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-78815-z": {
+    "category": "Cell Signaling",
+    "task": "Identify neuroendocrine mediators of radiation-induced bystander effects",
+    "key_results": "Tyramine from RIM neurons activates TYRA-3, promoting INS-5 secretion and aberrant DAF-2/IIS pathway activation; triggers ER stress and embryonic lethality in non-irradiated tissues",
+    "comments": "Reveals an unexpected adrenaline-like signaling axis orchestrating RIBEs, distinct from canonical radiation damage pathways.",
+    "model_io": [
+      {
+        "model": "C. elegans UV/X-ray irradiation",
+        "inputs": [
+          "localized UV or X-ray",
+          "tyraminergic RIM neurons",
+          "TYRA-3 GPCR",
+          "DAF-2 insulin receptor"
+        ],
+        "outputs": [
+          "tyramine release",
+          "INS-5 secretion",
+          "ER stress",
+          "DNA damage responses",
+          "embryonic lethality"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Neuron-derived tyramine mediates RIBEs via neuro-intestinal-germline axis",
+        "result": "Tyramine activates TYRA-3\u2192INS-5\u2192DAF-2/IIS, triggering systemic damage in non-irradiated tissues"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-78939-2": {
+    "category": "Cell Signaling",
+    "task": "Determine in vivo requirements for RasG12V pathway activation and EGFR interplay",
+    "key_results": "RasG12V acts as EGFR stimulation amplifier; RasG12V generates basal ERK activity independent of EGFR but requires EGFR for full pathway activation; RasG12V mutants are non-constitutively active",
+    "comments": "Challenges the classical 'constitutive activation' model of oncogenic Ras, suggesting RasG12V remains context-dependent on upstream receptor signaling.",
+    "model_io": [
+      {
+        "model": "Drosophila Ras1G12V transgenic and human KRASBG12V",
+        "inputs": [
+          "Ras1G12V or KRASBG12V",
+          "EGFR",
+          "wild-type Ras"
+        ],
+        "outputs": [
+          "ERK phosphorylation",
+          "EGFR-dependent pathway activation",
+          "basal signaling levels"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "RasG12V requires EGFR signaling for full downstream pathway activation",
+        "result": "RasG12V amplifies EGFR stimulation; full activation strictly dependent on EGFR despite generating basal ERK without it"
+      }
+    ]
+  },
+  "nature:10.1038/s41538-026-01201-y": {
+    "category": "Other",
+    "task": "Review of sustainable postharvest disease management in vegetables using integrated strategies",
+    "key_results": "Multi-omic analyses elucidate pathogenicity mechanisms; IPDM approach combines biocontrol, antimicrobials, physical treatments, and packaging",
+    "comments": "Conceptual framework lacking quantitative outcome metrics; practical implementation effectiveness remains largely anecdotal.",
+    "model_io": [],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41540-026-00841-w": {
+    "category": "Network Biology",
+    "task": "Standardize spreadsheet representation and exchange of Boolean and multi-valued logical models",
+    "key_results": "TabularQual bidirectional converter enables seamless exchange between spreadsheets and SBML-qual; demonstrated on Stress Knowledge Map and CaSQ case studies; web interface and programmatic access support diverse workflows",
+    "comments": "Practical bridge reducing XML syntax friction; streamlines model curation and reuse in community-driven development; integration strategies enable existing tools to operate with TabularQual.",
+    "model_io": [
+      {
+        "model": "TabularQual converter with bidirectional SBML-qual mapping",
+        "inputs": [
+          "spreadsheet-based logical models",
+          "SBML-qual XML files"
+        ],
+        "outputs": [
+          "standardized model representations",
+          "executable formats"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Spreadsheet-based representation improves model accessibility and reusability",
+        "result": "Supported by case studies demonstrating enhanced curation, construction, and community adoption"
+      }
+    ]
+  },
+  "nature:10.1038/s41524-026-02363-9": {
+    "category": "ML Theory",
+    "task": "Physics-aware neural networks for low-dose atomic electron tomography",
+    "key_results": "PANN reduces atomic coordinate error and increases recovery rate under reduced-dose AET; robust on metallic nanoparticles; validated on simulated halide perovskites, zeolites, quantum dots",
+    "comments": "Two-stage physics-informed architecture (ResUNet+Zernike+Graph-Transformer) is elegant; experimental validation limited to beam-robust materials.",
+    "model_io": [
+      {
+        "model": "Physics-Aware Neural Network (PANN)",
+        "inputs": [
+          "low-dose STEM images",
+          "tilt series",
+          "initial 3D reconstruction"
+        ],
+        "outputs": [
+          "refined atomic coordinates",
+          "elemental classification",
+          "atomic species labels"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Two-stage physics-aware network incorporating Zernike descriptors and graph attention improves AET accuracy under low dose",
+        "result": "Confirmed; atomic recovery rate increased on simulated and experimental datasets"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-36775-w": {
+    "category": "ML Theory",
+    "task": "Real-time disaster assessment using drone data and deep learning",
+    "key_results": "F1-score 0.981, AUC 0.993, disaster severity prediction rate 0.96",
+    "comments": "ACTF-Net claims superiority over BERT and CapsNet but lacks rigorous cross-model validation on identical test sets.",
+    "model_io": [
+      {
+        "model": "Adaptive Convolutional-Transformer Fusion Network (ACTF-Net)",
+        "inputs": [
+          "drone multimodal data",
+          "high-dimensional catastrophic signals"
+        ],
+        "outputs": [
+          "disaster severity classification",
+          "categorical labels"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Convolutional feature extraction + attention-based temporal modeling captures sequential and spatial patterns in disaster data",
+        "result": "Validated through F1, AUC, and severity prediction metrics"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76291-5": {
+    "category": "Algorithms",
+    "task": "Fuzzy inference-based fault diagnosis and control for battery packs",
+    "key_results": "Insulation fault accuracy improved 81.1%\u219292.3% (judgment time +4.6 s); communication fault accuracy 91.4%\u219297.7%; power limitation response 8.2\u201324 s",
+    "comments": "Fuzzy system adds diagnostic time but substantially improves accuracy; trade-off acceptable for safety-critical systems.",
+    "model_io": [
+      {
+        "model": "Fuzzy Inference System (FIS) with expert database",
+        "inputs": [
+          "state-of-charge",
+          "terminal voltage",
+          "adaptive noise estimates"
+        ],
+        "outputs": [
+          "graded fault levels",
+          "power-limitation commands"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Fuzzy matching + debounce + Mamdani inference improves fault detection robustness",
+        "result": "Confirmed; accuracy gains 11.2% (insulation) and 6.3% (communication)"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76318-x": {
+    "category": "Statistics/Probability",
+    "task": "Predictive modeling of asphalt concrete resilient modulus under varied loading conditions",
+    "key_results": "MARS-POA: R\u00b2 training 0.9973, R\u00b2 testing 0.9732; outperforms GEP and RSM; temperature identified as highest relative importance",
+    "comments": "MARS-POA achieves high fit but test R\u00b2 (0.973) suggests overfitting risk; cross-validation on independent datasets recommended.",
+    "model_io": [
+      {
+        "model": "MARS-POA (Hybrid Multivariate Adaptive Regression Spline-Pelican Optimization)",
+        "inputs": [
+          "loading waveform",
+          "loading frequency",
+          "temperature",
+          "SBS modification status"
+        ],
+        "outputs": [
+          "resilient modulus prediction"
+        ]
+      },
+      {
+        "model": "Gene Expression Programming (GEP)",
+        "inputs": [
+          "same as MARS-POA"
+        ],
+        "outputs": [
+          "resilient modulus prediction"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "MARS-POA captures nonlinear resilient modulus dependencies more accurately than GEP and RSM",
+        "result": "Confirmed; R\u00b2 0.9732 on test set vs. lower performance by GEP and RSM"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-03372-0": {
+    "category": "ML Theory",
+    "task": "Multi-model evaluation of AI standardized patients for clinical communication training",
+    "key_results": "Learner skill explains more variance (\u03b7\u00b2=0.31) than model choice (\u03b7\u00b2=0.06); no significant difference vs. human SP in OSCE gains (n=58 pilot)",
+    "comments": "Architecture-driven effects dominate model choice; Phase 2 pilot underpowered for equivalence testing; prospective validation needed.",
+    "model_io": [
+      {
+        "model": "AI Standardized Patients (LLM-based)",
+        "inputs": [
+          "student queries",
+          "diagnostic information",
+          "learner skill level"
+        ],
+        "outputs": [
+          "adaptive patient responses",
+          "information disclosure modulation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Five frontier LLMs yield similar performance under common three-layer architecture",
+        "result": "Confirmed; learner skill dominates model choice (\u03b7\u00b2=0.31 vs 0.06)"
+      },
+      {
+        "hypothesis": "AI-SP training yields OSCE gains equivalent to human SP training",
+        "result": "Not demonstrated; pilot underpowered; exploratory self-efficacy gains did not survive multiple comparison correction"
+      }
+    ]
   }
 }
