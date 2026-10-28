@@ -1,0 +1,2584 @@
+[
+  {
+    "uid": "hf:2610.34283",
+    "source": "hf",
+    "id": "2610.34283",
+    "title": "ChronoReplay: One Answer Interface Is Not Enough for Streaming Spatial Intelligence",
+    "publishedAt": "2026-10-25T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 199,
+    "projectPage": "https://yihaohu0118.github.io/ChronoReplay/",
+    "category": "Vision",
+    "task": "Streaming spatial VLM training with heterogeneous answer interfaces",
+    "key_results": "13.41-point gain on OST-Bench; improved performance across OVO-S-Bench and UCS-Bench with single checkpoint",
+    "comments": "Addresses real but narrow problem of interface lock-in; chronological replay is intuitive but incremental contribution.",
+    "model_io": [
+      {
+        "model": "spatial VLM",
+        "inputs": [
+          "video frames",
+          "spatial question (e.g., object location, distance)"
+        ],
+        "outputs": [
+          "categorical answer (side)",
+          "distance estimate",
+          "relationship label"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Single-interface supervision specialization weakens transfer to other spatial readouts",
+        "result": "Confirmed; interface lock-in observed when post-training emphasizes one output"
+      },
+      {
+        "hypothesis": "Chronological replay with heterogeneous supervision improves multi-task transfer",
+        "result": "Confirmed; ~2.41 point gain over shifted-order control on OST-Bench"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.36077",
+    "source": "hf",
+    "id": "2610.36077",
+    "title": "The Trinity:Capability-Driven Recursive Self-Improvement for Multimodal Agents",
+    "publishedAt": "2026-10-26T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 156,
+    "projectPage": null,
+    "category": "Agents/RL",
+    "task": "Recursive self-improvement for multimodal agents through capability trees",
+    "key_results": "34-point mean improvement on 28 training benchmarks; 26-point improvement on 18 unseen benchmarks including real embodied tasks",
+    "comments": "Clever capability abstraction via Real2Sim2Real, but evaluation mostly on training distribution; transfer gains moderate relative to claims.",
+    "model_io": [
+      {
+        "model": "Creator (task simplification)",
+        "inputs": [
+          "heterogeneous tasks"
+        ],
+        "outputs": [
+          "simplified simulated environments"
+        ]
+      },
+      {
+        "model": "Explorer (module evolution)",
+        "inputs": [
+          "verified trajectories"
+        ],
+        "outputs": [
+          "capability modules via selective inheritance"
+        ]
+      },
+      {
+        "model": "Evolver (task reorganization)",
+        "inputs": [
+          "execution data"
+        ],
+        "outputs": [
+          "hierarchical capability tree"
+        ]
+      },
+      {
+        "model": "Capability-Aware Router",
+        "inputs": [
+          "task info"
+        ],
+        "outputs": [
+          "Harness module selection"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Tasks with different modalities share underlying capability requirements",
+        "result": "Supported; enables Real2Sim2Real approach and capability tree organization"
+      },
+      {
+        "hypothesis": "Capability-driven module inheritance outperforms flat task organization",
+        "result": "Confirmed; hierarchical structure improves transfer across 28 training and 18 unseen benchmarks"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.37381",
+    "source": "hf",
+    "id": "2610.37381",
+    "title": "PDRVLA: A Vision-Language-Action Model with Physical Dynamics Representations",
+    "publishedAt": "2026-10-27T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 127,
+    "projectPage": null,
+    "category": "Agents/RL",
+    "task": "Vision-Language-Action model with learned physical dynamics for robot control",
+    "key_results": "99.3% on LIBERO, 89.9% on LIBERO-Plus, 93.6% on RoboTwin 2.0, 81.5% on SimplerEnv",
+    "comments": "Strong benchmark results but lightweight dynamics module is underspecified; world-model supervision helps but offline video prediction suffices.",
+    "model_io": [
+      {
+        "model": "PDRVLA (VLA + Physical Dynamics Module)",
+        "inputs": [
+          "RGB observation",
+          "depth",
+          "language instruction"
+        ],
+        "outputs": [
+          "robot action"
+        ]
+      },
+      {
+        "model": "Physical Dynamics Module (auxiliary)",
+        "inputs": [
+          "vision-language features"
+        ],
+        "outputs": [
+          "physical tokens (future RGB, depth, optical flow predictions)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Lightweight physics prediction without online video generation reduces latency while preserving performance",
+        "result": "Confirmed; auxiliary supervision from frozen world model improves future prediction"
+      },
+      {
+        "hypothesis": "ECoT and subtask annotation improve action success via better world understanding",
+        "result": "Supported; ablations show their contribution to overall success rates"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.36729",
+    "source": "hf",
+    "id": "2610.36729",
+    "title": "Hy-Nomas: Towards Free-form Interactive World Generation",
+    "publishedAt": "2026-10-27T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 101,
+    "projectPage": "https://hy-nomas.hy.tencent.com/",
+    "category": "Generative",
+    "task": "Interactive video world model with free-form text and camera control",
+    "key_results": "Superior performance over existing world models in human evaluation; released model weights, code and benchmarks",
+    "comments": "Addresses important problem of multimodal interaction history alignment; multi-stage curriculum is standard; main novelty is action-aware causal attention.",
+    "model_io": [
+      {
+        "model": "Hy-Nomas (8B diffusion world model)",
+        "inputs": [
+          "previous video segment",
+          "text instruction",
+          "camera control",
+          "cached history"
+        ],
+        "outputs": [
+          "variable-length future video segment"
+        ]
+      },
+      {
+        "model": "Prompt Enhancer (vision-language)",
+        "inputs": [
+          "user request",
+          "interaction history"
+        ],
+        "outputs": [
+          "structured condition for next segment"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Action-aware causal attention isolates action instructions to intended temporal windows while preserving context",
+        "result": "Supported; design enables multi-turn interaction without interference"
+      },
+      {
+        "hypothesis": "Multi-stage curriculum with diffusion distillation improves interactive generation quality",
+        "result": "Supported implicitly; human evaluation shows superior performance"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.24520",
+    "source": "hf",
+    "id": "2610.24520",
+    "title": "HABIT-Bench: Evaluating Habit Induction from Longitudinal Weak Evidence in Agent Memory",
+    "publishedAt": "2026-10-20T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 75,
+    "projectPage": "https://hollyming.github.io/habit-bench-site/",
+    "category": "LLM/Reasoning",
+    "task": "Evaluating habit inference from weak longitudinal evidence in agent memory",
+    "key_results": "Best memory method achieves 33.61% macro accuracy; performance remains limited even with annotated evidence",
+    "comments": "Important negative result exposing gap between data access and inference capability; well-designed benchmark but the 33.61% ceiling is concerning for deployment.",
+    "model_io": [
+      {
+        "model": "LLM agent with memory system (Qwen3-235B-A22B, GLM-5.3-Flash)",
+        "inputs": [
+          "user history (hundreds of sessions)",
+          "current request"
+        ],
+        "outputs": [
+          "inferred habit-conditioned action or response"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Agent memory systems can reliably infer and apply user habits from weak longitudinal evidence",
+        "result": "Rejected; best method only 33.61% accurate despite access to full histories"
+      },
+      {
+        "hypothesis": "Annotated evidence alone suffices for habit inference",
+        "result": "Rejected; performance limited even with direct evidence provided"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.34073",
+    "source": "hf",
+    "id": "2610.34073",
+    "title": "Memory Tax: Dissecting the Net Value of Agent Memory",
+    "publishedAt": "2026-10-25T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 66,
+    "projectPage": "https://hexuan21.github.io/MemoryTax/",
+    "category": "LLM/Reasoning",
+    "task": "Quantifying net value of memory systems versus raw history retrieval (RAG)",
+    "key_results": "Many dedicated memory systems underperform naive RAG; dissect gains and losses as memory benefit vs. memory tax",
+    "comments": "Novel lens on memory evaluation; shows abstraction costs outweigh reorganization benefits in many cases; generalizes beyond standalone performance.",
+    "model_io": [
+      {
+        "model": "Memory systems (various architectures)",
+        "inputs": [
+          "raw history",
+          "query"
+        ],
+        "outputs": [
+          "response"
+        ]
+      },
+      {
+        "model": "RAG baseline",
+        "inputs": [
+          "raw history",
+          "query"
+        ],
+        "outputs": [
+          "response"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Dedicated memory systems outperform naive RAG due to reorganization and abstraction",
+        "result": "Rejected; many memory systems show negative net value due to information loss (memory tax)"
+      },
+      {
+        "hypothesis": "Memory benefit and tax decompose net value changes from raw history",
+        "result": "Confirmed; framework separates expected gains from unexpected losses"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.36068",
+    "source": "hf",
+    "id": "2610.36068",
+    "title": "Rollback: Experience Backtracking in World Models for Policy Improvement",
+    "publishedAt": "2026-10-26T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 50,
+    "projectPage": "https://rollback-wm.github.io/",
+    "category": "Agents/RL",
+    "task": "Policy improvement via counterfactual world model rollback for robotics",
+    "key_results": "10.67%, 11.11%, 11.85% absolute improvement on block extraction, ball tossing, tabletop curling; surpasses human level on two tasks within 8 hours",
+    "comments": "Elegant counterfactual reasoning approach; test-time physics grounding via LoRA is practical; strong empirical results on real robots.",
+    "model_io": [
+      {
+        "model": "Action-conditioned world model",
+        "inputs": [
+          "current state",
+          "action candidate"
+        ],
+        "outputs": [
+          "predicted next state",
+          "reward"
+        ]
+      },
+      {
+        "model": "Rollback policy improvement loop",
+        "inputs": [
+          "decision point",
+          "alternative action branches"
+        ],
+        "outputs": [
+          "action-level supervision via counterfactual contrast"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Rollback to critical decision points and branching enables fine-grained action-level learning without separate value model",
+        "result": "Confirmed; improvement concentrated on counterfactual comparison"
+      },
+      {
+        "hypothesis": "Real-world experience refines world model via LoRA (test-time physics grounding)",
+        "result": "Confirmed; sharper model drives policy improvement in self-reinforcing cycle"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.37662",
+    "source": "hf",
+    "id": "2610.37662",
+    "title": "Can Discrete Tokens Serve as Semantically Lossless Representations of Visual Signals?",
+    "publishedAt": "2026-10-27T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 48,
+    "projectPage": "https://doctor-james.github.io/FVQ-Page/",
+    "category": "Vision",
+    "task": "Evaluating semantic fidelity of discrete visual tokens versus continuous representations",
+    "key_results": "Factorized Vector Quantization matches continuous representations on multimodal understanding; 22.8% outperformance over UniAR, 59.2% over Emu3-Chat",
+    "comments": "Challenges assumption that quantization error fundamentally limits discrete tokens; effective bit budget is key insight; achieves parity with continuous models.",
+    "model_io": [
+      {
+        "model": "Factorized Vector Quantization (FVQ)",
+        "inputs": [
+          "visual features"
+        ],
+        "outputs": [
+          "discrete tokens (complementary fixed-dimensional views with parallel codebooks)"
+        ]
+      },
+      {
+        "model": "Multimodal understanding evaluator",
+        "inputs": [
+          "discrete or continuous tokens",
+          "visual question"
+        ],
+        "outputs": [
+          "answer accuracy"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Quantization error is the fundamental limitation of discrete visual tokens",
+        "result": "Rejected; discrete representations with larger errors achieve better understanding; effective bit budget is key"
+      },
+      {
+        "hypothesis": "Factorized quantization with parallel codebooks alleviates saturation in standard quantizers",
+        "result": "Confirmed; continues improving at larger bit budgets, matching continuous representations"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.37341",
+    "source": "hf",
+    "id": "2610.37341",
+    "title": "CodeCap-Bench: Can Code Serve as a Good Video Caption?",
+    "publishedAt": "2026-10-27T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 47,
+    "projectPage": "https://codecap-bench.github.io/",
+    "category": "Benchmark",
+    "task": "Evaluating code generation for video captioning as alternative to natural language",
+    "key_results": "Code captions achieve superior reasoning accuracy and reconstruction fidelity; CodeCap-Bench reveals MLLMs struggle with temporal dynamics",
+    "comments": "Interesting problem formulation; code as caption is novel but limited scope (structured 2D content); question-answering gap suggests representation advantage may not generalize.",
+    "model_io": [
+      {
+        "model": "Code caption generator (MLLM)",
+        "inputs": [
+          "video"
+        ],
+        "outputs": [
+          "executable program (graphical primitives, layout rules, time functions)"
+        ]
+      },
+      {
+        "model": "Downstream task evaluator (QA or reconstruction)",
+        "inputs": [
+          "code caption"
+        ],
+        "outputs": [
+          "reasoning accuracy or reconstruction fidelity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Code captions preserve video information better than natural language on downstream tasks",
+        "result": "Confirmed for reasoning accuracy and reconstruction; advantage on fine-grained spatial/temporal structure"
+      },
+      {
+        "hypothesis": "MLLMs can faithfully generate code captions for structured visual content",
+        "result": "Partially confirmed; proprietary models show promise but struggle with complex temporal dynamics"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.37666",
+    "source": "hf",
+    "id": "2610.37666",
+    "title": "ThinkWorld: World Imagination Reinforces Chain-of-Dynamics Reasoning",
+    "publishedAt": "2026-10-27T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 44,
+    "projectPage": "https://thinkworld-project.github.io/",
+    "category": "Agents/RL",
+    "task": "Vision-Language-Action learning via Chain-of-Dynamics reasoning with world imagination",
+    "key_results": "Effective human-to-robot transfer and generalization to unseen tasks and environments via world imagination RL",
+    "comments": "Clever use of intermediate motion tokens as shared representation across embodiments; grounding in world dynamics is principled; evaluation somewhat limited.",
+    "model_io": [
+      {
+        "model": "ThinkWorld VLA framework",
+        "inputs": [
+          "observation",
+          "language instruction"
+        ],
+        "outputs": [
+          "Chain-of-Dynamics (CoD): sequence of motion tokens"
+        ]
+      },
+      {
+        "model": "World imagination (video prediction)",
+        "inputs": [
+          "current frame",
+          "CoD"
+        ],
+        "outputs": [
+          "predicted future frame"
+        ]
+      },
+      {
+        "model": "RL reinforce step",
+        "inputs": [
+          "CoD prediction vs. observed outcome"
+        ],
+        "outputs": [
+          "updated CoD policy"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Discrete motion tokens enable learning from videos without action annotations via observed state transitions",
+        "result": "Confirmed; human and robot experience refine same reasoning space"
+      },
+      {
+        "hypothesis": "World imagination RL strengthens action reasoning across embodiments",
+        "result": "Supported; effective transfer from human to robot in both simulation and real world"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.35864",
+    "source": "hf",
+    "id": "2610.35864",
+    "title": "VibeVideoBench: Evaluating Multimodal Agents on Code-Driven Video Generation",
+    "publishedAt": "2026-10-27T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 42,
+    "projectPage": "https://vibevideobench.github.io/",
+    "category": "Benchmark",
+    "task": "Benchmarking multimodal agents on code-driven video generation in sandboxed environment",
+    "key_results": "GPT-6 Astra and Claude Opus 5.5 rank first/second; strongest system satisfies core requirements on 76.3% of tasks; delivery timing major failure mode",
+    "comments": "Comprehensive benchmark (239 tasks); hierarchical evaluation is thorough; finding that agent planning matters more than inspection frequency is actionable.",
+    "model_io": [
+      {
+        "model": "Multimodal agent (frontier models)",
+        "inputs": [
+          "task specification (English/Chinese)",
+          "sandbox environment",
+          "1-hour compute budget"
+        ],
+        "outputs": [
+          "MP4 video with sound"
+        ]
+      },
+      {
+        "model": "VLM judge panel (3 judges)",
+        "inputs": [
+          "generated MP4",
+          "task specification"
+        ],
+        "outputs": [
+          "hierarchical quality score (spec checks, rubric checks, quality dimensions)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Agents can reliably write code for video generation without dedicated generative models",
+        "result": "Confirmed; strongest achieves 76.3% core requirement satisfaction"
+      },
+      {
+        "hypothesis": "Frame inspection frequency predicts generation quality",
+        "result": "Rejected; agents that inspect more do not necessarily produce higher quality"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.32046",
+    "source": "hf",
+    "id": "2610.32046",
+    "title": "Can Test-Time Memory Evolution Outperform Test-Time Training for Scientific Discovery?",
+    "publishedAt": "2026-10-23T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 41,
+    "projectPage": null,
+    "category": "LLM/Reasoning",
+    "task": "Test-time memory evolution as efficient alternative to test-time training for scientific discovery",
+    "key_results": "TTME outperforms TTT on all 5 mathematical tasks; reduces FLOPs by 82.8-84.6% and runtime by 47.7-58.4%",
+    "comments": "Practical contribution showing external memory updates can replace model weight updates; efficiency gains are substantial; limited evaluation scope.",
+    "model_io": [
+      {
+        "model": "LLM with external memory",
+        "inputs": [
+          "discovery task",
+          "previous experience (memory)"
+        ],
+        "outputs": [
+          "solution attempt"
+        ]
+      },
+      {
+        "model": "Memory update (distillation)",
+        "inputs": [
+          "trajectory",
+          "outcome"
+        ],
+        "outputs": [
+          "updated external memory"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Test-time memory evolution can replace weight updates without sacrificing performance",
+        "result": "Confirmed; TTME outperforms TTT on all 5 mathematical tasks"
+      },
+      {
+        "hypothesis": "Memory-based adaptation is more compute-efficient than gradient-based weight updates",
+        "result": "Confirmed; ~80% FLOP reduction with comparable or better accuracy"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.36456",
+    "source": "hf",
+    "id": "2610.36456",
+    "title": "LociArt: A Unified Paradigm for Free-Style Local Video Stylization",
+    "publishedAt": "2026-10-27T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 27,
+    "projectPage": "https://higherhu.github.io/lociart/",
+    "category": "Vision",
+    "task": "Free-style local video stylization with spatial and style control",
+    "key_results": "GRNStyle outperforms existing methods on regional style quality and spatial control; temporal consistency maintained; handles multiple regions despite single-region training",
+    "comments": "Well-executed system with automated data pipeline and comprehensive benchmark; limited to artistic stylization domain.",
+    "model_io": [
+      {
+        "model": "GRNStyle (Generative Refinement Networks)",
+        "inputs": [
+          "video frames",
+          "spatial mask (region selection)",
+          "style reference"
+        ],
+        "outputs": [
+          "stylized video (target regions with new style, non-target preserved)"
+        ]
+      },
+      {
+        "model": "Complementary representation-geometry conditioning",
+        "inputs": [
+          "encoded mask features",
+          "raw mask spatial support"
+        ],
+        "outputs": [
+          "spatiotemporal context integration"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Polar style-aware mask embeds style identities as equal-norm directions for consistent regional stylization",
+        "result": "Confirmed; outperforms baselines on SPS evaluation scheme"
+      },
+      {
+        "hypothesis": "Training on single-region pairs enables generalization to multi-region stylization",
+        "result": "Confirmed; qualitative examples show joint stylization of multiple regions"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.37037",
+    "source": "hf",
+    "id": "2610.37037",
+    "title": "Zooming without Zooming v2: From Seeing Details to Connecting Evidence for Generalizable Multimodal Perception",
+    "publishedAt": "2026-10-27T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 16,
+    "projectPage": "https://github.com/inclusionAI/Zooming-without-Zooming-v2",
+    "category": "Vision",
+    "task": "Multimodal perception via evidence connection for spatial reasoning and long-context understanding",
+    "key_results": "ZwZ2 improves fine-grained/spatial perception, embodied spatial reasoning, multimodal long-context, agent tasks; gains on benchmarks not explicitly trained on",
+    "comments": "Principled approach to data synthesis using zoomed views; shows transfer to diverse downstream tasks; synthetic data quality maintained via VLM agreement.",
+    "model_io": [
+      {
+        "model": "EvidenceConnect (data synthesis)",
+        "inputs": [
+          "image with zoomed region views"
+        ],
+        "outputs": [
+          "comparison/aggregation/chaining questions with reference answers"
+        ]
+      },
+      {
+        "model": "VLM (ZwZ2)",
+        "inputs": [
+          "visual evidence",
+          "spatial or long-context question"
+        ],
+        "outputs": [
+          "answer connecting multiple visual facts"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Connecting evidence is a shared capability underlying spatial perception and multimodal long-context understanding",
+        "result": "Supported; single capability transfer improves diverse downstream benchmarks"
+      },
+      {
+        "hypothesis": "Zoomed-view data synthesis is effective for supervising evidence connection",
+        "result": "Confirmed; VLM-agreement filtering ensures quality; region-ablation improves relevance"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.35724",
+    "source": "hf",
+    "id": "2610.35724",
+    "title": "MatAnyone-E: Sparse Memory Propagation for Efficient High-Resolution Video Matting",
+    "publishedAt": "2026-10-26T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 16,
+    "projectPage": "https://shuyun-wang.github.io/projects/MatAnyone-E",
+    "category": "Vision",
+    "task": "Efficient high-resolution video matting with sparse memory propagation",
+    "key_results": "7.4x inference speedup over MatAnyone 2; maintains comparable quality; 7.6% peak GPU memory at 4K; 73.07 FPS at 1080p, 28.62 FPS at 4K on H200",
+    "comments": "Incremental efficiency optimization using selective high-res matching; practical system for production; limited conceptual novelty.",
+    "model_io": [
+      {
+        "model": "MatAnyone-E (efficient video matting)",
+        "inputs": [
+          "video frames at target resolution"
+        ],
+        "outputs": [
+          "matte with fine detail preservation and temporal consistency"
+        ]
+      },
+      {
+        "model": "Sparse propagation module",
+        "inputs": [
+          "uncertain regions (from low-res pass)",
+          "relevant memory candidates"
+        ],
+        "outputs": [
+          "high-resolution matching for selected regions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Identifying uncertain regions in low-resolution enables selective high-resolution matching without quality loss",
+        "result": "Confirmed; maintains quality while reducing computation"
+      },
+      {
+        "hypothesis": "Lightweight decoder trained on bottleneck-optimized architecture reduces generation cost",
+        "result": "Confirmed; estimated 7.4x speedup achieved"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.33624",
+    "source": "hf",
+    "id": "2610.33624",
+    "title": "RSI Arena: Towards Recursive Self-Improvement with Human Feedback",
+    "publishedAt": "2026-10-24T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 16,
+    "projectPage": "https://rsiarena.org",
+    "category": "LLM/Reasoning",
+    "task": "Autonomous post-training with human feedback for recursive self-improvement",
+    "key_results": "All 10 frontier models produce working assistants; GPT-6 Astra closes 76% of base-to-Instruct gap; Stage 2 improves 8 of 10 models; no clear link between benchmarks and preference gains",
+    "comments": "Important study of autonomous model development; shows preference gains modest despite benchmark claims; highlights that feedback incentivizes length over quality.",
+    "model_io": [
+      {
+        "model": "Training agents (10 frontier models)",
+        "inputs": [
+          "base model",
+          "6-day compute budget (1000 GPU-hours, $300 API credit)"
+        ],
+        "outputs": [
+          "post-trained assistant model"
+        ]
+      },
+      {
+        "model": "Evaluator (20 benchmarks + blind human preference)",
+        "inputs": [
+          "model outputs"
+        ],
+        "outputs": [
+          "capability scores, preference ratings"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Autonomous agents can effectively conduct post-training to close base-to-instruct gap",
+        "result": "Confirmed; strongest achieves 76% gap closure, human rating close to NVIDIA Instruct"
+      },
+      {
+        "hypothesis": "Benchmark gains predict preference improvements",
+        "result": "Rejected; modest link between benchmark and preference gains"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.37386",
+    "source": "hf",
+    "id": "2610.37386",
+    "title": "Channel Selection for Mixture-of-Experts Decoding Needs No Calibration Data",
+    "publishedAt": "2026-10-27T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 10,
+    "projectPage": null,
+    "category": "Systems",
+    "task": "Channel selection for efficient Mixture-of-Experts decoding without calibration data",
+    "key_results": "Top-k selection matches or beats threshold (calibrated) version on 40/43 comparisons; reader achieves 98.1% accuracy at 17.8% routed-expert reads; 1.60-2.69x speedup on MoE blocks",
+    "comments": "Practical contribution eliminating calibration requirement; top-k is simpler and often better; ternary sketch + low-rank recovery is clever but adds complexity.",
+    "model_io": [
+      {
+        "model": "Channel selector (MoE model)",
+        "inputs": [
+          "token representation"
+        ],
+        "outputs": [
+          "channel importance scores"
+        ]
+      },
+      {
+        "model": "Top-k selector",
+        "inputs": [
+          "scores"
+        ],
+        "outputs": [
+          "k highest-scoring channels to load"
+        ]
+      },
+      {
+        "model": "Reader (ternary sketch + low-rank map)",
+        "inputs": [
+          "all channels"
+        ],
+        "outputs": [
+          "skipped channels recovered via low-rank approximation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Calibrated thresholds do not fix read budget due to varying channels passing threshold",
+        "result": "Confirmed; 18% budget threshold reads only 12.9% on average"
+      },
+      {
+        "hypothesis": "Top-k selection avoids calibration while matching threshold performance",
+        "result": "Confirmed; top-k outperforms threshold on 40/43 comparisons"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.35439",
+    "source": "hf",
+    "id": "2610.35439",
+    "title": "Omni-InteractScope: Benchmarking Proactive and Agentic Interaction in Continuous Omnimodal Streams",
+    "publishedAt": "2026-10-26T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 9,
+    "projectPage": "https://yinsongyan.github.io/Omni-InteractScope/",
+    "category": "Benchmark",
+    "task": "Benchmarking proactive and agentic interaction in continuous omnimodal streams",
+    "key_results": "Tool invocation on-time accuracy \u226440%; query-free reminder recall \u226423%; zero full-sequence guidance coverage; all 12 models show critical limitations",
+    "comments": "Comprehensive benchmark revealing real limitations of Omni-LLMs; streaming interaction is under-studied; findings highlight need for better initiative and timing.",
+    "model_io": [
+      {
+        "model": "Omni-LLM (12 frontier models)",
+        "inputs": [
+          "continuous audiovisual stream",
+          "user needs",
+          "temporal targets"
+        ],
+        "outputs": [
+          "timely intervention (tool invocation, query-free reminder, state tracking, guidance)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Omni-LLMs can reliably invoke tools at correct time with appropriate action",
+        "result": "Rejected; joint timing-and-tool accuracy \u226432.0%"
+      },
+      {
+        "hypothesis": "Omni-LLMs can provide query-free reminders at appropriate times",
+        "result": "Rejected; reminder recall \u226423%"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.36791",
+    "source": "hf",
+    "id": "2610.36791",
+    "title": "RynnWorld-Latent: A Cross-Embodiment World Model Conditioned on Universal Latent Actions",
+    "publishedAt": "2026-10-27T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 8,
+    "projectPage": "https://alibaba-damo-academy.github.io/RynnWorld-Latent.github.io/",
+    "category": "Agents/RL",
+    "task": "Cross-embodiment world model with universal latent actions for heterogeneous robots",
+    "key_results": "Improved video prediction on public benchmarks and real robots; synthetic mid-training improves LIBERO/LIBERO-Plus policy success; better real-world transfer",
+    "comments": "Principled approach to cross-embodiment learning via latent actions; enables human+robot+sim joint training; evaluation on real robots validates applicability.",
+    "model_io": [
+      {
+        "model": "RynnWorld-Latent (cross-embodiment world model)",
+        "inputs": [
+          "video frame",
+          "3D-grounded latent action"
+        ],
+        "outputs": [
+          "future video prediction"
+        ]
+      },
+      {
+        "model": "Identity-initialized local pathway",
+        "inputs": [
+          "action tokens",
+          "future video latents"
+        ],
+        "outputs": [
+          "aligned future representation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Universal latent actions enable joint pretraining on human, robot, and simulation data",
+        "result": "Confirmed; enables training without common native action space"
+      },
+      {
+        "hypothesis": "Synthetic mid-training via latent-action synthesis improves policy success",
+        "result": "Confirmed; improves LIBERO and real-world policy success rates"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.36269",
+    "source": "hf",
+    "id": "2610.36269",
+    "title": "Cross-modal Steering Vectors Exist Across Both Image and Text Generation",
+    "publishedAt": "2026-10-26T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 8,
+    "projectPage": "https://saintsauceee.github.io/unified-cm-steer-demo",
+    "category": "Vision",
+    "task": "Cross-modal steering vectors in unified multimodal models for image and text generation",
+    "key_results": "Steering vectors transfer zero-shot across text\u2194image modalities; transfer has geometric signature; concepts point in similar directions despite modality gap",
+    "comments": "Interesting mechanistic finding about multimodal model organization; limited scope (steering only) but raises questions about modality unification.",
+    "model_io": [
+      {
+        "model": "Unified multimodal model (UMM)",
+        "inputs": [
+          "text or image tokens"
+        ],
+        "outputs": [
+          "text or image generation"
+        ]
+      },
+      {
+        "model": "Steering vector (concept-specific activation adjustment)",
+        "inputs": [
+          "activation vector for one modality"
+        ],
+        "outputs": [
+          "effect on generation in other modality (zero-shot transfer)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Steering vectors that steer one modality transfer zero-shot to the other",
+        "result": "Confirmed; bidirectional transfer (text\u2192image and image\u2192text)"
+      },
+      {
+        "hypothesis": "Concepts with strong cross-modal transferability share geometric direction across modalities",
+        "result": "Confirmed; geometric signature observed despite modality gap"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.34491",
+    "source": "hf",
+    "id": "2610.34491",
+    "title": "What Effort Level Should I Choose? On the Economics of Reasoning Effort in LLM Agents",
+    "publishedAt": "2026-10-25T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 7,
+    "projectPage": null,
+    "category": "LLM/Reasoning",
+    "task": "Choosing optimal reasoning effort level in LLM agents for cost-performance tradeoff",
+    "key_results": "Higher effort doesn't preserve easy-task success (failure cases exist); easy-task highest-effort costs up to 42x lowest; effort changes solution trajectory",
+    "comments": "Important practical finding for LLM deployment; shows naive highest-effort is wasteful; escalation strategy matches or improves fixed top effort at lower cost.",
+    "model_io": [
+      {
+        "model": "LLM with reasoning effort setting",
+        "inputs": [
+          "task",
+          "effort level"
+        ],
+        "outputs": [
+          "solution attempt"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Higher reasoning effort consistently improves performance on tasks solvable at lower effort",
+        "result": "Rejected; higher effort frequently fails on previously solved tasks"
+      },
+      {
+        "hypothesis": "Escalation strategy (start low, escalate after failure) matches or beats fixed highest effort",
+        "result": "Confirmed; matches or improves performance at lower cost"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2602.10657",
+    "source": "hf",
+    "id": "2602.10657",
+    "title": "The Lexical Imprint of Pre-training Data",
+    "publishedAt": "2026-10-26T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 6,
+    "projectPage": null,
+    "category": "LLM/Reasoning",
+    "task": "Measuring lexical imprint of pre-training data on zero-shot benchmark accuracy",
+    "key_results": "Corpus-benchmark lexical alignment (UCE) consistently tracks zero-shot accuracy across 10 benchmarks, 4 corpora, 3 scales; alignment selection improves accuracy",
+    "comments": "Clean mechanistic study isolating lexical alignment as confound; explains variance in zero-shot but likely orthogonal to reasoning capability.",
+    "model_io": [
+      {
+        "model": "Language model (from-scratch pre-training)",
+        "inputs": [
+          "pre-training corpus"
+        ],
+        "outputs": [
+          "zero-shot benchmark accuracy"
+        ]
+      },
+      {
+        "model": "Unigram cross-entropy (UCE) probe",
+        "inputs": [
+          "corpus",
+          "benchmark target"
+        ],
+        "outputs": [
+          "lexical alignment score (tokenizer-agnostic)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Corpus-benchmark lexical alignment (UCE) predicts zero-shot accuracy",
+        "result": "Confirmed; UCE tracks accuracy across all benchmarks, corpora, scales"
+      },
+      {
+        "hypothesis": "Document selection maximizing lexical alignment improves accuracy",
+        "result": "Confirmed; benchmark-aligned corpus selection produces predicted gains"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.37255",
+    "source": "hf",
+    "id": "2610.37255",
+    "title": "Your Policy Is Secretly a Harness: The Decision Geometry of Agent Interfaces",
+    "publishedAt": "2026-10-27T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 6,
+    "projectPage": null,
+    "category": "Agents/RL",
+    "task": "Separating harness effect from policy learning in LLM agent evaluation",
+    "key_results": "Reversing observation field order drops success 85% to 19.2% with fixed model; ceiling-minus-mismatch predicts training gains better than single term",
+    "comments": "Important insight that harness changes mix what it offers (ceiling) with model performance (mismatch); changes comparison baseline meaningfully.",
+    "model_io": [
+      {
+        "model": "LLM policy trained under specific harness",
+        "inputs": [
+          "task via harness prompts/tools"
+        ],
+        "outputs": [
+          "action"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Trained policy carries preferences of its training harness",
+        "result": "Confirmed; log odds recover harness action biases under KL regularization"
+      },
+      {
+        "hypothesis": "Ceiling-minus-mismatch decomposition predicts post-training gains better than single metrics",
+        "result": "Confirmed; joint prediction reproduces ranking better than ceiling or mismatch alone"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.37585",
+    "source": "hf",
+    "id": "2610.37585",
+    "title": "Timestral",
+    "publishedAt": "2026-10-27T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 5,
+    "projectPage": null,
+    "category": "Systems",
+    "task": "Foundation models for time series probabilistic forecasting",
+    "key_results": "State-of-the-art on GIFT-Eval, TIME, fev-bench; Timestral-209M and Timestral-123M rank top two on every metric",
+    "comments": "Three solid ingredients (DHF, covariate framework, two-stage pretraining) are well-motivated; incremental innovation for time series domain.",
+    "model_io": [
+      {
+        "model": "Timestral (5M-209M parameters)",
+        "inputs": [
+          "time series history",
+          "covariates (known-future)"
+        ],
+        "outputs": [
+          "probabilistic forecasts at multiple horizons"
+        ]
+      },
+      {
+        "model": "Decoupled Horizon Forecasting (DHF)",
+        "inputs": [
+          "causal context",
+          "horizon"
+        ],
+        "outputs": [
+          "prediction tokens (longer horizons without masking)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Decoupled horizon forecasting enables longer horizon training without masking context",
+        "result": "Confirmed; each value is both target and later context"
+      },
+      {
+        "hypothesis": "Two-stage pipeline with synthetic pretraining then real/synthetic post-training improves transfer",
+        "result": "Implied; achieves SOTA across benchmarks"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.33066",
+    "source": "hf",
+    "id": "2610.33066",
+    "title": "OvisOCR3 Technical Report",
+    "publishedAt": "2026-10-20T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 5,
+    "projectPage": null,
+    "category": "Vision",
+    "task": "Unified OCR system for document parsing, KIE, figure captioning, and cross-page table reconstruction",
+    "key_results": "96.74 on OmniDocBench v1.6; highest scores on PureDocBench, Real5, MDPBench; 65.9 English / 61.3 Chinese on OCRBench v2",
+    "comments": "Compact 0.8B model achieving strong multi-task OCR performance; domain-balanced mid-training and multi-teacher distillation are standard techniques.",
+    "model_io": [
+      {
+        "model": "OvisOCR3 (0.8B)",
+        "inputs": [
+          "document image"
+        ],
+        "outputs": [
+          "parsed text",
+          "key-value pairs",
+          "figure captions",
+          "table data",
+          "cross-page table reconstruction"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Unified model across OCR tasks outperforms task-specific models via shared representations",
+        "result": "Supported; achieves SOTA across task families"
+      },
+      {
+        "hypothesis": "Multi-teacher distillation transfers 4B teacher expertise to 0.8B student",
+        "result": "Implied; enables compact model with strong performance"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.37649",
+    "source": "hf",
+    "id": "2610.37649",
+    "title": "Can LLMs Uncover Hidden Physical Laws through Free Exploration?",
+    "publishedAt": "2026-10-27T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 5,
+    "projectPage": "https://zhenyangcs.github.io/LongChang-website/",
+    "category": "LLM/Reasoning",
+    "task": "Evaluating free exploration and physical law discovery in simulated worlds with altered physics",
+    "key_results": "GPT-6-Astra achieves 16.7% discovery rate; other 11 models achieve 0%; exploration records show uninvestigated anomalies",
+    "comments": "Interesting evaluation setup but extremely low success rates; suggests LLMs lack genuine scientific curiosity and systematic hypothesis testing.",
+    "model_io": [
+      {
+        "model": "LLM explorer agent",
+        "inputs": [
+          "simulated world with altered physics"
+        ],
+        "outputs": [
+          "experiments (object manipulations, tool building)"
+        ]
+      },
+      {
+        "model": "LLM evaluators (scene generation, tool review, report validation)",
+        "inputs": [
+          "exploration records"
+        ],
+        "outputs": [
+          "correctness assessment of discovered laws"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LLMs can discover altered physical laws through free exploration without explicit research tasks",
+        "result": "Mostly rejected; 0% discovery for 11/12 models despite full autonomy"
+      },
+      {
+        "hypothesis": "LLMs notice unexpected behavior and investigate systematically",
+        "result": "Rejected; exploration records show uninvestigated anomalies persist"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.22543",
+    "source": "hf",
+    "id": "2610.22543",
+    "title": "On the SPOT: Enhancing Speculative Decoding for Diffusion Language Models via Commit-Order Prediction",
+    "publishedAt": "2026-10-26T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 5,
+    "projectPage": "https://eliezer318.github.io/SPOT-dLLM/",
+    "category": "Systems",
+    "task": "Speculative decoding for diffusion language models via predicted commit order",
+    "key_results": "6.8x reduction in target passes; 3.4x throughput on SDAR-8B; transfers across six different DLMs",
+    "comments": "Clever insight that predicting position order (not tokens) enables speculative decoding for DLMs; small drafter (0.62M params) is practical.",
+    "model_io": [
+      {
+        "model": "SPOT (0.62M drafter)",
+        "inputs": [
+          "target model output distributions"
+        ],
+        "outputs": [
+          "predicted position order",
+          "token proposals for tree of continuations"
+        ]
+      },
+      {
+        "model": "Target DLM (verifier)",
+        "inputs": [
+          "candidate continuations"
+        ],
+        "outputs": [
+          "state-equality verification (exact or approximate via coupled noise)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Predicting commit order enables lossless speculative decoding for DLMs",
+        "result": "Confirmed; 6.8x pass reduction with exact verification"
+      },
+      {
+        "hypothesis": "Coupled-noise match preserves exactness at any temperature",
+        "result": "Confirmed; enables temperature-controlled generation"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.34674",
+    "source": "hf",
+    "id": "2610.34674",
+    "title": "Benchmarking Obstacle-Conditioned Safety in Household Robot Navigation",
+    "publishedAt": "2026-10-26T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 4,
+    "projectPage": "https://osma-bench.github.io/",
+    "category": "Benchmark",
+    "task": "Evaluating obstacle-conditioned safe motion adaptation in household robot navigation",
+    "key_results": "VLM/VLA policies fail to adapt motion to obstacle safety despite recognizing obstacles; explicit parameter inference improves adaptation",
+    "comments": "Identifies important gap between semantic recognition and motion grounding; Semantic Sensitivity Index is useful metric.",
+    "model_io": [
+      {
+        "model": "VLM/VLA policy",
+        "inputs": [
+          "obstacle observation",
+          "navigation task"
+        ],
+        "outputs": [
+          "clearance, speed, smoothness parameters (motion)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Vision-language policies appropriately adapt motion to obstacle safety levels",
+        "result": "Rejected; neither VLM nor VLA consistently adapts despite obstacle distinction"
+      },
+      {
+        "hypothesis": "Explicit parameter-inference step improves semantic-to-motion grounding",
+        "result": "Confirmed; two-stage approach (recognize\u2192infer params) better than end-to-end"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.36022",
+    "source": "hf",
+    "id": "2610.36022",
+    "title": "Learning and Reasoning with Geometry: How Generation Helps Spatial Understanding",
+    "publishedAt": "2026-10-26T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 4,
+    "projectPage": "https://yangr116.github.io/geoug-project-page/",
+    "category": "Vision",
+    "task": "Geometric understanding and generation model integrating depth, multi-view, and spatial reasoning",
+    "key_results": "Circular accuracy: 97.9% CV-Bench-3D, 90.8% 3DCueBench, 94.2% DA-2K; adaptive reasoning reduces generation calls",
+    "comments": "Well-motivated integration of generation and understanding; 3DCueBench for controlling geometric difficulty is useful; adaptive interleaving via RL is elegant.",
+    "model_io": [
+      {
+        "model": "GeoUG (unified geometric understanding + generation)",
+        "inputs": [
+          "image",
+          "spatial question"
+        ],
+        "outputs": [
+          "answer",
+          "(optional) generated depth/multi-view for verification"
+        ]
+      },
+      {
+        "model": "Adaptive interleaved reasoning (RL-trained)",
+        "inputs": [
+          "draft answer",
+          "confidence"
+        ],
+        "outputs": [
+          "decision to generate evidence for confirmation/revision"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Joint training on depth/multi-view generation and spatial understanding yields task-dependent gains",
+        "result": "Confirmed; task-dependent improvements shown"
+      },
+      {
+        "hypothesis": "Generated depth provides larger reasoning gains on fine-grained geometric discrimination",
+        "result": "Confirmed; 3DCueBench results show this pattern"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.36466",
+    "source": "hf",
+    "id": "2610.36466",
+    "title": "Nemotron-Labs-Diffusion-Uni: Elastic Self-Refining Unified Diffusion LLM with Cross-Paradigm On-Policy Distillation",
+    "publishedAt": "2026-10-27T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 4,
+    "projectPage": "https://homepage.jackli.org/projects/nl-diffusion-uni/index.html",
+    "category": "Generative",
+    "task": "Unified diffusion LLM combining visual understanding and generation via cross-paradigm distillation",
+    "key_results": "State-of-the-art among unified DLLMs on VQA, reasoning, grounding, text-to-image, editing; progressive self-refining diffusion improves quality",
+    "comments": "Comprehensive approach combining understanding and generation; cross-paradigm OPD from autoregressive VLMs and flow models is complex but well-motivated.",
+    "model_io": [
+      {
+        "model": "NLD-Uni (unified discrete diffusion LLM)",
+        "inputs": [
+          "image/text prompt"
+        ],
+        "outputs": [
+          "text answer or generated image"
+        ]
+      },
+      {
+        "model": "Cross-paradigm OPD (teacher: VLM + flow model)",
+        "inputs": [
+          "student trajectories"
+        ],
+        "outputs": [
+          "distilled weights"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Progressive self-refining diffusion (multiple corruption steps) improves visual quality over masked diffusion",
+        "result": "Confirmed; enables intermediate token commits for refinement"
+      },
+      {
+        "hypothesis": "Cross-paradigm distillation transfers understanding and generation abilities to unified DLLM",
+        "result": "Supported; SOTA results across diverse tasks"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.35013",
+    "source": "hf",
+    "id": "2610.35013",
+    "title": "Multiscale Policy Optimization for Long-Horizon LLM Agents",
+    "publishedAt": "2026-10-26T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 3,
+    "projectPage": null,
+    "category": "LLM/Reasoning",
+    "task": "Multiscale policy optimization for long-horizon LLM agents with turn-level credit assignment",
+    "key_results": "Consistent gains across search, tool-use, automation tasks with 4B and 30B models over RL baselines",
+    "comments": "Sensible observation that critic values vary primarily across turns; multiscale advantage estimation is natural but incremental contribution.",
+    "model_io": [
+      {
+        "model": "LLM agent (long-horizon)",
+        "inputs": [
+          "environment",
+          "turn-level actions (token sequences)"
+        ],
+        "outputs": [
+          "trajectory"
+        ]
+      },
+      {
+        "model": "Critic (turn-level value estimation)",
+        "inputs": [
+          "state at turn i"
+        ],
+        "outputs": [
+          "value estimate"
+        ]
+      },
+      {
+        "model": "Multiscale Advantage Estimation",
+        "inputs": [
+          "turn values",
+          "token-level trajectory"
+        ],
+        "outputs": [
+          "token-level advantages (aligned to turn scale)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Turn-level value estimation better matches credit assignment granularity than token-level",
+        "result": "Confirmed; MAE improves over token-level advantage estimation"
+      },
+      {
+        "hypothesis": "Multiscale optimization improves long-horizon policy learning",
+        "result": "Confirmed; consistent gains across task families"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.37624",
+    "source": "hf",
+    "id": "2610.37624",
+    "title": "Rare, Relevant, and Still Wrong: How Memory Fails LLM Group Decisions",
+    "publishedAt": "2026-10-27T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 3,
+    "projectPage": null,
+    "category": "LLM/Reasoning",
+    "task": "Evaluating memory heuristics for group decision-making on hidden-profile tasks",
+    "key_results": "Both rarest-claim and relevance-based selection fail predictably; social proof bias on agent attribution costs 13-24 points; evidence balance determines outcome",
+    "comments": "Important negative result showing heuristic failures; CrossProfile benchmark is well-designed; attribution removal dramatically helps (13-24 point gain).",
+    "model_io": [
+      {
+        "model": "LLM group (discussion agents)",
+        "inputs": [
+          "hidden-profile task",
+          "facts distributed among agents"
+        ],
+        "outputs": [
+          "discussion (claims about facts)"
+        ]
+      },
+      {
+        "model": "Memory compression (heuristic selection)",
+        "inputs": [
+          "discussion transcript"
+        ],
+        "outputs": [
+          "condensed memory (rarest or relevant claims)"
+        ]
+      },
+      {
+        "model": "Decision maker (final)",
+        "inputs": [
+          "memory",
+          "decision prompt"
+        ],
+        "outputs": [
+          "group decision"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Selecting rarest claims captures information not widely known, improving decisions",
+        "result": "Rejected; rarest selection no better than random on average"
+      },
+      {
+        "hypothesis": "Selecting relevant claims avoids decoys, improving decisions",
+        "result": "Rejected; relevance filter still admits decoys (23-31 point loss)"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.37219",
+    "source": "hf",
+    "id": "2610.37219",
+    "title": "Vision-Language-Action or World-Action? Just Action Models",
+    "publishedAt": "2026-10-27T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 3,
+    "projectPage": "https://y0uroy.github.io/JAM/",
+    "category": "Agents/RL",
+    "task": "Unified VLA and WAM frameworks via backbone-invariant action-foresight training",
+    "key_results": "JAM outperforms matched FastWAM/ImageWAM on LIBERO/LIBERO-Plus (98.2% vs 97.0%, 64.5% vs 55.3%); 73% FLOP reduction vs FastWAM with cached targets",
+    "comments": "Clever framework unifying VLA and WAM; shows foresight loss sufficient without visual generation; practical efficiency gain via cached targets.",
+    "model_io": [
+      {
+        "model": "Just Action Model (JAM)",
+        "inputs": [
+          "current observation",
+          "action"
+        ],
+        "outputs": [
+          "predicted action"
+        ]
+      },
+      {
+        "model": "Foresight head (training only, discarded)",
+        "inputs": [
+          "current-frame features"
+        ],
+        "outputs": [
+          "prediction of frozen future-frame encoding"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Future supervision improves control without visual generation or inference machinery",
+        "result": "Confirmed; JAM outperforms FastWAM and ImageWAM"
+      },
+      {
+        "hypothesis": "Backbone choice (generator vs VLM initialization) is secondary to foresight loss",
+        "result": "Confirmed; both backbones work similarly with foresight training"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.34714",
+    "source": "hf",
+    "id": "2610.34714",
+    "title": "SearchHorizonBench: A Benchmark for Search Value in AI Agents",
+    "publishedAt": "2026-10-26T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 3,
+    "projectPage": "https://ethanning.github.io/SearchHorizonBench/",
+    "category": "Benchmark",
+    "task": "Benchmarking search value estimation for AI agents via repeated executions",
+    "key_results": "Search gains std dev 21.4 pp; historical calibration reduces Brier error 16.2%; free selection offers 2.49-point utility over constant; estimators explain <2% variance",
+    "comments": "Well-designed benchmark with repeated executions to separate signal from noise; reveals that access to history poorly predicts search value.",
+    "model_io": [
+      {
+        "model": "Search value estimator",
+        "inputs": [
+          "question",
+          "execution history"
+        ],
+        "outputs": [
+          "probability search is worth the cost"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Historical calibration predicts search value from execution experience",
+        "result": "Partially supported; reduces Brier error but explains <2% of variance"
+      },
+      {
+        "hypothesis": "Question difficulty (success probability) suffices for search value prediction",
+        "result": "Rejected; search gains uncorrelated with difficulty"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.35962",
+    "source": "hf",
+    "id": "2610.35962",
+    "title": "h1: A Taste of the Bitter Lesson in Automated Theorem Proving",
+    "publishedAt": "2026-10-25T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 2,
+    "projectPage": null,
+    "category": "LLM/Reasoning",
+    "task": "Formal theorem proving via simple agentic loop with efficient Lean interface",
+    "key_results": "SOTA on PutnamBench, FATE-X, FormalConjectures100-Solved; settles 8 open problems; pass@1 scales to open problems; matches specialized workflows",
+    "comments": "Validates bitter lesson for formal math: simple loop + efficient interface beats complex workflows; shows frontier models scale to real mathematics.",
+    "model_io": [
+      {
+        "model": "h1 (simple agentic loop)",
+        "inputs": [
+          "theorem/conjecture",
+          "Lean 4 feedback"
+        ],
+        "outputs": [
+          "proof attempt"
+        ]
+      },
+      {
+        "model": "Verifier (Lean 4 compiler)",
+        "inputs": [
+          "proof code"
+        ],
+        "outputs": [
+          "error or verification success"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Simple agentic loop can match specialized workflows for formal theorem proving",
+        "result": "Confirmed; h1 matches or outperforms Goedel-Architect and AlphaProof Nexus"
+      },
+      {
+        "hypothesis": "Efficient Lean interface is critical for scaling versus model capacity",
+        "result": "Confirmed; interface determines cost/solve-rate more than workflow design"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.37175",
+    "source": "hf",
+    "id": "2610.37175",
+    "title": "MLE-World: Predicting Machine Learning Experiment Outcomes with a Learned World Model",
+    "publishedAt": "2026-10-27T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 2,
+    "projectPage": "https://mle-world.github.io/",
+    "category": "LLM/Reasoning",
+    "task": "Predicting ML experiment outcomes with learned world model for agent scaling",
+    "key_results": "MLE-World matches real output 77.9%; improves mean performance up to 22.1% with fewer real executions",
+    "comments": "Practical approach to amortizing expensive ML training; 77.9% accuracy is impressive but below threshold for full replacement; uncertainty scoring helps.",
+    "model_io": [
+      {
+        "model": "MLE-World (finetuned Qwen3.5-4B)",
+        "inputs": [
+          "program code",
+          "data description"
+        ],
+        "outputs": [
+          "predicted terminal output (errors, logs, scores)",
+          "confidence score"
+        ]
+      },
+      {
+        "model": "TTS policy (guided by MLE-World)",
+        "inputs": [
+          "candidates"
+        ],
+        "outputs": [
+          "selected candidate to execute based on predicted score + confidence"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "World model can predict terminal ML outcomes from code without execution",
+        "result": "Supported; 77.9% accuracy enables productive filtering"
+      },
+      {
+        "hypothesis": "Confidence scores identify uncertain predictions for real execution",
+        "result": "Confirmed; enables low-execution TTS policies"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.34724",
+    "source": "hf",
+    "id": "2610.34724",
+    "title": "Harness-Model Collaboration for Long-Horizon Continual Learning",
+    "publishedAt": "2026-10-26T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 2,
+    "projectPage": null,
+    "category": "Agents/RL",
+    "task": "Continual learning for web agents via harness-model collaboration with strategy retrieval",
+    "key_results": "HaMo outperforms harness-only and model-only adaptation on within/cross-domain shifts; improves retention and transfer",
+    "comments": "Sensible combination of fast retrieval and slow adaptation; practical for web automation but evaluation limited to within-domain and close cross-domain shifts.",
+    "model_io": [
+      {
+        "model": "Strategy extraction (trajectory\u2192experience card)",
+        "inputs": [
+          "trajectory"
+        ],
+        "outputs": [
+          "reusable strategy card"
+        ]
+      },
+      {
+        "model": "Retrieval system",
+        "inputs": [
+          "current task"
+        ],
+        "outputs": [
+          "relevant strategy cards"
+        ]
+      },
+      {
+        "model": "Experience-conditioned model (continual learning)",
+        "inputs": [
+          "current observation",
+          "retrieved strategy"
+        ],
+        "outputs": [
+          "action"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Non-parametric experience retrieval enables rapid knowledge reuse",
+        "result": "Confirmed; fast harness adaptation better than model-only"
+      },
+      {
+        "hypothesis": "Parametric model learning grounds strategies for transfer across contexts",
+        "result": "Confirmed; improves cross-domain adaptation"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.26030",
+    "source": "hf",
+    "id": "2610.26030",
+    "title": "Truncate or Not? A Scaling Study of Looped Transformers with Truncated Backpropagation",
+    "publishedAt": "2026-10-20T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 1,
+    "projectPage": "https://xjxyys.github.io/truncate-or-not/",
+    "category": "Systems",
+    "task": "Scaling looped transformers with study of truncated backpropagation effects",
+    "key_results": "Full BPTT outperforms truncation in matched-compute runs; two fully trained loops optimal; fitted scaling law captures looping/truncation tradeoff",
+    "comments": "Systematic scaling study with 600 runs; full BPTT counterintuitively better than truncated despite compute savings; practical guidance on loop design.",
+    "model_io": [
+      {
+        "model": "Looped transformer (shared block repeated)",
+        "inputs": [
+          "sequence"
+        ],
+        "outputs": [
+          "prediction"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Truncated BPTT saves training compute without degrading performance",
+        "result": "Rejected; full BPTT outperforms in matched-compute runs"
+      },
+      {
+        "hypothesis": "Two fully trained loops are compute-optimal when model size is free",
+        "result": "Confirmed; scaling law identifies this as best configuration"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.34921",
+    "source": "hf",
+    "id": "2610.34921",
+    "title": "PhysEvolve: Verifier-grounded Self-evolution for Physical Reasoning with Executable Worlds",
+    "publishedAt": "2026-10-26T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 0,
+    "projectPage": "https://yelonhu.github.io/physevolve-page/",
+    "category": "Vision",
+    "task": "Self-evolving VLM training for physical reasoning via verifier-grounded simulation",
+    "key_results": "PhysBench Throwing +8.8pp, ContPhy Counterfactual Removal +7.4pp, Goal-Pit +24.4pp; gains concentrate on interaction-sensitive/altered-world questions",
+    "comments": "Principled loop of proposal\u2192simulation\u2192supervision; physics engine as verifier is strong, but requires executable world representation.",
+    "model_io": [
+      {
+        "model": "VLM (physical reasoning)",
+        "inputs": [
+          "observation (baseline + counterfactual)"
+        ],
+        "outputs": [
+          "causal answer"
+        ]
+      },
+      {
+        "model": "Creator (world proposal)",
+        "inputs": [
+          "intent"
+        ],
+        "outputs": [
+          "executable world program"
+        ]
+      },
+      {
+        "model": "Physics simulator (verifier)",
+        "inputs": [
+          "world program"
+        ],
+        "outputs": [
+          "baseline and counterfactual trajectories"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Model-proposed executable worlds with simulation verification enable self-evolution",
+        "result": "Confirmed; targeted gains on causal reasoning tasks"
+      },
+      {
+        "hypothesis": "Curriculum over physical intents improves learning efficiency",
+        "result": "Implied; adaptive curriculum integrated in framework"
+      }
+    ]
+  },
+  {
+    "uid": "hf:2610.26185",
+    "source": "hf",
+    "id": "2610.26185",
+    "title": "MoveBench: A Rubric-Based Benchmark for Evaluating Large Language Models in Sports and Health Coaching",
+    "publishedAt": "2026-10-26T00:00:00.000Z",
+    "submittedOnDailyAt": "2026-10-28T00:00:00.000Z",
+    "upvotes": 0,
+    "projectPage": "https://keepace.ai/",
+    "category": "Benchmark",
+    "task": "Evaluating LLMs on sports and health coaching safety, validity, and personalization",
+    "key_results": "15 LLMs evaluated; substantial performance variability; critical gaps in safety awareness, program design, personalization; 809 questions with 5,012 rubric criteria",
+    "comments": "Important domain-specific benchmark addressing safety; rubric-based evaluation is thorough; reveals concerning gaps in medical-adjacent applications.",
+    "model_io": [
+      {
+        "model": "LLM (sports/health coach)",
+        "inputs": [
+          "user scenario",
+          "fitness/health question"
+        ],
+        "outputs": [
+          "coaching recommendation"
+        ]
+      },
+      {
+        "model": "Rubric evaluator",
+        "inputs": [
+          "recommendation"
+        ],
+        "outputs": [
+          "safety, validity, personalization scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LLMs can provide safe, valid, personalized sports and health coaching",
+        "result": "Rejected; substantial gaps in safety, validity, and personalization"
+      },
+      {
+        "hypothesis": "Knowing\u2260Doing; knowledge benchmarks don't predict coaching quality",
+        "result": "Confirmed; general knowledge models underperform on domain-specific safety"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41467-026-78821-1",
+    "source": "biophysics",
+    "id": "10.1038/s41467-026-78821-1",
+    "title": "Oncogenic modulation of MAPK signaling in leukemia via SPNS2-driven sphingolipid metabolism and membrane nanodomains remodeling",
+    "projectPage": "https://www.nature.com/articles/s41467-026-78821-1",
+    "journal": "Nature Communications",
+    "publishedAt": "2026-10-28",
+    "category": "Membrane Biophysics",
+    "task": "Elucidate sphingolipid metabolism-driven membrane nanodomain remodeling and MAPK signaling in AML",
+    "key_results": "SPNS2 modulation alters sphingomyelin levels, disrupts membrane nanodomains, and sensitizes AML cells to MEK1/2 inhibition; low SPNS2 expression correlates with increased MAPK inhibitor sensitivity in patient cohorts",
+    "comments": "Integration of multi-omics with high-resolution imaging provides mechanistic insight, though causality between nanodomain disruption and signaling suppression could be more directly interrogated.",
+    "model_io": [
+      {
+        "model": "Mouse AML model with SPNS2 gain/loss-of-function",
+        "inputs": [
+          "MYC-driven AML cells",
+          "SPNS2 overexpression or silencing",
+          "MEK1/2 inhibitors"
+        ],
+        "outputs": [
+          "leukemia progression rate",
+          "sphingomyelin abundance",
+          "RAS nanodomain localization",
+          "MAPK pathway activation"
+        ]
+      },
+      {
+        "model": "Serine isotope-tracing lipidomics",
+        "inputs": [
+          "AML cells",
+          "13C-serine tracer"
+        ],
+        "outputs": [
+          "sphingolipid synthesis flux",
+          "sphingomyelin pool dynamics"
+        ]
+      },
+      {
+        "model": "High-resolution microscopy",
+        "inputs": [
+          "AML cells \u00b1 SPNS2",
+          "membrane nanodomain markers"
+        ],
+        "outputs": [
+          "nanodomain organization",
+          "RAS subcellular localization"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "SPNS2-mediated sphingomyelin depletion disrupts membrane nanodomains and suppresses oncogenic MAPK signaling",
+        "result": "SPNS2 reintroduction decreases sphingomyelin, disrupts nanodomains, and limits leukemic progression"
+      },
+      {
+        "hypothesis": "Low SPNS2 expression sensitizes AML cells to MAPK pathway inhibition",
+        "result": "SPNS2 silencing functionally sensitizes AML to MEK1/2 inhibition in vivo; low SPNS2 patients show heightened MAPK inhibitor sensitivity"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41423-026-01486-9",
+    "source": "cell-biology",
+    "id": "10.1038/s41423-026-01486-9",
+    "title": "Macrophage biology and immunoregulation in health and disease",
+    "projectPage": "https://www.nature.com/articles/s41423-026-01486-9",
+    "journal": "Nature Portfolio",
+    "publishedAt": "2026-10-28",
+    "category": "Epigenetics",
+    "task": "Review molecular mechanisms integrating ontogeny, metabolism, and epigenetics in macrophage plasticity and function",
+    "key_results": "Macrophage behavior emerges from coordinated integration of ontogenetic imprinting, environmental sensing, metabolic rewiring, and epigenetic remodeling; this framework informs next-generation therapeutic strategies",
+    "comments": "Comprehensive review synthesizing recent multi-omics advances in macrophage biology, though specific quantitative data on individual mechanisms are absent given the review format.",
+    "model_io": [],
+    "hypotheses": []
+  },
+  {
+    "uid": "nature:10.1038/s41556-026-02096-3",
+    "source": "cell-biology",
+    "id": "10.1038/s41556-026-02096-3",
+    "title": "Tubulin acetylation regulates nuclear shape fluctuations and DNA repair",
+    "projectPage": "https://www.nature.com/articles/s41556-026-02096-3",
+    "journal": "Nature Portfolio",
+    "publishedAt": "2026-10-28",
+    "category": "Cytoskeleton",
+    "task": "Elucidate mechanism by which nuclear mechanics promotes DNA double-strand break repair",
+    "key_results": "Tubulin acetylation drives nuclear shape fluctuations that enhance homologous recombination efficiency; inhibiting acetylation reduces DSB mobility and causes DSB clustering at nuclear periphery with cell-cycle arrest",
+    "comments": "Novel mechanistic link between cytoskeletal dynamics and genome stability, though the in vivo relevance of transient nuclear fluctuations remains to be validated in organismal contexts.",
+    "model_io": [
+      {
+        "model": "DNA damage-induced tubulin acetylation pathway",
+        "inputs": [
+          "DNA double-strand breaks",
+          "tubulin",
+          "vimentin cage"
+        ],
+        "outputs": [
+          "nuclear shape fluctuations",
+          "DSB mobility",
+          "homologous recombination efficiency"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Nuclear fluctuations driven by microtubule forces accelerate homology search during HR",
+        "result": "Confirmed; inhibiting tubulin acetylation abolishes fluctuations and impairs HR while preserving non-homologous end joining"
+      },
+      {
+        "hypothesis": "Vimentin cage removal is sufficient to restore nuclear dynamics and repair",
+        "result": "Confirmed; vimentin deletion rescues nuclear fluctuations and repair efficiency without tubulin acetylation"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41556-026-02097-2",
+    "source": "cell-biology",
+    "id": "10.1038/s41556-026-02097-2",
+    "title": "Motile vesicles (MoVes) are a cancer cell migration-associated extracellular vesicle population",
+    "projectPage": "https://www.nature.com/articles/s41556-026-02097-2",
+    "journal": "Nature Portfolio",
+    "publishedAt": "2026-10-28",
+    "category": "Cell Division/Cycle",
+    "task": "Characterize a novel extracellular vesicle population associated with cancer cell migration",
+    "key_results": "Motile vesicles (MoVes; 2\u20135 \u03bcm) are shed from trailing edges during epithelial\u2013mesenchymal transition and contain genomic DNA spanning the parent cell genome, organelles including mitochondria that enhance oxidative phosphorylation in recipients",
+    "comments": "Comprehensive characterization of MoVes reveals them as a distinct EV class with potential functional impacts on recipient cells, though the relative contribution of mitochondrial cargo versus genomic DNA transfer to tumor progression remains unresolved.",
+    "model_io": [
+      {
+        "model": "Cancer cell migration-associated extracellular vesicle generation",
+        "inputs": [
+          "migrating cancer cells",
+          "epithelial-mesenchymal transition signals",
+          "trailing edge cytoplasm"
+        ],
+        "outputs": [
+          "motile vesicles",
+          "genomic DNA",
+          "organelles",
+          "mitochondria",
+          "oxidative phosphorylation enhancement in recipients"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "MoVes arise specifically from trailing-edge retraction during mesenchymal migration",
+        "result": "Confirmed via live-cell imaging and scanning electron microscopy showing active shedding by migrating cancer cells"
+      },
+      {
+        "hypothesis": "MoVes-associated mitochondria enhance oxidative phosphorylation in recipient cells",
+        "result": "Confirmed; mitochondrial cargo from MoVes functionally enhances OXPHOS"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41589-026-02355-2",
+    "source": "cell-biology",
+    "id": "10.1038/s41589-026-02355-2",
+    "title": "ADP-ribose induces neuronal ferroptosis through ENT2-mediated nucleotide rewiring",
+    "projectPage": "https://www.nature.com/articles/s41589-026-02355-2",
+    "journal": "Nature Chemical Biology",
+    "publishedAt": "2026-10-28",
+    "category": "Apoptosis/Cell Death",
+    "task": "Identify metabolic pathway by which ADP-ribose accumulation triggers neuronal ferroptosis",
+    "key_results": "ADP-ribose inhibits ENT2 nucleoside transporter, suppressing salvage and hyperactivating de novo purine/pyrimidine synthesis; this drives superoxide bursts via XO/DHODH and ferroptotic death; dual XO/DHODH inhibition rescues cognitive deficits in intracerebral hemorrhage models",
+    "comments": "Elegant mechanistic dissection of NAD+ catabolite toxicity with clear therapeutic targets, though the relative contribution of each biosynthetic enzyme to ferroptosis induction remains partially unclear.",
+    "model_io": [
+      {
+        "model": "ADP-ribose-ENT2 axis in neuronal ferroptosis",
+        "inputs": [
+          "ADP-ribose",
+          "ENT2",
+          "NAD+",
+          "nucleotide salvage"
+        ],
+        "outputs": [
+          "xanthine oxidase activation",
+          "DHODH activation",
+          "superoxide production",
+          "lipid peroxidation",
+          "ferroptotic death"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "ADP-ribose directly binds and inhibits ENT2 to suppress nucleotide salvage",
+        "result": "Confirmed; extracellular ADP-ribose inhibits ENT2-mediated nucleotide transport"
+      },
+      {
+        "hypothesis": "Metabolic rewiring through XO/DHODH hyperactivation triggers ferroptosis",
+        "result": "Confirmed; dual XO/DHODH inhibition rescues neurodegeneration in vivo"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s43856-026-01954-3",
+    "source": "cell-biology",
+    "id": "10.1038/s43856-026-01954-3",
+    "title": "Exploiting iron metabolism in Ewing sarcoma",
+    "projectPage": "https://www.nature.com/articles/s43856-026-01954-3",
+    "journal": "Nature Portfolio",
+    "publishedAt": "2026-10-28",
+    "category": "Other",
+    "task": "Review therapeutic strategies targeting iron metabolism in Ewing sarcoma",
+    "key_results": "Multiple pre-clinical studies show Ewing sarcoma sensitivity to perturbed iron homeostasis with encouraging therapeutic results; review identifies specific mechanisms and translational potential",
+    "comments": "This is a review article summarizing existing evidence rather than presenting original experimental data, limiting extractable quantitative findings.",
+    "model_io": [],
+    "hypotheses": []
+  },
+  {
+    "uid": "nature:10.1038/s41467-026-78401-3",
+    "source": "computational-biology",
+    "id": "10.1038/s41467-026-78401-3",
+    "title": "Statistical inference of keystone taxa reshaping the assembly rules of forest root microbiomes",
+    "projectPage": "https://www.nature.com/articles/s41467-026-78401-3",
+    "journal": "Nature Communications",
+    "publishedAt": "2026-10-28",
+    "category": "Evolutionary Biology",
+    "task": "Identify keystone taxa reshaping root microbiome assembly rules in forest ecosystems",
+    "key_results": "Assembly landscape framework identifies endophytic fungi (Phialocephala, Oidiodendron) as keystone taxa reorganizing community states; prokaryotic transitions between Pseudomonadota and Actinomycetota states driven by Candidatus Udaeobacter and endophytic fungi; findings validated on independent European datasets",
+    "comments": "Statistical framework for keystone identification is scalable and ecologically motivated; linking microbiome assembly to ecosystem processes is novel, though causality remains correlative.",
+    "model_io": [
+      {
+        "model": "Probabilistic assembly landscape reconstruction",
+        "inputs": [
+          "1,270 root samples from cool-temperate forest",
+          "fungal and bacterial 16S/ITS amplicons",
+          "relative abundance profiles"
+        ],
+        "outputs": [
+          "assembly landscape topology",
+          "community state probabilities",
+          "abundance gradients"
+        ]
+      },
+      {
+        "model": "Keystone taxa identification",
+        "inputs": [
+          "assembly landscape",
+          "mycorrhizal colonization patterns",
+          "prokaryotic community transitions"
+        ],
+        "outputs": [
+          "keystone taxa candidates",
+          "reorganization strength metrics",
+          "ecosystem-scale process associations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Endophytic fungi drive reorganization of root microbiome assembly landscape",
+        "result": "Phialocephala and Oidiodendron strongly associated with landscape topography shifts; patterns confirmed in independent European datasets"
+      },
+      {
+        "hypothesis": "Keystone prokaryotes (Candidatus Udaeobacter) mediate transitions in dominant bacterial phyla",
+        "result": "Prokaryotic communities transition between states characterized by core taxa, Pseudomonadota, or Actinomycetota abundance"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41588-026-02786-6",
+    "source": "computational-biology",
+    "id": "10.1038/s41588-026-02786-6",
+    "title": "Population-scale single-nucleus multi-omic profiling of skeletal muscle reveals extensive context-specific genetic regulation",
+    "projectPage": "https://www.nature.com/articles/s41588-026-02786-6",
+    "journal": "Nature Genetics",
+    "publishedAt": "2026-10-28",
+    "category": "Single Cell",
+    "task": "Map genetic regulation architecture of skeletal muscle via population-scale single-nucleus multi-omics",
+    "key_results": "13 cell types identified across 287 biopsies; >7,000 eQTLs and >100,000 caQTLs discovered; ~3,500 GWAS signals colocalize with sn-eQTL/caQTL predominantly in cell-specific manner; caQTL colocalizations more prevalent than eQTL for trait mapping",
+    "comments": "Large-scale integration of snRNA-seq, snATAC-seq, and genetic variation is methodologically rigorous; G\u00d7C interactions highlight cell-type-context specificity often missed in bulk studies.",
+    "model_io": [
+      {
+        "model": "Genetic multiplexing snATAC-seq and snRNA-seq",
+        "inputs": [
+          "287 human skeletal muscle biopsies",
+          "genetic variants",
+          "chromatin accessibility",
+          "transcript abundance"
+        ],
+        "outputs": [
+          "cell type annotations",
+          "eQTL maps",
+          "caQTL maps",
+          "G\u00d7C interaction matrix"
+        ]
+      },
+      {
+        "model": "GWAS colocalization analysis",
+        "inputs": [
+          "sn-eQTL/caQTL",
+          "38 relevant disease/trait GWAS datasets"
+        ],
+        "outputs": [
+          "colocalized GWAS signals",
+          "causal gene-variant-cell type triples"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Cell-type-specific regulatory variants underlie polygenic metabolic disease susceptibility",
+        "result": "3,500 GWAS signals colocalize predominantly in cell-specific eQTL/caQTL; caQTL colocalizations more informative than eQTL"
+      },
+      {
+        "hypothesis": "Chromatin accessibility intermediates genetic effects on gene expression",
+        "result": "Causal directional maps constructed linking chromatin and expression QTLs; 2,000 eGenes colocalize with caQTL"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41598-026-77411-x",
+    "source": "computational-biology",
+    "id": "10.1038/s41598-026-77411-x",
+    "title": "Integrating bioinformatics analysis with molecular simulation to elucidate the therapeutic mechanism of Guizhi Fuling Wan for adenomyosis and endometriosis",
+    "projectPage": "https://www.nature.com/articles/s41598-026-77411-x",
+    "journal": "Scientific Reports",
+    "publishedAt": "2026-10-28",
+    "category": "Network Biology",
+    "task": "Elucidate therapeutic mechanism of Guizhi Fuling Wan for adenomyosis and endometriosis",
+    "key_results": "76 active ingredients and 480 GFW targets identified; 176 intersection targets with adenomyosis/endometriosis; core ingredients (cerevisterol, kaempferol, baicalein) stably bind AKT1; PI3K-Akt, MAPK, and apoptosis pathways implicated",
+    "comments": "Multi-omics integration is comprehensive, but experimental validation in cellular or animal models would strengthen mechanistic claims beyond in silico predictions.",
+    "model_io": [
+      {
+        "model": "Network pharmacology pipeline",
+        "inputs": [
+          "GFW herbal components",
+          "traditional medicine databases",
+          "disease target databases"
+        ],
+        "outputs": [
+          "herb-ingredient-target network",
+          "protein interaction networks",
+          "pathway enrichment"
+        ]
+      },
+      {
+        "model": "Molecular docking and dynamics",
+        "inputs": [
+          "core ingredients",
+          "hub protein targets (AKT1, MAPK3, HSP90AA1, BCL2, TP53, ESR1, JUN)"
+        ],
+        "outputs": [
+          "binding affinity scores",
+          "200 ns MD simulation trajectories",
+          "interaction stability metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "GFW acts via multi-target synergy on neuro-endocrine-immune-metabolic axis",
+        "result": "Seven hub targets and four major pathways identified; molecular dynamics confirm stable binding of core ingredients to AKT1"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41598-026-77503-8",
+    "source": "computational-biology",
+    "id": "10.1038/s41598-026-77503-8",
+    "title": "Hybrid feature pyramid attention and capsule network (FpaNet+CapsNet) for enhanced spatial and contextual feature extraction for improved brain tumor segmentation",
+    "projectPage": "https://www.nature.com/articles/s41598-026-77503-8",
+    "journal": "Scientific Reports",
+    "publishedAt": "2026-10-28",
+    "category": "Structural Prediction",
+    "task": "Segment glioma tumors in brain MRI using hybrid attention and capsule networks",
+    "key_results": "FpaNet+CapsNet achieved Dice scores of 99.05% (enhancing tumor), 98.05% (tumor core), 99.50% (whole tumor) on BraTS2020 test set; 99.6% overall accuracy; 0.962 Dice on BraTS2021 unseen data",
+    "comments": "Ablation studies validate both architectural components; excellent performance metrics, but clinical translation requires prospective multi-center validation and comparison against radiologist inter-observer variability.",
+    "model_io": [
+      {
+        "model": "FpaNet+CapsNet hybrid architecture",
+        "inputs": [
+          "T1 MRI",
+          "T1Gd MRI",
+          "T2 MRI",
+          "FLAIR MRI",
+          "preprocessed and augmented imaging data"
+        ],
+        "outputs": [
+          "tumor segmentation mask",
+          "Dice coefficient",
+          "Hausdorff distance (HD95)",
+          "pixel-level accuracy map"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Feature Pyramid Attention captures multi-scale context while Capsule Network preserves spatial structure",
+        "result": "Ablation tests confirm both modules contribute; combined model outperforms single-module variants"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41598-026-77658-4",
+    "source": "computational-biology",
+    "id": "10.1038/s41598-026-77658-4",
+    "title": "Delay-induced dynamics and Hopf bifurcation in a quarantined SEIQR epidemic model with nonlinear incidence",
+    "projectPage": "https://www.nature.com/articles/s41598-026-77658-4",
+    "journal": "Scientific Reports",
+    "publishedAt": "2026-10-28",
+    "category": "Statistical Methods",
+    "task": "Analyze delay-induced bifurcation dynamics in quarantined SEIQR epidemic model",
+    "key_results": "Hopf bifurcation conditions established with time delay \u03c4 as bifurcation parameter; R\u2080 < 1 ensures local asymptotic stability of healthy equilibrium; periodic oscillatory solutions characterized analytically",
+    "comments": "Rigorously extends classical epidemic models with saturated nonlinear incidence and explicit bifurcation analysis, though practical parameter validation against real epidemiological data is absent.",
+    "model_io": [
+      {
+        "model": "Delayed SEIQR compartmental model",
+        "inputs": [
+          "susceptible",
+          "exposed",
+          "infected",
+          "quarantined",
+          "recovered",
+          "time delay \u03c4",
+          "nonlinear incidence rate"
+        ],
+        "outputs": [
+          "basic reproduction number R\u2080",
+          "equilibrium points stability",
+          "Hopf bifurcation conditions",
+          "periodic solution trajectories"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Time delay in quarantine induces Hopf bifurcation and oscillatory dynamics",
+        "result": "Sufficient conditions for bifurcation derived; direction and stability of emerging periodic solutions determined"
+      },
+      {
+        "hypothesis": "R\u2080 < 1 stabilizes disease-free equilibrium; R\u2080 > 1 stabilizes endemic equilibrium",
+        "result": "Confirmed via Routh\u2013Hurwitz criterion"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41467-026-78807-z",
+    "source": "mathematics-and-computing",
+    "id": "10.1038/s41467-026-78807-z",
+    "title": "Supervising the search process produces reliable and generalizable information-seeking agents",
+    "projectPage": "https://www.nature.com/articles/s41467-026-78807-z",
+    "journal": "Nature Communications",
+    "publishedAt": "2026-10-28",
+    "category": "ML Theory",
+    "task": "Process supervision for information-seeking agents",
+    "key_results": "Re2Search++ achieves substantial improvements on multi-hop benchmarks with strong out-of-domain transfer; search critics transfer across models including proprietary LLMs",
+    "comments": "Shifting supervision from outcomes to process steps is an elegant insight, though the claim of 'reliability' depends heavily on the quality of process labels which may be expensive to obtain at scale.",
+    "model_io": [
+      {
+        "model": "Re2Search++ (LLM-based search agent)",
+        "inputs": [
+          "search queries",
+          "external knowledge sources",
+          "intermediate reasoning steps"
+        ],
+        "outputs": [
+          "synthesized answers",
+          "search trajectories"
+        ]
+      },
+      {
+        "model": "RAG-Gym framework",
+        "inputs": [
+          "multi-hop information-seeking tasks"
+        ],
+        "outputs": [
+          "process-supervised agent policies"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Process supervision improves generalization compared to outcome-only supervision",
+        "result": "Confirmed: stronger out-of-domain performance and reduced reward hacking"
+      },
+      {
+        "hypothesis": "Reasoning reflection is critical for search agent quality",
+        "result": "Confirmed: identified as key capability through systematic investigation"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41598-026-54738-z",
+    "source": "mathematics-and-computing",
+    "id": "10.1038/s41598-026-54738-z",
+    "title": "ESAD-Net: an efficient steel adaptive detection network for real-time surface defect detection",
+    "projectPage": "https://www.nature.com/articles/s41598-026-54738-z",
+    "journal": "Scientific Reports",
+    "publishedAt": "2026-10-28",
+    "category": "Algorithms",
+    "task": "Real-time steel surface defect detection",
+    "key_results": "ESAD-Net achieves 87.0% mAP@0.5 and 115.3 FPS; 6.8pp improvement over YOLOv8n baseline, 13.2pp gain on small defects",
+    "comments": "Solid engineering combining lightweight backbone design with adaptive sample selection, though the 25% parameter reduction claim and edge deployment viability need independent validation.",
+    "model_io": [
+      {
+        "model": "ESAD-Net (RegNet-X + ATSS)",
+        "inputs": [
+          "steel surface images"
+        ],
+        "outputs": [
+          "defect bounding boxes with confidence scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "ATSS adaptive sample selection mitigates class imbalance",
+        "result": "Confirmed: positive sample utilization increased from 15.2% to 24.8%; false positive rate reduced to 6.7%"
+      },
+      {
+        "hypothesis": "Multi-scale fusion with edge enhancement improves small defect detection",
+        "result": "Confirmed: 13.2pp average improvement on small target defects"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41598-026-74844-2",
+    "source": "mathematics-and-computing",
+    "id": "10.1038/s41598-026-74844-2",
+    "title": "Bidirectional cross-scale detail-semantic collaborative network (BCDS-Net) for vision-based waste recognition",
+    "projectPage": "https://www.nature.com/articles/s41598-026-74844-2",
+    "journal": "Scientific Reports",
+    "publishedAt": "2026-10-28",
+    "category": "Algorithms",
+    "task": "Vision-based waste image classification",
+    "key_results": "BCDS-Net achieves 96.73% accuracy on TrashNet, 92.15% on RealWaste, 96.23% on TrashBox with 41 samples/s inference on edge hardware",
+    "comments": "Strong empirical results, but the restriction to single-label classification per image significantly limits real-world applicability where multi-waste scenarios are common.",
+    "model_io": [
+      {
+        "model": "BCDS-Net (Hybrid Conv-MLP)",
+        "inputs": [
+          "waste images (224\u00d7224)"
+        ],
+        "outputs": [
+          "single waste category label"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Bidirectional cross-scale aggregation improves multi-scale feature fusion",
+        "result": "Confirmed: outperforms baselines on scale-stratified evaluation"
+      },
+      {
+        "hypothesis": "Model generalizes under occlusion and image degradation",
+        "result": "Confirmed: stable recognition demonstrated across condition-stratified benchmarks"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41467-026-78806-0",
+    "source": "physics",
+    "id": "10.1038/s41467-026-78806-0",
+    "title": "Integrated on-chip quantum light sources on a van der Waals platform",
+    "projectPage": "https://www.nature.com/articles/s41467-026-78806-0",
+    "journal": "Nature Communications",
+    "publishedAt": "2026-10-28",
+    "category": "Optics/Photonics",
+    "task": "Demonstrate integrated quantum light sources on van der Waals platform with waveguide coupling",
+    "key_results": "Single-photon g\u00b2(0)=0.003\u208b\u2080.\u2080\u2080\u2083\u207a\u2070\u00b7\u2070\u00b3\u2070 (single-port) and 0.076\u00b10.023 (cross-correlated); waveguide-coupled out-coupled rate ~357 kHz (estimated minimum 1.68 MHz), from strain-engineered bilayer WSe\u2082 emitters coupled to WS\u2082 waveguides",
+    "comments": "High-purity single-photon generation with efficient waveguide coupling is promising, though the discrepancy between single-port and multi-port g\u00b2 measurements warrants clarification.",
+    "model_io": [
+      {
+        "model": "Integrated van der Waals quantum photonics platform",
+        "inputs": [
+          "strain-engineered bilayer WSe\u2082",
+          "discrete-state excitation",
+          "WS\u2082 waveguide"
+        ],
+        "outputs": [
+          "single-photon emission",
+          "g\u00b2(0) correlation functions",
+          "waveguide-coupled count rates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Strain-engineered WSe\u2082 emitters efficiently couple to multimode WS\u2082 waveguides with high purity",
+        "result": "Confirmed: achieved near-unity purity and MHz-scale coupled rates"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41535-026-00951-y",
+    "source": "physics",
+    "id": "10.1038/s41535-026-00951-y",
+    "title": "Exciton-driven Floquet engineering from first principles",
+    "projectPage": "https://www.nature.com/articles/s41535-026-00951-y",
+    "journal": "Nature Portfolio",
+    "publishedAt": "2026-10-28",
+    "category": "Optics/Photonics",
+    "task": "Engineer Floquet band structure via exciton-driven internal drive from first principles",
+    "key_results": "Captured subgap excitonic resonance in monolayer h-BN; demonstrated clear Floquet sidebands and band renormalization from oscillatory excitonic field without temporal pump-probe overlap",
+    "comments": "The first-principles approach combining rt-TDDFT with Floquet analysis is novel, but computational cost and applicability to larger systems or other materials remain unclear.",
+    "model_io": [
+      {
+        "model": "Real-time TDDFT with modified long-range-corrected kernel + Floquet-band analysis + time/angle-resolved photoemission simulation",
+        "inputs": [
+          "monolayer h-BN structure",
+          "excitonic dynamics",
+          "probe pulse parameters"
+        ],
+        "outputs": [
+          "Floquet sidebands",
+          "band renormalization",
+          "photoemission signatures"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Excitons act as internal drive enabling Floquet engineering without direct laser dressing",
+        "result": "Confirmed: oscillatory excitonic field generates Floquet effects even without temporal pump-probe overlap"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41598-026-74214-y",
+    "source": "physics",
+    "id": "10.1038/s41598-026-74214-y",
+    "title": "Cometary impacts an unlikely pathway towards the origins of life on Earth",
+    "projectPage": "https://www.nature.com/articles/s41598-026-74214-y",
+    "journal": "Scientific Reports",
+    "publishedAt": "2026-10-28",
+    "category": "Astrophysics/Cosmology",
+    "task": "Reassess cometary contribution to prebiotic molecular delivery for life's origins",
+    "key_results": "Rapid decline in Earth's cometary impact bombardment combined with efficient destruction of fragile organics during hypervelocity impact indicate cometary delivery of prebiotic feedstock was extremely rare",
+    "comments": "The paper challenges a decades-old paradigm with updated impact simulations and dynamical models, but alternative delivery pathways (meteorites, hydrothermal synthesis) and uncertainty in pre-impact comet composition merit continued investigation.",
+    "model_io": [
+      {
+        "model": "Integrated impact simulations, comet-atmosphere interactions, and cometary orbital dynamics",
+        "inputs": [
+          "cometary volatiles and organics",
+          "hypervelocity impact parameters",
+          "short-period comet evolution"
+        ],
+        "outputs": [
+          "molecular survival fractions",
+          "impact bombardment decay rate",
+          "delivery concentration estimates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Cometary impacts efficiently delivered prebiotic molecules in concentrations sufficient for abiogenesis",
+        "result": "Rejected: successful delivery was exceedingly rare due to molecular destruction and declining impact flux"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41598-026-78522-1",
+    "source": "physics",
+    "id": "10.1038/s41598-026-78522-1",
+    "title": "Machine learning for advancing gamma source localization in a human phantom using NaI (Tl) detector spectra in radiobioassay",
+    "projectPage": "https://www.nature.com/articles/s41598-026-78522-1",
+    "journal": "Scientific Reports",
+    "publishedAt": "2026-10-28",
+    "category": "Applied Physics",
+    "task": "Localize gamma radiation sources in human phantom using ML classification of detector spectra",
+    "key_results": "Logistic regression achieved 100% localization accuracy for GI organ; decision tree reached 97.4%; performance degraded for Ba-133 (spectral overlap) and whole-body detector (geometric symmetry)",
+    "comments": "The modular approach is practical for constrained settings, but the small dataset and poor performance on low-energy isotopes and symmetric geometries suggest limited real-world applicability without data augmentation.",
+    "model_io": [
+      {
+        "model": "Four ML classifiers (LR, DT, SVM, MLP) trained per isotope-detector configuration",
+        "inputs": [
+          "NaI(Tl) detector spectra",
+          "10 statistical features (mean, skewness, kurtosis, entropy, IQR, etc.)",
+          "Co-60, Cs-137, Ba-133 sources"
+        ],
+        "outputs": [
+          "organ localization (GI, lung, thyroid, WB)",
+          "classification accuracy",
+          "confidence scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Statistical spectral features enable accurate isotope-organ localization",
+        "result": "Partially confirmed: LR/DT effective for GI/thyroid, but failed for Ba-133 and symmetric WB geometry"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s42005-026-02928-6",
+    "source": "physics",
+    "id": "10.1038/s42005-026-02928-6",
+    "title": "Hierarchical structure of primary and hybridization-induced superconducting correlations in bilayer nickelates",
+    "projectPage": "https://www.nature.com/articles/s42005-026-02928-6",
+    "journal": "Communications Physics",
+    "publishedAt": "2026-10-28",
+    "category": "Condensed Matter",
+    "task": "Elucidate microscopic pairing mechanism in bilayer nickelate superconductors",
+    "key_results": "Hierarchical pairing structure revealed: primary pairing from Ni 3d_{z\u00b2} bonding-antibonding splitting redistributes correlations to d_{x\u00b2-y\u00b2} channel via orbital hybridization; s\u00b1 gap symmetry robust against Fermi-surface changes",
+    "comments": "The distinction between pairing origin and resulting correlations elegantly resolves competing theories, though experimental verification of orbital contributions remains needed.",
+    "model_io": [
+      {
+        "model": "Variational Monte Carlo on bilayer two-orbital Hubbard model",
+        "inputs": [
+          "Ni 3d orbitals",
+          "bilayer coupling",
+          "electron interactions"
+        ],
+        "outputs": [
+          "superconducting gap symmetry",
+          "orbital pairing correlations",
+          "long-range order"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Orbital hybridization redistributes superconducting correlations despite weak intrinsic d_{x\u00b2-y\u00b2} pairing tendency",
+        "result": "Confirmed: both channels exhibit comparable long-range correlations"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41594-026-01914-4",
+    "source": "systems-biology",
+    "id": "10.1038/s41594-026-01914-4",
+    "title": "A nanoscale map of the human cell surface proteome reveals spatial and functional organization",
+    "projectPage": "https://www.nature.com/articles/s41594-026-01914-4",
+    "journal": "Nature Structural & Molecular Biology",
+    "publishedAt": "2026-10-28",
+    "category": "Signaling Pathways",
+    "task": "Map spatial organization and functional modules of human cell surface proteome",
+    "key_results": "Identified 85 surface antigens organized into functional modules including TCR complexes and novel membrane-associated mitochondrial proteins; ML classifier predicted IL-10 receptor \u03b2 regulation of type I interferon signaling",
+    "comments": "Proximity labeling provides valuable spatial context but may miss transient or weak interactions; the functional significance of detected mitochondrial surface localization requires independent validation.",
+    "model_io": [
+      {
+        "model": "Proximity labeling + data-independent acquisition mass spectrometry",
+        "inputs": [
+          "T lymphocytes",
+          "B lymphoblasts",
+          "85 surface antigens"
+        ],
+        "outputs": [
+          "protein interaction networks",
+          "spatial organization maps",
+          "functional module assignments"
+        ]
+      },
+      {
+        "model": "Machine learning classifier",
+        "inputs": [
+          "protein spatial proximity data"
+        ],
+        "outputs": [
+          "protein association predictions",
+          "IL-10R \u03b2 - type I interferon signaling regulation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Cell surface proteome exhibits functional modular organization beyond known complexes",
+        "result": "Confirmed; discovered modules including previously unknown membrane-associated clusters"
+      },
+      {
+        "hypothesis": "Mitochondrial proteins localize to plasma membrane with functional roles",
+        "result": "Detected; suggests underappreciated membrane functions requiring validation"
+      },
+      {
+        "hypothesis": "IL-10 receptor \u03b2 regulates type I interferon signaling",
+        "result": "Predicted by ML classifier; indicates cross-pathway regulatory connection"
+      }
+    ]
+  }
+]
