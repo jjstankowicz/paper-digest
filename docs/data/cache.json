@@ -682781,5 +682781,821 @@
         "result": "Predicted by ML classifier; indicates cross-pathway regulatory connection"
       }
     ]
+  },
+  "hf:2610.37364": {
+    "category": "Vision",
+    "task": "Unified multimodal embedding representation across text, images, audio, and video",
+    "key_results": "Establishes new Pareto frontier on embedding benchmarks; outperforms specialist models and models 2-12x larger; supports selective modality loading and quantized weights for resource-constrained environments",
+    "comments": "Strong engineering contribution with practical flexibility, though the abstract lacks specific benchmark numbers to assess the magnitude of improvements.",
+    "model_io": [
+      {
+        "model": "EmbeddingGemma 2 (multimodal encoder)",
+        "inputs": [
+          "text",
+          "images",
+          "audio",
+          "video"
+        ],
+        "outputs": [
+          "unified embedding vectors"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-stage curriculum with modality and objective progression improves cross-modal performance",
+        "result": "Confirmed\u2014strong quality across unimodal, cross-modal, and mixed-modal evaluations"
+      },
+      {
+        "hypothesis": "Selective modality loading and adjustable parameters enable efficiency without sacrificing quality",
+        "result": "Confirmed\u2014model achieves Pareto frontier while supporting resource-constrained deployment"
+      }
+    ]
+  },
+  "hf:2610.36082": {
+    "category": "LLM/Reasoning",
+    "task": "Multi-step financial reasoning via hindsight self-distillation under data-residency constraints",
+    "key_results": "Fin-SD achieves 3.03 pp accuracy gain over GPT-OSS-20B baseline on FinanceReasoning Hard; generates 9.5% fewer tokens than full-solution distillation; no material regression on MMLU-Pro or compliance audits",
+    "comments": "Interesting finding that hint content matters less than hint placement; the result that same-family hints don't require larger models is practically valuable but somewhat undermines the 'hindsight' framing.",
+    "model_io": [
+      {
+        "model": "GPT-OSS-20B (student) + frozen copy (teacher)",
+        "inputs": [
+          "problem",
+          "error-identified prefix",
+          "student-written critique"
+        ],
+        "outputs": [
+          "refined reasoning trajectory"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Hint content (critique) is necessary for the performance gain",
+        "result": "Rejected\u2014generic feedback control matches full Fin-SD gain, suggesting the benefit comes from *where* supervision is applied"
+      },
+      {
+        "hypothesis": "Hints from stronger models (6x parameters) provide greater benefits",
+        "result": "Rejected\u2014same-family hints yield no materially greater benefits than self-written hints"
+      },
+      {
+        "hypothesis": "Fin-SD matches full-solution distillation on accuracy while reducing token generation",
+        "result": "Confirmed\u20149.5% fewer tokens while maintaining accuracy parity"
+      }
+    ]
+  },
+  "hf:2610.29003": {
+    "category": "Generative",
+    "task": "Text-conditioned diversity for multi-image generation and interactive refinement",
+    "key_results": "T-DIG far exceeds baselines in text-conditioned diversity; preserves base-prompt alignment across multiple metrics and human judgments; works with open-weight, distilled, and proprietary models without weight access",
+    "comments": "Well-motivated user-centric problem with practical deployment advantages (frozen generator), though the paper's impact depends on the actual magnitude of diversity improvements over baselines.",
+    "model_io": [
+      {
+        "model": "LLM policy (trained with GRPO)",
+        "inputs": [
+          "user prompt",
+          "inspection feedback",
+          "natural language refinement requests"
+        ],
+        "outputs": [
+          "K axis-conditioned prompts or edit instructions"
+        ]
+      },
+      {
+        "model": "Frozen image generator/editor",
+        "inputs": [
+          "axis-conditioned prompts"
+        ],
+        "outputs": [
+          "diverse image variations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Text-conditioned diversity reward training improves user-directed axis-aligned variations",
+        "result": "Confirmed\u2014T-DIG far exceeds baselines on text-conditioned diversity metrics"
+      },
+      {
+        "hypothesis": "LLM policy can operate on frozen generators without access to model weights",
+        "result": "Confirmed\u2014T-DIG applies to open-weight, distilled, and proprietary models unchanged"
+      },
+      {
+        "hypothesis": "GRPO training with alignment penalties preserves base-prompt alignment while improving diversity",
+        "result": "Confirmed\u2014no degradation in prompt alignment across metrics and human judgments"
+      }
+    ]
+  },
+  "nature:10.1038/s41540-026-00842-9": {
+    "category": "Other",
+    "task": "Stratify osteosarcoma by glycolytic phenotype and identify regulators of chemoresistance",
+    "key_results": "HGlyOS cells show enhanced stemness and chemotherapy resistance; SSR3 identified as glycolysis regulator modulating cisplatin sensitivity",
+    "comments": "The 34-gene GGPS serves as a proxy rather than independent classifier, which may limit clinical utility as a standalone biomarker.",
+    "model_io": [
+      {
+        "model": "Single-cell and spatial transcriptomics (27 patients)",
+        "inputs": [
+          "malignant osteosarcoma cells"
+        ],
+        "outputs": [
+          "glycolysis stratification (HGlyOS/medium/low)",
+          "CGAS score",
+          "34-gene GGPS signature"
+        ]
+      },
+      {
+        "model": "Co-expression network and machine learning screening",
+        "inputs": [
+          "transcriptomic data"
+        ],
+        "outputs": [
+          "SSR3 as glycolysis regulator"
+        ]
+      },
+      {
+        "model": "Functional experiments",
+        "inputs": [
+          "SSR3 modulation"
+        ],
+        "outputs": [
+          "glycolytic metabolism",
+          "stemness markers",
+          "cisplatin sensitivity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "High-glycolysis phenotype correlates with stemness and chemoresistance",
+        "result": "Confirmed; HGlyOS cells exhibit enhanced stemness and cisplatin resistance"
+      },
+      {
+        "hypothesis": "SSR3 regulates glycolytic metabolism and drug sensitivity",
+        "result": "Confirmed; SSR3 modulation alters glycolysis, stemness, and cisplatin response"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-78760-x": {
+    "category": "Genomics",
+    "task": "Map cell type-specific chromatin accessibility and nucleosome QTLs to identify causal chromatin effects",
+    "key_results": "76,027 nfrQTLs, 24,623 nucQTLs; 1,528 causal nfrQTL\u2192nucleosome relationships; 76 colocalizations with muscle-trait GWAS signals",
+    "comments": "Fragment-level decomposition of ATAC-seq data reveals fine-grained causal regulatory architecture; direct proof of nucleosome causality limited by observational inference.",
+    "model_io": [
+      {
+        "model": "Statistical modeling of fragment position/length + causal inference",
+        "inputs": [
+          "snATAC-seq (281 muscle biopsies)",
+          "genetic variants",
+          "GWAS summary statistics"
+        ],
+        "outputs": [
+          "nfrQTLs",
+          "nucQTLs",
+          "causal directional maps",
+          "GWAS colocalizations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "NFR accessibility changes causally affect downstream nucleosome positioning",
+        "result": "1,528 causal instances identified via colocalization and inference"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-79009-3": {
+    "category": "Network Biology",
+    "task": "Predict circRNA-RBP interaction sites using deep learning",
+    "key_results": "Improved prediction across 37 benchmark datasets; identified recurrent pathways in neurodegenerative diseases (nucleocytoplasmic transport, lysosomal signaling)",
+    "comments": "Interpretable deep learning framework integrates multiple RNA structural features; claims therapeutic potential require experimental validation.",
+    "model_io": [
+      {
+        "model": "Deep learning framework (CPRISP)",
+        "inputs": [
+          "circRNA sequence",
+          "physicochemical properties",
+          "secondary structure",
+          "protein features"
+        ],
+        "outputs": [
+          "interaction site predictions",
+          "conserved sequence patterns",
+          "prioritized compounds"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Integrated features improve circRNA-RBP binding prediction",
+        "result": "Outperformed existing methods on 37 datasets; generalized across cell lines"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-74208-w": {
+    "category": "Other",
+    "task": "Classify fish diseases using visual embedding retrieval vs. caption-based retrieval",
+    "key_results": "CLIP visual retrieval 89.3% vs. Florence-2 captions 49.5%; integrated workflow: selective accuracy 0.928 at 54.4% coverage; EUS interception 71.2%",
+    "comments": "Visual retrieval substantially outperforms caption-based approach; interception strategy enables abstention for unknown classes, improving reliability.",
+    "model_io": [
+      {
+        "model": "CLIP (visual embedding retrieval)",
+        "inputs": [
+          "fish disease images"
+        ],
+        "outputs": [
+          "visual similarity rankings",
+          "disease labels"
+        ]
+      },
+      {
+        "model": "Florence-2 (caption generation)",
+        "inputs": [
+          "fish disease images"
+        ],
+        "outputs": [
+          "diagnostic captions",
+          "disease labels"
+        ]
+      },
+      {
+        "model": "Integrated workflow (caption + visual retrieval + evidence scoring + abstention)",
+        "inputs": [
+          "fish disease images",
+          "reference gallery"
+        ],
+        "outputs": [
+          "disease prediction",
+          "abstention flag",
+          "selective accuracy"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Visual embeddings capture diagnostic features better than generated captions",
+        "result": "CLIP achieved 89.3% vs. Florence-2 49.5%; low caption diagnostic-term density explains underperformance"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-75376-5": {
+    "category": "Other",
+    "task": "Interactive post-processing and analysis of calcium fluorescence transients",
+    "key_results": "FFT+Baseline and Wavelet Ridgewalking modules quantify transient features; demonstrated on three model organisms with consistent biological trends",
+    "comments": "User-friendly Shiny application addresses reproducibility through transparent baseline sensitivity analysis; validation via external A. thaliana data qualitative only.",
+    "model_io": [
+      {
+        "model": "CalciumInsights (FFT+Baseline and Wavelet Ridgewalking)",
+        "inputs": [
+          "ROI-derived calcium fluorescence time series"
+        ],
+        "outputs": [
+          "baseline estimates",
+          "peak detection",
+          "transient metrics",
+          "event-level measurements"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Baseline definition materially affects calcium event quantification",
+        "result": "Sensitivity analysis demonstrates baseline-dependent metric variation"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76498-6": {
+    "category": "Genomics",
+    "task": "Identify cancer-related fatigue molecular subtypes in glioma and develop prognostic risk model",
+    "key_results": "10-gene CRF-related risk score (CRRS) associated with WHO grade, IDH status, prognosis; Docetaxel and SNX-2112 inhibit proliferation in vitro",
+    "comments": "Multi-level integration (transcriptomics, immunology, drug screening) comprehensive; therapeutic efficacy in vivo remains to be demonstrated.",
+    "model_io": [
+      {
+        "model": "LASSO Cox regression",
+        "inputs": [
+          "CRF-associated genes",
+          "clinicopathological features",
+          "immune markers"
+        ],
+        "outputs": [
+          "CRRS risk score",
+          "prognostic nomogram"
+        ]
+      },
+      {
+        "model": "Molecular docking + molecular dynamics simulation",
+        "inputs": [
+          "candidate compounds",
+          "target protein structures"
+        ],
+        "outputs": [
+          "binding affinity predictions",
+          "lead compounds"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "CRF-related gene signature stratifies glioma prognosis",
+        "result": "CRRS associated with survival, immune infiltration, immunotherapy response"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76518-5": {
+    "category": "Statistical Methods",
+    "task": "Detect early-stage breast cancer via label-free Raman spectroscopy and machine learning",
+    "key_results": "Early-stage vs. control ROC-AUC>0.94; early vs. advanced ROC-AUC>0.85; characteristic peak at ~519 cm\u207b\u00b9 associated with oxidized glutathione",
+    "comments": "Non-invasive spectroscopic signature promising; clinical feasibility depends on sample preparation standardization and prospective validation.",
+    "model_io": [
+      {
+        "model": "Raman spectroscopy + PCA + machine learning (LDA, SVM, decision tree, Na\u00efve Bayes)",
+        "inputs": [
+          "serum Raman spectra",
+          "tumor-associated antigen proteins"
+        ],
+        "outputs": [
+          "diagnostic scores",
+          "ROC-AUC",
+          "cancer stage classification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Tumor-associated antigen Raman signatures distinguish early-stage breast cancer",
+        "result": "ROC-AUC>0.94 for early vs. controls; partial overlap with recombinant antigens supports biochemical relevance"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76905-y": {
+    "category": "Structural Prediction",
+    "task": "Correlate OCT imaging with histology in laser-induced retinal injury",
+    "key_results": "Hyper-reflective foci co-localized with IB4-positive structures; variable inter-lesion correspondence observed",
+    "comments": "Multi-modal validation framework is methodologically sound; inter-lesion variability suggests context-dependent OCT feature interpretation.",
+    "model_io": [
+      {
+        "model": "OCT-histology registration pipeline",
+        "inputs": [
+          "adaptive optics OCT volumetric images",
+          "confocal microscopy stacks",
+          "IB4 immunostain"
+        ],
+        "outputs": [
+          "co-localization maps",
+          "hyper-reflective foci annotations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Hyper-reflective foci on OCT correspond to vasculature on histology",
+        "result": "Co-localization with IB4-positive structures confirmed; inter-lesion variability noted"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77090-8": {
+    "category": "Other",
+    "task": "Develop federated learning and blockchain framework for secure EHR exchange across IoMT systems",
+    "key_results": "IUDVSP: 0.22 ms signature generation, 0.28 ms verification; edge processing reduced registration/validation latency 62.76%; 85.2% lower cost vs. centralized",
+    "comments": "Pairing-free designated-verifier approach is cryptographically interesting; latency and cost estimates model-based without direct experimental comparison to pairing-based schemes.",
+    "model_io": [
+      {
+        "model": "FBEHR (Federated + Blockchain EHR)",
+        "inputs": [
+          "EHR data",
+          "distributed healthcare entities",
+          "genetic variants for malicious detection"
+        ],
+        "outputs": [
+          "secure EHR registration",
+          "access control",
+          "detected anomalies"
+        ]
+      },
+      {
+        "model": "ANN-LSTM anomaly detector",
+        "inputs": [
+          "user access patterns"
+        ],
+        "outputs": [
+          "malicious user detection"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-77851-5": {
+    "category": "Genomics",
+    "task": "Derive MSC-associated transcriptional signature from single-cell RNA-seq for B-ALL prognosis",
+    "key_results": "35-gene signature; 10-gene-pair model stratified survival in derivation and external TARGET cohort; retained independent prognostic value after adjustment",
+    "comments": "Single-cell-informed approach novel; cellular source of signal unvalidated, limiting mechanistic interpretation.",
+    "model_io": [
+      {
+        "model": "Co-expression network analysis + logistic regression",
+        "inputs": [
+          "35-gene MSC signature",
+          "bulk transcriptome",
+          "clinical outcomes"
+        ],
+        "outputs": [
+          "10-gene-pair prognostic model",
+          "survival stratification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "MSC-derived transcriptional signal predicts B-ALL survival",
+        "result": "Model stratified derivation cohort; retained prognostic value in TARGET cohort independent of age, WBC, MRD"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-03431-6": {
+    "category": "Statistical Methods",
+    "task": "Estimate arterial stiffness from single brachial pressure waveform using physics-informed digital twin",
+    "key_results": "PWV estimation r=0.67, RMSE=1.12 m/s; improved from baseline r=0.22, RMSE=1.90 m/s",
+    "comments": "Physics-informed approach enables scalable non-invasive vascular assessment; modest correlation suggests need for multi-site validation.",
+    "model_io": [
+      {
+        "model": "Physics-informed digital twin (reduced-order wave propagation PDE)",
+        "inputs": [
+          "brachial pressure waveform",
+          "age",
+          "blood pressure"
+        ],
+        "outputs": [
+          "PWV estimate",
+          "ventricular-vascular parameters"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Physics-informed parameters improve PWV estimation over demographic baselines",
+        "result": "Blind test improvement: r increased from 0.22 to 0.67"
+      }
+    ]
+  },
+  "nature:10.1038/s41534-026-01403-y": {
+    "category": "Algorithms",
+    "task": "Scalable neural decoders for real-time quantum error correction",
+    "key_results": "Mamba decoder: O(d\u00b2) complexity vs. Transformer O(d\u2074); matches Transformer performance on Sycamore hardware, outperforms in simulated real-time with decoder-induced noise up to d=9",
+    "comments": "State-space model trades lower computational cost for maintained accuracy; practical advantage grows with code distance in realistic noise scenarios.",
+    "model_io": [
+      {
+        "model": "Mamba-based quantum error decoder",
+        "inputs": [
+          "syndrome measurements",
+          "error chains",
+          "hardware noise profile"
+        ],
+        "outputs": [
+          "estimated error correction operation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Mamba's O(d\u00b2) complexity enables real-time decoding without sacrificing accuracy",
+        "result": "Confirmed; matches Transformer on noiseless memory experiments, significantly outperforms in real-time scenarios with decoder noise"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-68657-6": {
+    "category": "Algorithms",
+    "task": "Energy management for virtual power plants in smart grids with day-ahead and reserve markets",
+    "key_results": "Bi-level optimization with Unscented Transform uncertainty + hybrid ALO-RPO metaheuristic improves ADN economic performance ~45.3% and technical performance 41.9\u201364.6%; energy losses reduced 44.9%, voltage deviation 48.9%",
+    "comments": "Accounts for bio-waste, hydrogen, and compressed-air storage; 100% VPP flexibility achieved; improvements relative to conventional power flow, not state-of-the-art market models.",
+    "model_io": [
+      {
+        "model": "Bi-level VPP optimization (ALO+RPO metaheuristic)",
+        "inputs": [
+          "load forecasts",
+          "renewable generation",
+          "electricity prices",
+          "reserve requirements"
+        ],
+        "outputs": [
+          "unit commitment",
+          "reserve allocation",
+          "storage dispatch",
+          "dispatch schedule"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Unscented Transform captures flexibility boundaries better than standard uncertainty methods",
+        "result": "Supported by 100% VPP flexibility and 45.3% economic improvement; direct comparison limited"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-73013-9": {
+    "category": "ML Theory",
+    "task": "Multi-metric characterization of quantum convolutional neural networks",
+    "key_results": "6-qubit QCNN achieved KS similarity 0.8826\u00b10.0144; gradient variance decreased from 0.139\u00b10.084 to 0.009\u00b10.004 across 2\u20138 qubits; parameter efficiency 72 vs. 906 for DNN baseline",
+    "comments": "Comprehensive analysis reveals finite-size gradient suppression without asymptotic barren-plateau behavior; expressibility alone does not guarantee robust trainability under noise.",
+    "model_io": [
+      {
+        "model": "6-qubit, 3-layer QCNN",
+        "inputs": [
+          "quantum circuit parameters",
+          "training data"
+        ],
+        "outputs": [
+          "classification predictions",
+          "gradient measurements",
+          "noise responses"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Increased circuit depth improves expressibility without inducing barren plateaus",
+        "result": "Partial confirmation; KS similarity improved 0.74\u21920.947 but gradient variance suppressed without asymptotic barren plateau"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-75125-8": {
+    "category": "ML Theory",
+    "task": "DDoS attack detection via bidirectional LSTM with attention mechanism and Bayesian hyperparameter optimization",
+    "key_results": "OBiLSTM-AM on CIC-DDoS2019: 99.2% accuracy, 98.5% precision, 98.3% F1-score; outperforms LSTM/GRU/hybrid baselines by significant margins",
+    "comments": "Bidirectional context + dynamic attention over temporal intervals; Bayesian optimization tunes hyperparameters; benchmark-dependent results require cross-dataset validation.",
+    "model_io": [
+      {
+        "model": "OBiLSTM-AM (Bayesian-optimized)",
+        "inputs": [
+          "network traffic sequences (100 time steps)"
+        ],
+        "outputs": [
+          "attack/benign classification",
+          "attention scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "BiLSTM + attention captures low-volume multi-vector DDoS signatures better than unidirectional models",
+        "result": "Confirmed; 99.2% accuracy and 98.5% precision significantly exceed baseline LSTM/GRU"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-75335-0": {
+    "category": "Analysis",
+    "task": "Wave propagation in stochastic triple-porosity thermoelasticity with uncertainty quantification",
+    "key_results": "Monte Carlo + perturbation analysis reveals significant quantitative differences from double-porosity in stress concentration, wave attenuation, thermal diffusion; uncertainty propagation quantified via correlation length variation",
+    "comments": "Novel stochastic framework for triple-porosity Lord\u2013Shulman theory; silicon testbed is well-characterized but naturally fractured reservoirs/vuggy rocks remain model validation targets.",
+    "model_io": [
+      {
+        "model": "Triple-porosity thermoelastic half-space (L\u2013S theory)",
+        "inputs": [
+          "thermo-mechanical loading",
+          "stochastic material properties (correlation length)"
+        ],
+        "outputs": [
+          "displacement/temperature/pore pressure fields",
+          "uncertainty distributions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Triple porosity induces distinct wave attenuation and stress concentration patterns vs. double-porosity",
+        "result": "Confirmed; quantitative differences observed in stress, attenuation, thermal diffusion across time instants"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-75518-9": {
+    "category": "Algorithms",
+    "task": "Photovoltaic power forecasting with evolved neural architecture and novel optimization",
+    "key_results": "BAOA-EvoMem-MambaFormer: RMSE 7.448, MAE 4.602, R\u00b2 0.948 on real-world PV dataset, outperforming state-of-the-art",
+    "comments": "Combines selective state-space modeling with memory-augmented attention and Betta fish-inspired metaheuristic; practical utility depends on comparative benchmarking rigor.",
+    "model_io": [
+      {
+        "model": "EvoMem-MambaFormer optimized by BAOA",
+        "inputs": [
+          "solar irradiance",
+          "temperature",
+          "time-series features"
+        ],
+        "outputs": [
+          "PV power predictions (kW)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Memory-augmented state-space models capture long-term solar generation periodicity better than standard transformers",
+        "result": "Supported by superior R\u00b2 and lower error metrics on real-world data"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76360-9": {
+    "category": "Algorithms",
+    "task": "Spectrum sensing and resource allocation for cognitive radio networks",
+    "key_results": "HDAR-CNet achieves 98.9% spectrum utilization efficiency and 5 s computation time; MKR-TNet for sensing, 2SO-DRL for allocation with sinusoidal chaotic mapping",
+    "comments": "Hybrid deep learning + reinforcement learning with chaotic mapping for exploration; practical deployment trade-offs not thoroughly analyzed.",
+    "model_io": [
+      {
+        "model": "MKR-TNet (spectrum sensing) + 2SO-DRL (resource allocation)",
+        "inputs": [
+          "RF signal measurements",
+          "spectrum occupancy",
+          "traffic conditions"
+        ],
+        "outputs": [
+          "spectrum availability predictions",
+          "resource allocation policy",
+          "QoS metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Sinusoidal chaotic mapping improves exploration and avoids premature convergence in DRL",
+        "result": "Supported by 98.9% utilization efficiency; detailed ablation limited"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76774-5": {
+    "category": "Other",
+    "task": "Multi-agent simulation of digital economy and regional income inequality coupling",
+    "key_results": "Technology-diffusion gradient explains 52.8\u201366.4% of inequality variation; DEI-Theil link is monotonic (no interior turning point); digital-infrastructure investment reduces western inequality by 15.2% by 2040",
+    "comments": "Uses synthetic benchmark with fixed seed (1642026), no external validity by design; mechanistic hypothesis-generation tool rather than empirical estimation.",
+    "model_io": [
+      {
+        "model": "Multi-agent economic-geographical dual-gradient model",
+        "inputs": [
+          "enterprise heterogeneity",
+          "resident and government agents",
+          "spatial lattice configuration"
+        ],
+        "outputs": [
+          "inequality metrics (Theil index)",
+          "technology/capital/institutional gradients",
+          "policy impact projections"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Technology diffusion is the primary driver of regional inequality variation",
+        "result": "Confirmed in simulation; explains 52.8\u201366.4% of variance"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76930-x": {
+    "category": "ML Theory",
+    "task": "Multimodal sensor fusion with drift-aware and explainable decision making for IoT/cyber-physical systems",
+    "key_results": "WESAD: macro-F1 0.923, AUROC 0.964 vs. 0.859, 0.960 early-fusion; SWaT: macro-F1 0.966, AUROC 0.999; ECE 2.1%, explanation fidelity >92%; 43 ms latency (400 nodes), 46.15% comm. reduction",
+    "comments": "Drift monitoring in feature+prediction space with minimal overshoot; SWaT AUPRC 0.911 below best baseline 0.975, indicating trade-off in precision-recall.",
+    "model_io": [
+      {
+        "model": "Modality-specific encoders + temporal fusion backbone",
+        "inputs": [
+          "multimodal sensor signals (ECG, EDA, temperature, etc.)",
+          "temporal context"
+        ],
+        "outputs": [
+          "calibrated decision scores",
+          "drift flags",
+          "perturbation-based explanations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Quality-aware encoders and drift monitoring improve robustness to distributional shift",
+        "result": "Confirmed; framework outperforms early-fusion baseline and maintains >0.985 stage-wise detection rate with <0.02 false alarm rate"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77070-y": {
+    "category": "Algorithms",
+    "task": "Robust finite-time speed control of switched reluctance motors with disturbance rejection",
+    "key_results": "Full-order terminal sliding mode control with super-twisting load observer eliminates steady-state error under load changes while maintaining fast transient response",
+    "comments": "Introduces novel gain-with-integrator modification to reference torque; Lyapunov stability verified but experimental validation limited to 12/8 prototype.",
+    "model_io": [
+      {
+        "model": "FOTSMC + STLO with DITC scheme",
+        "inputs": [
+          "speed reference",
+          "load disturbances",
+          "motor current/torque feedback"
+        ],
+        "outputs": [
+          "control signal",
+          "estimated disturbances",
+          "actual motor speed"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Integral action in FOTSMC eliminates steady-state error under sudden load changes",
+        "result": "Confirmed; experimental results validate finite-time convergence and chattering reduction"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77384-x": {
+    "category": "Statistics/Probability",
+    "task": "Evaluating hv-block cross-validation for temporally autocorrelated model selection in ETo estimation",
+    "key_results": "hv-block shows 23\u201330% over-selection rate at all autocorrelation levels, higher than BIC/AIC/5-fold CV; no bias reduction at n=4,000\u201320,000; over-selection mainly structural (fold geometry), secondarily from noise; practical RMSE differences negligible (<0.01 mm/day)",
+    "comments": "Confirms theoretical concern: hv-block lacks BIBD combinatorial balance; structural design imbalance drives over-selection, yet operational consequences minimal for ETo irrigation applications.",
+    "model_io": [
+      {
+        "model": "Random Forest (ETo predictor)",
+        "inputs": [
+          "hydro-meteorological features",
+          "temporal structure"
+        ],
+        "outputs": [
+          "ETo predictions",
+          "model selection via CV/IC"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "hv-block over-selection rate is independent of sample size (n=4,000\u201320,000) and primarily due to structural design",
+        "result": "Confirmed; 23\u201330% over-selection persists; control experiments show fold geometry (not noise) responsible"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77683-3": {
+    "category": "Statistics/Probability",
+    "task": "Comparative sentiment and thematic analysis of conversational AI user reviews",
+    "key_results": "ChatGPT vs. Replika: marginal overall sentiment differences (method-dependent); polarized rating distributions differ significantly (\u03c7\u00b2=242.26, p<0.001, Cram\u00e9r's V=0.20); topic modeling: conversation/companionship 53.6% Replika vs. 10.9% ChatGPT",
+    "comments": "Instrumental vs. relational framing explain review polarity differences; App\u00d7Rating interaction effect size small (\u03b7\u00b2=0.016); cross-temporal sample bias for interaction noted.",
+    "model_io": [
+      {
+        "model": "NRC emotion + topic modeling pipeline",
+        "inputs": [
+          "6,000 app store reviews (3,000 per app)"
+        ],
+        "outputs": [
+          "sentiment scores",
+          "emotion distributions",
+          "topic assignments"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Task-oriented (ChatGPT) and companionship-oriented (Replika) apps elicit divergent user expectations and evaluative framing",
+        "result": "Confirmed; topic modeling shows 53.6% vs. 10.9% split on conversation/companionship; emotions differ (joy, anger, surprise, anticipation higher in Replika)"
+      }
+    ]
+  },
+  "nature:10.1038/s41699-026-00741-x": {
+    "category": "Topology/Geometry",
+    "task": "Inverse design of heterodeformations for strain soliton networks in bilayer 2D materials",
+    "key_results": "Established one-to-one mapping between heterodeformations and soliton network geometry (line vector-Burgers vector pairs); demonstrated design of anisotropic interfacial friction in bilayer graphene",
+    "comments": "Geometric framework bypasses moir\u00e9 Bravais lattice limitation (many-to-one under translational symmetry); enables systematic inverse design of superlubric interfaces.",
+    "model_io": [
+      {
+        "model": "Heterodeformation-to-soliton-network mapper",
+        "inputs": [
+          "target soliton network geometry",
+          "generalized stacking fault energy landscape"
+        ],
+        "outputs": [
+          "heterodeformation tensor field",
+          "interface properties (friction anisotropy)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Distinct heterodeformations can produce identical moir\u00e9 Bravais lattices but different soliton networks",
+        "result": "Confirmed; soliton network encodes multilattice topology not captured by moir\u00e9 lattice alone"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-78977-w": {
+    "category": "Optics/Photonics",
+    "task": "Incorporate gate-tunable photodetector response in cross-spectral image prediction",
+    "key_results": "Achieved PSNR 26.58 dB and SSIM 0.89 in visible-to-infrared prediction; reduced detector-space error relative to controls; post-inference measurements confirmed 64-mask response consistency",
+    "comments": "Detector-response layer as differentiable constraint is conceptually novel but validation limited to specific van der Waals device; generalization to other detector types unclear.",
+    "model_io": [
+      {
+        "model": "Cross-spectral prediction network with differentiable detector-response layer",
+        "inputs": [
+          "visible-band source images",
+          "gate-tunable PdSe2/h-BN/WSe2 detector response manifold (wavelength, power, bias, gate voltage)"
+        ],
+        "outputs": [
+          "infrared target-band predictions",
+          "predicted detector response",
+          "PSNR/SSIM metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Detector response manifold constrains prediction consistency while preserving image fidelity",
+        "result": "Confirmed: framework reduces detector-space error; post-inference measurements validate response consistency"
+      }
+    ]
   }
 }
