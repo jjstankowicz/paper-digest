@@ -683597,5 +683597,1341 @@
         "result": "Confirmed: framework reduces detector-space error; post-inference measurements validate response consistency"
       }
     ]
+  },
+  "hf:2610.34894": {
+    "category": "Agents/RL",
+    "task": "Decomposing RL gains in reasoning models into finishing, reliability, and reach components",
+    "key_results": "Finishing accounts for 82% of pass@1 changes at 4k-8k tokens; reach (new problems solved) adds \u22642.1 percentage points; 96.5% of new RL solutions don't hold on resampling",
+    "comments": "A valuable empirical audit of outcome RL claims, showing most gains are token-budget artifacts rather than genuine new reasoning capability.",
+    "model_io": [
+      {
+        "model": "Various RL-trained thinking models (1.5B\u201332B) vs. base models",
+        "inputs": [
+          "physics and math problems",
+          "token budget constraints"
+        ],
+        "outputs": [
+          "pass@1 score",
+          "finishing rate",
+          "reliability rate",
+          "reach differential"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "RL pass@1 gains come from solving fundamentally harder problems (high reach)",
+        "result": "False; reach is negligible (\u22642.1 pp), most gain is finishing/reliability"
+      },
+      {
+        "hypothesis": "Finishing dominates where base model hits token limits",
+        "result": "True; 82% of change at 4k\u20138k tokens"
+      }
+    ]
+  },
+  "hf:2610.36192": {
+    "category": "Generative",
+    "task": "Accelerating training of pixel-space flow models via statistical priors",
+    "key_results": "PixelDiT-XL with WiD reaches FID 1.53 on ImageNet 256\u00d7256 in 500 epochs vs. 800 for baseline (37.5% fewer epochs); Brier score improvements on text-to-image tasks",
+    "comments": "Elegant inductive bias injection: frozen Wiener estimates + learnable coefficient interfaces provide both prediction guidance and decoder organization without architectural changes.",
+    "model_io": [
+      {
+        "model": "Wiener-Informed Decoding (WiD) integrated into PixelDiT",
+        "inputs": [
+          "image data",
+          "pixel-space velocity targets"
+        ],
+        "outputs": [
+          "generated images",
+          "velocity field predictions",
+          "decoder coefficient corrections"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Second-order image statistics (Wiener estimates) improve velocity learning only via direct linear prediction",
+        "result": "False; gains extend beyond linear predictions via decoder organization"
+      },
+      {
+        "hypothesis": "Frozen statistical bases accelerate training without modifying native blocks",
+        "result": "True; WiD achieves smoother gradients with modest parameter overhead"
+      }
+    ]
+  },
+  "hf:2610.22684": {
+    "category": "Agents/RL",
+    "task": "Training LLM agents to forecast events via search, reasoning, and calibrated probability reporting across multiple information states",
+    "key_results": "Brier score reduced from 0.731\u21920.626 on Forecast-Dojo and 0.612\u21920.528 on FutureX; ablations show gains split between evidence acquisition and probability reporting",
+    "comments": "Novel insight that GRPO's standard-deviation normalization can distort proper scoring rules; multi-date training elegantly reuses one resolved event across multiple information states.",
+    "model_io": [
+      {
+        "model": "GLM-4.5-Air with GRPO reinforcement learning",
+        "inputs": [
+          "unresolved event descriptions",
+          "dated forecast horizons"
+        ],
+        "outputs": [
+          "search queries",
+          "probability forecasts",
+          "reasoning traces"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-date training improves forecasting via both evidence acquisition and calibration",
+        "result": "True; controlled ablations validate both components contribute significantly"
+      },
+      {
+        "hypothesis": "GRPO's std normalization is appropriate for multi-class proper scoring rules",
+        "result": "False; it degrades performance on Brier score while preserving top-outcome accuracy"
+      }
+    ]
+  },
+  "hf:2610.31924": {
+    "category": "Molecular",
+    "task": "Quantitative sub-monolayer resolution characterization of molecular states at buried thin-film interfaces using ML-optimized optical models",
+    "key_results": "Achieved sub-monolayer depth resolution of molecular orientation and chemical identity; discovered gradient evolution of molecular orientation contradicting substrate patterning hypotheses",
+    "comments": "Powerful demonstration of ML-enhanced inverse modeling for materials characterization; nondestructive access to buried interfaces via polarized resonant soft X-ray scattering.",
+    "model_io": [
+      {
+        "model": "ML-optimized optical model for RSoXS data interpretation",
+        "inputs": [
+          "polarized resonant soft X-ray scattering data",
+          "thin film geometry"
+        ],
+        "outputs": [
+          "molecular orientation depth profiles",
+          "chemical identity maps",
+          "packing state distributions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Resonant scattering can achieve sub-diffraction-limit spatial resolution via energy/polarization coupling through optical modeling",
+        "result": "True; ML optimization of interpretive model unlocked quantitative sub-monolayer sensitivity"
+      }
+    ]
+  },
+  "hf:2509.05512": {
+    "category": "Vision",
+    "task": "Rotation-equivariant image classification and object detection via efficient quaternion approximation in real-valued convolutions",
+    "key_results": "Higher accuracy with fewer parameters on CIFAR-10/100 and ImageNet; SOTA for quaternion CNNs on COCO and DOTA; improved rotation handling in robotic perception",
+    "comments": "Pragmatic decomposition: approximates quaternion convolution through Hamilton products using efficient real-valued CUDA kernels rather than forcing quaternion domain computation.",
+    "model_io": [
+      {
+        "model": "Quaternion Approximate Networks (QUAN) with Independent Quaternion Batch Normalization",
+        "inputs": [
+          "images"
+        ],
+        "outputs": [
+          "class predictions (classification)",
+          "bounding boxes + rotation (detection)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Full quaternion-domain computation is necessary for rotation equivariance benefits",
+        "result": "False; Hamilton product decomposition via real operations achieves equivariance with better efficiency"
+      },
+      {
+        "hypothesis": "Quaternion CNNs improve parameter efficiency and rotation robustness over standard CNNs",
+        "result": "True; demonstrated across classification and object detection benchmarks"
+      }
+    ]
+  },
+  "hf:2610.36184": {
+    "category": "Benchmark",
+    "task": "Building large-scale, diarized, multi-domain Bengali speech corpus via weakly-supervised YouTube pipeline with human-annotated gold evaluation",
+    "key_results": "885 hours across 17 domains with speaker diarization from 998 videos; all four ASR baselines degrade on emotive/dialectal/long-form content; 30-hour gold annotations verified by 17 annotators",
+    "comments": "First Bengali corpus pairing large scale with speaker diarization and long-form audio; replicable pipeline methodology generalizes to other low-resource languages with YouTube presence.",
+    "model_io": [
+      {
+        "model": "ASR benchmarks (Whisper, multilingual models, etc.)",
+        "inputs": [
+          "audio",
+          "YouTube caption tracks",
+          "speaker diarization"
+        ],
+        "outputs": [
+          "transcriptions",
+          "speaker labels",
+          "timestamps"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Standard ASR models generalize equally well to all Bengali speech domains",
+        "result": "False; consistent degradation on emotive, dialectal, and long-form content detected"
+      }
+    ]
+  },
+  "nature:10.1038/s41538-026-01218-3": {
+    "category": "Apoptosis/Cell Death",
+    "task": "Investigate mechanisms of intestinal inflammation induced by polystyrene nanoplastics using advanced in vitro models",
+    "key_results": "PS-NPs at 40 and 400 \u03bcg/mL induced oxidative stress, inflammatory alterations, and epithelial dysfunction in Caco-2 spheroids and organ-on-chip; computational prediction and IBD scRNA-seq analysis identified ALOX5 as candidate target",
+    "comments": "Novel integration of 3D spheroids with microfluidic organs-on-chip provides physiologically relevant assessment, though computational ALOX5 prediction requires independent functional validation.",
+    "model_io": [
+      {
+        "model": "Caco-2-derived spheroids + microfluidic organ-on-a-chip",
+        "inputs": [
+          "20 nm polystyrene nanoplastics (40-400 \u03bcg/mL)"
+        ],
+        "outputs": [
+          "oxidative stress markers",
+          "antioxidant capacity",
+          "inflammatory factors",
+          "epithelial function indicators",
+          "Villin/ZO-1 expression"
+        ]
+      },
+      {
+        "model": "Metabolomic analysis on chip effluents",
+        "inputs": [
+          "chip secreted metabolites"
+        ],
+        "outputs": [
+          "metabolic signatures"
+        ]
+      },
+      {
+        "model": "Computational target prediction (styrene-based) + molecular docking + in silico ALOX5 perturbation (IBD scRNA-seq)",
+        "inputs": [
+          "PS-NP structure",
+          "IBD single-cell transcriptomes"
+        ],
+        "outputs": [
+          "ALOX5 candidate identification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "PS-NPs induce oxidative and inflammatory stress in 3D intestinal epithelium",
+        "result": "Confirmed; 40 and 400 \u03bcg/mL PS-NPs induced significant oxidative, inflammatory, and epithelial-associated alterations"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-65635-w": {
+    "category": "Cell Division/Cycle",
+    "task": "Identify radioprotective hematopoietic cell subsets in naked mole-rats enabling bone marrow recovery after high-dose TBI",
+    "key_results": "scRNA-seq identified two TBI-resistant HSPC subpopulations (C19 and C24) with C24 enriched post-TBI; these subsets exhibit enhanced oxidative stress resistance, cell cycle regulation, DNA repair, and differentiation capacity",
+    "comments": "Comparative radiobiology approach using naturally radiation-resistant organisms provides valuable insights, though translating NMR-specific mechanisms to human therapeutics requires careful mechanistic validation.",
+    "model_io": [
+      {
+        "model": "Naked mole-rat bone marrow scRNA-seq \u00b1 total body irradiation (TBI)",
+        "inputs": [
+          "hematopoietic stem and progenitor cells"
+        ],
+        "outputs": [
+          "cell subpopulation identification (C19, C24)",
+          "oxidative stress response genes",
+          "DNA repair genes",
+          "cell cycle regulators"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Naked mole-rats possess distinct HSPC subpopulations conferring TBI resistance",
+        "result": "Confirmed; C19 and C24 subsets identified with unique radioprotective regulatory mechanisms"
+      },
+      {
+        "hypothesis": "TBI-resistant HSPCs exhibit enhanced oxidative stress handling and DNA repair",
+        "result": "Confirmed; C24 expanded post-TBI and showed enhanced oxidative stress and DNA repair gene expression"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77491-9": {
+    "category": "Cell Signaling",
+    "task": "Identify stromal factors driving ovarian cancer proliferation and evaluate polyphenol inhibitors",
+    "key_results": "Fibroblasts secreted highest TGF-\u03b21 levels; apigenin (API) most effectively suppressed TGF-\u03b21 secretion and FIB-mediated cancer cell proliferation via AKT inhibition; API reduced OVCAR3 xenograft growth in vivo",
+    "comments": "Clear mechanistic pathway linking stromal TGF-\u03b21 to AKT-dependent cancer growth provides rationale for dietary intervention, though translation to clinical efficacy remains to be demonstrated.",
+    "model_io": [
+      {
+        "model": "Ovarian cancer cells (OVCAR3/OVCAR4) + stromal cell conditioned media",
+        "inputs": [
+          "fibroblast/adipocyte/macrophage CM"
+        ],
+        "outputs": [
+          "cancer cell proliferation"
+        ]
+      },
+      {
+        "model": "Secretome profiling (LC-MS/MS) + polyphenol screening",
+        "inputs": [
+          "stromal cell secretomes"
+        ],
+        "outputs": [
+          "TGF-\u03b21 identification",
+          "polyphenol efficacy ranking"
+        ]
+      },
+      {
+        "model": "Apigenin mechanism + xenograft model",
+        "inputs": [
+          "apigenin",
+          "fibroblast and cancer cell cultures",
+          "OVCAR3 cells"
+        ],
+        "outputs": [
+          "AKT phosphorylation",
+          "TGF-\u03b21 secretion",
+          "tumor growth"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Fibroblast-derived TGF-\u03b21 promotes ovarian cancer proliferation via AKT activation",
+        "result": "Confirmed; TGF-\u03b21-mediated growth requires AKT activation in both cell types"
+      },
+      {
+        "hypothesis": "Apigenin suppresses cancer-stroma interaction by inhibiting AKT and TGF-\u03b21 secretion",
+        "result": "Confirmed; apigenin inhibited AKT in both stromal and cancer cells, reducing TGF-\u03b21 availability and tumor growth"
+      }
+    ]
+  },
+  "nature:10.1038/s42003-026-11205-9": {
+    "category": "Cell Signaling",
+    "task": "Identify host factors mediating DON-induced cytotoxicity in intestinal epithelial cells",
+    "key_results": "CRISPR KO screen identified MYD88 and IRAK4 as top resilience genes; MYD88/IRAK4 KO reduced IL-1\u03b2 expression, restored antioxidant protein levels, and significantly improved cell viability under DON exposure",
+    "comments": "Strong mechanistic link between innate immune signaling and oxidative damage provides clear therapeutic targets for mycotoxin mitigation.",
+    "model_io": [
+      {
+        "model": "porcine intestinal epithelial IPI-2I cells + genome-wide CRISPR KO screen",
+        "inputs": [
+          "deoxynivalenol (DON)"
+        ],
+        "outputs": [
+          "cell viability",
+          "IL-1\u03b2/IL-6/TNF\u03b1 levels",
+          "ROS accumulation",
+          "antioxidant gene expression (GPX4, SOD1, NQO1, GCLC)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "MYD88/IRAK4 signaling mediates DON cytotoxicity",
+        "result": "Confirmed; MYD88/IRAK4 KO confers resilience to DON-induced death"
+      },
+      {
+        "hypothesis": "DON activates MYD88/IRAK4/NF-\u03baB axis leading to pro-inflammatory and oxidative damage",
+        "result": "Confirmed; axis activation accompanied by ROS accumulation and antioxidant suppression"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-78944-5": {
+    "category": "Genomics",
+    "task": "Map telomere inheritance patterns across generations",
+    "key_results": "Parental telomere length predicts child length (R\u00b2=0.623); paternal alleles 448 bp longer than maternal (p=0.048); enabled allelic tracing in 49-53% of inherited telomeres",
+    "comments": "Elegant use of PacBio HiFi and variant repeats for tracking; parent-of-origin effect is biologically notable but mechanism remains unclear.",
+    "model_io": [
+      {
+        "model": "PacBio HiFi long-read sequencing analysis",
+        "inputs": [
+          "DNA from 225 individuals (75 trios)"
+        ],
+        "outputs": [
+          "Telomere length measurements",
+          "Telomeric variant repeat profiles",
+          "Allelic inheritance patterns"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Maternal and paternal telomere length together predict child telomere length",
+        "result": "R\u00b2=0.623 for combined parental effect"
+      },
+      {
+        "hypothesis": "Paternally transmitted telomeres are longer than age-matched maternal ones",
+        "result": "\u0394mean=448 bp (p=0.048); increases to 732 bp from older fathers (p=0.041)"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-79102-7": {
+    "category": "Other",
+    "task": "Develop and evaluate domain-specialized reasoning model for radiological impression generation",
+    "key_results": "Impression-R1 outperforms general models across 11,884 cases; head-to-head: stronger agreement with reference impressions than radiologists; improves report quality (adjusted diff 0.28) and reduces completion time 27%",
+    "comments": "Rigorous multicenter evaluation with prospective validation is exemplary; harmlessness scores similar to baseline suggest safety profile, but broader deployment requires ongoing monitoring.",
+    "model_io": [
+      {
+        "model": "Impression-R1 (large reasoning model trained via Imitation-Reasoning-Reinforcement)",
+        "inputs": [
+          "Radiology images (multiple modalities)",
+          "institutional reference impressions"
+        ],
+        "outputs": [
+          "Radiological impressions",
+          "clinical reasoning",
+          "impression quality score"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Domain-specialized large reasoning model with radiology-aware reward optimization outperforms general models",
+        "result": "Impression-R1 matched or exceeded state-of-the-art across 11,884 cases"
+      },
+      {
+        "hypothesis": "AI-assisted radiological reporting improves quality without increasing harm",
+        "result": "Report quality improved 0.28 points; completion time reduced 27%; harmlessness not significantly different"
+      }
+    ]
+  },
+  "nature:10.1038/s41545-026-00646-8": {
+    "category": "Other",
+    "task": "Review PFAS behavior in engineered biofilms for water treatment",
+    "key_results": "Proposed biofilm-centered mass-balance framework distinguishing retention, transformation, remobilization and loss",
+    "comments": "Conceptual framework is valuable but lacks quantitative validation; emphasis on biological transformation of precursors rather than terminal PFAS is important caveat.",
+    "model_io": [
+      {
+        "model": "Biofilm-centered mass-balance framework",
+        "inputs": [
+          "PFAS molecular properties",
+          "extracellular polymeric substances",
+          "microbial surfaces",
+          "biofilm structure",
+          "reactor conditions"
+        ],
+        "outputs": [
+          "PFAS partitioning",
+          "biological accessibility",
+          "transformation rates",
+          "retention",
+          "remobilization"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Apparent PFAS removal from tracked inventory may not equal true elimination",
+        "result": "Framework identifies need to distinguish retention, transformation, and remobilization from loss"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10721-2": {
+    "category": "Genomics",
+    "task": "Map single-cell expression QTLs for rare and common variants across 28 immune cell types",
+    "key_results": "TenK10K: >5 million cells, 1,925 individuals, 28 immune types; 83% of 21,404 genes have putative common regulatory variants; 47% have cumulative rare-variant signals; ~50% effects cell-type-specific; integrated rare and common variants reveal disease-variant molecular modes of action",
+    "comments": "Exceptional power for rare-variant eQTL detection at single-cell resolution; cell-state-dependent effects and continuous state modeling add sophistication; mechanistic validation of identified associations would strengthen impact.",
+    "model_io": [
+      {
+        "model": "Single-cell eQTL mapping with rare and common variants",
+        "inputs": [
+          "scRNA-seq (>5M cells, 28 immune types)",
+          "whole-genome sequencing (n=1,925)",
+          "disease annotations"
+        ],
+        "outputs": [
+          "eQTLs (common and rare)",
+          "cell-type-specific effects",
+          "cell-state-dependent variation",
+          "disease-variant mechanisms"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Rare and common genetic variants show cell-type-specific regulation at high power",
+        "result": "Common variants: 83% of genes; rare variants: 47% cumulative signals; ~50% effects restricted to 1\u2013few cell types"
+      },
+      {
+        "hypothesis": "Genetic effects on gene expression vary across continuous cell states",
+        "result": "Identified state-dependent eQTL effects and state-abundance variant associations"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76112-9": {
+    "category": "Statistical Methods",
+    "task": "Apply biased FedSDS for federated learning with non-IID data in multi-disorder studies",
+    "key_results": "FedSDS outperformed FedAvg in non-IID settings across Myelodysplastic Syndrome, Low Grade Glioma, and Breast Cancer; locally biased synthetic data preserved client-specific distributions and improved federated model performance",
+    "comments": "Pragmatic federated learning strategy addressing real-world data heterogeneity; missing ablation on bias degree and generalization to other non-IID structures warrant further investigation.",
+    "model_io": [
+      {
+        "model": "Federated Synthetic Data Sharing (FedSDS) with DeepSurv",
+        "inputs": [
+          "Distributed patient cohorts (Myelodysplastic Syndrome, Low Grade Glioma, Breast Cancer) with non-IID attributes"
+        ],
+        "outputs": [
+          "Synthetic datasets per client",
+          "federated survival prediction model",
+          "aggregated survival probabilities"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Locally biased synthetic data generation preserves client-specific distributions and improves non-IID federated learning",
+        "result": "FedSDS outperformed FedAvg across three disease cohorts; biased approach enabled meaningful model aggregation despite heterogeneity"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76179-4": {
+    "category": "Other",
+    "task": "Predict elderly ischemic stroke using attention-based BiLSTM on multimodal biosignals",
+    "key_results": "Attention-BiLSTM achieved 98.6% test accuracy, AUC-ROC 0.996, 98.8% precision, 98.9% recall; SHAP identified cardiovascular signals (ECG, ABP) as primary biomarkers; R\u00b2=0.847 for cardiovascular risk prediction",
+    "comments": "Multimodal biosignal integration with strong explainability via SHAP; small sample (n=64) and single-center data limit generalizability; clinical impact requires prospective validation.",
+    "model_io": [
+      {
+        "model": "Attention-based bidirectional LSTM with SHAP interpretation",
+        "inputs": [
+          "Multimodal physiological biosignals (ECG, ABP, cerebral flow velocity, end-tidal CO\u2082, etc.)",
+          "clinical outcomes"
+        ],
+        "outputs": [
+          "Stroke classification",
+          "biomarker importance (SHAP)",
+          "cardiovascular risk estimates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Attention-based temporal modeling of physiological dynamics predicts elderly stroke with high accuracy",
+        "result": "Achieved 98.6% accuracy, AUC-ROC 0.996, outperforming LSTM, GRU, 1D-CNN baselines"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76377-0": {
+    "category": "Other",
+    "task": "Classify cherry leaf diseases using hybrid EfficientNet-CBAM-ViT deep learning",
+    "key_results": "HECB-ViT achieved 99% classification accuracy across 5 disease classes (4,995 images); consistent high precision, recall, F1 across categories; ablation studies confirm component effectiveness",
+    "comments": "Strong performance on controlled dataset; real-world deployment in orchards with varying illumination and backgrounds requires field validation before practical use.",
+    "model_io": [
+      {
+        "model": "Hybrid EfficientNet-B0-CBAM-ViT framework",
+        "inputs": [
+          "Cherry leaf images (5 classes) with data augmentation"
+        ],
+        "outputs": [
+          "Disease class predictions",
+          "confidence scores",
+          "feature attribution maps"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Combining CNN local features with transformer global context improves disease classification robustness",
+        "result": "Achieved 99% accuracy with consistent high precision/recall/F1 across all disease categories"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76733-0": {
+    "category": "Single Cell",
+    "task": "Classify concordant intra-oral halitosis via salivary microbiome",
+    "key_results": "Porphyromonas gingivalis as sentinel taxon: AUROC 0.913 alone (balanced accuracy 0.833), AUROC 0.961\u20130.962 with T. forsythia/P. intermedia; P. gingivalis detected in 100% halitosis vs. 37.5% controls (p=0.008); independent of periodontal status",
+    "comments": "Rigorous microbiome analysis with qPCR validation; sentinel-taxon concept is biologically appealing but external validation and functional studies required for clinical application.",
+    "model_io": [
+      {
+        "model": "16S rRNA sequencing + qPCR with logistic regression",
+        "inputs": [
+          "Unstimulated saliva from 102 participants",
+          "16S rRNA gene profiles (V3-V4)",
+          "bacterial loads",
+          "VSC measurements (H\u2082S, CH\u2083SH)"
+        ],
+        "outputs": [
+          "Halitosis classification",
+          "taxon abundance",
+          "logistic regression models",
+          "AUROC"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Salivary P. gingivalis is a sentinel marker for concordant intra-oral halitosis",
+        "result": "AUROC 0.913 for P. gingivalis alone; detected in 100% halitosis vs. 37.5% controls; association independent of periodontal status"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76840-y": {
+    "category": "Evolutionary Biology",
+    "task": "Analyze shared genetic architecture between adhesive capsulitis and type 2 diabetes",
+    "key_results": "Positive genetic correlation between AC and T2D (Pan-UK rg=0.334, p=1.4\u00d710\u207b\u00b9\u00b9; FinnGen rg=0.189, p=7.0\u00d710\u207b\u2076); partial overlap in genetic architecture but no shared causal mechanisms established",
+    "comments": "Rigorous statistical framework with multiple approaches (LD score regression, MiXeR, FDR); acknowledged limitation that population-level sharing does not imply causality or clinical utility is appropriately cautious.",
+    "model_io": [
+      {
+        "model": "Cross-trait LD score regression, MiXeR, pleioFDR",
+        "inputs": [
+          "GWAS summary statistics for AC and T2D from FinnGen and Pan-UK Biobank"
+        ],
+        "outputs": [
+          "Genetic correlation estimates",
+          "pleiotropy analysis",
+          "shared locus identification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "AC and T2D share inherited genetic susceptibility",
+        "result": "Consistent positive genetic correlation across cohorts (rg=0.189\u20130.334)"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77579-2": {
+    "category": "Statistical Methods",
+    "task": "Develop machine learning model for early gestational diabetes mellitus risk prediction",
+    "key_results": "Logistic regression achieved test AUC 0.865 (95% CI 0.777\u20130.954), sensitivity 0.795, specificity 0.846; FPG had highest SHAP contribution; multi-indicator model showed limited incremental value over FPG alone",
+    "comments": "Transparent methodology with SHAP interpretation; acknowledged calibration deviation and external validation need temper clinical application claims; incremental value over FPG is marginal.",
+    "model_io": [
+      {
+        "model": "Eight ML models (logistic regression, SVM, etc.) with LASSO feature selection",
+        "inputs": [
+          "16 first-trimester clinical indicators (laboratory values)",
+          "GDM status"
+        ],
+        "outputs": [
+          "Risk predictions",
+          "AUC-ROC",
+          "feature importance (SHAP)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "First-trimester indicators combined with ML enable early GDM risk prediction",
+        "result": "Logistic regression achieved AUC 0.865 with FPG as dominant predictor"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78023-1": {
+    "category": "Structural Prediction",
+    "task": "Multi-class fetal ultrasound classification across all gestational trimesters",
+    "key_results": "DenseNet achieved 97.73% validation accuracy and Cohen's kappa 0.9754 in third trimester across 121 anatomical categories; integrated into clinical workflow for auxiliary image organization (prospective efficiency study pending)",
+    "comments": "Comprehensive trimester-specific classification on large dataset (121,000 images); deployment into clinical workflow is pragmatic, but formal workflow efficiency and prospective validation studies are needed before clinical reliance.",
+    "model_io": [
+      {
+        "model": "DenseNet, GoogLeNet, ResNet, EfficientNet for trimester-specific classification",
+        "inputs": [
+          "Fetal ultrasound images (121,000 across 121 anatomical categories, 3 gestational stages)"
+        ],
+        "outputs": [
+          "Anatomical class predictions",
+          "auxiliary image labeling",
+          "image retrieval support"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Deep learning can accurately classify fetal ultrasound into multiple anatomical categories across gestational stages",
+        "result": "DenseNet achieved 97.73% accuracy and \u03ba=0.9754 in third trimester despite 24 categories"
+      }
+    ]
+  },
+  "nature:10.1038/s41698-026-01722-5": {
+    "category": "Other",
+    "task": "Review longitudinal multimodal AI for tracking cancer drug resistance",
+    "key_results": "Framework integrates ctDNA kinetics, serial imaging/radiomics, digital pathology; distinguishes retrospective discrimination from demonstrated clinical utility; proposes evidentiary standards for external validation, calibration, missing-modality robustness",
+    "comments": "Comprehensive narrative review emphasizing pragmatic constraints; acknowledges gap between predictive capability and evidence of decision impact, appropriately tempering technical optimism.",
+    "model_io": [
+      {
+        "model": "Multi-modal longitudinal AI integration (no single model)",
+        "inputs": [
+          "Circulating tumor DNA kinetics",
+          "serial imaging and radiomics",
+          "digital pathology",
+          "clinical outcomes"
+        ],
+        "outputs": [
+          "Resistance prediction",
+          "mechanism discovery",
+          "adaptive dosing recommendations",
+          "trial enrichment decisions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Longitudinal multimodal data with AI models can identify resistance mechanisms earlier than standard follow-up",
+        "result": "Technical capability advancing but clinical utility evidence remains limited; real-world constraints (missing modalities, temporal misalignment) hinder deployment"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-74952-z": {
+    "category": "ML Theory",
+    "task": "Hierarchical orthogonal ESN with adaptive signal decomposition for financial time series",
+    "key_results": "HO-ESN on multi-scale financial datasets: 23% improvement in multi-step forecasting accuracy, 19% directional accuracy, 47% reduction in mode interference vs standard ESN, LSTM, GRU, Transformer; Variational Mode Decomposition + orthogonal reservoir + hierarchical learning",
+    "comments": "Addresses non-stationary chaos in financial data via VMD + orthogonal ESNs; impressive accuracy gains, though backtest performance on real trading signals and comparison to tree-based ensembles (XGBoost, LightGBM) would strengthen claims.",
+    "model_io": [
+      {
+        "model": "HO-ESN (Variational Mode Decomposition + SVD orthogonalization + hierarchical ESN)",
+        "inputs": [
+          "raw financial time series",
+          "market regime indicators"
+        ],
+        "outputs": [
+          "multi-step price/return forecasts"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "VMD isolates frequency components, reducing mode interference",
+        "result": "Confirmed; 47% interference reduction"
+      },
+      {
+        "hypothesis": "Orthogonal reservoirs maximize memory and stability",
+        "result": "Supported; 23% accuracy improvement demonstrated"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-75809-1": {
+    "category": "ML Theory",
+    "task": "Neural-operator surrogate for crack-front stress intensity factor prediction",
+    "key_results": "Enhanced-piFNO achieves R\u00b2 0.9977\u20130.9986 on DIC-derived labels (Modes I, II); lowest NMAE on TT-CC countersunk-hole cases (b/t=0.5); lowest normalized L\u2082 error on bearing case (b/t=0.05); outperforms DeepONet baseline on selected simulated cases",
+    "comments": "Task-specific neural operator architecture (angular positional encoding, 1D spectral mixing, mechanics-based regularization) shows promise; multi-source data evaluation (simulation, DIC, benchmark) strengthens validation.",
+    "model_io": [
+      {
+        "model": "Enhanced-piFNO (neural operator surrogate)",
+        "inputs": [
+          "crack geometry",
+          "loading conditions",
+          "material properties"
+        ],
+        "outputs": [
+          "stress intensity factor distribution along crack front"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Task-specific enhancements improve operator surrogate accuracy",
+        "result": "Confirmed; R\u00b2 >0.99 on DIC-derived labels"
+      },
+      {
+        "hypothesis": "FNO outperforms DeepONet on mechanics problems",
+        "result": "Supported on selected cases; data-source dependent"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76020-y": {
+    "category": "Algorithms",
+    "task": "Fuzzy Type-1 adaptive RGB image steganography with dual-constraint capacity allocation",
+    "key_results": "3.125 bits per pixel capacity, PSNR 43.21 dB, SSIM 0.987; Chi-Square p-value 0.181, RS detection rate 22% (low detectability); O(MN) linear complexity with lightweight fuzzy inference",
+    "comments": "Combines classical fuzzy logic + PVD in practical hybrid framework; high capacity and imperceptibility claims supported by metrics, but CNN-based steganalysis resistance acknowledged as future work.",
+    "model_io": [
+      {
+        "model": "Mamdani fuzzy inference system + Pixel Value Differencing",
+        "inputs": [
+          "cover image (RGB)",
+          "secret message",
+          "fuzzy membership parameters"
+        ],
+        "outputs": [
+          "stego image",
+          "capacity allocation map"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Fuzzy classification enables adaptive capacity allocation",
+        "result": "Confirmed; achieves 3.125 bits/pixel with high imperceptibility"
+      },
+      {
+        "hypothesis": "Round-robin RGB channel distribution resists steganalysis",
+        "result": "Partially confirmed; Chi-Square p=0.181 (good) but CNN resistance TBD"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76716-1": {
+    "category": "Algorithms",
+    "task": "Decentralized plug-and-play control for grid-forming converters in resilient AC microgrids",
+    "key_results": "Passivity-based PnP admission test allows unit addition/removal without neighbor retuning; peak PCC voltage deviation 1.79% (settling 58 ms) on admission; min passivity index 0.723 (N=2-8), sustained 0.723-0.885 up to N=128; PCC voltage THD 9.19%\u21923.33%",
+    "comments": "Theoretically rigorous stability analysis with explicit assumptions; comprehensive simulation validation (detailed model, small-signal, Monte Carlo); real-time HWiL testing identified as future work.",
+    "model_io": [
+      {
+        "model": "Decentralized GFM converter control (droop + adaptive impedance + consensus)",
+        "inputs": [
+          "local voltage/current measurements",
+          "trust weights"
+        ],
+        "outputs": [
+          "converter setpoints",
+          "admission test result"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Passivity margin guarantees stability during plug-and-play events",
+        "result": "Confirmed; no retuning required; peak deviation 1.79% is acceptable"
+      },
+      {
+        "hypothesis": "Sparse consensus-based restoration maintains system stability",
+        "result": "Confirmed up to N=128 converters in simulation"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76875-1": {
+    "category": "ML Theory",
+    "task": "Uncertainty-aware federated edge intelligence for multimodal healthcare monitoring",
+    "key_results": "AUC-ROC 0.956, enhanced calibration reliability, reduced latency and energy consumption; probabilistic multi-task learning with adaptive federated coordination; energy-aware workload management on non-IID data",
+    "comments": "Addresses practical concerns (uncertainty, non-IID heterogeneity, energy efficiency) in federated healthcare; simulation-only evaluation limits real-world applicability claims.",
+    "model_io": [
+      {
+        "model": "Probabilistic multi-task learning with adaptive federated coordination",
+        "inputs": [
+          "multimodal health data from edge nodes",
+          "heterogeneous client populations"
+        ],
+        "outputs": [
+          "health predictions with uncertainty estimates",
+          "risk scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Selective client participation improves federated learning efficiency",
+        "result": "Supported; AUC-ROC 0.956 achieved with reduced communication"
+      },
+      {
+        "hypothesis": "Uncertainty estimates improve model calibration",
+        "result": "Confirmed; enhanced calibration reliability over baselines"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76970-3": {
+    "category": "ML Theory",
+    "task": "Deep hybrid model for rail transit passenger flow prediction and headway optimization",
+    "key_results": "Passenger flow prediction: relative error 4.62%, Pearson correlation 0.96, RMSE 15.23; optimized headway achieves 3.26 min average wait time, 94.72% capacity matching; field test confirms 94.72% matching rate",
+    "comments": "Well-engineered ensemble (Attention+ResNet+BiGRU+XGBoost) with PSO/GA headway optimization; strong empirical validation including real-world field testing strengthens claims.",
+    "model_io": [
+      {
+        "model": "Attention-Mechanism + ResNet + BiGRU + XGBoost ensemble",
+        "inputs": [
+          "historical passenger counts",
+          "temporal features",
+          "external factors"
+        ],
+        "outputs": [
+          "passenger flow forecast"
+        ]
+      },
+      {
+        "model": "PSO + Improved GA + Derivative Search headway optimizer",
+        "inputs": [
+          "predicted flow",
+          "capacity constraints",
+          "service level targets"
+        ],
+        "outputs": [
+          "optimized headway schedule"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-factor coupling relationships improve forecast accuracy",
+        "result": "Confirmed; relative error 4.62% is competitive"
+      },
+      {
+        "hypothesis": "Dynamic headway matching adapts to flow variations",
+        "result": "Confirmed; capacity matching 94.72% sustained under varying conditions"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77191-4": {
+    "category": "Analysis",
+    "task": "Characterizing metastable phase dynamics in hydrated DNA electrical transport",
+    "key_results": "Stochastic switching between long-lived attractor states with ~9s dwell times; phase distribution strongly bimodal (\u0394BIC=1068); discrete phase increments approaching 2\u03c0 consistent with h/2e flux quantization",
+    "comments": "The claimed h/2e flux scale interpretation relies on a speculative gauge-phase model and lacks independent experimental confirmation of quantum coherence.",
+    "model_io": [
+      {
+        "model": "Hilbert phase reconstruction + Bayesian state analysis",
+        "inputs": [
+          "transverse voltage V_xy(t) time series"
+        ],
+        "outputs": [
+          "phase trajectory",
+          "attractor state classification",
+          "dwell time statistics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Phase states follow bimodal distribution",
+        "result": "Strongly confirmed; Bayesian analysis favors two-state model"
+      },
+      {
+        "hypothesis": "Magnetic field ramps produce discrete phase scaling changes",
+        "result": "Confirmed; D changes from ~2 to ~1 with quantized increments"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77302-1": {
+    "category": "Algorithms",
+    "task": "Nonlinear bit-level image encryption with DCGAN-derived features and chaotic regulation",
+    "key_results": "Key space reaches 2^256; 29.7% computational efficiency improvement vs DNA-based methods; security metrics outperform mainstream algorithms; adaptive Chen chaotic system provides strong nonlinearity",
+    "comments": "Hybrid deep learning + chaos approach is practical, but 2^256 key space is standard for symmetric encryption; lacks formal security proofs and side-channel analysis.",
+    "model_io": [
+      {
+        "model": "DCGAN dual-branch feature generation + adaptive Chen chaos system",
+        "inputs": [
+          "plaintext image",
+          "secret key"
+        ],
+        "outputs": [
+          "cipher keys",
+          "encrypted image"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "DCGAN features correlate tightly with plaintext content",
+        "result": "Confirmed; key generation is adaptive and content-dependent"
+      },
+      {
+        "hypothesis": "Adaptive chaos improves nonlinearity over fixed systems",
+        "result": "Confirmed; Chen system modulation enables superior security performance"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77635-x": {
+    "category": "ML Theory",
+    "task": "Hybrid semantic and spatial-wavelet optimization for zero-shot anomaly detection",
+    "key_results": "Competitive performance on 11 datasets; frequency-aware refinement via Fourier transformation; multi-level prompting (image-, sentiment-, region-level) enriches semantics; intra-inter contrastive loss improves local-to-global semantic fusion",
+    "comments": "Multi-faceted approach combining frequency domain, spatial wavelets, and semantic prompting is thorough but lacks quantitative anomaly detection metrics (AUC, AUROC) on standard benchmarks.",
+    "model_io": [
+      {
+        "model": "H2HCLIP (hybrid semantic-wavelet anomaly detector)",
+        "inputs": [
+          "query image",
+          "normal reference dataset",
+          "multi-level text prompts"
+        ],
+        "outputs": [
+          "anomaly score",
+          "segmentation mask"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Frequency-aware refinement captures high/low-frequency cues missed by object-centric encoders",
+        "result": "Supported; competitive performance on anomaly detection benchmarks"
+      },
+      {
+        "hypothesis": "Multi-level prompts refine normal-abnormal semantic boundaries",
+        "result": "Supported; improved classification-segmentation joint optimization"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11190-3": {
+    "category": "Development",
+    "task": "Characterize somatic genomic variation in developing human neurons and identify quality-control mechanisms",
+    "key_results": "25.9% of prenatal cortical neurons have widespread copy number variants; this proportion reduced 4.5-fold postnatally (P = 3.5 \u00d7 10\u22126); neurons with high CNV burdens selectively eliminated and showed abnormal synaptic gene expression",
+    "comments": "Single-cell whole-genome sequencing reveals a previously unappreciated developmental mechanism of genomic quality control through selective neuronal elimination based on dosage sensitivity.",
+    "model_io": [
+      {
+        "model": "Single-cell whole-genome sequencing (Tn5 and PTA methods)",
+        "inputs": [
+          "2,357 neurons from fetal to postnatal human cortex"
+        ],
+        "outputs": [
+          "CNV detection",
+          "CNV burden quantification",
+          "genomic aberrancy classification"
+        ]
+      },
+      {
+        "model": "Single-nucleus chromatin and transcriptomics (snATAC-seq, snRNA-seq)",
+        "inputs": [
+          "44,861 nuclei from developing brain"
+        ],
+        "outputs": [
+          "synaptic gene expression",
+          "chromatin accessibility patterns"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Neurons with widespread CNVs are selectively eliminated perinatally",
+        "result": "Confirmed; high-CNV neurons reduced 4.5-fold after birth, proportional to CNV burden"
+      },
+      {
+        "hypothesis": "Elimination targets neurons with dosage-sensitive gene disruptions",
+        "result": "Confirmed; surviving neurons depleted for dosage-sensitive genes and neurodevelopmental disorder genes"
+      },
+      {
+        "hypothesis": "Abnormal synaptic gene regulation mediates elimination of defective neurons",
+        "result": "Supported; high-CNV neurons exhibit abnormal synaptic gene expression patterns"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11195-y": {
+    "category": "Neural Circuits",
+    "task": "Identify central pattern generator circuit for fly walking",
+    "key_results": "Three-neuron circuit (1 inhibitory, 2 excitatory interneurons) necessary and sufficient for motor rhythms across all six legs; DNg100 identified as strongest driver of rhythmic leg motor activity",
+    "comments": "Elegant use of connectome-based simulation combined with optogenetic validation demonstrates how computational approaches can discover minimal functional circuits from connectivity data.",
+    "model_io": [
+      {
+        "model": "Drosophila ventral nerve cord connectome simulation",
+        "inputs": [
+          "descending neurons",
+          "synaptic connectivity"
+        ],
+        "outputs": [
+          "motor rhythms",
+          "leg movement patterns"
+        ]
+      },
+      {
+        "model": "Optogenetic validation in behaving flies",
+        "inputs": [
+          "light stimulation of DNb08"
+        ],
+        "outputs": [
+          "rhythmic leg movements"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "DNg100 is the primary command neuron for walking-induced leg rhythms",
+        "result": "Confirmed; DNg100 was strongest driver in computational screen"
+      },
+      {
+        "hypothesis": "A minimal three-neuron circuit can generate motor rhythms",
+        "result": "Confirmed; isolated circuit sufficient across four connectome datasets"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11201-3": {
+    "category": "Synaptic Plasticity",
+    "task": "Elucidate presynaptic homeostatic mechanism after high-frequency stimulation",
+    "key_results": "VAMP7-mediated inhibition of P/Q-type Ca2+ channels reduces neurotransmitter release following high-frequency stimulation; absence of this homeostasis increases FOS+ neurons several-fold",
+    "comments": "Novel identification of vesicle-associated SNARE proteins as activity-dependent regulators of presynaptic calcium channels provides mechanistic insight into metaplasticity.",
+    "model_io": [
+      {
+        "model": "Synaptic physiology and calcium imaging",
+        "inputs": [
+          "high-frequency stimulation",
+          "VAMP7",
+          "P/Q-type Ca2+ channels",
+          "syntaxin"
+        ],
+        "outputs": [
+          "neurotransmitter release",
+          "Ca2+ influx",
+          "neuronal activity (FOS+)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "VAMP7 mediates activity-dependent reduction in neurotransmitter release",
+        "result": "Confirmed; VAMP7 inhibits P/Q-type channels to reduce release after high-frequency stimulation"
+      },
+      {
+        "hypothesis": "VAMP7 localization to AP-3-derived vesicles enables activity-dependent delivery to plasma membrane",
+        "result": "Confirmed; VAMP7 localizes to AP-3 vesicles responsive to high-frequency stimulation"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11203-1": {
+    "category": "Cognition/Behavior",
+    "task": "Determine neural basis of individual emotion regulation capacity",
+    "key_results": "Across 2,175 participants in 40 fMRI datasets, trait questionnaires, task-based affective ratings, and amygdala down-regulation showed no convergence; SNP heritability of 16% (threefold higher than previous estimates) for AD",
+    "comments": "Large-scale preregistered consortium study challenges the assumption that prefrontal activation reliably indexes emotion regulation ability, with important implications for clinical biomarkers.",
+    "model_io": [
+      {
+        "model": "Task-based fMRI during reappraisal",
+        "inputs": [
+          "emotional stimuli",
+          "reappraisal instruction"
+        ],
+        "outputs": [
+          "prefrontal activation",
+          "amygdala down-regulation",
+          "affective ratings"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Canonical prefrontal regulatory circuits show consistent association with emotion regulation capacity across measures",
+        "result": "Rejected; no convergence between trait, behavioral, and neural indicators"
+      },
+      {
+        "hypothesis": "Prefrontal circuits are specifically engaged during emotion reappraisal",
+        "result": "Rejected; control circuits engaged during both emotion generation and reappraisal"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11206-y": {
+    "category": "Neurodegeneration",
+    "task": "Identify genetic loci and molecular mechanisms underlying Alzheimer's disease",
+    "key_results": "118 loci identified in multi-ancestry analysis (48 novel); SNP heritability 16% (threefold higher than previous estimates); genes upregulated in microglia and downregulated in neurons enriched for AD-associated risk",
+    "comments": "Substantially larger sample size and diverse ancestry analysis resolves prior underestimation of common-variant contribution to AD and highlights microglial-neuronal dysregulation as central mechanism.",
+    "model_io": [
+      {
+        "model": "Genome-wide association study meta-analysis",
+        "inputs": [
+          "SNP data from 183,620 cases and 2,631,507 controls"
+        ],
+        "outputs": [
+          "118 associated loci",
+          "polygenic risk scores",
+          "SNP heritability estimates"
+        ]
+      },
+      {
+        "model": "Gene expression analysis in AD brains",
+        "inputs": [
+          "microglial gene expression",
+          "neuronal gene expression"
+        ],
+        "outputs": [
+          "enrichment for AD risk genes"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Common variants contribute substantially more to AD risk than previously estimated",
+        "result": "Confirmed; SNP heritability 16% vs prior estimates of ~5%"
+      },
+      {
+        "hypothesis": "Microglial activation and neuronal dysfunction are central to AD pathogenesis",
+        "result": "Supported; genes upregulated in microglia and downregulated in neurons enriched for AD risk"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-78809-x": {
+    "category": "Optics/Photonics",
+    "task": "Develop all-silicon single-photon source using W center in nanophotonic cavity",
+    "key_results": "All-silicon source at 1217 nm with saturated count rate 1.29\u00d710^6 counts/s; photon antibunching g^(2)(0)=0.06\u00b10.02; triggered operation yields 93\u00b12% purity; purity degradation at saturation attributed to repumping processes",
+    "comments": "Significant advance for silicon quantum photonics but single-photon rate lower than cavity-enhanced NV centers; indistinguishability and scalability to coupled emitters remain open challenges.",
+    "model_io": [
+      {
+        "model": "Single W center in circular Bragg grating cavity embedded in silicon",
+        "inputs": [
+          "above-gap continuous-wave or pulsed excitation",
+          "cavity wavelength tuned to W center ZPL at 1217 nm"
+        ],
+        "outputs": [
+          "single-photon count rate",
+          "photon antibunching g^(2)(t)",
+          "photon purity",
+          "lifetime/coherence metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Nanoscale positioning of W center in cavity enhances zero-phonon line enabling high-purity on-demand single-photon emission",
+        "result": "Confirmed: saturated 1.29\u00d710^6 counts/s with 93\u00b12% purity under weak pulsed excitation"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11147-6": {
+    "category": "Quantum",
+    "task": "Develop single-molecule spin-photon interface using triplet ground-state carbene",
+    "key_results": "Carbene molecule in host crystal exhibits narrow zero-phonon lines, >1-hour spectral stability, spin-selective optical transitions, millisecond-scale dynamical-decoupling coherence, tens-of-milliseconds spin relaxation at 4.5 K, single-molecule optically detected magnetic resonance",
+    "comments": "Unprecedented molecular qubit platform combining bright fluorescence and long spin coherence; scalability to multi-qubit systems and room-temperature operation remain major challenges.",
+    "model_io": [
+      {
+        "model": "Triplet ground-state carbene molecule in structurally matched host crystal",
+        "inputs": [
+          "optical excitation wavelength",
+          "magnetic field",
+          "RF pulse sequences"
+        ],
+        "outputs": [
+          "fluorescence intensity",
+          "zero-phonon line position",
+          "spin coherence time T_2",
+          "spin relaxation time T_1",
+          "magnetic resonance spectrum"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Triplet carbene with structural host matching enables simultaneous bright fluorescence, spectral stability, and long spin lifetimes",
+        "result": "Confirmed: demonstrated narrow ZPLs, >1 hr spectral stability, ms-scale coherence, and 10s-ms relaxation times"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11202-2": {
+    "category": "Condensed Matter",
+    "task": "Synthesize metallic carbon pentaheptite nanoribbon with near-ballistic conductance",
+    "key_results": "On-surface synthesis of planar carbon pentaheptite nanoribbons (CPHNs) via lateral fusion of polypentalene chains; CPHN 1 intrinsic metal with near-ballistic conductance approaching one conductance quantum (comparable to metallic CNTs); CPHN 2 narrow-bandgap semiconductor",
+    "comments": "First demonstration of metallic pentaheptite nanoribbon with CNT-comparable conductance; device integration and synthetic yield optimization critical for practical carbon electronics.",
+    "model_io": [
+      {
+        "model": "On-surface synthesis with hierarchical polypentalene fusion and electronic transport measurement",
+        "inputs": [
+          "polycyclooctadiene precursor chains on substrate",
+          "thermal conditions for chain transformation and fusion"
+        ],
+        "outputs": [
+          "nanoribbon atomic structure (CPHN 1/2 variants)",
+          "conductance (G \u2248 G_0 for CPHN 1)",
+          "bandgap (CPHN 2)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Pentaheptite structure with alternating pentagon-heptagon rings enables intrinsic metallic conductivity with near-ballistic transport",
+        "result": "Confirmed: CPHN 1 exhibits near-conductance quantum, comparable to metallic carbon nanotubes"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11214-y": {
+    "category": "Optics/Photonics",
+    "task": "Visualize subcycle Landau-Zener-Majorana tunneling in graphene band structure",
+    "key_results": "Attosecond-precision imaging of entire first Brillouin zone showing coherent subcycle displacement and distortion at zone edge; reveals non-thermal electron distributions and competing scattering processes",
+    "comments": "Unprecedented subcycle band-structure videography but limited to graphene's relatively simple Dirac band structure; generalization to complex materials unclear.",
+    "model_io": [
+      {
+        "model": "Subcycle band-structure videography with photoelectron momentum microscopy",
+        "inputs": [
+          "strong-field-driven acceleration",
+          "periodic light waves"
+        ],
+        "outputs": [
+          "full Brillouin zone carrier distribution",
+          "interband tunneling events",
+          "scattering signatures"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Non-adiabatic Landau-Zener-Majorana tunneling manifests as coherent carrier displacement at Brillouin zone edge",
+        "result": "Confirmed: observed subcycle distortion and displacement consistent with periodic interband tunneling"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11223-x": {
+    "category": "Condensed Matter",
+    "task": "Demonstrate delayed electron-hole recombination in pseudo-direct bandgap semiconductor",
+    "key_results": "Bismuth sulfide exhibits pseudo-direct nature (indirect transition lower in energy than direct transition by ~kBT); bimolecular recombination substantially retarded vs. classic direct semiconductors; high absorption coefficient + delayed recombination overcome van Roosbroeck-Shockley limitations",
+    "comments": "Elegant demonstration of reciprocity circumvention via pseudo-direct gap but practical solar cell efficiency gains depend on minimizing other non-radiative loss pathways.",
+    "model_io": [
+      {
+        "model": "Bismuth sulfide pseudo-direct bandgap semiconductor",
+        "inputs": [
+          "carrier generation (optical excitation)",
+          "temperature"
+        ],
+        "outputs": [
+          "absorption coefficient",
+          "recombination lifetime",
+          "radiative vs. non-radiative decay rates",
+          "external radiative efficiency"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Pseudo-direct bandgap character retards bimolecular recombination relative to direct bandgap semiconductors",
+        "result": "Confirmed: BiS2 shows substantially delayed recombination enabling combination of high absorption and long carrier lifetime"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11227-7": {
+    "category": "Condensed Matter",
+    "task": "Generate spin currents from compensated magnet using altermagnetic order",
+    "key_results": "Electrical spin injection from Mn5Si3 (compensated magnet, zero net magnetization) into non-magnetic channel detected at ferromagnetic electrode; switching between time-reversed magnetic states reverses spin signal; spin polarization 6.5-10% comparable to ferromagnets; spin diffusion lengths 50-130 nm",
+    "comments": "First experimental demonstration of altermagnetic spintronic functionality without net magnetization; significant paradigm shift but only single material demonstrated; generalization to other alternalternagnets requires validation.",
+    "model_io": [
+      {
+        "model": "Mn5Si3 compensated magnet spin-valve device with lateral geometry",
+        "inputs": [
+          "charge current from Mn5Si3 contact",
+          "magnetic state (time-reversed pair)",
+          "ferromagnetic detector spin polarization"
+        ],
+        "outputs": [
+          "spin current polarization",
+          "detected spin signal (reversed with magnetic state)",
+          "spin diffusion length"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Altermagnetic order of compensated magnet enables spin-polarized current generation without net magnetization via time-reversal symmetry breaking",
+        "result": "Confirmed: spin injection from Mn5Si3 demonstrated with 6.5-10% polarization; signal reversal with magnetic state confirms altermagnetic mechanism"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-75856-8": {
+    "category": "Applied Physics",
+    "task": "Diagnose XLPE cable insulation aging using physics-informed impedance spectroscopy",
+    "key_results": "Second-order Havriliak-Negami model separates interfacial and dipolar relaxation; model-matching strategy estimates localized aging location; phase-based indicators characterize degraded region extent and severity; simulations demonstrate feasibility for non-destructive in-service assessment",
+    "comments": "Physics-informed approach mechanistically interpretable but requires accurate frequency-dependent impedance measurements; localization precision and sensitivity to early-stage degradation need experimental validation.",
+    "model_io": [
+      {
+        "model": "Second-order H-N dielectric model with localized aging inverse problem",
+        "inputs": [
+          "measured source-end input impedance Z(\u03c9) over frequency range",
+          "cable geometry and material properties",
+          "assumed aging location grid"
+        ],
+        "outputs": [
+          "interfacial/dipolar relaxation parameters",
+          "estimated aging location",
+          "degraded region extent",
+          "phase-based severity indicators"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Extracted dielectric parameters from impedance spectroscopy enable identification of dominant aging relaxation process and localization",
+        "result": "Confirmed in simulation: differentiated sensitivities to two relaxation contributions; model-matching approach successfully estimates position and phase indicators characterize severity"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76718-z": {
+    "category": "Applied Physics",
+    "task": "Design and optimize TFET photodetector for visible-light applications",
+    "key_results": "CSP-DGM-SO-SD TFET achieves maximum sensitivity 5.8\u00d710^5, LDCR 115.3 dB, responsivity 1.07\u00d710^3 A/W, detectivity 2.07\u00d710^10 Jones at 400-700 nm",
+    "comments": "TCAD simulations show excellent performance metrics but lack experimental validation; gate-tunable response and temperature/dielectric dependence require device fabrication verification.",
+    "model_io": [
+      {
+        "model": "C-shaped dual-metal gate stacked-oxide sandwiched-drain TFET simulated in Synopsys Sentaurus TCAD",
+        "inputs": [
+          "incident wavelength \u03bb (400-700 nm)",
+          "optical power",
+          "gate/drain voltage",
+          "operating temperature"
+        ],
+        "outputs": [
+          "photocurrent",
+          "dark current",
+          "responsivity",
+          "detectivity",
+          "energy band profiles",
+          "photogeneration rates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Stacked oxide geometry enhances photodetection sensitivity through improved band alignment and tunneling efficiency",
+        "result": "Confirmed: simulation predicts 5.8\u00d710^5 sensitivity with 115.3 dB LDCR in subthreshold region"
+      }
+    ]
   }
 }
