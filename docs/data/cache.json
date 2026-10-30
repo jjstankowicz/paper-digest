@@ -690550,5 +690550,648 @@
         "result": "Confirmed; double-pulse sequences with tunable time-dependent polarization achieved"
       }
     ]
+  },
+  "hf:2610.39293": {
+    "category": "Generative",
+    "task": "Adapting pretrained autoregressive image models for flexible any-order token generation",
+    "key_results": "ImageNet inpainting FID of 6.21 (vs. MaskGIT 10.44); 13-33% compute overhead beyond pretraining; maintains AR inference compatibility",
+    "comments": "Elegant approach to unlock conditional generation without retraining, though class-conditional FID degrades by 1.2-1.9x compared to standard AR baseline.",
+    "model_io": [
+      {
+        "model": "LlamaGen-L/XL, RAR-L/XL (autoregressive transformer)",
+        "inputs": [
+          "image tokens",
+          "target positions",
+          "conditioning masks"
+        ],
+        "outputs": [
+          "image tokens in any order"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Future-aware positional embeddings resolve target-position identifiability without overhead",
+        "result": "Confirmed; enables stable adaptation with ordering curriculum"
+      },
+      {
+        "hypothesis": "Pretrained raster-scan AR models contain sufficient knowledge for any-order generation",
+        "result": "Confirmed; 13-33% additional compute sufficient vs. 3x for discrete diffusion retraining"
+      }
+    ]
+  },
+  "hf:2610.38681": {
+    "category": "LLM/Reasoning",
+    "task": "Self-distillation of large reasoning models using weaker model variants",
+    "key_results": "Magnitude pruning improves accuracy by 5.5 pp average; Qwen3.5-4B reaches 70.5% on HMMT 2025 (from 57.7%); Qwen3.6-35B-A3B reaches 74.6% on same benchmark",
+    "comments": "Novel direction of learning from weaker self-teachers without privileged information, though pruning/quantization trade-offs warrant further analysis across model families.",
+    "model_io": [
+      {
+        "model": "Qwen series transformers (3.5-4B, 3.6-35B-A3B)",
+        "inputs": [
+          "unlabeled prompts"
+        ],
+        "outputs": [
+          "reasoning traces",
+          "final answers"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Magnitude pruning produces better weaker teachers than low-bit quantization for reasoning tasks",
+        "result": "Confirmed; pruning yields 5.5 pp vs. quantization 4.0 pp average improvement"
+      },
+      {
+        "hypothesis": "Weakening-based self-distillation achieves competitive performance without privileged information",
+        "result": "Confirmed; state-of-the-art on HMMT 2025 and LiveCodeBench v6"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-79191-4": {
+    "category": "Computational Biophysics",
+    "task": "Predict conformational ensembles of intrinsically disordered proteins and regions",
+    "key_results": "IDPForge generates all-atom IDP/IDR ensembles agreeing with NMR and SAXS data without sequence-specific training or reweighting; maintains folded domain integrity in mixed proteins.",
+    "comments": "Transformer diffusion models avoid costly ensemble reweighting, but validation against high-resolution cryo-EM of IDPs remains limited.",
+    "model_io": [
+      {
+        "model": "IDPForge: transformer protein language diffusion model",
+        "inputs": [
+          "Protein sequence",
+          "optional: NMR/SAXS restraints",
+          "folded domain masks"
+        ],
+        "outputs": [
+          "All-atom conformational ensemble",
+          "disorder prediction",
+          "IDR structures"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Diffusion models can generate diverse IDP ensembles without backpropagation from coarse-grained states",
+        "result": "Confirmed: good agreement with experimental solution data"
+      }
+    ]
+  },
+  "nature:10.1038/s42003-026-11218-4": {
+    "category": "Structural Biology",
+    "task": "Characterize RAD51\u2013BRCA2 BRC repeat interaction for homologous recombination and cancer risk",
+    "key_results": "Comprehensive biophysical mapping of RAD51\u2013BRC repeat binding affinities and their correlation with RAD51 disassembly; pathogenic mutations impair recruitment and predict cancer risk.",
+    "comments": "Structure of the full RAD51\u2013BRCA2 complex remains elusive; cell-based validation of variant predictions would strengthen translational relevance.",
+    "model_io": [
+      {
+        "model": "Biophysical characterization of RAD51\u2013BRC repeats and BRCA2 truncations",
+        "inputs": [
+          "Purified RAD51",
+          "BRC repeat peptides",
+          "BRCA2 truncations",
+          "cancer-associated variants"
+        ],
+        "outputs": [
+          "Binding affinities (Kd)",
+          "RAD51 disassembly kinetics",
+          "variant pathogenicity scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "BRC repeat binding affinity correlates with RAD51 disassembly capacity",
+        "result": "Confirmed: quantitative relationship established for pathogenic variant interpretation"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-78993-w": {
+    "category": "Cell Division/Cycle",
+    "task": "Define HpaAB-mediated equipositioning of secondary chromosome pHV3 in polyploid archaeon",
+    "key_results": "HpaA (ParA-like protein) and HpaB (centromere-binding protein) mediate pHV3 positioning; HpaA deletion impaired growth on xylose (located on pHV3) and reduced pHV3:main chromosome ratio; single-particle tracking revealed HpaB influences HpaA dynamics",
+    "comments": "Identifies archaeal chromosome segregation mechanism in high-ploidy genome; HpaB foci formation and HpaA-HpaB dynamics suggest ParA-ParB-like machinery, though functional validation of positioning specificity is limited.",
+    "model_io": [
+      {
+        "model": "Haloferax volcanii DS2; HpaA/HpaB mutants; single-particle tracking",
+        "inputs": [
+          "HpaA",
+          "HpaB",
+          "pHV3",
+          "Xylose carbon source"
+        ],
+        "outputs": [
+          "HpaB foci formation",
+          "HpaA localization",
+          "pHV3 positioning",
+          "Growth rate",
+          "pHV3:chromosome ratio"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "HpaAB mediates equipositioning and segregation of secondary chromosome pHV3",
+        "result": "Supported; HpaA/HpaB deletion impaired growth on pHV3-located xylose genes and reduced pHV3 retention"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-75653-3": {
+    "category": "Organelles",
+    "task": "Define OFD1-p53-DRAM1 axis linking centrosome integrity to ciliogenesis suppression",
+    "key_results": "OFD1 loss redistributes p53 from centrioles to nucleus, inducing DRAM1; DRAM1 localizes to pericentrosomal region and reduces centriolar satellites (PCM1, CEP131, CEP290)",
+    "comments": "Elegant mechanistic model connecting centrosome proteostasis to autophagy and cilium suppression; causal relationship between satellite protein reduction and ciliogenesis suppression is inferred rather than directly tested.",
+    "model_io": [
+      {
+        "model": "Cell lines treated with PLK4 inhibitor centrinone; OFD1 knockout/knockdown cells",
+        "inputs": [
+          "OFD1",
+          "p53",
+          "Centrosomes",
+          "Autophagy markers"
+        ],
+        "outputs": [
+          "DRAM1 induction",
+          "Centriolar satellite levels (PCM1, CEP131, CEP290)",
+          "Primary cilium formation",
+          "Autophagy markers"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "OFD1 loss activates p53-DRAM1 axis to suppress ciliogenesis",
+        "result": "Confirmed; OFD1 depletion leads to p53 redistribution and DRAM1 induction with reduced centriolar satellites and primary cilium suppression"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-78623-5": {
+    "category": "Statistical Methods",
+    "task": "Benchmark variant pathogenicity prediction models with proper stratification",
+    "key_results": "Performance severely inflated by mixing variant categories; stratified evaluation reveals context-dependent accuracy",
+    "comments": "Important methodological critique showing that reported high accuracies may be artifacts of improper evaluation procedures.",
+    "model_io": [
+      {
+        "model": "deep learning variant pathogenicity predictors",
+        "inputs": [
+          "genomic variants"
+        ],
+        "outputs": [
+          "pathogenicity scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Genome-wide prediction accuracy is uniformly high",
+        "result": "False; performance varies substantially by variant type and genomic context"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-79035-1": {
+    "category": "Genomics",
+    "task": "Reprogram SlugCas9 PAM specificity toward NNAN PAMs via high-throughput mutagenesis and protein language models",
+    "key_results": "Sequence Display-derived datasets integrated with language models identify SlugCas9 variants with enhanced/broadened NNAN activity; improved base editing at APOC3/PCSK9 sites",
+    "comments": "Novel platform combining high-throughput screening with modern AI to overcome targeting constraints; extends CRISPR precision genome editing.",
+    "model_io": [
+      {
+        "model": "Sequence Display mutagenesis",
+        "inputs": [
+          "SlugCas9 variants",
+          "NNAN PAM contexts"
+        ],
+        "outputs": [
+          "activity measurements"
+        ]
+      },
+      {
+        "model": "protein language model",
+        "inputs": [
+          "variant sequences",
+          "activity data"
+        ],
+        "outputs": [
+          "activity landscapes",
+          "optimized variants"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Protein language models identify PAM-reprogramming mutations from high-throughput data",
+        "result": "Variants identified show enhanced/broadened NNAN activity and improved endogenous targeting"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-75231-7": {
+    "category": "Other",
+    "task": "Generate spatially controllable synthetic chest X-rays with structured latent conditioning",
+    "key_results": "LatAlignCXR achieves anatomical Dice 0.6564, pneumonia-localization Dice 0.1385; radiologist ratings 4.63 (pathology) vs 3.63 (baseline)",
+    "comments": "Novel latent space representation enabling multi-modal control; synthetic augmentation improves downstream classification (69% to 76%).",
+    "model_io": [
+      {
+        "model": "scalable interpolant transformer (SiT)",
+        "inputs": [
+          "text prompts",
+          "reference images",
+          "user coordinates"
+        ],
+        "outputs": [
+          "synthetic chest X-rays"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Structured latent spaces enable spatially precise pathology synthesis",
+        "result": "LatAlignCXR demonstrates superior anatomical and pathology consistency vs baselines"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77011-9": {
+    "category": "Structural Prediction",
+    "task": "Identify cancer-associated mutations in RAD51C/D and their structural consequences",
+    "key_results": "11 high-risk nsSNPs in RAD51C identified; mutations p.R212H, p.L219S, p.L262V significantly alter protein stability and DNA repair partner binding",
+    "comments": "Comprehensive computational pipeline with molecular dynamics validation, but lacks experimental functional confirmation.",
+    "model_io": [
+      {
+        "model": "molecular dynamics simulations",
+        "inputs": [
+          "RAD51C/D protein structures",
+          "nsSNP mutations"
+        ],
+        "outputs": [
+          "protein stability",
+          "binding affinity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "RAD51C/D nsSNPs compromise DNA repair through altered protein stability/interactions",
+        "result": "MD simulations confirm altered stability, flexibility, and binding affinity for identified variants"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77379-8": {
+    "category": "Other",
+    "task": "Deep learning for fine-grained cherry cultivar classification with interpretability",
+    "key_results": "EfficientNet-B0 achieves highest accuracy 0.970 (AUC 1.00); misclassification primarily in phenotypically similar cultivars; Grad-CAM shows spatially focused fruit-centered attribution",
+    "comments": "Benchmark comparison of CNN architectures; interpretable attention maps useful for validation, though limited to controlled imaging conditions.",
+    "model_io": [
+      {
+        "model": "CNN architectures (ResNet50, EfficientNet-B0, Swin Transformer V2)",
+        "inputs": [
+          "cherry fruit images"
+        ],
+        "outputs": [
+          "cultivar classification",
+          "attention maps"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "EfficientNet-B0 provides superior fine-grained cultivar classification",
+        "result": "Highest accuracy on dataset; result dataset/condition-specific, not general architectural superiority"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77428-2": {
+    "category": "Statistical Methods",
+    "task": "Probabilistic representation learning for anticancer drug-response prediction and pathway interpretation",
+    "key_results": "64-dimensional VAE latent representations retain predictive signal; 6 aggregate-importance factors associated with immune/inflammatory, oncogenic, stress-response programs",
+    "comments": "Reusable latent-space framework enabling pathway-level interpretation; limited bootstrap robustness for drug-preferential factors.",
+    "model_io": [
+      {
+        "model": "variational autoencoder (VAE)",
+        "inputs": [
+          "baseline transcriptomes"
+        ],
+        "outputs": [
+          "latent representations",
+          "pathway factor assignments"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Low-dimensional latent representations enable stable pathway-level drug-response interpretation",
+        "result": "Partial stability with seed-sensitive axes; aggregate-importance factors show better robustness than drug-preferential candidates"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78295-7": {
+    "category": "Genomics",
+    "task": "Identify shared glucose metabolism genes between osteoporosis and frozen shoulder; develop diagnostic models",
+    "key_results": "MARCKS, MAP3K1, LTF, ZMIZ1 identified as shared candidates; OP model AUC 0.900 (train), 0.715 (secondary); FS model AUC 0.991, 0.875",
+    "comments": "Significant performance drop in secondary validation; sample mapping verification needed and models require larger independent cohorts.",
+    "model_io": [
+      {
+        "model": "machine learning classification",
+        "inputs": [
+          "glucose metabolism gene expression"
+        ],
+        "outputs": [
+          "disease probability scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Shared glucose metabolism genes predict osteoporosis and frozen shoulder status",
+        "result": "Four-gene models show promising training performance but reduced secondary-validation AUCs"
+      }
+    ]
+  },
+  "nature:10.1038/s41534-026-01402-z": {
+    "category": "Algorithms",
+    "task": "Quantum circuit compilation and manipulation at ultra-large scale",
+    "key_results": "Pandora handles billions of gates; outperforms TKET and Qiskit for circuits >10,000 gates; successfully compiled Fermi-Hubbard 100\u00d7100 and 1024-bit Shor's algorithm circuits; equivalence checking outperforms MQT.QCEC on circuits >32 qubits",
+    "comments": "Open-source multithreaded engine based on declarative programming principles; addresses critical gap between theoretical quantum algorithm requirements and current software capabilities.",
+    "model_io": [
+      {
+        "model": "Pandora quantum circuit rewrite engine",
+        "inputs": [
+          "large quantum circuits (billions of gates)",
+          "compilation targets",
+          "equivalence checking specifications"
+        ],
+        "outputs": [
+          "compiled circuit",
+          "equivalence verification results",
+          "resource estimation streams"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Declarative programming-based quantum circuit engine scales to practical application sizes",
+        "result": "Confirmed; successfully compiles 1024-bit Shor's and 100\u00d7100 Fermi-Hubbard circuits with performance advantages"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-57922-3": {
+    "category": "Statistics/Probability",
+    "task": "Seismographic network optimization via dynamic Pythagorean fuzzy Dombi aggregation",
+    "key_results": "LPFDyDWA and LPFDyDWG operators aggregate time-varying linguistic assessments under uncertainty; dynamic weighting reflects changing data reliability and expert preference; novel score function ranks alternatives; application to earthquake monitoring network design",
+    "comments": "Dombi formulation flexible parameter models decision-maker risk attitude; theoretical framework with systematic procedure demonstrated on seismic network application; practical deployment validation not yet provided.",
+    "model_io": [
+      {
+        "model": "Linguistic Pythagorean Fuzzy Dynamic Dombi Aggregation",
+        "inputs": [
+          "linguistic expert assessments",
+          "time-varying attribute importance",
+          "network performance criteria"
+        ],
+        "outputs": [
+          "aggregated network evaluation scores",
+          "ranked seismic network configurations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Dynamic Dombi operators with linguistic Pythagorean fuzzy sets handle time-varying uncertainty in network optimization",
+        "result": "Proposed and validated theoretically; practical earthquake monitoring application demonstrates feasibility"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76807-z": {
+    "category": "Other",
+    "task": "Mathematical modeling of layer-by-layer CdS thin-film deposition kinetics",
+    "key_results": "Multifactor regression model predicts film thickness with high accuracy; cross-salt validation confirms model universality across cadmium sulfate, chloride, iodide, nitrate, acetate sources; thinner films (high transparency) for sensing, thicker films (high absorption) for optoelectronics",
+    "comments": "Least-squares matrix-based coefficients with interaction/quadratic terms capture nonlinear growth; 3D visualization confirms model-data adequacy; optical (transmittance, bandgap) and morphological characterization demonstrates thickness-property correlation.",
+    "model_io": [
+      {
+        "model": "Multifactor Regression (least-squares matrix form)",
+        "inputs": [
+          "cadmium salt concentration",
+          "number of deposition cycles",
+          "salt type"
+        ],
+        "outputs": [
+          "CdS film thickness",
+          "optical transmittance",
+          "bandgap (Eg)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Mathematical model captures CdS thin-film growth kinetics across different cadmium sources",
+        "result": "Confirmed; cross-salt validation demonstrates model universality and transferability"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77913-8": {
+    "category": "ML Theory",
+    "task": "Federated framework for privacy-preserving personalized learning diagnosis",
+    "key_results": "FedEAVE achieves 84.7% response-prediction accuracy on EdNet (MAE 0.113); privacy budget (\u03b5=2.0, \u03b4=10\u207b\u2075) via per-example clipping and Gaussian noise; matched difference-in-differences estimates intervention effects with retrospective validation",
+    "comments": "Combines contrastive evidence alignment, prerequisite-aware diagnosis, and intervention verification; intervention estimates remain retrospective and require prospective clinical validation.",
+    "model_io": [
+      {
+        "model": "FedEAVE (Federated Evidence-Aligned Verification)",
+        "inputs": [
+          "assessment data",
+          "behavioral signals",
+          "peer-interaction data",
+          "temporal signals"
+        ],
+        "outputs": [
+          "concept mastery estimates",
+          "intervention effect estimates",
+          "response predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Federated framework with privacy protection preserves diagnostic accuracy while protecting student records",
+        "result": "Confirmed on EdNet, ASSISTments, and Junyi Academy; retrospective intervention estimates require prospective validation"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78005-3": {
+    "category": "Other",
+    "task": "User-centered chatbot platform for cerebral palsy telerehabilitation",
+    "key_results": "RehaBot achieves high usability (System Usability Scale exceeding industry benchmarks for both patients and therapists); qualitative data highlight enhanced patient engagement and streamlined remote supervision; identified areas for automation optimization",
+    "comments": "Mixed-methods evaluation (n=10 patients, n=10 therapists) demonstrates feasibility; conversational interface enables structured home neurorehabilitation without extensive technical training; large-scale clinical validation remains needed.",
+    "model_io": [
+      {
+        "model": "RehaBot chatbot platform",
+        "inputs": [
+          "structured exercise prescriptions",
+          "video-guided sessions",
+          "patient adherence data",
+          "therapist queries"
+        ],
+        "outputs": [
+          "telerehabilitation sessions",
+          "automated reminders",
+          "bidirectional communication logs"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Chatbot-based architecture improves therapy engagement and remote supervision in home neurorehabilitation",
+        "result": "Confirmed by qualitative feedback; high usability scores; prospective outcome validation required"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78007-1": {
+    "category": "Other",
+    "task": "Hybrid nanoliquid flow near stagnation points with thermal radiation and porous media effects",
+    "key_results": "CuO nanoparticle mass parameter enhances velocity profiles and reduces temperature; axial velocity higher at saddle point, transverse velocity higher at nodal point; thermal radiation sensitivity topology-dependent; Nusselt number independent of Rd at nodal point, significantly increases at saddle point",
+    "comments": "Mass-based thermophysical relations replace conventional volume-fraction approach; quadratic thermal radiation approximation employed; Darcy parameter produces marginal variation (<0.2%) in engineering quantities.",
+    "model_io": [
+      {
+        "model": "3D stagnation-point flow model (water-based CuO/ZnO hybrid nanoliquid)",
+        "inputs": [
+          "porous medium porosity variation",
+          "CuO nanoparticle mass parameter",
+          "thermal radiation parameter Rd",
+          "Darcy parameter Da"
+        ],
+        "outputs": [
+          "velocity profiles",
+          "temperature distribution",
+          "Nusselt number"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "CuO nanoparticles enhance velocity while reducing temperature in stagnation-point flow",
+        "result": "Confirmed; mass-based thermophysical relations provide different predictions than volume-fraction approaches"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78542-x": {
+    "category": "Statistics/Probability",
+    "task": "Predicting cotton/polyester yarn hairiness from machine variables",
+    "key_results": "Taguchi L27 identified cot hardness as dominant factor; ANFIS achieved lowest held-out RMSE (0.273 hairs/m); cross-validated ANN showed lowest mean RMSE (0.554 \u00b1 0.194 hairs/m) over six-fold validation",
+    "comments": "Small test set (n=3) limits statistical power for model comparison; cross-validation across data partitions provides more stable assessment than single split.",
+    "model_io": [
+      {
+        "model": "Taguchi DOE + MLR/ANN/ANFIS",
+        "inputs": [
+          "front-roller cot hardness",
+          "front-to-middle roller gauge",
+          "front-roller pressure",
+          "apron spacer size",
+          "spinning angle"
+        ],
+        "outputs": [
+          "yarn hairiness (hairs/m)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Machine learning models (ANN, ANFIS) outperform multiple linear regression for hairiness prediction",
+        "result": "Confirmed in cross-validation; ANN showed most stable performance with lowest mean RMSE \u00b1 SD"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78623-x": {
+    "category": "Statistics/Probability",
+    "task": "Multi-criteria decision-making for semiconductor selection in DC-DC buck converters",
+    "key_results": "MOORA and integrated AHP-TOPSIS methods applied to GaN-transistor, IGBT, and power MOSFET selection; both methods rank alternatives consistently, validating MCDM approach for power electronics applications; evaluation based on switching speed, losses, cost criteria",
+    "comments": "First application of MOORA and integrated AHP-TOPSIS to semiconductor selection in literature; consistency between methods suggests robustness but lacks quantitative performance metrics on converter operation.",
+    "model_io": [
+      {
+        "model": "MOORA + Integrated AHP-TOPSIS",
+        "inputs": [
+          "semiconductor candidates (GaN, IGBT, MOSFET)",
+          "evaluation criteria (switching speed, losses, cost, others)"
+        ],
+        "outputs": [
+          "ranked semiconductor alternatives",
+          "consistency validation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "MOORA and AHP-TOPSIS produce consistent semiconductor rankings for DC-DC converters",
+        "result": "Confirmed; consistent results demonstrate method effectiveness for power electronics applications"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77147-8": {
+    "category": "Optics/Photonics",
+    "task": "Unified description of Fano resonances in excitonic nanostructures",
+    "key_results": "Fano profiles emerge from interference between constant background and complex Lorentzian exciton term across geometries (spheres, cylinders, slabs with 40 nm scales)",
+    "comments": "General formalism unifies Fano line shapes in diverse excitonic geometries through background-resonance interference, validating theoretical predictions.",
+    "model_io": [
+      {
+        "model": "Excitonic nanostructures (sphere, cylinder, slab)",
+        "inputs": [
+          "excitonic dielectric function",
+          "geometry parameters"
+        ],
+        "outputs": [
+          "light-scattering/reflection spectra",
+          "Fano line shapes"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Fano resonances arise from background-resonance interference in all geometries",
+        "result": "Confirmed: normalized spectra exhibit universal Fano profiles"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77735-8": {
+    "category": "Applied Physics",
+    "task": "Eight-beam multibeam antenna array with integrated 4\u00d74 Butler matrix",
+    "key_results": "Peak gain 19.7 dBi; wide angular coverage \u00b179\u00b0 with gain imbalance <1.9 dB; 13.4% fractional bandwidth (59\u201367.5 GHz); reflection coefficient <\u221210 dB",
+    "comments": "Ridge waveguide slot architecture with integrated beamforming overcomes scan loss and null regions through strategic grating-lobe configuration.",
+    "model_io": [
+      {
+        "model": "Ridged waveguide slot antenna + 4\u00d74 Butler matrix network",
+        "inputs": [
+          "frequency 62.5 GHz",
+          "beam state selection"
+        ],
+        "outputs": [
+          "eight interleaved radiation patterns",
+          "gain, directivity, S-parameters"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Four dual-lobe patterns enable eight-directional coverage without additional hardware",
+        "result": "Confirmed: \u00b179\u00b0 coverage with <1.9 dB imbalance achieved"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77789-8": {
+    "category": "Applied Physics",
+    "task": "Scatter-correction for quantitative neutron imaging via dual-detector setup",
+    "key_results": "Scatter-free radiography without sample-dependent calibration; validated on resolution standards; 4D tomography of H\u2082O/D\u2082O in heterogeneous soil",
+    "comments": "Dual-detector geometry provides material-independent scatter correction, enabling quantitative analysis of strongly scattering, dynamic systems.",
+    "model_io": [
+      {
+        "model": "Dual-detector neutron imaging system",
+        "inputs": [
+          "sample",
+          "neutron flux",
+          "detector 1 (close, captures scatter)",
+          "detector 2 (far, scatter-suppressed)"
+        ],
+        "outputs": [
+          "scatter-corrected radiography",
+          "quantitative attenuation coefficients"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Scatter can be corrected without material-specific calibration",
+        "result": "Confirmed: dual-detector approach yields sample-independent correction"
+      }
+    ]
   }
 }
