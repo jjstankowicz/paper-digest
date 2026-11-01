@@ -8,34 +8,53 @@
     "journal": "Nature Portfolio",
     "publishedAt": "2026-11-01",
     "category": "Cell Signaling",
-    "task": "Identify tumor-specific metabolic vulnerabilities in NSCLC to enhance TKI sensitivity",
-    "key_results": "Vandetanib suppresses MYC-driven serine synthesis pathway (SSP) transcription; MYC regulates SSP more strongly than GCN2\u2013ATF4 in tumor cells; vandetanib + serine/glycine restriction achieves potent tumor suppression with reduced toxicity to normal cells",
-    "comments": "Elegant example of exploiting oncogene-specific transcriptional dependencies; selectivity margin between tumor and normal cells requires careful clinical validation.",
+    "task": "Identify MYC-dependent metabolic vulnerabilities targetable with vandetanib in NSCLC",
+    "key_results": "Vandetanib suppresses MYC to block serine synthesis pathway transcription more potently than canonical GCN2-ATF4; combination with serine/glycine restriction achieved tumor suppression with preserved safety in normal cells",
+    "comments": "Elegant differentiation of oncogenic versus homeostatic transcriptional regulation of the same pathway; metabolic sensitization paradigm could generalize to other MYC-driven cancers.",
     "model_io": [
       {
-        "model": "NSCLC tumor and normal cell lines, in vivo NSCLC xenografts",
+        "model": "NSCLC cells + vandetanib \u00b1 serine/glycine deprivation",
         "inputs": [
-          "vandetanib (multi-kinase inhibitor)",
-          "serine/glycine restriction",
-          "MYC modulation"
+          "vandetanib",
+          "serine/glycine restriction"
         ],
         "outputs": [
-          "SSP transcription",
-          "serine/glycine metabolism",
-          "cell proliferation",
+          "MYC expression",
+          "SSP gene transcription",
+          "tumor cell viability"
+        ]
+      },
+      {
+        "model": "In vivo NSCLC xenograft with vandetanib \u00b1 SG restriction",
+        "inputs": [
+          "vandetanib",
+          "serine/glycine-restricted diet"
+        ],
+        "outputs": [
           "tumor growth",
-          "normal cell toxicity"
+          "drug toxicity markers"
+        ]
+      },
+      {
+        "model": "Normal cells + vandetanib \u00b1 serine/glycine deprivation",
+        "inputs": [
+          "vandetanib",
+          "serine/glycine restriction"
+        ],
+        "outputs": [
+          "GCN2-ATF4 pathway activation",
+          "cell viability"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Vandetanib represses SSP transcription via MYC suppression in NSCLC",
-        "result": "Confirmed: vandetanib inhibits MYC-driven SSP regulation more effectively than canonical GCN2\u2013ATF4 pathway"
+        "hypothesis": "Vandetanib represses SSP via MYC inhibition in tumor cells",
+        "result": "Confirmed; MYC exerts greater regulatory weight on SSP than GCN2-ATF4"
       },
       {
-        "hypothesis": "MYC-directed SSP blockade combined with serine/glycine deprivation induces selective tumor cell death",
-        "result": "Confirmed: combination achieved potent tumor suppression with sparing of normal cells reliant on GCN2\u2013ATF4 pathway"
+        "hypothesis": "Normal cells rely on GCN2-ATF4 for SSP regulation, sparing them from vandetanib toxicity",
+        "result": "Confirmed; selective tumor toxicity achieved"
       }
     ]
   },
@@ -48,38 +67,46 @@
     "journal": "Nature Portfolio",
     "publishedAt": "2026-11-01",
     "category": "Apoptosis/Cell Death",
-    "task": "Characterize the cell death mechanism induced by STF-62247 in ccRCC with different genetic profiles",
-    "key_results": "STF-62247 induces non-canonical, caspase-independent death in SETD2-inactivated cells; PIKfyve inhibition causes endolysosomal enlargement trapping pro-cathepsin L; ATG5/BECN1 knockout partially rescued viability",
-    "comments": "Complex multi-pathway death phenotype complicates therapeutic prediction; unclear whether the autophagic response is adaptive or pathological.",
+    "task": "Characterize the cell death mechanism induced by STF-62247 in ccRCC with distinct genetic profiles",
+    "key_results": "STF-62247 triggers PIKfyve-dependent endolysosomal dysfunction and autophagic deregulation independent of caspase-3, GSDME, or canonical apoptosis pathways",
+    "comments": "Comprehensive mechanistic dissection rules out multiple cell death modalities and reveals a non-canonical autophagy-linked pathway; LAMP1 translocation and dysfunctional vacuolar accumulation suggest atypical secretory autophagy.",
     "model_io": [
       {
-        "model": "VHL-deficient and SETD2-inactivated ccRCC cells, CRISPR knockouts (CASP3, GSDME, ATG5, BECN1)",
+        "model": "VHL-deficient and SETD2-inactivated ccRCC cells with STF-62247 treatment",
         "inputs": [
-          "STF-62247",
-          "caspase inhibitors",
-          "SAR405 (autophagy inhibitor)",
-          "pharmacological pathway inhibitors"
+          "STF-62247 small molecule"
+        ],
+        "outputs": [
+          "cytochrome c release",
+          "caspase-3/8 cleavage",
+          "PARP cleavage",
+          "LAMP1/CTSL/Galectin-3 localization",
+          "lysosomal morphology"
+        ]
+      },
+      {
+        "model": "CASP3, GSDME, ATG5, or BECN1 knockout ccRCC cells",
+        "inputs": [
+          "STF-62247"
         ],
         "outputs": [
           "cell viability",
-          "apoptosis markers (cytochrome c, PARP, caspase cleavage)",
-          "lysosomal markers (LAMP1, CTSL, Galectin-3)",
-          "autophagy markers"
+          "autophagic markers"
         ]
       }
     ],
     "hypotheses": [
       {
         "hypothesis": "STF-62247 induces caspase-dependent apoptosis in VHL-deficient cells",
-        "result": "Partially confirmed in VHL-deficient cells; rejected in SETD2-inactivated cells where caspase activation is absent"
+        "result": "Partially confirmed for marker induction, but caspase inhibition does not rescue viability, indicating secondary role"
       },
       {
-        "hypothesis": "PIKfyve inhibition triggers lysosomal membrane permeabilization",
-        "result": "Rejected: no LAMP1 translocation or functional lysosomal rupture; instead endolysosomal enlargement traps degradative enzymes"
+        "hypothesis": "PIKfyve inhibition causes endolysosomal dysfunction and drives cell death",
+        "result": "Confirmed; STF-62247 causes endolysosomal enlargement and pro-CTSL trapping"
       },
       {
-        "hypothesis": "Autophagy contributes to STF-62247-mediated death in SETD2-inactivated cells",
-        "result": "Confirmed: ATG5/BECN1 knockout and SAR405 partially rescued viability"
+        "hypothesis": "Autophagy contributes to cell death in SETD2-inactivated cells",
+        "result": "Confirmed; ATG5/BECN1 knockout partially rescues viability"
       }
     ]
   },
@@ -92,34 +119,56 @@
     "journal": "Nature Communications",
     "publishedAt": "2026-11-01",
     "category": "Cell Division/Cycle",
-    "task": "Determine how PRMT1-mediated SKP1 methylation stabilizes pro-proliferative phosphoproteins during liver regeneration",
-    "key_results": "PRMT1 catalyzes asymmetric dimethylation of SKP1 at R81, disrupting FBXW7 recruitment to SCF complex; SAM supplementation accelerates liver regeneration in mice and patients",
-    "comments": "Demonstrates proof-of-concept for metabolite supplementation as regenerative therapy, though the clinical translatability and optimal dosing remain to be established.",
+    "task": "Elucidate PRMT1-mediated regulation of phosphoprotein stability during hepatocyte proliferation",
+    "key_results": "PRMT1 catalyzes SKP1 dimethylation at R81, disrupting FBXW7 recruitment to SCF E3 ligase and preventing pro-proliferative phosphoprotein degradation; SAM administration accelerates liver regeneration in mice and patients",
+    "comments": "Mechanistically precise demonstration that post-translational methylation regulates E3 ligase assembly; SAM supplementation represents a simple potential therapeutic intervention for liver disease.",
     "model_io": [
       {
-        "model": "hepatocyte proliferation assay, liver regeneration in mice and humans",
+        "model": "Hepatocytes stimulated with EGF",
         "inputs": [
-          "EGF signaling",
-          "PRMT1 expression",
-          "S-adenosylmethionine (SAM)",
-          "SKP1 methylation at R81"
+          "EGF",
+          "PRMT1 inhibitors or wild-type conditions"
         ],
         "outputs": [
+          "PRMT1 expression",
+          "SKP1 methylation",
+          "FBXW7 recruitment",
           "phosphoprotein stability",
-          "cell proliferation",
-          "liver mass recovery",
-          "hepatocyte proliferation rate"
+          "proliferation markers"
+        ]
+      },
+      {
+        "model": "Mouse partial hepatectomy with SAM administration",
+        "inputs": [
+          "S-adenosylmethionine"
+        ],
+        "outputs": [
+          "liver regeneration rate",
+          "hepatocyte proliferation"
+        ]
+      },
+      {
+        "model": "Patient liver regeneration with SAM supplementation",
+        "inputs": [
+          "S-adenosylmethionine"
+        ],
+        "outputs": [
+          "regeneration kinetics"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "PRMT1 upregulation by EGF signaling methylates SKP1 to prevent FBXW7-mediated degradation of pro-proliferative phosphoproteins",
-        "result": "Confirmed: R81 methylation disrupts FBXW7 recruitment and stabilizes target substrates"
+        "hypothesis": "PRMT1 is required for hepatocyte proliferation during liver regeneration",
+        "result": "Confirmed; PRMT1 upregulated by EGF and is indispensable for propagating proliferative signals"
       },
       {
-        "hypothesis": "SAM supplementation enhances PRMT1-catalyzed methylation and accelerates hepatocyte proliferation",
-        "result": "Confirmed: SAM administration significantly accelerated liver regeneration in vivo"
+        "hypothesis": "SKP1 methylation at R81 inhibits FBXW7-mediated ubiquitination",
+        "result": "Confirmed; methylation disrupts SCF complex assembly"
+      },
+      {
+        "hypothesis": "SAM supplementation accelerates liver regeneration",
+        "result": "Confirmed in both mouse and patient models"
       }
     ]
   },
@@ -132,28 +181,41 @@
     "journal": "Nature Communications",
     "publishedAt": "2026-11-01",
     "category": "Other",
-    "task": "Determine whether KIF2C activation can counteract DNA damage and aging",
-    "key_results": "KIF2C agonist enhanced DSB repair in HGPS and DS cells; subcutaneous injection in progeria mice extended lifespan and improved healthspan",
-    "comments": "Novel connection between microtubule-driven nuclear envelope dynamics and genome stability; mechanism may be broadly geroprotective.",
+    "task": "Determine if KIF2C agonism can enhance DNA repair and delay aging phenotypes",
+    "key_results": "KIF2C agonist enhanced DSB repair in HGPS and DS cells; subcutaneous administration in progeria mice extended healthspan and lifespan",
+    "comments": "Compelling pharmacological intervention targeting a microtubule motor protein to restore nuclear envelope architecture and DSB repair, bridging cell biology and in vivo gerontology.",
     "model_io": [
       {
-        "model": "aged cells, patient-derived HGPS and DS cells, progeria mouse model",
+        "model": "HGPS and DS patient-derived cells + aged cells",
         "inputs": [
-          "KIF2C small-molecule agonist"
+          "KIF2C agonist small molecule"
         ],
         "outputs": [
           "DSB repair efficiency",
           "nuclear structure",
-          "transcriptional signatures",
-          "lifespan",
-          "healthspan"
+          "transcriptional signatures"
+        ]
+      },
+      {
+        "model": "Progeria mouse model with subcutaneous KIF2C agonist",
+        "inputs": [
+          "KIF2C agonist"
+        ],
+        "outputs": [
+          "aging phenotypes",
+          "healthspan",
+          "lifespan"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Increased KIF2C activity restores nuclear envelope invaginations and enhances DSB repair",
-        "result": "Confirmed: agonist improved assembly of microtubule-driven invaginations and DSB repair in multiple cell types and in vivo"
+        "hypothesis": "KIF2C agonism restores DSB repair via nuclear envelope invagination assembly",
+        "result": "Confirmed; mechanism involves microtubule-driven nuclear envelope dynamics"
+      },
+      {
+        "hypothesis": "Enhanced genome stability delays aging",
+        "result": "Confirmed in progeria mice; lifespan extended with KIF2C agonist"
       }
     ]
   },
@@ -166,27 +228,36 @@
     "journal": "Nature Communications",
     "publishedAt": "2026-11-01",
     "category": "Development",
-    "task": "Elucidate mechanisms of congenital lung anomalies in Trisomy 21",
-    "key_results": "IFN-I hyperactivation recapitulates T21 lung pathology; mesenchyme-derived IFN-I shifts epithelial progenitors toward AT2-like differentiation",
-    "comments": "While mechanistically insightful, the study does not yet demonstrate therapeutic efficacy of IFN-I pathway inhibition in vivo.",
+    "task": "Determine mechanisms of congenital lung anomalies in Trisomy 21",
+    "key_results": "IFN-I treatment recapitulates T21 lung epithelial transcriptional changes; mesenchyme-driven IFN-I hyperactivation shifts progenitor identity toward AT2-like programs",
+    "comments": "Elegant use of scRNAseq and co-culture to mechanistically link type I interferon to developmental pathology, though translation to therapeutic discovery remains preliminary.",
     "model_io": [
       {
-        "model": "human lung tissue explants with single-cell RNA-seq",
+        "model": "human lung tissue explants with IFN-I treatment/repression",
         "inputs": [
-          "IFN-I treatment",
-          "lineage-specific cell co-cultures"
+          "Type I interferon",
+          "tissue culture conditions"
         ],
         "outputs": [
-          "transcriptional signatures",
-          "epithelial differentiation state",
-          "progenitor cell identity shifts"
+          "scRNAseq transcriptional profiles",
+          "epithelial differentiation status"
+        ]
+      },
+      {
+        "model": "mesenchyme-epithelium co-culture",
+        "inputs": [
+          "mesenchymal and epithelial cell types"
+        ],
+        "outputs": [
+          "progenitor cell identity",
+          "AT2-like program induction"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "IFN-I hyperactivation is necessary and sufficient to drive T21 lung pathology",
-        "result": "Confirmed: IFN treatment recapitulates T21 transcriptional changes and promotes epithelial remodeling"
+        "hypothesis": "IFN-I hyperactivation drives T21-related lung pathologies",
+        "result": "Confirmed by IFN treatment recapitulating transcriptional changes and co-culture experiments showing mesenchyme-driven effects"
       }
     ]
   },
@@ -199,36 +270,44 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-11-01",
     "category": "Cell Signaling",
-    "task": "Identify metabolic mechanisms driving LOXL4-dependent colorectal cancer progression",
-    "key_results": "LOXL4 knockout downregulated GLS1, causing glutamine accumulation and glutamate reduction; CB-839 (GLS1 inhibitor) synergized with LOXL4 deletion to suppress tumor growth",
-    "comments": "Mechanistic elegance is undermined by lack of clarity on how LOXL4 specifically regulates GLS1 at the molecular level.",
+    "task": "Elucidate LOXL4-driven metabolic rewiring in colorectal cancer",
+    "key_results": "LOXL4 knockout suppressed CRC cell proliferation/migration in vitro and tumor burden in vivo; GLS1-mediated glutaminolysis is the key metabolic node",
+    "comments": "Integrated proteomics-metabolomics approach convincingly links LOXL4 to glutamine metabolism; combination with GLS1 inhibition CB-839 offers a rational therapeutic strategy.",
     "model_io": [
       {
-        "model": "LOXL4 knockout CRC cell lines (SW480, HT-29), AOM/DSS-induced CRC mice",
+        "model": "LOXL4 knockout SW480 and HT-29 cells (CRISPR-Cas9)",
         "inputs": [
-          "LOXL4 deletion",
-          "CB-839 (GLS1 inhibitor)",
-          "exogenous glutamate"
+          "LOXL4 silencing"
         ],
         "outputs": [
-          "cell proliferation",
+          "proliferation",
           "migration",
           "invasion",
-          "glutamine levels",
-          "glutamate levels",
-          "tumor size",
+          "proteomic profile",
+          "metabolomic profile"
+        ]
+      },
+      {
+        "model": "AOM/DSS-induced CRC mouse model",
+        "inputs": [
+          "LOXL4 knockout",
+          "GLS1 inhibitor CB-839"
+        ],
+        "outputs": [
+          "tumor burden",
+          "intestinal tumor count",
           "weight loss"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "LOXL4 silencing suppresses CRC progression via GLS1 downregulation",
-        "result": "Confirmed: LOXL4 knockout reduced GLS1 and impaired malignant behaviors; exogenous glutamate rescued proliferation"
+        "hypothesis": "LOXL4 promotes CRC via GLS1-dependent glutaminolysis",
+        "result": "Confirmed; LOXL4 knockout reduces GLS1 expression, causing glutamine accumulation and glutamate depletion"
       },
       {
-        "hypothesis": "GLS1 inhibition synergizes with LOXL4 deletion",
-        "result": "Confirmed: CB-839 further potentiated anti-tumor effects of LOXL4 depletion in vivo"
+        "hypothesis": "Exogenous glutamate rescues proliferation in LOXL4-knockout cells",
+        "result": "Confirmed; demonstrates metabolic dependence"
       }
     ]
   },
@@ -241,30 +320,30 @@
     "journal": "Nature Communications",
     "publishedAt": "2026-11-01",
     "category": "Single Cell",
-    "task": "Isoform-resolved spatial transcriptomics combining short-read and long-read sequencing on high-density arrays",
-    "key_results": "Identified spatially localized unannotated isoforms and intron-retention events; revealed regional isoform usage differences masked at gene-level expression in tomato grafts and mouse embryos",
-    "comments": "Innovative tri-part barcode design enables long-read mapping on high-density arrays; novel isoforms detected but tissue validation and functional characterization needed.",
+    "task": "Isoform-resolved spatial transcriptomics combining short and long-read sequencing",
+    "key_results": "Identified spatially localized unannotated isoforms and intron-retention events; revealed regional isoform usage differences invisible at gene level in tomato-pepper grafts and mouse embryos",
+    "comments": "Innovative tri-part barcode design enables high-density arrays with long-read compatibility; single-chip workflow elegantly combines short-read quantification with long-read isoform discovery.",
     "model_io": [
       {
-        "model": "Lab-Made High-Density Spatial Transcriptomics System",
+        "model": "Lab-made high-density spatial transcriptomics system",
         "inputs": [
           "tissue sections (tomato grafts, mouse embryos)",
-          "full-length cDNA from single capture chip"
+          "full-length cDNA"
         ],
         "outputs": [
-          "short-read gene expression quantification (spatial resolved)",
-          "long-read full-length transcript isoforms (spatial resolved)"
+          "short-read gene-expression quantification",
+          "long-read isoform structures with spatial coordinates"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Spatial localization of transcript isoforms reveals regional splicing regulation masked by gene-level analysis",
-        "result": "Confirmed via identification of region-specific isoform usage patterns not apparent from aggregate expression"
+        "hypothesis": "Tri-part combinatorial barcode design enables high-density array capacity and long-read barcode identification",
+        "result": "Successfully mapped full-length transcripts to high-density spatial coordinates"
       },
       {
-        "hypothesis": "Tri-part combinatorial barcode design enables accurate spatial assignment of long reads on high-density arrays",
-        "result": "Successfully mapped long-read isoforms to spatial coordinates in dual tissue contexts"
+        "hypothesis": "Isoform usage varies regionally within tissues, not captured by gene-level analysis",
+        "result": "Identified spatially localized unannotated isoforms and intron-retention events; revealed regional isoform-usage differences"
       }
     ]
   },
@@ -277,24 +356,29 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-11-01",
     "category": "Other",
-    "task": "Automated intracranial aneurysm detection from medical imaging using deep learning",
-    "key_results": "CDSS-IALD system demonstrates improved detection and localization of intracranial aneurysms; ConvNeXt feature extraction with spiking neural network classification outperforms comparative approaches",
-    "comments": "Clinical decision support system combining ConvNeXt and spiking neural networks; image preprocessing pipeline well-described but quantitative performance metrics (sensitivity/specificity/AUC) not explicitly stated in abstract.",
+    "task": "Clinical decision support for intracranial aneurysm detection from biomedical imaging",
+    "key_results": "CDSS-IALD model outperforms existing approaches on Intracranial Aneurysm Dataset for detection and localization",
+    "comments": "Combines ConvNeXt feature extraction with spiking neural networks for aneurysm classification; preprocessing pipeline (normalization, skull stripping) standard but necessary; no specific quantitative metrics provided.",
     "model_io": [
       {
-        "model": "CDSS-IALD (Clinical Decision Support System)",
+        "model": "CDSS-IALD (ConvNeXt + Spiking Neural Network)",
         "inputs": [
-          "biomedical imaging data (preprocessed via normalization, noise reduction, contrast improvement, skull stripping)"
+          "biomedical MRI/CT images of brain"
         ],
         "outputs": [
-          "aneurysm detection and classification results"
+          "aneurysm detection labels",
+          "aneurysm localization/segmentation"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "ConvNeXt hierarchical feature extraction captures both local and global context for accurate aneurysm detection",
-        "result": "CDSS-IALD demonstrated improved performance over comparative approaches on benchmark dataset"
+        "hypothesis": "Preprocessing (normalization, skull stripping, contrast enhancement) improves downstream detection",
+        "result": "Enhanced image quality and consistency enabled by preprocessing pipeline"
+      },
+      {
+        "hypothesis": "ConvNeXt hierarchical features + spiking neural networks outperform existing methods",
+        "result": "CDSS-IALD demonstrated superiority over baseline approaches on benchmark dataset"
       }
     ]
   },
@@ -307,25 +391,38 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-11-01",
     "category": "Other",
-    "task": "Multi-attribute hierarchical classification of museum artifacts using multimodal learning",
-    "key_results": "85.2% hierarchical F1 on Met Museum dataset (6.9pp gain over baseline); 2.8% hierarchical violation rate reduced to 0% with constrained decoding",
-    "comments": "Strong application of vision-semantic alignment to cultural heritage, though evaluation limited to two datasets; constrained decoding elegantly addresses structural validity.",
+    "task": "Multi-attribute museum artifact classification with hierarchical taxonomy constraints",
+    "key_results": "85.2% hierarchical F1 on Met Museum dataset (6.9pp gain over baseline); 2.8% learned hierarchical violation rate reduced to 0% with constrained decoding",
+    "comments": "Clever integration of vision-semantic alignment with hierarchical loss; real-world cultural heritage application demonstrates practical utility beyond academic benchmarks.",
     "model_io": [
       {
-        "model": "Multimodal Hierarchical Framework",
+        "model": "ViT + BERT dual-encoder with contrastive alignment",
         "inputs": [
-          "visual images (ViT encoder)",
-          "textual metadata (BERT encoder)"
+          "visual features from artifact images",
+          "textual metadata"
         ],
         "outputs": [
-          "hierarchical classification predictions across taxonomy trees"
+          "aligned multimodal embeddings in shared space"
+        ]
+      },
+      {
+        "model": "Cascaded conditional classification heads with hierarchical consistency loss",
+        "inputs": [
+          "fused visual-semantic features"
+        ],
+        "outputs": [
+          "multi-level hierarchical predictions across taxonomy trees"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Hierarchical consistency loss during training reduces taxonomically illegitimate predictions",
-        "result": "Violation rate dropped to 2.8%, eliminated entirely at inference with constrained decoding"
+        "hypothesis": "Hierarchical consistency loss penalizes incompatible predictions between adjacent taxonomy levels",
+        "result": "Reduced violation rate to 2.8% during training; constrained decoding guarantees legitimacy at inference"
+      },
+      {
+        "hypothesis": "Multimodal fusion outperforms unimodal baselines for artifact classification",
+        "result": "6.9pp F1 improvement over strongest multimodal baseline on Met dataset"
       }
     ]
   },
@@ -338,28 +435,32 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-11-01",
     "category": "Statistical Methods",
-    "task": "Evaluate LLM response quality for patient health education on femoral head avascular necrosis",
-    "key_results": "Claude/DeepSeek ranked highest on clinical accuracy (p<0.001); all responses safe; readability scores (FKGL 10.85-13.93) exceeded recommended grade levels",
-    "comments": "Important for assessing AI-generated medical content; critical gap is unmeasured patient comprehension, limiting clinical utility assessment.",
+    "task": "Evaluation of large language model responses to patient health questions",
+    "key_results": "Claude and DeepSeek ranked highest on clinical accuracy; all models rated safe; readability scores (FKGL 10.85\u201313.93) exceeded patient education recommendations",
+    "comments": "Important quality assessment of LLM-generated medical advice; notable gap between clinical accuracy and readability limiting patient comprehension\u2014a practical concern for deployment.",
     "model_io": [
       {
-        "model": "Five LLM Platforms (ChatGPT, Gemini, Copilot, Claude, DeepSeek)",
+        "model": "Five LLM platforms (ChatGPT, Gemini, Copilot, Claude, DeepSeek)",
         "inputs": [
-          "15 patient FAQs on femoral head avascular necrosis"
+          "15 frequently asked questions about femoral head avascular necrosis"
         ],
         "outputs": [
-          "text responses (75 total)"
+          "75 text responses evaluated by 4 orthopedic surgeons"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Claude and DeepSeek provide clinically more accurate responses than ChatGPT/Gemini/Copilot",
-        "result": "Confirmed via JAMA and DISCERN scoring with significant differences (p<0.001)"
+        "hypothesis": "LLM response quality varies significantly across platforms",
+        "result": "Claude and DeepSeek outperformed ChatGPT, Gemini, Copilot on clinical accuracy (p<0.001); no significant difference between Claude and DeepSeek"
       },
       {
-        "hypothesis": "LLM readability matches patient education guidelines",
-        "result": "Rejected; average FKGL 10.85-13.93 exceeds recommended levels for general patient comprehension"
+        "hypothesis": "All platforms generate clinically safe responses",
+        "result": "All 75 responses rated safe by all 4 raters"
+      },
+      {
+        "hypothesis": "Readability differs among platforms and exceeds patient comprehension levels",
+        "result": "Significant differences in FRES (p=0.043) and FKGL (p<0.001); average FKGL above recommended grade level"
       }
     ]
   },
@@ -372,29 +473,30 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-11-01",
     "category": "Other",
-    "task": "Dual watermarking of medical MRI images using frequency-spatial vision models",
-    "key_results": "PSNR=42.37dB, SSIM=0.9557, BER=0.0491, BitAcc=0.9509; Vision Mamba outperforms CNN/Transformer baselines",
-    "comments": "Novel application of state-space models (Vision Mamba) to medical image watermarking; two-phase curriculum learning elegantly decouples imperceptibility-extraction tradeoff.",
+    "task": "Dual watermarking of medical MRI images with frequency-spatial modeling",
+    "key_results": "PSNR=42.37 dB, SSIM=0.9557, NC=0.9511, BER=0.0491; Vision Mamba outperforms CNN/Transformer backbones",
+    "comments": "Novel application of Vision Mamba's long-range receptive fields to watermarking; two-phase curriculum learning elegantly decouples imperceptibility-fidelity tradeoff.",
     "model_io": [
       {
-        "model": "FS-VMADW (Frequency-Spatial Vision Mamba Dual Watermarking)",
+        "model": "FS-VMADW (Vision Mamba + Haar DWT dual-branch encoder)",
         "inputs": [
-          "abdominal MRI images"
+          "abdominal MRI images",
+          "two 64-bit binary watermarks"
         ],
         "outputs": [
           "watermarked images",
-          "recovered 64-bit binary watermarks"
+          "recovered watermarks"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Combining spatial Vision Mamba with frequency DWT branch improves both imperceptibility and recovery fidelity",
-        "result": "FS-VMADW achieved superior PSNR/SSIM/BER metrics compared to CNN and Transformer alternatives"
+        "hypothesis": "Long-range spatial modeling via Vision Mamba combined with frequency information improves watermark robustness and imperceptibility",
+        "result": "Vision Mamba backbone outperforms CNN and Transformer alternatives; DWT addition further improves both metrics"
       },
       {
-        "hypothesis": "Two-phase curriculum training mitigates gradient conflict between imperceptibility and extraction objectives",
-        "result": "Successful decoupling across training phases yielded 0.9509 BitAcc and 0.9511 NC"
+        "hypothesis": "Two-phase curriculum training mitigates gradient conflict between imperceptibility and extraction fidelity",
+        "result": "Achieved PSNR=42.37 dB and BER=0.0491 simultaneously"
       }
     ]
   },
@@ -407,24 +509,32 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-11-01",
     "category": "Other",
-    "task": "Facial expression recognition using multi-scale dual-channel attention mechanisms",
-    "key_results": "MDAMNet achieved 76.87% (FER2013), 97.52% (CK+), 98.34% (JAFFE) accuracy on benchmark datasets",
-    "comments": "Solid architectural contributions (dilated convolution for multi-scale features, combined channel-spatial attention); high performance on CK+ and JAFFE reflects dataset bias toward posed expressions, while FER2013 accuracy gap suggests real-world applicability challenges.",
+    "task": "Facial expression recognition with multi-scale dual-channel attention",
+    "key_results": "FER2013: 76.87%, CK+: 97.52%, JAFFE: 98.34% accuracy; outperforms traditional deep learning baselines",
+    "comments": "Multi-scale dilated convolution + dual-channel attention + focal loss is well-motivated architecture; high accuracy on CK+/JAFFE but notably lower on FER2013 suggests dataset-dependent performance.",
     "model_io": [
       {
-        "model": "MDAMNet (Multi-scale Dual-channel Attention Mechanism Facial Expression Network)",
+        "model": "MDAMNet (Multi-scale Dilated Feature Extraction + Dual-channel Attention)",
         "inputs": [
           "facial images"
         ],
         "outputs": [
-          "facial expression classification"
+          "expression class labels"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Multi-scale feature extraction via dilated convolution combined with dual-channel attention improves expression recognition",
-        "result": "Achieved 76.87%-98.34% accuracy across three benchmark datasets, outperforming traditional deep networks"
+        "hypothesis": "Multi-scale dilated convolution extracts features at different receptive fields, improving detail capture",
+        "result": "MDAMNet achieves high accuracy on three public datasets; dilated convolution captures multi-scale features"
+      },
+      {
+        "hypothesis": "Dual-channel attention (spatial + channel) enhances key feature extraction and suppresses redundancy",
+        "result": "Attention mechanism improves accuracy and model interpretability"
+      },
+      {
+        "hypothesis": "Focal loss dynamically reweights hard examples, improving stability",
+        "result": "Enhanced system accuracy and stability across three datasets"
       }
     ]
   },
@@ -437,24 +547,25 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-11-01",
     "category": "Other",
-    "task": "Tomato leaf disease classification with interpretable attention mechanisms",
-    "key_results": "96.0% accuracy with hard attention-enhanced VGG16 vs 92.3% baseline VGG16",
-    "comments": "Modest 3.7pp improvement; explainability via attention maps is valuable for agricultural deployment but limited technical novelty in attention mechanism design.",
+    "task": "Tomato leaf disease classification with interpretable attention",
+    "key_results": "96.0% accuracy (vs. 92.3% baseline VGG16); improved interpretability through attention visualization",
+    "comments": "Straightforward hard attention integration into VGG16; modest 3.7pp gain comes at cost of added complexity, and no comparison to modern vision transformers.",
     "model_io": [
       {
-        "model": "Hard Attention-Enhanced VGG16",
+        "model": "Hard attention-enhanced VGG16",
         "inputs": [
           "tomato leaf images"
         ],
         "outputs": [
-          "disease classification (healthy/diseased categories)"
+          "disease classification labels",
+          "attention maps highlighting discriminative regions"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Hard attention mechanism focusing on informative regions improves disease discrimination",
-        "result": "96.0% accuracy achieved, outperforming standard VGG16 and other baselines"
+        "hypothesis": "Hard attention mechanism focuses on informative image regions, improving disease discrimination",
+        "result": "96.0% accuracy achieved; attention maps provide model explainability"
       }
     ]
   },
@@ -467,29 +578,42 @@
     "journal": "Communications Biology",
     "publishedAt": "2026-11-01",
     "category": "Genomics",
-    "task": "Genome-wide methylome profiling to identify epigenetic drivers of NSCLC progression and therapy resistance",
-    "key_results": "Gene-body hypomethylation targets lung cancer drivers; promoter hypermethylation affects GPCRs; subtype-specific patterns distinguish adenocarcinoma (neurotransmitter signaling) from squamous cell carcinoma (canonical oncogenic pathways)",
-    "comments": "Solid epigenomic profiling across 260 methylomes revealing EMT, EGFR, and immune pathway regulation; functional validation of identified methylation events recommended.",
+    "task": "Genome-wide methylome profiling to reveal epigenetic drivers in NSCLC",
+    "key_results": "Gene-body hypomethylation targets lung cancer drivers; promoter hypomethylation regulates EGFR signaling, EMT, and PD-L1; subtype-specific patterns (adenocarcinoma vs. squamous)",
+    "comments": "RRBS on 260 methylomes from 130 patients provides solid scale; linking epigenetic alterations to EGFR, EMT, and immune pathways suggests therapeutic intervention points.",
     "model_io": [
       {
-        "model": "Reduced Representation Bisulfite Sequencing (RRBS)",
+        "model": "Genome-wide DNA methylation sequencing (RRBS)",
         "inputs": [
-          "lung tissue samples from 130 NSCLC patients (260 methylomes)"
+          "DNA from 260 NSCLC tumor samples (130 patients)"
         ],
         "outputs": [
-          "genome-wide DNA methylation profiles",
+          "genome-wide methylation profiles",
           "differentially methylated regions"
+        ]
+      },
+      {
+        "model": "Upstream transcription factor analysis",
+        "inputs": [
+          "promoter and gene-body methylation patterns"
+        ],
+        "outputs": [
+          "transcription factor motifs (SNAIL, SLUG, SMAD3, BRD4)"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Promoter hypomethylation of miRNA genes regulates EGFR signaling and EMT",
-        "result": "Confirmed via methylation sequencing and upstream TF analysis implicating SNAIL/SLUG/SMAD3/BRD4"
+        "hypothesis": "Gene-body hypomethylation targets cancer driver genes",
+        "result": "Identified lung cancer driver genes with gene-body hypomethylation"
       },
       {
-        "hypothesis": "Subtype-specific methylation patterns reflect distinct oncogenic pathways in adenocarcinoma vs squamous NSCLC",
-        "result": "Adenocarcinoma shows neurotransmitter signaling alterations; squamous shows canonical oncogenic pathway changes"
+        "hypothesis": "Promoter hypomethylation regulates miRNAs linked to EGFR signaling, EMT, and immune response",
+        "result": "Promoter hypomethylation targets miRNA genes affecting EGFR, EMT, PD-L1 pathways"
+      },
+      {
+        "hypothesis": "NSCLC subtypes show distinct methylation patterns",
+        "result": "Adenocarcinoma shows neurotransmitter signaling alterations; squamous cell carcinoma shows canonical oncogenic pathway alterations"
       }
     ]
   },
@@ -501,16 +625,16 @@
     "projectPage": "https://www.nature.com/articles/s44303-026-00213-3",
     "journal": "Nature Portfolio",
     "publishedAt": "2026-11-01",
-    "category": "Structural Prediction",
-    "task": "Predict tumor response to chemo-immunotherapy by integrating ultrasound stiffness and perfusion imaging",
-    "key_results": "CNN-combi (integrated model) achieved 93.0% overall accuracy with class-specific rates of 98.3% (responsive), 93.0% (stable), 94.7% (non-responsive); SWE alone 87.7%, CEUS alone 82.5%",
-    "comments": "Strong multimodal integration bridging biophysical mechanisms (stiffness\u2192hypoperfusion) to treatment response; preclinical mouse models warrant validation in human patients.",
+    "category": "Genomics",
+    "task": "Predict tumor treatment response from ultrasound perfusion and stiffness",
+    "key_results": "CNN-combi integrated model achieved 93.0% overall accuracy (vs. 87.7% SWE-only, 82.5% CEUS-only); class-specific accuracies: 98.3% responsive, 93.0% stable, 94.7% non-responsive",
+    "comments": "Elegant multimodal fusion of mechanical (SWE) and perfusion (CEUS) biomarkers; large 5pp accuracy gain from integration validates hypothesis that stiffness-perfusion coupling predicts drug delivery efficacy.",
     "model_io": [
       {
-        "model": "CNN-ultra (separate SWE and CEUS models)",
+        "model": "CNN-ultra (separate models for SWE and CEUS)",
         "inputs": [
-          "shear wave elastography (SWE) images",
-          "contrast-enhanced ultrasound (CEUS) images"
+          "shear wave elastography images",
+          "contrast-enhanced ultrasound images"
         ],
         "outputs": [
           "tumor response classification (responsive/stable/non-responsive)"
@@ -519,22 +643,21 @@
       {
         "model": "CNN-combi (integrated dual-modality model)",
         "inputs": [
-          "SWE images",
-          "CEUS images"
+          "SWE and CEUS image pairs from same tumor"
         ],
         "outputs": [
-          "tumor response classification (responsive/stable/non-responsive)"
+          "enhanced tumor response prediction"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Combining SWE stiffness and CEUS perfusion biomarkers improves treatment response prediction",
-        "result": "CNN-combi achieved 93.0% accuracy vs 87.7% (SWE) and 82.5% (CEUS) separately"
+        "hypothesis": "Increased tumor stiffness compresses blood vessels, limiting perfusion, drug delivery, and causing immunosuppression",
+        "result": "Combining SWE (stiffness) and CEUS (perfusion) improves prediction accuracy to 93.0% vs. unimodal approaches"
       },
       {
-        "hypothesis": "Elevated tumor stiffness causes intravascular compression, reducing perfusion and drug efficacy",
-        "result": "Supported by mechanistic basis; dual imaging captures complementary pathophysiology"
+        "hypothesis": "Multimodal integration outperforms independent unimodal predictions",
+        "result": "CNN-combi accuracy 93.0% vs. CNN-ultra 87.7% (SWE) and 82.5% (CEUS)"
       }
     ]
   },
@@ -547,14 +670,27 @@
     "journal": "Nature Portfolio",
     "publishedAt": "2026-11-01",
     "category": "Analysis",
-    "task": "Unifying quantum state smoothing theories via extended retrodiction",
-    "key_results": "Quantum smoothing formulated as extended Bayesian retrodiction; prior-correlation dependence identified as uniquely quantum feature; unified framework encompasses previous incompatible approaches",
-    "comments": "Theoretically elegant unification with clear information-theoretic characterization via state entropy; no numerical experiments or practical implications for quantum state estimation provided.",
-    "model_io": [],
+    "task": "Unify quantum state smoothing theories via extended Bayesian retrodiction",
+    "key_results": "Demonstrated quantum smoothing as extended Bayesian retrodiction; prior correlations fundamentally determine retrodictive dependence; information-theoretic characterization via average entropy of smoothed states",
+    "comments": "Elegant unification framework resolving incompatibilities between prior smoothing approaches; practical computational implications for quantum state estimation algorithms could be strengthened.",
+    "model_io": [
+      {
+        "model": "Extended Bayesian retrodiction with auxiliary prior systems",
+        "inputs": [
+          "past measurements",
+          "future measurements",
+          "specified prior correlations"
+        ],
+        "outputs": [
+          "smoothed quantum state estimates",
+          "entropy of state distributions"
+        ]
+      }
+    ],
     "hypotheses": [
       {
-        "hypothesis": "Quantum smoothing hinges on retrodictive dependence on prior correlations",
-        "result": "Confirmed; framework identifies previous approaches as different prior choices"
+        "hypothesis": "Quantum smoothing depends fundamentally on prior correlations via retrodiction",
+        "result": "Confirmed; prior choice determines retrodictive dependence structure"
       }
     ]
   },
@@ -567,30 +703,30 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-11-01",
     "category": "Algorithms",
-    "task": "Lightweight closed-loop adaptive intrusion detection for critical infrastructure",
-    "key_results": "F1=0.7526\u00b10.1074 (full model) vs 0.5719\u00b10.1578 (baseline); budgeted incremental learning contributed 0.1704 to F1; feedback mechanisms raised F1 from 0.5845 to 0.7292\u20130.7676",
-    "comments": "Rigorous ablation with StratifiedGroupKFold validation over 25 splits; deception-prioritized approach underperformed; acknowledged limitations: no synergy claims, no zero-day detection, not field-tested on live plant.",
+    "task": "Lightweight closed-loop adaptive intrusion detection for critical infrastructure with regularized logistic regression",
+    "key_results": "Full model F1 = 0.7526 \u00b1 0.1074 vs. static-threshold baseline F1 = 0.5719 \u00b1 0.1578 (p < 0.001); budgeted incremental learning contributed 0.1704 F1; no significant classifier superiority identified",
+    "comments": "Ablation reveals incremental learning dominates; deception-prioritized detection did not outperform random sampling, and claims of zero-day detection readiness are appropriately cautious.",
     "model_io": [
       {
-        "model": "Regularized Logistic Regression with closed-loop feedback",
+        "model": "Logistic Regression with context-aware thresholding, behavioral profiling, error-rate feedback, budget-limited incremental updates",
         "inputs": [
-          "SWaT network traffic (39,919 instances)"
+          "SWaT sensor streams (39,919 instances)"
         ],
         "outputs": [
-          "anomaly class",
-          "confidence score",
-          "behavioral baseline"
+          "binary intrusion classifications",
+          "behavioral baselines",
+          "updated decision thresholds"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Budgeted incremental learning improves anomaly detection F1",
-        "result": "Confirmed; 0.1704 F1 gain from incremental updates"
+        "hypothesis": "Budgeted incremental learning improves F1 over static threshold",
+        "result": "Confirmed; F1 gain of 0.1704 when enabled"
       },
       {
-        "hypothesis": "Deception-derived observations improve detection over random sampling",
-        "result": "Rejected; lost to random sampling on all examined metrics"
+        "hypothesis": "Deception-derived observations improve detection",
+        "result": "Rejected; deception-prioritized proxy underperformed random sampling"
       }
     ]
   },
@@ -602,29 +738,32 @@
     "projectPage": "https://www.nature.com/articles/s41598-026-73957-y",
     "journal": "Scientific Reports",
     "publishedAt": "2026-11-01",
-    "category": "Statistics/Probability",
-    "task": "AI capabilities in HRM and organizational effectiveness via structural equation modeling",
-    "key_results": "Recruitment/performance-management AI \u2192 HR process efficiency; strategic-planning/talent-analytics AI \u2192 decision accuracy; employee engagement AI \u2192 workforce agility; training/development AI and decision accuracy showed no significant associations with HRM effectiveness",
-    "comments": "Cross-sectional survey (n=256) limits causal inference; null findings for training-development AI and decision-accuracy pathways suggest that HR function specificity and organizational context matter more than assumed generality.",
+    "category": "Other",
+    "task": "Unified model of AI capabilities and organizational mechanisms for HRM effectiveness",
+    "key_results": "Recruitment and performance-management AI positively associated with HR process efficiency; strategic planning and talent analytics AI with decision-making accuracy; employee engagement AI with workforce agility; training-development AI showed no significant efficiency effect",
+    "comments": "Resource-Based View + Dynamic Capabilities framework provides theoretical grounding; however, cross-sectional design precludes causal inference and result generalization beyond Saudi Arabia context.",
     "model_io": [
       {
-        "model": "PLS structural equation model (Resource-Based View + Dynamic Capabilities)",
+        "model": "Partial Least Squares SEM with six AI-enabled HRM capabilities",
         "inputs": [
-          "survey responses from 256 HR professionals (Saudi Arabia)"
+          "survey responses (256 HR professionals)",
+          "organizational context"
         ],
         "outputs": [
-          "HRM effectiveness scores",
-          "path coefficients"
+          "HR process efficiency",
+          "decision-making accuracy",
+          "workforce agility",
+          "enhanced HRM effectiveness"
         ]
       }
     ],
     "hypotheses": [
       {
         "hypothesis": "AI in recruitment and performance management improves HR process efficiency",
-        "result": "Confirmed; significant positive association"
+        "result": "Confirmed (p < 0.05)"
       },
       {
-        "hypothesis": "AI in training and development improves HR process efficiency",
+        "hypothesis": "Training and development AI improves process efficiency",
         "result": "Rejected; no significant association"
       }
     ]
@@ -638,25 +777,26 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-11-01",
     "category": "ML Theory",
-    "task": "Multi-task transformer for community service request classification and urgency ranking on edge devices",
-    "key_results": "88.1% macro-F1 and 0.897 NDCG@10; quantized 1.43M-parameter model 77\u00d7 smaller than BERT-base with 1.4pp and 0.015pp trade-offs; 7.6 ms inference on Jetson Xavier, 52.3 ms on Raspberry Pi 4",
-    "comments": "Sophisticated engineering (homoscedastic uncertainty weighting, gradient projection, grouped-query attention, structured pruning+distillation+INT8); cross-region robustness validated; pairwise ranking formulation is clever but evaluation lacks statistical significance testing.",
+    "task": "Lightweight multi-task transformer for joint classification and urgency ranking of community service requests on edge devices",
+    "key_results": "EdgeCSR-Net: 88.1% macro-F1, 0.897 NDCG@10 on 47,832 requests; 1.43M parameters (1.5 MB), 77\u00d7 fewer than BERT-base with only 1.4 macro-F1 loss; inference 7.6 ms on Jetson Xavier NX, 52.3 ms on Raspberry Pi 4B; cross-district robustness (-0.8 macro-F1)",
+    "comments": "Homoscedastic uncertainty weighting elegantly balances multi-task objectives; however, gradient-projection conflict suppression lacks ablation isolating its marginal contribution.",
     "model_io": [
       {
-        "model": "EdgeCSR-Net (depth-wise separable encoder + grouped-query attention)",
+        "model": "EdgeCSR-Net: multi-task transformer with depthwise-separable encoder, grouped-query attention, convolutional positional encoding",
         "inputs": [
-          "textual service requests (47,832 corpus)"
+          "textual community service requests (47,832 corpus)"
         ],
         "outputs": [
           "36-way category classification",
-          "4-level urgency ranking"
+          "4-level urgency ranking",
+          "pairwise comparison scores"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Joint multi-task architecture with compression maintains cross-region robustness",
-        "result": "Confirmed; temporal and leave-one-district-out costs 1.7 and 0.8 F1pp"
+        "hypothesis": "Multi-task joint training with homoscedastic uncertainty weighting outperforms separate pipelines on edge devices",
+        "result": "Confirmed; 88.1% macro-F1 and 0.897 NDCG@10 achieved in 1.5 MB footprint"
       }
     ]
   },
@@ -668,27 +808,28 @@
     "projectPage": "https://www.nature.com/articles/s41598-026-77857-z",
     "journal": "Scientific Reports",
     "publishedAt": "2026-11-01",
-    "category": "Algorithms",
-    "task": "AI-IoT framework for sustainable business operations and intelligent decision management",
-    "key_results": "HLX-DOM model achieved 98.7% accuracy, 98.1% precision, 97.9% recall, 98.0% F1; resource efficiency 92.3%, energy savings 91.8%, sustainability increase 91.8%",
-    "comments": "Strong numerical results on multiple datasets, but 'Upgraded industries' terminology is nonstandard; ablation, sensitivity, and complexity analyses mentioned but not detailed; generalization to real-world cases claimed without specifics.",
+    "category": "Other",
+    "task": "AI-IoT framework for sustainable business operations and intelligent decision management in Industry 4.0",
+    "key_results": "Resource optimization 92.3%, energy savings 91.8%, sustainability improvement 91.8%; HLX-DOM model achieved 98.7% accuracy, 98.1% precision, 97.9% recall, 98.0% F1; outperformed Decision Tree, Random Forest, XGBoost, ANN, single LSTM",
+    "comments": "Strong experimental results on multiple industrial datasets; however, claimed 'scalability and resilience' are validated only via ablation and sensitivity analysis rather than true distributed deployment tests.",
     "model_io": [
       {
-        "model": "HLX-DOM (edge-cloud AI-IoT architecture)",
+        "model": "Edge-cloud HLX-DOM combining AI analytics, IoT data collection, sustainability assessment, intelligent decision support",
         "inputs": [
-          "industrial IoT sensor data",
-          "sustainability parameters"
+          "AI4I Predictive Maintenance, Smart Manufacturing, Appliances Energy, Industry 4.0 Production datasets"
         ],
         "outputs": [
-          "predictive maintenance alerts",
-          "resource optimization commands"
+          "resource efficiency metrics",
+          "energy consumption",
+          "sustainability scores",
+          "predictive maintenance forecasts"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "HLX-DOM outperforms Decision Tree, Random Forest, XGBoost, ANN, LSTM",
-        "result": "Confirmed; 98.7% accuracy vs baselines"
+        "hypothesis": "Integrated AI-IoT framework with sustainability assessment improves operational efficiency",
+        "result": "Confirmed; 92.3% resource optimization achieved"
       }
     ]
   },
@@ -701,26 +842,28 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-11-01",
     "category": "Other",
-    "task": "Industrial cloud platform integrating knowledge graphs and LLMs for manufacturing",
-    "key_results": "40.27% reduction in CAM programming/preparation time; 12.29% reduction in single-piece machining time; functional PHM integration demonstrated",
-    "comments": "Evaluation is case-specific and lacks broader cross-enterprise validation; results are promising but limited to proprietary CAM records and proof-of-concept PHM demonstrations.",
+    "task": "Design cloud platform integrating knowledge graphs and LLMs for manufacturing workflows",
+    "key_results": "Demonstrated 40.27% reduction in CAM programming time and 12.29% in machining time; integrated data acquisition, fault reasoning, and maintenance planning in PHM application",
+    "comments": "Real-world deployment results are promising but limited to case-specific metrics; broader cross-enterprise validation and quantitative PHM benchmarks are needed to substantiate generalizability claims.",
     "model_io": [
       {
-        "model": "Knowledge-model-data-resource operational loop",
+        "model": "Knowledge graph + LLM planning + mechanistic verification loop",
         "inputs": [
+          "CAM records",
           "shop-floor data",
-          "manufacturing CAM records"
+          "machine telemetry"
         ],
         "outputs": [
-          "optimized task plans",
-          "maintenance predictions"
+          "optimized tool paths",
+          "maintenance plans",
+          "execution feedback"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "LLM-assisted planning reduces CAM programming overhead",
-        "result": "Confirmed; 40.27% time reduction on existing records"
+        "hypothesis": "LLM-generated plans validated by mechanistic models improve CAM efficiency",
+        "result": "Confirmed in case study; 40.27% programming time reduction observed"
       }
     ]
   },
@@ -733,14 +876,28 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-11-01",
     "category": "Analysis",
-    "task": "Mathematical modeling and stability analysis of measles spatial spread",
-    "key_results": "Derived R\u2080 using next-generation matrix; identified invasion threshold via linear stability; long-wavelength analysis characterizes slow spatial variation near invasion front",
-    "comments": "Model does not support finite-wavenumber Turing instability, limiting pattern-theoretic predictions to generic modes rather than provable emergent patterns.",
-    "model_io": [],
+    "task": "Analyze geographic spread of measles with vaccination via reaction-diffusion PDE",
+    "key_results": "Computed basic reproduction number R\u2080 via next-generation matrix; showed zero critical wavenumber precludes finite-wavenumber Turing instability; long-wavelength analysis characterizes invasion front dynamics",
+    "comments": "Thorough mathematical consistency check showing common-diffusion formulation cannot generate Turing patterns is valuable; numerical validation of spatial propagation effects would strengthen claims.",
+    "model_io": [
+      {
+        "model": "Reaction-diffusion SVEIR PDE system",
+        "inputs": [
+          "vaccination rate",
+          "vaccine efficacy",
+          "transmission intensity",
+          "initial spatial distribution"
+        ],
+        "outputs": [
+          "spatial disease prevalence over time",
+          "invasion front profile"
+        ]
+      }
+    ],
     "hypotheses": [
       {
-        "hypothesis": "Common-diffusion formulation supports finite-wavenumber Turing instability",
-        "result": "Rejected; no Turing instability observed"
+        "hypothesis": "Finite-wavenumber Turing instability occurs in common-diffusion formulation",
+        "result": "Rejected; zero critical wavenumber precludes such patterns"
       }
     ]
   },
@@ -753,27 +910,27 @@
     "journal": "Communications Physics",
     "publishedAt": "2026-11-01",
     "category": "Optics/Photonics",
-    "task": "Broadband microwave sensing via spatial multiplexing with Rydberg atoms",
-    "key_results": "210 MHz instantaneous bandwidth with 326.6 nVcm\u22121Hz\u22121/2 sensitivity; 160 MHz tuning range maintained across 21-line microwave frequency comb",
-    "comments": "Elegant use of Stark shifts to overcome coherence-time limitations, though full simultaneous operation across bandwidth requires parallel readout of all channels.",
+    "task": "Broadband microwave detection via Rydberg atom spatial multiplexing",
+    "key_results": "210 MHz instantaneous bandwidth with 326.6 nVcm\u207b\u00b9Hz\u207b\u00b9/\u00b2 sensitivity; 160 MHz tuning range maintained across 21-line microwave frequency comb",
+    "comments": "Clever use of Stark shifts to create independent frequency channels, though full simultaneous operation requires yet-to-be-demonstrated parallel readout of all channels.",
     "model_io": [
       {
-        "model": "Rydberg vapor cell array with Stark comb heterodyne receiver",
+        "model": "Rydberg vapor cell array with Stark comb receiver",
         "inputs": [
-          "microwave signal",
+          "microwave signal (variable frequency)",
           "position-dependent Stark field",
           "21-line microwave frequency comb"
         ],
         "outputs": [
-          "channelized frequency-selective detection",
-          "broadband microwave spectrum"
+          "heterodyne detection signals",
+          "receiver sensitivity (nVcm\u207b\u00b9Hz\u207b\u00b9/\u00b2)"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Spatial multiplexing via Stark shifts can overcome instantaneous bandwidth limits of atomic coherence time",
-        "result": "Confirmed: 210 MHz bandwidth achieved with maintained sensitivity despite frequency tuning"
+        "hypothesis": "Spatial multiplexing via Stark-shifted channels overcomes atomic coherence time limitation on bandwidth",
+        "result": "Confirmed: 210 MHz instantaneous bandwidth achieved with preserved sensitivity"
       }
     ]
   },
@@ -786,33 +943,32 @@
     "journal": "Nature Portfolio",
     "publishedAt": "2026-11-01",
     "category": "Astrophysics/Cosmology",
-    "task": "Determining space radiation exposure history of meteorite via color center analysis in halite",
-    "key_results": "Blue halite coloration caused by VK-related color centers and sodium colloids from cosmic-ray irradiation; cosmic-ray exposure age ~4 Ma",
-    "comments": "Clever use of color centers as radiation damage records; absence of KCl inclusions and low K content (550\u2013750 ppm) definitively rules out 40K as coloration source.",
+    "task": "Characterizing space radiation exposure history via color centers in meteoritic halite",
+    "key_results": "Blue coloration attributed to VK-related color centers and sodium colloids produced by cosmic-ray irradiation; cosmic-ray exposure age ~4 Ma; K abundances 550\u2013750 ppm rule out \u2074\u2070K decay as primary color source",
+    "comments": "Compelling mineralogical evidence that space radiation, not radioactive decay, produced color centers in SEH 001 halite\u2014establishes halite as a proxy for paleodose assessment in planetary materials.",
     "model_io": [
       {
-        "model": "Blue halite in H5 ordinary chondrite SEH 001",
+        "model": "Halite color-center analysis in H5 chondrite SEH 001",
         "inputs": [
-          "halite crystal samples",
-          "spectroscopic analysis",
-          "K abundance measurements",
-          "cosmic-ray exposure dating"
+          "blue halite crystal sample",
+          "K abundance measurements (550\u2013750 ppm)",
+          "cosmic-ray exposure age dating"
         ],
         "outputs": [
-          "color center identification (VK-related absorptions, Na colloids)",
-          "radiation source determination",
+          "color center composition (VK absorptions, Na colloids)",
+          "irradiation dose estimate",
           "exposure age (~4 Ma)"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "40K radioactive decay is the irradiation source for blue coloration in SEH 001 halite",
-        "result": "Rejected: no KCl inclusions present; K abundances too low compared to other colored halites"
+        "hypothesis": "Radioactive \u2074\u2070K decay produces blue coloration in meteoritic halite via KCl inclusions",
+        "result": "Rejected: SEH 001 halite lacks KCl and shows insufficient K for \u2074\u2070K-driven coloration; space radiation identified as primary agent"
       },
       {
-        "hypothesis": "Color centers were introduced by space radiation during parent-body surface residence and/or transit",
-        "result": "Supported: consistent with low K abundances and cosmic-ray exposure age"
+        "hypothesis": "Space radiation during parent-body residence and Earth transit produces and preserves lattice damage in halite",
+        "result": "Confirmed: color centers consistent with cosmic-ray exposure over ~4 Ma timescale"
       }
     ]
   }
