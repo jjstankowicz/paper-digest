@@ -695825,5 +695825,894 @@
         "result": "Confirmed; geometry-dependent electronic behavior demonstrated"
       }
     ]
+  },
+  "hf:2610.37481": {
+    "category": "LLM/Reasoning",
+    "task": "Identify fine-tuning data causing safety degradation in LLMs",
+    "key_results": "SimpleLoRIF achieves AUC 0.865 identifying misaligned data; SafeTulu reduces GCG attack success by up to 22% while preserving capability",
+    "comments": "Gradient-based filtering is practical and scalable, but the connection between gradient alignment and actual harm remains correlational rather than causal.",
+    "model_io": [
+      {
+        "model": "SimpleLoRIF (gradient embedding method)",
+        "inputs": [
+          "fine-tuning dataset",
+          "transformer model"
+        ],
+        "outputs": [
+          "gradient embeddings",
+          "safety risk scores"
+        ]
+      },
+      {
+        "model": "SafeTulu (Tulu 3 variant)",
+        "inputs": [
+          "filtered training data"
+        ],
+        "outputs": [
+          "language model weights"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Gradient alignment with unsafe behavior identifies safety-degrading training examples",
+        "result": "Confirmed: AUC 0.865 on misaligned models; 22% GCG attack reduction"
+      },
+      {
+        "hypothesis": "Removing top 20% gradient-aligned examples preserves model capability",
+        "result": "Confirmed: SafeTulu maintains or improves capability while reducing attacks"
+      }
+    ]
+  },
+  "hf:2610.40488": {
+    "category": "Agents/RL",
+    "task": "Evaluate research agents' judgment in proposing and ranking early-stage experiments",
+    "key_results": "194 of 415 proposed MVEs are sound and valuable; agents' rankings marginally outperform random but not first-experiment baseline",
+    "comments": "The null result\u2014that agent rankings don't meaningfully improve experiment selection\u2014suggests current frontier models lack substantive research taste despite producing individually sound proposals.",
+    "model_io": [
+      {
+        "model": "Frontier LLMs (6 models as research agents)",
+        "inputs": [
+          "NLP research papers"
+        ],
+        "outputs": [
+          "minimum viable experiments (MVEs)",
+          "forecasts",
+          "rankings"
+        ]
+      },
+      {
+        "model": "Human auditors",
+        "inputs": [
+          "MVE outcomes"
+        ],
+        "outputs": [
+          "quality judgments (sound, valuable, novel, obvious)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Research agents' experiment rankings improve selection over baseline",
+        "result": "Partially rejected: first-agent choice beats random but not first-written experiment"
+      },
+      {
+        "hypothesis": "Team agents produce higher-quality rankings than individual agents",
+        "result": "Rejected: teams cost more without clear quality improvement"
+      },
+      {
+        "hypothesis": "Agent forecasts outperform fresh model instances on same paper",
+        "result": "Rejected: no measurable improvement over baseline forecasts"
+      }
+    ]
+  },
+  "hf:2610.35850": {
+    "category": "Vision",
+    "task": "One-step action generation for autonomous driving and embodied control",
+    "key_results": "OSWAM achieves 3\u00d7 speedup over multi-step baselines (40ms latency on RTX 5090) with comparable or better action quality",
+    "comments": "Using imagination tokens as structured priors is clever, but generalization to novel environments and the transferability of privileged information distillation remain unclear.",
+    "model_io": [
+      {
+        "model": "OSWAM (diffusion-based world action model)",
+        "inputs": [
+          "visual observations",
+          "imagination tokens",
+          "future conditioning"
+        ],
+        "outputs": [
+          "action sequences"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Structured action priors via imagination tokens enable one-step diffusion without quality loss",
+        "result": "Confirmed: single step achieves parity with tens-of-step baselines"
+      },
+      {
+        "hypothesis": "Privileged information distillation improves future-aware action generation",
+        "result": "Confirmed: enhances action quality in both autonomous driving and embodied control"
+      }
+    ]
+  },
+  "hf:2610.37903": {
+    "category": "LLM/Reasoning",
+    "task": "Build efficient language models via better data, training, and architecture",
+    "key_results": "Logos (10.23B) achieves 52.93 avg benchmark score on ~1/12th median training data; 67.50% on AIME 2025, 63.64% on HMMT Feb 2026",
+    "comments": "The post-hoc analysis of failures (wrong optimizer, n-gram memory shutdown, length reward inversion) is valuable but undermines confidence in the design principles claimed.",
+    "model_io": [
+      {
+        "model": "Praxis (2.94B, 0.46B active per pass)",
+        "inputs": [
+          "804.76B pretraining tokens",
+          "18B context extension",
+          "200B supervised fine-tuning"
+        ],
+        "outputs": [
+          "language model"
+        ]
+      },
+      {
+        "model": "Logos (10.23B, 1.18B active per pass)",
+        "inputs": [
+          "1.02T total tokens"
+        ],
+        "outputs": [
+          "language model"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Hybrid Mamba-2 and attention MoE with double-pass per token achieves Pareto-optimal efficiency",
+        "result": "Confirmed: competitive benchmarks with fewer active parameters than beating models"
+      },
+      {
+        "hypothesis": "Better data and training methods substitute for parameter count",
+        "result": "Partially confirmed: Logos is data-efficient but weak at code, instruction-following, long context"
+      }
+    ]
+  },
+  "hf:2610.42010": {
+    "category": "LLM/Reasoning",
+    "task": "Predict Turkish conversation turn-taking from text",
+    "key_results": "TurnTurk-GPT outperforms multilingual detector under both recording-disjoint and speaker-disjoint eval; suffix removal reduces AP by 44%, identifying verb-final morphology as cue",
+    "comments": "The morphological finding is linguistically interesting, but zero-shot performance collapse on unseen speakers and near-chance performance during pauses suggest limited practical robustness.",
+    "model_io": [
+      {
+        "model": "TurnTurk-GPT (fine-tuned Turkish GPT-2)",
+        "inputs": [
+          "unpunctuated, lower-cased dialogue text"
+        ],
+        "outputs": [
+          "turn-taking predictions (word-level decision points)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "TurnGPT objective fine-tuning improves Turkish turn-taking prediction over baselines",
+        "result": "Confirmed: outperforms multilingual detector in speaker-disjoint eval"
+      },
+      {
+        "hypothesis": "Turn-final cue is localized to verb-final morphology in Turkish",
+        "result": "Confirmed: suffix removal costs 44% AP on turn-final words vs. 2% on sentence-internal"
+      },
+      {
+        "hypothesis": "Synthetic dialogue alone suffices for training",
+        "result": "Rejected: synthetic-only model is weakest; real dialogue necessary"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76788-z": {
+    "category": "Cell Signaling",
+    "task": "Clarify ChREBP-HMGB1-Nrf2 pathway role in type-2 diabetes via preoperative autologous blood donation",
+    "key_results": "PABD and modified preservation solution downregulated ChREBP-HMGB1-Nrf2 pathway; improved PBMC apoptosis and viability in T2D patients",
+    "comments": "The proposed mechanism links a preservation technique to molecular pathway modulation, but causality between pathway downregulation and clinical benefit remains to be established.",
+    "model_io": [
+      {
+        "model": "Type-2 diabetes patient PBMCs",
+        "inputs": [
+          "PABD treatment",
+          "modified preservation solution"
+        ],
+        "outputs": [
+          "apoptosis rate",
+          "cell viability",
+          "ChREBP-HMGB1-Nrf2 pathway activity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "PABD and preservation solution improve PBMCs through ChREBP-HMGB1-Nrf2 downregulation",
+        "result": "Pathway downregulation confirmed via western blot and flow cytometry"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76796-z": {
+    "category": "Organelles",
+    "task": "Characterize Plasmodium SEY1 dynamin-like GTPase as essential ER-maintenance protein and drug target",
+    "key_results": "SEY1 is essential in P. falciparum; localizes to ER; conditional knockdown causes ER morphology defects; recombinant P. vivax SEY1 maintains catalytic activity and moderate GTP affinity",
+    "comments": "SEY1 represents a novel druggable target distinct from human atlastins, offering potential for parasite-selective inhibition.",
+    "model_io": [
+      {
+        "model": "P. falciparum and P. vivax",
+        "inputs": [
+          "SEY1 conditional knockdown",
+          "recombinant SEY1 protein"
+        ],
+        "outputs": [
+          "ER morphology",
+          "GTPase activity",
+          "protein dimerization",
+          "GTP binding"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "SEY1 is essential for ER homotypic membrane fusion in Plasmodium",
+        "result": "SEY1 disruption impairs ER morphology; protein maintains catalytic activity in vitro"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-73161-y": {
+    "category": "Structural Prediction",
+    "task": "Uncertainty-aware osteoporosis classification from knee radiographs via entropy-guided ensemble",
+    "key_results": "E-ACW Ensemble achieves 99.2% binary accuracy, 98.7% multi-class accuracy, 99.1% F1-score with substantially lower computational cost than high-capacity ensembles; entropy-guided adaptive confidence weighting enables effective decision-level fusion",
+    "comments": "Rigorous reproducible framework with comprehensive ablations and uncertainty quantification; high reported performance warrants external validation on diverse datasets.",
+    "model_io": [
+      {
+        "model": "Entropy-Guided Adaptive Confidence-Weighted Ensemble (E-ACW)",
+        "inputs": [
+          "preprocessed knee radiographs",
+          "complementary deep feature extractors (EfficientNetB0, MobileNetV2)"
+        ],
+        "outputs": [
+          "osteoporosis class predictions",
+          "predictive uncertainty estimates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Entropy-guided adaptive confidence weighting improves uncertainty-aware fusion for musculoskeletal imaging",
+        "result": "Confirmed; superior performance and efficiency vs fixed-weight ensembles"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77367-y": {
+    "category": "Statistical Methods",
+    "task": "Assess training-corpus overlap constraints on fine-tuned clinical LLM evaluation",
+    "key_results": "Exact-stem overlap >70% in PubMedQA, MedQA, MMLU-Med; on uncontaminated MedXpertQA items, fine-tune gains 5.2 percentage points (P=7.9\u00d710\u207b\u2077) vs originally reported 7.1; ablation shows 70% of improvement from bundled training differences",
+    "comments": "Important methodological critique exposing evaluation protocol vulnerabilities in clinical LLM benchmarking; highlights reproducibility concerns in fine-tuning studies.",
+    "model_io": [
+      {
+        "model": "QLoRA fine-tuned Qwen3-8B vs parent checkpoint",
+        "inputs": [
+          "medical QA benchmarks (PubMedQA, MedQA, MMLU, MedMCQA, MedXpertQA)"
+        ],
+        "outputs": [
+          "benchmark scores",
+          "corpus overlap metrics",
+          "attributable performance gains"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Reported fine-tuning gains reflect training-test overlap rather than true capability improvement",
+        "result": "Partially confirmed; substantial overlap affects multiple benchmarks"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77601-7": {
+    "category": "Statistical Methods",
+    "task": "Large-scale many-objective optimization via population representation learning",
+    "key_results": "MOEA-T achieves improved convergence and diversity on DTLZ, WFG, MaF, CEC 2020 benchmarks (up to 20 objectives, 1000 variables) compared to Pareto/decomposition/reference-vector methods",
+    "comments": "Technically sophisticated but primarily algorithmic optimization contribution; superiority not uniform across all problem instances.",
+    "model_io": [
+      {
+        "model": "Dependency-aware evolutionary optimization framework (MOEA-T)",
+        "inputs": [
+          "candidate solutions",
+          "objective functions"
+        ],
+        "outputs": [
+          "Pareto-optimal solutions",
+          "latent population representations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Population-level structural learning improves large-scale many-objective optimization",
+        "result": "Partially confirmed; improvements on selected benchmarks but not uniform superiority"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78059-3": {
+    "category": "Structural Prediction",
+    "task": "Privacy-preserving automated ANB angle estimation and Cobb angle measurement from radiographs",
+    "key_results": "UNet heatmap regression achieves ANB MAE=0.57\u00b0 on locked test set, 92.68% class accuracy, 96.34% SDR@2.0mm; exploratory Cobb angle extension achieves MAE=0.78\u00b0 (n=36); full de-identification and geometric verification pipeline implemented",
+    "comments": "Rigorous privacy-compliant pipeline with geometric validation; Cobb angle findings preliminary and warrant dedicated validation.",
+    "model_io": [
+      {
+        "model": "UNet-based heatmap regression for landmark detection",
+        "inputs": [
+          "anonymized lateral cephalometric radiographs (n=1282)",
+          "expert consensus landmarks"
+        ],
+        "outputs": [
+          "Sella/Nasion/A-point/B-point localization",
+          "ANB angle estimates",
+          "Cobb angle (exploratory)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Privacy-preserved deep learning enables accurate automated ANB estimation",
+        "result": "Confirmed; model achieves clinically acceptable accuracy with HIPAA compliance"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78292-w": {
+    "category": "Proteomics",
+    "task": "Identify and validate serum biomarkers for CRC diagnosis and prognosis",
+    "key_results": "ROBO4 and VCAM-1 achieve AUCs of 0.886 and 0.871 respectively, superior to CA199 (0.757) and CEA (0.808); four-marker nomogram achieves AUC 0.969; high expression correlates with poor overall survival",
+    "comments": "Solid proteomics validation with large cohort (n=300) and independent verification; clinical utility requires prospective studies.",
+    "model_io": [
+      {
+        "model": "Data-independent acquisition (DIA) proteomics + ELISA validation",
+        "inputs": [
+          "serum samples (CRC, adenoma, control)"
+        ],
+        "outputs": [
+          "differentially expressed proteins",
+          "diagnostic AUCs",
+          "prognostic associations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "ROBO4 and VCAM-1 serve as superior biomarkers compared to conventional markers",
+        "result": "Confirmed; both show significantly higher AUCs and prognostic value"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78645-5": {
+    "category": "Structural Prediction",
+    "task": "Design 5-HT2A receptor ligands with specified mechanism via mechanism-guided generative chemistry",
+    "key_results": "Generated 500 agonist-like and 500 antagonist-like molecules; antagonist candidates show higher affinity/confidence, agonist candidates show higher diversity; campaign-by-context interactions at S242, L229, L362 identified via MM-GBSA/contact analysis",
+    "comments": "Sophisticated integrative workflow combining multiple ML approaches; generated compounds remain computational hypotheses requiring experimental functional validation.",
+    "model_io": [
+      {
+        "model": "Mechanism-guided generative chemistry pipeline",
+        "inputs": [
+          "ChEMBL data (8,949 measurements, 6,252 compounds)",
+          "binding affinity QSAR",
+          "functional assay labels"
+        ],
+        "outputs": [
+          "agonist-like ligands",
+          "antagonist-like ligands",
+          "docking poses",
+          "contact-informed predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Distinct chemical regimes support agonist vs antagonist mechanisms for 5-HT2A",
+        "result": "Confirmed; campaign generates mechanistically divergent populations"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-74967-6": {
+    "category": "ML Theory",
+    "task": "IGBT RUL prediction via TD-MSEFormer with temporal dependency and multi-scale expertise",
+    "key_results": "Best overall RUL accuracy on NASA IGBT Aging Dataset; superior generalization and stable degradation representation",
+    "comments": "Captures stage-dependent degradation, mixed short/long-term dependencies; validated on complex nonlinear aging.",
+    "model_io": [
+      {
+        "model": "TD-MSEFormer (SDCM, MSTEB, TDA blocks)",
+        "inputs": [
+          "IGBT degradation sequences"
+        ],
+        "outputs": [
+          "RUL prediction",
+          "degradation representation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Sequential dependency calibration + multi-scale temporal expertise improves nonlinear degradation capture",
+        "result": "Outperforms other methods; superior accuracy, generalization, and representation stability"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76621-7": {
+    "category": "Algorithms",
+    "task": "Quantum-inspired semantic-energy-aware adaptive learning for cloud-edge AI (SEA-QAL)",
+    "key_results": "Improved sustainability indicators (reduced energy, communication); comparable/enhanced prediction accuracy vs. benchmarks across perception, sensor, IoT-edge workloads",
+    "comments": "Integrates semantic utility with QUBO via quantum-inspired annealing; closed-loop sustainability controller.",
+    "model_io": [
+      {
+        "model": "SEA-QAL (semantic evaluation + QUBO + quantum-inspired annealing)",
+        "inputs": [
+          "distributed model updates",
+          "energy costs",
+          "semantic utility indicators (gradient sensitivity, uncertainty, attention)"
+        ],
+        "outputs": [
+          "selected updates",
+          "resource allocation",
+          "model accuracy",
+          "energy consumption"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Semantic utility in QUBO formulation reduces unnecessary computation and communication while maintaining model generalization",
+        "result": "Improved sustainability metrics; comparable/better accuracy vs. benchmarks on cloud-edge workloads"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76793-2": {
+    "category": "Statistics/Probability",
+    "task": "Operator reliability assessment for thermal spraying via extended TESEO and HEART",
+    "key_results": "Framework expanded with 4 novel factors (process stability, physical impacts, material variability, operational dynamics); improved error probability assessment",
+    "comments": "Bridges human reliability assessment and occupational safety; domain-specific factors enhance model accuracy for thermal spraying.",
+    "model_io": [
+      {
+        "model": "Extended TESEO + HEART human reliability model",
+        "inputs": [
+          "work environment conditions",
+          "task characteristics",
+          "occupational hazards"
+        ],
+        "outputs": [
+          "operator error probability",
+          "risk scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Additional domain-specific factors (process stability, impact intensity, material variability, operational dynamics) improve error probability assessment",
+        "result": "Model more comprehensively reflects thermal spraying process; supports training and competence development"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76813-1": {
+    "category": "ML Theory",
+    "task": "Heterogeneous treatment effect estimation for loss/gain framing in retirement savings (causal ML)",
+    "key_results": "25% most loss-responsive: +9.4pp conversion vs. gain; 25% most gain-responsive: -8.4pp conversion vs. gain; personalized targeting increases participation 51% (4.53% \u2192 6.86%), savings 18% (\u20ac2062 \u2192 \u20ac2442)",
+    "comments": "Large-scale RCT (N=22,919) validated in independent experiment (N=18,288); causal machine learning estimates heterogeneous effects.",
+    "model_io": [
+      {
+        "model": "Causal ML heterogeneous treatment effect estimator",
+        "inputs": [
+          "randomized loss/gain-framed reminders",
+          "socioeconomic covariates"
+        ],
+        "outputs": [
+          "individual-level treatment effects",
+          "conversion probability",
+          "savings amount"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Heterogeneous response to loss vs. gain framing; personalized targeting improves aggregate retirement savings",
+        "result": "25% loss-responsive gain +9.4pp, 25% gain-responsive lose -8.4pp; personalized policy \u2192 51% participation, 18% savings gains"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77387-8": {
+    "category": "ML Theory",
+    "task": "Explainability of attention-based deep learning for thermal analysis via Entropy-Guided Attention Filtering",
+    "key_results": "DAUC 0.281, IAUC 0.824, IoU 0.801, 91.7% localization accuracy; consistent stability under noise across CIFAR-10, ISIC, SST-2",
+    "comments": "Addresses noisy, spatially inconsistent explanations; framework works with multiple architectures (ViT, attention-ResNet50, ConvNeXtV2).",
+    "model_io": [
+      {
+        "model": "EGAF (transformer + spatial attention + entropy filtering + multi-layer aggregation)",
+        "inputs": [
+          "images (CIFAR-10, ISIC, text embeddings SST-2)"
+        ],
+        "outputs": [
+          "attention maps",
+          "localization masks"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Entropy-guided filtering + multi-layer aggregation improves attention explanation fidelity and noise robustness",
+        "result": "Highest explainability, fidelity, localization; lowest noise; consistent under perturbations across diverse datasets"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77443-3": {
+    "category": "Other",
+    "task": "Climate change impact on Iranian economic sectors via dynamic input-output model",
+    "key_results": "Output growth reduced from 2.7% to 1.6-2.0%; agriculture down 1-2% annually; fuzzy optimization reduces losses by ~22%",
+    "comments": "Heterogeneous sectoral effects; integration of fuzzy optimization for adaptive resource reallocation.",
+    "model_io": [
+      {
+        "model": "Dynamic input-output model with fuzzy optimization",
+        "inputs": [
+          "climate scenarios",
+          "sectoral interdependencies",
+          "final demand"
+        ],
+        "outputs": [
+          "sectoral output growth",
+          "total economic output",
+          "policy adjustments"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Sectoral resource reallocation, esp. toward services, can partially mitigate climate-induced losses",
+        "result": "Fuzzy optimization reduces output losses by ~22%; output gains ~0.4% annually with 10% demand increase"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77763-4": {
+    "category": "Statistics/Probability",
+    "task": "Bounded lifetime modeling via Truncated Copoun distribution",
+    "key_results": "TCpn accommodates U/J-shaped densities; outperforms competing models on Boeing 720 and polyester fiber data by AIC/BIC/CAIC",
+    "comments": "Novel flexible two-parameter model on unit interval; closed-form properties and MLE estimation.",
+    "model_io": [
+      {
+        "model": "Truncated Copoun (TCpn) distribution with MLE",
+        "inputs": [
+          "bounded lifetime samples"
+        ],
+        "outputs": [
+          "parameter estimates",
+          "density/hazard functions",
+          "goodness-of-fit metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "TCpn flexibility in shape (U/J-shaped) improves fit for diverse engineering failure modes",
+        "result": "Superior AIC/BIC/CAIC and KS test performance vs. competing models"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77949-w": {
+    "category": "Statistics/Probability",
+    "task": "Adaptive parameter estimation and life-distribution selection for censored engine data",
+    "key_results": "Entropy-weighted multi-criteria selection with adaptive lookup rule reduces regret; framework applied to PW4000-100 bearing data",
+    "comments": "Engineering-oriented framework handling mixed censoring types; entropy weighting avoids manual criterion specification.",
+    "model_io": [
+      {
+        "model": "Distribution screening + adaptive estimator selection",
+        "inputs": [
+          "complete, right/left/interval-censored observations"
+        ],
+        "outputs": [
+          "selected distribution family",
+          "parameter estimates",
+          "reliability metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Entropy-derived weighting of AIC/BIC/CC avoids manual tuning while matching performance",
+        "result": "Comparable performance to single-criterion approaches; 25-cell adaptive lookup reduces NMSE regret"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78964-7": {
+    "category": "Algorithms",
+    "task": "Comparative assessment of VSC DC-link voltage regulation controllers",
+    "key_results": "ACO/PSO show fastest settling times; LSTM/FLC exhibit lower overshoot but longer settling; trade-offs between speed and voltage deviation",
+    "comments": "Comprehensive evaluation across classical, metaheuristic, and AI methods; domain-specific performance under diverse faults.",
+    "model_io": [
+      {
+        "model": "SO, PP, ACO, PSO, LSTM, FLC controllers",
+        "inputs": [
+          "load changes",
+          "power-reference variations",
+          "reactive-power changes",
+          "mode transitions",
+          "terminal outage"
+        ],
+        "outputs": [
+          "rise time",
+          "peak time",
+          "settling time",
+          "overshoot",
+          "DC-link voltage"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Classical/metaheuristic controllers achieve faster step response than AI-based",
+        "result": "ACO/PSO shortest settling times; LSTM/FLC lower overshoot but slower response"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-75743-2": {
+    "category": "Condensed Matter",
+    "task": "Investigate metamaterial engineering effects on TiN superconductivity",
+    "key_results": "TiN/dielectric nanolaminates show enhanced Tc compared to thin single-layer films (<30 nm) but do not exceed bulk TiN Tc; anisotropic single-layer behavior dominates over layered superconductor picture",
+    "comments": "Results suggest metamaterial enhancement mechanisms differ for TiN versus other systems; disorder effects are significant for nanometer-scale films.",
+    "model_io": [
+      {
+        "model": "TiN and TiN/dielectric nanolaminate thin films",
+        "inputs": [
+          "film thickness",
+          "dielectric layer type (TiO2, AlN)",
+          "deposition via PEALD"
+        ],
+        "outputs": [
+          "superconducting transition temperature Tc",
+          "disorder effects"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Metamaterial approach enhances Tc via hyperbolic mode engineering",
+        "result": "Tc enhancement observed versus thin films, but anisotropic single-layer behavior dominates; no bulk-exceeding Tc achieved"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78629-5": {
+    "category": "Astrophysics/Cosmology",
+    "task": "Calculate thermonuclear reaction rate for d(\u03b1,\u03b3)\u2076Li in primordial nucleosynthesis",
+    "key_results": "CEFT reaction rate at next-to-leading order computed over T = 10\u2076\u201310\u00b9\u2070 K; follows NACRE II temperature dependence broadly; shows deviation from LUNA rate",
+    "comments": "Systematic EFT treatment with constrained low-energy constants provides useful consistency test for primordial \u2076Li production models.",
+    "model_io": [
+      {
+        "model": "Cluster effective field theory (CEFT) for d-\u03b1 system",
+        "inputs": [
+          "deuteron",
+          "alpha particle",
+          "temperature range 10\u2076\u201310\u00b9\u2070 K",
+          "E1/E2 transition amplitudes"
+        ],
+        "outputs": [
+          "thermonuclear reaction rate",
+          "astrophysical S-factor"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "CEFT with constrained low-energy constants predicts accurate d(\u03b1,\u03b3)\u2076Li rate",
+        "result": "Rate follows NACRE II trend; validates CEFT capture framework without refitting"
+      }
+    ]
+  },
+  "nature:10.1038/s42005-026-02940-w": {
+    "category": "Applied Physics",
+    "task": "Optimize adiabatic annealing strategies for classical Ising machines",
+    "key_results": "Hybrid classical adiabatic annealing shows only marginal performance gains; saddle-node bifurcations identified as limiting mechanism",
+    "comments": "While theoretically motivated by quantum analogues, practical benefits appear limited compared to simpler existing methods.",
+    "model_io": [
+      {
+        "model": "Analog Ising machine with gradual Hamiltonian transformation",
+        "inputs": [
+          "initial easily-solvable Hamiltonian",
+          "target Hamiltonian"
+        ],
+        "outputs": [
+          "low-energy configurations",
+          "convergence trajectory"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Classical adiabatic annealing improves navigation of rugged energy landscapes",
+        "result": "Marginal improvements only; bifurcations limit effectiveness"
+      }
+    ]
+  },
+  "nature:10.1038/s44333-026-00134-z": {
+    "category": "Other",
+    "task": "Characterize hierarchical organization of pedestrian mobility across cities",
+    "key_results": "Pedestrian flows exhibit hierarchical organization in both Sydney and NYC despite urban form differences; small fraction of locations account for disproportionate movement; model transferability preserved across cities",
+    "comments": "Demand-inference framework reveals universal structural regularities in human walking patterns, enabling practical flow estimation in data-scarce urban settings.",
+    "model_io": [
+      {
+        "model": "Transferable behavioral model for pedestrian flow",
+        "inputs": [
+          "origin city (Brisbane, Seattle)",
+          "behavioral model parameters",
+          "target city observed counts (Sydney, NYC)"
+        ],
+        "outputs": [
+          "pedestrian flow estimates",
+          "location hierarchy",
+          "spatial interaction patterns"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Pedestrian flow hierarchies transfer across cities with structural compatibility",
+        "result": "Confirmed: hierarchical organization preserved; magnitude adjustments via calibration maintain structural regularity"
+      }
+    ]
+  },
+  "nature:10.1038/s44335-026-00103-2": {
+    "category": "Applied Physics",
+    "task": "Accelerate thermodynamic matrix computation via optimized digital initialization",
+    "key_results": "Mpemba-inspired initialization suppresses slow relaxation modes; predictable speedup determined by spectrum of encoded matrix; quadratic energy landscape analysis yields analytic expressions for thermalization acceleration",
+    "comments": "Hybrid digital-thermodynamic approach leverages spectral structure of Fokker-Planck operator; practical speedups depend on system parameters but offer systematic acceleration strategy.",
+    "model_io": [
+      {
+        "model": "Overdamped Langevin dynamics for quadratic energy landscape",
+        "inputs": [
+          "digitally optimized initialization (covariance)",
+          "quadratic Hamiltonian"
+        ],
+        "outputs": [
+          "system relaxation trajectory",
+          "matrix operation result",
+          "thermalization time"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Optimized initialization inspired by Mpemba effect accelerates thermodynamic computation",
+        "result": "Confirmed: spectral analysis identifies optimal initial conditions; predictable speedup achieved for matrix inversion and determinant computation"
+      }
+    ]
+  },
+  "nature:10.1038/s44335-026-00105-0": {
+    "category": "Applied Physics",
+    "task": "Train brain-inspired iontronic networks for nonlinear computation",
+    "key_results": "Microfluidic networks with memristive iontronic synapses perform input-output mapping and linear regression; multimodal (electrical, chemical, mechanical) responsiveness enables reconfiguration for different tasks",
+    "comments": "Physical computing paradigm leveraging ionic relaxation as forward pass shows feasibility but lacks quantitative performance metrics versus conventional networks.",
+    "model_io": [
+      {
+        "model": "Microfluidic network with conical electrolyte-filled channel synapses",
+        "inputs": [
+          "electrical signal",
+          "chemical gradient",
+          "mechanical pressure"
+        ],
+        "outputs": [
+          "channel conductance",
+          "ionic relaxation dynamics",
+          "network output"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Small iontronic networks can learn nonlinear tasks via hybrid digital-physical training",
+        "result": "Confirmed: gradient descent + physical relaxation achieves input-output mapping and regression"
+      }
+    ]
+  },
+  "nature:10.1038/s44335-026-00106-z": {
+    "category": "Applied Physics",
+    "task": "Optimize transistor and interconnect materials for cryogenic CMOS computing",
+    "key_results": "Material-optimized cryogenic 2 nm GAA technology achieves 3\u00d7 TOPS increase, 7.7\u00d7 TOPS/W improvement, and 23\u00d7 TOPS\u00b2/W efficiency gain; work-function tuning translates SS improvements to ON-current; superconducting interconnects eliminate resistive bottlenecks",
+    "comments": "Dual optimization at device (work function) and system (superconducting interconnects) levels essential for realizing cryogenic CMOS advantages; substantial AI accelerator speedups demonstrated.",
+    "model_io": [
+      {
+        "model": "Cryogenic-aware 2 nm gate-all-around nanosheet CMOS",
+        "inputs": [
+          "transistor work function (material-optimized)",
+          "interconnect material (superconducting/normal)",
+          "temperature (cryogenic)"
+        ],
+        "outputs": [
+          "ON current",
+          "subthreshold slope",
+          "TOPS",
+          "TOPS/W",
+          "TOPS\u00b2/W efficiency"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Cryogenic operation alone provides insufficient speedup without material optimization",
+        "result": "Confirmed: coordinated transistor work-function and superconducting interconnect optimization required for full benefit realization"
+      }
+    ]
+  },
+  "nature:10.1038/s44459-026-00092-5": {
+    "category": "Other",
+    "task": "Develop physics-informed neural framework for wireless digital twin construction",
+    "key_results": "Neural models guided by Maxwell's equations achieve high-quality EM reconstruction and robust generalization across changing environments; physics-constrained learning preserves essential scene parameters (geometry, material properties, propagation)",
+    "comments": "Principled approach coupling deep learning with classical EM theory enables data-efficient wireless digital twins; strong synergy between physics and AI demonstrated.",
+    "model_io": [
+      {
+        "model": "Physics-informed neural network for Maxwell's equations",
+        "inputs": [
+          "EM field data",
+          "environmental geometry",
+          "material properties",
+          "Maxwell PDE constraints"
+        ],
+        "outputs": [
+          "reconstructed EM fields",
+          "scene parameters",
+          "propagation mechanisms"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Physics-informed neural learning of Maxwell equations enables robust wireless digital twins",
+        "result": "Confirmed: high-quality reconstruction achieved with generalization across varying environments via intrinsic parameter learning"
+      }
+    ]
+  },
+  "nature:10.1038/s44459-026-00099-y": {
+    "category": "Applied Physics",
+    "task": "Develop 2.4 GHz MIMO backscatter systems using large-area electronics for IoT",
+    "key_results": "ZnO TFT-based 4\u00d74 MIMO reflector and QPSK backscatter transmitter demonstrated at 2.4 GHz on meter-scale flexible substrates; independent input/output beamsteering achieved",
+    "comments": "Breakthrough extending LAE into gigahertz regime via resonant switch design enables scalable, monolithic integration for massive IoT deployment.",
+    "model_io": [
+      {
+        "model": "Large-area electronics TFT-based backscatter system",
+        "inputs": [
+          "ZnO TFT resonant switch",
+          "switch matrix architecture",
+          "incidence signal"
+        ],
+        "outputs": [
+          "backscattered signal",
+          "beam direction (input/output)",
+          "QPSK modulation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LAE can achieve gigahertz-regime MIMO beamforming via resonant switch design",
+        "result": "Confirmed: 2.4 GHz operation demonstrated; scalable, monolithic integration on flexible substrates realized"
+      }
+    ]
+  },
+  "nature:10.1038/s44459-026-00101-7": {
+    "category": "Optics/Photonics",
+    "task": "Design dual-resonant circular dichroism metasurface with polarization selectivity",
+    "key_results": "Bilayer chiral metasurface produces RHCP CD maxima of 0.72 and 0.75 at 9.672 and 10.636 GHz; eight polarization domains; CD null at 10.3 GHz; equivalent-circuit model reproduces broadband response",
+    "comments": "Unequal-arm and rotational coupling geometry enables simultaneous dual-resonance tuning; validates passive circular-polarization-selective approach for receivers and CFRP sensing.",
+    "model_io": [
+      {
+        "model": "Electrically thin bilayer chiral metasurface (11\u00d711 mm\u00b2 unit cell)",
+        "inputs": [
+          "linear polarization",
+          "X-band frequency (9\u201311 GHz)"
+        ],
+        "outputs": [
+          "RHCP/LHCP transmission",
+          "circular dichroism",
+          "polarization selectivity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Front-back rotational transformation and unequal terminal paths produce dual-resonant circular dichroism",
+        "result": "Confirmed: interlayer coupling and mixed-mode interactions yield two independent CD maxima within single window"
+      }
+    ]
   }
 }
