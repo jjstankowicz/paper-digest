@@ -699781,5 +699781,868 @@
         "result": "Confirmed\u2014phonon renormalization maximized at optimal doping, directly correlating with superconducting dome"
       }
     ]
+  },
+  "hf:2610.38623": {
+    "category": "LLM/Reasoning",
+    "task": "Assessing and improving cross-primitive consistency in LLM-based decision-making",
+    "key_results": "Cross-primitive discrepancies predict decision failure with ROC-AUC 0.91; CPRC reduces inconsistency by 58.57% and improves accuracy by +2.97%",
+    "comments": "Addresses an important but underexplored reliability concern in LLM querying, though the practical impact depends on how prevalent multi-primitive queries are in real applications.",
+    "model_io": [
+      {
+        "model": "Jev (three sizes)",
+        "inputs": [
+          "typed query primitives (binary, multiple-choice)"
+        ],
+        "outputs": [
+          "decisions across different query formats"
+        ]
+      },
+      {
+        "model": "Cross-Primitive Residual Calibrator (CPRC)",
+        "inputs": [
+          "frozen Jev backbone outputs"
+        ],
+        "outputs": [
+          "calibrated decisions with improved consistency"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Cross-primitive inconsistencies follow systematic patterns and predict decision failure",
+        "result": "Confirmed with ROC-AUC 0.91"
+      },
+      {
+        "hypothesis": "Lightweight residual calibration can improve both accuracy and consistency",
+        "result": "Confirmed with 58.57% inconsistency reduction and +2.97% accuracy gain"
+      }
+    ]
+  },
+  "hf:2610.35219": {
+    "category": "Agents/RL",
+    "task": "Multi-agent collaborative reasoning with dynamic relay topology",
+    "key_results": "+3.3% on MathVista, +3.9% on MMStar; 6.0x less token overhead than group-thinking strategies",
+    "comments": "Novel relay topology is intuitive and empirically sound, though the confidence-guided mechanism appears relatively straightforward and may benefit from ablation studies on confidence calibration.",
+    "model_io": [
+      {
+        "model": "Multi-Agent Confidence-guided Relay (MACR)",
+        "inputs": [
+          "reasoning trajectory from previous agent",
+          "current agent confidence"
+        ],
+        "outputs": [
+          "refined reasoning trajectory",
+          "relay decision"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Relay thinking with confidence-guided triggering outperforms independent group thinking",
+        "result": "Confirmed on four benchmarks with gains up to +3.9% and 6.0x token reduction"
+      },
+      {
+        "hypothesis": "Heterogeneous agents benefit from progressive integration in relay topology",
+        "result": "Confirmed through analysis showing complementary insights across reasoning stages"
+      }
+    ]
+  },
+  "hf:2611.02112": {
+    "category": "LLM/Reasoning",
+    "task": "On-policy distillation using ordinal supervision instead of probability matching",
+    "key_results": "Outperforms OPD on all six teacher-student pairs by up to 2.9 points average, with gains up to 5.6 points on AIME25",
+    "comments": "Elegant insight that ranking rather than probability values carries transferable knowledge; temperature-invariance is a practical advantage though the mechanism warrants deeper theoretical analysis.",
+    "model_io": [
+      {
+        "model": "Order-Only On-Policy Distillation (O\u00b3PD)",
+        "inputs": [
+          "student-generated prefix",
+          "teacher's top-K token ordering"
+        ],
+        "outputs": [
+          "student predictions respecting teacher token ordering"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Teacher token ordering carries sufficient knowledge for effective distillation",
+        "result": "Confirmed: O\u00b3PD outperforms probability-matching OPD across all pairs"
+      },
+      {
+        "hypothesis": "Ordinal supervision is invariant to teacher temperature and requires no tuning",
+        "result": "Confirmed by temperature-invariant design"
+      },
+      {
+        "hypothesis": "Departing from teacher probabilities while preserving ranking yields stronger students",
+        "result": "Confirmed: O\u00b3PD reproduces ranking more faithfully than OPD despite larger probability divergence"
+      }
+    ]
+  },
+  "hf:2610.32878": {
+    "category": "Systems",
+    "task": "Layer-wise SVD-based LLM compression with improved rank allocation and decomposition",
+    "key_results": "Zero-shot accuracy gains up to 4.8 p.p.; KFAC-SVD achieves 15% average perplexity improvement; scales to 70B parameters",
+    "comments": "Addresses two key SVD compression bottlenecks with principled solutions (ILP-based rank allocation, token-wise Fisher statistics), though computational cost of the search procedure could be better characterized.",
+    "model_io": [
+      {
+        "model": "Layer-wise Error Modeling Search (LEMS)",
+        "inputs": [
+          "LLM layer importance",
+          "error propagation bias"
+        ],
+        "outputs": [
+          "optimal rank allocation via ILP"
+        ]
+      },
+      {
+        "model": "KFAC-SVD",
+        "inputs": [
+          "token-wise statistics",
+          "LLM weights"
+        ],
+        "outputs": [
+          "low-rank decomposed weights"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Layer-wise error modeling with propagation bias enables better rank allocation than global approaches",
+        "result": "Confirmed: LEMS outperforms existing strategies with up to 4.8 p.p. accuracy gains"
+      },
+      {
+        "hypothesis": "Token-wise Fisher statistics mitigate rank collapse compared to global Fisher",
+        "result": "Confirmed: KFAC-SVD achieves 15% average perplexity improvement"
+      }
+    ]
+  },
+  "hf:2611.03097": {
+    "category": "Vision",
+    "task": "End-to-end multimodal deep research agent using rendered document pages instead of OCR text",
+    "key_results": "Outperforms OCR baselines on GPT-4o, Gemini-3.5-Flash, Qwen3.6-27B; training improves recall by ~15 points and accuracy by >10 points; 1.8 points from oracle on out-of-distribution ViDoRe-V3",
+    "comments": "Strong empirical validation that page-native retrieval is superior to OCR, and counterfactual credit reweighting is an elegant solution to noisy trajectories; 1.06M page corpus evaluation is substantial.",
+    "model_io": [
+      {
+        "model": "DR Pixel (multimodal agent)",
+        "inputs": [
+          "rendered document page images (1.06M pages)",
+          "reasoning query"
+        ],
+        "outputs": [
+          "retrieved pages",
+          "final reasoning answer"
+        ]
+      },
+      {
+        "model": "Counterfactual Credit Reweighting",
+        "inputs": [
+          "noisy teacher trajectories with reasoning and action steps"
+        ],
+        "outputs": [
+          "weighted training signal based on counterfactual contribution"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Page-native retrieval and reasoning outperforms OCR-based pipelines without training",
+        "result": "Confirmed across multiple state-of-the-art VLMs"
+      },
+      {
+        "hypothesis": "Fine-grained credit assignment improves agentic supervised finetuning on noisy trajectories",
+        "result": "Confirmed: +15 points retrieval recall, +10 points final accuracy on DRPixelBench"
+      },
+      {
+        "hypothesis": "Page-native training generalizes to out-of-distribution settings",
+        "result": "Confirmed: within 1.8 points of oracle on ViDoRe-V3"
+      }
+    ]
+  },
+  "hf:2610.39639": {
+    "category": "Benchmark",
+    "task": "Evaluating vision-language models' 3D reasoning consistency and reliability",
+    "key_results": "Humans achieve 93.3% per-color counting accuracy vs 7.2% for best model; fine-tuning raises one model from 3.0% to 68.6% but reveals inconsistency with own counts; exact reasoning requires visual evidence only 65% of the time for Qwen3.5-27B",
+    "comments": "Thorough benchmark design with probing analysis reveals critical gaps between recovery and consistent use of properties; the finding that image-removal controls show spurious successes is particularly concerning for deployed systems.",
+    "model_io": [
+      {
+        "model": "BedBench (procedurally generated vision tasks)",
+        "inputs": [
+          "3D scene images"
+        ],
+        "outputs": [
+          "per-color counts",
+          "composite answers about objects"
+        ]
+      },
+      {
+        "model": "Qwen3.5-27B (probed)",
+        "inputs": [
+          "rendered 3D scenes",
+          "token-wise statistics"
+        ],
+        "outputs": [
+          "per-color counts",
+          "reasoning answers"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "VLMs struggle with per-color counting in 3D scenes",
+        "result": "Confirmed: 7.2% best model vs 93.3% human accuracy"
+      },
+      {
+        "hypothesis": "Recovering a property does not guarantee consistent use in reasoning",
+        "result": "Confirmed: fine-tuned model recovers counts but remains inconsistent with them"
+      },
+      {
+        "hypothesis": "The language model stage loses information despite being recoverable at input",
+        "result": "Confirmed: 65.0% probe recovery vs 3.0% model accuracy on Qwen3.5-27B"
+      },
+      {
+        "hypothesis": "Some apparent 3D reasoning successes are not visually grounded",
+        "result": "Confirmed by image-removal controls"
+      }
+    ]
+  },
+  "hf:2610.41994": {
+    "category": "Systems",
+    "task": "Improving long-context retrieval in gated linear attention through initialization",
+    "key_results": "DAMI improves RULER-style retrieval accuracy by 5.29 to 16.71 percentage points across GDN, KDA, GDN2, Mamba-2, RWKV-7; language modeling and reasoning performance remains comparable",
+    "comments": "Practical initialization technique with broad applicability across linear attention families; the finding that A_log and dt_bias remain correlated with initial values post-training is noteworthy and suggests room for further investigation.",
+    "model_io": [
+      {
+        "model": "Dual-Axis Memory Initialization (DAMI)",
+        "inputs": [
+          "activation samples",
+          "model architecture (GDN-family)"
+        ],
+        "outputs": [
+          "configured A_log and dt_bias parameters"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Joint initialization of A_log and dt_bias improves long-context retrieval",
+        "result": "Confirmed: 5.29 to 16.71 p.p. improvements across five architectures"
+      },
+      {
+        "hypothesis": "Geometric timescales and input-sensitivity profiles are key to retrieval",
+        "result": "Supported by DAMI design achieving target behavioral profiles"
+      },
+      {
+        "hypothesis": "Improved retrieval does not compromise language modeling or reasoning",
+        "result": "Confirmed: performance remains broadly comparable to baselines"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-78843-9": {
+    "category": "Single Molecule",
+    "task": "Mechanism of APLF-mediated synapsis of double-strand breaks via Ku70/Ku80 dimerization",
+    "key_results": "APLF requires threading of \u22652 Ku70/Ku80 heterodimers per DNA end for synapsis; long non-coding RNA NIHCOLE cooperatively binds up to 4 Ku70/Ku80 complexes; multivalency restricts bridging to DNA-bound Ku70/Ku80",
+    "comments": "The threading requirement elegantly explains how multivalent interactions provide both specificity and regulatory control, though in vivo dynamics of lncRNA-mediated regulation remain to be tested.",
+    "model_io": [
+      {
+        "model": "APLF-Ku70/Ku80-DNA complex assembly",
+        "inputs": [
+          "DNA double-strand break",
+          "Ku70/Ku80 heterodimers",
+          "APLF protein",
+          "poly(ADP-ribose) modifications",
+          "NIHCOLE lncRNA"
+        ],
+        "outputs": [
+          "synaptic bridged complexes",
+          "threading stoichiometry",
+          "synapsis efficiency"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Single Ku70/Ku80-APLF interaction is sufficient for synapsis",
+        "result": "Refuted\u2014requires threading of \u22652 Ku70/Ku80 heterodimers per DNA end"
+      },
+      {
+        "hypothesis": "NIHCOLE enhances synapsis efficiency through cooperative Ku70/Ku80 bridging",
+        "result": "Supported\u2014NIHCOLE binds up to 4 Ku70/Ku80 complexes consistent with bridging model"
+      }
+    ]
+  },
+  "nature:10.1038/s41596-026-01464-5": {
+    "category": "Single Molecule",
+    "task": "Extracting spatiotemporal dynamics of subcellular structures without single-particle tracking",
+    "key_results": "Image-derived MSD yields simultaneous diffusion coefficients, anomalous exponents, and confinement dimensions; distinguishes Brownian, superdiffusive, and confined motion; resolves object size; temporal resolution ranges from milliseconds (confocal) to microseconds (line-scan)",
+    "comments": "A practical alternative to tracking that sacrifices trajectory information for robustness in dense environments, though loss of individual-trajectory data limits mechanistic interpretation.",
+    "model_io": [
+      {
+        "model": "iMSD analysis pipeline",
+        "inputs": [
+          "time-lapse fluorescence image stacks",
+          "proteins/organelles/nanoparticles"
+        ],
+        "outputs": [
+          "spatiotemporal correlation function",
+          "diffusion coefficient",
+          "anomalous exponent",
+          "confinement radius",
+          "object size"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Fluctuation-based analysis recovers diffusion metrics without discrete trajectory reconstruction",
+        "result": "Confirmed\u2014iMSD extracts diffusion, anomalous exponents, and confinement across temporal scales"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77959-8": {
+    "category": "Mechanobiology",
+    "task": "Training reinforcement learning agents for autonomous microrobot navigation in simulated blood capillaries",
+    "key_results": "RL agents converge on Run-and-Rotate strategies; transferred policies succeed beyond single-condition training; zero-shot transfer demonstrates most failures are optimization limits, not physical constraints; agents achieve targeted vessel blocking/unblocking restoring baseline RBC passage",
+    "comments": "The use of deliberately idealized 2D simulations with realistic flow and cell dynamics is pragmatic for RL training, but validation in even simple 3D experimental systems remains critical.",
+    "model_io": [
+      {
+        "model": "Capillary navigation RL environment",
+        "inputs": [
+          "microrobot size",
+          "swimming speed",
+          "flow velocity field",
+          "red blood cell positions",
+          "branching vessel geometry"
+        ],
+        "outputs": [
+          "navigation policy",
+          "target vessel reach rate",
+          "RBC passage restoration"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Policies trained in more demanding conditions transfer successfully to simpler scenarios",
+        "result": "Confirmed\u2014transferred policy succeeds far beyond per-combination training convergence"
+      },
+      {
+        "hypothesis": "Run-and-Rotate strategies are optimal for RL-based microrobot navigation",
+        "result": "Supported\u2014successful agents converge on this strategy family"
+      }
+    ]
+  },
+  "nature:10.1038/s41388-026-04024-z": {
+    "category": "Cell Division/Cycle",
+    "task": "Identify therapy-induced senescence as driver of oxaliplatin resistance in colorectal cancer",
+    "key_results": "Short-term oxaliplatin exposure enriched senescence phenotypes; senolytic ABT263 attenuated senescence and restored oxaliplatin sensitivity in vitro/vivo; ADORA1 is elevated in resistant tumors and chemoresistant patients (associated with poor outcomes); ADORA1 stabilizes FASN by suppressing ubiquitin-mediated degradation, promoting palmitic acid synthesis and p53/p21-driven senescence; ADORA1/FASN knockdown restored oxaliplatin sensitivity",
+    "comments": "Reveals therapy-induced senescence as mechanistic link to early acquired chemoresistance via ADORA1-FASN-PA metabolic reprogramming, suggesting senolytic therapy as resistance-reversing strategy.",
+    "model_io": [
+      {
+        "model": "CRC cells with short-term oxaliplatin exposure",
+        "inputs": [
+          "oxaliplatin",
+          "senolytics (ABT263)"
+        ],
+        "outputs": [
+          "senescence markers (p16, p21, SA-\u03b2-gal)",
+          "drug sensitivity",
+          "cell viability"
+        ]
+      },
+      {
+        "model": "Oxaliplatin-resistant CRC cell lines",
+        "inputs": [
+          "ADORA1 knockdown",
+          "FASN knockdown",
+          "oxaliplatin"
+        ],
+        "outputs": [
+          "FASN stability",
+          "palmitic acid levels",
+          "lipid droplet accumulation",
+          "p53/p21 expression",
+          "cell viability"
+        ]
+      },
+      {
+        "model": "Patient-derived xenografts from chemoresistant CRC",
+        "inputs": [
+          "senolytics",
+          "oxaliplatin"
+        ],
+        "outputs": [
+          "tumor growth",
+          "senescence markers",
+          "ADORA1/FASN levels"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Therapy-induced senescence drives oxaliplatin resistance",
+        "result": "Short-term oxaliplatin exposure enriched senescence phenotypes; ABT263 senolytic treatment restored sensitivity in vitro and in vivo"
+      },
+      {
+        "hypothesis": "ADORA1 is a key mediator of senescence-driven resistance",
+        "result": "ADORA1 elevated in resistant cells and chemoresistant patients; knockdown restored oxaliplatin sensitivity"
+      },
+      {
+        "hypothesis": "ADORA1 promotes senescence via FASN-palmitic acid metabolic reprogramming",
+        "result": "ADORA1 stabilizes FASN, promoting PA synthesis, lipid accumulation, and p53/p21-driven senescence"
+      }
+    ]
+  },
+  "nature:10.1038/s41420-026-03367-6": {
+    "category": "Cell Signaling",
+    "task": "Determine Piezo1-mediated mechanotransduction pathway driving osteoarthritis progression",
+    "key_results": "Mechanical loading activated Piezo1, increasing intracellular Ca2+, NFATc1 activation, and miR-145a-5p expression; miR-145a-5p directly suppressed FoxO1, promoting chondrocyte degeneration; Piezo1-conditional knockout reduced miR-145a-5p and attenuated cartilage degeneration; miR-145a-5p inhibition markedly alleviated chondrocyte degeneration",
+    "comments": "Identifies a mechanotransduction axis (Piezo1\u2013NFATc1\u2013miR-145a-5p\u2013FoxO1) linking mechanical overload to OA progression via exosomal miRNA signaling, with clinical validation in patient samples.",
+    "model_io": [
+      {
+        "model": "Chondrocytes under tensile stress",
+        "inputs": [
+          "mechanical loading",
+          "Piezo1 antagonists",
+          "Ca2+ indicators"
+        ],
+        "outputs": [
+          "Piezo1 activation",
+          "intracellular Ca2+",
+          "NFATc1 phosphorylation",
+          "miR-145a-5p expression"
+        ]
+      },
+      {
+        "model": "Piezo1flox/flox; Col2a1CreERT mice with OA induction",
+        "inputs": [
+          "Piezo1 conditional deletion",
+          "OA model"
+        ],
+        "outputs": [
+          "miR-145a-5p levels",
+          "cartilage degeneration score",
+          "chondrocyte apoptosis",
+          "FoxO1 levels"
+        ]
+      },
+      {
+        "model": "miR-145a-5p target validation",
+        "inputs": [
+          "miR-145a-5p",
+          "FoxO1 3'UTR reporter"
+        ],
+        "outputs": [
+          "luciferase activity",
+          "FoxO1 expression"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Mechanical loading activates Piezo1-mediated NFATc1 signaling",
+        "result": "Tensile stress activated Piezo1 and increased intracellular Ca2+ and NFATc1 activation"
+      },
+      {
+        "hypothesis": "NFATc1 activation promotes miR-145a-5p expression and FoxO1 suppression",
+        "result": "Mechanical loading increased miR-145a-5p, which directly suppressed FoxO1"
+      },
+      {
+        "hypothesis": "Piezo1 deletion attenuates OA progression",
+        "result": "Conditional Piezo1 knockout reduced miR-145a-5p and attenuated cartilage degeneration in OA model"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78441-1": {
+    "category": "Development",
+    "task": "Evaluate ADMSC-seeded fibrin membranes for corneal repair following alkaline burns",
+    "key_results": "ADMSC-fibrin membranes achieved complete epithelial regeneration (7/7 rabbits) versus epithelial degeneration in acellular and control groups (P=0.000026); significantly reduced neovascularization (P=0.00012), stromal inflammation, and corneal melting (1/7 vs 7/7; P=0.00039)",
+    "comments": "Demonstrates superior regenerative capacity of cell-seeded scaffolds in terminal histological endpoints, but lacks molecular validation, extended follow-up, and comparison to normal corneas.",
+    "model_io": [
+      {
+        "model": "Rabbit corneal alkali-burn model",
+        "inputs": [
+          "alkaline burn injury",
+          "ADMSC-fibrin membrane",
+          "acellular fibrin",
+          "no treatment"
+        ],
+        "outputs": [
+          "epithelial regeneration",
+          "neovascularization score",
+          "stromal inflammation",
+          "collagen organization",
+          "corneal melting incidence"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "ADMSC-seeded fibrin membranes promote superior corneal repair versus acellular scaffolds",
+        "result": "ADMSC group showed complete epithelial regeneration and significantly lower neovascularization/melting versus acellular and control groups"
+      }
+    ]
+  },
+  "nature:10.1038/s42003-026-11276-8": {
+    "category": "Development",
+    "task": "Elucidate melatonin-dependent circadian adaptation to darkness in soil-dwelling organisms",
+    "key_results": "Melatonin suppresses ROS production via PCDR-1 receptor to maintain lin-42/PERIOD expression in darkness; lin-42 knockdown induced premature aging in dark conditions; melatonin deficiency activated DAF-16/FOXO leading to lipid accumulation",
+    "comments": "Identifies a non-photic circadian mechanism linking melatonin to ROS homeostasis and PERIOD regulation, relevant to understanding circadian adaptation in lightless niches.",
+    "model_io": [
+      {
+        "model": "C. elegans cultured in darkness",
+        "inputs": [
+          "light/darkness cycles",
+          "melatonin",
+          "ROS"
+        ],
+        "outputs": [
+          "lin-42 expression",
+          "aging rate",
+          "lipid accumulation",
+          "DAF-16 activation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Melatonin maintains circadian homeostasis in darkness through PCDR-1",
+        "result": "Melatonin suppressed ROS production via PCDR-1, maintaining lin-42/PERIOD expression"
+      },
+      {
+        "hypothesis": "lin-42/PERIOD deficiency accelerates aging in darkness",
+        "result": "lin-42 knockdown induced accelerated aging phenotype under dark conditions"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-78471-3": {
+    "category": "Proteomics",
+    "task": "Iterative computational-rational enzyme engineering for PET hydrolase improvement",
+    "key_results": "603 designs tested across eight parent PETases via evolution-informed design (EVdesign) + rational design; >400 variants (12\u201368 substitutions) active, nearly all outperforming parents; top variants approach LCC-ICCG benchmark performance in partial-conversion assays; TfCut2 emerged as most design-amenable scaffold",
+    "comments": "Impressive combinatorial enzyme engineering; however, full polymer depolymerization efficiency and long-term stability under industrial conditions remain to be demonstrated.",
+    "model_io": [
+      {
+        "model": "EVdesign + rational design iteration",
+        "inputs": [
+          "PETase homolog sequences",
+          "PET polymer substrates"
+        ],
+        "outputs": [
+          "engineered PETase variants",
+          "depolymerization activity, thermal stability"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Iterative EVdesign and rational refinement generate high-performing PET hydrolases",
+        "result": ">400 active variants with 12\u201368 substitutions; most outperformed parents; select variants approached benchmark performance"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-78923-w": {
+    "category": "Single Cell",
+    "task": "Spatial domain detection in transcriptomics using LLM-guided consensus",
+    "key_results": "L-STAR matched expert annotations better than individual methods; consensus approach improved robustness across diverse datasets and technologies",
+    "comments": "Innovative application of LLMs for comparative analysis, though interpretability of LLM reasoning for biological domains requires careful validation.",
+    "model_io": [
+      {
+        "model": "Large Language Model (LLM) + consensus algorithm",
+        "inputs": [
+          "spatial domain maps from multiple computational methods",
+          "tissue images"
+        ],
+        "outputs": [
+          "ranked methods",
+          "consensus spatial domain map",
+          "domain annotations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LLMs can identify superior domain detection methods by visual comparison",
+        "result": "L-STAR rankings reproducible and stable across presentation variations"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-79116-1": {
+    "category": "Structural Prediction",
+    "task": "3D neuromuscular compartment mapping via multimodal ultrasound-MRI for finger control architecture",
+    "key_results": "Multimodal framework resolved volumetric flexor digitorum superficialis compartments in vivo; compartment topology and fiber orientations consistent with cadaveric anatomy; estimated compartments accurately predicted surface EMG amplitude distributions",
+    "comments": "Novel imaging integration enabling subject-specific digital twins; however, validation limited to n=10 healthy individuals\u2014applicability to pathological conditions unclear.",
+    "model_io": [
+      {
+        "model": "Dynamic ultrasound + MRI + tractography",
+        "inputs": [
+          "ultrasound tissue-motion during finger flexion",
+          "3D MRI reference",
+          "surface EMG"
+        ],
+        "outputs": [
+          "volumetric compartment masks",
+          "3D fiber trajectories",
+          "architectural parameters"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Tissue-motion-derived compartment contours predict surface EMG spatial distribution",
+        "result": "Estimated compartments accurately predicted EMG amplitude patterns; topology and fiber orientation consistent with cadaveric anatomy"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76483-z": {
+    "category": "Single Cell",
+    "task": "Disease classification from clinical text via transformer and graph attention networks",
+    "key_results": "MedClassNet achieved 94.2% accuracy, 94.6% precision, F1-score 0.93 on MIMIC-III 1,748-document corpus; SHAP analysis identified clinically relevant features",
+    "comments": "Strong performance on single dataset; overfitting risk with small corpus; external validation on other clinical datasets needed.",
+    "model_io": [
+      {
+        "model": "BioBERT + Graph Attention Network (GAT)",
+        "inputs": [
+          "clinical narratives (admission/progress notes)",
+          "patient similarity graphs"
+        ],
+        "outputs": [
+          "ICD-9 disease classification",
+          "attention weights"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Patient-level relational embeddings improve disease classification over text-only approaches",
+        "result": "MedClassNet with GAT outperformed baseline transformer models; SHAP analysis revealed clinically interpretable predictions"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76504-x": {
+    "category": "Other",
+    "task": "Non-local Zika virus transmission dynamics via fractal-fractional Caputo modeling",
+    "key_results": "Fractal-fractional model incorporating memory effects and Sterile Insect Technique; sensitivity analysis identified mosquito biting rate as dominant risk parameter; fractional order and fractal dimension influenced transient epidemic profiles and infection-peak timing/magnitude",
+    "comments": "Sophisticated mathematical framework; however, no empirical validation against real outbreak data; practical applicability to public health unclear.",
+    "model_io": [
+      {
+        "model": "Fractal-fractional Caputo differential equations + Adams\u2013Bashforth\u2013Moulton scheme",
+        "inputs": [
+          "transmission parameters (biting rate, SIT density, compartment sizes)"
+        ],
+        "outputs": [
+          "temporal disease dynamics",
+          "basic reproduction number R0",
+          "peak infection times/magnitudes"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Memory effects via fractional derivatives improve model fit to non-Markovian Zika dynamics",
+        "result": "Fractional order and fractal dimension influenced transient profiles; SIT suppression reduced R0 under suitable parameters"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77597-0": {
+    "category": "Evolutionary Biology",
+    "task": "TRAF6-mediated immune regulation in beetle antimicrobial defense",
+    "key_results": "TmTRAF6 silencing elevated antimicrobial peptide expression and enhanced larval survival post-infection; contrasts canonical TRAF6 positive regulation seen in other insects",
+    "comments": "Interesting evidence of TRAF-function divergence in Coleoptera; mechanistic basis (tissue-dependent, pathogen-specific) requires further investigation.",
+    "model_io": [
+      {
+        "model": "Gene knockdown + infection model (Tenebrio molitor)",
+        "inputs": [
+          "TmTRAF6 transcripts",
+          "bacterial/fungal pathogens (E. coli, S. aureus, C. albicans)"
+        ],
+        "outputs": [
+          "antimicrobial peptide expression",
+          "larval survival rates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "TmTRAF6 acts as a negative regulator of antimicrobial defense in beetles",
+        "result": "TmTRAF6 silencing markedly elevated AMP expression and survival; contrasts positive TRAF6 role in other insects"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78324-5": {
+    "category": "Other",
+    "task": "EEG-based sleep disorder detection via hybrid deep learning",
+    "key_results": "EB-PSDD framework achieved maximum accuracy 0.949, precision 0.799, NPV 0.971 on CAP Sleep Database using HLNet-P (LeNet + EBN-PCNN hybrid)",
+    "comments": "Strong reported metrics, but evaluation on single dataset without cross-validation or external test set limits generalization claims.",
+    "model_io": [
+      {
+        "model": "HLNet-P (LeNet + EBN-PCNN) hybrid deep learning",
+        "inputs": [
+          "EEG signals (preprocessed with AWMAF)",
+          "extracted features (MWS-T, cross-correntropy, CSP)"
+        ],
+        "outputs": [
+          "sleep disorder classification",
+          "confidence scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Hybrid LeNet-PCNN architecture with enhanced batch normalization improves EEG sleep-disorder detection",
+        "result": "EB-PSDD outperformed traditional methods with maximum accuracy 0.949"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79305-4": {
+    "category": "Structural Prediction",
+    "task": "Multi-epitope vaccine design for Streptococcus pasteurianus via pangenome and immunoinformatics",
+    "key_results": "MEV design (344 amino acids) comprising 6 CTL, 4 HTL, 3 LBL epitopes showed favorable TLR1\u2013TLR2 binding (Kd 1.3\u00d710\u207b\u00b2\u2074 M, MM/PBSA \u221232.15/\u221216.83 kcal/mol); estimated 76.87% global population coverage; in silico immune analysis predicted enhanced IgG and prolonged cytokine response",
+    "comments": "Comprehensive computational vaccine design; however, all findings in silico\u2014experimental immunogenicity and protection remain entirely unexplored.",
+    "model_io": [
+      {
+        "model": "Pangenome analysis + subtractive proteomics + epitope prediction + MD simulations + docking",
+        "inputs": [
+          "11 S. pasteurianus genomes",
+          "human proteome",
+          "TLR1\u2013TLR2 ectodomain PDB 2Z7X"
+        ],
+        "outputs": [
+          "candidate vaccine construct",
+          "epitope predictions",
+          "binding free energies",
+          "population coverage estimates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-epitope vaccine design targeting conserved core genes elicits broad immune response",
+        "result": "In silico analysis predicted favorable MEV-TLR interaction, enhanced IgG response, and 76.87% population coverage"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79381-6": {
+    "category": "Other",
+    "task": "PCB defect localization via static axial-bias YOLO",
+    "key_results": "SABi-YOLO achieved mAP50\u201395 of 0.7516 \u00b1 0.0216 with mean improvement of 0.0613 over YOLOv8m; 5.42% fewer parameters and 6.44% fewer GFLOPs",
+    "comments": "Modest improvement with strong inductive bias; generalization to other datasets not demonstrated, limiting practical deployment confidence.",
+    "model_io": [
+      {
+        "model": "SABi-YOLO with static dual-axis convolution",
+        "inputs": [
+          "PCB images (DeepPCB dataset)"
+        ],
+        "outputs": [
+          "bounding box predictions for defects",
+          "confidence scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Directional inductive bias improves PCB elongated-defect localization at strict IoU thresholds",
+        "result": "SABi-YOLO showed consistent improvement over YOLOv8m; DSConv control did not"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79490-2": {
+    "category": "Genomics",
+    "task": "Shared molecular signatures linking osteoporosis and atherosclerosis via integrative transcriptomics",
+    "key_results": "2,788 shared candidates identified; 88 met stringent differential-expression criteria in both diseases; C1orf174, FBXL18, RBM4B prioritized by machine learning; nine-gene panel partially validated (C1orf174 FDR=0.0429 in GSE56815)",
+    "comments": "Multi-omic integration identified candidates; however, clinical RT-qPCR findings were weak, suggesting identified candidates may be correlative rather than causative.",
+    "model_io": [
+      {
+        "model": "WGCNA + machine learning (LASSO, random forest, SVM-RFE)",
+        "inputs": [
+          "bone/arterial transcriptomes",
+          "circulating transcriptome cohorts"
+        ],
+        "outputs": [
+          "differentially expressed genes",
+          "co-expression modules",
+          "prioritized gene panels"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Bone and vascular tissues share dysregulated molecular pathways in aging-related diseases",
+        "result": "88 genes significantly dysregulated in both OP and AS; functional enrichment implicated translation, endosomal-lysosomal biology, and ECM remodeling"
+      }
+    ]
+  },
+  "nature:10.1038/s42003-026-11211-x": {
+    "category": "Genomics",
+    "task": "SNP-gene expression associations in membranous nephropathy via multivariate CCA",
+    "key_results": "CCA identified 1095 HLA and 46 PLA2R1 SNPs significantly correlated with MN; ATF6B, C2, CYP21A2, HLA-DRB1 colocalized with HLA SNPs and showed differential expression in MN; previously unreported candidates for MN and type-1 diabetic nephropathy",
+    "comments": "Multivariate approach identified gene-SNP interactions; however, small independent validation cohort and modest FDR-corrected signal limit clinical confidence.",
+    "model_io": [
+      {
+        "model": "Canonical Correlation Analysis (CCA) + WGCNA + colocalization analysis",
+        "inputs": [
+          "HLA and PLA2R1 SNP genotypes",
+          "kidney transcriptomes (NURTuRE-CKD, SKS cohorts)"
+        ],
+        "outputs": [
+          "SNP-gene co-expression associations",
+          "disease-risk gene candidates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multivariate SNP combinations show stronger correlation with MN transcriptome than univariate GWAS",
+        "result": "CCA identified 1141 SNPs in HLA/PLA2R1 with MN correlation; functional enrichment and colocalization revealed candidate genes including ATF6B and RNF5"
+      }
+    ]
+  },
+  "nature:10.1038/s44325-026-00159-w": {
+    "category": "Other",
+    "task": "Bioethical framework for AI integration in cardiovascular medicine",
+    "key_results": "No quantitative results; review identifies four bioethics pillars (autonomy, beneficence, nonmaleficence, justice) overlapping with regulatory requirements; proposes governance priorities for responsible AI deployment in cardiology",
+    "comments": "Thoughtful ethical analysis; however, framework remains largely conceptual with limited concrete recommendations for translating principles into practice.",
+    "model_io": [],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41467-026-78916-9": {
+    "category": "Gene Regulation",
+    "task": "Determine how chromosomal position reprograms genetic circuit dynamics and function",
+    "key_results": "Spatial positioning alone switches circuits between distinct operational modes; mathematical model predicts three functional regimes for toggle switch linked to chromosomal position via expression noise; 219 circuits tested across four topologies",
+    "comments": "Elegant decoupling of position effects from sequence; mechanistic attribution to noise-driven stochasticity is valuable, though model validation uses the same experimental dataset.",
+    "model_io": [
+      {
+        "model": "Bacterial genetic circuits (regulatory cascades and toggle switch)",
+        "inputs": [
+          "chromosomal insertion position",
+          "circuit topology type"
+        ],
+        "outputs": [
+          "circuit dynamics",
+          "protein expression levels",
+          "expression noise metrics"
+        ]
+      },
+      {
+        "model": "Mathematical predictive model of toggle switch",
+        "inputs": [
+          "chromosomal position",
+          "noise parameters (experimentally parameterized)"
+        ],
+        "outputs": [
+          "functional regime classification",
+          "switch stability predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Chromosomal position modulates circuit performance through position-dependent effects",
+        "result": "Confirmed: spatial positioning switches circuits between different dynamics"
+      },
+      {
+        "hypothesis": "Position effects are mediated by changes in expression noise rather than simple analog changes",
+        "result": "Supported: mathematical model links chromosomal position to switch stability via noise"
+      }
+    ]
   }
 }
