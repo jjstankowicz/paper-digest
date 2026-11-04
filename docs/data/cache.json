@@ -703870,5 +703870,1470 @@
         "result": "Improved glucose homeostasis, reduced endotoxemia, and attenuated hepatic steatosis observed"
       }
     ]
+  },
+  "hf:2611.05345": {
+    "category": "Agents/RL",
+    "task": "Improving long-horizon agent reasoning via adversarial speculative decoding",
+    "key_results": "End-to-end success rate improvement on complex agentic coding benchmarks by training only 0.06%-0.28% of parameters; numerical noise in verification windows shown to change output distribution after 30 steps",
+    "comments": "Reframes speculative decoding from pure acceleration to precision allocation, though the mechanism relies on identifying and deliberately rejecting critical reasoning tokens which may not generalize across all agent types.",
+    "model_io": [
+      {
+        "model": "Draft model + Target LLM (open-weight frontier models)",
+        "inputs": [
+          "agent task prompts"
+        ],
+        "outputs": [
+          "long-horizon reasoning traces",
+          "agent actions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Speculative decoding changes output distribution for long-horizon reasoning after 30 steps due to accumulated numerical noise",
+        "result": "Confirmed; numerical noise grows within verification windows and measurably affects reasoning accuracy"
+      },
+      {
+        "hypothesis": "Training draft model to be rejected at critical decision points improves target model reasoning",
+        "result": "Confirmed; end-to-end success rate increases with adversarial preference training"
+      }
+    ]
+  },
+  "hf:2611.04414": {
+    "category": "Generative",
+    "task": "Missing modality imputation via geometric transport on hypersphere",
+    "key_results": "State-of-the-art generation fidelity on BraTS multi-modal MRI and CT-MRI translation; downstream brain tumor segmentation closes ~80% of gap to full-modality oracle",
+    "comments": "The geometric insight of treating cross-modal imputation as short-range transport on a shared manifold is elegant, though the approach assumes availability of frozen self-supervised encoders that preserve manifold structure.",
+    "model_io": [
+      {
+        "model": "SphereFlow (flow matching on hypersphere)",
+        "inputs": [
+          "observed medical imaging modalities",
+          "frozen encoder"
+        ],
+        "outputs": [
+          "imputed missing modalities",
+          "synthetic cross-modal translations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Projecting modalities to shared hypersphere reduces imputation to short-range transport compared to unstructured jumps",
+        "result": "Confirmed; improved generation fidelity and segmentation performance"
+      },
+      {
+        "hypothesis": "Data-as-source formulation bounds worst-case off-manifold deviation independent of latent dimension",
+        "result": "Confirmed theoretically; dimension-independent bound governs inter-modality similarity"
+      }
+    ]
+  },
+  "hf:2611.04169": {
+    "category": "Benchmark",
+    "task": "Understanding language model failures on long context via attention analysis",
+    "key_results": "Attention mass on evidence explains up to 58% of variance in loss vs. 8% for log length; single rival statement multiplies loss by 9-110x; neutral filler maintains 0.97-1.00 accuracy up to 32K tokens",
+    "comments": "The mechanistic finding that context rot stems from attention competition rather than mere length is well-supported empirically, though the analysis is limited to retrieval tasks and smaller open models (0.5B-3B).",
+    "model_io": [
+      {
+        "model": "Five open-weight LLMs (0.5B-3B parameters, four families including Qwen2.5)",
+        "inputs": [
+          "retrieval queries",
+          "context with varying rival/filler statements",
+          "up to 32K tokens"
+        ],
+        "outputs": [
+          "retrieval accuracy",
+          "attention mass distribution"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Length alone causes LM failure on long contexts",
+        "result": "Rejected; neutral filler causes no accuracy loss up to 32K tokens"
+      },
+      {
+        "hypothesis": "Attention competition for evidence predicts context rot better than length",
+        "result": "Confirmed; attention mass explains 58% of loss variance vs. 8% for length"
+      }
+    ]
+  },
+  "hf:2611.01598": {
+    "category": "Systems",
+    "task": "Cross-domain task recovery on heterogeneous Linux-RTOS embedded boards",
+    "key_results": "MCU dispatch costs ~19ms regardless of compute; MCU runs kernels 34x slower; Linux contention inflates MCU latency to 400ms p99 vs 17.0ms Linux p99; QFabric prevents harmful migrations but cannot isolate from Linux interference",
+    "comments": "Valuable negative result showing migration cannot solve timing issues on heterogeneous boards due to RPC overhead and Linux interference, but practical applicability is limited to specific Arduino UNO Q hardware.",
+    "model_io": [
+      {
+        "model": "QFabric prototype (quiescence-based guarded migration)",
+        "inputs": [
+          "task timing contracts",
+          "workload measurements",
+          "CPU load and SCHED_FIFO contention"
+        ],
+        "outputs": [
+          "domain placement decisions",
+          "migration/rollback actions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Task migration between Linux and MCU domains can recover violated soft real-time contracts",
+        "result": "Partially rejected; Linux contention inflates MCU path so severely that migration cannot isolate tasks"
+      },
+      {
+        "hypothesis": "Hysteresis and probation prevent harmful migrations",
+        "result": "Confirmed; probation rolled back 5 of 7 problematic migrations in chain test"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11148-5": {
+    "category": "Structural Biology",
+    "task": "Map fibril-to-fibre mechanical coupling in intact intervertebral disc under load",
+    "key_results": "Intrafibrillar molecular pre-strain (D-period stagger) is lamellar textured and inversely correlated with fibril strain variability; radial strain bridges at annulus-nucleus interfaces regulate local mechanics",
+    "comments": "TomoSAXS is innovative for direct nanoscale-to-microscale visualization, though the mechanistic link between molecular unwinding and macroscale elasticity preservation requires functional validation.",
+    "model_io": [
+      {
+        "model": "TomoSAXS full-field 3D small-angle X-ray scattering tomography",
+        "inputs": [
+          "intact intervertebral disc tissue",
+          "in vivo loading"
+        ],
+        "outputs": [
+          "fibril D-period stagger",
+          "fibre strain",
+          "fibril strain",
+          "curvature maps",
+          "radial strain distribution"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Intrafibrillar pre-strain is correlated with microscale fibre strain and inversely with fibril strain variability",
+        "result": "Confirmed; pre-strain inversely related to fibril strain consistent with load-sharing through molecular unwinding"
+      },
+      {
+        "hypothesis": "Radial strain bridges and high-curvature zones regulate local mechanics at annulus-nucleus interface",
+        "result": "Confirmed as critical mechanical regulators"
+      }
+    ]
+  },
+  "nature:10.1038/s44341-026-00059-1": {
+    "category": "Mechanobiology",
+    "task": "Integrate molecular fibrin degradation with vascular recanalisation across scales",
+    "key_results": "Identified transport and mechanical properties evolution as key cross-scale mediator; computational models now span molecular to vascular scales with stochastic fibre rupture and fluid-structure interaction",
+    "comments": "Review paper identifying integration challenges; patient-specific prediction remains aspirational without validation against clinical data.",
+    "model_io": [
+      {
+        "model": "Multiscale thrombolysis framework",
+        "inputs": [
+          "fibrin structure",
+          "enzyme kinetics",
+          "haemodynamic flow",
+          "clot permeability"
+        ],
+        "outputs": [
+          "fibrin degradation rate",
+          "vascular recanalisation",
+          "clot mechanical properties"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Transport and mechanical properties evolution mediates coupling across molecular to vascular scales",
+        "result": "Identified as key cross-scale mediator requiring integration in predictive models"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-10956-z": {
+    "category": "Cell/Gene Therapy",
+    "task": "Identify synergistic gene pairs for enhanced CAR-T cell anti-tumor efficacy",
+    "key_results": "NR4A1\u2013SOCS3 double knockout CAR-T cells achieve superior tumor control across multiple models and outperform single and dual-gene modifications; upregulated metabolic pathways correlate with higher mitochondrial activity",
+    "comments": "High-throughput in vivo screening elegantly maps combinatorial genetic effects, though long-term safety in clinical settings remains to be established.",
+    "model_io": [
+      {
+        "model": "In vivo CAR-T double-knockout CRISPR screen",
+        "inputs": [
+          "CAR-T cells",
+          "guide RNA library targeting gene pairs",
+          "tumor xenografts"
+        ],
+        "outputs": [
+          "synergistic DKO pairs",
+          "NR4A1\u2013SOCS3 identified as top candidate"
+        ]
+      },
+      {
+        "model": "Transcriptome profiling and single-cell RNA-seq",
+        "inputs": [
+          "NR4A1\u2013SOCS3 DKO CAR-T cells",
+          "tumor tissue"
+        ],
+        "outputs": [
+          "metabolic pathway upregulation",
+          "mitochondrial activity measurements"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Dual knockout of NR4A1 and SOCS3 enhances CAR-T efficacy synergistically",
+        "result": "Confirmed; NR4A1\u2013SOCS3 DKO outperforms single knockouts and benchmark dual-gene modifications"
+      },
+      {
+        "hypothesis": "Enhanced efficacy is mediated by increased metabolic fitness",
+        "result": "Supported; transcriptome and scRNA-seq show upregulated metabolic pathways and elevated mitochondrial activity"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11200-4": {
+    "category": "Gene Editing",
+    "task": "Engineer cancer-selective pyroptotic gene circuit exploiting translational dysregulation",
+    "key_results": "Frameshifting-activated synthetic therapeutic (FAST) circuit selectively induces pyroptosis in cancer cells; AAV9 delivery achieves pronounced tumor regression in colorectal and pancreatic cancer models with synergy to immune checkpoint blockade",
+    "comments": "Elegant exploitation of cancer-intrinsic translational dysregulation offers selective toxicity, but tissue-specific frameshifting rates and AAV9 off-target delivery remain design constraints.",
+    "model_io": [
+      {
+        "model": "Codon-pair frameshifting detection",
+        "inputs": [
+          "cancer cell lines",
+          "normal tissues",
+          "ribosomal profiling"
+        ],
+        "outputs": [
+          "frameshifting-permissive state identification",
+          "phospho-S6 levels"
+        ]
+      },
+      {
+        "model": "FAST synthetic circuit design",
+        "inputs": [
+          "frameshifting-prone codon pairs",
+          "gasdermin D coding sequence"
+        ],
+        "outputs": [
+          "conditional pyroptosis activation in cancer cells"
+        ]
+      },
+      {
+        "model": "In vivo AAV9 delivery",
+        "inputs": [
+          "AAV9-FAST vector",
+          "mouse colorectal/pancreatic cancer models"
+        ],
+        "outputs": [
+          "tumor volume reduction",
+          "immune activation markers"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Ribosomal frameshifting via specific codon pairs is enriched in cancer cells",
+        "result": "Confirmed; frameshifting is prevalent across diverse cancer types and linked to impaired ribosome quality control and S6 phosphorylation"
+      },
+      {
+        "hypothesis": "FAST circuit induces selective pyroptosis in cancer cells while sparing normal tissue",
+        "result": "Confirmed; robust tumor regression and immune activation without detectable toxicity to normal tissues"
+      },
+      {
+        "hypothesis": "FAST synergizes with immune checkpoint blockade",
+        "result": "Confirmed; enhanced anti-tumor efficacy when combined with ICB"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-79256-4": {
+    "category": "Other",
+    "task": "Determine VHL's role in regulating p62 condensate dynamics and proteostasis",
+    "key_results": "VHL increases p62 condensate liquidity via IDR2 region; VHL depletion causes excessive protein aggregation and KEAP1/NRF2 dysregulation; chimeric peptide suppresses tumorigenesis",
+    "comments": "Elegant mechanistic insight into phase separation as a proteostasis checkpoint, though the HIF-independent tumor suppression may have limited clinical translation without combination strategies.",
+    "model_io": [
+      {
+        "model": "VHL-p62 condensate interaction",
+        "inputs": [
+          "VHL protein",
+          "p62 protein",
+          "proteotoxic stress"
+        ],
+        "outputs": [
+          "p62 condensate phase state",
+          "aggresome formation",
+          "autophagy flux"
+        ]
+      },
+      {
+        "model": "Disease-associated mutations",
+        "inputs": [
+          "VHL IDR2 mutations"
+        ],
+        "outputs": [
+          "impaired p62 dynamics",
+          "protein aggregation",
+          "KEAP1 sequestration"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "VHL binding to p62 increases condensate liquidity to promote aggrephagy",
+        "result": "Confirmed; VHL depletion impairs dynamics and increases aggregation"
+      },
+      {
+        "hypothesis": "Chimeric peptide mimicking VHL function suppresses tumorigenesis",
+        "result": "Confirmed; suppresses both aggregation and tumor growth"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11177-0": {
+    "category": "Development",
+    "task": "Decode hierarchical gene-regulatory programs governing glioblastoma plasticity and identify safeguard repressors that stabilize low-plasticity states",
+    "key_results": "scDORI framework reveals asymmetric activator-repressor networks; hierarchical transition landscape with cross-lineage trajectories absent from normal development; MYT1L represses all alternative fates; MYT1L loss accelerates malignant features",
+    "comments": "Sophisticated single-cell regulatory inference with elegant functional validation, though translating safeguard repressor targeting into clinical benefit requires overcoming tumor heterogeneity and adaptive resistance.",
+    "model_io": [
+      {
+        "model": "scDORI single-cell regulatory inference",
+        "inputs": [
+          "single-nucleus multiome profiles from >1M cells",
+          "primary glioblastomas"
+        ],
+        "outputs": [
+          "enhancer-driven gene regulatory networks",
+          "cellular state transitions",
+          "transcription factor activities"
+        ]
+      },
+      {
+        "model": "MYT1L perturbation",
+        "inputs": [
+          "MYT1L knockout/overexpression"
+        ],
+        "outputs": [
+          "plasticity state",
+          "alternative fate activation",
+          "tumor growth",
+          "invasion"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Low-plasticity neuronal-like state is actively maintained by safeguard repressor networks",
+        "result": "Confirmed; MYT1L knockout reactivates plasticity and accelerates malignant features"
+      },
+      {
+        "hypothesis": "MYT1L binds and represses master regulators of alternative states",
+        "result": "Confirmed; MYT1L consolidates neuronal-like identity through multi-target repression"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79169-8": {
+    "category": "Cell Division/Cycle",
+    "task": "Establish STK33 role in spermatocyte differentiation and male fertility via mitochondrial homeostasis",
+    "key_results": "STK33\u2212/\u2212 mice show complete male infertility and reduced sperm count; differentiation defects concentrated at spermatocyte stage; STK33 knockout causes mitochondrial abnormalities and increased apoptosis",
+    "comments": "Clear in vivo functional evidence for STK33 in germ cell development, but mechanistic insights into how STK33 kinase activity specifically regulates mitochondrial function remain underdeveloped.",
+    "model_io": [
+      {
+        "model": "STK33 knockout in mouse spermatogenesis",
+        "inputs": [
+          "STK33 gene deletion via CRISPR/Cas9"
+        ],
+        "outputs": [
+          "sperm count",
+          "spermatocyte differentiation",
+          "metabolic gene expression",
+          "mitochondrial morphology",
+          "apoptosis markers"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "STK33 deletion disrupts spermatocyte differentiation via metabolic pathway dysregulation",
+        "result": "Confirmed; single-cell analysis shows enriched metabolic gene changes at spermatocyte stage"
+      },
+      {
+        "hypothesis": "STK33 maintains mitochondrial homeostasis to prevent apoptosis",
+        "result": "Confirmed; STK33\u2212/\u2212 spermatocytes show mitochondrial abnormalities and heightened apoptosis"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79205-7": {
+    "category": "Cell Signaling",
+    "task": "Elucidate sex-specific mechanisms of lung ischemia-reperfusion injury and 17\u03b2-estradiol protection",
+    "key_results": "Male rats show worse LIRI outcomes than females; E2 pretreatment protects males via PI3K/AKT/GSK-3\u03b2 reactivation; PI3K inhibition abolishes E2 protection",
+    "comments": "Clear demonstration of sex dimorphism and pathway-specific protection, though mechanistic insight into baseline sex differences in pathway activation remains incomplete.",
+    "model_io": [
+      {
+        "model": "Lung LIRI in male vs female rats",
+        "inputs": [
+          "60-min left hilar occlusion",
+          "120-min reperfusion",
+          "sex"
+        ],
+        "outputs": [
+          "pulmonary gas exchange",
+          "wet-to-dry ratio",
+          "inflammatory cytokines",
+          "endothelial disruption",
+          "apoptosis"
+        ]
+      },
+      {
+        "model": "E2 protection mechanism",
+        "inputs": [
+          "17\u03b2-estradiol pretreatment",
+          "LIRI challenge"
+        ],
+        "outputs": [
+          "PI3K/AKT/GSK-3\u03b2 phosphorylation",
+          "Caspase-3 activity",
+          "injury attenuation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Male LIRI rats exhibit worse outcomes than females due to baseline pathway differences",
+        "result": "Confirmed; males show greater suppression of PI3K/AKT/GSK-3\u03b2 and apoptosis"
+      },
+      {
+        "hypothesis": "E2 protection requires PI3K pathway activation",
+        "result": "Confirmed; LY294002 inhibitor abolishes E2-mediated protection"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11210-2": {
+    "category": "Structural Prediction",
+    "task": "RNA structure-guided foundation model pretraining",
+    "key_results": "structRFM trained on 21M sequence-structure pairs; Zfold tertiary structure predictions comparable to AlphaFold3 on CASP15-16 and RNA-Puzzles; new benchmarks for secondary-structure prediction",
+    "comments": "Multimodal pretraining elegantly addresses RNA's structure-function relationship, though generalization to novel families requires further validation beyond the tested scope.",
+    "model_io": [
+      {
+        "model": "structRFM",
+        "inputs": [
+          "RNA sequences",
+          "base-pairing annotations"
+        ],
+        "outputs": [
+          "sequence-level representations",
+          "nucleotide-level features",
+          "pairwise features"
+        ]
+      },
+      {
+        "model": "Zfold",
+        "inputs": [
+          "RNA sequences"
+        ],
+        "outputs": [
+          "3D structure predictions",
+          "secondary structure"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Structure-guided pretraining improves RNA function prediction",
+        "result": "Improved performance on function-prediction tasks and generalization to new families"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-70495-5": {
+    "category": "Other",
+    "task": "IoT-cloud framework for chronic disease monitoring and detection",
+    "key_results": "LST-BCLNM achieved 97.58% classification accuracy, 98.95% F-measure; HTELCC security 98.82%; S-2(RL)MS convergence 98.51%",
+    "comments": "High reported metrics lack independent external validation and claim comprehensive disease monitoring without evidence of clinical utility or comparative benchmarking.",
+    "model_io": [
+      {
+        "model": "S-2(RL)MS interference mitigation",
+        "inputs": [
+          "IoT wearable data",
+          "healthcare app data",
+          "symptom data"
+        ],
+        "outputs": [
+          "interference-mitigated data"
+        ]
+      },
+      {
+        "model": "LST-BCLNM anomaly detection",
+        "inputs": [
+          "filtered aggregated features"
+        ],
+        "outputs": [
+          "disease classification",
+          "anomaly detection"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-source IoT data integrated with LSTM-based deep learning improves chronic disease detection",
+        "result": "97.58% classification accuracy reported; however, no comparative baseline or external validation provided"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76874-2": {
+    "category": "Genomics",
+    "task": "Pan-genome-wide association analysis for oil palm agronomic traits",
+    "key_results": "Pan-genome graph with ~32.8M variants; GWAS panels: SNP, MNP, micro-indel, structural-indel subsets; recovered major SHELL locus; identified palm-height candidates (structural indel near GATA TF); multi-class variants associated with oil-mesocarp ratio and rachis length",
+    "comments": "Comprehensive multi-variant-class GWAS demonstrating utility of structural variants for trait mapping; candidates require independent validation in additional populations.",
+    "model_io": [
+      {
+        "model": "Pan-genome-wide association study",
+        "inputs": [
+          "384 oil palm accessions",
+          "pan-genome graph",
+          "agronomic phenotypes (shell-fruit ratio, height, oil content, rachis length)"
+        ],
+        "outputs": [
+          "GWAS candidates (SNP, MNP, indel, structural-indel)",
+          "effect sizes",
+          "FDR-significant associations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multiple variant classes (SNP, MNP, indels, structural variants) reveal complementary trait associations in oil palm",
+        "result": "Structural indels identified for palm height; multi-class analysis detected MNP and indel associations with oil-mesocarp ratio and rachis length; SHELL locus recovered as positive control"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77757-2": {
+    "category": "Statistical Methods",
+    "task": "Split federated learning for ECG arrhythmia classification on wearable devices",
+    "key_results": "FedIoMT-RPM: 93.97%\u00b11.72% accuracy, MCC 0.731\u00b10.039, macro-F1 60.07%\u00b12.41% (MIT-BIH inter-patient protocol); 6.8\u00d7 smaller client-side model (28.4 KiB); 18.9% less communication than SplitFed",
+    "comments": "Practical IoMT deployment framework; ECG reconstruction attacks recover signals from transmitted activations, requiring additional privacy protection; supraventricular beat sensitivity limited (64.8%).",
+    "model_io": [
+      {
+        "model": "FedIoMT-RPM (split federated learning + adaptive weighted aggregation)",
+        "inputs": [
+          "patient ECG waveforms (distributed across 5 hospital-level clients)"
+        ],
+        "outputs": [
+          "arrhythmia class prediction",
+          "federated model weights"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Split federated learning with adaptive aggregation maintains arrhythmia detection while protecting patient privacy",
+        "result": "Performance comparable to centralized baselines; communication 18.9% lower than SplitFed; privacy attacks feasible on intermediate activations"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78172-3": {
+    "category": "Genomics",
+    "task": "Ferro-aging-related gene signature for cervical cancer prognosis and drug prediction",
+    "key_results": "8-gene FARG signature (DUOX1, E2F1, IL1B, KEAP1, MAP3K14, SLAMF8, TFRC, TNFAIP3) constructed; moderate prognostic discriminatory power in internal and external cohorts; BRD-A56371469 predicted DUOX1 binder",
+    "comments": "Multi-omics integration (bulk, scRNA-seq, spatial transcriptomics) provides layered validation; FARG signature moderate prognostic power; drug prediction computational only, requiring experimental validation.",
+    "model_io": [
+      {
+        "model": "FARG machine learning models (SHAP-interpreted)",
+        "inputs": [
+          "TCGA CESC bulk RNA-seq",
+          "GEO expression data",
+          "single-cell RNA-seq",
+          "spatial transcriptomics"
+        ],
+        "outputs": [
+          "risk stratification",
+          "FARG signature score",
+          "cell type associations"
+        ]
+      },
+      {
+        "model": "Virtual screening + molecular docking",
+        "inputs": [
+          "DUOX1 protein structure"
+        ],
+        "outputs": [
+          "candidate compound (BRD-A56371469)",
+          "binding affinity predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Ferro-aging gene signature predicts cervical cancer prognosis and identifies therapeutic targets",
+        "result": "8-gene model constructed with moderate discriminatory power; spatial transcriptomics revealed immunosuppressive TME in high-risk group; BRD-A56371469 predicted DUOX1 modulator"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78505-2": {
+    "category": "Structural Prediction",
+    "task": "Metric dimension analysis of antiviral drug molecular graphs",
+    "key_results": "Galidesivir molecular graph metric dimension = 4; exchange property holds for metric, edge metric, and mixed dimensions",
+    "comments": "Graph-theoretic characterization provides structural classification framework but lacks pharmacological validation or clinical relevance.",
+    "model_io": [
+      {
+        "model": "Chemical graph analysis",
+        "inputs": [
+          "molecular structure (atoms, bonds)"
+        ],
+        "outputs": [
+          "metric dimension",
+          "resolving sets",
+          "distance representations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Resolving set exchange property characterizes structural rigidity of antiviral drug molecules",
+        "result": "Exchange property confirmed for Galidesivir across three resolvability parameters"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78529-8": {
+    "category": "Structural Prediction",
+    "task": "Deep learning-based stroke lesion detection with attention and multi-scale fusion",
+    "key_results": "YOLOv8n with CBAM and Detect_ASFF: 74.9% mAP@0.5, 36.1% mAP@0.5:0.95 on patient-level hold-out (34 patients, 474 images); medium lesion recall 62.5%\u219273.5%, large lesion 84.9%\u219290.3%",
+    "comments": "Lightweight architecture suitable for real-time deployment; modest performance on strict IoU thresholds (36.1% mAP@0.5:0.95); clinical utility requires prospective external validation.",
+    "model_io": [
+      {
+        "model": "YOLOv8n with CBAM + Detect_ASFF",
+        "inputs": [
+          "stroke CT/MRI images"
+        ],
+        "outputs": [
+          "lesion bounding boxes",
+          "confidence scores",
+          "lesion size classification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "CBAM attention and adaptive spatial feature fusion improve small-lesion detection",
+        "result": "Medium and large lesion recall improved; overall mAP@0.5:0.95 modest (36.1%), indicating difficulty with high IoU threshold"
+      }
+    ]
+  },
+  "nature:10.1038/s44260-026-00102-1": {
+    "category": "Other",
+    "task": "Agent-friendly interfaces for complex systems simulation",
+    "key_results": "Conceptual framework identifying lack of agent-compatible APIs in existing simulators",
+    "comments": "Positions an important infrastructure gap but provides no empirical results, prototype systems, or methodology.",
+    "model_io": [],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-68486-7": {
+    "category": "ML Theory",
+    "task": "Benchmarking latent-space reasoning in large language models via forced response-language selection",
+    "key_results": "GPT-4.5 achieves 74.7% accuracy; internal reasoning detectable but heuristic exploitations possible under certain conditions; control experiments identify boundary",
+    "comments": "Creative methodology for measuring covert reasoning; results cautiously support latent computation but note heuristic alternatives remain possible.",
+    "model_io": [
+      {
+        "model": "LLM latent-space reasoning benchmark",
+        "inputs": [
+          "4000 reasoning problems",
+          "non-English response language constraint"
+        ],
+        "outputs": [
+          "accuracy scores",
+          "internal reasoning signal"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LLMs perform internal reasoning computations in latent space",
+        "result": "Supported but not definitively: GPT-4.5 74.7% accuracy suggests reasoning, but heuristic alternatives not ruled out"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-71099-9": {
+    "category": "Other",
+    "task": "Conflict detection in autonomous drone navigation under uncertainty",
+    "key_results": "Fermatean fuzzy CRITIC-WASPAS framework demonstrates consistent ranking behavior and better stability under sensitivity analysis compared to TOPSIS and VIKOR",
+    "comments": "Framework adds uncertainty quantification rigor, but lacks quantitative deployment metrics (e.g., detection latency, real-world safety validation).",
+    "model_io": [
+      {
+        "model": "Fermatean fuzzy CRITIC-WASPAS",
+        "inputs": [
+          "conflict scenarios",
+          "multi-criteria attributes",
+          "uncertainty ranges"
+        ],
+        "outputs": [
+          "ranked conflict-resolution options",
+          "stability scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Fermatean fuzzy sets model uncertainty better than classical fuzzy logic in drone conflict detection",
+        "result": "Supported by improved consistency under sensitivity analysis vs. TOPSIS/VIKOR"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-73409-7": {
+    "category": "Other",
+    "task": "Split-plane Zero Trust architecture for low-cost digital publishing",
+    "key_results": "Bidirectional probes validate directional WireGuard policy; 41,247 identifiers and 4.54 GiB uploaded in 183s with site availability maintained; FP rate = 0 on benign paths",
+    "comments": "Practical security architecture reducing infrastructure costs; operational validation is solid, but threat model limitations should be acknowledged.",
+    "model_io": [
+      {
+        "model": "IA-ZTA (infrastructure-aware Zero Trust)",
+        "inputs": [
+          "public replica requests",
+          "control plane sessions"
+        ],
+        "outputs": [
+          "WireGuard tunnel promotions",
+          "directional policy enforcement"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Split-plane architecture enables low-cost publishing with reduced security overhead",
+        "result": "Confirmed: validated directional policy, rapid data transfer, zero false positives on benign paths"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77120-5": {
+    "category": "Algorithms",
+    "task": "Building extraction from remote sensing imagery",
+    "key_results": "LMDE-UNet achieves 73.47% IoU and 85.16% F1-score on Typical Chinese Urban Building Dataset, exceeding SwinUNet by 0.99 and 0.63 percentage points",
+    "comments": "Modest performance gains through architectural innovations; ablation confirms synergistic contributions of proposed modules.",
+    "model_io": [
+      {
+        "model": "LMDE-UNet",
+        "inputs": [
+          "remote sensing images"
+        ],
+        "outputs": [
+          "building segmentation masks",
+          "IoU scores",
+          "F1-scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Window-based local multi-directional scanning with edge enhancement improves building extraction",
+        "result": "Confirmed with higher IoU/F1 than baselines; WLMS provides larger gains when combined with BFAM and DEEM"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77141-0": {
+    "category": "Statistics/Probability",
+    "task": "Cross-validation protocol sensitivity in financial time series deep learning",
+    "key_results": "Confirmatory purged/embargoed cross-validation shows ConvNeXt+CLIP at 44.0% accuracy (MCC=0.158) vs. exploratory 64.0%; non-visual baselines indistinguishable from chance (33.3%)",
+    "comments": "Rigorous study demonstrating leakage risk in financial ML; headline result (44%) invalidates exploratory findings and emphasizes protocol importance.",
+    "model_io": [
+      {
+        "model": "Pretrained visual encoders (DINOv2, ConvNeXt Tiny, CLIP)",
+        "inputs": [
+          "gold futures OHLC (2000-2025)",
+          "line/candlestick/Gramian Angular Field encodings"
+        ],
+        "outputs": [
+          "SELL/HOLD/BUY predictions",
+          "accuracy",
+          "MCC scores"
+        ]
+      },
+      {
+        "model": "Sequence baselines (LSTM, GRU, Transformer)",
+        "inputs": [
+          "OHLC sequences"
+        ],
+        "outputs": [
+          "predictions",
+          "accuracies near 33.3%"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Pretrained visual representations outperform OHLC and sequence models for gold price classification",
+        "result": "Partially confirmed: visual models retain modest signal (44%) under conservative protocol vs. chance"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77577-4": {
+    "category": "Algorithms",
+    "task": "Region-aware spatial-frequency adaptive fusion for single image dehazing",
+    "key_results": "Fused dark/bright channel priors with NSCT processing demonstrates consistent performance across five datasets on PSNR/SSIM/other quality metrics",
+    "comments": "Straightforward fusion of complementary priors; quantitative metrics not provided in abstract, limiting assessment.",
+    "model_io": [
+      {
+        "model": "Region-aware spatial-frequency adaptive fusion",
+        "inputs": [
+          "hazy images"
+        ],
+        "outputs": [
+          "dehazed images",
+          "scene radiance",
+          "transmission maps"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Fusing dark and bright channel priors improves dehazing across sky and non-sky regions",
+        "result": "Supported by consistent performance across five datasets"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77607-1": {
+    "category": "ML Theory",
+    "task": "Ensemble-based federated learning for false data injection attack detection in AIoT",
+    "key_results": "FLFDA-ECM: security-classification 93.67% accuracy with FedAdam, regression 0.6562 R\u00b2 with FedYogi; 22.25% communication reduction; top-k compression effective",
+    "comments": "Multi-component ensemble with dual-level preprocessing; empirical evaluation on benchmark dataset requires external validation.",
+    "model_io": [
+      {
+        "model": "FLFDA-ECM (federated ensemble with BiGRU, VAE, TCN)",
+        "inputs": [
+          "FDIA-injected smart grid data",
+          "feature-engineered attributes"
+        ],
+        "outputs": [
+          "attack classification",
+          "health-risk regression",
+          "parameter updates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Ensemble federated learning with privacy preservation detects false data injection attacks",
+        "result": "Confirmed: 93.67% security classification, effective communication compression"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77752-7": {
+    "category": "Algorithms",
+    "task": "Low-voltage stick-slip piezoelectric actuator control via LuGre friction modeling",
+    "key_results": "LuGre model-based simulation enables voltage scheduling for coarse-to-fine positioning; three-actuator configuration demonstrates feasibility with discrete move-measure-correct strategy",
+    "comments": "Simulation-only study; experimental validation on actual hardware needed before deployment.",
+    "model_io": [
+      {
+        "model": "LuGre friction model in MATLAB/Simulink",
+        "inputs": [
+          "driving voltage",
+          "frequency",
+          "position error"
+        ],
+        "outputs": [
+          "step size",
+          "velocity",
+          "position displacement"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Voltage scheduling based on LuGre friction model enables effective positioning control",
+        "result": "Simulation demonstrates feasibility; coarse motion at large errors, fine positioning near target"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77809-7": {
+    "category": "ML Theory",
+    "task": "Machine learning-driven reverse prediction of concrete mix design with physics-informed correction",
+    "key_results": "Extra Trees highest test R\u00b2=0.341; Gradient Boosting highest 10-fold CV R\u00b2=0.262 \u00b1 0.041; physics layer corrects W/C from 1.0 to 0.80 with modest R\u00b2 loss",
+    "comments": "Inverse design problem with limited invertibility; component-wise R\u00b2 variation (0.52 hydration-driven vs. 0.16 aggregate-determined) reflects concrete chemistry.",
+    "model_io": [
+      {
+        "model": "12-algorithm comparison (linear, instance-based, tree, ensemble, kernel, deep learning)",
+        "inputs": [
+          "target 28-day compressive strength",
+          "curing age"
+        ],
+        "outputs": [
+          "proportions of 7 concrete components",
+          "R\u00b2 scores per component"
+        ]
+      },
+      {
+        "model": "Physics-informed correction layer",
+        "inputs": [
+          "model predictions"
+        ],
+        "outputs": [
+          "constrained proportions (W/C, cement, SCM, superplasticizer)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Inverse concrete mix design via ML is feasible with physics constraints",
+        "result": "Partially confirmed: hydration-controlled components (R\u00b2~0.5) more predictable than aggregates (R\u00b2<0.2); physics layer enables constraint satisfaction"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78345-0": {
+    "category": "Statistics/Probability",
+    "task": "Comprehensive benchmarking framework for intrusion detection systems under deployment conditions",
+    "key_results": "SH4 framework integrates threshold-dependent/independent assessment, drift-aware online evaluation, and interpretability; MLP and reconstruction-based proxy strongest; ranking stability remains under reduced separability",
+    "comments": "Rigorous benchmarking methodology addressing generalization, threshold calibration, and drift; reveals that single headline metrics obscure operational trade-offs.",
+    "model_io": [
+      {
+        "model": "SH4 benchmarking (12 heterogeneous IDS architectures)",
+        "inputs": [
+          "network traffic",
+          "attack scenarios",
+          "distributional shift conditions"
+        ],
+        "outputs": [
+          "threshold-dependent metrics",
+          "drift-aware scores",
+          "interpretability diagnostics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Comprehensive multi-dimensional evaluation reveals IDS trade-offs hidden by single-score reporting",
+        "result": "Confirmed: ranking preserved under reduced separability; threshold calibration and drift materially alter utility"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78859-7": {
+    "category": "Algorithms",
+    "task": "Lightweight deep unfolding for video snapshot compressive imaging reconstruction",
+    "key_results": "LDUnet achieves competitive reconstruction performance with substantially reduced model complexity; ablations confirm measurement normalization and parameter sharing contributions",
+    "comments": "Efficient design with practical trade-offs; evaluation on simulated and real datasets shows robustness under unseen masks and noise.",
+    "model_io": [
+      {
+        "model": "LDUnet (deep unfolding framework)",
+        "inputs": [
+          "coded measurements",
+          "SCI measurement model",
+          "compression factor"
+        ],
+        "outputs": [
+          "reconstructed video frames",
+          "PSNR/SSIM scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Measurement-consistent unfolding with parameter sharing maintains reconstruction quality while reducing model size",
+        "result": "Confirmed: marginal accuracy change with substantial complexity reduction"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79032-w": {
+    "category": "Other",
+    "task": "Hyperbolic neural network for spatiotemporal link prediction in location-based social networks",
+    "key_results": "Hyperbolic model achieves up to 13.1% higher F1-score and 23.8% higher Recall (class 1) on Brightkite vs. Euclidean MLP; faster convergence on Gowalla",
+    "comments": "Geometric insight into LBSN hierarchies is valuable; larger-scale and ablation studies would strengthen claims.",
+    "model_io": [
+      {
+        "model": "Hyperbolic Neural Network (HNN)",
+        "inputs": [
+          "spatiotemporal user features",
+          "friendship relations",
+          "check-in data"
+        ],
+        "outputs": [
+          "link predictions",
+          "F1-scores",
+          "Recall metrics"
+        ]
+      },
+      {
+        "model": "Euclidean MLP baseline",
+        "inputs": [
+          "same features"
+        ],
+        "outputs": [
+          "predictions",
+          "lower F1/Recall"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Hyperbolic geometry better models hierarchical LBSN structures than Euclidean space",
+        "result": "Confirmed with substantial F1/Recall gains; faster convergence on large-scale data"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11209-9": {
+    "category": "Sensory Systems",
+    "task": "Elucidate how ecological and social cues integrate to orchestrate mating behavior across fly populations",
+    "key_results": "Food volatiles promote male sexual arousal in D. erecta, triggering visual motion feedback that amplifies courtship across groups; species-specific variation in olfactory-courtship coupling reflects differences in central arousal thresholds",
+    "comments": "The multisensory feedback loop model is elegant, but the mechanism of how visual motion specifically amplifies arousal in each individual requires deeper characterization.",
+    "model_io": [
+      {
+        "model": "D. erecta mating behavior in ecological context",
+        "inputs": [
+          "food volatiles",
+          "visual motion (group density)",
+          "male-female pairings"
+        ],
+        "outputs": [
+          "sexual arousal",
+          "courtship behavior",
+          "group-level mating dynamics"
+        ]
+      },
+      {
+        "model": "Comparative circuit analysis (D. erecta vs. D. melanogaster)",
+        "inputs": [
+          "olfactory input",
+          "conserved courtship drive nodes"
+        ],
+        "outputs": [
+          "species-specific arousal thresholds",
+          "olfactory modulation strength"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Food volatiles are a strict sensory gate for courtship in D. erecta but not D. melanogaster",
+        "result": "Confirmed; circuit variation in olfactory modulation of conserved nodes explains species difference"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11217-9": {
+    "category": "Neural Circuits",
+    "task": "Determine whether aggression observation and experience engage common neural mechanisms for behavioral adaptation",
+    "key_results": "Observation and experience produce shared adaptive behavioral signatures and activate overlapping subcortical networks; widespread reduction in inhibition is necessary for behavioral change in both conditions",
+    "comments": "The longitudinal recording design is technically impressive, but causality for the inhibitory plasticity mechanism relies on perturbation rather than direct manipulation during learning.",
+    "model_io": [
+      {
+        "model": "Mouse aggression learning (direct experience vs. observation)",
+        "inputs": [
+          "aggression experience",
+          "aggression observation"
+        ],
+        "outputs": [
+          "behavioral strategy",
+          "subcortical network activity patterns",
+          "inhibitory tone changes"
+        ]
+      },
+      {
+        "model": "Multiregion neural modeling",
+        "inputs": [
+          "cell-type-specific recordings across subcortical regions"
+        ],
+        "outputs": [
+          "core aggression network changes",
+          "inhibitory plasticity signatures"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Experience and observation recruit shared inhibitory plasticity mechanisms",
+        "result": "Confirmed; both conditions show widespread reduction in inhibition and persistent neural changes"
+      },
+      {
+        "hypothesis": "Reduced inhibition is necessary for adaptive behavioral change",
+        "result": "Confirmed through perturbation experiments"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11229-5": {
+    "category": "Synaptic Plasticity",
+    "task": "Identify the neural mechanism by which post-ingestive nutrient signals drive flavor-nutrient learning",
+    "key_results": "Nutrient-triggered dopamine release occurs selectively in anterior basolateral amygdala (left hemisphere preference); CCK+ dopamine neurons convey gut nutrient information; anterior BLA neurons integrate gustatory and post-ingestive cues",
+    "comments": "The laterality finding (left BLA) aligns with human neuroimaging but the functional significance of this asymmetry remains speculative.",
+    "model_io": [
+      {
+        "model": "Flavor-nutrient learning in mice",
+        "inputs": [
+          "flavor (gustatory)",
+          "post-ingestive nutrients (gut signals)"
+        ],
+        "outputs": [
+          "dopamine release in anterior BLA",
+          "learned flavor preference"
+        ]
+      },
+      {
+        "model": "Dopamine pathway circuit",
+        "inputs": [
+          "CCK+ VTA neurons",
+          "gut nutrient sensors"
+        ],
+        "outputs": [
+          "DA release in anterior BLA",
+          "integrative BLA neuron activity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "VTA dopamine neurons are necessary for nutrient-flavor association",
+        "result": "Confirmed"
+      },
+      {
+        "hypothesis": "Post-ingestive nutrients trigger DA release selectively in anterior BLA, not striatum",
+        "result": "Confirmed"
+      },
+      {
+        "hypothesis": "BLA neurons integrate gustatory and post-ingestive cues for learning",
+        "result": "Confirmed by two-photon imaging; silencing prevents learning"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11236-6": {
+    "category": "Neurodegeneration",
+    "task": "Identify shared transcriptomic convergence across diverse ASD mutations and explain the female protective effect",
+    "key_results": "18 ASD gene perturbations converge on shared downregulation of other ASD genes; X-linked ZFX is a key ASD gene activator with higher expression in females, providing molecular basis for female protective effect",
+    "comments": "The transcriptomic convergence is compelling, but the connection between convergence and core ASD behavioral phenotypes remains largely unexplored in this work.",
+    "model_io": [
+      {
+        "model": "Human neural progenitor cells with ASD gene perturbations",
+        "inputs": [
+          "18 ASD gene knockdowns"
+        ],
+        "outputs": [
+          "gene expression changes",
+          "transcriptional network dysregulation"
+        ]
+      },
+      {
+        "model": "Gene regulatory network reconstruction",
+        "inputs": [
+          "transcriptomic data from perturbed cells"
+        ],
+        "outputs": [
+          "central transcriptional regulators (CHD8, REST)",
+          "ASD gene regulatory connections"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Individual ASD gene disruptions converge on shared transcriptomic effects",
+        "result": "Confirmed; widespread downregulation of other ASD genes detected"
+      },
+      {
+        "hypothesis": "ZFX higher expression in females buffers ASD mutations",
+        "result": "Proposed mechanism based on ZFX's role as key activator of ASD genes; ZFX escapes X-inactivation in females"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-79220-2": {
+    "category": "High Energy/Particle",
+    "task": "Characterize expanding bifurcated current sheets in magnetic reconnection",
+    "key_results": "EBCS identified consistently in lab experiments, spacecraft observations (Earth/Sun), and kinetic simulations; double-peaked current layers with localized electric fields and strong ion acceleration; occur for 0.1<\u03b2\u22721 during quasi-steady antiparallel reconnection",
+    "comments": "Cross-scale consistency from 10 m (lab) to 10\u2078 km (solar wind) validates two-fluid reconnection model, though causal link between EBCS formation and outflow opening requires further investigation.",
+    "model_io": [
+      {
+        "model": "Magnetic reconnection in collisionless plasma",
+        "inputs": [
+          "Initial antiparallel magnetic field configuration",
+          "Plasma beta, plasma composition"
+        ],
+        "outputs": [
+          "Current sheet structure",
+          "Electric field distribution",
+          "Ion acceleration signatures"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "EBCS arise from two-fluid plasma dynamics",
+        "result": "Confirmed; consistent across laboratory, space, and simulation domains"
+      },
+      {
+        "hypothesis": "EBCS link Petschek classical model to open reconnection outflows",
+        "result": "Supported; connection established across system scales"
+      }
+    ]
+  },
+  "nature:10.1038/s41524-026-02364-8": {
+    "category": "Applied Physics",
+    "task": "Automate quantitative HRTEM image analysis using physics-informed Bayesian optimization",
+    "key_results": "3\u20134 order-of-magnitude improvement in time efficiency for 3D crystal structure determination from single HRTEM image; automated full-field-of-view analysis demonstrated on BaTiO\u2083 with heavy/medium/light elements",
+    "comments": "BO framework efficiently handles high-dimensional parameter spaces, but generalization to diverse materials and sample geometries requires further validation.",
+    "model_io": [
+      {
+        "model": "Physics-informed Bayesian optimization for HRTEM",
+        "inputs": [
+          "Experimental HRTEM image",
+          "Physics-based forward model (image simulation)"
+        ],
+        "outputs": [
+          "3D crystal structure parameters (atomic positions, defects)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "BO stepwise strategy efficiently refines parameter space for rapid HRTEM quantification",
+        "result": "Confirmed; dramatic time improvement demonstrated"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11225-9": {
+    "category": "Quantum",
+    "task": "Observe prethermal dynamical phase transitions in quenched spin systems",
+    "key_results": "Stable dynamical regimes in 180-qubit systems; first-order prethermal phase transition with exponentially long timescales; quantitative agreement with Floquet prethermal steady states",
+    "comments": "Demonstrates scalable neutral-atom quantum simulation of far-from-equilibrium dynamics, though prethermalization limits long-time applicability.",
+    "model_io": [
+      {
+        "model": "Neutral-atom quantum simulator (180 qubits)",
+        "inputs": [
+          "Product state initial condition",
+          "Quench parameters across parameter space"
+        ],
+        "outputs": [
+          "Dynamical response",
+          "Defect proliferation",
+          "First-order phase transition signatures"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Dynamical regimes stabilized by Floquet-like prethermal steady states",
+        "result": "Confirmed; robust over exponentially long emergent timescales"
+      },
+      {
+        "hypothesis": "Sharp peaks in dynamical response explained by structured melting through resonances",
+        "result": "Confirmed; quantitatively explained by resonant breakdown"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11245-5": {
+    "category": "Optics/Photonics",
+    "task": "Develop attosecond metrology and synchronization for hard X-ray pulses",
+    "key_results": "First time-domain characterization of hard X-ray pulse coherence time; attosecond synchronization between pulse pairs; intensity autocorrelation measures 170 as average pulse duration; enables X-ray pump\u2013X-ray probe spectroscopy and diffraction",
+    "comments": "Breakthrough in hard X-ray metrology enables unprecedented spatiotemporal resolution (~0.1 \u00c5 / 170 as), though high-rep-rate extension to enable pump-probe scanning remains challenging.",
+    "model_io": [
+      {
+        "model": "Broadband X-ray split-delay line (XFEL-based)",
+        "inputs": [
+          "Hard X-ray attosecond pulse train"
+        ],
+        "outputs": [
+          "Field correlation (coherence time)",
+          "Pulse synchronization",
+          "Intensity autocorrelation (pulse duration)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Nonlinear two-photon absorption enables time-domain pulse duration measurement",
+        "result": "Confirmed; 170 as duration quantified"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11274-0": {
+    "category": "Condensed Matter",
+    "task": "Map twist-angle-dependent quantum phase diagram of moir\u00e9 MoTe\u2082 bilayers",
+    "key_results": "Evolution from fractional quantum anomalous Hall states (3.79\u00b0) \u2192 valley-degenerate correlated states \u2192 superconductivity (>5.6\u00b0); anomalous composite Fermi liquid at \u03bd\u2095=1/2; integer-to-trivial correlated insulator transition with displacement field",
+    "comments": "Comprehensive phase diagram reveals unified twist-angle-driven evolution linking topology, symmetry breaking, and superconductivity; direct comparison to WSe\u2082 strengthens generalization.",
+    "model_io": [
+      {
+        "model": "Twisted bilayer MoTe\u2082 (twist angles 3.79\u00b0\u20135.76\u00b0)",
+        "inputs": [
+          "Carrier density (via gate), magnetic field, displacement field"
+        ],
+        "outputs": [
+          "Transport signatures (Hall resistance, longitudinal resistance)",
+          "Correlated quantum states"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Increasing twist angle suppresses fractional topological phases",
+        "result": "Confirmed; progressive reconstruction toward integer and trivial states"
+      },
+      {
+        "hypothesis": "Superconductivity emerges adjacent to correlated insulator at large twist angles",
+        "result": "Confirmed; phase diagram resembles twisted WSe\u2082"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77643-x": {
+    "category": "Other",
+    "task": "Experimentally validate ensemble dynamics approach for drifting chaotic systems",
+    "key_results": "Six measured time series from three double pendula under controlled excitation amplitude drift; individual trajectories remain within ensemble simulation bands; snapshot attractor concept confirmed; equations of motion consistent with experiments",
+    "comments": "First experimental validation of ensemble dynamics for parameter drift extends prior simulation-only studies, though system remains low-dimensional and drift rates are modest.",
+    "model_io": [
+      {
+        "model": "Double pendulum system (\u00d73 units) with drifting excitation",
+        "inputs": [
+          "Time-varying shaker excitation amplitude",
+          "Initial conditions"
+        ],
+        "outputs": [
+          "Time series trajectories",
+          "Ensemble envelope",
+          "Snapshot attractors"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Ensemble approach captures global dynamics better than individual trajectories under parameter drift",
+        "result": "Confirmed; ensemble bands contain all measured trajectories"
+      },
+      {
+        "hypothesis": "Snapshot attractor concept explains transition from initialization to time-dependent steady state",
+        "result": "Confirmed; observed experimentally"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77910-x": {
+    "category": "Optics/Photonics",
+    "task": "Develop improved brilliance metric for coherent advanced accelerator X-ray sources",
+    "key_results": "Updated brilliance plot in 0.01% relative bandwidth (vs traditional 0.1%); analytical expressions incorporate non-uniform SASE current profile and seeded harmonic scaling; closed-form saturation length formula provided",
+    "comments": "Addresses overestimation in coherent X-ray source characterization, but application limited to undulator and FEL regimes; high-harmonic generation sources may require further refinement.",
+    "model_io": [
+      {
+        "model": "X-ray undulator and free-electron laser source model",
+        "inputs": [
+          "Electron beam parameters (emittance, energy spread, current profile)",
+          "Undulator parameters",
+          "Harmonic number"
+        ],
+        "outputs": [
+          "Spectral brilliance (0.01% BW)",
+          "Pulse duration",
+          "Saturation length"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Non-uniform electron current profile affects SASE saturation length calculation",
+        "result": "Confirmed; must be included for accuracy"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78329-0": {
+    "category": "Applied Physics",
+    "task": "Design secure routing protocol for wireless sensor networks with Markov filtering and swarm optimization",
+    "key_results": "RSMFSO extends network lifetime to Round 400 (100 nodes scenario) and Round 1000 with 98 active nodes (300 nodes); first node death delayed to Round 500; mitigates blackhole attacks with <10% malicious nodes; Wilcoxon test p<0.05 vs LEACH/MMABC/WIFNCP",
+    "comments": "Comprehensive empirical evaluation with statistical validation, though attack models simplified; real-world deployments require validation against sophisticated insider threats.",
+    "model_io": [
+      {
+        "model": "RSMFSO (trust-aware radio-aware routing)",
+        "inputs": [
+          "WSN topology",
+          "5-round rolling state profile (PMF)",
+          "Node trust scores",
+          "Radio propagation constraints (d\u00b2 free-space)"
+        ],
+        "outputs": [
+          "Routing paths",
+          "Cluster heads",
+          "Active node count over time"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Predictive Markov filtering preemptively isolates compromised nodes",
+        "result": "Confirmed; blackhole mitigation effective with <10% malicious footprint"
+      },
+      {
+        "hypothesis": "Radio-aware optimization with d\u00b2 transmission limits extends lifetime vs d\u2074 swarm overpromotion",
+        "result": "Confirmed; substantial lifetime extension vs baselines"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79056-2": {
+    "category": "Applied Physics",
+    "task": "Estimate BLDC motor speed sensorlessly using physics-informed neural networks",
+    "key_results": "Steady-state error \u22648 rpm at 500-1000 rpm; precise tracking at 1500-1600 rpm using PINN-based EKF; outperforms conventional methods under high-speed nonlinear dynamics",
+    "comments": "Validated experimentally on embedded platform, but limited to simulated parameter variations; real-world robustness to actual motor degradation untested.",
+    "model_io": [
+      {
+        "model": "Physics-Informed Neural Network (EKF-based)",
+        "inputs": [
+          "Back-EMF voltage",
+          "Stator current",
+          "Motor model constraints"
+        ],
+        "outputs": [
+          "Estimated motor speed"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "PINN-based EKF overcomes parameter variation and nonlinear dynamics at high speed",
+        "result": "Confirmed; experimental validation on LAUNCHXL-F28379D board"
+      }
+    ]
+  },
+  "nature:10.1038/s44304-026-00293-6": {
+    "category": "Applied Physics",
+    "task": "Audit infrastructure adaptation efficacy following repeated earthquakes",
+    "key_results": "Yokoe Bridge: 19.61 days to reopening after later earthquake vs 1022.4 days after earlier; all restoration ratios <1; Mashiki Central Line: passage observed in 20/21 post-shock snapshots within 43.55 h",
+    "comments": "Rigorous bounded design with explicit measurement and chronology boundaries, though limited to two case studies restricts generalizability.",
+    "model_io": [
+      {
+        "model": "Matched-endpoint infrastructure analysis",
+        "inputs": [
+          "Official intervention chronologies",
+          "Event-specific shaking (MMI, PGA, spectral acceleration)",
+          "Post-event performance snapshots"
+        ],
+        "outputs": [
+          "Restoration time ratios",
+          "Operational corridor passage timelines",
+          "Infrastructure adaptation audit"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Structural adaptations enable faster reopening under higher shaking intensity",
+        "result": "Supported at Yokoe Bridge; asymmetric outcomes suggest context-dependent learning"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11243-7": {
+    "category": "Evolutionary Dynamics",
+    "task": "Quantify viral-bacterial synergy in algal bloom collapse and identify drivers of coordinated co-infection",
+    "key_results": "Bacteria enhanced virus-induced algal mortality across multiple species despite <30% active viral infection; Alteromonas spp. showed high synergy index and preferentially accumulated in infected aggregates during oceanic bloom collapse",
+    "comments": "Novel metrics elegantly quantify cryptic microbial interactions, but synthetic community may not fully capture in situ chemical complexity or predation dynamics.",
+    "model_io": [
+      {
+        "model": "Tripartite synthetic community: Gephyrocapsa huxleyi + environmental bacteria + viral isolates",
+        "inputs": [
+          "infected cell extracts (chemical cues)",
+          "viral infection",
+          "bacterial abundance"
+        ],
+        "outputs": [
+          "algal mortality rate",
+          "synergy index",
+          "benefit index",
+          "bacterial chemoattraction",
+          "aggregate formation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Bacteria enhance virus-induced algal mortality through synergistic interaction beyond independent additive effects",
+        "result": "Confirmed; synergy index quantifies bacterial-viral interaction strength with Alteromonas as key driver"
+      },
+      {
+        "hypothesis": "Alteromonas display chemoattraction to infected cell extracts and accumulate during bloom collapse in situ",
+        "result": "Confirmed; high synergy and benefit indices; field abundance increases during oceanic bloom termination"
+      },
+      {
+        "hypothesis": "Viral-bacterial synergy alters balance between carbon-recycling viral shunt and carbon-exporting viral shuttle pathways",
+        "result": "Proposed mechanism; direct measurement of carbon flux not presented"
+      }
+    ]
   }
 }
