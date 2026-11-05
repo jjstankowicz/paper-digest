@@ -707656,5 +707656,601 @@
         "result": "Demonstrated in proof-of-concept; practical coastal protection application viable"
       }
     ]
+  },
+  "hf:2611.05988": {
+    "category": "Generative",
+    "task": "Real-time video-to-audio generation for interactive applications",
+    "key_results": "Matches offline models in temporal alignment; achieves imperceptible latency (<human perceptual threshold) while maintaining audio-visual synchronization",
+    "comments": "Trailing Sliding Window is an elegant solution for converting non-causal encoders to streaming without retraining, though the contribution's practical impact depends on adoption in production systems.",
+    "model_io": [
+      {
+        "model": "LiveFoley (causal autoregressive diffusion)",
+        "inputs": [
+          "video frames"
+        ],
+        "outputs": [
+          "audio patches"
+        ]
+      },
+      {
+        "model": "Trailing Sliding Window visual frontend",
+        "inputs": [
+          "video segment encodings"
+        ],
+        "outputs": [
+          "streaming visual features"
+        ]
+      },
+      {
+        "model": "Local Diffusion Transformer (LocDiT) with History/Future-Warmup variants",
+        "inputs": [
+          "visual features",
+          "noise"
+        ],
+        "outputs": [
+          "denoised audio"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Non-causal segment-level encoders can be converted to streaming via window realignment without retraining",
+        "result": "Confirmed; Trailing Sliding Window preserves alignment while reducing look-ahead latency"
+      },
+      {
+        "hypothesis": "Widening the denoising window in both temporal directions improves audio quality",
+        "result": "Confirmed; History LocDiT improves quality at no latency cost; Future-Warmup further improves quality with acceptable backend look-ahead"
+      }
+    ]
+  },
+  "hf:2611.03517": {
+    "category": "LLM/Reasoning",
+    "task": "GPU kernel optimization via LLM agents with question-driven guidance",
+    "key_results": "KernelSeek achieved 1.13x FlashAttention-3 performance vs 0.50x for tool-rich autonomous baseline; generated 1.16x\u20131.46x faster kernels than FlashAttention-3/4 on Hopper/Blackwell",
+    "comments": "The insight that strategic questions outperform rich tool provisioning is compelling, but generalization beyond CUDA kernels and single-task focus remain open questions.",
+    "model_io": [
+      {
+        "model": "General-purpose LLM coding agent + question bank",
+        "inputs": [
+          "CUDA kernel source",
+          "performance profiler output",
+          "questions"
+        ],
+        "outputs": [
+          "optimized kernel code"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Questions at decision points provide better direction than equipping agents with richer tool sets",
+        "result": "Confirmed; every major gain followed a question that shifted the agent's focus to a different system layer or rejected a claimed limit"
+      },
+      {
+        "hypothesis": "A general-purpose agent with minimal domain knowledge can produce competitive implementations",
+        "result": "Confirmed; KernelSeek produces dependency-free FlashAttention kernels without CUTLASS, CuTe, or cuDNN"
+      }
+    ]
+  },
+  "hf:2611.03852": {
+    "category": "LLM/Reasoning",
+    "task": "Reducing reasoning token usage through history compaction without retraining",
+    "key_results": "Compact histories usually shorten future reasoning; coding case study shows reduced repeated verification; software-agent deployments reduce total token spending",
+    "comments": "The intervention is practical (no retraining required) but task quality and time-cost tradeoffs appear model- and domain-dependent, requiring careful evaluation per use case.",
+    "model_io": [
+      {
+        "model": "Open-weight LLM with intervention on reasoning history",
+        "inputs": [
+          "original reasoning trace",
+          "compaction policy"
+        ],
+        "outputs": [
+          "compact state record",
+          "continued reasoning"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Rewriting prior reasoning into compact state records reduces future reasoning token usage",
+        "result": "Confirmed; accepted compact histories usually shorten subsequent reasoning without retraining"
+      },
+      {
+        "hypothesis": "Compaction reduces total token spending in software-agent deployments",
+        "result": "Partially confirmed; total spending reduction depends on target and compressor; task quality and time-cost tradeoffs vary"
+      }
+    ]
+  },
+  "hf:2611.05029": {
+    "category": "Agents/RL",
+    "task": "Continual learning in physical AI with dynamics-aware plasticity control",
+    "key_results": "DRAP substantially improves retention of previous behaviors while preserving new-task acquisition compared to AdamW fine-tuning and EWC on LIBERO suites",
+    "comments": "Risk-weighted gradient accumulation via Lyapunov-inspired perturbation amplification is theoretically motivated, but evaluation limited to one vision-language model architecture on manipulation tasks.",
+    "model_io": [
+      {
+        "model": "OpenVLA subnetwork (KappaTune-selected) with DRAP plasticity scaling",
+        "inputs": [
+          "state-action trajectories",
+          "local trajectory-amplification risk estimates"
+        ],
+        "outputs": [
+          "adapted model parameters with risk-weighted learning rates"
+        ]
+      },
+      {
+        "model": "Ridge-regularized local linear model (Lyapunov estimator)",
+        "inputs": [
+          "expert state-action transitions"
+        ],
+        "outputs": [
+          "singular values (perturbation amplification estimates)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Sample-level action gradients weighted by trajectory-amplification risk better preserve previous behavior in continual learning",
+        "result": "Confirmed; DRAP shows substantially improved retention vs AdamW and EWC across LIBERO suites"
+      },
+      {
+        "hypothesis": "Replay-free continual learning can maintain new-task acquisition while improving retention",
+        "result": "Confirmed; DRAP preserves strong new-suite acquisition on sequential LIBERO tasks"
+      }
+    ]
+  },
+  "nature:10.1038/s44511-026-00004-w": {
+    "category": "Structural Biology",
+    "task": "Develop unified residue-numbering system for microbial rhodopsins",
+    "key_results": "MO numbering system applied to 129 structures and ~40,000 sequences; enables consistent comparison across divergent family members with low sequence identity",
+    "comments": "A practical taxonomic tool rather than mechanistic discovery, but essential infrastructure for organizing an expanding protein superfamily and supporting optogenetic engineering.",
+    "model_io": [
+      {
+        "model": "Microbial rhodopsins (archaea, bacteria, eukaryotes, viruses)",
+        "inputs": [
+          "Seven-transmembrane bundle structures",
+          "Retinal-binding pocket geometry",
+          "Sequence alignments"
+        ],
+        "outputs": [
+          "MO numbering assignments",
+          "Structure-guided residue mappings"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Structure-guided numbering anchored to retinal pocket enables comparison across low-identity sequences",
+        "result": "Confirmed; system successfully maps 129 diverse rhodopsin structures"
+      }
+    ]
+  },
+  "nature:10.1038/s41418-026-01894-4": {
+    "category": "Apoptosis/Cell Death",
+    "task": "Elucidate JNK-mediated coordination of apoptosis and proliferation during epithelial tissue stress recovery",
+    "key_results": "JNK pulse arrests proliferation and triggers apoptosis within 3 h; G2 arrest protective while G1 cells sensitive to JNK-induced apoptosis; JNK induces Dally/Dlp glypicans to enhance Wingless and Dpp ligand retention; Dlp activity essential for recovery from stress",
+    "comments": "Sophisticated cell-cycle-dependent JNK response allows selective elimination of damaged cells while protecting and expanding viable populations through morphogen signaling; elegant model for stress-induced tissue remodeling.",
+    "model_io": [
+      {
+        "model": "Drosophila wing primordia with optogenetic JNK activation; transcriptomic analysis",
+        "inputs": [
+          "JNK signaling pulse",
+          "cell cycle phase",
+          "Dally",
+          "Dlp",
+          "Wingless (Wnt)",
+          "Dpp (BMP)",
+          "apoptotic signals"
+        ],
+        "outputs": [
+          "proliferation arrest",
+          "apoptosis rate",
+          "glypican expression",
+          "morphogen signaling",
+          "tissue recovery",
+          "developmental completion"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "JNK activity level correlates with single-cell apoptosis probability",
+        "result": "Refuted; JNK triggers apoptosis independent of activity level, with cell-cycle phase as key modulator"
+      },
+      {
+        "hypothesis": "Dlp/Dally enhance tissue recovery by increasing morphogen signaling",
+        "result": "Confirmed; Dlp activity essential for recovery from ribosomal protein deficiency and irradiation stress"
+      }
+    ]
+  },
+  "nature:10.1038/s41419-026-09370-0": {
+    "category": "Cell Signaling",
+    "task": "Demonstrate CCL8-mediated macrophage infiltration and NF-\u03baB signaling in doxorubicin-induced ovarian toxicity",
+    "key_results": "DOX upregulates CCL8 in granulosa cells, driving M1 macrophage accumulation; Bindarit reduces collagen deposition, DNA damage, and apoptosis; fertility outcomes partially restored; Bindarit reverses DOX-induced NF-\u03baB and AKT phosphorylation",
+    "comments": "Localized ovarian delivery strategy is innovative, though long-term reproductive outcomes and potential off-target effects require validation.",
+    "model_io": [
+      {
+        "model": "Murine DOX ovarian injury model and KGN granulosa-like cells",
+        "inputs": [
+          "doxorubicin",
+          "Bindarit",
+          "CCL8",
+          "NF-\u03baB pathway",
+          "macrophage polarization"
+        ],
+        "outputs": [
+          "ovarian structure",
+          "follicle reserve",
+          "fertility",
+          "apoptosis markers",
+          "inflammatory gene expression"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "CCL8 upregulation drives macrophage-dependent inflammation in DOX-induced ovarian injury",
+        "result": "Confirmed; CCL8 knockdown suppressed inflammatory response"
+      },
+      {
+        "hypothesis": "Localized Bindarit delivery protects ovarian function",
+        "result": "Confirmed; reduced structural damage and partially restored fertility"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-79252-8": {
+    "category": "Cell Signaling",
+    "task": "Identify integrin \u03b12\u03b21 and its glycan interactions as receptors for equine rhinitis A virus entry",
+    "key_results": "CRISPRi screen identified integrin \u03b12\u03b21; virus binds closed-conformation \u03b12 \u03b2-propeller independent of divalent cations; binds high-mannose glycan at \u03b12 N112 and sialylated glycan at \u03b21 N269; both glycan interactions required for infection",
+    "comments": "Dual glycan-protein interaction mechanism represents a sophisticated viral adaptation to receptor diversity, with implications for understanding picornavirus tropism.",
+    "model_io": [
+      {
+        "model": "HEK293T cells and equine fibroblasts; cryo-EM analysis",
+        "inputs": [
+          "ERAV",
+          "integrin \u03b12\u03b21",
+          "glycans (mannose, sialic acid)",
+          "divalent cations"
+        ],
+        "outputs": [
+          "viral binding",
+          "cell infection",
+          "receptor conformation",
+          "cryo-EM structure"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "ERAV binds divalent cation-dependent integrin epitope",
+        "result": "Refuted; binding is independent of divalent cations"
+      },
+      {
+        "hypothesis": "Glycan interactions are required for viral entry",
+        "result": "Confirmed; glycan knockout and mutant studies demonstrated importance of both glycans"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-74079-1": {
+    "category": "Cell Division/Cycle",
+    "task": "Elucidate mechanism by which traditional Chinese herbal formulation DGST suppresses ESCC through glycolytic reprogramming",
+    "key_results": "DGST suppresses TAK1 phosphorylation, reduces I\u03baB\u03b1 and p65 phosphorylation, decreases GLUT1/HK2/PFKP/LDHA expression, reduces ATP levels; TAK1 knockdown enhances DGST effects; DGST suppresses tumor growth, proliferation, migration by ~60\u201380%",
+    "comments": "Network pharmacology approach identifies TAK1/NF-\u03baB/GLUT1 axis, though individual DGST constituents and their relative contributions remain to be fully elucidated.",
+    "model_io": [
+      {
+        "model": "4NQO-induced ESCC mouse model and TE-1 cancer cells with TAK1 knockdown/overexpression",
+        "inputs": [
+          "DGST",
+          "4NQO",
+          "TAK1",
+          "NF-\u03baB pathway",
+          "glycolytic enzymes (GLUT1, HK2, PFKP, LDHA)"
+        ],
+        "outputs": [
+          "tumor progression",
+          "cell proliferation",
+          "migration",
+          "invasion",
+          "apoptosis",
+          "phospho-TAK1/I\u03baB\u03b1/p65",
+          "ATP levels"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "DGST suppresses ESCC by modulating TAK1/NF-\u03baB axis",
+        "result": "Confirmed; TAK1 knockdown enhanced DGST efficacy"
+      },
+      {
+        "hypothesis": "Glycolytic reprogramming is downstream of TAK1/NF-\u03baB",
+        "result": "Confirmed; GLUT1 and glycolytic enzyme expression reduced via TAK1 modulation"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78997-y": {
+    "category": "Apoptosis/Cell Death",
+    "task": "Determine mechanisms by which MSC-derived exosomes protect liver from cadmium-induced ferroptosis",
+    "key_results": "MSCs-Exos reverse mitochondrial fragmentation and membrane potential loss; reduce ROS and iron accumulation; restore ferroptosis regulator expression; in vivo homing to injured liver and reduction of liver enzymes by ~50%",
+    "comments": "Therapeutic exosome approach shows promise but mechanism of hepatic targeting and optimal dosing require further investigation.",
+    "model_io": [
+      {
+        "model": "Cadmium-exposed hepatocytes and liver tissue (in vitro and in vivo mouse model)",
+        "inputs": [
+          "cadmium",
+          "MSC-derived exosomes",
+          "ferroptosis regulators",
+          "mitochondrial integrity factors"
+        ],
+        "outputs": [
+          "mitochondrial morphology",
+          "ROS levels",
+          "iron content",
+          "liver enzyme levels",
+          "inflammation markers"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Cadmium triggers mitochondria-dependent ferroptosis",
+        "result": "Confirmed; characterized by fragmentation, membrane potential loss, antioxidant depletion"
+      },
+      {
+        "hypothesis": "MSCs-Exos suppress ferroptosis by restoring mitochondrial integrity",
+        "result": "Confirmed; reversed multiple ferroptosis hallmarks"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-78784-3": {
+    "category": "Condensed Matter",
+    "task": "Nonlinear rheology of entangled polymers under extensional flow",
+    "key_results": "Strain-induced entangled-to-packed crossover identified via MD; inter-chain stress contribution quantitatively captured beyond tube model predictions",
+    "comments": "Molecular dynamics provides mechanistic insight but validation against experimental rheology data would strengthen conclusions; the packed-state model offers practical improvements for processing predictions.",
+    "model_io": [
+      {
+        "model": "Molecular dynamics simulation of entangled polymer chains",
+        "inputs": [
+          "extensional strain",
+          "chain topology",
+          "inter-chain interactions"
+        ],
+        "outputs": [
+          "stress tensor",
+          "primitive-chain stretch",
+          "inter-chain configuration"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Tube model fails in strong extension due to inter-chain reorganization",
+        "result": "Confirmed; convective disentanglement and alignment transition to packed state"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-78880-4": {
+    "category": "Optics/Photonics",
+    "task": "Compact X-ray laser generation via plasma wakefield acceleration",
+    "key_results": "Multi-gigawatt-class water-window X-ray pulses with wavelength tunability and femtosecond timescale; metre-scale device footprint compared to conventional km-scale FELs",
+    "comments": "Start-to-end simulations validate the concept but experimental demonstration remains pending; space-charge balance mechanism is elegant but sensitive to plasma parameter variations.",
+    "model_io": [
+      {
+        "model": "Plasma photocathode wakefield accelerator + undulator system",
+        "inputs": [
+          "laser pulse",
+          "plasma density",
+          "witness beam charge"
+        ],
+        "outputs": [
+          "electron beam (ultra-low emittance, tunable energy)",
+          "X-ray pulses (wavelength-tunable, coherent)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Space-charge forces balance wakefield to reduce energy spread and improve stability",
+        "result": "Confirmed; enables reliable multi-GW X-ray generation with robustness to plasma variations"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77470-0": {
+    "category": "Other",
+    "task": "RGB image encryption via 3D hyperchaotic system with coupled bidirectional diffusion",
+    "key_results": "NIST SP 800-22 statistical tests pass; entropy \u22488 bits; NPCR and UACI near ideal ranges; adjacent-pixel correlation near zero",
+    "comments": "Comprehensive cryptographic evaluation is thorough, but the novelty of the 3D hyperchaotic system design over prior work is not clearly delineated; session-dependent nonces add security but complexity.",
+    "model_io": [
+      {
+        "model": "HC-3D hyperchaotic system with sinusoidal modulation and modulo-one transformation",
+        "inputs": [
+          "RGB image",
+          "master key",
+          "session-dependent nonce"
+        ],
+        "outputs": [
+          "chaotic sequences (x,y,z)",
+          "permutation patterns (spatial and channel)",
+          "keystream",
+          "encrypted RGB image"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Coupled bidirectional diffusion with session-dependent permutation provides separation between encryption sessions",
+        "result": "Confirmed; NIST tests pass independently on components and final ciphertext"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77909-4": {
+    "category": "Other",
+    "task": "Secure group communication in resource-constrained IoT with insider threat detection",
+    "key_results": "Packet delivery recovery from 43.7% to 93.4% against blackhole attacker; 22.4 s median isolation time; 6.4% energy overhead on Class 1 hardware",
+    "comments": "Practical implementation on Contiki-NG is valuable, but trust-layer accuracy and false-positive rates under benign network failures need deeper analysis.",
+    "model_io": [
+      {
+        "model": "SecureGroup-IoT protocol (key hierarchy + trust voting + consensus eviction)",
+        "inputs": [
+          "sensor node broadcasts",
+          "forwarding observations",
+          "network topology"
+        ],
+        "outputs": [
+          "node trust scores (subjective logic)",
+          "misbehavior detection",
+          "key rotation triggers"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-watchdog consensus can detect and isolate malicious nodes without high overhead",
+        "result": "Confirmed; achieved fast isolation with <7% energy penalty on constrained devices"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78321-8": {
+    "category": "Optics/Photonics",
+    "task": "Wavelength-hybrid entangled photon source optimized for fiber QKD deployment",
+    "key_results": "Polarization entanglement visibility 97.3% (H/V) and 94.9% (D/A); state fidelity \u226596.1%; spectral brightness 1.9\u00d710\u00b3 pairs/s/mW/GHz over 300 GHz bandwidth",
+    "comments": "Clever wavelength choice (680 nm + 1550 nm) addresses practical deployment bottlenecks; high-brightness SPDC design is well-optimized but ppKTP substrate cost and alignment sensitivity merit discussion.",
+    "model_io": [
+      {
+        "model": "Type-0 SPDC in crossed-crystal ppKTP pumped at 473 nm",
+        "inputs": [
+          "pump power (473 nm)",
+          "crystal temperature",
+          "phase-matching angle"
+        ],
+        "outputs": [
+          "entangled photon pairs (680 nm, 1550 nm)",
+          "polarization entanglement visibility",
+          "spectral brightness"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Wavelength-hybrid design simultaneously addresses fiber loss, detector efficiency, and cost for practical QKD networks",
+        "result": "Confirmed; high fidelity and brightness enable scalable entanglement-based QKD nodes"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78907-2": {
+    "category": "Other",
+    "task": "Clustering influential control nodes in temporal Social IoT networks via graph transformer",
+    "key_results": "TGCIN achieves ~91% accuracy and ~92% F1-score; partitions nodes into critical drivers (few), bridging relays (intermediate), peripheral (majority)",
+    "comments": "Novel application of graph transformers to controllability in temporal multilayer networks; interpretability is strong but comparison to recent graph neural network baselines would strengthen claims.",
+    "model_io": [
+      {
+        "model": "Temporal Graph Transformer Neural Network (TGCIN) on multilayer SIoT graph",
+        "inputs": [
+          "temporal network snapshots",
+          "user-to-user/object-to-object/cross interactions",
+          "maximum matching ranks",
+          "multi-relational degree centrality"
+        ],
+        "outputs": [
+          "node embeddings",
+          "controllability scores",
+          "temporal stability index",
+          "cluster assignments (critical/bridging/peripheral)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Relation-aware spatial attention + temporal GRU encoder captures node influence evolution in controllability processes",
+        "result": "Confirmed; TGCIN outperforms baselines with fast convergence and interpretable clustering"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-79287-x": {
+    "category": "Synthetic Circuits",
+    "task": "Predict kinetic parameter changes (\u0394kCat, \u0394Km) upon enzyme mutations",
+    "key_results": "DeltaCata achieved substantial performance improvements over existing methods on unseen enzymes; sGmOMT2 engineering achieved 7.0-fold improvement in catalytic efficiency for icaritin synthesis",
+    "comments": "The shift from predicting absolute parameters to modeling deltas is clever and addresses a real training data bottleneck, though validation is limited to one industrial enzyme.",
+    "model_io": [
+      {
+        "model": "DeltaCata (Siamese geometric graph neural network)",
+        "inputs": [
+          "protein structure (3D geometry)",
+          "wild-type kinetic parameters (kCat, Km)",
+          "mutation specification (residue substitution)"
+        ],
+        "outputs": [
+          "predicted \u0394kCat",
+          "predicted \u0394Km"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Exploiting protein structural geometry improves mutation effect prediction over sequence-only approaches",
+        "result": "Confirmed by superior performance on unseen enzyme scaffolds"
+      },
+      {
+        "hypothesis": "Predicted beneficial mutations identified via deep mutational scanning will correlate with experimental outcomes",
+        "result": "Validated through in silico screening experiments and sGmOMT2 engineering"
+      }
+    ]
+  },
+  "nature:10.1038/s41596-026-01437-8": {
+    "category": "Metabolic Networks",
+    "task": "Personalize and integrate human whole-body metabolic models with microbiome community models",
+    "key_results": "Persephone pipeline successfully processes 100 metagenomic samples in days-to-week timescale on modest hardware; enables investigation of human-microbiome co-metabolism and physiological parameter effects",
+    "comments": "The democratization of WBM analysis is valuable but the computational cost (days-to-weeks per cohort) limits high-throughput personalization; validation against ground-truth metabolomic predictions is not discussed.",
+    "model_io": [
+      {
+        "model": "Persephone personalization and evaluation pipeline",
+        "inputs": [
+          "metagenomic sequencing data or taxonomy tables",
+          "physiological data (weight, etc.)",
+          "metabolomic data",
+          "user-defined metabolic reactions for optimization"
+        ],
+        "outputs": [
+          "personalized human WBM",
+          "community microbiome model",
+          "integrated community microbiome-WBM",
+          "statistical analyses",
+          "metabolic flux predictions",
+          "visualization figures"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Physiological parameters such as body weight significantly influence predicted human metabolism",
+        "result": "Framework enables systematic evaluation of such effects through WBM optimization"
+      }
+    ]
+  },
+  "nature:10.1038/s42003-026-11236-2": {
+    "category": "Multi-scale Modeling",
+    "task": "Enable high-throughput single-cell tracking of T-cell proliferation dynamics",
+    "key_results": "Microfluidic device successfully tracked human leukemia T-cells over multiple generations; cells employ sizer-like strategy with asymmetric volume division to regulate size variation",
+    "comments": "CFD-optimized channel geometry elegantly addresses nutrient supply for non-adherent cells, though generalizability to other cell types remains to be demonstrated.",
+    "model_io": [
+      {
+        "model": "Mother machine microfluidic device with computational fluid dynamics optimization",
+        "inputs": [
+          "channel geometry parameters",
+          "culture medium flow rate",
+          "initial single T-cell"
+        ],
+        "outputs": [
+          "cell volume over time",
+          "division timing",
+          "cell lineage tracking"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Human leukemia T-cells regulate division through a sizer-like mechanism to compensate for stochastic size fluctuations",
+        "result": "Confirmed by multi-generational tracking showing asymmetric volume division strategy"
+      }
+    ]
   }
 }
