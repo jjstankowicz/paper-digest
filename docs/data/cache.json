@@ -708252,5 +708252,1000 @@
         "result": "Confirmed by multi-generational tracking showing asymmetric volume division strategy"
       }
     ]
+  },
+  "hf:2611.04408": {
+    "category": "Systems",
+    "task": "Predictive control for optical AI data center networks",
+    "key_results": "Goodput rises from 65.2% to 76.5% under spare exhaustion; 3.3\u201314.7% less data center capacity needed for same training",
+    "comments": "Formal guarantees on each layer and FPGA/signoff verification strengthen practical credibility, though real-world failure correlation patterns remain an empirical validation question.",
+    "model_io": [
+      {
+        "model": "LightReserve (laser pool sizing)",
+        "inputs": [
+          "resource state predictions"
+        ],
+        "outputs": [
+          "coverage-bounded laser pool allocation"
+        ]
+      },
+      {
+        "model": "FoldFit (switch scheduling)",
+        "inputs": [
+          "switch state"
+        ],
+        "outputs": [
+          "11/9-optimal schedule"
+        ]
+      },
+      {
+        "model": "ThermaLead (microring control)",
+        "inputs": [
+          "thermal state"
+        ],
+        "outputs": [
+          "one-step-ahead control signal"
+        ]
+      },
+      {
+        "model": "TriageGuard (module protection)",
+        "inputs": [
+          "module risk scores"
+        ],
+        "outputs": [
+          "protection priority ordering"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Predictive control at each network layer improves goodput over fixed policy",
+        "result": "Confirmed: 65.2% \u2192 76.5% goodput improvement"
+      },
+      {
+        "hypothesis": "Correlated failure at fixed spare ratio caps availability",
+        "result": "Confirmed: motivates need for predictive resource sizing"
+      }
+    ]
+  },
+  "hf:2611.03330": {
+    "category": "LLM/Reasoning",
+    "task": "Analytical model for LLM inference energy cost",
+    "key_results": "R\u00b2 = 0.969, 11.97% MAPE across 13 LLMs (3.1\u20133.5\u00d7 better than SOTA); prefill energy quadratic in hidden dimension; GQA reduces per-token energy by up to 3\u00d7",
+    "comments": "SIMPLE elegantly decomposes the energy problem without per-model calibration, though it assumes constant hardware and does not account for dynamic frequency/voltage scaling.",
+    "model_io": [
+      {
+        "model": "SIMPLE (Inference Model to Predict LLMs Energy)",
+        "inputs": [
+          "architectural hyperparameters (hidden dim, heads, sequence length, reasoning budget)",
+          "LLM traces on H100"
+        ],
+        "outputs": [
+          "predicted energy per token",
+          "total sequence energy"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Closed-form complexity model predicts LLM inference energy better than fitted SOTA",
+        "result": "Confirmed: R\u00b2 = 0.969 vs. lower SOTA performance"
+      },
+      {
+        "hypothesis": "Agentic serving increases energy per request relative to non-agentic",
+        "result": "Confirmed: 13.0\u00d7 higher; prefix caching removes 93% of prefill but not KV-cache cost"
+      },
+      {
+        "hypothesis": "Reasoning token budget's Intelligence per Joule peaks at intermediate value",
+        "result": "Confirmed: falls by 3.14\u00d7 across 4.0\u00d7 budget range"
+      }
+    ]
+  },
+  "hf:2611.03768": {
+    "category": "LLM/Reasoning",
+    "task": "Accelerate sparse attention indexing via multi-layer selection overlap",
+    "key_results": "Up to 14.5% faster decode on DeepSeek-V3.2 vs. IndexCache at 1/2 retention; 1.32\u00d7 throughput at 128K context with 1/4 retention; accuracy within few percentage points",
+    "comments": "Exploiting adjacent-layer token selection overlap is clever and requires no retraining, but the gains diminish at very low retention and long-context assumptions may not hold universally.",
+    "model_io": [
+      {
+        "model": "Multi-layer Indexer (MLI)",
+        "inputs": [
+          "previous layer's k=2048 selected tokens",
+          "current cache"
+        ],
+        "outputs": [
+          "concurrent indexer scan + sparse attention output"
+        ]
+      },
+      {
+        "model": "DeepSeek-V3.2 / GLM-5 with MLI + IndexCache",
+        "inputs": [
+          "long-context token sequence (10K\u2013195K)",
+          "reasoning/generation query"
+        ],
+        "outputs": [
+          "decoded tokens at high resolution"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Adjacent layers select nearly identical tokens, enabling concurrent indexing",
+        "result": "Confirmed: MLI faster than IndexCache across retention 1/2 to 1/4"
+      },
+      {
+        "hypothesis": "Composing MLI with IndexCache improves throughput",
+        "result": "Confirmed: 1.32\u00d7 unmodified model throughput at 128K context and 1/4 retention"
+      }
+    ]
+  },
+  "hf:2611.03394": {
+    "category": "Generative",
+    "task": "Progressive-resolution autoregressive audio-video streaming",
+    "key_results": "1.6\u00d7 speedup over direct high-resolution generation; 1.9\u00d7 overall speedup with stage-parallel deployment; 11.18 pp CER reduction; supports hour-long generation",
+    "comments": "Asymmetric text conditioning and chunked history propagation are pragmatic for streaming, though stability under rapid text updates and perceptual quality at long durations need deeper analysis.",
+    "model_io": [
+      {
+        "model": "TaoMate-HD (autoregressive audio-video)",
+        "inputs": [
+          "text chunks",
+          "previous chunk's audio-visual predictions",
+          "new text updates"
+        ],
+        "outputs": [
+          "coarse video (low-res, 2 denoising steps)",
+          "fine video (high-res, 1 step)",
+          "audio waveform"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Retaining audio-visual history across text updates reduces speech interruption/repetition",
+        "result": "Confirmed: continuation training reduces CER by 11.18 pp"
+      },
+      {
+        "hypothesis": "Progressive resolution (coarse \u2192 fine) with stage parallelization accelerates generation",
+        "result": "Confirmed: 1.9\u00d7 speedup via stage-parallel deployment"
+      }
+    ]
+  },
+  "hf:2611.04949": {
+    "category": "LLM/Reasoning",
+    "task": "Domain-adapted machine translation for historical Hanja-to-English text",
+    "key_results": "Outperforms baselines on automated and human evaluation; expands training data via RAG-generated pseudo-labels; mitigates temporal bias across historical periods",
+    "comments": "RAG for data augmentation is well-motivated, but the abstract lacks quantitative metrics (BLEU, TER, human scores) and details on which baselines were compared.",
+    "model_io": [
+      {
+        "model": "HERIT (Hanja-to-English translation pipeline)",
+        "inputs": [
+          "Hanja historical text",
+          "abundant Hanja-Korean corpora",
+          "retrieval queries"
+        ],
+        "outputs": [
+          "high-quality English translation",
+          "pseudo-labeled training data (via RAG)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "RAG-generated pseudo-labels from Hanja-Korean corpora mitigate data scarcity and temporal overfitting",
+        "result": "Confirmed: outperforms baselines; enables global archive access"
+      }
+    ]
+  },
+  "hf:2610.36544": {
+    "category": "Agents/RL",
+    "task": "Evaluate AI agent restart monitors via decision value rather than classification accuracy",
+    "key_results": "90% accurate monitor can swing from \u22125 pp to +35 pp success gain; zero of 103 live prospective comparisons certified restart preference; 2.29 pp apparent gain attributed to single surviving failure",
+    "comments": "The decision-sufficiency criterion and model-free audit are methodologically rigorous, but the near-zero positive replication on prospective tasks raises serious questions about restart monitor utility in practice.",
+    "model_io": [
+      {
+        "model": "Agent restart monitor + finite-sample decision audit",
+        "inputs": [
+          "agent execution traces",
+          "restart success/failure outcomes",
+          "progress signals"
+        ],
+        "outputs": [
+          "decision certification (restart vs. continue) or abstain",
+          "decision value (\u0394 success rate)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Classification accuracy alone does not determine whether restart improves success",
+        "result": "Confirmed: 90% accurate monitor can range \u22125 to +35 pp gain"
+      },
+      {
+        "hypothesis": "Decision-sufficiency identifies minimal context needed for optimal restart/continue choice",
+        "result": "Confirmed: binary-action specialization of Blackwell comparison applies"
+      },
+      {
+        "hypothesis": "Restart monitors on SWE-bench Verified deliver positive decision value in prospective evaluation",
+        "result": "Disconfirmed: zero of 103 live comparisons meet certification bar; initial gain not replicated"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-78828-8": {
+    "category": "Mechanobiology",
+    "task": "Optical control of myosin contractility for dissecting actomyosin dynamics",
+    "key_results": "Blue-light responsive engineered minifilaments modulate actin network contraction rates in vitro and enable optical control of cell protrusion, cortical flow, and migration in live cells",
+    "comments": "Excellent proof-of-concept for optogenetic dissection of contractile systems, though scaling from engineered minifilaments to endogenous myosin regulation remains unclear.",
+    "model_io": [
+      {
+        "model": "MyLOV-based gearshifting minifilaments",
+        "inputs": [
+          "actin filaments",
+          "blue light (470 nm)"
+        ],
+        "outputs": [
+          "motor velocity",
+          "contraction rate",
+          "cell migration speed"
+        ]
+      },
+      {
+        "model": "Single-molecule tracking assay",
+        "inputs": [
+          "gearshifting minifilaments",
+          "actin"
+        ],
+        "outputs": [
+          "velocity change",
+          "direction switching"
+        ]
+      },
+      {
+        "model": "Live-cell imaging",
+        "inputs": [
+          "engineered myosin",
+          "blue light"
+        ],
+        "outputs": [
+          "protrusion dynamics",
+          "cortical flow",
+          "cell morphology"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Light-induced conformational changes in MyLOV domain alter motor kinetics",
+        "result": "Minifilaments demonstrate speed and directional changes upon blue light illumination"
+      },
+      {
+        "hypothesis": "Processivity can be gated by light in alternative designs",
+        "result": "Alternative minifilament design achieves actin binding only in blue light"
+      }
+    ]
+  },
+  "nature:10.1038/s41420-026-03437-9": {
+    "category": "Epigenetics",
+    "task": "Identify MBD3-dependent mechanisms regulating Runx2 deacetylation and osteoblast dysfunction in glucocorticoid-induced osteoporosis",
+    "key_results": "MBD3 upregulated in GIOP bone tissue; MBD3 associates with Runx2 and increases HDAC1\u2013Runx2 interaction, reducing Runx2 acetylation; D246 is critical for MBD3\u2013Runx2 binding; MBD3 knockdown restored acetyl lysine levels and trabecular bone in vivo; HDAC inhibitor SAHA partially reversed GIOP defects",
+    "comments": "Identifies a chromatin remodeling-mediated mechanism of glucocorticoid toxicity and reveals D246 as a potentially druggable target for restoring osteoblast function through enhanced Runx2 acetylation.",
+    "model_io": [
+      {
+        "model": "Osteoblasts and GIOP rat model",
+        "inputs": [
+          "MBD3",
+          "Runx2",
+          "HDAC1",
+          "glucocorticoids",
+          "SAHA",
+          "Exifone"
+        ],
+        "outputs": [
+          "Runx2 acetylation",
+          "osteogenic gene expression",
+          "apoptosis markers",
+          "trabecular bone volume",
+          "bone cell differentiation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "MBD3 regulates osteoblast function independently of its chromatin remodeling complex role",
+        "result": "MBD3 specifically enhances HDAC1\u2013Runx2 association and deacetylation, impairing Runx2-driven osteogenic activity through NuRD-dependent mechanisms"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-79280-4": {
+    "category": "Evolutionary Biology",
+    "task": "Decoding modular evolution of GH18 chitinases through domain promiscuity and coevolution",
+    "key_results": "High modular plasticity characterizes environmental chitin-scavenging chitinases with structural core elaboration; specialized developmental-role chitinases fix domain architecture; quantitative domain promiscuity analysis reveals distinct evolutionary trajectories",
+    "comments": "Elegant evolutionary framework linking domain architecture to function, but limited to prokaryotic chitinases; eukaryotic GH18 diversity and experimental validation of functional predictions remain unexplored.",
+    "model_io": [
+      {
+        "model": "Phylogenetic analysis with quantitative domain promiscuity assessment",
+        "inputs": [
+          "prokaryotic GH18 chitinase sequences (n=69 genes)"
+        ],
+        "outputs": [
+          "evolutionary tree",
+          "domain composition maps",
+          "promiscuity metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Domain architecture coevolves with catalytic core to adapt chitinases to environmental roles",
+        "result": "Confirmed; modular plasticity vs. architectural fixation correlates with ecological specialization"
+      }
+    ]
+  },
+  "nature:10.1038/s41540-026-00849-2": {
+    "category": "Statistical Methods",
+    "task": "LLM-assisted interpretation of bioinformatics analysis outputs for interdisciplinary communication",
+    "key_results": "LLMs produced readable, safe summaries but frequently misinterpreted visualizations and rarely offered novel insights; human oversight remains essential",
+    "comments": "Honest assessment of LLM limitations; however, systematic comparison of LLM summaries against domain-expert-written reports would strengthen claims about safety and accuracy.",
+    "model_io": [
+      {
+        "model": "State-of-the-art LLMs (unspecified models)",
+        "inputs": [
+          "bioinformatics analysis outputs",
+          "visualizations"
+        ],
+        "outputs": [
+          "natural language summaries",
+          "interpretations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LLMs reliably interpret real-world biomedical data analysis outputs",
+        "result": "Partially refuted; LLMs excel at translation but struggle with visualization interpretation"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-73376-z": {
+    "category": "Statistical Methods",
+    "task": "Sleep staging from ECG/smartwatch PPG-derived intervals using multi-window HRV and temporal context",
+    "key_results": "Achieved accuracy/Cohen's Kappa of 0.6988/0.5326 on SHHS 1000, 0.6958/0.4830 on Huami ECG, 0.6915/0.4615 on Huami smartwatch PPG; multi-window HRV and sleep-progress context most consistent contributors",
+    "comments": "Systematic ablation study is valuable, but modest performance (Kappa ~0.48\u20130.53) and future-context information confound interpretation; prospective deployment validation needed.",
+    "model_io": [
+      {
+        "model": "Lightweight Transformer encoder with multi-window HRV features and temporal sleep-progress context",
+        "inputs": [
+          "ECG-derived RR intervals or smartwatch PPG-derived IBI sequences"
+        ],
+        "outputs": [
+          "sleep stage classification (Wake, Light, Deep, REM)",
+          "accuracy",
+          "Cohen's Kappa"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-window HRV representation improves sleep staging",
+        "result": "Confirmed; consistent contribution across datasets in ablation"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-75148-1": {
+    "category": "Statistical Methods",
+    "task": "Fractional-order MRSA transmission modeling and screening strategy comparison",
+    "key_results": "Caputo fractional-order model demonstrates conserved hospital census, nonnegative bounded trajectories, unique solutions with geometric convergence; screening at admission or discharge stabilizes flagged-patient population",
+    "comments": "Rigorous mathematical foundation with Volterra integral equation analysis; however, empirical validation against real hospital MRSA outbreak data is absent.",
+    "model_io": [
+      {
+        "model": "Caputo fractional-order MRSA transmission model with fractional Adams\u2013Bashforth\u2013Moulton predictor\u2013corrector scheme",
+        "inputs": [
+          "hospital population compartments",
+          "transmission rates",
+          "screening coverage"
+        ],
+        "outputs": [
+          "colonized/infected patient counts",
+          "contaminated worker counts",
+          "time-series dynamics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Fractional-order dynamics capture memory effects in MRSA transmission",
+        "result": "Supported; model exhibits unique solutions and convergence guarantees"
+      },
+      {
+        "hypothesis": "Screening at discharge is superior to admission screening",
+        "result": "Refuted; both strategies stabilize flagged population similarly"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77853-3": {
+    "category": "Single Cell",
+    "task": "Benchmarking scGPT frozen embeddings vs. matched expression for cell type annotation",
+    "key_results": "Matched expression achieved higher pooled Macro F1 in six TNBC/PBMC comparisons; scGPT higher in three brain comparisons; donor-held-out bootstraps supported expression advantages; performance atlas- and classifier-dependent",
+    "comments": "Rigorous holdout-donor design and donor-cluster bootstrap validation, but frozen scGPT checkpoint only tested; fine-tuning and newer models not evaluated.",
+    "model_io": [
+      {
+        "model": "scGPT 0.2.5 (frozen embeddings) vs. matched expression + Logistic Regression, Random Forest, XGBoost",
+        "inputs": [
+          "single-cell RNA-seq data (965,427 cells from 312 donors across TNBC, PBMC, brain)"
+        ],
+        "outputs": [
+          "cell type predictions",
+          "Macro F1",
+          "donor-level accuracy"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "scGPT embeddings capture cell-type information as effectively as matched expression",
+        "result": "Partially refuted; matched expression superior in TNBC/PBMC; scGPT superior in brain"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78624-w": {
+    "category": "Structural Prediction",
+    "task": "Pediatric colorectal polyp classification with transfer learning",
+    "key_results": "Two-phase transfer learning improved ConvNeXt-Small accuracy from 98.88% to 99.77% on CP-CHILD-A and 89.21% to 99.88% on CP-CHILD-B; substantial domain shift observed on external Kvasir dataset",
+    "comments": "Strong internal performance, but major domain shift on Kvasir highlights critical need for independent pediatric validation before clinical deployment.",
+    "model_io": [
+      {
+        "model": "Convolutional neural networks (ConvNeXt-Small, others) with two-phase transfer learning",
+        "inputs": [
+          "endoscopic colonoscopy images"
+        ],
+        "outputs": [
+          "polyp classification",
+          "diagnostic category"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Two-phase transfer learning improves accuracy over training from scratch",
+        "result": "Confirmed; substantial gains on both CP-CHILD datasets"
+      },
+      {
+        "hypothesis": "Models trained on CP-CHILD generalize to external datasets",
+        "result": "Partially confirmed; strong transfer within CP-CHILD datasets but major domain shift on Kvasir"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78973-6": {
+    "category": "Statistical Methods",
+    "task": "Cross-site pooling with feature harmonization for SGA prediction across heterogeneous feature spaces",
+    "key_results": "Feature-harmonized pooled training achieved AUROC 0.823 on Malaysia test set (similar to country-specific baseline 0.825) and 0.673 on India test set (vs. 0.553 for India-only baseline); training-size-matched analysis showed no measurable difference",
+    "comments": "Pragmatic framework for heterogeneous multi-site data, but modest improvements and wide CIs on small India cohort (n=46) limit clinical impact claims.",
+    "model_io": [
+      {
+        "model": "Machine learning classifiers with feature-specific imputation and harmonization",
+        "inputs": [
+          "heterogeneous antenatal features from Malaysia (n=18,582) and India (n=1,760)"
+        ],
+        "outputs": [
+          "SGA risk probability",
+          "AUROC",
+          "calibration metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Feature harmonization improves cross-site pooling without sacrificing discriminative power",
+        "result": "Confirmed within Malaysia; modest gains in India with overlapping CIs"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79247-x": {
+    "category": "Other",
+    "task": "Computational design of ketamine\u2013dextromethorphan conjugates targeting GluN2B NMDA receptor",
+    "key_results": "Conjugate 25 achieved strongest docking score (\u22129.2 kcal/mol) versus ketamine (\u22126.3 kcal/mol); MD simulations identified three accessible minima; multiple toxicity liability signals predicted",
+    "comments": "Comprehensive computational pipeline but lacks experimental validation; predicted toxicity concerns (neurotoxicity, CYP450 interactions) necessitate empirical testing.",
+    "model_io": [
+      {
+        "model": "CReM-guided computational workflow (docking, MD, MM/GBSA, DFT, toxicity prediction)",
+        "inputs": [
+          "ketamine\u2013dextromethorphan conjugate structures"
+        ],
+        "outputs": [
+          "docking scores",
+          "MD trajectories",
+          "binding free energies",
+          "toxicity predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Conjugate 25 exhibits improved GluN2B binding over parent compounds",
+        "result": "Confirmed computationally; docking and MD support enhanced binding"
+      },
+      {
+        "hypothesis": "Conjugate 25 is safe and bioavailable",
+        "result": "Contradicted; toxicity prediction identified multiple liability signals requiring experimental validation"
+      }
+    ]
+  },
+  "nature:10.1038/s41698-026-01771-w": {
+    "category": "Single Cell",
+    "task": "Characterizing IL1B+ TAM-IL-iCAF inflammatory niche in HNSCC and correlation with recurrence",
+    "key_results": "scRNA-seq and spatial transcriptomics identified IL1B+ TAMs and IL-iCAFs as spatially co-localized inflammatory niche; IL1B+ TAM infiltration correlated with poorer survival and higher recurrence; in vitro co-culture confirmed IL-iCAF-derived signals induce IL1B+ TAM state",
+    "comments": "Well-integrated single-cell and spatial analysis reveals plausible TME communication axis, but causal relationship between IL-iCAF signals and clinical outcomes requires functional perturbation studies.",
+    "model_io": [
+      {
+        "model": "Single-cell RNA-seq and spatial transcriptomics on HPV-negative HNSCC tumors",
+        "inputs": [
+          "patient-derived HNSCC tissue"
+        ],
+        "outputs": [
+          "TAM and CAF subset clustering",
+          "spatial co-localization maps",
+          "differential gene expression"
+        ]
+      },
+      {
+        "model": "In vitro co-culture system (IL-iCAF and THP-1 macrophages)",
+        "inputs": [
+          "IL-iCAF paracrine signals"
+        ],
+        "outputs": [
+          "macrophage transcriptional state",
+          "IL1B expression"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "IL-iCAF-derived signals promote IL1B+ TAM differentiation",
+        "result": "Confirmed in vitro; co-culture induces IL1B+ TAM features"
+      },
+      {
+        "hypothesis": "IL1B+ TAM infiltration predicts poor prognosis",
+        "result": "Confirmed; high infiltration correlates with poor survival and recurrence"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-03427-2": {
+    "category": "Statistical Methods",
+    "task": "Multi-horizon AI-driven risk stratification for heart failure hospitalization in UA with HFpEF",
+    "key_results": "Ensemble feature selection identified diabetes, TyG-BMI, NT-proBNP as top predictors; optimal time-specific models (ET, GBDT, LightGBM) achieved AUCs 0.818\u20130.863 in training and 0.839\u20130.851 in external validation for 12-, 24-, 36-month horizons",
+    "comments": "Rigorous external validation and multi-modal feature selection strengthen claims, but prospective evaluation on diverse populations essential before clinical implementation.",
+    "model_io": [
+      {
+        "model": "Ensemble feature selection (LASSO, SVM-RFE, Boruta) + machine learning classifiers (ET, GBDT, LightGBM)",
+        "inputs": [
+          "antenatal data from Malaysia (n=18,582) and India (n=1,760)"
+        ],
+        "outputs": [
+          "HFH risk at 12-, 24-, 36-month horizons",
+          "AUROC",
+          "SHAP feature importance"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-horizon machine learning models generalize across 12-, 24-, 36-month prediction windows",
+        "result": "Confirmed; time-specific models maintained AUC > 0.83 in external validation"
+      }
+    ]
+  },
+  "nature:10.1038/s42003-026-11194-9": {
+    "category": "Single Cell",
+    "task": "Decoding Chinese character handwriting from brain activity using structural semantic priors",
+    "key_results": "Brain-Writing-BERT achieved 94.45% online accuracy for 295-character vocabulary with 8.55\u00b12.77 characters/minute; learned logographic structural priors superior to alphabetic approaches",
+    "comments": "Impressive single-subject clinical validation, but lacks multi-subject replication and comparison to alphabetic language BCIs to assess generalizability of logographic advantage.",
+    "model_io": [
+      {
+        "model": "Brain-Writing-BERT with structural semantic prior learning",
+        "inputs": [
+          "neural signals (intracranial recordings)",
+          "logographic character structure information"
+        ],
+        "outputs": [
+          "decoded character sequence",
+          "classification accuracy"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Structural semantic priors from logographic characters improve neural decoding",
+        "result": "Confirmed; 94.45% accuracy demonstrates feasibility"
+      }
+    ]
+  },
+  "nature:10.1038/s44387-026-00169-0": {
+    "category": "Statistical Methods",
+    "task": "Learning neural network structure and weights jointly during training",
+    "key_results": "Autoplastic networks achieve performance surpassing static and dynamic baselines across vision, video, language, bioinformatics, and healthcare with reduced computation; no outer search loop required",
+    "comments": "Convergence guarantees via stability-gated rule are valuable, but practical speedup and scalability remain to be demonstrated on very large models.",
+    "model_io": [
+      {
+        "model": "Autoplastic Neural Network with stability-gated architectural evolution",
+        "inputs": [
+          "input data"
+        ],
+        "outputs": [
+          "predictions",
+          "learned compact architecture"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Unifying architecture search and training yields more efficient resource allocation",
+        "result": "Confirmed; surpasses static and dynamic baselines with comparable compute"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-71472-8": {
+    "category": "Algorithms",
+    "task": "Particulate matter concentration forecasting via adaptive inverse-distance weighting and transformer attention",
+    "key_results": "IDW-ADAFormer outperforms baselines on 1\u20133-day-ahead PM\u2082.\u2085 and PM\u2081\u2080 forecasting; AQI-aware loss improves classification and interpretability; specific RMSE/MAE values not cited in abstract",
+    "comments": "Methodologically sound integration of spatial separation, transformer, and AQI-aware objectives; quantitative forecasting errors omitted.",
+    "model_io": [
+      {
+        "model": "iTransformer + Alignment-Diversity Attention (ADA) + adaptive IDW spatial separation",
+        "inputs": [
+          "multi-sensor hourly PM\u2082.\u2085/PM\u2081\u2080 data",
+          "raw inputs",
+          "spatial trends"
+        ],
+        "outputs": [
+          "1\u20133-day-ahead PM forecasts",
+          "AQI category predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Spatial trend separation improves temporal pattern learning in PM forecasting",
+        "result": "Supported by model design; quantitative validation not detailed in abstract"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-73276-2": {
+    "category": "Algorithms",
+    "task": "DC-link voltage control in grid-integrated solar PV systems via hybrid enhanced atom search optimization",
+    "key_results": "HASO significantly improves ASO convergence speed and optimization efficiency on benchmark functions; PI controller gains optimized with HASO deliver superior performance vs. literature under steady-state and dynamic conditions; THD <5% maintained",
+    "comments": "Practical power electronics application; spider-guided boundary handling is simple yet effective; evaluation limited to single benchmark circuit and irradiation/load variations.",
+    "model_io": [
+      {
+        "model": "Hybrid Enhanced ASO (HASO) with spider mechanism from Black Widow Optimization; applied to PI controller tuning",
+        "inputs": [
+          "irradiation levels",
+          "load variations",
+          "grid frequency/voltage"
+        ],
+        "outputs": [
+          "optimal PI gains (Kp, Ki)",
+          "DC-link voltage regulation signal"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Spider-guided boundary handling improves ASO convergence vs. standard atom search",
+        "result": "Confirmed; HASO reduces generations to optimal solution on unimodal/multimodal benchmarks"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-73714-1": {
+    "category": "Algorithms",
+    "task": "Rigid Finite Element Method for overconstrained multibody systems with redundant constraints",
+    "key_results": "Modified Rigid-FEM achieves accuracy comparable to classical FEM with significantly fewer elements and reduced computation time; validated on spatial parallelogram benchmark vs. experimental hardware data",
+    "comments": "Efficient for plate/beam-like structures; solves classical problem of reaction force determination under redundant constraints; limited to specific geometry classes.",
+    "model_io": [
+      {
+        "model": "Rigid-FEM with spring-damper elements (SDEs) and methodological optimizations (reduced SDE count, discretization density, shear coefficient tuning)",
+        "inputs": [
+          "mechanism geometry",
+          "joint types",
+          "load conditions"
+        ],
+        "outputs": [
+          "displacement fields",
+          "reaction forces",
+          "stress distributions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Modified Rigid-FEM with optimized SDE placement/count achieves FEM-comparable accuracy with reduced computation",
+        "result": "Confirmed by parametric study and experimental validation on spatial parallelogram"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-75584-z": {
+    "category": "ML Theory",
+    "task": "Quality prediction for high-performance aluminum alloys via CTGAN, SAINT, and CNN hybrid approach",
+    "key_results": "~5% improvement in accuracy, macro F1, and recall vs. baseline; CTGAN augmentation alleviates data scarcity/imbalance; SAINT dual-channel attention captures nonlinear feature/sample dependencies",
+    "comments": "End-to-end SCADA-MES integration supports data quality; synthetic data generation helpful for imbalanced datasets; cross-process quality prediction demonstrated.",
+    "model_io": [
+      {
+        "model": "CTGAN + SAINT + CNN on SCADA-MES integrated aluminum-alloy melting-casting data",
+        "inputs": [
+          "dynamic multi-process telemetry",
+          "operator actions",
+          "environmental factors"
+        ],
+        "outputs": [
+          "quality class predictions (defective/acceptable)",
+          "confidence scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "CTGAN synthetic sample generation and SAINT attention improve quality classification on small imbalanced datasets",
+        "result": "Confirmed; ~5% metric improvement across accuracy, F1, recall"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76218-0": {
+    "category": "Statistics/Probability",
+    "task": "Federated learning framework for real-time cyber hygiene advisory and threat detection in individual users",
+    "key_results": "Framework ensures continuous protection from emerging threats; experimental results establish efficacy (details sparse in abstract)",
+    "comments": "Lacks quantitative metrics or experimental evidence in abstract; claims broad applicability without specific performance numbers.",
+    "model_io": [
+      {
+        "model": "Federated learning system with globally coordinated threat detection",
+        "inputs": [
+          "user behavior signals",
+          "threat indicators",
+          "distributed device telemetry"
+        ],
+        "outputs": [
+          "cyber hygiene advisories",
+          "threat alerts",
+          "response recommendations"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-78113-0": {
+    "category": "Other",
+    "task": "Transmission mechanism identification for power pulsation signals in sucker-rod pumping wells",
+    "key_results": "3D fluid-structure coupling model achieves <10% prediction error; joint time-frequency identification algorithm enables signal detection under strong noise",
+    "comments": "Application-focused work addressing a specific oilfield challenge; limited generalizability beyond petroleum engineering domain.",
+    "model_io": [
+      {
+        "model": "3D full-scale fluid-structure coupling dynamic model",
+        "inputs": [
+          "sucker rod geometry",
+          "wellbore fluid properties",
+          "tubing characteristics",
+          "field-measured loading data"
+        ],
+        "outputs": [
+          "stress wave propagation patterns",
+          "signal attenuation curves",
+          "transmission channel characteristics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Low-frequency stress waves retain superior long-distance transmission capability in high-impedance wells",
+        "result": "Confirmed; model reveals fluid viscous damping and material damping govern attenuation"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78389-2": {
+    "category": "Algorithms",
+    "task": "Surface defect detection via YOLOv7-tiny with feature retention and densely-scale spatial attention",
+    "key_results": "CA-YOLOv7-DF: 71.9\u00b11.2% mAP (NEU-DET) vs. 70.9\u00b11.0% YOLOv7-tiny; 11.6 FPS on Jetson Nano; no improvement on GC10-DET dataset (generalization limited)",
+    "comments": "Marginal mAP gain within run-to-run noise; FRBs provide largest contribution; DSSA and CA schedule effects uncertain; dataset dependence suggests limited generalizability.",
+    "model_io": [
+      {
+        "model": "YOLOv7-tiny + FRBs + DSSA blocks + Cosine Annealing LR schedule + Focal-DIoU loss",
+        "inputs": [
+          "surface defect images (NEU-DET, GC10-DET)",
+          "bounding box annotations"
+        ],
+        "outputs": [
+          "defect detections",
+          "class labels",
+          "confidence scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Feature retention blocks preserve small-defect information during backbone feature extraction",
+        "result": "Partially supported; largest average gain from FRBs but overall mAP improvement marginal (\u00b11.0%)"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78535-w": {
+    "category": "ML Theory",
+    "task": "Auditing compute-normalization rule for LoRA rank comparisons",
+    "key_results": "Inverse step schedule (682/42/10/1) causes rank undertraining; equal-step baseline (42 updates per rank) yields consistent accuracy improvements with rank (0.54\u21920.75 on SST-2)",
+    "comments": "Methodological audit revealing experimental design artifacts; findings cast doubt on published LoRA efficiency claims without broader architectural implications.",
+    "model_io": [
+      {
+        "model": "LoRA-adapted roberta-base and distilroberta-base",
+        "inputs": [
+          "SST-2 and AG News datasets",
+          "ranks 2/8/16/64",
+          "optimizer step schedules"
+        ],
+        "outputs": [
+          "accuracy across ranks",
+          "GPU runtime measurements",
+          "convergence curves"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Inverse step schedule provides compute-equivalent fairness across ranks",
+        "result": "Rejected; measured runtime shows schedule dominated by update count, not rank"
+      },
+      {
+        "hypothesis": "Larger ranks underperform due to optimization constraints",
+        "result": "Confirmed; severe undertraining with inverse schedule; reversed with equal-step training"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79035-7": {
+    "category": "Algorithms",
+    "task": "Winter wheat mapping from Sentinel-2 imagery using UNet-Transformer fusion",
+    "key_results": "UNet-Transformer achieves 91.16% accuracy (5.12pp improvement over UNet), F1-score 92.60%; mapped areas agree with government data to 94.87\u201398.21% across 2018\u20132023",
+    "comments": "Strong multi-year validation on real government statistics; domain shift from other crops/regions not extensively tested.",
+    "model_io": [
+      {
+        "model": "UNet, DeepLab V3+, SegNet, and UNet-Transformer on Sentinel-2 A imagery",
+        "inputs": [
+          "24 Sentinel-2 scenes",
+          "7280 field observation points",
+          "multiscale segmentation labels"
+        ],
+        "outputs": [
+          "pixel-level crop classification",
+          "winter wheat extent maps",
+          "confidence scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "UNet-Transformer fusion outperforms single-architecture approaches",
+        "result": "Confirmed; 5.12pp accuracy gain over UNet alone"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79143-4": {
+    "category": "Algorithms",
+    "task": "Multi-horizon forecasting of agricultural commodity price index via model combination",
+    "key_results": "Shrunk combination outperforms validation-selected model by 1.3\u201311.2% and no-change baseline by 2.1\u201322.2% across 1\u20133-day horizons; models that won test ranked 3rd\u20137th on validation",
+    "comments": "Effective combination strategy when individual models are unstable; direct change target reduces error 33\u201353% vs. standard level targets; limited to single market (Nepal).",
+    "model_io": [
+      {
+        "model": "12 architectures: penalized linear, tree ensembles, RNNs, direct neural forecasters",
+        "inputs": [
+          "135 daily wholesale commodity series",
+          "55 causal predictors (Nepali festivals, etc.)",
+          "2013\u20132023 data"
+        ],
+        "outputs": [
+          "1\u20133-day-ahead Agricultural Commodity Price Index forecasts"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Direct change targets reduce error vs. level targets in commodity forecasting",
+        "result": "Confirmed; 33\u201353% error reduction observed"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79165-y": {
+    "category": "Algorithms",
+    "task": "Gas-optimized multi-party computation framework for blockchain-based parametric crop insurance",
+    "key_results": "47,000 gas units, 24s settlement time, 70 TPS throughput, 98.92% privacy preservation, 98% attack resistance, 98% claim accuracy, 97.82% farmer satisfaction",
+    "comments": "Comprehensive metrics across security, efficiency, and UX; evaluation on simulated drought scenarios; real-world deployment and regulatory compliance untested.",
+    "model_io": [
+      {
+        "model": "GOMPC-SCF with MPC-enabled smart contracts, off-chain computation, oracle-based data aggregation",
+        "inputs": [
+          "environmental sensor data (rainfall, temperature, drought indices)",
+          "farmer claims",
+          "crop data"
+        ],
+        "outputs": [
+          "insurance payouts",
+          "settlement confirmations",
+          "audit trails"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Off-chain MPC with gas-efficient consensus reduces transaction costs vs. on-chain verification",
+        "result": "Confirmed; 47,000 gas units achieved under maximum evaluation conditions"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79187-6": {
+    "category": "ML Theory",
+    "task": "Named entity recognition (NER) for railway employee work experience via BERT-BiLSTM-CRF",
+    "key_results": "F1-score 98% on railway work experience text NER; significantly outperforms traditional ML and mainstream deep learning benchmarks",
+    "comments": "Strong domain-specific performance; multi-type entity annotation scheme design not detailed; practical HR system deployment feasibility not discussed.",
+    "model_io": [
+      {
+        "model": "BERT-BiLSTM-CRF with domain knowledge enhancement and early stopping",
+        "inputs": [
+          "railway employee work experience texts",
+          "multi-type entity annotations"
+        ],
+        "outputs": [
+          "predicted entity spans and types"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Domain knowledge enhancement and early stopping improve BERT-BiLSTM-CRF adaptation to railway professional texts",
+        "result": "Confirmed; 98% F1-score achieved with improved adaptability"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78362-z": {
+    "category": "Applied Physics",
+    "task": "Assess inductive current transformer applicability for distorted current transformation",
+    "key_results": "Excitation current RMS level correlates with harmonic self-generation; factor ranking matches 3rd/5th harmonic distortion when differences exceed 25%",
+    "comments": "Method is indirect and only validated for 3rd/5th harmonics; broader harmonic coverage and real-world grid data would improve practical utility.",
+    "model_io": [
+      {
+        "model": "Inductive current transformer with nonlinear magnetic core",
+        "inputs": [
+          "sinusoidal excitation current",
+          "load impedance"
+        ],
+        "outputs": [
+          "secondary voltage distortion",
+          "excitation RMS"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Core nonlinearity degree (via excitation current measurement) predicts secondary harmonic self-generation",
+        "result": "Partially confirmed for 3rd/5th harmonics; ranking consistency achieved when distortion differences >25%"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78732-7": {
+    "category": "Applied Physics",
+    "task": "Model Coulombic efficiency and round-trip performance evolution in Li-ion batteries under aging and thermal stress",
+    "key_results": "Capacity loss 34.1% (2.704\u21921.783 Ah) over 1500 cycles; Coulombic efficiency drops from 90.1% to 59.43%; model validated across 0\u201375 \u00b0C range",
+    "comments": "Comprehensive experimental validation is valuable; mechanistic understanding of degradation pathways could be deepened with post-mortem characterization.",
+    "model_io": [
+      {
+        "model": "Li-ion battery analytical model",
+        "inputs": [
+          "cycle number",
+          "temperature",
+          "charge-discharge current"
+        ],
+        "outputs": [
+          "discharge capacity",
+          "Coulombic efficiency",
+          "impedance"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Coulombic efficiency, capacity retention and temperature follow coupled power-law or exponential degradation",
+        "result": "Confirmed: model shows good agreement with measured evolution across 1500 cycles and temperature range"
+      }
+    ]
   }
 }
