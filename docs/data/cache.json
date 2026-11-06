@@ -711605,5 +711605,609 @@
         "result": "Reasoned conclusion: strict liability aligns with risk-control, risk-dispersion, and cost-avoidance principles; two-tier structure extends to charterers, operators, managers under specific circumstances"
       }
     ]
+  },
+  "hf:2611.08237": {
+    "category": "Benchmark",
+    "task": "Agentic evaluation of contest-style mathematical modeling problems with verifiable solutions",
+    "key_results": "Strongest multimodal model reaches 64.58% multi-reference O-Eval; open model achieves 59.81% at 1/100th cost",
+    "comments": "First benchmark to combine contest-style problem completeness with machine-checkable feasibility verification via Lean 4 obligations and decidable invariants, enabling reproducible scoring.",
+    "model_io": [
+      {
+        "model": "multimodal agents (7 entries tested)",
+        "inputs": [
+          "problem statement",
+          "official attachments",
+          "figures"
+        ],
+        "outputs": [
+          "JSON artifact with numeric solution"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Direction-aware one-sided scoring against multiple reference solutions improves fairness over single-anchor grading",
+        "result": "Multi-reference O-Eval metric implemented; enables comparison to panel of outstanding papers rather than single solution"
+      },
+      {
+        "hypothesis": "Two-layer feasibility verification (programmatic gates + Lean 4 obligations) can machine-check physical feasibility",
+        "result": "624 Lean 4 obligations plus 6 decidable invariant forms successfully gate infeasible answers with hard zeroing"
+      }
+    ]
+  },
+  "hf:2611.08483": {
+    "category": "Agents/RL",
+    "task": "Evolutionary program synthesis via LLM-guided agent swarms with latent-space reasoning",
+    "key_results": "Achieves best scores in median 3-8 minutes vs 60 minutes for state-of-the-art; Qwen 3 8B improves on AlphaEvolve frontier LLM solutions on several problems",
+    "comments": "Latent-space reasoning and KV cache sharing dramatically reduce wall-clock time, making evolutionary search practical for scientific computing despite smaller model size.",
+    "model_io": [
+      {
+        "model": "SwarmEvolve (LLM agent swarms with summarizer)",
+        "inputs": [
+          "mathematical/computational problem"
+        ],
+        "outputs": [
+          "improved program solution",
+          "fitness score"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Agent swarms reasoning in latent space without text decoding reduce computational overhead while maintaining population diversity",
+        "result": "Median 3-8 minute runtime vs 60 minutes for alternatives; novelty filter on hidden state distances maintains diversity"
+      },
+      {
+        "hypothesis": "KV cache crossover in latent space enables effective idea recombination without explicit text generation",
+        "result": "Summarizer agent aggregates combined KV caches of swarm members; achieves state-of-the-art on 21 problems"
+      }
+    ]
+  },
+  "hf:2611.04386": {
+    "category": "Generative",
+    "task": "Multi-stage distillation of text-to-image diffusion models for few-step sampling with multiple capabilities",
+    "key_results": "StepX-OPD matches four-step methods' performance and exceeds 40-step Flow-OPD; trains with ~37% fewer GPU-hours than sequential DiffusionOPD + step distillation",
+    "comments": "Merging capability integration and step distillation into one stage avoids performance collapse from compression and improves training efficiency, though introduces spurious text rendering requiring post-hoc correction.",
+    "model_io": [
+      {
+        "model": "StepX-OPD student diffusion model",
+        "inputs": [
+          "text prompt"
+        ],
+        "outputs": [
+          "4-step generated image"
+        ]
+      },
+      {
+        "model": "frozen specialist teachers (SD3.5-Medium, FLUX.1-dev)",
+        "inputs": [
+          "model rollout states"
+        ],
+        "outputs": [
+          "supervision signal for instruction following, text rendering, quality, human preference"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Joint training on capabilities and step distillation outperforms sequential stages by supervising student on its own rollout distribution",
+        "result": "StepX-OPD achieves highest normalized average score on both architectures; no compression performance drop observed"
+      },
+      {
+        "hypothesis": "KL weight decomposition weighting low-noise region improves velocity matching and convergence speed",
+        "result": "Regressing velocity on low-noise part reduces optimization burden; 37% GPU-hour reduction vs sequential approach"
+      }
+    ]
+  },
+  "hf:2610.37739": {
+    "category": "Benchmark",
+    "task": "Formal evaluation of LLM agents on research-level problem rediscovery with Lean 4 verification",
+    "key_results": "Closed-book rediscovery rare (\u22647 of 40 resolved problems); live-web success primarily reflects published solution retrieval; 200-problem benchmark with 110 resolved 2026 problems formally verified",
+    "comments": "Retrospective benchmark design (recently resolved problems) enables ground-truth verification via Lean 4 formal proofs, but reveals limited genuine rediscovery capacity without web access.",
+    "model_io": [
+      {
+        "model": "seven LLM agents (evaluated on HQ-50 subset)",
+        "inputs": [
+          "problem statement in Lean 4"
+        ],
+        "outputs": [
+          "formal proof (checked by two independent verifiers)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Formal verification with Lean 4 enables objective measurement of rediscovery capability vs subjective LLM grading",
+        "result": "Two independent sandbox checkers with closed-book, frozen-retrieval, and live-web evaluation protocols; 200 problems formally verified"
+      },
+      {
+        "hypothesis": "Live-web access significantly improves solution rates compared to closed-book reasoning",
+        "result": "Closed-book rediscovery capped at 7/40; live-web success largely reflects retrieval of published solutions rather than novel derivation"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11233-9": {
+    "category": "Gene Editing",
+    "task": "In vivo CRISPR base editing of ANGPTL3 to lower LDL cholesterol and triglycerides",
+    "key_results": ">90% reduction in circulating ANGPTL3 protein in nonhuman primates; 40-50% LDL-C and 50-70% triglyceride reductions in disease models; durability confirmed at 3 years post-single dose",
+    "comments": "Off-target effects rigorously assessed (~3000 candidate sites), but long-term safety in humans remains to be established in ongoing clinical trial.",
+    "model_io": [
+      {
+        "model": "CRISPR adenine base editor in GalNAc-LNP",
+        "inputs": [
+          "guide RNA",
+          "mRNA encoding ABE",
+          "GalNAc-lipid nanoparticle"
+        ],
+        "outputs": [
+          "ANGPTL3 inactivation",
+          "ANGPTL3 protein levels",
+          "LDL-C concentration",
+          "triglyceride concentration"
+        ]
+      },
+      {
+        "model": "Human liver cells in vitro",
+        "inputs": [
+          "base editor components",
+          "ANGPTL3 locus"
+        ],
+        "outputs": [
+          "DNA base-pair changes",
+          "off-target editing assessment",
+          "structural variants"
+        ]
+      },
+      {
+        "model": "Nonhuman primate models",
+        "inputs": [
+          "single dose GalNAc-LNP-ABE"
+        ],
+        "outputs": [
+          "ANGPTL3 protein reduction",
+          "LDL-C reduction",
+          "triglyceride reduction",
+          "durability over 3 years"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "ANGPTL3 inactivation reduces circulating lipid levels in hyperlipidemic models",
+        "result": "40-50% LDL-C and 50-70% triglyceride reductions achieved"
+      },
+      {
+        "hypothesis": "Single-dose base editor treatment produces durable effects",
+        "result": "Effects confirmed durable through 3 years post-dose in nonhuman primates"
+      },
+      {
+        "hypothesis": "Liver-selective editing minimizes off-target effects",
+        "result": "No detectable off-target editing across ~3000 candidate sites in vitro"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-78640-4": {
+    "category": "Cell Signaling",
+    "task": "Determine non-canonical FOXO1 mechanism in bacteria-induced barrier loss",
+    "key_results": "FOXO1 nuclear translocation causes E-cadherin/\u03b2-catenin redistribution and barrier failure without transcription or proteolysis; Tyr654 phosphorylation of \u03b2-catenin disrupts complex stability",
+    "comments": "Reveals rapid post-translational control of barrier integrity independent of gene expression changes.",
+    "model_io": [
+      {
+        "model": "3D microfluidic epithelial device and murine intestinal model",
+        "inputs": [
+          "bacteria",
+          "lipopolysaccharide",
+          "FOXO1"
+        ],
+        "outputs": [
+          "FOXO1 localization",
+          "E-cadherin membrane localization",
+          "epithelial leakiness",
+          "\u03b2-catenin Tyr654 phosphorylation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "FOXO1 mediates barrier dysfunction through spatial redistribution of adherens junction proteins",
+        "result": "Confirmed; nuclear FOXO1 alone sufficient to disrupt barrier; cytoplasmic retention rescues function"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-78777-2": {
+    "category": "Network Biology",
+    "task": "Information-theoretic characterization of associative memory learning via redundancy maximization in Hopfield networks",
+    "key_results": "Partial Information Decomposition reveals high redundancy between external pattern and recurrent input below capacity; redundancy maximization improves memory capacity to 1.59 (vs 0.14 classical), >10-fold improvement; outperforms recent state-of-the-art Hopfield implementations",
+    "comments": "Novel theoretical insight: redundancy (not synergy) characterizes successful associative memory function; principle generalizes beyond classical networks and suggests new interpretive framework for neural computation.",
+    "model_io": [
+      {
+        "model": "Hopfield networks with redundancy maximization objective",
+        "inputs": [
+          "Stored patterns",
+          "Noisy/partial cues"
+        ],
+        "outputs": [
+          "Retrieved patterns",
+          "Neuron-level information decomposition"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Redundancy maximization at each neuron increases associative memory capacity beyond classical Hopfield networks",
+        "result": "Confirmed; 1.59 capacity vs 0.14 baseline; 10-fold improvement"
+      }
+    ]
+  },
+  "nature:10.1038/s41588-026-02780-y": {
+    "category": "Statistical Methods",
+    "task": "Robust fine-mapping of causal variants despite linkage disequilibrium mismatch",
+    "key_results": "RSparsePro identified credible sets with higher power/coverage under varying LD mismatch; consistently higher enrichment of functional variants and cross-study replication rates in cis-pQTL and complex trait loci; biologically relevant variants identified in drug targets; LDL-cholesterol regulatory mechanisms implicated",
+    "comments": "Probabilistic graphical model with variational inference addresses real-world LD reference-panel mismatch; robust performance across genetic architectures suggests practical utility for fine-mapping pipelines.",
+    "model_io": [
+      {
+        "model": "RSparsePro: Variational inference graphical model for robust fine-mapping",
+        "inputs": [
+          "GWAS summary statistics",
+          "External LD reference panel (mismatched to GWAS population)",
+          "Causal variant prior"
+        ],
+        "outputs": [
+          "Credible sets",
+          "Posterior inclusion probabilities",
+          "Functional variant enrichment"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Accounting for LD mismatch improves fine-mapping credible set accuracy and functional enrichment",
+        "result": "Confirmed; consistently higher power, coverage, and cross-study replication vs methods ignoring mismatch"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77041-3": {
+    "category": "Other",
+    "task": "Automated mango leaf disease classification from visual imagery",
+    "key_results": "97% accuracy, precision, recall, F1-score and AUC using hybrid XGBoost-Random Forest meta-classifier on 4,000 leaf images across 8 categories",
+    "comments": "Multi-stage feature fusion (CLAHE+HSV enhancement, three CNN architectures) demonstrates effective ensemble learning for agricultural phenotyping despite visual similarity between disease classes.",
+    "model_io": [
+      {
+        "model": "Hybrid CNN-XGBoost pipeline: CLAHE+HSV \u2192 [EfficientNetB0, ResNet50, DenseNet121] \u2192 concatenation \u2192 XGBoost+RF",
+        "inputs": [
+          "Mango leaf images (MangoleafBD, 4000 samples)"
+        ],
+        "outputs": [
+          "Disease classification (8 classes: Anthracnose, Bacterial Canker, Powdery Mildew, Sooty Mould, Cutting Weevil, Gall Midge, Die Back, Healthy)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Feature-level concatenation of heterogeneous CNN architectures improves disease discrimination",
+        "result": "97% accuracy across all metrics"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78761-2": {
+    "category": "Statistical Methods",
+    "task": "Adaptive parameter selection for multiple imputation in longitudinal medical data",
+    "key_results": "Mean-initialized MICE ranked first in 4/6 conditions; adaptive MICE not universally superior; no significant differences after multiple comparison correction across 66 paired comparisons",
+    "comments": "Demonstrates that imputation fidelity and downstream prediction utility require separate evaluation; reproducibility achieved but practical superiority remains marginal.",
+    "model_io": [
+      {
+        "model": "Random-forest chained imputation (MICE variants)",
+        "inputs": [
+          "Longitudinal pulmonary function test records",
+          "Missing data patterns (MCAR/MAR at 5%-20%)"
+        ],
+        "outputs": [
+          "Imputed PFT values",
+          "LSTM predictions of lung function"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Adaptive variable-level initialization improves imputation accuracy",
+        "result": "No significant improvement after correction for multiple comparisons"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79845-9": {
+    "category": "Genomics",
+    "task": "Multi-target Alzheimer's disease therapy via dual BChE inhibition and A\u03b242 anti-aggregation",
+    "key_results": "5 novel 2-phenylbenzofurans synthesized; compounds 8/12 show BChE IC50 5.1\u201345.8 \u00b5M; compound 12 highest antioxidant activity (EC50 10.65 \u00b5M) and anti-A\u03b242 potency; compound 12 decreases intracellular ROS, non-cytotoxic at active concentrations; favorable ADMET and telomere protection predicted",
+    "comments": "Compound 12 emerges as lead with multi-target activity (BChE inhibition, antioxidant, anti-amyloid); computational-experimental concordance strong, but cellular and in vivo efficacy in AD models remain pending.",
+    "model_io": [
+      {
+        "model": "Multi-target drug discovery: Synthesis \u2192 BChE inhibition assay \u2192 antioxidant assay (ABTS) \u2192 A\u03b242 aggregation (Thioflavin-T) \u2192 ROS assay \u2192 molecular docking \u2192 ADMET + telomere analysis",
+        "inputs": [
+          "5 novel 2-phenylbenzofurans",
+          "BChE enzyme",
+          "A\u03b242 peptide",
+          "SH-SY5Y neuroblastoma cells"
+        ],
+        "outputs": [
+          "IC50/EC50 values",
+          "Aggregation inhibition",
+          "Binding conformations",
+          "Pharmacokinetic predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "2-phenylbenzofurans inhibit BChE and A\u03b242 aggregation via mixed-type mechanism with antioxidant activity",
+        "result": "Confirmed for compounds 8/12; compound 12 superior across all assays"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77213-1": {
+    "category": "Other",
+    "task": "Urban mobility assessment in Peshawar via functional zoning and composite pressure indexing",
+    "key_results": "Composite Mobility Pressure Index (CMPI) constructed from normalized trip generation, attraction, parking, pedestrian pressure, roadway deficiency; Zones F (0.718), E (0.705), A (0.663), D (0.661) form high-pressure tier under equal weights. Zones D and E account for 57.2% trip generation; Cars/motorcycles/rickshaws 78% of observed trips.",
+    "comments": "Integrated multi-source approach (traffic, OD, pedestrian, parking, road inventory) but CMPI weighting scenarios explored without principled sensitivity analysis. Generalization to other South Asian cities unclear.",
+    "model_io": [
+      {
+        "model": "Composite Mobility Pressure Index (CMPI)",
+        "inputs": [
+          "Traffic counts, OD surveys, pedestrian observations, parking surveys, road-inventory data (6 zones)"
+        ],
+        "outputs": [
+          "Normalized CMPI scores (0\u20131 per zone) under alternative weighting scenarios"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Integrated zoning-based mobility analysis identifies demand-led vs. friction-led pressures",
+        "result": "Confirmed; Zone D (demand-led), Zone F (curbside/pedestrian friction) distinguished"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78095-z": {
+    "category": "ML Theory",
+    "task": "Confidence-aware two-stage IIoT authentication with DNN and Random Forest escalation",
+    "key_results": "DNN attains 98.82% test accuracy, AUC 0.9991 on binary authentication; Random Forest baseline achieves higher single-model accuracy (99.60%), FAR (0.668%), FRR (0.137%). Adaptive pipeline (uncertainty escalation to RF) reduces FRR to 0.647%, FAR to 1.070%, overall accuracy 99.15% vs. standalone DNN; gains from selective escalation incremental, not replicated across seeds.",
+    "comments": "Careful statistical design and fallback logic but single train-test split without cross-validation; incremental FAR/FRR reductions vs. simpler Random Forest alone weaken practical justification.",
+    "model_io": [
+      {
+        "model": "Feed-forward DNN (binary classification) + Random Forest arbiter",
+        "inputs": [
+          "59 engineered IIoT flow features (X-IIoTID subset: 180,583 records)"
+        ],
+        "outputs": [
+          "High-confidence accept/reject regions + uncertainty band; escalated predictions arbitrated by RF"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Confidence-gated escalation to ensemble arbiter reduces False Rejection Rate without sacrificing False Acceptance Rate",
+        "result": "Partially confirmed; FRR reduced from 1.064% to 0.647% but gains incremental"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79939-4": {
+    "category": "Statistics/Probability",
+    "task": "ZnO nanofluid optimization for hemispherical cavity receiver solar thermal systems via response surface methodology",
+    "key_results": "RSM cubic models for 6 responses (thermal efficiency, exergy efficiency, useful heat gain, heat loss, Nusselt number, pumping power) fit well (R\u00b2=96.07\u201398.39%, predicted R\u00b2\u226596.92%). Desirability optimization: optimal condition water base, 0.27 vol% ZnO, 5 LPM (D=0.93) yielded predicted thermal efficiency 40.0%, exergy efficiency 15.9%, useful heat gain 778 W. EG addition reduced efficiencies up to 17% (thermal) and 25% (exergy).",
+    "comments": "Rigorous experimental design with strong RSM validation but extrapolation beyond tested range (0.1\u20130.3 vol%, 1\u20135 LPM) risky. Real-world thermal stability and fouling over time not characterized.",
+    "model_io": [
+      {
+        "model": "Cubic response surface model (RSM)",
+        "inputs": [
+          "ZnO concentration (0.1\u20130.3 vol%), EG:W ratio (0:100 to 30:70), flow rate (1\u20135 LPM)"
+        ],
+        "outputs": [
+          "Thermal efficiency, exergy efficiency, useful heat, heat loss, Nusselt number, pumping power"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Nonlinear ZnO concentration and EG content effects optimize solar thermal performance",
+        "result": "Confirmed; cubic RSM fits well (R\u00b2>96%); 0.27 vol% ZnO + water optimal for desirability"
+      }
+    ]
+  },
+  "nature:10.1038/s44260-026-00101-2": {
+    "category": "ML Theory",
+    "task": "Adoption threshold heterogeneity in social contagion with AI agents",
+    "key_results": "Artificial agents (5 LLMs) exhibit systematically lower adoption thresholds than human subjects; simulations show even modest AI-agent share increases total adoption; diffusion dynamics altered.",
+    "comments": "Important emergent finding but based on two experimental domains; LLM behavior may not generalize to real-world social networks. Mechanistic understanding of threshold reduction limited.",
+    "model_io": [
+      {
+        "model": "Large language models (5 variants tested)",
+        "inputs": [
+          "Choice scenarios (two domains)"
+        ],
+        "outputs": [
+          "Adoption decisions; inferred thresholds"
+        ]
+      },
+      {
+        "model": "Diffusion simulation (network-based)",
+        "inputs": [
+          "Adoption thresholds; network structure; agent composition"
+        ],
+        "outputs": [
+          "Total adoption; diffusion speed"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Artificial agents have lower adoption thresholds than human subjects",
+        "result": "Confirmed across two domains and five LLMs"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-78483-z": {
+    "category": "Quantum",
+    "task": "Investigate decoherence resilience of non-Hermitian skin effect in photonic systems",
+    "key_results": "Non-Hermitian skin effect survives dephasing and is enhanced (drift velocity exceeds coherent case); amplitude damping shows order-dependent suppression/persistence depending on application timing",
+    "comments": "Bridges quantum and classical non-Hermitian dynamics with practical photonic implementation, though the enhancement mechanism under dephasing warrants deeper theoretical understanding.",
+    "model_io": [
+      {
+        "model": "Photonic quantum walk with tunable decoherence",
+        "inputs": [
+          "Dephasing channel",
+          "Amplitude damping channel",
+          "Non-Hermitian loss operator"
+        ],
+        "outputs": [
+          "Drift velocity",
+          "Skin effect survival metric",
+          "Incoherence regime behavior"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Non-Hermitian skin effect persists under dephasing decoherence",
+        "result": "Confirmed; effect survives to fully incoherent regime and is enhanced"
+      },
+      {
+        "hypothesis": "Amplitude damping order affects skin effect suppression",
+        "result": "Confirmed; pre-applied damping suppresses effect; post-applied damping allows persistence"
+      }
+    ]
+  },
+  "nature:10.1038/s41524-026-02334-0": {
+    "category": "Condensed Matter",
+    "task": "Elucidate light-induced phase separation kinetics in mixed-halide perovskites via polaron-lattice model",
+    "key_results": "In situ XRD revealed iodide-rich phase appears abruptly after delay while bromide-rich phase drifts gradually; Monte Carlo polaron model reproduces both delay and asymmetry; electron-polaron coupling dominates separation",
+    "comments": "Successful integration of experiment and simulation reveals electron-phonon coupling as suppression lever; findings suggest design strategies for improving tandem cell stability.",
+    "model_io": [
+      {
+        "model": "In situ XRD of MAPbBr\u2081.\u2088I\u2081.\u2082 under illumination",
+        "inputs": [
+          "Light excitation",
+          "Temperature"
+        ],
+        "outputs": [
+          "Lattice parameters",
+          "Phase composition kinetics"
+        ]
+      },
+      {
+        "model": "Kawasaki Hamiltonian with polaron-induced stress (Monte Carlo)",
+        "inputs": [
+          "Electron/hole polaron coupling",
+          "Applied strain"
+        ],
+        "outputs": [
+          "Halide lattice evolution",
+          "Phase separation kinetics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Electron-polaron coupling dominates light-induced phase separation in mixed perovskites",
+        "result": "Confirmed; model with electron-polaron stress reproduces observed delay and asymmetry"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-75652-4": {
+    "category": "Condensed Matter",
+    "task": "Extract multitrap interface charge-capture kinetics from stochastic nanoscale transistor transients",
+    "key_results": "Framework combines pulsed IV measurement and stochastic modeling to extract log-normal capture-time distributions; distinguishes intrinsic trap disorder from electrostatic renormalization; measured transient is dynamically reshaped response",
+    "comments": "Sophisticated statistical treatment of multitrap kinetics; log-normal parameterization is convenient but alternative distributions may be equally valid.",
+    "model_io": [
+      {
+        "model": "Nanoscale transistor with multitrap interface defects",
+        "inputs": [
+          "Pulsed subthreshold voltage biases",
+          "Sensing-phase duration"
+        ],
+        "outputs": [
+          "Drain-current transients",
+          "Cycle-to-cycle fluctuations"
+        ]
+      },
+      {
+        "model": "Self-consistent stochastic model with trap-filling feedback",
+        "inputs": [
+          "Mean transient signal",
+          "Fluctuation envelope",
+          "Assumed log-normal parameterization"
+        ],
+        "outputs": [
+          "Capture-time-constant distribution",
+          "Trap-to-trap disorder metric"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Interface-trap capture kinetics can be extracted from stochastic transients",
+        "result": "Confirmed; framework extracts common distribution parameters across sensing biases"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79589-6": {
+    "category": "Optics/Photonics",
+    "task": "Design plasmonic MIM biosensors with machine learning prediction for cancer cell detection",
+    "key_results": "Figure of merit enhanced from 5.82 to 80.76 with 5 X-shaped resonators; ML model reduces computation time by ~90% vs FDTD; high sensitivity demonstrated for cancer cell detection",
+    "comments": "Practical biosensor design with reasonable FoM improvement; ML acceleration is valuable but prediction accuracy vs simulation fidelity trade-off not fully characterized.",
+    "model_io": [
+      {
+        "model": "MIM waveguide with 1\u20135 X-shaped resonators",
+        "inputs": [
+          "Analyte refractive index",
+          "Plasmonic structure geometry"
+        ],
+        "outputs": [
+          "Transmittance spectrum",
+          "Photonic band gap edges",
+          "Figure of merit"
+        ]
+      },
+      {
+        "model": "Extreme Randomized Tree Regression",
+        "inputs": [
+          "Structure parameters",
+          "RI range"
+        ],
+        "outputs": [
+          "Predicted transmittance response"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Coupled X-shaped resonators improve photonic band gap sharpness",
+        "result": "Confirmed; FoM increased ~14-fold with 5 resonators"
+      }
+    ]
+  },
+  "nature:10.1038/s44306-026-00164-w": {
+    "category": "Condensed Matter",
+    "task": "Engineer strain-tunable magnonic band structures via substrate elasticity control",
+    "key_results": "Substrate elastic modulus determines strain-transfer mechanism: high-modulus substrates transmit finite strain \u2192 magnetoelastic dominance; compliant substrates accommodate strain \u2192 dipolar-coupling modification; identical strain yields qualitatively different band structures for PDMS vs Kapton",
+    "comments": "Multiphysics coupling reveals substrate role as design parameter; findings suggest practical engineering routes for magnonic device reconfiguration.",
+    "model_io": [
+      {
+        "model": "Magnonic crystal (CoFeB nanomagnets) on deformable substrate with multiphysics coupling",
+        "inputs": [
+          "Applied strain",
+          "Substrate elastic modulus",
+          "Nanomagnet geometry"
+        ],
+        "outputs": [
+          "Magnonic band structure",
+          "Magnetoelastic vs dipolar contributions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Substrate elasticity modulus governs strain-transfer and band-structure evolution",
+        "result": "Confirmed; high-modulus (PDMS-like) and compliant (Kapton-like) substrates produce distinct band behaviors for identical applied strain"
+      }
+    ]
   }
 }
