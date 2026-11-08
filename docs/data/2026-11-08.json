@@ -8,46 +8,36 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-11-08",
     "category": "Algorithms",
-    "task": "Seed scheduling and energy allocation in fuzzing for vulnerability detection",
+    "task": "Seed scheduling and energy allocation in greybox fuzzing",
     "key_results": [
       "19.89% improvement in path exploration over AFL",
       "160.87% improvement in crash discovery over AFL across 24-hour trials"
     ],
-    "comments": "The tabu search formulation for seed scheduling is intuitive, though the comparison baselines (FairFuzz, MOPT, EcoFuzz) are somewhat dated and lack recent state-of-the-art fuzzers.",
+    "comments": "The tabu search approach to seed prioritization is intuitive, but the dramatic crash improvement (160.87%) suggests either baseline weakness or a particularly effective crash-inducing strategy that warrants deeper investigation.",
     "model_io": [
       {
-        "model": "TabuFuzz (tabu search-based fuzzing framework)",
+        "model": "TabuFuzz (tabu search-based fuzzer)",
         "inputs": [
           "seed corpus",
           "target program",
           "dynamic execution traces"
         ],
         "outputs": [
+          "scheduled seeds",
+          "energy allocations",
           "discovered paths",
-          "crash cases",
-          "seed priority scores"
-        ]
-      },
-      {
-        "model": "AFL baseline",
-        "inputs": [
-          "seed corpus",
-          "target program"
-        ],
-        "outputs": [
-          "discovered paths",
-          "crash cases"
+          "crash inputs"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Tabu search-based seed scheduling outperforms coarse-grained heuristics in identifying high-quality seeds",
-        "result": "Confirmed: TabuFuzz achieved 19.89% higher path exploration than AFL"
+        "hypothesis": "Tabu search can more precisely select promising seeds than coarse-grained criteria",
+        "result": "Confirmed: higher path exploration and crash discovery vs. baselines"
       },
       {
-        "hypothesis": "Adaptive energy allocation using fine-grained dynamic execution information improves crash discovery",
-        "result": "Confirmed: 160.87% improvement in crash discovery over baseline AFL"
+        "hypothesis": "Fine-grained dynamic execution information enables better adaptive energy allocation",
+        "result": "Confirmed: TabuFuzz outperformed representative fuzzers (FairFuzz, MOPT, EcoFuzz, AFL++)"
       }
     ]
   },
@@ -59,18 +49,18 @@
     "projectPage": "https://www.nature.com/articles/s41598-026-77269-z",
     "journal": "Scientific Reports",
     "publishedAt": "2026-11-08",
-    "category": "Condensed Matter",
+    "category": "Applied Physics",
     "task": "Growth and purification of lithium-doped KCl single crystals via Bridgman method",
-    "key_results": "Purified KCl matrix to 0.2 ppm OH, 0.1\u20130.3 ppm Me\u00b2\u207a, and 1\u20133 ppm alkali-metal impurities; enhanced scintillation and dosimetric properties demonstrated in KCl:Li crystals",
-    "comments": "The argon atmosphere approach effectively suppresses halogen evaporation, though quantitative comparison with vacuum-only or alternative growth methods is not provided.",
+    "key_results": "KCl matrix purified to 0.2 ppm oxygen-containing impurities, 0.1\u20130.3 ppm divalent impurities, 1\u20133 ppm alkali-metal impurities; enhanced scintillation and dosimetric properties demonstrated",
+    "comments": "Practical demonstration of multi-stage purification but lacks detailed comparison to alternative growth methods or quantitative scintillation/dosimetric performance metrics.",
     "model_io": [
       {
-        "model": "Bridgman crystal growth setup",
+        "model": "Bridgman crystal growth setup (Across International)",
         "inputs": [
           "KCl raw material",
           "Li dopant",
-          "pyrolytic carbon coating precursor",
-          "argon gas (1.1\u20131.3 bar)"
+          "pyrolytic carbon coating",
+          "argon atmosphere (1.1\u20131.3 bar)"
         ],
         "outputs": [
           "KCl:Li single crystal",
@@ -80,12 +70,53 @@
     ],
     "hypotheses": [
       {
-        "hypothesis": "Pyrolytic carbon coating suppresses adhesion of molten AHC to quartz walls",
-        "result": "Coating successfully applied and enabled crystal growth without wall adhesion"
+        "hypothesis": "Pyrolytic carbon coating and argon atmosphere suppress halogen vapor evaporation and oxygen contamination",
+        "result": "Confirmed by achievement of low impurity levels and successful lithium-doped crystal growth"
+      }
+    ]
+  },
+  {
+    "uid": "nature:10.1038/s41598-026-77666-4",
+    "source": "physics",
+    "id": "10.1038/s41598-026-77666-4",
+    "title": "Embedded sensing telemetry and a validated explicit finite element digital twin of pressurised uPVC pipe under low velocity impact",
+    "projectPage": "https://www.nature.com/articles/s41598-026-77666-4",
+    "journal": "Scientific Reports",
+    "publishedAt": "2026-11-08",
+    "category": "Applied Physics",
+    "task": "Development and validation of digital twin for pressurized uPVC pipe under impact loading",
+    "key_results": "Peak contact force increased from 3527 to 4174 N (689 to 2068 kPa pressure); plastic-zone numerical/experimental agreement within 16.9%; contact-force response linear to ~1379 kPa",
+    "comments": "Well-executed experimental-numerical synchronization with practical sensor integration, though real-time predictive validation and discharge behavior at device scale remain unstudied.",
+    "model_io": [
+      {
+        "model": "ABAQUS/Explicit finite element model (uPVC pipe)",
+        "inputs": [
+          "measured hammer velocity (5.56 m/s)",
+          "internal water pressure (689\u20132068 kPa)",
+          "pipe geometry and material properties"
+        ],
+        "outputs": [
+          "contact force transient",
+          "permanent deformation",
+          "plastic-zone area",
+          "pressure pulse"
+        ]
       },
       {
-        "hypothesis": "Argon atmosphere suppresses halogen vapor evaporation",
-        "result": "Argon at 1.1\u20131.3 bar maintained crystal integrity and purity levels"
+        "model": "ESP32-S2 embedded sensing unit",
+        "inputs": [
+          "drop-weight impact event"
+        ],
+        "outputs": [
+          "hammer velocity (infrared gates)",
+          "transient internal pressure (transducer)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Internal pressure stiffens pipe walls, reducing permanent deformation and shortening contact period",
+        "result": "Confirmed; permanent deformation fell from 15.1 to 7.0 mm as pressure increased"
       }
     ]
   },
@@ -98,34 +129,35 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-11-08",
     "category": "Applied Physics",
-    "task": "Thermal conductivity and crystallization control in octadecane phase-change composites with hybrid coatings and graphene",
-    "key_results": "ZIF-8-coated composite: thermal conductivity 0.78 \u00b1 0.04 W m\u207b\u00b9 K\u207b\u00b9, supercooling 1.2 \u00b1 0.2 \u00b0C; UiO-66-coated: 0.72 \u00b1 0.03 W m\u207b\u00b9 K\u207b\u00b9, 2.4 \u00b1 0.3 \u00b0C; ZIF-8 retained 98.2 \u00b1 1.1% melting enthalpy after 1000 thermal cycles",
-    "comments": "Synergistic effect of coating and graphene on thermal transport is evident but the isolation of individual mechanisms remains incomplete; device-scale performance testing is explicitly absent.",
+    "task": "Enhanced thermal transport and thermal stability of phase change material composites via framework coating and graphene",
+    "key_results": "ZIF-8-coated composite: thermal conductivity 0.78 \u00b1 0.04 W m\u22121 K\u22121, supercooling 1.2 \u00b1 0.2 \u00b0C; 98.2 \u00b1 1.1% melting enthalpy retention after 1000 thermal cycles",
+    "comments": "Strong cyclic durability and thermal conductivity improvement, but synergistic mechanism between coating and graphene remains unclear; device-scale discharge power untested.",
     "model_io": [
       {
-        "model": "Composite thermal storage system",
+        "model": "Octadecane-filled polyurea capsules with metal-organic framework coating in polyurethane matrix with graphene",
         "inputs": [
-          "n-octadecane (PCM)",
-          "ZIF-8 or UiO-66 coating",
-          "polyurea capsule",
+          "n-octadecane (phase change material)",
+          "ZIF-8 or UiO-66 porous coating",
           "graphene nanoplatelets (5 wt%)",
-          "polyurethane matrix"
+          "thermal cycling (10\u201360 \u00b0C)"
         ],
         "outputs": [
-          "effective thermal conductivity (W m\u207b\u00b9 K\u207b\u00b9)",
+          "thermal conductivity (W m\u22121 K\u22121)",
+          "melting enthalpy (J/g)",
           "supercooling onset (\u00b0C)",
-          "cycle durability (%), mass loss (%)"
+          "mass retention (%)",
+          "crystallization behavior"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "MOF coatings and graphene additively enhance thermal transport",
-        "result": "Neither coating nor graphene alone explains composite thermal conductivity; synergistic interaction confirmed"
+        "hypothesis": "Synergistic thermal transport from graphene and framework coating exceeds either component alone",
+        "result": "Partially confirmed; ZIF-8 + graphene composite (0.78 W m\u22121 K\u22121) outperforms ZIF-8 alone or graphene alone, but mechanism unresolved due to differing coating properties"
       },
       {
-        "hypothesis": "ZIF-8 coating reduces crystallization delay relative to UiO-66",
-        "result": "ZIF-8 showed 1.2 \u00b0C supercooling vs. 2.4 \u00b0C for UiO-66; coating thickness and topology may influence nucleation"
+        "hypothesis": "Framework coating delays crystallization (supercooling)",
+        "result": "Confirmed; UiO-66 coating shows 2.4 \u00b1 0.3 \u00b0C supercooling vs. 1.2 \u00b1 0.2 \u00b0C for ZIF-8"
       }
     ]
   }
