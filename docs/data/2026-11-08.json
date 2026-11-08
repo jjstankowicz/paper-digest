@@ -8,36 +8,35 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-11-08",
     "category": "Algorithms",
-    "task": "Seed scheduling and energy allocation in greybox fuzzing",
+    "task": "Seed scheduling and energy allocation for fuzzing",
     "key_results": [
       "19.89% improvement in path exploration over AFL",
-      "160.87% improvement in crash discovery over AFL across 24-hour trials"
+      "160.87% improvement in crash discovery over AFL"
     ],
-    "comments": "The tabu search approach to seed prioritization is intuitive, but the dramatic crash improvement (160.87%) suggests either baseline weakness or a particularly effective crash-inducing strategy that warrants deeper investigation.",
+    "comments": "The tabu search formulation for seed scheduling is practical but the evaluation is limited to 9 programs; generalization to diverse software ecosystems remains unclear.",
     "model_io": [
       {
-        "model": "TabuFuzz (tabu search-based fuzzer)",
+        "model": "TabuFuzz (tabu search-based fuzzing framework)",
         "inputs": [
+          "target programs",
           "seed corpus",
-          "target program",
           "dynamic execution traces"
         ],
         "outputs": [
-          "scheduled seeds",
-          "energy allocations",
           "discovered paths",
-          "crash inputs"
+          "crashes/vulnerabilities",
+          "seed priority rankings"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Tabu search can more precisely select promising seeds than coarse-grained criteria",
-        "result": "Confirmed: higher path exploration and crash discovery vs. baselines"
+        "hypothesis": "Tabu search seed scheduling outperforms coarse-grained heuristics in prioritizing high-quality seeds",
+        "result": "Demonstrated 19.89% better path exploration than AFL"
       },
       {
-        "hypothesis": "Fine-grained dynamic execution information enables better adaptive energy allocation",
-        "result": "Confirmed: TabuFuzz outperformed representative fuzzers (FairFuzz, MOPT, EcoFuzz, AFL++)"
+        "hypothesis": "Adaptive energy allocation based on fine-grained execution information improves crash detection",
+        "result": "160.87% improvement in crash discovery over AFL baseline"
       }
     ]
   },
@@ -49,29 +48,33 @@
     "projectPage": "https://www.nature.com/articles/s41598-026-77269-z",
     "journal": "Scientific Reports",
     "publishedAt": "2026-11-08",
-    "category": "Applied Physics",
-    "task": "Growth and purification of lithium-doped KCl single crystals via Bridgman method",
-    "key_results": "KCl matrix purified to 0.2 ppm oxygen-containing impurities, 0.1\u20130.3 ppm divalent impurities, 1\u20133 ppm alkali-metal impurities; enhanced scintillation and dosimetric properties demonstrated",
-    "comments": "Practical demonstration of multi-stage purification but lacks detailed comparison to alternative growth methods or quantitative scintillation/dosimetric performance metrics.",
+    "category": "Condensed Matter",
+    "task": "Purification and growth of lithium-doped KCl single crystals via Bridgman method",
+    "key_results": "KCl matrix purified to 0.2 ppm oxygen-containing impurities, 0.1\u20130.3 ppm divalent impurities, 1\u20133 ppm alkali-metal cations; enhanced scintillation and dosimetric properties demonstrated in KCl:Li crystals",
+    "comments": "The multi-stage purification approach (pyrolytic coating, high vacuum, argon shielding) is systematic, though the specific scintillation performance metrics are not quantified numerically.",
     "model_io": [
       {
-        "model": "Bridgman crystal growth setup (Across International)",
+        "model": "Bridgman crystal growth setup",
         "inputs": [
           "KCl raw material",
           "Li dopant",
-          "pyrolytic carbon coating",
+          "quartz ampoule",
           "argon atmosphere (1.1\u20131.3 bar)"
         ],
         "outputs": [
           "KCl:Li single crystal",
-          "purified crystal matrix"
+          "purified matrix composition"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Pyrolytic carbon coating and argon atmosphere suppress halogen vapor evaporation and oxygen contamination",
-        "result": "Confirmed by achievement of low impurity levels and successful lithium-doped crystal growth"
+        "hypothesis": "Pyrolytic carbon coating suppresses adhesion of molten AHC to ampoule walls",
+        "result": "Successfully enabled crystal extraction and growth"
+      },
+      {
+        "hypothesis": "High vacuum purification removes oxygen-containing impurities from raw materials",
+        "result": "Achieved 0.2 ppm OH concentration in final crystal"
       }
     ]
   },
@@ -84,22 +87,21 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-11-08",
     "category": "Applied Physics",
-    "task": "Development and validation of digital twin for pressurized uPVC pipe under impact loading",
-    "key_results": "Peak contact force increased from 3527 to 4174 N (689 to 2068 kPa pressure); plastic-zone numerical/experimental agreement within 16.9%; contact-force response linear to ~1379 kPa",
-    "comments": "Well-executed experimental-numerical synchronization with practical sensor integration, though real-time predictive validation and discharge behavior at device scale remain unstudied.",
+    "task": "Validated digital twin of pressurized uPVC pipe response to low-velocity impact",
+    "key_results": "Peak contact force increased 3527\u20134174 N with internal pressure rise (689\u20132068 kPa); permanent deformation decreased 15.1\u20137.0 mm; experimental and numerical plastic-zone areas agreed to 16.9%",
+    "comments": "The synchronized ABAQUS/Explicit model provides confidence in predictive capability, though the study validates only a single impact scenario and discharge power at device scale was not tested.",
     "model_io": [
       {
-        "model": "ABAQUS/Explicit finite element model (uPVC pipe)",
+        "model": "ABAQUS/Explicit finite element model",
         "inputs": [
-          "measured hammer velocity (5.56 m/s)",
+          "clamped uPVC pipe geometry",
           "internal water pressure (689\u20132068 kPa)",
-          "pipe geometry and material properties"
+          "4 kg hammer at 5.56 m/s mid-span impact"
         ],
         "outputs": [
-          "contact force transient",
-          "permanent deformation",
+          "contact force time-history",
           "plastic-zone area",
-          "pressure pulse"
+          "permanent deformation"
         ]
       },
       {
@@ -109,14 +111,18 @@
         ],
         "outputs": [
           "hammer velocity (infrared gates)",
-          "transient internal pressure (transducer)"
+          "transient internal pressure pulse"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Internal pressure stiffens pipe walls, reducing permanent deformation and shortening contact period",
-        "result": "Confirmed; permanent deformation fell from 15.1 to 7.0 mm as pressure increased"
+        "hypothesis": "Internal pressure induces wall stiffening, reducing permanent deformation",
+        "result": "Confirmed: deformation decreased from 15.1 to 7.0 mm as pressure rose"
+      },
+      {
+        "hypothesis": "Contact-force response transitions from linear to plateau behavior near burst pressure",
+        "result": "Observed linear response up to ~1379 kPa, then plateau onset"
       }
     ]
   },
@@ -129,35 +135,52 @@
     "journal": "Scientific Reports",
     "publishedAt": "2026-11-08",
     "category": "Applied Physics",
-    "task": "Enhanced thermal transport and thermal stability of phase change material composites via framework coating and graphene",
-    "key_results": "ZIF-8-coated composite: thermal conductivity 0.78 \u00b1 0.04 W m\u22121 K\u22121, supercooling 1.2 \u00b1 0.2 \u00b0C; 98.2 \u00b1 1.1% melting enthalpy retention after 1000 thermal cycles",
-    "comments": "Strong cyclic durability and thermal conductivity improvement, but synergistic mechanism between coating and graphene remains unclear; device-scale discharge power untested.",
+    "task": "Enhanced thermal transport and crystallization control in phase-change material composites",
+    "key_results": "ZIF-8-coated composite: thermal conductivity 0.78 \u00b1 0.04 W m\u207b\u00b9 K\u207b\u00b9, supercooling 1.2 \u00b1 0.2 \u00b0C; UiO-66-coated composite: 0.72 \u00b1 0.03 W m\u207b\u00b9 K\u207b\u00b9, supercooling 2.4 \u00b1 0.3 \u00b0C; ZIF-8 retained 98.2 \u00b1 1.1% melting enthalpy after 1000 cycles",
+    "comments": "The synergistic effect of metal\u2013organic framework coating and graphene is demonstrated but not mechanistically isolated; device-scale discharge power validation is absent, limiting applicability assessment.",
     "model_io": [
       {
-        "model": "Octadecane-filled polyurea capsules with metal-organic framework coating in polyurethane matrix with graphene",
+        "model": "Polyurea-capsule composite system",
         "inputs": [
-          "n-octadecane (phase change material)",
-          "ZIF-8 or UiO-66 porous coating",
-          "graphene nanoplatelets (5 wt%)",
-          "thermal cycling (10\u201360 \u00b0C)"
+          "n-octadecane",
+          "ZIF-8 or UiO-66 coating",
+          "polyurethane matrix",
+          "graphene nanoplatelets (5 wt%)"
         ],
         "outputs": [
-          "thermal conductivity (W m\u22121 K\u22121)",
-          "melting enthalpy (J/g)",
-          "supercooling onset (\u00b0C)",
-          "mass retention (%)",
-          "crystallization behavior"
+          "effective thermal conductivity",
+          "onset-based supercooling",
+          "melting enthalpy retention"
+        ]
+      },
+      {
+        "model": "Modulated differential scanning calorimetry",
+        "inputs": [
+          "coated composite sample"
+        ],
+        "outputs": [
+          "heat-flow components"
+        ]
+      },
+      {
+        "model": "Fast scanning calorimetry",
+        "inputs": [
+          "coated composite sample",
+          "varied cooling rates"
+        ],
+        "outputs": [
+          "crystallization kinetics"
         ]
       }
     ],
     "hypotheses": [
       {
-        "hypothesis": "Synergistic thermal transport from graphene and framework coating exceeds either component alone",
-        "result": "Partially confirmed; ZIF-8 + graphene composite (0.78 W m\u22121 K\u22121) outperforms ZIF-8 alone or graphene alone, but mechanism unresolved due to differing coating properties"
+        "hypothesis": "Graphene nanoplatelets enhance thermal conductivity beyond either component alone",
+        "result": "Confirmed: combined ZIF-8+graphene (0.78 W m\u207b\u00b9 K\u207b\u00b9) exceeds ZIF-8 alone or graphene alone"
       },
       {
-        "hypothesis": "Framework coating delays crystallization (supercooling)",
-        "result": "Confirmed; UiO-66 coating shows 2.4 \u00b1 0.3 \u00b0C supercooling vs. 1.2 \u00b1 0.2 \u00b0C for ZIF-8"
+        "hypothesis": "Metal\u2013organic framework coatings delay crystallization via nucleation suppression",
+        "result": "Partially supported: UiO-66 (2.4 \u00b0C supercooling) > ZIF-8 (1.2 \u00b0C); mechanism not isolated due to confounding coating parameters"
       }
     ]
   }
