@@ -716680,5 +716680,175 @@
         "result": "Confirmed; robust performance in Monte Carlo and PVT analyses"
       }
     ]
+  },
+  "hf:2611.08175": {
+    "category": "Agents/RL",
+    "task": "Automated PCB routing on complex circuit boards",
+    "key_results": "Achieved 100%, 94.9%, 100%, and 40% clean-pass rates on four PCBWorld-Bench splits; outperformed baselines by 13.9-36 percentage points on real-world subsets",
+    "comments": "The hierarchical decomposition into global planning and local execution is well-motivated, though the sharp performance drop on D3-C suggests fundamental challenges remain on the hardest boards.",
+    "model_io": [
+      {
+        "model": "Global Routing Planner (multimodal LLM)",
+        "inputs": [
+          "board image",
+          "electrical connectivity",
+          "geometric constraints"
+        ],
+        "outputs": [
+          "routing topology",
+          "routing order",
+          "corridors",
+          "layer transitions"
+        ]
+      },
+      {
+        "model": "Detailed Routing Executor (KiCad integration)",
+        "inputs": [
+          "routing guides",
+          "board state"
+        ],
+        "outputs": [
+          "routed connections",
+          "structured failure feedback"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Hierarchical decomposition into global planning and local execution enables reliable routing",
+        "result": "Confirmed on simpler boards; fails on D3-C (40% pass rate), indicating architectural limits on complex problems"
+      }
+    ]
+  },
+  "hf:2611.09891": {
+    "category": "LLM/Reasoning",
+    "task": "Caching and reusing LLM reasoning for efficient task solving",
+    "key_results": "CPU-executable reasoning caches achieve frontier-LLM parity on mathematical and scientific tasks while being 16-291x cheaper and fully explainable",
+    "comments": "The core insight\u2014separating reasoning from execution\u2014is elegant, but scalability to novel problem distributions and generalization beyond the training domain remain open questions.",
+    "model_io": [
+      {
+        "model": "LLM (reasoning phase)",
+        "inputs": [
+          "original problem instance"
+        ],
+        "outputs": [
+          "reasoning trace",
+          "solution structure"
+        ]
+      },
+      {
+        "model": "CPU-ARC (cached reasoning executor)",
+        "inputs": [
+          "new problem instance in same task family"
+        ],
+        "outputs": [
+          "solution execution",
+          "result"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Once reasoning is cached, new problem instances can be solved efficiently without LLM re-reasoning",
+        "result": "Confirmed: achieved parity with frontier models at 16-291x lower cost on tested tasks"
+      },
+      {
+        "hypothesis": "Cached reasoning is robust to input perturbations",
+        "result": "Confirmed: demonstrated robustness, though domain-specificity limits may apply"
+      }
+    ]
+  },
+  "hf:2611.08647": {
+    "category": "Benchmark",
+    "task": "Evaluating gradient-free weight editing capabilities of LLMs",
+    "key_results": "Frontier models (Astra, GPT-6.1 Sol) dramatically outperform peers; success highly task-dependent (structured response 0%, recoding high); capability appears recent (absent in GPT-5.6 Sol)",
+    "comments": "The sharp performance divergence and task-specificity suggest intra-weight injection is an emerging, fragile capability; the benchmark reveals surprising limitations even in frontier models.",
+    "model_io": [
+      {
+        "model": "Editor LLM (weight manipulation agent)",
+        "inputs": [
+          "target model weights",
+          "edit objective",
+          "editing tools",
+          "rollout budget"
+        ],
+        "outputs": [
+          "weight patch proposal",
+          "edited model behavior"
+        ]
+      },
+      {
+        "model": "Validator (clean environment)",
+        "inputs": [
+          "proposed patch",
+          "unmodified target model"
+        ],
+        "outputs": [
+          "comparison metrics",
+          "success/failure verdict"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Large editor models can reliably modify smaller target model weights via gradient-free editing",
+        "result": "Partially confirmed: frontier models succeed on some tasks (recoding, alias acquisition) but fail universally on others (structured response)"
+      },
+      {
+        "hypothesis": "Intra-weight injection capability correlates across different editing tasks",
+        "result": "Rejected: poor cross-task correlation indicates uneven capability frontier"
+      },
+      {
+        "hypothesis": "Intra-weight injection is a recent acquisition in frontier models",
+        "result": "Confirmed: absent/minimal in GPT-5.6 Sol, strong in GPT-6.1 Sol; suggests recent training emergence"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77118-z": {
+    "category": "Other",
+    "task": "Brain MRI synthesis and cross-scanner harmonization",
+    "key_results": "MER-CycleGAN shows statistically significant reconstruction improvements over CycleGAN with large effect sizes; hippocampal segmentation and CN-vs-AD classification show modest differences without clinical superiority",
+    "comments": "Memory-embedded residual learning improves cycle-reconstruction metrics but downstream clinical benefit remains unestablished; requires larger multi-site cohorts.",
+    "model_io": [
+      {
+        "model": "MER-CycleGAN (CycleGAN + memory modules in residual representations)",
+        "inputs": [
+          "unpaired MRI images (T1, T2, or 1.5T, 3T)"
+        ],
+        "outputs": [
+          "synthesized MRI images",
+          "harmonized MRI"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Memory interaction within generator feature space improves unpaired MRI domain translation",
+        "result": "Partially confirmed: reconstruction metrics improve significantly, but downstream clinical utility unclear"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79860-w": {
+    "category": "Statistical Methods",
+    "task": "Machine learning for obstructive sleep apnea diagnosis and severity prediction",
+    "key_results": "ANN achieves class-specific AUC 0.89\u20130.96 for OSA severity prediction on 1,954 participants; good discriminative performance with only 18 demographic/clinical input features",
+    "comments": "Promising for resource-limited screening; limited internal validation without external cohort testing.",
+    "model_io": [
+      {
+        "model": "Artificial neural network (1 hidden layer, 50 neurons, ReLU, Softmax output)",
+        "inputs": [
+          "18 demographic and clinical parameters"
+        ],
+        "outputs": [
+          "OSA severity category (4-class)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Simple neural network with clinical features predicts OSA severity comparably to polysomnography-derived labels",
+        "result": "Confirmed: AUC 0.89\u20130.96 across severity categories"
+      }
+    ]
   }
 }
