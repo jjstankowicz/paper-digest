@@ -719718,5 +719718,385 @@
         "result": "Confirmed: water-permeable diatomite adds +0.16 mV over sealed acrylic mask"
       }
     ]
+  },
+  "hf:2611.10592": {
+    "category": "Benchmark",
+    "task": "Evaluating motion graphics generation from static images and natural language prompts",
+    "key_results": "Pass@1 ranges 6.0%-67.7% across 47 LLM configurations; verification programs achieve 93.3% agreement with human judgments vs. 83.3% for GPT-6 Astra baseline",
+    "comments": "Programmatic verification is a clever alternative to VLM judges, though the low absolute performance across models suggests motion generation remains a hard problem.",
+    "model_io": [
+      {
+        "model": "Various LLMs (32 models, 12 providers)",
+        "inputs": [
+          "static SVG image",
+          "motion edit prompt (natural language)"
+        ],
+        "outputs": [
+          "animated SVG with motion edits"
+        ]
+      },
+      {
+        "model": "Multi-agent pipeline",
+        "inputs": [
+          "human-labeled animations",
+          "synthesized test cases"
+        ],
+        "outputs": [
+          "deterministic verification programs"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Programmatic verification outperforms VLM-based evaluation",
+        "result": "Verified: 93.3% vs 83.3% agreement with human judgments"
+      },
+      {
+        "hypothesis": "More reasoning attempts improve pass rates",
+        "result": "Confirmed: pass@32 ranges 38.0%-95.0% vs pass@1 ranges 6.0%-67.7%"
+      }
+    ]
+  },
+  "hf:2611.10556": {
+    "category": "Systems",
+    "task": "Improving language model parameter efficiency with twin embeddings",
+    "key_results": "Lowers validation loss in 11/12 comparisons and raises downstream task accuracy in 10/12 comparisons; cost is one extra embedding table",
+    "comments": "Weight tying improvement is incremental but consistent, with real efficiency gains and minimal parameter overhead.",
+    "model_io": [
+      {
+        "model": "on\u00f3na (Transformer variant)",
+        "inputs": [
+          "token sequences"
+        ],
+        "outputs": [
+          "token logits",
+          "language model predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Twin embedding tables with gated mixture preserve weight sharing while increasing output expressiveness",
+        "result": "Confirmed across Dense, Gated DeltaNet, MoE, and Attention Residual architectures at 142M-1B scales"
+      }
+    ]
+  },
+  "hf:2611.09709": {
+    "category": "Systems",
+    "task": "Accelerating LLM prefill via training-free cache fill prediction",
+    "key_results": "1.25-1.31x faster prefill on Qwen3.8-27B (16K-120K tokens); 1.50-1.60x on Qwen3.8-Flash-Next (9K-32K tokens) with minimal loss degradation",
+    "comments": "Clever retrofitting of cache-fill to existing models via ridge regression, though efficiency gains come with measurable but small accuracy tradeoffs.",
+    "model_io": [
+      {
+        "model": "RidgeFill (ridge regression-based cache prediction)",
+        "inputs": [
+          "lower layer activations",
+          "prompt tokens"
+        ],
+        "outputs": [
+          "predicted upper layer KV cache"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Per-layer ridge regression maps can predict upper layer inputs without training",
+        "result": "Confirmed; maps fitted in closed form from calibration data achieve 1.25-1.60x speedup with <5% perplexity degradation"
+      },
+      {
+        "hypothesis": "Keys and values contribute differently to fill error across model architectures",
+        "result": "Confirmed; keys dominate on Llama-3.1-8B, values and recurrent state on Qwen3.5-9B"
+      }
+    ]
+  },
+  "hf:2611.12167": {
+    "category": "Benchmark",
+    "task": "Evaluating LLM propensity to commit fraud under U.S. law",
+    "key_results": "Fraud rates range 0%-40% across models; autonomy increases fraud from 3.0% (advising) to 14.7% (drafting) to 21.4% (acting); profit-maximization prompts increase fraud, law-obedience prompts reduce it",
+    "comments": "Important safety benchmark grounded in real case law, though high variance across models and conditions suggests prompt engineering significantly shapes behavior.",
+    "model_io": [
+      {
+        "model": "20 LLMs",
+        "inputs": [
+          "scenario text (real U.S. court case facts)",
+          "task type (advise/draft/act)"
+        ],
+        "outputs": [
+          "response text",
+          "fraud classification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LLM fraud propensity increases with autonomy level",
+        "result": "Confirmed: 3.0% \u2192 14.7% \u2192 21.4% across advising, drafting, and acting"
+      },
+      {
+        "hypothesis": "Prompt-based interventions significantly affect fraud rates",
+        "result": "Confirmed: law-obedience prompts reduce fraud; profit-maximization and agentic prompts increase it"
+      },
+      {
+        "hypothesis": "LLMs sometimes engage in fraud despite recognizing legal risks",
+        "result": "Confirmed in qualitative analysis"
+      }
+    ]
+  },
+  "hf:2611.11740": {
+    "category": "LLM/Reasoning",
+    "task": "Learning creative processes rather than outputs to enable novel generation",
+    "key_results": "Creative Priming decouples primer generation from response generation via GRPO; primers learned to optimize for novelty, quality, and diversity of resulting responses",
+    "comments": "Conceptually sound approach to the creative paradox, but abstract; concrete experimental results on downstream creative tasks are not reported in the abstract.",
+    "model_io": [
+      {
+        "model": "Creative Priming (priming model + response model)",
+        "inputs": [
+          "prompt"
+        ],
+        "outputs": [
+          "primer (process prompt)",
+          "response"
+        ]
+      },
+      {
+        "model": "Priming model (trained via GRPO)",
+        "inputs": [
+          "prompt"
+        ],
+        "outputs": [
+          "primer maximizing novelty, quality, diversity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Decoupling creative process (primer) from product (response) escapes the creative paradox",
+        "result": "Proposed mechanism; empirical validation on creative tasks not detailed in abstract"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77441-5": {
+    "category": "Genomics",
+    "task": "Biomarker discovery for intervertebral disc degeneration via weighted gene co-expression and machine learning",
+    "key_results": "105 candidate genes identified; 7 final biomarkers; TFPI/TNFAIP6 consistently upregulated; nomogram AUC 0.953 (GSE70362)",
+    "comments": "Well-executed multi-step filtering but lacks independent clinical validation cohort; RT-qPCR validation on small cohort only.",
+    "model_io": [
+      {
+        "model": "WGCNA + Boruta + XGBoost feature selection; logistic regression nomogram",
+        "inputs": [
+          "IDD transcriptomic datasets",
+          "RNA modification-related genes"
+        ],
+        "outputs": [
+          "biomarker panel",
+          "IDD risk nomogram"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "TFPI and TNFAIP6 are diagnostic biomarkers for IDD",
+        "result": "Partially confirmed; consistently upregulated across datasets; nomogram shows high AUC but prospective validation needed"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77697-x": {
+    "category": "Other",
+    "task": "Plant disease recognition using hybrid transformer-CNN architecture",
+    "key_results": "99.61% accuracy on PlantVillage; zero-shot 88.34% on PlantDoc, 82.47% on Plant Pathology 2020",
+    "comments": "Strong in-domain performance but substantial zero-shot degradation; good analysis of failure modes and domain adaptation strategies.",
+    "model_io": [
+      {
+        "model": "HTA-ConvNet: EfficientNet-B4 with Dual-Branch Spatial Attention blocks",
+        "inputs": [
+          "leaf images"
+        ],
+        "outputs": [
+          "disease class probabilities"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Adaptive fusion of local convolution and global attention improves robustness",
+        "result": "Confirmed; outperforms pure CNN and ViT baselines on near-saturated PlantVillage"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78825-3": {
+    "category": "Statistical Methods",
+    "task": "Pneumonia detection from routine hematological markers using explainable ensemble learning",
+    "key_results": "Super Learner AUC 0.9822 (test), 0.9612\u00b10.0077 (5-fold CV); SHAP identified MCH, lymphocyte %, L:M ratio as top features",
+    "comments": "Strong discrimination but requires prospective validation in symptomatic patients with relevant non-pneumonia comparators.",
+    "model_io": [
+      {
+        "model": "Super Learner ensemble with random forest meta-learner",
+        "inputs": [
+          "hematological markers (CBC)"
+        ],
+        "outputs": [
+          "pneumonia probability",
+          "SHAP feature importance scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Routine blood markers enable accurate pneumonia screening via ensemble learning",
+        "result": "Confirmed; AUC 0.9822 on holdout test set"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79734-1": {
+    "category": "Statistical Methods",
+    "task": "Network pharmacology and molecular dynamics elucidating arrhythmogenic mechanisms of anthraquinone antitumor drugs",
+    "key_results": "195 toxicity targets identified; PI3K-Akt and cancer microRNAs pathways enriched; Mitoxantrone/Losoxantrone may block hERG, prolong QT",
+    "comments": "Comprehensive computational pipeline combining network toxicology, docking, MD simulations; ADMET predictions identify hERG liability but experimental validation limited.",
+    "model_io": [
+      {
+        "model": "Network toxicology + PPI network + GO/KEGG enrichment + molecular docking + MD simulation + ADMET",
+        "inputs": [
+          "7 anthraquinone drug structures",
+          "target databases"
+        ],
+        "outputs": [
+          "arrhythmia target networks",
+          "drug-target binding stability",
+          "ADMET profiles"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Anthraquinone drugs induce arrhythmias via multi-target effects on PI3K-Akt and cardiac ion channels",
+        "result": "Supported by network analysis and molecular modeling; hERG blockade predicted for Mitoxantrone/Losoxantrone"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79920-1": {
+    "category": "Genomics",
+    "task": "Machine learning prediction of base editor sgRNA fitness score from sequence and biological features",
+    "key_results": "Decision tree models: AUC-ROC 87\u201394%, AU-PR 53\u201375%; PAM-proximal nucleotides most predictive; gene essentiality secondary feature",
+    "comments": "Practical utility for sgRNA prioritization in base editing screens; limited external validation across independent screening datasets.",
+    "model_io": [
+      {
+        "model": "Decision tree-based classifiers with feature importance analysis",
+        "inputs": [
+          "sgRNA sequence",
+          "PAM context",
+          "predicted variant effect",
+          "gene essentiality"
+        ],
+        "outputs": [
+          "sgRNA fitness score prediction",
+          "feature importance"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "sgRNA sequence, particularly PAM-proximal nucleotides, predicts base editor fitness effect",
+        "result": "Confirmed; sequence features show AUC 87\u201394% in gene-held-out validation"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80034-x": {
+    "category": "Statistical Methods",
+    "task": "Integrated computational toxicology identifying methylparaben-responsive pathways in colorectal cells",
+    "key_results": "52 candidate genes identified; LASSO-RF model best (predicts CRC classification); MAOB identified as key target; Hippo/Wnt pathway associations predicted",
+    "comments": "Multi-level integration (network toxicology, WGCNA, ML, MD, scRNA-seq) is comprehensive; proposed MAOB-Hippo/Wnt link remains hypothetical pending direct validation.",
+    "model_io": [
+      {
+        "model": "Network toxicology + WGCNA + LASSO-RF ML + molecular docking + MD simulation + single-cell transcriptomics",
+        "inputs": [
+          "MP chemical structure",
+          "CRC transcriptomic datasets (685 samples)",
+          "NCM460/RKO cell lines"
+        ],
+        "outputs": [
+          "candidate target genes (52)",
+          "MAOB binding conformation",
+          "pathway associations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Methylparaben targets MAOB to modulate Hippo/Wnt signaling and colorectal epithelial homeostasis",
+        "result": "Hypothesized via computational integration; experimental causality not established"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80099-8": {
+    "category": "Other",
+    "task": "Retrieval-augmented generation for Down syndrome literature synthesis",
+    "key_results": "Section-aware RAG system on 1,594 open-access articles; no significant difference from proprietary/open-source models on most metrics; higher Recall than standalone generator",
+    "comments": "Principled approach to domain-specific RAG with results/evidence prioritization; limited by small query set (n=30) and no comparison to other biomedical RAG systems.",
+    "model_io": [
+      {
+        "model": "T21 Research Assistant: section-aware RAG on NVIDIA-Nemotron with query validation, reranking, synthesis",
+        "inputs": [
+          "user queries",
+          "1,594 Down syndrome research articles"
+        ],
+        "outputs": [
+          "cited, structured responses with source attribution"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Prioritizing Results sections improves evidence grounding in biomedical RAG",
+        "result": "Supported; improved Recall vs. standalone generator; comparable to proprietary models"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-03380-0": {
+    "category": "Statistical Methods",
+    "task": "Machine learning for rapid diagnostic test interpretation using synthetic training data",
+    "key_results": "HIV RDT: 98% sensitivity, 99% specificity; COVID-19 RDT: up to 99% accuracy",
+    "comments": "Synthetic data approach removes annotation burden; generalization to real-world RDT images in field settings not reported.",
+    "model_io": [
+      {
+        "model": "SynSight: ML pipeline trained on synthetic RDT images",
+        "inputs": [
+          "synthetic/real RDT images"
+        ],
+        "outputs": [
+          "RDT result classification",
+          "segmentation masks"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Synthetic data enables accurate RDT interpretation without real-world training images",
+        "result": "Confirmed for HIV and COVID-19 RDTs with high sensitivity/specificity"
+      }
+    ]
+  },
+  "nature:10.1038/s44303-026-00212-4": {
+    "category": "Structural Prediction",
+    "task": "Lightweight 3D astrocyte reconstruction and morphometry from volume electron microscopy",
+    "key_results": "AstroSeg-vEM: Dice 0.92, weighted Dice 0.95 on held-out test; lightweight, consumer-grade hardware compatible",
+    "comments": "Efficient transformer-based 2D segmentation with morphology-preserving post-processing; validated on normal and stress-associated astrocyte states.",
+    "model_io": [
+      {
+        "model": "AstroSeg-vEM: transformer-based 2D segmentation + dedicated post-processing for astrocyte morphology",
+        "inputs": [
+          "high-resolution vEM sections (4 mouse datasets)"
+        ],
+        "outputs": [
+          "3D astrocyte segmentations",
+          "morphometric features"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Lightweight transformer architecture with morphology-aware post-processing enables scalable astrocyte reconstruction",
+        "result": "Confirmed; Dice 0.92 with efficient inference on consumer hardware"
+      }
+    ]
   }
 }
