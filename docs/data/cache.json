@@ -719085,5 +719085,638 @@
         "result": "Confirmed: anisotropy disappears within 2\u20133 ms; energy relaxation follows collision dynamics"
       }
     ]
+  },
+  "hf:2611.10304": {
+    "category": "Benchmark",
+    "task": "Repository-level SWE benchmark for underrepresented programming languages",
+    "key_results": "202 high-quality issue-resolution tasks across 13 languages; solver-judge-repairer pipeline improved task quality by correcting invalid tests and descriptions",
+    "comments": "Addresses a genuine gap in SWE benchmarks, though the relatively small task count per language (\u224815 tasks) may limit statistical significance for fine-grained model comparisons.",
+    "model_io": [
+      {
+        "model": "frontier models (GPT-4, Claude, etc.)",
+        "inputs": [
+          "repository code",
+          "issue description",
+          "test suite"
+        ],
+        "outputs": [
+          "code solution",
+          "execution trajectory"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Solver-judge-repairer pipeline improves benchmark quality by filtering defective tasks",
+        "result": "Successfully corrected tests rejecting valid implementations and retained challenging tasks"
+      }
+    ]
+  },
+  "hf:2611.12870": {
+    "category": "Generative",
+    "task": "Scaling world action models with language-video-action alignment",
+    "key_results": "88.10% success rate (Easy conditions), 61.56% (Hard conditions); 40.00% on real-world tasks vs 23.33% baseline; curated 47,000 hours of video data across egocentric, UMI, and robot demonstrations",
+    "comments": "Systematic ablation of supervision signals (language-video vs language-video-action) provides useful insights, though the gap between simulated and real-world performance suggests generalization challenges remain.",
+    "model_io": [
+      {
+        "model": "vision-language transformer (world action model)",
+        "inputs": [
+          "video frames",
+          "language instruction",
+          "action demonstrations"
+        ],
+        "outputs": [
+          "predicted video",
+          "predicted actions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Mixing egocentric and UMI demonstrations improves control generalization",
+        "result": "Confirmed under fixed training budget"
+      },
+      {
+        "hypothesis": "Language annotation quality affects pretrained language-video capabilities",
+        "result": "Supported through systematic supervision study"
+      }
+    ]
+  },
+  "hf:2611.01112": {
+    "category": "Agents/RL",
+    "task": "Zero-shot embodied manipulation task execution with planning-execution gap closure",
+    "key_results": "57.7% success rate on RoboDojo (64.0 Score), 73.2% on RoboCasa365; closes 68.3% of planning-execution gap without target-task trials; 2\u00d7 improvement over reference harness",
+    "comments": "Excellent systems engineering (visual preview, staged execution, in-place recovery) demonstrates that agent harness design can be as important as model capability, though frozen evaluation may not capture performance on truly novel tasks.",
+    "model_io": [
+      {
+        "model": "vision-language model (GPT-4 Astra or similar)",
+        "inputs": [
+          "robot state images",
+          "task instruction",
+          "visual trajectory preview"
+        ],
+        "outputs": [
+          "tool calls or Python programs",
+          "motion commands"
+        ]
+      },
+      {
+        "model": "agent harness (calibration, control, safety)",
+        "inputs": [
+          "model decisions",
+          "3D measurements",
+          "grasp bounds"
+        ],
+        "outputs": [
+          "robot commands",
+          "execution feedback"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Removing arm execution detail (abstraction) raises VLM success rate",
+        "result": "Confirmed: 22.5% \u2192 76.2% with abstraction"
+      },
+      {
+        "hypothesis": "Explicit task belief and staged validation improve robustness",
+        "result": "Supported: maintains first place under scene randomization"
+      }
+    ]
+  },
+  "hf:2611.12875": {
+    "category": "Vision",
+    "task": "Interactive correction of 3D stereo reconstruction via sparse correspondence clicks",
+    "key_results": "Single correspondence click reduces reconstruction error; outperforms feed-forward models on curated benchmark; effective on repetitive textures, symmetric structures, large viewpoint changes",
+    "comments": "Novel interactive paradigm is practical and well-motivated, but the curated benchmark design is not detailed sufficiently to assess generalization; user study on click efficiency would strengthen claims.",
+    "model_io": [
+      {
+        "model": "3D reconstruction network + point correspondence adapter",
+        "inputs": [
+          "stereo image pair",
+          "sparse correspondence clicks (2D points)"
+        ],
+        "outputs": [
+          "3D point cloud",
+          "depth map"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Sparse human correspondence clicks can correct feed-forward model failures",
+        "result": "Confirmed on standard and curated benchmarks"
+      }
+    ]
+  },
+  "hf:2610.37570": {
+    "category": "LLM/Reasoning",
+    "task": "LLM-based uplift modeling for optimal promotion allocation in e-commerce",
+    "key_results": "1% conversion increase and 6% promotion cost reduction in production A/B test on churn reactivation vs EMA baseline",
+    "comments": "Production results are compelling but modest; the single-token output as threshold probability is a neat technique, though details on monotonicity constraints and session context encoding are sparse.",
+    "model_io": [
+      {
+        "model": "finetuned LLM (Large Commerce Model)",
+        "inputs": [
+          "user session context (day, delivery shift)",
+          "transactional history"
+        ],
+        "outputs": [
+          "single-token conversion threshold probability"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LLM finetuned on commerce data can learn monotonic promotion-response curves",
+        "result": "Production A/B test shows 1% lift, 6% cost reduction"
+      }
+    ]
+  },
+  "hf:2501.08686": {
+    "category": "LLM/Reasoning",
+    "task": "Schema matching via knowledge graph-augmented retrieval for LLM",
+    "key_results": "39.79% precision gain and 30.56% F1 improvement over LLM SOTA (Jellyfish-8B) on MIMIC; 69.20% precision and 21.99% F1 gain over PLM SOTA on Synthea; no retraining required",
+    "comments": "Strong empirical results; the hallucination mitigation through instruction-tuning knowledge exclusion is pragmatic, though the mechanism deserves clearer exposition.",
+    "model_io": [
+      {
+        "model": "LLM with knowledge graph retrieval + reranking",
+        "inputs": [
+          "schema pair",
+          "external knowledge graph"
+        ],
+        "outputs": [
+          "schema mapping",
+          "confidence score"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "KG-augmented retrieval mitigates LLM hallucination in schema matching",
+        "result": "Confirmed via instruction-tuning knowledge exclusion and strong F1 gains"
+      },
+      {
+        "hypothesis": "Hybrid retrieval (LLM-based, vector-based, graph traversal) outperforms single methods",
+        "result": "Supported by SOTA results on two datasets"
+      }
+    ]
+  },
+  "hf:2512.23818": {
+    "category": "Generative",
+    "task": "Extending Tweedie's formula from Gaussian to energy-based (Gibbs) noise distributions",
+    "key_results": "Energy-Tweedie identity generalizes Tweedie's formula to Gibbs noise; path derivative of kernel scoring rule recovers Stein score; enables principled noise parameter estimation and diffusion sampling along user-chosen noise paths",
+    "comments": "Elegant theoretical contribution bridging denoising, scoring rules, and diffusion; practical implications for generative modeling are noted but not deeply explored empirically.",
+    "model_io": [
+      {
+        "model": "score-based generative model",
+        "inputs": [
+          "noisy data",
+          "noise potential function"
+        ],
+        "outputs": [
+          "Stein score estimate",
+          "denoised sample"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Path derivative of kernel scoring rule under Gibbs noise recovers Stein score",
+        "result": "Proved via Energy-Tweedie identity"
+      },
+      {
+        "hypothesis": "Posterior-samples-to-score conversion enables efficient score estimation",
+        "result": "Theoretical framework established"
+      }
+    ]
+  },
+  "nature:10.1038/s41419-026-09363-z": {
+    "category": "Cell Signaling",
+    "task": "Characterize GLA's role in mTORC1 activation and melanoma progression",
+    "key_results": "GLA overexpression activates mTORC1 and enhances melanoma cell survival; GLA-GATOR1 interaction on lysosomal surface sensitizes nutrient-sensing upstream of mTOR",
+    "comments": "Enzyme-independent oncogenic function is notable; GLA precursor diversion from secretory pathway is an unconventional mechanism.",
+    "model_io": [
+      {
+        "model": "B16 melanoma cells",
+        "inputs": [
+          "GLA overexpression/deficiency",
+          "nutrient signals"
+        ],
+        "outputs": [
+          "mTORC1 activity",
+          "TFEB-mediated lysosome biogenesis",
+          "cell proliferation/survival"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "GLA activates mTORC1 through GATOR1 interaction independent of enzymatic activity",
+        "result": "Catalytically inactive GLA mutants retain mTORC1 activation and promote tumor growth"
+      },
+      {
+        "hypothesis": "GLA deficiency enhances autophagy-lysosomal pathway",
+        "result": "GLA loss impairs autolysosome formation and autophagic flux"
+      }
+    ]
+  },
+  "nature:10.1038/s41420-026-03418-y": {
+    "category": "Cell Signaling",
+    "task": "Characterize RS9-mediated Nrf2 activation via Keap1-C151 and protective effects against phototoxic oxidative injury",
+    "key_results": "RS9 stabilized Nrf2, promoted nuclear translocation, upregulated HO-1/NQO1 in RPE and hRMECs; mitigated UVR-induced viability loss, ROS, mitochondrial depolarization, DNA damage; Keap1-C151S mutation blocked RS9-Nrf2 activation; intravitreal RS9 preserved RPE thickness, visual function, retinal vascular integrity in light-damage model",
+    "comments": "Comprehensive in vitro and in vivo validation; precise Keap1 cysteine targeting demonstrates mechanism specificity.",
+    "model_io": [
+      {
+        "model": "Human ARPE-19, primary murine RPE, hRMECs with UVR exposure",
+        "inputs": [
+          "RS9 (nanomolar concentrations)",
+          "UVR"
+        ],
+        "outputs": [
+          "cell viability",
+          "ROS",
+          "mitochondrial depolarization",
+          "DNA damage",
+          "apoptosis",
+          "Nrf2 stabilization/translocation",
+          "HO-1/NQO1 expression"
+        ]
+      },
+      {
+        "model": "Murine light-damage model with intravitreal RS9",
+        "inputs": [
+          "RS9 injection",
+          "intense light exposure"
+        ],
+        "outputs": [
+          "RPE layer thickness",
+          "visual function",
+          "retinal vascular integrity (PECAM-1)",
+          "oxidative injury markers"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "RS9 engages Keap1-C151 to stabilize and activate Nrf2",
+        "result": "Keap1-C151S mutation blocks RS9-induced Nrf2 activation and cytoprotection; Keap1 depletion precluded additional RS9 benefit"
+      },
+      {
+        "hypothesis": "Nrf2 activation protects inner and outer blood-retinal barriers against phototoxicity",
+        "result": "Intravitreal RS9 preserved RPE layer, visual function, and vascular integrity in light-damage model"
+      }
+    ]
+  },
+  "nature:10.1038/s41420-026-03450-y": {
+    "category": "Cell Signaling",
+    "task": "Investigate NCX1 function in migration and vasculogenic mimicry in mesenchymal glioblastoma",
+    "key_results": "NCX1 enriched at migratory front; NCX1 blockade impairs wound closure, actin organization, spheroid invasion, and loop formation; positive correlation between NCX1 and ELF2 in mesenchymal GBM associates with worse survival",
+    "comments": "VM-like structures in vivo confirm therapeutic relevance; patient-derived stem cell enrichment strengthens translational potential.",
+    "model_io": [
+      {
+        "model": "GBM19 primary mesenchymal glioblastoma stem cells",
+        "inputs": [
+          "bepridil (NCX1 inhibitor)",
+          "mechanical wounding",
+          "3D spheroid invasion"
+        ],
+        "outputs": [
+          "migration rate",
+          "actin organization",
+          "VE-cadherin+ loop structures",
+          "transcriptomic profile"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "NCX1 regulates VM through coordination with ELF2",
+        "result": "High ELF2 expression correlates with NCX1 in mesenchymal GBM and worse survival"
+      },
+      {
+        "hypothesis": "NCX1 controls cell polarity and directional migration",
+        "result": "NCX1 blockade disrupts actin organization, cell polarity, and directional migration"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-69804-9": {
+    "category": "Cell Signaling",
+    "task": "Develop microfluidic platform to modulate TGF-\u03b21 secretion via mechanical perturbation and assess chondrogenic potential",
+    "key_results": "Intermediate flow condition (Case 3) increased TGF-\u03b21 secretion ~250% and mRNA ~3.5-fold; conditioned medium enhanced COL2A1 and SOX9 in AD-MSCs",
+    "comments": "Proof-of-concept with simplified droplet model; actual cell viscoelasticity and mechanotransduction not resolved; bioactivity validation in 2D is preliminary.",
+    "model_io": [
+      {
+        "model": "Constriction-based microfluidic device with HCT116 cells",
+        "inputs": [
+          "flow rate",
+          "constriction geometry",
+          "transit time",
+          "pressure amplification"
+        ],
+        "outputs": [
+          "TGF-\u03b21 concentration (supernatant)",
+          "TGF-\u03b21 mRNA expression",
+          "cell viability"
+        ]
+      },
+      {
+        "model": "2D AD-MSC bioactivity assay",
+        "inputs": [
+          "conditioned medium from HCT116 microfluidic passage"
+        ],
+        "outputs": [
+          "COL2A1 protein",
+          "SOX9 protein"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Flow-dependent mechanical stimulation enhances TGF-\u03b21 secretion",
+        "result": "Intermediate flow condition produced highest TGF-\u03b21 (~250% increase); lower flow reduced viability"
+      },
+      {
+        "hypothesis": "Microfluidic-conditioned medium promotes chondrogenic differentiation",
+        "result": "Case 3 conditioned medium enhanced COL2A1 and SOX9 in AD-MSCs"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79337-w": {
+    "category": "Cell Signaling",
+    "task": "Determine whether adipogenic MSC-derived COL-3 drives M2 macrophage polarization via PI3K-AKT signaling in sepsis-induced lung injury",
+    "key_results": "COL-3 enhances M2-like macrophage phenotype; PI3K-AKT pathway involved; lyophilized ECM from adipogenic MSCs reduced lung inflammation and increased M2 infiltration in sepsis model",
+    "comments": "ECM-mediated immune modulation is an emerging therapeutic angle; quantitative M2 polarization metrics would strengthen the claims.",
+    "model_io": [
+      {
+        "model": "Mouse macrophages and CLP sepsis model",
+        "inputs": [
+          "COL-3 protein",
+          "adipogenic MSC-derived ECM",
+          "PI3K/AKT inhibitors"
+        ],
+        "outputs": [
+          "M2 marker expression (Arg1, Il10)",
+          "lung inflammation",
+          "inflammatory cell infiltration"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "COL-3 activates PI3K-AKT to promote M2 polarization",
+        "result": "Pharmacological inhibition of AKT blocks COL-3-associated M2 responses"
+      },
+      {
+        "hypothesis": "Adipogenic ECM alleviates sepsis-induced lung injury via M2 polarization",
+        "result": "ECM treatment reduced inflammation and increased M2 macrophage infiltration in vivo"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80132-w": {
+    "category": "Apoptosis/Cell Death",
+    "task": "Investigate CrCl\u2083-induced oocyte meiotic maturation impairment via oxidative stress and mitochondrial dysfunction",
+    "key_results": "CrCl\u2083 reduced first polar body extrusion rate and disrupted spindle-chromosome organization; elevated ROS, GSH depletion, decreased mitochondrial membrane potential; induced DNA damage and apoptosis markers",
+    "comments": "High-dose acute model may not reflect chronic occupational exposure; epigenetic changes (H3K27me3) suggest potential transgenerational effects.",
+    "model_io": [
+      {
+        "model": "Mouse oocytes with CrCl\u2083 exposure (0\u20130.4 mmol/kg, 3 days)",
+        "inputs": [
+          "CrCl\u2083 concentration"
+        ],
+        "outputs": [
+          "first polar body extrusion rate",
+          "spindle morphology",
+          "ROS levels",
+          "GSH content",
+          "mitochondrial membrane potential",
+          "apoptosis/autophagy markers",
+          "H3K27me3"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "CrCl\u2083 impairs meiotic maturation via oxidative stress",
+        "result": "ROS accumulation and GSH depletion accompanied reduced polar body extrusion and spindle defects"
+      },
+      {
+        "hypothesis": "Mitochondrial dysfunction mediates CrCl\u2083 toxicity",
+        "result": "Decreased mitochondrial membrane potential and abnormal distribution correlate with apoptosis"
+      }
+    ]
+  },
+  "nature:10.1038/s41583-026-01093-7": {
+    "category": "Network Biology",
+    "task": "Synthesis of cortico-basal ganglia\u2013thalamic (CBGT) network organization from connectomic data",
+    "key_results": "Modern connectomics reveal multiscale architecture with modular organization, graded/overlapping boundaries, stage-specific segregation/convergence, and re-entrant interactions; spatial heterogeneity aligns with connectivity-defined organization",
+    "comments": "Comprehensive framework synthesis rather than novel empirical findings; valuable conceptual integration but speculative regarding links between architecture and computation.",
+    "model_io": [
+      {
+        "model": "Integration of mesoscale and single-neuron connectomics with transcriptomics and morphology",
+        "inputs": [
+          "connectome datasets (cortex, basal ganglia, thalamus, brainstem)",
+          "molecular markers",
+          "neuronal morphology"
+        ],
+        "outputs": [
+          "CBGT network structural framework",
+          "functional circuit hypotheses"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Connectome-level organization principles generalize from mesoscale to nanoscale",
+        "result": "Partially supported; modular and segregated/convergent patterns observed but nanoscale complexity requires specialized tools"
+      }
+    ]
+  },
+  "nature:10.1038/s41583-026-01094-6": {
+    "category": "Network Biology",
+    "task": "Community detection methods for analyzing nanoscale connectomic networks",
+    "key_results": "Reviews and proposes community detection approaches for identifying neuron subnetworks; discusses utility for understanding modular organization, dimension reduction, and functional circuit discovery",
+    "comments": "Conceptual review of methods rather than novel empirical findings; valuable roadmap for connectomics analysis but illustrative applications limited.",
+    "model_io": [
+      {
+        "model": "Community detection algorithms (modularity optimization, spectral clustering, flow models, etc.) applied to nanoscale connectomes",
+        "inputs": [
+          "neuron-level connectivity matrices"
+        ],
+        "outputs": [
+          "neuron communities",
+          "modular organization metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Nanoscale connectomes exhibit modular community structure supporting functional specialization",
+        "result": "Theoretically supported but empirical validation in review domain"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78496-0": {
+    "category": "Statistical Methods",
+    "task": "Reproducible breast mass segmentation with improved metaheuristic optimization",
+    "key_results": "Dice coefficients of 0.8721\u20130.9623 and IoU of 0.7704\u20130.8452 across three datasets; 0.9\u20132.3% improvement over AdamW optimizer",
+    "comments": "Rigorous cross-domain validation but limited discussion of why metaheuristic optimization outperforms gradient-based methods mechanistically.",
+    "model_io": [
+      {
+        "model": "U-Net with Improved Crested Porcupine Optimizer (ICPO)",
+        "inputs": [
+          "mammogram ROI images (256\u00d7256) from INbreast and CBIS-DDSM datasets"
+        ],
+        "outputs": [
+          "breast mass segmentation masks"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "ICPO optimization overcomes non-convex loss landscape better than gradient-based methods",
+        "result": "Confirmed by improved Dice and IoU scores with reproducibility"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79388-z": {
+    "category": "Network Biology",
+    "task": "Analysis of network properties governing reservoir computing performance in recurrent networks",
+    "key_results": "Small-world networks achieved highest performance on both tasks; high clustering and low degree heterogeneity associated with optimal performance; connectome showed lower clustering and higher heterogeneity, performing comparably to random networks",
+    "comments": "Foundational connectomics-based computational study revealing that biological connectome topology is not automatically optimal for reservoir tasks; suggests task-specific network optimization.",
+    "model_io": [
+      {
+        "model": "Reservoir computing with connectome-derived, small-world, and random network architectures",
+        "inputs": [
+          "human activity sensor data",
+          "Mackey-Glass chaotic time series"
+        ],
+        "outputs": [
+          "activity classification",
+          "signal prediction"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Connectome-derived networks are computationally favorable reservoirs",
+        "result": "Rejected; small-world networks superior; connectome performance matched random networks"
+      },
+      {
+        "hypothesis": "High clustering and low degree heterogeneity optimize reservoir performance",
+        "result": "Confirmed"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79667-9": {
+    "category": "Statistical Methods",
+    "task": "Real-time forecasting model for lumpy skin disease outbreaks incorporating vector dynamics",
+    "key_results": "Model accurately captured spatiotemporal dynamics when fit to first 3 weeks of outbreak data in Australia simulation and Japan 2024 outbreak; infection probability approach outperformed infectious pressure approach",
+    "comments": "Demonstrates utility of incorporating epidemiological complexity and vector dynamics; good validation on real outbreak but limited to two geographic contexts.",
+    "model_io": [
+      {
+        "model": "Approximate Bayesian Computation Sequential Monte Carlo with intra/inter-farm transmission and vector dynamics",
+        "inputs": [
+          "farm locations",
+          "livestock data",
+          "early outbreak case counts (3 weeks)"
+        ],
+        "outputs": [
+          "spatiotemporal outbreak predictions",
+          "risk maps"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Infection probability modeling better captures between-farm transmission than force-based infectious pressure",
+        "result": "Confirmed by higher spatiotemporal accuracy"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80095-y": {
+    "category": "Genomics",
+    "task": "Pan-cancer expression analysis and functional validation of HSD11B2 in breast cancer",
+    "key_results": "HSD11B2 elevated in BRCA/CHOL/LIHC, reduced in COAD/KIRC/THCA; significant prognostic associations in 8 cancer types; AUC >0.9 for malignancy discrimination; HSD11B2 silencing reduced proliferation/migration/invasion in vitro and in vivo",
+    "comments": "Comprehensive multi-omics and functional validation across pan-cancer cohorts, but sample sizes for tissue proteomics limited (n=7 WT).",
+    "model_io": [
+      {
+        "model": "Multi-omics analysis (transcriptomics, proteomics, immunoprofiling) integrated with functional studies",
+        "inputs": [
+          "TCGA/GTEx transcriptomic data",
+          "tissue proteomics",
+          "cancer cell lines",
+          "xenograft models"
+        ],
+        "outputs": [
+          "HSD11B2 expression landscapes",
+          "prognostic nomogram",
+          "functional impact metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "HSD11B2 upregulation promotes breast cancer progression",
+        "result": "Confirmed by functional knockdown reducing proliferation/migration/invasion"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-75604-y": {
+    "category": "ML Theory",
+    "task": "State-of-charge estimation for Li-ion EV batteries",
+    "key_results": "CatBoost achieved RMSE 5.04% and MAE 3.73%; all boosting models outperformed RF/ELM baselines; SHAP provides feature importance explanation",
+    "comments": "Comprehensive hyperparameter optimization via Bayesian methods with explainability analysis; real-world BMW i3 validation strengthens claims.",
+    "model_io": [
+      {
+        "model": "CatBoost, HGBoost, LightGBM, AdaBoost (Bayesian-optimized)",
+        "inputs": [
+          "battery voltage, current, temperature, time"
+        ],
+        "outputs": [
+          "state-of-charge estimate"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Boosting ensemble models outperform conventional benchmarks for SOC estimation",
+        "result": "Confirmed; CatBoost RMSE 5.04% vs baselines"
+      },
+      {
+        "hypothesis": "SHAP enables interpretable feature importance for SOC prediction",
+        "result": "Confirmed; derived feature importance rankings"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80269-8": {
+    "category": "Applied Physics",
+    "task": "Enhance output voltage of water-floating SWCNT thermoelectric generators via reflective, water-permeable masks",
+    "key_results": "Diatomite-masked device outputs 0.50 mV vs. 0.25 mV for unmasked under 1000 W/m\u00b2 sunlight; reflective layer contributes +0.09 mV, water-permeable diatomite adds +0.16 mV",
+    "comments": "Two-factor gain decomposition elegantly isolates the contributions of reflectivity and water permeability.",
+    "model_io": [
+      {
+        "model": "Water-floating SWCNT thermoelectric generator",
+        "inputs": [
+          "artificial sunlight (1000 W/m\u00b2)",
+          "water evaporation"
+        ],
+        "outputs": [
+          "output voltage (mV)",
+          "temperature gradient",
+          "ion temperature"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Reflecting sunlight from cooling regions enlarges temperature gradient",
+        "result": "Confirmed: diatomite mask raises voltage by 0.50 mV vs. 0.25 mV unmasked"
+      },
+      {
+        "hypothesis": "Water permeability compensates evaporation loss from sealing",
+        "result": "Confirmed: water-permeable diatomite adds +0.16 mV over sealed acrylic mask"
+      }
+    ]
   }
 }
