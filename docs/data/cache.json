@@ -729670,5 +729670,972 @@
         "result": "Confirmed; closure leads to slower than t^(1/2) propagation"
       }
     ]
+  },
+  "hf:2611.09567": {
+    "category": "Benchmark",
+    "task": "3D turbulent flow surrogate modeling evaluation",
+    "key_results": "Benchmarked neural operators on 14 TB dataset of 400 3D turbulent cylinder wake trajectories; identified failure modes including temporal instability and small-scale energy loss on industrial-scale irregular meshes",
+    "comments": "First large-scale benchmark combining realistic turbulence with dense irregular meshes and long-horizon dynamics, but reveals fundamental challenges in current neural operator designs for this regime.",
+    "model_io": [
+      {
+        "model": "Neural operators (state-of-the-art)",
+        "inputs": [
+          "3D turbulent flow fields on irregular meshes"
+        ],
+        "outputs": [
+          "autoregressive future flow predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Existing neural operators can effectively learn 3D turbulent surrogate models with autoregressive rollouts",
+        "result": "Failed: identified temporal instability, energy cascade loss, and scaling challenges on large irregular domains"
+      }
+    ]
+  },
+  "hf:2611.17190": {
+    "category": "Benchmark",
+    "task": "UAV video stabilization under moving foreground objects",
+    "key_results": "Consensus capture affects unmasked ORB on 28/304 dynamic pairs; masking eliminates capture for all pipelines with <0.005 cost; leading pipelines (AKAZE, RootSIFT, SIFT, BRISK) achieve mAA gains of \u22640.0062 from retuning",
+    "comments": "Reveals subtle failure mode in robust homography estimation overlooked by inlier statistics, with practical solutions validated on 4K aerial footage.",
+    "model_io": [
+      {
+        "model": "Feature matching pipelines (AKAZE, RootSIFT, SIFT, BRISK, ORB)",
+        "inputs": [
+          "drone video frames"
+        ],
+        "outputs": [
+          "homography estimates for frame registration"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Feature matching inlier statistics sufficiently flag consensus capture by moving objects",
+        "result": "Failed: capture undetected on ORB (28 dynamic pairs); masking required"
+      }
+    ]
+  },
+  "hf:2611.16961": {
+    "category": "LLM/Reasoning",
+    "task": "Adaptive reasoning routing in hybrid decision models",
+    "key_results": "HDM-4B scores 0.857 vs 0.851 on JevBench (+0.7%) with 72.5% latency reduction; HDM-27B cuts token cost by 80.1% on MiniWoB agentic tasks",
+    "comments": "Novel zero-or-T paradigm with value-of-thinking routing outperforms adaptive reasoning by achieving cost reduction without sacrificing accuracy, though gains on standard benchmarks are modest.",
+    "model_io": [
+      {
+        "model": "Hybrid decision model (frozen backbone + self-routing block)",
+        "inputs": [
+          "task input (text/query)"
+        ],
+        "outputs": [
+          "direct answer OR full chain-of-thought reasoning + answer"
+        ]
+      },
+      {
+        "model": "Calibrated Decision Policy Optimisation (CDPO)",
+        "inputs": [
+          "episode trajectories"
+        ],
+        "outputs": [
+          "routing block weights trained on episode returns"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "A model can learn to route between fast implicit reasoning and slow autoregressive reasoning based on value estimation",
+        "result": "Confirmed: CDPO successfully trains routing on episodic agentic tasks with 80% token cost reduction"
+      }
+    ]
+  },
+  "hf:2611.12750": {
+    "category": "LLM/Reasoning",
+    "task": "Multilingual diverse narrative navigation for information seeking",
+    "key_results": "Evaluated 14 LLMs on 23 contested topics in 23 publication languages; all models lack reliable capabilities for narrative inclusion, exclusion, and diversity preservation across query framings and languages",
+    "comments": "Identifies critical gap in current LLM capabilities for supporting democratic discourse through unbiased multilingual information access, with persistent disparities across query languages.",
+    "model_io": [
+      {
+        "model": "14 frontier LLMs",
+        "inputs": [
+          "news articles in 23 languages, 460 Reddit-grounded queries in 24 languages"
+        ],
+        "outputs": [
+          "narrative recommendations and rankings"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Current LLMs can reliably help users navigate competing narratives across languages on contested topics",
+        "result": "Failed: models show information disparities, linguistic filter bubbles, and inability to preserve narrative diversity under confirmatory queries"
+      }
+    ]
+  },
+  "hf:2611.15094": {
+    "category": "Medical",
+    "task": "General-purpose neuroimaging interpretation and radiology report generation",
+    "key_results": "Neuro-VL trained on ~1M clinical neuroimaging studies outperformed frontier models (GPT-4o, Google) in diagnosis, localization, abnormality description, and report generation; better resisted misleading clinical assumptions; enables longitudinal disease monitoring",
+    "comments": "Largest-scale vision-language model for clinical neuroimaging demonstrates that scale and domain-specific pretraining enable specialized expertise while maintaining broad generality, though performance on specific diagnostic tasks not quantified.",
+    "model_io": [
+      {
+        "model": "Neuro-VL (vision-language model)",
+        "inputs": [
+          "neuroimaging examinations (MRI/CT/etc.), clinical context, natural language queries"
+        ],
+        "outputs": [
+          "diagnostic predictions, abnormality localizations, radiology reports, longitudinal comparisons"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Training on large-scale routine clinical neuroimaging enables models to interpret complex examinations and engage in clinical conversations better than general-purpose frontier models",
+        "result": "Confirmed: Neuro-VL outperformed GPT-4o and Google models across diagnostic and report generation tasks"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-78668-6": {
+    "category": "Single Molecule",
+    "task": "Depth-enhanced subcellular imaging in live multicellular specimens using two-photon oblique plane microscopy",
+    "key_results": "Achieved ~300 nm lateral and ~650 nm axial resolution with <60 nm localization precision in vivo; ~2\u00d7 contrast enhancement at depth; >5\u00d7 faster volumetric acquisition (3.25\u00d710\u2076 voxels/s) versus point scanning",
+    "comments": "The combination of multiphoton illumination with high-NA single-objective detection effectively mitigates scattering artifacts, though applicability to very thick tissues remains unclear.",
+    "model_io": [
+      {
+        "model": "Two-photon oblique plane microscope",
+        "inputs": [
+          "near-infrared excitation",
+          "high-NA single-objective detection",
+          "multiphoton plane illumination"
+        ],
+        "outputs": [
+          "volumetric fluorescence image",
+          "single-molecule localization",
+          "transcription factor dynamics",
+          "mRNA position"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multiphoton plane illumination reduces out-of-focus background and improves contrast at depth compared to linear excitation",
+        "result": "Confirmed: ~2\u00d7 contrast enhancement and >2\u00d7 restoration of resolving power in multicellular contexts"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-79445-1": {
+    "category": "Membrane Biophysics",
+    "task": "Understanding self-propulsion mechanisms of cholesterol crystallites on lipid bilayers",
+    "key_results": "Crystallites exhibit directional motility (circular, unidirectional, reciprocating); fluorescence lifetime imaging confirms crystallization-induced rigidity gradients; quantitative composition-motility map generated",
+    "comments": "The mechanistic link between cholesterol redistribution and directional forces is plausible but relies on mathematical modeling rather than direct force measurement.",
+    "model_io": [
+      {
+        "model": "Supported lipid bilayer with cholesterol crystallites",
+        "inputs": [
+          "cholesterol concentration",
+          "phospholipid composition",
+          "membrane state"
+        ],
+        "outputs": [
+          "crystallite trajectory",
+          "membrane packing (FLIM)",
+          "rigidity gradient"
+        ]
+      },
+      {
+        "model": "Mathematical model of crystallization-induced gradients",
+        "inputs": [
+          "cholesterol depletion profile",
+          "adhesion variation"
+        ],
+        "outputs": [
+          "predicted directional force",
+          "motility pattern"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Cholesterol depletion generates composition and rigidity gradients that induce directional forces via haptotaxis/durotaxis mechanisms",
+        "result": "Confirmed by FLIM time-resolved packing changes and single particle tracking consistency with model predictions"
+      }
+    ]
+  },
+  "nature:10.1038/s41419-026-09385-7": {
+    "category": "Cell Signaling",
+    "task": "Determine how palmitoylation of Smad2 promotes breast cancer metastasis",
+    "key_results": "ZDHHC7-mediated palmitoylation of Smad2 stabilizes the protein and enhances Smad2/Smad3 interaction; cell-penetrating peptides blocking Smad2 palmitoylation suppressed EMT and lung metastasis in orthotopic models",
+    "comments": "Interesting mechanistic link between metabolic lipid availability and TGF\u03b2 signaling, though therapeutic peptide approach may face delivery challenges in vivo.",
+    "model_io": [
+      {
+        "model": "breast cancer cell lines (2D and 3D)",
+        "inputs": [
+          "palmitic acid",
+          "2-bromopalmitate",
+          "TGF\u03b2"
+        ],
+        "outputs": [
+          "Smad2 palmitoylation",
+          "EMT markers",
+          "cell migration/invasion",
+          "Smad2/Smad3 complex formation"
+        ]
+      },
+      {
+        "model": "orthotopic mouse xenografts",
+        "inputs": [
+          "ZDHHC7 depletion",
+          "cell-penetrating peptides"
+        ],
+        "outputs": [
+          "lung metastasis burden",
+          "primary tumor growth"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Palmitic acid enhances Smad2 palmitoylation via ZDHHC7, stabilizing Smad2 and promoting TGF\u03b2-dependent EMT",
+        "result": "Confirmed; palmitoyl-transferase inhibition and ZDHHC7 knockdown reduced EMT and metastasis"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-79411-x": {
+    "category": "Epigenetics",
+    "task": "Determine how LRH-1 coordinates metabolic and epigenetic programs to establish luteal cell identity",
+    "key_results": "LRH-1 undergoes chromatin-binding reprogramming during luteinization; LRH-1 couples lipid metabolism to steroidogenesis via ACSS2-mediated acetyl-CoA synthesis; LRH-1 loss disrupts lipid droplet accumulation and steroidogenic gene expression",
+    "comments": "Elegant integration of metabolic and epigenetic control relevant to reproductive function; the specific chromatin sites and histone modifications controlled by LRH-1 during luteinization could be further detailed.",
+    "model_io": [
+      {
+        "model": "primary large luteal cells from corpus luteum",
+        "inputs": [
+          "luteinization stimuli",
+          "LRH-1 knockout/knockdown"
+        ],
+        "outputs": [
+          "lipid droplet accumulation",
+          "steroidogenic gene expression",
+          "progesterone production",
+          "chromatin accessibility"
+        ]
+      },
+      {
+        "model": "computational/epigenomic: chromatin immunoprecipitation",
+        "inputs": [
+          "LRH-1 antibody",
+          "acetyl-histone marks"
+        ],
+        "outputs": [
+          "LRH-1 binding sites",
+          "chromatin state changes during luteinization"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LRH-1 reprograms chromatin to couple ACSS2-mediated lipid metabolism with steroidogenic gene activation, establishing luteal cell identity",
+        "result": "Confirmed; LRH-1 loss impairs both lipid homeostasis and progesterone production"
+      }
+    ]
+  },
+  "nature:10.1038/s41514-026-00569-1": {
+    "category": "Development",
+    "task": "Elucidate how cellular senescence in photoaged skin promotes melanoma progression",
+    "key_results": "UVB-induced senescent dermal fibroblasts (SnDFbs) secrete SASP factors that enhance melanoma cell proliferation and migration; senolytic drug treatment or genetic elimination of senescent cells reduced tumor growth and immunosuppression",
+    "comments": "Strong in vitro and in vivo evidence linking senescence to tumor permissiveness, though the specific SASP factors driving melanoma promotion remain incompletely characterized.",
+    "model_io": [
+      {
+        "model": "primary human dermal fibroblasts exposed to UVB",
+        "inputs": [
+          "UVB radiation",
+          "aging"
+        ],
+        "outputs": [
+          "cellular senescence markers",
+          "SASP expression",
+          "secretome factors"
+        ]
+      },
+      {
+        "model": "melanoma cells + SnDFb co-culture (2D)",
+        "inputs": [
+          "SnDFb secretome"
+        ],
+        "outputs": [
+          "proliferation",
+          "invasion",
+          "migration"
+        ]
+      },
+      {
+        "model": "mouse melanoma xenografts with SnDFb co-implantation",
+        "inputs": [
+          "senolytic drugs",
+          "genetic senescent cell ablation"
+        ],
+        "outputs": [
+          "tumor growth kinetics",
+          "immune infiltration",
+          "tumor microenvironment composition"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Senescent fibroblasts create a tumor-permissive microenvironment through SASP-mediated immunosuppression and direct melanoma cell stimulation",
+        "result": "Confirmed; senolytic elimination mitigated both tumor growth and immunosuppression"
+      }
+    ]
+  },
+  "nature:10.1038/s42003-026-11334-1": {
+    "category": "Cell Division/Cycle",
+    "task": "Elucidate the E2F1-E2F7/8 transcriptional axis in suppressing renal senescence and attenuating diabetic kidney disease",
+    "key_results": "Hyperglycemia upregulates E2F1 in renal tubular epithelial cells, precipitating DNA damage and senescence; resveratrol induces E2F7/E2F8 expression which represses E2F1 transcription; in vivo E2F1 knockdown significantly ameliorated DKD pathology in db/db mice",
+    "comments": "Well-supported mechanistic axis linking resveratrol's polypharmacology to senescence suppression; demonstrates transcriptional antagonism between activator and repressor E2F family members as a therapeutic strategy.",
+    "model_io": [
+      {
+        "model": "mouse renal tubular epithelial cells under hyperglycemic conditions",
+        "inputs": [
+          "high glucose",
+          "resveratrol"
+        ],
+        "outputs": [
+          "E2F1 expression",
+          "E2F7/E2F8 expression",
+          "DNA damage markers",
+          "senescence markers"
+        ]
+      },
+      {
+        "model": "db/db mice (type 2 diabetes model)",
+        "inputs": [
+          "E2F1 knockdown",
+          "resveratrol treatment"
+        ],
+        "outputs": [
+          "renal fibrosis markers",
+          "tubular senescence",
+          "kidney disease progression"
+        ]
+      },
+      {
+        "model": "chromatin analysis: E2F1 promoter",
+        "inputs": [
+          "E2F7/E2F8 binding sites"
+        ],
+        "outputs": [
+          "E2F1 promoter occupancy",
+          "transcriptional repression"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Resveratrol induces E2F7/E2F8 to repress E2F1 transcription, suppressing hyperglycemia-induced renal tubular senescence and DKD progression",
+        "result": "Confirmed; E2F1 knockdown mitigated DKD; resveratrol modulated E2F family balance"
+      }
+    ]
+  },
+  "nature:10.1038/s41523-026-01078-w": {
+    "category": "Genomics",
+    "task": "Prognostic signature combining genomic instability and immunogenicity for breast cancer recurrence",
+    "key_results": "RIGOR150 HR=5.10 (training), HR=3.07 (test); early recurrence (0\u20135y) HR=5.75, late (5\u201310y) HR=2.67 in ER+ tumors; independent of 21-gene and PAM50 scores",
+    "comments": "Solid independent validation but mechanistic link between genomic instability, immune features, and recurrence biology remains unclear.",
+    "model_io": [
+      {
+        "model": "RNA-based RIGOR150 prognostic model",
+        "inputs": [
+          "bulk RNA expression (repair, immune, genomic instability genes)"
+        ],
+        "outputs": [
+          "recurrence risk stratification (high/low), hazard ratios"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Joint patterns of genomic instability and immunogenicity predict recurrence better than individual components",
+        "result": "Confirmed; RIGOR150 added independent prognostic value beyond standard scores in both ER+ and ER\u2212 cohorts"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-74784-x": {
+    "category": "Statistical Methods",
+    "task": "Myocardial infarction detection from ECG via multihead cross-correlation attention fusion and ESMOTE balancing",
+    "key_results": "PTLO-MCCAF-AF-KDTCN accuracy 95.78% vs LSTM 82.28%, BiGRU 90.86%, CNN 82.73%, MCCAF-F-KDTCN 92.14%",
+    "comments": "Incremental architecture contributions (ESMOTE, attention fusion, KDTCN, PTLO) lack individual ablation clarity; benchmark dataset unspecified.",
+    "model_io": [
+      {
+        "model": "PTLO-MCCAF-AF-KDTCN (Temporal Convolution Network)",
+        "inputs": [
+          "ECG signals (preprocessed)"
+        ],
+        "outputs": [
+          "MI classification (binary)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multihead cross-correlation attention fusion of wave, spectral, and deep features outperforms single-modality fusion",
+        "result": "Confirmed; MCCAF-AF-KDTCN (92.14%) exceeded MCCAF-F-KDTCN (no attention, 88.5%)"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77137-w": {
+    "category": "Statistical Methods",
+    "task": "Modeling Crimean-Congo hemorrhagic fever with fractal-fractional derivatives",
+    "key_results": "Calibration R\u00b2=0.93, MAPE 6.6%, RMSE 93 cases; host-cycle R\u2080=1.12 (95% CI 1.02\u20131.21); optimal control averted ~42% cases, 59% deaths",
+    "comments": "Novel mathematical framework with rigorous stability proofs but single country data (T\u00fcrkiye 2017\u20132024); external validation absent.",
+    "model_io": [
+      {
+        "model": "8-compartment tick\u2013host\u2013human Caputo fractal-fractional model",
+        "inputs": [
+          "epidemiological parameters (transmission, mortality, recovery rates)"
+        ],
+        "outputs": [
+          "incidence curves, equilibria, bifurcation dynamics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Fractal-fractional operators (\u03b1, \u03d1) better capture CCHF hereditary dynamics than standard ODEs",
+        "result": "Supported; model fit CCHF data well; global stability proven"
+      },
+      {
+        "hypothesis": "Tick control more cost-effective than treatment for preventing infections",
+        "result": "Confirmed by sensitivity analysis and optimal control"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77778-x": {
+    "category": "Statistical Methods",
+    "task": "Assessing LLM run-to-run variability in extracting structured pathology data",
+    "key_results": "Direct extraction 99.8% accuracy (14,972/15,000); ChatGPT omitted tumor differentiation in 28/29 misspelled records in one run; Gemini generated variable code across runs",
+    "comments": "Reveals critical reproducibility issues masked by single-run validation; public chat APIs unsuitable for production without verification.",
+    "model_io": [
+      {
+        "model": "LLM (ChatGPT, Gemini, DeepSeek) zero-shot extraction",
+        "inputs": [
+          "Turkish colorectal cancer pathology report summaries (semi-structured text)"
+        ],
+        "outputs": [
+          "structured fields (8 variables: tumor stage, differentiation, etc.)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Single-query accuracy reflects true reproducibility",
+        "result": "Refuted; 10 repeated queries revealed substantial run-to-run variability in output formatting and field omission"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79256-w": {
+    "category": "Statistical Methods",
+    "task": "Federated blockchain framework for privacy-preserving medical image analysis via XAI",
+    "key_results": "Accuracy 97.3%, AUC-ROC 0.984, F1=0.971 (LIDC-IDRI, LiTS, ISIC-2020); blockchain overhead <2.3% convergence time; XAI latency 12 ms; differential privacy \u03b5=0.5 degrades attribution fidelity substantially",
+    "comments": "Comprehensive integration of FL, blockchain, XAI, and edge computing but privacy\u2013interpretability trade-off quantified only at single \u03b5; clinical feasibility unclear.",
+    "model_io": [
+      {
+        "model": "XFedChain-IoMT (Hierarchical Federated Aggregation + Blockchain + Multi-modal XAI)",
+        "inputs": [
+          "distributed medical images (CT, MRI, histology) from IoMT devices"
+        ],
+        "outputs": [
+          "image classification, SHAP/Grad-CAM++/LIME saliency maps, on-chain audit log"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Federated + Byzantine-robust gradient filtering + blockchain auditing preserves privacy and model integrity",
+        "result": "Supported; Krum/FoolsGold filters prevented poisoning; PoMI validation gate immutable"
+      },
+      {
+        "hypothesis": "Differential privacy noise substantially degrades gradient-based XAI fidelity in federated medical imaging",
+        "result": "Confirmed; substantial privacy\u2013interpretability trade-off at \u03b5=0.5"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79851-x": {
+    "category": "Statistical Methods",
+    "task": "Stock trend classification via recolorized time-series imaging (GAF, MTF, RP) and ViT-LSTM fusion",
+    "key_results": "Recurrence Plot (RP) and Markov Transition Field (MTF) generalized best; sector-wise accuracy RP=0.7708, MTF=0.7702, GAF=0.7535; RP/MTF statistically equivalent (Cohen's d=\u22120.0184)",
+    "comments": "Recolorization strategy novel but improvement over standard RP/MTF/GAF modest; real trading utility and forward-looking validation absent.",
+    "model_io": [
+      {
+        "model": "ViT-LSTM + downstream classifiers (7 tested)",
+        "inputs": [
+          "stock price sequences (UMAP 5D projection) \u2192 recolorized RP/MTF/GAF images"
+        ],
+        "outputs": [
+          "directional trend classification (up/down/neutral)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Recolorization (rather than classifier choice) improves visual-temporal stock classification benchmark performance",
+        "result": "Partially confirmed; recolorization effects present but Friedman test p=0.0211 shows modest intermethod differences"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80618-7": {
+    "category": "Genomics",
+    "task": "Multi-rank NMF reveals myeloid-centered co-expression remodeling and prioritizes MMP9 in Kawasaki disease",
+    "key_results": "5-gene hub classifier (ITGAM, MMP9, HK3, FCER1G, CSF3R) AUC=0.889 external validation; MMP9 candidate ligand S-3304 binding energy \u221210.21 kcal/mol; KD shares Jaccard index 0.504 with bacterial (vs 0.155 viral, 0.017 autoimmune)",
+    "comments": "Integrative transcriptomic-to-docking pipeline but MMP9 inhibition biochemical/preclinical validation pending; causal role in coronary injury unproven.",
+    "model_io": [
+      {
+        "model": "Multi-rank NMF + differential correlation + molecular docking",
+        "inputs": [
+          "whole-blood transcriptomics (KD, bacterial, viral, HSP, JIA cohorts)"
+        ],
+        "outputs": [
+          "hub genes, co-expression modules, docking poses (MMP9-S-3304)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "MMP9 co-expression patterns in KD differ from infection/autoimmune mimics",
+        "result": "Confirmed; MMP9 hub gene correlated with neutrophil fraction, anticorrelated with CD8+ T cells (r=\u22120.81 for HK3)"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-79420-w": {
+    "category": "Other",
+    "task": "Li+ transport optimization in disordered rocksalt battery electrodes via machine learning and percolation theory",
+    "key_results": "Li-site energy rectified percolation metric identifies Li1.3Mn0.4Ti0.3O2 with 294 mAh\u00b7g\u207b\u00b9 capacity; phase-transition variant achieves 316 mAh\u00b7g\u207b\u00b9",
+    "comments": "Machine learning interatomic potentials are fine-tuned against experiments, and the design map spans full composition space; trade-off between topological connectivity and energy landscape quantified elegantly, but battery cycling performance and thermal stability not addressed.",
+    "model_io": [
+      {
+        "model": "Machine learning interatomic potential + percolation analysis + optimal control (Li-site energy rectification)",
+        "inputs": [
+          "Li-Mn-Ti-O composition",
+          "temperature",
+          "Li vacancy distribution"
+        ],
+        "outputs": [
+          "Li+ diffusivity",
+          "electrode capacity",
+          "composition design map"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Increasing cation disorder enhances topological connectivity but broadens energy landscape, creating a trade-off for diffusion",
+        "result": "Confirmed; design map quantifies interaction"
+      },
+      {
+        "hypothesis": "Phase transition toward spinel-like state simultaneously enhances percolation and narrows energy landscape",
+        "result": "Confirmed; 316 mAh\u00b7g\u207b\u00b9 capacity achieved"
+      }
+    ]
+  },
+  "nature:10.1038/s41545-026-00647-7": {
+    "category": "Statistics/Probability",
+    "task": "Phosphate soft sensing in wastewater using machine learning with evaluation of data leakage and operational burden",
+    "key_results": "No-dose config R\u00b2=0.470 (rolling-origin) vs 0.670 (control-inclusive); random splits inflate R\u00b2 from 0.688 to 0.834; alert rule detects 43/73 excursions with 3.21 false notifications/week",
+    "comments": "Thorough critical evaluation exposes temporal leakage and the cost of operator-response inputs; honest assessment that high accuracy depends on controller information rather than sensor inputs alone.",
+    "model_io": [
+      {
+        "model": "Twelve regressors (LightGBM, RF, XGBoost, etc.)",
+        "inputs": [
+          "SCADA time series (ammonium, metal-dose inputs, historical records)",
+          "rolling-origin evaluation blocks"
+        ],
+        "outputs": [
+          "phosphate concentration forecast",
+          "confidence bounds"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Temporal leakage from chronological vs random splitting inflates generalization estimates",
+        "result": "Confirmed; R\u00b2 gap 0.146 (0.688 vs 0.834)"
+      },
+      {
+        "hypothesis": "Controller-response inputs substantially inflate phosphate forecast accuracy",
+        "result": "Confirmed; no-dose R\u00b2 drops 0.200 (0.670 vs 0.470)"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-74354-1": {
+    "category": "ML Theory",
+    "task": "Machine learning-based hazelnut variety classification and weight estimation from images",
+    "key_results": "ANN achieves 100% variety classification accuracy (5 cultivars); GPR achieves R\u00b2=0.72 for weight estimation on 700-image dataset (70% train, 15% validation, 15% test)",
+    "comments": "Perfect classification suggests overfitting risk or easy dataset; weight estimation R\u00b2=0.72 is moderate, indicating image-based weight prediction is inherently limited; external validation on commercial scales needed.",
+    "model_io": [
+      {
+        "model": "Artificial Neural Network (ANN) + Gaussian Process Regression (GPR)",
+        "inputs": [
+          "hazelnut images (controlled conditions)",
+          "visual features"
+        ],
+        "outputs": [
+          "variety classification",
+          "weight estimate (g)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Image-based ANN achieves high-accuracy hazelnut variety classification",
+        "result": "Confirmed; 100% test accuracy"
+      },
+      {
+        "hypothesis": "Image-based GPR provides reliable weight estimates",
+        "result": "Partially supported; R\u00b2=0.72 indicates moderate predictive power"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-75814-4": {
+    "category": "ML Theory",
+    "task": "Worker-independent multimodal fatigue detection in industrial settings using domain adaptation networks",
+    "key_results": "DAN with Multi-Scale MMD achieves 97.08% test accuracy on unseen workers; outperforms CNN+BiLSTM+Attention (96.35%), CNN+BiLSTM (96.72%), LightGBM (84.81%)",
+    "comments": "Strict worker-independent evaluation protocol is appropriate, and SHAP/LIME provide interpretability; however, sample size (50 workers, 60k instances) and generalization to new industrial settings unclear.",
+    "model_io": [
+      {
+        "model": "Domain Adaptation Network (CNN+BiLSTM+Attention+GRL+Multi-Scale MMD)",
+        "inputs": [
+          "multimodal physiological signals (85 features)",
+          "environmental measurements",
+          "worker identity"
+        ],
+        "outputs": [
+          "fatigue classification (Low/Moderate/High)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Domain adaptation with adversarial learning and MMD alignment improves worker-independent fatigue classification",
+        "result": "Confirmed; 97.08% accuracy vs 96.35% baseline"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76529-2": {
+    "category": "Algorithms",
+    "task": "Surrogate-assisted multimodal multi-objective optimization of permanent-magnet bridged reluctance actuators",
+    "key_results": "DNN surrogate (64-32-16 architecture) achieves 5-fold MAE 10.04\u201316.03 N, RMSE 13.20\u201321.06 N; SPD-DN-NSGA-II preserves Pareto-set branches with significant gains on CEC2019 benchmarks (rPSP, IGDX metrics)",
+    "comments": "Surrogate quality validated on multiple test protocols, and multimodal optimization preserves distinct structural solutions; however, real FEA validation of optimized designs not shown.",
+    "model_io": [
+      {
+        "model": "DNN force-per-unit-depth surrogate + SPD-DN-NSGA-II",
+        "inputs": [
+          "structural variables (Nc, Nn, de, g)",
+          "stack depth range 37.6\u201360 mm"
+        ],
+        "outputs": [
+          "Pareto-optimal designs",
+          "thrust density",
+          "copper-loss-based force-to-power ratio"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "DNN surrogate outperforms low-complexity baselines for PMBRA force prediction",
+        "result": "Confirmed; MAE/RMSE superior on 5-fold and intermediate-grid protocols"
+      }
+    ]
+  },
+  "nature:10.1038/s41599-026-09377-0": {
+    "category": "Other",
+    "task": "Economic growth forecasting by augmenting complexity models with institutional metrics",
+    "key_results": "Polity metric improves GDP prediction for early-stage developing countries; Technological Fitness best for advanced economies; Fitness best for middle-stage; higher-dimensional models improve predictions for specific country groups",
+    "comments": "Empirical findings suggest institutional factors matter, but causal attribution is limited; China and India treated as outliers without principled explanation.",
+    "model_io": [
+      {
+        "model": "Velocity Bootstrapped Selective Predictability Scheme + Polity/Fitness/Technological Fitness metrics",
+        "inputs": [
+          "export sophistication (Fitness)",
+          "innovation capacity (Tech Fitness)",
+          "institutional quality (Polity)",
+          "historical GDP"
+        ],
+        "outputs": [
+          "GDP growth predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Different institutional and complexity metrics perform best for different country development stages",
+        "result": "Confirmed; metric-country interaction effects identified"
+      },
+      {
+        "hypothesis": "Conventional two-dimensional EC models are insufficient for all country groups",
+        "result": "Confirmed for subset of countries requiring higher-dimensional approaches"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-78202-8": {
+    "category": "Applied Physics",
+    "task": "Screening Amyloid \u03b2 aggregation inhibitors using unified in vitro and in vivo fluorescence lifetime platform",
+    "key_results": "Discovered inhibitor blocking A\u03b2 self-assembly in vitro, cellular, and C. elegans models; 445-compound pilot screen; directly comparable aggregation kinetics across formats",
+    "comments": "Innovative nanoFLIM platform bridges assay formats, reducing attrition; however, lead optimization and mechanism of inhibitor action remain uncharacterized.",
+    "model_io": [
+      {
+        "model": "Microfluidic nanoFLIM assay platform",
+        "inputs": [
+          "Amyloid \u03b2(1-42)",
+          "test compounds",
+          "cell-free, cellular, organism-level systems"
+        ],
+        "outputs": [
+          "fluorescence lifetime aggregation kinetics",
+          "aggregation profiles"
+        ]
+      },
+      {
+        "model": "Aggregation sensor validation",
+        "inputs": [
+          "in vitro aggregation kinetics",
+          "cellular/C. elegans disease models"
+        ],
+        "outputs": [
+          "directly comparable dynamics",
+          "inhibitor identification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "In vitro screening hits translate to in vivo efficacy (low attrition)",
+        "result": "Supported; pilot campaign identified compound active across all formats"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-79555-w": {
+    "category": "Condensed Matter",
+    "task": "Understanding charge-transport-driven conformational changes in molecular junctions",
+    "key_results": "Threshold-activated transition to gauche-defect state at orbital-mediated transport onset; resonance scattering framework quantitatively reproduces measured response",
+    "comments": "Novel insight connecting microscopic quantum scattering to macroscopic structural dynamics, though validation limited to alkanethiolate systems.",
+    "model_io": [
+      {
+        "model": "Quantum resonance scattering framework",
+        "inputs": [
+          "applied bias",
+          "backbone-delocalized molecular orbitals",
+          "molecule-electrode coupling",
+          "Franck-Condon overlap"
+        ],
+        "outputs": [
+          "carrier energy deposition into nuclear motion",
+          "conformational reorganization efficiency"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Carrier acts as passive probe of fixed electronic landscape",
+        "result": "Refuted; carrier itself drives conformational reorganization via resonance scattering"
+      }
+    ]
+  },
+  "nature:10.1038/s41535-026-00952-x": {
+    "category": "Condensed Matter",
+    "task": "Computing electron-phonon coupling and phonon-limited transport in moir\u00e9 twisted bilayer graphene",
+    "key_results": "Resistivity increases 100-fold between 13.2\u00b0 and 1.6\u00b0 TBG due to electronic energy scale reduction; predictions match 1.6\u00b0 and 2.0\u00b0 TBG experiments",
+    "comments": "Scalable Holstein-Peierls method enables unprecedented system sizes (~5000 atoms); however, approximations for many-body e-ph effects remain untested.",
+    "model_io": [
+      {
+        "model": "Atomistic electronic potential with Holstein/Peierls terms",
+        "inputs": [
+          "twist angle (1.6\u00b0 to 13.2\u00b0)",
+          "atomic coordinates",
+          "phonon modes"
+        ],
+        "outputs": [
+          "e-ph coupling matrix elements",
+          "phonon-limited electronic transport"
+        ]
+      },
+      {
+        "model": "First-principles reference calculations",
+        "inputs": [
+          "small-cell graphene and large-angle TBG"
+        ],
+        "outputs": [
+          "e-ph coupling",
+          "resistivity",
+          "validation benchmarks"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Phonon-limited resistivity is dominated by electronic band structure evolution",
+        "result": "Confirmed; resistivity increase driven by progressive electronic energy scale reduction"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77977-6": {
+    "category": "Applied Physics",
+    "task": "Mitigating structural vibrations in laser weapon systems via multi-stage isolation strategy",
+    "key_results": "Attenuation of approximately 36 dB along vibration-transmission path from source to trailer; final vibration reaches ultra-low-vibration regime",
+    "comments": "Practical engineering solution with experimental validation, though 36 dB attenuation likely insufficient for sub-microradian jitter requirements.",
+    "model_io": [
+      {
+        "model": "LWS vibration transmission pathway analysis",
+        "inputs": [
+          "vibration sources (pumps, compressors, condensers)",
+          "platform dynamics",
+          "transport trailer structure",
+          "emission assembly"
+        ],
+        "outputs": [
+          "vibration characteristics",
+          "dynamic transmission paths",
+          "jitter at emission assembly"
+        ]
+      },
+      {
+        "model": "Three-stage vibration control strategy",
+        "inputs": [
+          "source isolation mounts",
+          "decoupled floor structures",
+          "platform-trailer isolation mounts"
+        ],
+        "outputs": [
+          "attenuation along transmission path",
+          "final vibration level"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Vibration isolation at source is most effective control stage",
+        "result": "Partially confirmed; three-stage strategy required for 36 dB cumulative attenuation"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79809-z": {
+    "category": "Optics/Photonics",
+    "task": "Designing geometry-tunable MWIR multispectral plasmonic filter using Dy:CdO",
+    "key_results": "Maximum transmission 58%, minimum FWHM 400 nm, quality factor ~9; outperforms Au-based counterparts in transmission efficiency and spectral selectivity",
+    "comments": "Promising low-loss platform, though SiO\u2082 encapsulation adds fabrication complexity and tunability limited to geometric parameters.",
+    "model_io": [
+      {
+        "model": "Bull's-eye plasmonic filter (Dy:CdO)",
+        "inputs": [
+          "corrugation period",
+          "carrier concentration (3.7\u00d710\u00b2\u2070 cm\u207b\u00b3)",
+          "SiO\u2082 encapsulation",
+          "geometric parameters"
+        ],
+        "outputs": [
+          "multispectral resonances (3-5 \u03bcm MWIR)",
+          "transmission spectra",
+          "FWHM",
+          "quality factor"
+        ]
+      },
+      {
+        "model": "2D FDTD simulations",
+        "inputs": [
+          "Dy:CdO optical properties",
+          "ENZ wavelength response",
+          "corrugation geometry"
+        ],
+        "outputs": [
+          "extraordinary optical transmission (EOT)",
+          "spectral selectivity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "SiO\u2082 encapsulation enhances spectral response without degrading performance",
+        "result": "Confirmed; average peak transmittance increases 45% to 50%, quality factor improves ~15%"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79890-4": {
+    "category": "Optics/Photonics",
+    "task": "Connecting coupled-oscillator description to grating diffraction physics for plasmonic Fano resonances",
+    "key_results": "Analytical relations between Fano asymmetry parameter and oscillator parameters derived; discrete oscillator damping is finite, producing finite Fano minima",
+    "comments": "Rigorous analytical framework provides design guidelines, though primarily for TM illumination on silica substrates.",
+    "model_io": [
+      {
+        "model": "Two-oscillator coupled model",
+        "inputs": [
+          "continuum mode (zero-order diffraction)",
+          "discrete mode (surface plasmon polaritons)",
+          "coupling strength (real/imaginary)",
+          "oscillator damping"
+        ],
+        "outputs": [
+          "Fano asymmetry parameter",
+          "line shape (dip-peak vs. peak-dip)",
+          "resonance spectral position and quality factor"
+        ]
+      },
+      {
+        "model": "2D FDTD simulations",
+        "inputs": [
+          "gold grating geometry (ribbon width, period, height)",
+          "Dy:CdO properties at 3.7\u00d710\u00b2\u2070 cm\u207b\u00b3",
+          "SiO\u2082 encapsulation"
+        ],
+        "outputs": [
+          "transmission spectra",
+          "FWHM",
+          "quality factor",
+          "transmission efficiency"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Fano resonance emerges from phase transition in discrete oscillator",
+        "result": "Confirmed; \u03c0 phase transition at natural frequency of discrete oscillator"
+      }
+    ]
+  },
+  "nature:10.1038/s42005-026-02944-6": {
+    "category": "Condensed Matter",
+    "task": "Elucidating physical mechanisms driving rosette formation in multicellular systems",
+    "key_results": "Local curvature-inducing defects enable rosette emergence; trade-off between tissue fluidity and single-cell deformability governs assembly",
+    "comments": "Combines theory and experiment on biologically relevant structures, though model restricted to Voronoi dynamics.",
+    "model_io": [
+      {
+        "model": "Voronoi dynamical model",
+        "inputs": [
+          "local spatial symmetry",
+          "curvature-inducing defects",
+          "tissue fluidity",
+          "single-cell deformability",
+          "cell self-alignment interactions"
+        ],
+        "outputs": [
+          "rosette probability",
+          "structure stability",
+          "transient vs. stabilized assemblies"
+        ]
+      },
+      {
+        "model": "Fluorescence microscopy experiments",
+        "inputs": [
+          "neural cell populations from iPSCs"
+        ],
+        "outputs": [
+          "rosette formation statistics",
+          "cellular organization patterns"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Rosette formation arises from spontaneous local spatial ordering",
+        "result": "Refuted; requires explicit symmetry breaking via curvature defects"
+      }
+    ]
   }
 }
