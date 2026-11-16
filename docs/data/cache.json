@@ -738034,5 +738034,642 @@
         "result": "Dynamo successfully predicted cell fate diversions following genetic perturbations in validation datasets"
       }
     ]
+  },
+  "hf:2611.17169": {
+    "category": "LLM/Reasoning",
+    "task": "Reducing silent errors in semantic parsing through output format selection",
+    "key_results": "Word encoding reduces silent error rate by 2.3x on Qwen and 1.8x on LFM2; achieves 87.5% exact match (vs 85.8% for s-expression) while emitting 4.1x fewer tokens",
+    "comments": "Demonstrates that output format is a critical but often overlooked hyperparameter; the trade-off between refusal rate (2.1-10.1%) and accuracy is pragmatically important for deployment.",
+    "model_io": [
+      {
+        "model": "Qwen3.5-0.8B with LoRA",
+        "inputs": [
+          "natural language order"
+        ],
+        "outputs": [
+          "semantic parse tree (word-encoded format)"
+        ]
+      },
+      {
+        "model": "LFM2.5-350M with LoRA",
+        "inputs": [
+          "natural language order"
+        ],
+        "outputs": [
+          "semantic parse tree (word-encoded format)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Shorter encodings alone improve accuracy",
+        "result": "False\u2014shortening never helped; surface form matters more than length"
+      },
+      {
+        "hypothesis": "Word encoding reduces silent errors compared to s-expression",
+        "result": "True\u20142.3x reduction on Qwen, 1.8x on LFM2 across all pool sizes"
+      }
+    ]
+  },
+  "hf:2611.05843": {
+    "category": "Generative",
+    "task": "Solving linear inverse problems via joint image-measurement flow estimation",
+    "key_results": "State-of-the-art performance across distortion metrics and perceptual quality; no hyperparameter tuning beyond inference steps; shorter reconstruction times than competing methods",
+    "comments": "Novel dual-flow formulation elegantly enforces consistency with the forward model by construction, though the computational benefit over single-domain approaches is not quantified.",
+    "model_io": [
+      {
+        "model": "Coupled flow model (image and measurement domains)",
+        "inputs": [
+          "noisy observation"
+        ],
+        "outputs": [
+          "clean image estimate",
+          "noise-free measurement estimate"
+        ]
+      },
+      {
+        "model": "Velocity-prediction network",
+        "inputs": [
+          "sufficient statistic of joint state"
+        ],
+        "outputs": [
+          "conditional mean (Gaussian denoising)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Joint estimation in image and measurement domains improves reconstruction",
+        "result": "True\u2014achieves state-of-the-art perceptual quality and distortion metrics"
+      },
+      {
+        "hypothesis": "Final estimates satisfy the forward model by construction",
+        "result": "True\u2014guaranteed by the coupled-flow design"
+      }
+    ]
+  },
+  "hf:2611.16500": {
+    "category": "Benchmark",
+    "task": "Creating vision-language resources for endangered Even language",
+    "key_results": "107,543 synthetic training examples; tokenizer expansion reduces tokens per word by 27%; VQA achieves 65% accuracy (from 0% baseline); 0.1283 chrF on translation",
+    "comments": "Important contribution to low-resource NLP, though the synthetic data generation and modest downstream accuracy suggest the dataset may still be limited for practical applications.",
+    "model_io": [
+      {
+        "model": "Qwen3-VL-4B with LoRA (text tasks)",
+        "inputs": [
+          "Even text",
+          "Russian reference"
+        ],
+        "outputs": [
+          "translation",
+          "grammar analysis",
+          "comprehension"
+        ]
+      },
+      {
+        "model": "Qwen3-VL-4B with LoRA (VQA, frozen vision encoder)",
+        "inputs": [
+          "image",
+          "Even question"
+        ],
+        "outputs": [
+          "answer text"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Tokenizer expansion reduces token inefficiency on agglutinative Even",
+        "result": "True\u201427% reduction in tokens per word (4.99 to 3.64)"
+      },
+      {
+        "hypothesis": "LoRA fine-tuning enables VQA without vision encoder retraining",
+        "result": "True\u201465% VQA accuracy with frozen vision encoder at rank 64"
+      }
+    ]
+  },
+  "hf:2611.17780": {
+    "category": "LLM/Reasoning",
+    "task": "Fast local text-to-SQL with confidence-based escalation to frontier LLM",
+    "key_results": "LuthorSQL reaches 68.03% execution accuracy at 0.84s per question on single GPU; combined with Claude Opus cuts API costs by 33.3% while maintaining accuracy; transfers zero-shot to five SQL databases within 3.1 points",
+    "comments": "Practical system leveraging a two-tier approach; contamination analysis reveals Opus memorizes 48-92% of public benchmarks, but achieves 95.6-97.4% on post-cutoff databases, validating the need for local fallback.",
+    "model_io": [
+      {
+        "model": "LuthorSQL (non-autoregressive 7B)",
+        "inputs": [
+          "natural language question",
+          "database schema"
+        ],
+        "outputs": [
+          "SQL query"
+        ]
+      },
+      {
+        "model": "Confidence cascade (LuthorSQL \u2192 Claude Opus 5.5)",
+        "inputs": [
+          "natural language question",
+          "database schema"
+        ],
+        "outputs": [
+          "SQL query",
+          "execution result"
+        ]
+      },
+      {
+        "model": "Trained validator",
+        "inputs": [
+          "candidate plan execution results"
+        ],
+        "outputs": [
+          "selected answer"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Local 7B model can handle ~50% of queries without LLM escalation",
+        "result": "True\u2014answers nearly half of questions locally"
+      },
+      {
+        "hypothesis": "LuthorSQL maintains accuracy across diverse SQL backends",
+        "result": "True\u2014zero-shot transfer within 3.1 points on five databases"
+      }
+    ]
+  },
+  "hf:2611.15640": {
+    "category": "Benchmark",
+    "task": "Evaluating true memory capabilities in streaming video understanding",
+    "key_results": "Four-category evaluation (Episodic Retrieval, State Tracking, Multi-Evidence Integration, Contextual Memory) with evidence-controlled validation; disentangles memory from understanding failures and linguistic shortcuts",
+    "comments": "Addresses a critical gap in existing video QA benchmarks, but the annotation overhead for evidence intervals and solvability validation may limit scalability.",
+    "model_io": [
+      {
+        "model": "Streaming video understanding model (generic)",
+        "inputs": [
+          "video frames (streaming)",
+          "question text"
+        ],
+        "outputs": [
+          "answer"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Question-answering accuracy alone does not measure memory capability",
+        "result": "True\u2014protocol distinguishes memory failures from understanding failures and shortcuts"
+      },
+      {
+        "hypothesis": "Evidence-controlled validation reduces spurious correct predictions",
+        "result": "True\u2014protocol removes questions answerable from recent or post-evidence observations"
+      }
+    ]
+  },
+  "hf:2610.41354": {
+    "category": "Agents/RL",
+    "task": "Steerable whole-body humanoid motion tracking with one-step diffusion control",
+    "key_results": "Achieves lowest local tracking error on held-out clips; raises clean passage rate under 1.25m bar from 2% to 90% with steering; completes 27/27 nominal trials on physical Unitree G1; predicts tracking failures 10x faster than simulation",
+    "comments": "Demonstrates practical deployment of diffusion-based control on hardware with test-time steering via noise optimization; the failure prediction scoring method is a notable contribution beyond tracking.",
+    "model_io": [
+      {
+        "model": "OneSteer (one-step diffusion whole-body controller)",
+        "inputs": [
+          "reference motion trajectory",
+          "current state",
+          "steering cost (optional)"
+        ],
+        "outputs": [
+          "state-action plan"
+        ]
+      },
+      {
+        "model": "Noise optimization (frozen weights)",
+        "inputs": [
+          "task cost gradient"
+        ],
+        "outputs": [
+          "optimized generator input noise"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "One-step diffusion achieves lowest tracking error without iterative refinement",
+        "result": "True\u2014outperforms baselines on nominal tracking"
+      },
+      {
+        "hypothesis": "Frozen controller adapts to diverse objectives via noise optimization",
+        "result": "True\u2014single distilled model adapts across steering tasks without retraining"
+      }
+    ]
+  },
+  "hf:2611.16312": {
+    "category": "Systems",
+    "task": "Multi-material physics simulation engine for robot learning at scale",
+    "key_results": "Unified engine handles rigid bodies, cloth, cables, liquids, granular material, soft bodies; runs thousands of parallel worlds on one GPU or CPU; agents install and train policies from scratch in cold test",
+    "comments": "Addresses real robotics challenge of multi-material handling; designed for autonomous agent integration via MCP, though scalability benchmarks beyond throughput curves would strengthen claims.",
+    "model_io": [
+      {
+        "model": "Alloy physics engine (Newton, MuJoCo Warp, Warp)",
+        "inputs": [
+          "robot state",
+          "material properties",
+          "action commands"
+        ],
+        "outputs": [
+          "next state",
+          "contact forces",
+          "material dynamics"
+        ]
+      },
+      {
+        "model": "Health grader",
+        "inputs": [
+          "world state trajectory"
+        ],
+        "outputs": [
+          "health grade",
+          "failure classification"
+        ]
+      },
+      {
+        "model": "MCP tool interface",
+        "inputs": [
+          "agent query"
+        ],
+        "outputs": [
+          "simulation result or documentation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Single coupled engine outperforms multiple hand-written integrations",
+        "result": "True\u2014agents successfully trained policies for walking, cable handling, pouring with no prior engine knowledge"
+      },
+      {
+        "hypothesis": "Health grades reliably distinguish physics failures from policy failures",
+        "result": "Implicit\u2014used for reliability testing but quantitative validation not detailed"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-79677-1": {
+    "category": "Protein Dynamics",
+    "task": "Predict multiple conformational states from sequence co-evolutionary signals using AlphaFold2",
+    "key_results": "AF-ClaSeq achieves robust prediction of alternative protein conformations by enriching state-specific evolutionary signals; accuracy depends on MSA purity rather than sequence depth; conformational signals distributed across phylogenetic clades",
+    "comments": "The claim that purity outweighs depth is valuable but would benefit from explicit quantitative benchmarking across diverse protein families with known multi-state dynamics.",
+    "model_io": [
+      {
+        "model": "AlphaFold2 with iterative sequence classification (AF-ClaSeq)",
+        "inputs": [
+          "multiple sequence alignments (MSAs)",
+          "sequence subsets classified by state"
+        ],
+        "outputs": [
+          "alternative protein conformations",
+          "structural state predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Co-evolutionary signals in MSAs encode distinct conformational states",
+        "result": "Confirmed: purified state-specific sequences enable accurate alternative conformation prediction"
+      },
+      {
+        "hypothesis": "Conformational signals cluster within individual phylogenetic lineages",
+        "result": "Refuted: signals distributed across clades and superfamilies"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-78762-9": {
+    "category": "Development",
+    "task": "Map mitochondrial network phenotypes across human lung and intestinal epithelial development",
+    "key_results": "Mitochondrial morphology and motility signatures vary with developmental stage; developmental stage predictable from mitochondrial and cellular features; 3D imaging reveals phenotypes obscured in 2D",
+    "comments": "The integration of 4D lattice light-sheet microscopy provides unprecedented resolution; predictive modeling of developmental stage from mitochondrial features is a novel contribution.",
+    "model_io": [
+      {
+        "model": "Human stem cell-derived lung and intestinal organoids",
+        "inputs": [
+          "developmental time points",
+          "differentiation signals"
+        ],
+        "outputs": [
+          "mitochondrial morphology",
+          "mitochondrial motility",
+          "developmental stage classification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Mitochondrial morphology and motility signatures predict developmental stage",
+        "result": "Confirmed; predictive modeling successfully stratified developmental stages"
+      }
+    ]
+  },
+  "nature:10.1038/s41591-026-04808-6": {
+    "category": "Other",
+    "task": "Autonomous biomedical data analysis via open-source agentic AI co-scientist",
+    "key_results": "Completed analyses in minutes vs months of human expertise; Alzheimer's biomarker quantification accurate; plasma proteomic survival model predicted survival in hidden cohort; tau-lysosomal mechanism reproducible; myeloma hypotheses validated in external cohort",
+    "comments": "OpenScientist supports air-gapped environments with open-source models; human-expert validation on five case studies demonstrates proof-of-concept; scalability beyond benchmarks unknown.",
+    "model_io": [
+      {
+        "model": "OpenScientist (agentic LLM + literature search + analysis execution)",
+        "inputs": [
+          "scientific queries",
+          "biomedical datasets"
+        ],
+        "outputs": [
+          "verifiable data-grounded analyses",
+          "mechanistic insights",
+          "hypotheses"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Agentic AI can autonomously conduct complex biomedical analyses with human oversight",
+        "result": "Supported: completed case studies with concordance to human experts; full autonomous operation not yet realized"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77336-5": {
+    "category": "Other",
+    "task": "Brain tumor classification from CE-T1 MRI using transformer-enhanced YOLO framework",
+    "key_results": "YOLOv11-PVT improves precision, recall, F1-score, mAP vs baseline YOLOv11/YOLOv8; improved sensitivity and IoU-based localization consistency; enhanced global contextual information",
+    "comments": "PVT backbone replaces CSP, adding hierarchical multi-scale attention; improvements quantified descriptively rather than numerically in abstract.",
+    "model_io": [
+      {
+        "model": "YOLOv11-PVT (Pyramid Vision Transformer backbone)",
+        "inputs": [
+          "brain tumor MRI images (balanced dataset)"
+        ],
+        "outputs": [
+          "tumor class prediction",
+          "precision, recall, F1, mAP metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "PVT backbone improves brain tumor detection robustness vs convolution-only YOLO",
+        "result": "Confirmed: improved sensitivity and localization consistency vs baseline models"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78000-8": {
+    "category": "Other",
+    "task": "11-class kidney disease classification from transmission electron microscopy using heterogeneous deep-learning ensemble",
+    "key_results": "Single-image accuracy 0.444, macro-F1 0.361 (95% CI 0.344\u20130.379); patient-averaged (1,642 patients) accuracy 0.610, F1 0.507; macro-AUC 0.793; referral target (\u22650.90 autonomous accuracy) not achieved",
+    "comments": "Patient-independent evaluation is rigorous; heterogeneous ensemble (5 backbones) leverages complementary architectures; limited single-image performance precludes autonomous diagnosis.",
+    "model_io": [
+      {
+        "model": "Ensemble (EfficientNet-B4, ViT-B/16, Swin-B, ConvNeXt-B, DeiT-B) with soft voting + logistic stacking",
+        "inputs": [
+          "60,509 TEM images from 8,250 patients"
+        ],
+        "outputs": [
+          "11-class kidney disease prediction",
+          "single-image and patient-level accuracy"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Heterogeneous ensemble achieves autonomous diagnosis of kidney diseases from TEM",
+        "result": "Refuted: single-image accuracy 0.444 insufficient; patient-averaged improves to 0.610 but falls below autonomous threshold"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79881-5": {
+    "category": "Network Biology",
+    "task": "Model COVID-19 spread on scale-free contact networks using self-targeted attack hypothesis",
+    "key_results": "Reproduction number decreases ~inverse square root of cumulative infections (exponent 0.53, 95% CI 0.33\u20130.66); simulation-validated scale-free network with \u03b3\u22483; vaccination targeting 6% of revealed superspreaders suppresses spread",
+    "comments": "Self-targeted attack model (virus targets high-degree nodes first) elegantly explains observed dynamics; screening procedure for superspreaders requires validation beyond simulations.",
+    "model_io": [
+      {
+        "model": "Scale-free network SIR simulation",
+        "inputs": [
+          "contact network topology",
+          "transmission rate"
+        ],
+        "outputs": [
+          "reproduction number R(t)",
+          "cumulative infections"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Virus exhibits self-targeted attack on scale-free networks, targeting superspreaders first",
+        "result": "Confirmed: inverse-square-root decay and scale-free \u03b3\u22483 consistent with data"
+      },
+      {
+        "hypothesis": "Vaccination of revealed superspreaders suppresses spread more efficiently than random vaccination",
+        "result": "Confirmed: 6% vaccination of screened nodes suppresses spread; requires experimental validation"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-03430-7": {
+    "category": "Other",
+    "task": "AI-PDCA framework for clinical history taking and documentation training with LLM-based dual chain-of-thought",
+    "key_results": "AI + PDCA configuration highest OSCE performance; steeper learning trajectories vs AI-assisted alone; closed-loop model with human oversight",
+    "comments": "Integration of dual CoT reasoning with PDCA cycle provides structured scaffolding; retroactive observational design limits causal inference about interventional efficacy.",
+    "model_io": [
+      {
+        "model": "Dual CoT LLM + PDCA framework",
+        "inputs": [
+          "clinical cases",
+          "student responses",
+          "faculty feedback"
+        ],
+        "outputs": [
+          "AI scoring",
+          "learning analytics",
+          "OSCE performance"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "AI-PDCA framework with human oversight improves clinical competency acquisition",
+        "result": "Supported: highest OSCE performance and steeper learning trajectories observed; causal inference limited"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-03507-3": {
+    "category": "Network Biology",
+    "task": "Link routine gout clinical phenotypes to multi-omic signatures and health outcomes via interpretable framework",
+    "key_results": "Three clinical subsets: C1 (low burden), C2 (urate-inflammatory, highest recurrence sHR=1.896), C3 (systemic vulnerability, higher mortality); 6-variable CRT model achieves AUCs 0.965/0.945/0.980 (C1/C2/C3) in UKB; external validation AUCs >0.89 in GoutRe and MIMIC-IV",
+    "comments": "Routine laboratory variables suffice for subset identification; genetic/proteomic/metabolomic support distinct biological axes, though C3 senescence signal nominal and requires replication.",
+    "model_io": [
+      {
+        "model": "Unsupervised learning (6 lab variables) + CRT classifier",
+        "inputs": [
+          "routine clinical labs",
+          "genetic/proteomic/metabolomic data"
+        ],
+        "outputs": [
+          "gout clinical subsets",
+          "recurrence/mortality predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Routine laboratory variables identify gout subsets with distinct molecular profiles and outcomes",
+        "result": "Confirmed: three subsets with distinct recurrence/mortality patterns; molecular signatures support but C3 genetic signal requires replication"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76170-z": {
+    "category": "Algorithms",
+    "task": "ML-enhanced hybrid swarm optimization (RSO\u2013SAO) for optimal DG allocation in distribution networks",
+    "key_results": "ML-RSO-SAO with ANN surrogate and Random Forest bus selection outperforms PSO, WOA, DEO, SMA in power losses, voltage profiles, economic and environmental metrics on IEEE 33/69-bus systems; reduced computational burden via surrogate modeling",
+    "comments": "Practical framework integrating domain knowledge (surrogate modeling, candidate bus filtering); hybrid algorithm balances exploration-exploitation well, but fundamental novelty over prior swarm optimization methods not emphasized.",
+    "model_io": [
+      {
+        "model": "ML-RSO-SAO: ANN surrogate loss predictor + Random Forest critical-bus identifier + hybrid Rhinopithecus-Snow Ablation optimizer",
+        "inputs": [
+          "IEEE 33/69-bus distribution networks",
+          "solar/wind DG integration parameters"
+        ],
+        "outputs": [
+          "DG placement and sizing",
+          "power losses, voltage profiles, economic/environmental metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Machine learning surrogates and intelligent search-space reduction accelerate DG allocation optimization",
+        "result": "Confirmed: ML-RSO-SAO outperforms classical swarm algorithms in losses and voltage improvement; computational cost reduced via surrogate"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78630-y": {
+    "category": "Algorithms",
+    "task": "Adaptive robust fractional-order sliding mode fault-tolerant control for quadrotor UAV under disturbances and actuator loss",
+    "key_results": "Position RMS errors 0.02904, 0.02190, 0.01500 m (x, y, z) over 130-s inspection; exponential convergence of sliding variables to invariant neighborhood; ultimate boundedness of tracking errors proven",
+    "comments": "Combines fractional-order sliding backstepping with EKF-based sensorless observer; validation is simulation-based; practical robustness under real sensor noise and unmodeled dynamics not addressed.",
+    "model_io": [
+      {
+        "model": "SH-IHSBSC-EKF: sensorless hybrid integral hyperbolic sliding backstepping + extended Kalman filter",
+        "inputs": [
+          "stator current/voltage measurements",
+          "disturbances",
+          "actuator effectiveness loss schedule"
+        ],
+        "outputs": [
+          "control signals",
+          "position/attitude tracking errors",
+          "RMS errors (x,y,z)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Fractional-order sliding backstepping with hyperbolic tangent and integral conditioning achieves fast convergence and chattering attenuation",
+        "result": "Confirmed: settling time reduced 95.68% vs PI-EKF; THD reduced to 0.24%; stable tracking under variable speed, load, and parameter variations"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80465-6": {
+    "category": "Algorithms",
+    "task": "RGB-D SLAM for indoor dynamic environments with adaptive triangulation-affine matching and semantic filtering",
+    "key_results": "RMSE reduction: 94% on highly dynamic TUM sequences, 38% on slightly dynamic; ~20 FPS processing speed; real-world effectiveness demonstrated on dynamic objects",
+    "comments": "Practical system combining geometric and semantic outlier detection; comparisons primarily vs ORB-SLAM3; generalization to other SLAM frameworks and varying lighting not discussed.",
+    "model_io": [
+      {
+        "model": "ATALC-matching + semantic segmentation + dynamic object filtering + pose estimation",
+        "inputs": [
+          "RGB-D frames from TUM dataset, Bonn dynamic dataset, real scenes"
+        ],
+        "outputs": [
+          "camera pose estimates",
+          "filtered map points",
+          "trajectory, ATE RMSE"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Adaptive triangulation-affine matching + semantic filtering detect outliers and dynamic objects, improving SLAM robustness",
+        "result": "Confirmed: 94% ATE RMSE reduction on highly dynamic sequences; real-world evaluation shows effective outlier/dynamic-object detection"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79538-3": {
+    "category": "Condensed Matter",
+    "task": "Investigate negative differential resistance in edge-chlorinated MgO nanoribbons for nanoelectronics",
+    "key_results": "DFT calculations show Cl passivation of MgO nanoribbon edges yields metallic character and pronounced negative differential resistance (NDR); Cl-Mg-edge structures exhibit highest peak-to-valley current ratio",
+    "comments": "Useful prediction for nanodevice design, but demonstration of NDR through experimental I-V measurement remains absent.",
+    "model_io": [
+      {
+        "model": "DFT (density functional theory)",
+        "inputs": [
+          "MgO nanoribbon structure",
+          "Cl passivation sites"
+        ],
+        "outputs": [
+          "bandstructure",
+          "density of states"
+        ]
+      },
+      {
+        "model": "Two-probe transport simulation",
+        "inputs": [
+          "applied voltage"
+        ],
+        "outputs": [
+          "current I(V), negative differential resistance signature"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Cl passivation induces NDR phenomenon in MgO nanoribbons",
+        "result": "Confirmed; all Cl-passivated structures exhibit NDR absent in bare nanoribbons"
+      }
+    ]
+  },
+  "nature:10.1038/s42005-026-02946-4": {
+    "category": "Condensed Matter",
+    "task": "Understand thermodynamic mechanism controlling 2D melting pathways",
+    "key_results": "Free energy curvature balance between energy (convex at high T) and entropy (non-convex) governs melting order; vibrational entropy drives non-convexity while configurational entropy switches sign with defect proliferation",
+    "comments": "Elegant unification of competing mechanisms, though experimental validation beyond simulation would strengthen claims.",
+    "model_io": [
+      {
+        "model": "Thermodynamic free energy analysis",
+        "inputs": [
+          "temperature",
+          "defect density",
+          "vibrational modes"
+        ],
+        "outputs": [
+          "free energy curvature",
+          "phase transition order"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Non-convex entropic curvature dominates at high T, triggering first-order transition",
+        "result": "Confirmed; entropy switches from convex (low T) to non-convex (high T)"
+      }
+    ]
+  },
+  "nature:10.1038/s42254-026-01008-6": {
+    "category": "Astrophysics/Cosmology",
+    "task": "Historical and conceptual analysis of neutrino-to-dark-matter paradigm shift in particle cosmology",
+    "key_results": "Neutrino-dominated universe model (early 1970s) provided coherent cosmic structure framework; hints of neutrino mass (1980) displaced it as leading 'missing matter' explanation; conceptual legacy persists in current WIMP-centric dark matter search strategy",
+    "comments": "Valuable historiographic perspective; illustrates how past successful models constrain present research directions, though implications for future paradigm shifts remain speculative.",
+    "model_io": [],
+    "hypotheses": [
+      {
+        "hypothesis": "Neutrino paradigm's methodological standards carried forward to shape WIMP-search experimental design and theory",
+        "result": "Supported by historical evidence; author argues early success ingrains expectations still operative"
+      }
+    ]
   }
 }
