@@ -741501,5 +741501,406 @@
         "result": "Confirmed: 100k vs. 1M sample change <0.076% points; SI < 0 probabilities vary 2.7%\u201322.3%"
       }
     ]
+  },
+  "hf:2611.18330": {
+    "category": "Systems",
+    "task": "Typed speech decisions from frozen ASR features",
+    "key_results": "Decoder AUROC 0.80-0.97 across tasks; speaker counting more accurate than pyannote; turn-end AUROC 0.930 vs baseline 0.982",
+    "comments": "Practical system leveraging frozen representations, but turn-end detection shows modest gains over existing baselines and confidence intervals overlap on ICSI subset.",
+    "model_io": [
+      {
+        "model": "Qwen3-ASR 0.6B (frozen features)",
+        "inputs": [
+          "audio window"
+        ],
+        "outputs": [
+          "term presence decision",
+          "turn completion score",
+          "language ID",
+          "speaker change detection",
+          "speaker count"
+        ]
+      },
+      {
+        "model": "PII detection pipeline",
+        "inputs": [
+          "ASR transcript"
+        ],
+        "outputs": [
+          "PII labels (F1 0.904)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Layer-12 readouts can detect speaker change better than ECAPA",
+        "result": "AUROC 0.966-0.980 on AMI/VoxConverse, above ECAPA baseline"
+      },
+      {
+        "hypothesis": "Turn-end readout matches Smart Turn v3.2 performance",
+        "result": "AUROC 0.930 vs 0.982; confidence interval includes zero on ICSI subset"
+      }
+    ]
+  },
+  "hf:2611.20595": {
+    "category": "Agents/RL",
+    "task": "Protecting LLM agents from silent API failures",
+    "key_results": "SilentGuard reduces wrong answers from 74.0% to 1.7% on target faults; found silent failures in 11 of 15 public APIs; current fixes leave >70% of answers wrong",
+    "comments": "Enforcement at harness level proves more effective than model-level detection; demonstrates fundamental limitation of delegating correctness to LLM judgment.",
+    "model_io": [
+      {
+        "model": "SilentGuard harness with invariant checking",
+        "inputs": [
+          "API result",
+          "request"
+        ],
+        "outputs": [
+          "validated result or abstention"
+        ]
+      },
+      {
+        "model": "7 open LLM agents + 3 frontier models",
+        "inputs": [
+          "question",
+          "tool calls"
+        ],
+        "outputs": [
+          "agent response (with/without enforcement)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LLM judges can catch silent API failures",
+        "result": "Models see problems but answer anyway; >70% remain wrong"
+      },
+      {
+        "hypothesis": "Invariant enforcement at harness level prevents silent failures",
+        "result": "Reduces wrong answers to 1.7% on target faults vs 74.0% baseline"
+      }
+    ]
+  },
+  "hf:2611.16694": {
+    "category": "LLM/Reasoning",
+    "task": "Evaluating LLM decision revision under expert disagreement",
+    "key_results": "No model meets selectivity threshold under expert disagreement; accuracy drops up to 16.1 points; expert label adds reversals but effect ranges -5.2 to +2.4 points",
+    "comments": "Prestige cues drive behavior independent of correctness; reversal counts mask harm, requiring paired conditional metrics for proper evaluation.",
+    "model_io": [
+      {
+        "model": "Five LLM models (across medicine, science, law)",
+        "inputs": [
+          "question",
+          "evidence",
+          "initial answer",
+          "revision context (neutral/anonymous/expert)"
+        ],
+        "outputs": [
+          "revised or confirmed answer"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Expert disagreement improves accuracy if selective enough (reversing wrong >a/(1-a) times as often as correct)",
+        "result": "No model meets this threshold; accuracy falls up to 16.1 points"
+      },
+      {
+        "hypothesis": "Expert attribution (prestige cue) affects reversal behavior independently of argument quality",
+        "result": "Expert label adds reversals for 4/5 models; identical arguments from both sources still raise reversals for proprietary models"
+      }
+    ]
+  },
+  "hf:2611.21605": {
+    "category": "Vision",
+    "task": "Visual reasoning on ultra-high-resolution images via evidence-focused RL",
+    "key_results": "CrossRPO achieves 63.3% on ViRA-Bench vs 59.3% GRPO; ViRA-27B outperforms Claude Haiku and GPT-6-Luna on most benchmarks",
+    "comments": "Contrast-set RL design cleverly prevents common-sense shortcuts; evidence-based reasoning substantially improves resolution handling.",
+    "model_io": [
+      {
+        "model": "ViRA-9B and ViRA-27B visual reasoning agents with CrossRPO",
+        "inputs": [
+          "ultra-high-resolution image (21-120 MP)",
+          "question",
+          "contrast set variants"
+        ],
+        "outputs": [
+          "answer with set-level accuracy reward"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "RL on final answer cannot correct common-sense bias because guesses earn same reward as reading",
+        "result": "Contrast-set training (CrossRPO) forces evidence reading; set accuracy 63.3% vs 59.3% GRPO"
+      },
+      {
+        "hypothesis": "CrossRPO does not reinforce sets answered from common sense",
+        "result": "Proven theoretically; empirically validated against baseline"
+      }
+    ]
+  },
+  "hf:2611.21412": {
+    "category": "Medical",
+    "task": "Multi-stack brain MRI super-resolution in resource-constrained settings",
+    "key_results": "MS-HVED preferred in 187/210 paired assessments on Nigerian cohort; overall-quality scores 5.93 vs 4.49 baseline (p<.001); improved tissue segmentation",
+    "comments": "External validation on under-represented population strengthens generalization claims; field-of-view-aware fusion handles realistic clinical heterogeneity.",
+    "model_io": [
+      {
+        "model": "MS-HVED (hetero-orientation variational encoder)",
+        "inputs": [
+          "axial/coronal/sagittal stacks (variable coverage, orientation, alignment)"
+        ],
+        "outputs": [
+          "high-resolution brain MRI reconstruction"
+        ]
+      },
+      {
+        "model": "Expert reader evaluation (7 neuroradiologists, 44 cases)",
+        "inputs": [
+          "MS-HVED output vs supervised baseline"
+        ],
+        "outputs": [
+          "image-quality ratings, reader preference"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "MS-HVED generalizes to under-represented populations (Nigerian cohort)",
+        "result": "Preferred in 187/210 assessments; quality scores 5.93 vs 4.49"
+      },
+      {
+        "hypothesis": "Flexible multi-stack fusion handles heterogeneous acquisition conditions",
+        "result": "Superior performance with axial+coronal+sagittal; preference persists when inputs omitted"
+      }
+    ]
+  },
+  "hf:2611.17610": {
+    "category": "Agents/RL",
+    "task": "Disentangling coordination, ensembling, and compute in multi-agent LLM systems",
+    "key_results": "Multi-agent accuracy averages -0.042 vs resource-matched baselines; 74% of comparable contrasts show equal or worse performance; moving to sampled baseline shifts accuracy -0.038",
+    "comments": "Meta-analysis reveals multi-agent communication provides no benefit without partitioned evidence or external verification; confounding resource and coordination has masked this.",
+    "model_io": [
+      {
+        "model": "516 multi-agent configurations across 9 studies",
+        "inputs": [
+          "shared evidence/question"
+        ],
+        "outputs": [
+          "coordinated agent response vs single-pass baseline"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-agent communication improves accuracy over matched baselines",
+        "result": "Average accuracy -0.042; 74% of comparisons show equal/worse performance"
+      },
+      {
+        "hypothesis": "Communication adds value when agents share identical evidence",
+        "result": "Returns require partitioned evidence, external verification, or error diversity across models"
+      },
+      {
+        "hypothesis": "Sample multiplicity confounds coordination benefits",
+        "result": "Shift from greedy to sampled baseline changes accuracy -0.038 on average"
+      }
+    ]
+  },
+  "hf:2611.18981": {
+    "category": "Benchmark",
+    "task": "German civil-law legal reasoning and retrieval benchmark",
+    "key_results": "Model scores 4.81-76.42/100 without retrieval; retrieval buys at most 4.1 essay points; verbatim statute recall correlates \u03c1=0.92 with performance",
+    "comments": "Retrieval quality matters far less than prior legal knowledge; benchmark design linking norms to grading enables joint retrieval+generation evaluation.",
+    "model_io": [
+      {
+        "model": "32 open-weight and proprietary LLMs",
+        "inputs": [
+          "examination case facts (German Public Law)"
+        ],
+        "outputs": [
+          "structured legal opinion (Gutachten) with cited norms"
+        ]
+      },
+      {
+        "model": "Retrieval systems (8 configurations)",
+        "inputs": [
+          "case facts"
+        ],
+        "outputs": [
+          "retrieved statutory provisions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Retrieval improves legal opinion quality substantially",
+        "result": "Varies threefold across configs; at most 4.1 essay points; insignificant for 3/7 models"
+      },
+      {
+        "hypothesis": "Essay quality tracks prior knowledge (statute memorization) more than retrieval",
+        "result": "Verbatim statute recall correlates \u03c1=0.92 with model performance"
+      }
+    ]
+  },
+  "nature:10.1038/s41419-026-09257-0": {
+    "category": "Apoptosis/Cell Death",
+    "task": "Identify FDX1-G6PD axis as driver of disulfidptosis in sepsis-associated acute kidney injury",
+    "key_results": "NADPH downregulation and disulfidptosis markers elevated in S-AKI kidney; FDX1 deletion inhibits disulfidptosis and alleviates kidney injury in vivo and in vitro; G6PD agonist AG1 attenuates disulfidptosis and renal injury",
+    "comments": "Novel cell death pathway (disulfidptosis) in AKI context; mechanistic connection between FDX1-G6PD-NADPH depletion and actin disulfide bond formation is biochemically sound but direct structural evidence of actin crosslinking needed.",
+    "model_io": [
+      {
+        "model": "S-AKI mouse model (LPS+cecal ligation puncture or sepsis serum)",
+        "inputs": [
+          "FDX1 genetic deletion",
+          "G6PD agonist AG1"
+        ],
+        "outputs": [
+          "NADPH levels",
+          "Disulfidptosis markers",
+          "Actin cytoskeletal disulfide bonds",
+          "Kidney injury biomarkers",
+          "Renal function"
+        ]
+      },
+      {
+        "model": "Human renal tubular epithelial cells (HK-2) + sepsis serum or LPS/TNF",
+        "inputs": [
+          "FDX1 siRNA",
+          "G6PD agonist"
+        ],
+        "outputs": [
+          "Disulfidptosis markers",
+          "ROS",
+          "Cell death",
+          "Actin morphology"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "FDX1 interacts with G6PD to deplete NADPH and trigger disulfidptosis",
+        "result": "Supported; FDX1 deletion or G6PD activation blocks pathway"
+      },
+      {
+        "hypothesis": "Disulfidptosis drives renal epithelial injury in S-AKI",
+        "result": "Supported; FDX1 inhibition ameliorates S-AKI phenotype"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-79076-6": {
+    "category": "Condensed Matter",
+    "task": "Investigate deep-strong light-matter coupling in Kane fermions without Dicke superradiance",
+    "key_results": "Single-mode coupling strength 1.6 above room temperature in mercury cadmium telluride; deep-strong coupling coexists with linear low-energy dispersion; diamagnetic A\u00b2 term emerges despite linear dispersion, preventing Dicke transition",
+    "comments": "Resolves long-standing theoretical controversy; Kane fermion linearity and ultralow cyclotron mass enable unprecedented coupling strength.",
+    "model_io": [
+      {
+        "model": "Kane fermions in mercury cadmium telluride coupled to Fabry-Perot resonator",
+        "inputs": [
+          "temperature",
+          "magnetic field",
+          "carrier density"
+        ],
+        "outputs": [
+          "Landau polariton spectrum",
+          "coupling strength",
+          "low-energy dispersion"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Kane fermion systems cannot support Dicke superradiant transition due to absent A\u00b2 term",
+        "result": "Contradicted; diamagnetic A\u00b2 term emerges despite linear dispersion, still preventing transition"
+      },
+      {
+        "hypothesis": "Deep-strong coupling incompatible with linear dispersion",
+        "result": "Contradicted; both coexist in this system"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78524-z": {
+    "category": "Applied Physics",
+    "task": "Optimize MAC-layer retransmission strategy for lossy 802.15.4 wireless sensor networks using contention-aware resource allocation",
+    "key_results": "CARMA delivers 17\u201342% more frames/joule across load range versus standard 802.15.4 at equal or higher delivery; 14% gain versus grid-tuned baseline; decomposes failure rate into collision (backed off) vs. channel (abandoned) components",
+    "comments": "Practical energy-aware MAC improvement; channel fade detection without collision detection is clever; 19% gap to perfect-information threshold leaves room for future work.",
+    "model_io": [
+      {
+        "model": "CARMA contention-aware retransmission manager",
+        "inputs": [
+          "clear-channel assessment busy fraction",
+          "transmission unacknowledged fraction",
+          "MAC retry budget"
+        ],
+        "outputs": [
+          "collision/channel failure decomposition",
+          "contention window scale",
+          "abandon decision"
+        ]
+      },
+      {
+        "model": "802.15.4 radio energy model",
+        "inputs": [
+          "transmit state",
+          "receive state",
+          "idle state",
+          "clear-channel assessment"
+        ],
+        "outputs": [
+          "energy per frame (joules)",
+          "delivery ratio"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Decomposing failure types enables energy-optimal retry strategy",
+        "result": "Confirmed; abandon rule delivers 17\u201342% energy gain; collision/channel scaling has minimal effect"
+      },
+      {
+        "hypothesis": "Dead links identifiable via single probe without collision detection",
+        "result": "Confirmed; fraction-based decomposition sidesteps need for 802.15.4 CD enhancement"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80553-7": {
+    "category": "Optics/Photonics",
+    "task": "Suppress XFEL imaging artifacts via physics-guided deep learning for high-resolution reconstruction",
+    "key_results": "U-Net improves SSIM from 0.345\u21920.906 and 0.0679\u21920.945 versus flat-field normalization; superior artifact suppression and signal preservation versus Fourier filtering, PCC, DFFN; deep ensembles provide epistemic uncertainty estimates",
+    "comments": "Practical ML approach for single-shot HED/IFE experiments; uncertainty quantification enhances credibility for critical applications.",
+    "model_io": [
+      {
+        "model": "U-Net with physics-guided artifact layer",
+        "inputs": [
+          "raw XFEL transmission image",
+          "structured noise features"
+        ],
+        "outputs": [
+          "cleaned transmission map",
+          "artifact estimate",
+          "uncertainty map"
+        ]
+      },
+      {
+        "model": "Artifact modeling pipeline",
+        "inputs": [
+          "flat-field normalization",
+          "shot-to-shot drift"
+        ],
+        "outputs": [
+          "residual patterns",
+          "separable feature layer"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Artifacts modeled as separable feature layer enables direct estimation",
+        "result": "Confirmed; U-Net successfully estimates artifacts from data"
+      },
+      {
+        "hypothesis": "Physics-guided learning preserves filament profiles better than standard methods",
+        "result": "Confirmed; filament signal degradation reduced in multiple synthetic tests"
+      }
+    ]
   }
 }
