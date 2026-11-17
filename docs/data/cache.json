@@ -740430,5 +740430,1076 @@
         "result": "Confirmed: both SHG and THG observed from single cavity"
       }
     ]
+  },
+  "hf:2611.19771": {
+    "category": "Agents/RL",
+    "task": "Robotic manipulation planning with 4D point cloud world models",
+    "key_results": "98.4% success on MetaWorld, 88.0% on Adroit Relocate; 1.1 cm mean point error over 200 steps; zero-shot sim-to-real transfer",
+    "comments": "JEPA4R's interpretable 4D latent space and verifiable 200-step predictions offer a principled alternative to opaque pixel-based approaches, though evaluation is limited to manipulation benchmarks.",
+    "model_io": [
+      {
+        "model": "JEPA4R (Joint-Embedding Predictive Architecture)",
+        "inputs": [
+          "depth camera point clouds",
+          "action commands"
+        ],
+        "outputs": [
+          "latent point cloud embeddings",
+          "policy actions",
+          "predicted future point clouds"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Point cloud latents preserve metric geometry better than 2D image embeddings for manipulation",
+        "result": "Outperformed pixel JEPA on OGBench tasks and achieved top results on MetaWorld and Adroit"
+      },
+      {
+        "hypothesis": "Frozen world model with separate policy head enables zero-shot sim-to-real transfer",
+        "result": "Policy trained only in digital twin transferred to real arm with gripper and dexterous hand"
+      }
+    ]
+  },
+  "hf:2611.09825": {
+    "category": "Systems",
+    "task": "Memory-efficient FP4 quantization for LLM KV cache decoding",
+    "key_results": "2.4-3.0\u00d7 higher peak serving throughput than BF16; within 0.5 points BF16 accuracy (NVFP4) or 1 point (MXFP4)",
+    "comments": "The algorithm-system co-design addressing quantization error sources is thorough, but gains are largely throughput-focused; accuracy maintenance under heavy quantization remains tight.",
+    "model_io": [
+      {
+        "model": "BitDecoding-FP4 quantizer with FP4 Tensor Core execution",
+        "inputs": [
+          "BF16 KV cache",
+          "queries",
+          "attention logits"
+        ],
+        "outputs": [
+          "FP4 quantized KV",
+          "attention output",
+          "scaled probabilities"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Dual-residual query quantization reduces query logit error",
+        "result": "Query logit error reduced from 60% to 1%"
+      },
+      {
+        "hypothesis": "Underflow-aware probability scaling prevents E4M3 rounding to zero in long-context",
+        "result": "Maintains accuracy within tolerance across dense and MoE models with varied attention mechanisms"
+      }
+    ]
+  },
+  "hf:2611.14960": {
+    "category": "Agents/RL",
+    "task": "Characterizing termination inefficiency in autonomous code-fixing agents",
+    "key_results": "38-82% of successful runs find correct patch on first edit; agents waste 35-60% of steps post-solution; 1-8% undo correct patches",
+    "comments": "This empirical study exposes a fundamental inefficiency in agent rollout protocols rather than proposing solutions; the findings argue for early-stopping mechanisms in coding agents.",
+    "model_io": [
+      {
+        "model": "Five coding agent models (Qwen3-Coder, Laguna-XS.2, etc.)",
+        "inputs": [
+          "GitHub issues",
+          "repository code"
+        ],
+        "outputs": [
+          "code patches",
+          "execution steps",
+          "test results"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Agents achieve correct solutions early but lack early stopping criteria",
+        "result": "38-82% solve on first edit yet continue; median 35-37% of post-solution steps are verification or exploration"
+      },
+      {
+        "hypothesis": "Continued work after solution sometimes damages correct patches",
+        "result": "1-8% of successful runs undo correct patch and fail final submission"
+      }
+    ]
+  },
+  "hf:2611.21479": {
+    "category": "Generative",
+    "task": "Real-time hand-controlled video generation for interactive world models",
+    "key_results": "FVD 181.67 (full), MANO Dice 93.02; 3-step model maintains MANO Dice 92.49; 18.03 FPS at 540p with 741ms latency on single H200",
+    "comments": "LynnReal-Hand's hand-object interaction supervision and efficient streaming architecture are well-motivated, though FVD-to-latency tradeoffs and generalization beyond HandBench tasks remain underexplored.",
+    "model_io": [
+      {
+        "model": "LynnReal-Hand (causal flow map + region-aware diffusion + Ultra-Fast-VAE)",
+        "inputs": [
+          "video frames",
+          "continuous hand poses/movements"
+        ],
+        "outputs": [
+          "next video frames",
+          "hand-object interaction video"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Hand-aware supervision improves fine-grained interaction over generic video models",
+        "result": "Superior hand-following accuracy and MANO Dice 93.02 on HandBench vs. prior baselines"
+      },
+      {
+        "hypothesis": "Ultra-Fast-VAE reduces inference latency without sacrificing reconstruction quality",
+        "result": "18.03 FPS streaming at 540p with 34.89GB peak GPU memory"
+      }
+    ]
+  },
+  "hf:2611.06238": {
+    "category": "Benchmark",
+    "task": "Multi-lingual decision classification models for European languages",
+    "key_results": "27B model: 87.5% accuracy, ECE 0.016 (pooled) on 27 European languages; reach beyond training languages limited by base model (23-28 point drop)",
+    "comments": "Zuse provides valuable multilingual calibration analysis, but its focus on frozen base+adapter design limits architectural exploration; English-centric base models remain a fundamental bottleneck.",
+    "model_io": [
+      {
+        "model": "Zuse (4B, 9B, 27B) low-rank adapter + pointer head on frozen bases",
+        "inputs": [
+          "documents (27 European languages)"
+        ],
+        "outputs": [
+          "probability distribution over fixed options",
+          "calibration scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Miscalibration varies by task type, not language",
+        "result": "Confidence gap on parallel/topic tasks stable across 26 languages; knowledge tasks overconfident, acceptability underconfident"
+      },
+      {
+        "hypothesis": "Skill-based metrics predict automatable decisions better than raw accuracy",
+        "result": "Chance-corrected skill (Spearman 0.97) better predicts 5% error-budget automation than raw accuracy (0.91)"
+      },
+      {
+        "hypothesis": "Base model language coverage determines multilingual reach",
+        "result": "Languages outside base's documented list drop 23-28 points at all sizes; adapter tuning contributes \u22642 points"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80792-8": {
+    "category": "Membrane Biophysics",
+    "task": "Determine how simulated microgravity affects electroporation-mediated transfection efficiency in mammalian cells",
+    "key_results": "2 h simulated microgravity exposure decreased fluorophore uptake by 20% and transfection efficiency by 31%; increased cortical actin thickness and cell area correlate with reduced transfection",
+    "comments": "The mechanistic link between actin remodeling and EP efficiency is suggestive but incomplete\u2014F-actin destabilization only partially reversed the S\u00b5G effect, indicating additional mechanisms likely contribute.",
+    "model_io": [
+      {
+        "model": "Human Jurkat T-lymphocyte cells in rotating wall vessel bioreactor",
+        "inputs": [
+          "Simulated microgravity exposure (2 h)",
+          "Electroporation pulses (varying voltages)",
+          "Exogenous fluorescent molecules or plasmid DNA",
+          "Actin-targeting drugs (jasplakinolide, latrunculin B)"
+        ],
+        "outputs": [
+          "Fluorophore uptake efficiency (%)",
+          "Transfection efficiency (%)",
+          "Cell area (\u00b5m\u00b2)",
+          "Cortical actin thickness",
+          "F-actin organization (phalloidin staining)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Simulated microgravity reduces electroporation-mediated transfection efficiency",
+        "result": "Confirmed: 20% decrease in fluorophore uptake and 31% decrease in transfection efficiency"
+      },
+      {
+        "hypothesis": "S\u00b5G-induced actin remodeling (increased cortical actin) mediates the reduction in transfection",
+        "result": "Partially confirmed: promoting F-actin mimicked S\u00b5G effect; destabilizing F-actin showed only small non-significant reversal"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-79461-1": {
+    "category": "Cell Signaling",
+    "task": "Map compartment-specific H\u2082O\u2082 signaling pathways in cardiomyocytes",
+    "key_results": "Cytosolic H\u2082O\u2082 impairs contractility via Z-disc protein oxidation; mitochondrial H\u2082O\u2082 shows adaptive response with preserved function",
+    "comments": "Elegant chemogenetic approach reveals redox compartmentalization as a critical determinant of cellular response; important for understanding ROS signaling specificity.",
+    "model_io": [
+      {
+        "model": "iPSC-derived cardiomyocytes with DAO-HyPer biosensor",
+        "inputs": [
+          "Chemogenetic H\u2082O\u2082 generation (cytosol/mitochondria/nucleus)",
+          "antioxidant treatment"
+        ],
+        "outputs": [
+          "H\u2082O\u2082 propagation patterns",
+          "protein oxidation signatures",
+          "contractility",
+          "sarcomere organization"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Mitochondrial H\u2082O\u2082 remains spatially restricted due to compartmentalized antioxidant buffering",
+        "result": "Confirmed: mitochondrial H\u2082O\u2082 shows restricted propagation versus cytosolic diffusion"
+      },
+      {
+        "hypothesis": "Cytosolic H\u2082O\u2082 impairs contractility via preferential oxidation of Z-disc proteins",
+        "result": "Confirmed: cytosolic H\u2082O\u2082 causes Z-disc protein oxidation and contractile dysfunction"
+      }
+    ]
+  },
+  "nature:10.1038/s41579-026-01393-w": {
+    "category": "Other",
+    "task": "Review of AI-enabled antibiotic discovery and design approaches",
+    "key_results": "AI methods expand chemical space exploration, enable phenotypic discovery, elucidate mechanisms of action, support target-based and de novo design, and optimize leads",
+    "comments": "Comprehensive review highlighting AI's role in addressing antibiotic resistance crisis; novel mechanisms and chemical diversity remain critical for clinical development.",
+    "model_io": [],
+    "hypotheses": [
+      {
+        "hypothesis": "AI-driven approaches accelerate antibiotic discovery and expand scaffolds",
+        "result": "Supported by literature across phenotypic, target-based, and generative design modalities"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-77772-3": {
+    "category": "Other",
+    "task": "Multi-class malicious URL detection from character sequences and lexical features",
+    "key_results": "92.56% accuracy, 90.61% macro-F1 on main dataset; 87.43% accuracy, 82.48% macro-F1 on external dataset; phishing class F1=79%",
+    "comments": "Hierarchical CNN-attention dual-input fusion shows generalization but highlights distribution shift vulnerability, particularly for phishing URLs.",
+    "model_io": [
+      {
+        "model": "HCAN (Hierarchical CNN-Attention Network)",
+        "inputs": [
+          "raw URL character sequences",
+          "64 handcrafted lexical/statistical/IP/HTTPS/phishing features"
+        ],
+        "outputs": [
+          "URL class (benign, phishing, defacement, malware)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-scale hierarchical convolution + attention improves URL classification",
+        "result": "Confirmed on main dataset; partial confirmation on external dataset"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78781-y": {
+    "category": "Statistical Methods",
+    "task": "Hybrid CNN-ViT framework for sunflower developmental and health classification with adversarial robustness",
+    "key_results": "97.26% accuracy on 5,111 images; 94.26% on independent secondary dataset; Robustness Index 0.9899; ECE 0.0675; FGSM adversarial: 71.71% at \u03b5=0.10, 42.35% at \u03b5=0.30; mIoU 0.7487 (p=0.0098) for XAI validation",
+    "comments": "Attention Fusion Module balances local and global features; adversarial resilience and biologically grounded explainability strengthen agricultural deployment potential.",
+    "model_io": [
+      {
+        "model": "SunAFNet (DenseNet201+ViT-B/16 with Attention Fusion)",
+        "inputs": [
+          "sunflower capitulum images"
+        ],
+        "outputs": [
+          "growth/health class",
+          "attention heatmaps (mIoU-validated XAI)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Dynamic Attention Fusion outperforms static CNN and Transformer baselines",
+        "result": "Confirmed\u201497.26% accuracy, high robustness index"
+      },
+      {
+        "hypothesis": "Explainability heatmaps align with biologically relevant floral markers",
+        "result": "Confirmed\u2014mIoU 0.7487 statistically significant (p=0.0098)"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78838-y": {
+    "category": "Structural Prediction",
+    "task": "Design and evaluation of indole-based hydrazones targeting heparanase",
+    "key_results": "Compounds interact with GLU 225, GLN 270, HIS 296, TYR 298, TYR 348; compound E showed modest heparanase inhibition without clear dose-dependence; compound A exhibited IC50 2.078 \u00b5M in MCF-7 cells; acceptable ADME profiles in silico",
+    "comments": "Heparanase inhibition modest; cytotoxic IC50 compounds show potential but require further optimization for target engagement.",
+    "model_io": [
+      {
+        "model": "Structure-based drug design pipeline",
+        "inputs": [
+          "heparanase crystal structure",
+          "indole-based hydrazone library"
+        ],
+        "outputs": [
+          "molecular docking scores",
+          "ADME predictions",
+          "HTRF inhibition assays"
+        ]
+      },
+      {
+        "model": "Cell-based cytotoxicity assay",
+        "inputs": [
+          "synthesized indole-based hydrazones"
+        ],
+        "outputs": [
+          "IC50 values in MCF-7 cells"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Indole-based hydrazones inhibit heparanase at therapeutically relevant potency",
+        "result": "Partially supported\u2014modest inhibition; compound A shows cytotoxicity but weak heparanase target engagement"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79559-y": {
+    "category": "Statistical Methods",
+    "task": "Segmentation-agnostic deep learning classification of calcium imaging dynamics",
+    "key_results": "Precision=0.99, sensitivity=0.99, specificity=0.99 in validation; robust under moderate noise; performance declined with high perturbation magnitude",
+    "comments": "Quantile transition pattern representation enables invariance to acquisition settings and temporal resolution; framework scales across neuronal recording modalities.",
+    "model_io": [
+      {
+        "model": "CNN classifier on quantile-transition matrices",
+        "inputs": [
+          "calcium imaging fluorescence time series (variable resolution/frequency)"
+        ],
+        "outputs": [
+          "neuronal dynamics classification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Quantile-based representations are segmentation-agnostic and resolution-invariant",
+        "result": "Confirmed\u2014consistent high performance across preprocessing strategies"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80400-9": {
+    "category": "Single Cell",
+    "task": "Plasma exosomal ncRNA profiling in PLWH with non-AIDS-defining cancers",
+    "key_results": "Distinct ncRNA signature in PLWH with NADCs including SNORD3A, miR-126-5p, miR-451a; signature absent in cancer-free PLWH and HIV-negative cancer patients; enrichment in inflammation, immune regulation, and cancer biology pathways",
+    "comments": "HIV + cancer combination yields unique exosomal ncRNA profile; findings establish plausible biomarker candidates but require mechanistic validation.",
+    "model_io": [
+      {
+        "model": "Small RNA sequencing and exosome profiling",
+        "inputs": [
+          "plasma exosomes from PLWH with NADCs, cancer-free PLWH, HIV-negative cancer patients, healthy controls"
+        ],
+        "outputs": [
+          "differential ncRNA expression",
+          "pathway enrichment"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Coexistence of HIV and cancer generates specific exosomal ncRNA signatures",
+        "result": "Confirmed\u2014distinct signature observed only in PLWH with NADCs"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80526-w": {
+    "category": "Statistical Methods",
+    "task": "Explainable early prediction of ventilator-associated pneumonia from EHR trajectories",
+    "key_results": "CatBoost AUC 0.86 with sensitivity 0.76 at 24 h before diagnosis; SHAP identified antibiotic, PEEP, temperature, FiO2, and purulent secretions as top predictors; deployed in silent mode with hourly updates",
+    "comments": "Physician-documented diagnoses with exact onset dates provide high-quality labels; SHAP explainability enables clinician trust and actionability.",
+    "model_io": [
+      {
+        "model": "CatBoost gradient-boosting classifier",
+        "inputs": [
+          "18 routinely collected EHR variables (hourly resolution)"
+        ],
+        "outputs": [
+          "VAP risk probability",
+          "SHAP feature attribution scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "EHR trajectories predict VAP 24 h before clinical diagnosis",
+        "result": "Confirmed\u2014AUC 0.86, sensitivity 0.76"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81133-5": {
+    "category": "Single Cell",
+    "task": "EBV DNA and transcriptional activity associations with immunity and pyroptosis in OLP",
+    "key_results": "EBV detected in 8/35 OLP vs 4/35 controls (not significant); broad interferon-\u03b3, -\u03b1, and pyroptosis pathway enrichment in OLP; miR-155-5p, miR-146a-5p, miR-21-5p, miR-142-3p increased; miR-27b-3p decreased",
+    "comments": "EBV subgroups small; OLP signature is primarily disease-associated, not EBV-driven; findings exploratory and confounded by disease status.",
+    "model_io": [
+      {
+        "model": "Transcriptomic and miRNA profiling",
+        "inputs": [
+          "oral tissue from OLP patients and controls",
+          "EBV status (DNA and transcripts)"
+        ],
+        "outputs": [
+          "differential gene expression",
+          "pathway enrichment",
+          "miRNA abundance"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "EBV drives a distinct inflammatory program in OLP",
+        "result": "Not supported after multiple-testing correction; OLP signature disease-associated"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-03405-8": {
+    "category": "Statistical Methods",
+    "task": "Transformer-based prediction of treatment-associated complications from longitudinal laboratory trajectories in cancer",
+    "key_results": "Transformer predicts complications 1.5- to 6.1-fold above prevalence; AUROC +0.024 to +0.070 vs non-sequential baselines; external validation on MIMIC-IV and CoMMpass; renal/metabolic endpoints show strong transferability",
+    "comments": "Longitudinal structure exploited by transformer; biomarker masking recovers established pathophysiology; generalization strongest for organ-specific endpoints.",
+    "model_io": [
+      {
+        "model": "Transformer on laboratory time series",
+        "inputs": [
+          "2.78M longitudinal laboratory measurements from 3,905 cancer patients"
+        ],
+        "outputs": [
+          "2-year risk of 162 treatment-associated complications"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Routine laboratory trajectories encode complication-specific physiological signal months before diagnosis",
+        "result": "Confirmed\u20141.5- to 6.1-fold enrichment; AUROC improvements over non-sequential models"
+      },
+      {
+        "hypothesis": "Transformer captures temporal structure superior to static and engineered-trajectory models",
+        "result": "Confirmed\u2014consistent AUROC gains across endpoints"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-63064-3": {
+    "category": "ML Theory",
+    "task": "Bottom-hole temperature (BHT) prediction in oil wells via Random Forest and ensemble machine learning",
+    "key_results": "Random Forest: R\u00b2=0.990 (blind test), MAE=0.38 \u00b0C, RMSE=0.77 \u00b0C, MAPE=0.01%; after exponential smoothing: MAE=0.33 \u00b0C, RMSE=0.45 \u00b0C; Voting Regressor R\u00b2=0.974, MAE=1.09 \u00b0C",
+    "comments": "Practical basin-specific (Taranaki) ML workflow; feature selection via correlation reasonable; smoothing improves generalization but requires tuning.",
+    "model_io": [
+      {
+        "model": "Random Forest + XGBoost + AdaBoost + Gradient Boosting + Voting Regressor",
+        "inputs": [
+          "well log data (Taranaki Basin, NZ)",
+          "feature-selected input logs"
+        ],
+        "outputs": [
+          "bottom-hole temperature prediction"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Random Forest outperforms linear regression for BHT prediction; exponential smoothing further improves accuracy",
+        "result": "Confirmed: R\u00b2=0.990 on blind test; smoothing reduces RMSE 0.77\u21920.45 \u00b0C"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76328-9": {
+    "category": "ML Theory",
+    "task": "Economic loss prediction for natural disaster risk management via ensemble machine learning",
+    "key_results": "Framework integrates preprocessing, optimization (Turbulent Flow Water-based), outlier detection, 5-fold CV, ensemble learning; demonstrates robust, statistically significant improvements",
+    "comments": "Comprehensive pipeline with rigorous evaluation (ANOVA, Wilcoxon, ablation); quantitative performance metrics not extracted from abstract.",
+    "model_io": [
+      {
+        "model": "Ensemble (DNN + CNN + XGBoost + Gradient Boosting + Voting Regressor)",
+        "inputs": [
+          "disaster-related data (irregular, nonlinear)",
+          "preprocessing + Turbulent Flow optimization"
+        ],
+        "outputs": [
+          "economic loss prediction"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Ensemble learning with Turbulent Flow optimization and rigorous validation improves disaster-loss prediction robustness",
+        "result": "Supported: statistically significant improvements; decision-oriented framework validated"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78019-x": {
+    "category": "Other",
+    "task": "Porosity estimation of construction materials from CT images via adaptive thresholding",
+    "key_results": "Median + adaptive mean-C thresholding (MB_AMCT) shows promising agreement with vacuum-pycnometer reference; discrepancies attributed to noise, unresolved pores, threshold settings; pore-area correlations computed on 6,840 CT slices",
+    "comments": "Transparent comparison of four filtering\u2013thresholding configs; acknowledges CT/PYC non-equivalence (pore accessibility, spatial coverage); limited specimen replication (1 per class) reduces generalizability.",
+    "model_io": [
+      {
+        "model": "Four filtering\u2013thresholding pipelines (Median/Gaussian + Adaptive Mean-C/Gaussian)",
+        "inputs": [
+          "CT slices (6,840 total, 6 material classes)",
+          "vacuum-pycnometer reference values"
+        ],
+        "outputs": [
+          "pore-area fraction estimates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Median filtering + adaptive mean-C thresholding best matches pycnometer-based porosity for construction materials",
+        "result": "Partially supported: MB_AMCT promising but CT/PYC discrepancy remains; independent replication needed"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78044-w": {
+    "category": "Algorithms",
+    "task": "Event-triggered distributed STW-RBFNN control for DC-microgrid voltage regulation under uncertainty",
+    "key_results": "Nominal: RMSE=0.0089 V, MAE=0.0074 V, settling=0.601 s; 91.03% fewer transmissions (3,228 vs periodic); Monte Carlo (40 runs): mean RMSE=0.00704\u00b10.00027 V; delays 0.5\u201310 ms handled",
+    "comments": "Practical event-triggered control with radial basis function online estimation; analytical delay margin not established, limiting formal stability guarantees.",
+    "model_io": [
+      {
+        "model": "Distributed STW-RBFNN (super-twisting + RBFNN + directed pinned coordination + event-trigger)",
+        "inputs": [
+          "DC-link voltages (6-node PV-battery microgrid)",
+          "load demand",
+          "PV generation",
+          "communication delays (0.5\u201310 ms)"
+        ],
+        "outputs": [
+          "voltage control signals",
+          "transmission count"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Event-triggered STW-RBFNN achieves tight voltage regulation with 90%+ communication savings",
+        "result": "Confirmed: 0.0089 V RMSE, 91.03% fewer transmissions; robustness to delays validated empirically"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78092-2": {
+    "category": "Other",
+    "task": "Thermo-mechanical reanalysis of induction-assisted hard turning via archived FEM and Johnson\u2013Cook sensitivity",
+    "key_results": "FEM cutting force \u00b11.43% of experimental mean (475 \u00b0C ref); initial yield A and thermal exponent m dominate sensitivity; flank pressure 920\u2192680 MPa (350\u2013600 \u00b0C), tool-zone temp 430\u2192525 \u00b0C; tool wear non-monotonic, endpoint comparison only",
+    "comments": "Mechanism-centered reanalysis of published experiment; 2D plane-strain FEM limits and no independent tool-temperature validation weaken conclusions.",
+    "model_io": [
+      {
+        "model": "Archived FEM (2D plane-strain) + Johnson\u2013Cook constitutive sensitivity + reanalysis post-processing",
+        "inputs": [
+          "published cutting campaign (27 runs, SKD61 hard turning)",
+          "tool/material properties"
+        ],
+        "outputs": [
+          "flank contact pressure",
+          "tool-zone temperature",
+          "surface roughness indices"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Johnson\u2013Cook parameters A and m dominate thermo-mechanical response in hard turning; 475 \u00b0C is intermediate state, not renewed optimum",
+        "result": "Supported by sensitivity screening; wear non-monotonicity limits tool-life inference"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78255-1": {
+    "category": "ML Theory",
+    "task": "Autonomous vs. agentic small language models in greenhouse climate control via benchmark",
+    "key_results": "Command execution 65\u2013100%, autonomous initiation 0.4\u201364.6%; model ranking environment-conditional (Qwen2.5-7B vs 14B reversed across environments, McNemar p=0.016); hybrid rule+LLM: rules hold safety floor, LLM adds auditability; baseline rule matches second-best model",
+    "comments": "Rigorous benchmark on real ESP32 controller; honest finding that LLM adds knowledge capture and auditability, not superior regulation; environment sensitivity critical.",
+    "model_io": [
+      {
+        "model": "Four quantized LLMs (3\u201314B, llama.cpp) + rule-based fallback controller + prompt-based tool schema",
+        "inputs": [
+          "greenhouse sensors (temp, humidity, etc.)",
+          "ESP32 control loops",
+          "96 test cases \u00d7 4 models \u00d7 2 environments \u00d7 up to 10 seeds"
+        ],
+        "outputs": [
+          "actuator commands (heating, ventilation)",
+          "performance metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Small LLMs reliably execute safety-critical cyber-physical control autonomously",
+        "result": "Rejected: execution 65\u2013100% vs. initiation 0.4\u201364.6%; rules hold safety floor; LLM value is auditability"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78665-1": {
+    "category": "Algorithms",
+    "task": "Scalable posit arithmetic processing element (PPE) with optimized adders, multipliers, and MAC units",
+    "key_results": "32-bit posit adder (Han\u2013Carlson FPGA): 1.5% delay reduction; (ASIC): 32% area reduction; Modified Booth multiplier: 63% ASIC delay reduction, 48% area increase; 32-bit PPE + 4-tap FIR: 23.1% critical-path delay reduction; Posit{32,2} truncation: 100% accuracy to 4 decimals, 98.8% at 6 decimals, MRE 1.0e\u20136",
+    "comments": "Thorough hardware design with FPGA/ASIC trade-offs; speed\u2013area trade-off clearly documented; truncation safety for DSP/ML is practical finding.",
+    "model_io": [
+      {
+        "model": "Posit PPE (Kogge\u2013Stone/Han\u2013Carlson adders, Modified Booth/Wallace multipliers, MAC)",
+        "inputs": [
+          "8/16/32-bit posit operands",
+          "DSP/ML workloads (FIR, matrix-vector)"
+        ],
+        "outputs": [
+          "posit results",
+          "latency/power/area metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Han\u2013Carlson and Modified Booth designs optimize posit arithmetic speed\u2013area; truncation safe for noise-tolerant DSP",
+        "result": "Supported: documented delay/area improvements; truncation MRE 1.0e\u20136 validates corner-cutting"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78963-8": {
+    "category": "Other",
+    "task": "Parameter optimization of porous curved guide wall for 90\u00b0 bend pumping-station inflow improvement",
+    "key_results": "Optimized scheme: recirculation volume reduced 62.32%, axial velocity uniformity increased 103.46%, flow deviation angle (13.36\u00b0\u21925.26%), reduction 60.63%",
+    "comments": "Practical hydraulic engineering; CFD + orthogonal experiments + Entropy-weight TOPSIS is methodologically sound but limited to single station.",
+    "model_io": [
+      {
+        "model": "CFD + Orthogonal Experiment + Entropy-weight TOPSIS optimization",
+        "inputs": [
+          "90\u00b0 bend approach channel geometry",
+          "porous guide-wall parameters"
+        ],
+        "outputs": [
+          "optimized guide-wall design",
+          "flow field (velocity, recirculation)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Porous curved guide-wall rational parameter tuning eliminates 90\u00b0 bend recirculation and improves inflow uniformity",
+        "result": "Confirmed: 62.32% recirculation reduction, 60.63% deviation-angle reduction"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79177-8": {
+    "category": "Other",
+    "task": "Design, analysis, validation of screw compressor via Rack-profile method and 3D transient CFD",
+    "key_results": "Rack-profile screw compressor design coupled to ANSYS CFX transient model; mesh-density sensitivity analysis in leakage region; numerical results compared to experimental data with improved agreement",
+    "comments": "Comprehensive design-to-simulation pipeline; SCORG mesh generation into CFX transient 3D modeling is thorough; quantitative error reduction from mesh refinement not extracted.",
+    "model_io": [
+      {
+        "model": "Rack-profile design method + SCORG mesh generation + ANSYS CFX 3D transient CFD",
+        "inputs": [
+          "screw compressor geometry (rack profile parameters)",
+          "leakage path specifications"
+        ],
+        "outputs": [
+          "mesh (parametrized)",
+          "transient flow/temperature fields",
+          "performance metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Mesh refinement in leakage region reduces discrepancy between CFD and experimental screw-compressor performance",
+        "result": "Supported: improved agreement; quantitative error reduction not specified in abstract"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79259-7": {
+    "category": "Other",
+    "task": "Transfer of urban morphological relations from large to small cities via GIS-KBS framework",
+    "key_results": "317 of 496 pairwise urban relations positive (r=0.84 mean); 292 non-linear best fits; multivariate regressions R\u00b2=0.57\u20130.999 with theoretically expected signs on Corvallis (1853\u20132014)",
+    "comments": "Rigorous parcel-level longitudinal study; claims transferability but Corvallis is a single small city\u2014generalization to other small-city contexts remains open.",
+    "model_io": [
+      {
+        "model": "GIS-KBS anatomic-statistical framework (32 urban measures, multivariate regression)",
+        "inputs": [
+          "parcel-level data (161 years)",
+          "5-year intervals",
+          "form/mix/accessibility/socioeconomic indices"
+        ],
+        "outputs": [
+          "pairwise correlation matrices",
+          "fitted function types",
+          "multivariate coefficients"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Explicit-tacit urban relations established for large cities hold for small cities",
+        "result": "Largely supported: high explanatory power and expected coefficient signs; non-linear fits dominate"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80085-0": {
+    "category": "ML Theory",
+    "task": "Real-time driver behavior detection from in-vehicle camera using lightweight attention network",
+    "key_results": "DSC-Mamba achieves 93.12%\u00b10.19% accuracy (SFD3, driver-level 5-fold) with 0.421M parameters, 0.1053 GFLOPs; NPU simulation: 12\u201318 ms latency, 0.9\u20131.4 W",
+    "comments": "Practical edge deployment focus; image-level partitioning (99.89% accuracy) is noted as overly optimistic, reducing inflated claim confidence.",
+    "model_io": [
+      {
+        "model": "DSC-Mamba (depthwise separable conv + DAEDC channel-spatial attention + HEMamba global-local context)",
+        "inputs": [
+          "in-vehicle camera images",
+          "SFD3/AUCv2 datasets"
+        ],
+        "outputs": [
+          "abnormal driving behavior class",
+          "confidence scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Global Mamba context re-injected into local tokens improves behavior detection",
+        "result": "Supported: competitive accuracy with baseline MVim; practical NPU performance validated"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80145-5": {
+    "category": "Algorithms",
+    "task": "Spatio-temporal voltage prediction in microgrids via hybrid graph-convolutional moving average",
+    "key_results": "Hyb-GCMA on IEEE 14-bus: RMSE=0.0049 p.u, MAE=0.0047 p.u, R\u00b2=0.999993; outperforms standalone deep-learning baselines",
+    "comments": "Sensible fusion of GNN (spatial) + LSTM (temporal) + SARIMAX (trend); R\u00b2=0.999993 suggests near-perfect fit\u2014potential overfitting or test-set leakage.",
+    "model_io": [
+      {
+        "model": "Hyb-GCMA (GNN + LSTM + SARIMAX with adaptive learning rate and early stopping)",
+        "inputs": [
+          "historical load-flow data (IEEE 14-bus microgrid)",
+          "time-varying load/generation patterns"
+        ],
+        "outputs": [
+          "per-bus voltage predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Spatio-temporal integration via GNN+LSTM+SARIMAX improves voltage prediction vs. standalone models",
+        "result": "Supported: RMSE/MAE/R\u00b2 metrics exceed baselines; R\u00b2 near 1.0 raises overfitting concern"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80277-8": {
+    "category": "Other",
+    "task": "Vibration characterization of light goods vehicles in pharmaceutical second-echelon distribution (Japan)",
+    "key_results": "NV100 exhibits higher vibration than NV200/NV350 across directions; route-specific frequency differences observed for NV100; vibration levels lower than other countries",
+    "comments": "Field-derived repeated vibration data from real distribution; route variability documented; sample size per vehicle (5 runs) modest for robust generalization.",
+    "model_io": [
+      {
+        "model": "Vibration measurement and analysis (Grms, ECDF, PDF, PSD)",
+        "inputs": [
+          "LGV telemetry (NV100, NV200, NV350)",
+          "two pharmaceutical distribution routes (Tokyo)"
+        ],
+        "outputs": [
+          "vibration acceleration spectra",
+          "frequency characteristics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LGV structural properties (kei car vs. larger vans) drive vibration differences in second-echelon distribution",
+        "result": "Supported: NV100 lower mass/wheelbase/tread correlate with higher vibration; route-specific differences observed"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80289-4": {
+    "category": "Other",
+    "task": "High-quality low-light light-field enhancement via hybrid feature perception network",
+    "key_results": "HFPnet outperforms state-of-the-art on low-light light-field enhancement; detail preservation, noise suppression, and cross-view consistency achieved",
+    "comments": "Modular design (HDM + REM + GPM + IEM) is interpretable; quantitative metrics (SSIM, PSNR) not provided in abstract.",
+    "model_io": [
+      {
+        "model": "HFPnet (hybrid decoupling module + reflection/gradient/illumination modules)",
+        "inputs": [
+          "low-light light-field images"
+        ],
+        "outputs": [
+          "enhanced light-field with detail, low noise, consistent views"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Hybrid spatial-angular-EPI decoupling with dedicated optimization modules improves L3FE",
+        "result": "Supported: outperforms SOTA; cross-view consistency maintained"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80335-1": {
+    "category": "Statistics/Probability",
+    "task": "KAYA-identity carbon emissions forecasting with quantum-optimized SVR and Shapley interpretability",
+    "key_results": "SVR-QPSO reduces AR forecasting error 92.55\u201397.05% (training) and 93.37\u201397.82% (testing) across four West African nations; Shapley values quantify variable contributions",
+    "comments": "Hybrid quantum+classical approach with solid reduction ratios; Shapley interpretability adds value, though quantum speedup over classical SVR not explicitly benchmarked.",
+    "model_io": [
+      {
+        "model": "SVR-QPSO (Support Vector Regression + Quantum Particle Swarm Optimization)",
+        "inputs": [
+          "KAYA factors: population, GDP, energy use, emissions intensity; AR/ARIMA/MLR/ELM/MLP baselines"
+        ],
+        "outputs": [
+          "CO\u2082 emissions forecast (C\u00f4te d'Ivoire, Ghana, Nigeria, Senegal)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "SVR-QPSO outperforms univariate and classical multivariate methods for West African emissions",
+        "result": "Confirmed: 92\u201398% error reduction; MLP best for Senegal, SVR for C\u00f4te d'Ivoire"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80499-w": {
+    "category": "Other",
+    "task": "Spatial synchrony between mega-event population hotspots and commercial zones via mobile signaling",
+    "key_results": "0\u201360 min transit zone: highest concordance 47.07% at 23:00; overlap exceeds null models; 22\u201324% more stays/cell on event night; Fuzzy IoU metric applied",
+    "comments": "Novel use of mobile signaling + H3 grid + Gi*-weighted density for event dynamics; mechanism causality unconfirmed at aggregate level.",
+    "model_io": [
+      {
+        "model": "Mobile signaling + Gi*-weighted kernel density + Fuzzy IoU comparison",
+        "inputs": [
+          "hourly net population (Busan Fireworks Festival)",
+          "commercial-facility locations",
+          "transit isochrones"
+        ],
+        "outputs": [
+          "spatial synchrony index (Fuzzy IoU)",
+          "staging-zone ranking"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "0\u201360 min transit zone acts as staging area, showing high spatial synchrony with commercial zones",
+        "result": "Supported: Fuzzy IoU 47.07% peak; zone ranking robust across null models"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80621-y": {
+    "category": "ML Theory",
+    "task": "Dynamic graph reinforcement learning for portfolio optimization with sparse topology",
+    "key_results": "LDGRL achieves higher cumulative return and lower max drawdown than RL baselines on CSI 300 stocks; dual pruning + local sampling + shallow convolution reduce complexity while preserving correlations",
+    "comments": "Novel lightweight approach to dynamic correlation modeling; topology-decision closed-loop adds interpretability, though empirical comparison on holdout period crucial for real deployment.",
+    "model_io": [
+      {
+        "model": "LDGRL (dynamic graph construction + dual pruning + twin trust region policy optimization)",
+        "inputs": [
+          "stock returns (rolling window)",
+          "capital flows",
+          "market sentiment",
+          "CSI 300 constituent pool"
+        ],
+        "outputs": [
+          "sparse correlation graph",
+          "position allocation decisions",
+          "portfolio returns"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Dynamic topology with adaptive pruning outperforms fixed-graph RL for portfolio optimization",
+        "result": "Supported: improved return and Sharpe ratio vs. state-of-the-art"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80681-0": {
+    "category": "ML Theory",
+    "task": "Dynamic attention-based multimodal fusion for real-time audience emotion in interactive media",
+    "key_results": "DWR-TCSA on IEMOCAP/LIRIS-ACCEDE: 87.9% and 87.2% accuracy, F1=87.8/87.0; combined test (2,310 samples): 87.6% accuracy, 87.4% F1; Low-Arousal Sadness 62.3%\u219274.2% (+19.1% relative); inference 72 FPS, 186 ms latency; real-world (96 participants): 86.2% mean accuracy, 4.19/5.0 satisfaction; survey (300 respondents): 91.7% satisfied",
+    "comments": "Multi-seed validation and stringent statistical testing (paired t-tests, Holm\u2013Bonferroni) strengthen rigor; reference labels subjective (self-report + annotator consensus), limiting ground truth.",
+    "model_io": [
+      {
+        "model": "DWR-TCSA (Temporal Context Synchronization Attention + Dynamic Weighted Routing)",
+        "inputs": [
+          "facial expressions",
+          "vocal prosody",
+          "audiovisual context (IEMOCAP, LIRIS-ACCEDE)",
+          "real-world video + 96 participants"
+        ],
+        "outputs": [
+          "emotion class (6-class IEMOCAP)",
+          "confidence"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "TCSA + DWR adaptively fuses visual/auditory/contextual modalities for robust emotion recognition across FAT genres",
+        "result": "Supported: 87.6% combined accuracy, 72 FPS real-time, 91.7% user satisfaction; LAS recognition +19.1%"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80946-8": {
+    "category": "ML Theory",
+    "task": "Privacy-aware visual intelligence via chaotic encryption and quantum-inspired nonlinear feature mapping",
+    "key_results": "Encryption: NPCR=99.8709%, UACI=33.4629%, entropy=7.9972 bits; Proposed-QINNFM-SVM: 100% held-out test, 91.03\u00b10.20% 5-fold CV (accuracy), 0.8894\u00b10.0026 (Macro-F1)",
+    "comments": "Unified encryption + classification pipeline; held-out 100% is suspiciously high\u20145-fold CV results more credible and show modest performance.",
+    "model_io": [
+      {
+        "model": "Chaotic encryption + Quantum-inspired nonlinear feature mapping (QINNFM) + SVM",
+        "inputs": [
+          "plaintext images"
+        ],
+        "outputs": [
+          "encrypted image",
+          "encrypted-image classification (privacy-preserving)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Chaotic encryption + QINNFM-SVM enables privacy-aware classification with strong encryption",
+        "result": "Supported for encryption metrics; classification CV (91.03%) modest; held-out 100% not replicable"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80964-6": {
+    "category": "Algorithms",
+    "task": "DSM and sparse-view 3DGS co-optimization for georeferenced building facade reconstruction",
+    "key_results": "DGS-CF under 4 views: SSIM improvement 21.73\u201327.91%; PSNR +2.953 dB; restored 3D-DSM accuracy +48.2%, quantity +273.8%",
+    "comments": "Clever use of DSM priors and dual-Gaussian pruning for sparse-view challenge; georeferenced output preserves practical utility for urban mapping.",
+    "model_io": [
+      {
+        "model": "DGS-CF (depth-augmented 3DGS + dual pruning + topology-aware sampling)",
+        "inputs": [
+          "satellite DSM",
+          "4 sparse close-range images",
+          "public/self-collected building datasets"
+        ],
+        "outputs": [
+          "georeferenced 3D model",
+          "facade geometry",
+          "completed 3D-DSM"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "DSM-informed Gaussian initialization and dual pruning recover facade details from sparse views",
+        "result": "Confirmed: significant SSIM and PSNR gains; 3D-DSM accuracy substantially improved"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80989-x": {
+    "category": "ML Theory",
+    "task": "Syntax-guided multi-granularity fusion for multimodal aspect-based sentiment analysis",
+    "key_results": "MGGFN on Twitter-2015/2017: mean Macro-F1=73.2 and 69.6; competitive among compared methods; exploits syntactic structure + scene/face visual context",
+    "comments": "Principled syntax-aware evidence modeling with gated fusion; multi-granularity visual (scene-level + face-level) adds nuance but Macro-F1 scores suggest room for improvement.",
+    "model_io": [
+      {
+        "model": "MGGFN (dependency-weighted graph + scene/face caption + adaptive gating)",
+        "inputs": [
+          "image-text pairs (Twitter-2015/2017)",
+          "dependency parsing",
+          "visual segmentation"
+        ],
+        "outputs": [
+          "aspect-level sentiment polarity",
+          "confidence"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Syntax-aware binding of aspect and opinion terms with multi-granularity visual context improves aspect-level sentiment",
+        "result": "Supported: competitive Macro-F1; 73.2 on Twitter-2015 reasonable"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81128-2": {
+    "category": "Other",
+    "task": "Pix2pix simulation for high-temperature ceramic firing appearance prediction",
+    "key_results": "Baseline pix2pix generates realistic appearances in-domain; best L1+perceptual+noise: LPIPS=0.2011, SSIM=0.5229; performance degrades on unseen samples; below practical requirements",
+    "comments": "Honest failure report; deterministic pix2pix cannot capture stochastic firing variability\u2014multimodal generative models suggested but not pursued.",
+    "model_io": [
+      {
+        "model": "pix2pix (encoder-decoder + discriminator + L1/perceptual loss + instance noise)",
+        "inputs": [
+          "semantic segmentation maps (glaze compositions)",
+          "SFD3 dataset (panel images)"
+        ],
+        "outputs": [
+          "predicted fired appearance"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Pix2pix with perceptual loss and regularization captures ceramic firing deterministically",
+        "result": "Rejected: in-domain bias; poor generalization; multimodal architecture needed"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81251-0": {
+    "category": "Algorithms",
+    "task": "Time-indexed optimization for multi-level puzzle-based storage with explicit loading/unloading",
+    "key_results": "TIMM heuristic reproduced all 7 proven optima; explicit handling increased makespan 38.0% (5.56\u21927.67); vertical movement freedom reduced makespan 19.5% (8.2\u21926.6)",
+    "comments": "Practical warehouse optimization with rigorous validation; replay-based verification is commendable though computational speedup (13.8\u21920.4 s) suggests some scalability trade-off.",
+    "model_io": [
+      {
+        "model": "TIMM heuristic (priority construction + local search + replay validation)",
+        "inputs": [
+          "storage configuration (10\u00d710\u00d710 grid)",
+          "shuttle count",
+          "job sequence"
+        ],
+        "outputs": [
+          "schedule with collision avoidance",
+          "makespan",
+          "replay-validity flag"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Explicit loading/unloading delays increase makespan relative to instantaneous handling",
+        "result": "Confirmed: 38% increase across paired cases"
+      },
+      {
+        "hypothesis": "Unrestricted vertical movement reduces makespan under full shuttle availability",
+        "result": "Confirmed: 19.5% reduction on five matched cases"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80331-5": {
+    "category": "Applied Physics",
+    "task": "Assess overturning stability of compact crane-equipped transport vehicle under parametric loading and wind",
+    "key_results": "Minimum stability indices SI = \u22120.110, \u22120.143, \u22120.079, 0.090 for four payload cases (200\u2013800 kg) at 1000 kg deck, 3\u00b0 slope, 15.5 m/s wind; SI < 0 probabilities 17.79%, 22.30%, 15.90%, 2.70%; at 1500 kg deck, longitudinal-only payload bounds for SI \u2265 0.10 are 191\u2013437 kg",
+    "comments": "Rigid-body screening model with node-consistent piecewise-linear boom CoG; Monte Carlo (100k samples) well-converged; not hardware validation or certified capacity chart.",
+    "model_io": [
+      {
+        "model": "Rigid-body stability screening model for crane-equipped vehicle",
+        "inputs": [
+          "payload mass and horizontal reach",
+          "deck mass",
+          "support-centered coordinates",
+          "wind speed (clipped 0\u201320 m/s)",
+          "ground slope (3\u00b0)"
+        ],
+        "outputs": [
+          "stability index SI",
+          "overturning probability"
+        ]
+      },
+      {
+        "model": "Monte Carlo sensitivity analysis (PCG64, 100k\u20131M samples)",
+        "inputs": [
+          "parametric wind distribution",
+          "payload/deck-mass uncertainty"
+        ],
+        "outputs": [
+          "conditional probability P(SI < 0)",
+          "confidence intervals"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Node-consistent piecewise-linear boom-CoG model correctly captures stability across rated payload reaches",
+        "result": "Assumed; model validation against tipping-point measurements not performed"
+      },
+      {
+        "hypothesis": "Stability indices are sensitive to deck mass and wind speed; posterior overturning probabilities well-converged at 100k MC samples",
+        "result": "Confirmed: 100k vs. 1M sample change <0.076% points; SI < 0 probabilities vary 2.7%\u201322.3%"
+      }
+    ]
   }
 }
