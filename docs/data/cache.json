@@ -741902,5 +741902,1830 @@
         "result": "Confirmed; filament signal degradation reduced in multiple synthetic tests"
       }
     ]
+  },
+  "hf:2611.22115": {
+    "category": "Systems",
+    "task": "LLM training infrastructure and agentic post-training on Ascend NPUs",
+    "key_results": "Pretrained 285B-parameter model on 8,192 Ascend 910C cards; introduced TeleGym platform for unified agent execution",
+    "comments": "Comprehensive systems engineering effort addressing practical constraints of non-GPU hardware; strong focus on distributed training optimization and agent execution.",
+    "model_io": [
+      {
+        "model": "Xing4 (285B parameters)",
+        "inputs": [
+          "text corpus"
+        ],
+        "outputs": [
+          "text completions"
+        ]
+      },
+      {
+        "model": "TeleGym agent execution platform",
+        "inputs": [
+          "task specifications"
+        ],
+        "outputs": [
+          "agent trajectories",
+          "policy updates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Sparse activation and speculative decoding balance model capacity with computation constraints on Ascend",
+        "result": "Design principles validated through pretraining at scale"
+      }
+    ]
+  },
+  "hf:2611.17621": {
+    "category": "Benchmark",
+    "task": "Kernel optimization evaluation on Ascend NPUs under realistic workload conditions",
+    "key_results": "48 kernels across three difficulty levels; 0.05-0.12 AUC drop under temporal validation vs. random CV, confirming sensor/execution drift",
+    "comments": "Novel contribution of temporal validation splits to capture real-world drift; Speedup-Token Score metric balances practical speedup gains against API cost.",
+    "model_io": [
+      {
+        "model": "Various kernel optimizers (agents/models)",
+        "inputs": [
+          "kernel code",
+          "tensor shapes",
+          "data types"
+        ],
+        "outputs": [
+          "optimized kernel implementations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Real-world kernel test cases introduce temporal drift that random CV misses",
+        "result": "Confirmed: significant AUC drops under temporal validation"
+      }
+    ]
+  },
+  "hf:2611.22055": {
+    "category": "LLM/Reasoning",
+    "task": "Direct weight-space programming by LLMs without gradient-based training",
+    "key_results": "LLM-designed sparse table model achieves 54.4% accuracy with 1,800x fewer parameters than Transformer baseline; up to 17x GPU speedup",
+    "comments": "Counterintuitive finding that Transformers are unnecessary when LLMs write weights directly; models naturally discover interpretable sparse tables rather than weight matrices.",
+    "model_io": [
+      {
+        "model": "Frontier LLMs (GPT-4o, Gemini, Claude)",
+        "inputs": [
+          "task description",
+          "labeled examples",
+          "sandbox environment"
+        ],
+        "outputs": [
+          "hand-written model weights",
+          "architecture specification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LLMs can design more parameter-efficient architectures than Transformers when freed from gradient-descent constraints",
+        "result": "Confirmed: sparse tables outperform Transformers on parameter efficiency and interpretability"
+      }
+    ]
+  },
+  "hf:2611.21099": {
+    "category": "Agents/RL",
+    "task": "Force-aware robot manipulation for frozen frontier models without retraining",
+    "key_results": "GPT-4 Astra zero-shot success raised from 3.3% to 90.0% on real arm; +17.5pp on ForceBench, +34.3pp on HiddenPhys simulation",
+    "comments": "Elegant solution decoupling low-level force control from high-level reasoning; physics translation layer enables frozen models to reason about forces without demonstrations.",
+    "model_io": [
+      {
+        "model": "ForceHarness (physical primitives + physics translator)",
+        "inputs": [
+          "robot observations",
+          "language instructions",
+          "force traces"
+        ],
+        "outputs": [
+          "force-regulated actions",
+          "physical quantity estimates with uncertainty"
+        ]
+      },
+      {
+        "model": "Frozen frontier model (GPT-4 Astra)",
+        "inputs": [
+          "image",
+          "language query",
+          "physical quantities"
+        ],
+        "outputs": [
+          "action decision"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Self-terminating force primitives and physics translation enable frozen models to use force without finetuning",
+        "result": "Confirmed: strong gains on both real and simulated tasks without model retraining"
+      }
+    ]
+  },
+  "hf:2611.19800": {
+    "category": "Vision",
+    "task": "Parallel Transformer branching for improved scaling and inference efficiency",
+    "key_results": "2-branch Wide-Shallow MBT outperforms sequential Transformer at matched compute; Joint-KV reduces KV-cache by 34% and increases throughput 51.4%",
+    "comments": "Novel scaling axis complementary to width/depth; well-motivated by compute-memory tradeoffs and validated with comprehensive ablations.",
+    "model_io": [
+      {
+        "model": "Multi-Branch Transformer (MBT)",
+        "inputs": [
+          "text tokens"
+        ],
+        "outputs": [
+          "text completions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Branching provides better scaling curves than sequential stacking at matched compute budgets",
+        "result": "Confirmed: standard Transformers require up to 1.26x training compute to match MBT validation loss"
+      },
+      {
+        "hypothesis": "Joint-KV cache construction improves inference efficiency without hurting quality",
+        "result": "Confirmed: up to 34% cache reduction and 51.4% throughput gain"
+      }
+    ]
+  },
+  "hf:2611.15348": {
+    "category": "Medical",
+    "task": "Time series classification for disease screening from electronic nose sensors with temporal drift",
+    "key_results": "Best methods achieve ROC AUC 0.74-0.76 for some conditions; recurrent models most consistent across diseases; demographic confounders significant",
+    "comments": "Critical contribution of realistic temporal train/test splits revealing sensor drift; first large-scale public eNose dataset (1,234 patients, 9 conditions).",
+    "model_io": [
+      {
+        "model": "Various time series classifiers (RNN, CNN, tabular, graph-based)",
+        "inputs": [
+          "17-channel multivariate eNose time series"
+        ],
+        "outputs": [
+          "disease class probabilities"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Random CV overstates generalization; temporal drift embeds strong signal requiring temporal validation",
+        "result": "Confirmed: 0.05-0.12 AUC drop under temporal vs. random validation"
+      },
+      {
+        "hypothesis": "Recurrent architectures best handle temporal sensor drift",
+        "result": "Confirmed: RNNs show most consistent performance across all diseases"
+      }
+    ]
+  },
+  "hf:2611.18856": {
+    "category": "Agents/RL",
+    "task": "Continual recursive self-improvement of harness optimizers across compatible domains",
+    "key_results": "Self-Improvement Memory achieves higher scores than harness-only baseline; +2.36 point average improvement in coding with cross-model continuation (p=0.003)",
+    "comments": "Addresses practical challenge of harness reuse across tasks; memory structure enables principled continuation rather than naive carryover.",
+    "model_io": [
+      {
+        "model": "Harness optimizer with Self-Improvement Memory",
+        "inputs": [
+          "benchmark data",
+          "harness edits",
+          "policy model"
+        ],
+        "outputs": [
+          "optimized harness"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Tracking rationale and outcomes of past edits improves continuation across domains",
+        "result": "Confirmed: SIM outperforms harness-only continuation on cross-dataset and cross-model tasks"
+      }
+    ]
+  },
+  "hf:2611.23143": {
+    "category": "Vision",
+    "task": "Unified TCP tracking and motion generation for robot manipulation from monocular video",
+    "key_results": "Tracker achieves 7.60mm trajectory error on DROID; generator 69.19% success on RoboTwin; cross-embodiment augmentation improves target success by 41.5%",
+    "comments": "Elegant embodiment-agnostic action space (TCP in SE(3)); strong contribution of synthetic cross-embodiment data augmentation.",
+    "model_io": [
+      {
+        "model": "TCP4D (shared 4D scene representation)",
+        "inputs": [
+          "monocular RGB video",
+          "initial 2D TCP queries",
+          "language instructions"
+        ],
+        "outputs": [
+          "metric TCP poses",
+          "gripper states",
+          "scene geometry",
+          "future TCP trajectories"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Shared 4D representation can both track and generate TCP motion with high precision",
+        "result": "Confirmed: 7.60mm tracking error and strong trajectory prediction performance"
+      }
+    ]
+  },
+  "hf:2611.23226": {
+    "category": "Generative",
+    "task": "Fast autoregressive video diffusion for interactive latency at multiple scales",
+    "key_results": "1.3B variant: 36ms per frame (28 RPS) on single B200; 14B variant: 45ms per frame (22 RPS) on 8x B200; matches 8x slower baseline at same quality",
+    "comments": "Practical optimization identifying VAE decoding and KV updates as bottlenecks; fixed-step parallel decoding is key to interactive latency.",
+    "model_io": [
+      {
+        "model": "FastFrames (autoregressive video diffusion)",
+        "inputs": [
+          "conditioning (camera/physics)",
+          "noise schedule"
+        ],
+        "outputs": [
+          "video frames"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "VAE decoding and KV cache updates are primary latency bottlenecks in video diffusion",
+        "result": "Confirmed: profiling shows >50% of inference time in these operations"
+      }
+    ]
+  },
+  "hf:2611.21392": {
+    "category": "LLM/Reasoning",
+    "task": "Video perception decoupled from planning to handle long videos efficiently",
+    "key_results": "VideoNexus achieves 88.6% accuracy on full LVBench (+3.6pp over static ingestion, +1.1pp over built-in agentic, 44% lower cost)",
+    "comments": "Training-free framework elegantly separating perception and reasoning; compact evidence exchange reduces context burden while improving accuracy.",
+    "model_io": [
+      {
+        "model": "VideoNexus (planner + perception sub-agents)",
+        "inputs": [
+          "long video",
+          "user query"
+        ],
+        "outputs": [
+          "grounded answer with temporal evidence"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Delegating video perception with compact evidence exchange reduces planning burden and improves accuracy",
+        "result": "Confirmed: 88.6% accuracy with 44% lower API cost than agentic baseline"
+      }
+    ]
+  },
+  "hf:2611.22275": {
+    "category": "Agents/RL",
+    "task": "Decentralized long-horizon multi-humanoid collaboration with local observations",
+    "key_results": "System scales to 10 humanoids; generalizes to heterogeneous teams without retraining; outperforms baselines on 12-task HH-Bench",
+    "comments": "Strong contribution of decentralized control from local observations and speech-based synchronization without network communication.",
+    "model_io": [
+      {
+        "model": "Multi-agent tracking model + vision-language planner",
+        "inputs": [
+          "local observations",
+          "language specifications",
+          "speech signals"
+        ],
+        "outputs": [
+          "decentralized control signals",
+          "coordinated actions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Adapting humanoid foundation models to coupled interactions enables scalable decentralized control",
+        "result": "Confirmed: scales to 10 humanoids and generalizes to heterogeneous teams"
+      }
+    ]
+  },
+  "hf:2611.23144": {
+    "category": "Vision",
+    "task": "Unified 4D scene geometry and motion reconstruction from diverse uncalibrated RGB inputs",
+    "key_results": "\u03c0^4 achieves best average rank on geometry evaluation; 0.5B parameters (< half most baselines); handles scenes with thousands of images",
+    "comments": "Remarkably compact foundation model with strong generalization; couples geometry and motion branches naturally for joint reconstruction.",
+    "model_io": [
+      {
+        "model": "\u03c0^4 (geometry + motion branches)",
+        "inputs": [
+          "single image, unordered collection, or video sequence"
+        ],
+        "outputs": [
+          "dense geometry",
+          "camera poses",
+          "metric scale",
+          "point tracks",
+          "moving-object masks"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Geometry-conditioned motion prediction via correspondence lifting improves 3D tracking and reconstruction",
+        "result": "Confirmed: competitive performance with smaller model than baselines"
+      }
+    ]
+  },
+  "hf:2611.20992": {
+    "category": "Medical",
+    "task": "Fast medical image classification via direct multimodal decision without autoregressive generation",
+    "key_results": "MedJev-4B: +7.93% accuracy, 6.04x speedup over baseline; state-of-the-art for 4B-9B models; matches larger models at lower cost",
+    "comments": "Clever observation that decision models avoid generative overhead; frozen vision + lightweight decision head offers practical speedup.",
+    "model_io": [
+      {
+        "model": "MedJev (frozen vision + decision head)",
+        "inputs": [
+          "medical image",
+          "question",
+          "candidate answers"
+        ],
+        "outputs": [
+          "answer choice"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Direct multimodal decision-making is faster and more accurate than autoregressive generation for medical image tasks",
+        "result": "Confirmed: 6.04x speedup with +7.93% accuracy on MedJev-4B"
+      }
+    ]
+  },
+  "hf:2611.23108": {
+    "category": "Systems",
+    "task": "Lossless image compression with fixed-step parallel decoding",
+    "key_results": "FMT decodes Kodak photos 9-61x faster than learned codecs on same GPU; matches or beats HTJ2K on both size and speed",
+    "comments": "Novel insight that arithmetic coding bottleneck can be eliminated via fixed-step parallelism; practical alternative to slow learned codecs.",
+    "model_io": [
+      {
+        "model": "FMT (coarse-to-fine tree codec with parallel rANS)",
+        "inputs": [
+          "image"
+        ],
+        "outputs": [
+          "lossless decompressed image"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Fixed-step parallel decoding eliminates waiting and enables fast lossless compression",
+        "result": "Confirmed: 9-61x speedup over learned codecs at comparable compression"
+      }
+    ]
+  },
+  "hf:2611.17048": {
+    "category": "LLM/Reasoning",
+    "task": "Streaming video understanding with model-initiated conversation and tool calling",
+    "key_results": "AURA 2.0 achieves 88.6% on LVBench (open-source); exceeds AURA baseline by meaningful margins on streaming tasks",
+    "comments": "Advances beyond reactive assistants to proactive model-initiated conversation; interactive visual grounding supports precise referencing.",
+    "model_io": [
+      {
+        "model": "AURA 2.0 (streaming video LLM)",
+        "inputs": [
+          "video stream",
+          "audio",
+          "user messages",
+          "user-marked objects"
+        ],
+        "outputs": [
+          "conversational responses",
+          "tool invocations",
+          "visual bounding boxes"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Model-initiated conversation from visual streams improves engagement beyond user-driven interaction",
+        "result": "Supported: new interaction paradigm demonstrated across streaming benchmarks"
+      }
+    ]
+  },
+  "hf:2611.21152": {
+    "category": "Agents/RL",
+    "task": "Automated environment synthesis and evolution for long-horizon coding agent training",
+    "key_results": "RepoFactory produces 10,159 environments; RepoHorizen-35B gains +22.6pp on NL2Repo-Bench, +8.5pp average on five benchmarks",
+    "comments": "Strong systems contribution: environment evolution loop uses proxy signals to automatically improve training value at scale.",
+    "model_io": [
+      {
+        "model": "RepoHorizen-35B (coding agent)",
+        "inputs": [
+          "natural language specification"
+        ],
+        "outputs": [
+          "complete project implementation"
+        ]
+      },
+      {
+        "model": "RepoFactory (environment synthesizer)",
+        "inputs": [
+          "code repositories"
+        ],
+        "outputs": [
+          "verifiable environments with trajectories"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Environment evolution loop optimizing validity, coupling, and scope improves training value",
+        "result": "Confirmed: +22.6pp improvement on NL2Repo-Bench with evolved environments"
+      }
+    ]
+  },
+  "hf:2611.19244": {
+    "category": "LLM/Reasoning",
+    "task": "Understanding cross-domain transfer effects of on-policy distillation on agent reasoning patterns",
+    "key_results": "General reasoning supervision reduces mathematical tool use 70.4%\u219214.4% while raising accuracy 16.7%\u219238.0%; negative transfer on \u03c4\u00b2-bench mitigated via selective OPD",
+    "comments": "Important analysis of unintended transfer; selective OPD using teacher preference changes recovers accuracy from 11.5% to 29.9%.",
+    "model_io": [
+      {
+        "model": "LLM agent with on-policy distillation",
+        "inputs": [
+          "domain-specific training trajectories",
+          "reasoning tasks"
+        ],
+        "outputs": [
+          "agent responses",
+          "tool calls",
+          "reasoning traces"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Domain-specific OPD reshapes reasoning patterns with cross-domain effects that can be negative",
+        "result": "Confirmed: mathematical supervision reduces tool use; ALFWorld supervision harms \u03c4\u00b2-bench"
+      },
+      {
+        "hypothesis": "Selective OPD based on teacher preference changes mitigates negative transfer",
+        "result": "Confirmed: retaining top 95% of positions raises \u03c4\u00b2 accuracy to 29.9%"
+      }
+    ]
+  },
+  "hf:2611.19559": {
+    "category": "Vision",
+    "task": "Residual learning for efficient world-action models in robot manipulation",
+    "key_results": "ResWAM (2.3B params): 81.1% LIBERO-Plus, 93.8% RoboTwin 2.0, 80% real-robot tasks at 2.7-4.0 TFLOPs training, 1.0-1.4 TFLOPs inference",
+    "comments": "Key insight: supervising feature change rather than complete future observations improves rank and focuses on task-relevant motion.",
+    "model_io": [
+      {
+        "model": "ResWAM (0.5B DiT + action/residual branches)",
+        "inputs": [
+          "current frame",
+          "robot observations",
+          "language instructions"
+        ],
+        "outputs": [
+          "future frame residuals",
+          "next actions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Residual learning in frozen DINOv3 space concentrates on object/robot motion over static backgrounds",
+        "result": "Confirmed: higher feature rank and improved policy learning at lower compute"
+      }
+    ]
+  },
+  "hf:2611.23219": {
+    "category": "Agents/RL",
+    "task": "Autonomous self-learning algorithm discovery by LLM agents without external specification",
+    "key_results": "Frozen LLM with compute budget discovers self-improvement strategies aligning with cognitive science and ML theory",
+    "comments": "Philosophical contribution: sufficiently capable models spontaneously develop self-regulated learning without imposed loops.",
+    "model_io": [
+      {
+        "model": "Frozen LLM agent",
+        "inputs": [
+          "game environment",
+          "compute budget",
+          "tools for experience collection and document updates"
+        ],
+        "outputs": [
+          "self-designed learning algorithm",
+          "game experience",
+          "learned text artifacts"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Sufficiently capable models can autonomously design effective self-improvement algorithms given primitives and goals",
+        "result": "Confirmed: models discover strategies consistent with cognitive science frameworks"
+      }
+    ]
+  },
+  "hf:2611.12069": {
+    "category": "Generative",
+    "task": "Mixed-resolution video generation with self-selected high-resolution regions",
+    "key_results": "MPEG-Diffusion: 4.8x speedup on Wan 2.1 14B (3.8x on 1.3B); outperforms prior mixed-resolution; 90% user preference over prior methods",
+    "comments": "Three complementary innovations: dual-resolution attention, mixed-resolution decoder, and self-selected HR regions eliminate need for advance specification.",
+    "model_io": [
+      {
+        "model": "MPEG-Diffusion (video DiT)",
+        "inputs": [
+          "conditioning signals",
+          "noise schedule"
+        ],
+        "outputs": [
+          "mixed-resolution video frames"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Dual-resolution attention and self-selected regions eliminate quality loss in mixed-resolution generation",
+        "result": "Confirmed: 4.8x speedup with quality improvements over full resolution"
+      }
+    ]
+  },
+  "hf:2611.21791": {
+    "category": "Agents/RL",
+    "task": "Stabilizing off-policy RL for LLM agents via regularized score centering",
+    "key_results": "RSC with TIS improves sample efficiency on agentic tasks; 14.3% gain on AppWorld, 9.9x on BabyAI; best performance on all six agentic benchmarks",
+    "comments": "Principled approach addressing policy mismatch in asynchronous RL; KL regularization theoretically justified and empirically validated.",
+    "model_io": [
+      {
+        "model": "LLM agent with RSC optimization",
+        "inputs": [
+          "experience from stale policies",
+          "task rewards"
+        ],
+        "outputs": [
+          "learned policy"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "KL regularization stabilizes off-policy learning by limiting policy mismatch from behavior policy",
+        "result": "Confirmed: RSC with TIS achieves top performance across six agentic benchmarks"
+      }
+    ]
+  },
+  "hf:2611.21421": {
+    "category": "LLM/Reasoning",
+    "task": "Autoformalization of program specifications via executable postconditions with RL",
+    "key_results": "Qwen3.8-27B improves from 70% to 84.3% on AuXSpec-Test; on Verina outperforms prior art 47.6%\u219273.7% (pass@1) and 63.9%\u219290.5% (pass@4)",
+    "comments": "Novel execution-based reward from type-class resolution; expert iteration scales training to 19.5K samples.",
+    "model_io": [
+      {
+        "model": "AuXSpec (specification generator)",
+        "inputs": [
+          "natural language problem"
+        ],
+        "outputs": [
+          "Lean formal specification with executable postcondition"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Executable postconditions enable execution-based rewards for RL-driven specification synthesis",
+        "result": "Confirmed: execution reward improves pass@4 from 70% to 84.3%"
+      }
+    ]
+  },
+  "hf:2611.19857": {
+    "category": "Generative",
+    "task": "Panoramic 4D driving world models with stitched camera views and efficient sampling",
+    "key_results": "PanDWM: lower FID/FVD than multi-camera baselines at 8-46x speedup; 50-step teacher performance with 22-25% FVD improvement at student speed",
+    "comments": "Elegant reformulation: stitching views into panorama converts consistency problem to continuity; enables efficient 4-step generation.",
+    "model_io": [
+      {
+        "model": "PanDWM (causal student diffusion model)",
+        "inputs": [
+          "panoramic scene layout"
+        ],
+        "outputs": [
+          "panoramic video band frames"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Panoramic representation converts multi-view consistency to single-image continuity problem",
+        "result": "Confirmed: achieves teacher performance at 8-46x student speed"
+      }
+    ]
+  },
+  "hf:2611.15671": {
+    "category": "Systems",
+    "task": "Isolating quantization effects from other sources of decision variability in model serving",
+    "key_results": "Quantization (Q4_K_M, NVFP4) moves 5.67-5.79% of decisions; engine/batch/kernel changes move 0-0.92%; FP8 not within restart noise contrary to prediction",
+    "comments": "Rigorous methodology isolating confounds; two failed pre-registered predictions highlight measurement challenges in numerical reproducibility.",
+    "model_io": [
+      {
+        "model": "Clef-flash (9B) and Clef (27B) decision models",
+        "inputs": [
+          "public decision questions"
+        ],
+        "outputs": [
+          "quantized vs. BF16 predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Engine/batch/kernel changes contribute negligibly to decision variability vs. quantization",
+        "result": "Partially confirmed: sources move 0-0.92% vs. quantization 5-5.79%; FP8 prediction failed"
+      }
+    ]
+  },
+  "hf:2611.23034": {
+    "category": "LLM/Reasoning",
+    "task": "Multi-teacher on-policy distillation for multimodal reasoning across image STEM, perception, and video",
+    "key_results": "M3OPD-Reasoner-9B: matches domain teachers on own domain; average above mixed-training baseline; sequential MixRL+MOPD improves further without collapse",
+    "comments": "Novel finding: same data benefits sequential MOPD then MixRL stages; suggests complementary rather than competing optimization objectives.",
+    "model_io": [
+      {
+        "model": "M3OPD-Reasoner (Qwen3.5 student)",
+        "inputs": [
+          "multimodal reasoning tasks (image STEM, perception, video)"
+        ],
+        "outputs": [
+          "reasoning chains and answers"
+        ]
+      },
+      {
+        "model": "Domain teachers (GSPO-trained on single domain)",
+        "inputs": [
+          "domain-specific reasoning tasks"
+        ],
+        "outputs": [
+          "expert reasoning trajectories"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-teacher OPD preserves domain specialization while MOPD merges capabilities",
+        "result": "Confirmed: student matches teachers on respective domains"
+      },
+      {
+        "hypothesis": "Sequential MOPD then MixRL improves over either alone",
+        "result": "Confirmed: no collapse and further improvement on same data"
+      }
+    ]
+  },
+  "hf:2611.23026": {
+    "category": "Vision",
+    "task": "Improving Transformer scaling via tensor-parallel hyper-connections with grouped stream updates",
+    "key_results": "TPHC with 16 streams requires only +19% training time vs. +81% for mHC; validation loss down 0.7-1.0%, commonsense accuracy +0.3-0.7pp at matched stream counts",
+    "comments": "Elegant integration of tensor parallelism with hyper-connections; enables stream scaling without excessive training overhead.",
+    "model_io": [
+      {
+        "model": "TPHC (Transformer with tensor-parallel hyper-connections)",
+        "inputs": [
+          "text tokens"
+        ],
+        "outputs": [
+          "text completions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Tensor-parallel stream routing improves independence and expressiveness of residual stream updates",
+        "result": "Confirmed: validation loss improvement and training time scaling with 16 streams"
+      }
+    ]
+  },
+  "hf:2611.08922": {
+    "category": "Medical",
+    "task": "Interpretable feature discovery from clinical multimodal data via foundation models and sparse autoencoders",
+    "key_results": "Glyph extracted 397 predictive concepts with 4,463 Bonferroni-significant associations; majority reproducible across held-out cohorts; complementary to literature markers",
+    "comments": "Important bridge between neural interpretability and clinical discovery; latent FM features yield novel biomarkers beyond pre-defined phenotypes.",
+    "model_io": [
+      {
+        "model": "Glyph (FM embeddings + sparse autoencoders)",
+        "inputs": [
+          "abdominal CT volumes",
+          "radiology reports",
+          "lab measurements"
+        ],
+        "outputs": [
+          "interpretable clinical concept features",
+          "disease associations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Foundation model latent features represent novel clinical concepts discoverable and interpretable via sparse autoencoders",
+        "result": "Confirmed: 397 concepts with significant, reproducible disease associations"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-79248-4": {
+    "category": "Structural Biology",
+    "task": "Elucidate the atomic-resolution mechanism of intrinsic GTP hydrolysis by Ras",
+    "key_results": "GTP hydrolysis in Ras proceeds directly from state 1 (lacking stabilized nucleophilic water) to Ras/GDP without passing through state 2; state 1 persists for hours post-photolysis",
+    "comments": "Time-resolved crystallography (femtosecond to hours) elegantly captures transient intermediates, but the physiological relevance of the state 1\u2192GDP pathway in cells versus the conventional state 1\u2194state 2\u2192GDP model deserves further investigation.",
+    "model_io": [
+      {
+        "model": "Ras protein with photoactivatable caged GTP",
+        "inputs": [
+          "caged GTP",
+          "photolysis trigger"
+        ],
+        "outputs": [
+          "time-resolved crystal structures",
+          "Ras conformational states (state 1, Ras/GDP)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "GTP hydrolysis requires passage through state 2 (biphasic model)",
+        "result": "Refuted; state 1 directly converts to Ras/GDP without state 2 intermediacy"
+      },
+      {
+        "hypothesis": "State 1 alone can support GTP hydrolysis catalysis",
+        "result": "Confirmed; observed direct state 1\u2192Ras/GDP conversion"
+      }
+    ]
+  },
+  "nature:10.1038/s41594-026-01919-z": {
+    "category": "Mechanobiology",
+    "task": "Map DNA backbone mechanics as a layer of transcription factor recognition",
+    "key_results": "Identify position-dependent mechanically sensitive sites where backbone nicks substantially reshape TF binding across 15 TFs; sensitive positions correlate with strain-adapted DNA geometries (Hoogsteen conformations)",
+    "comments": "PIC-NIC elegantly decouples DNA mechanics from base-sequence effects, but the in vivo impact of TF retention at nicked DNA on repair-factor accessibility remains correlative and would benefit from functional validation.",
+    "model_io": [
+      {
+        "model": "PIC-NIC platform with site-specific backbone nicks",
+        "inputs": [
+          "DNA sequences with/without site-specific nicks",
+          "transcription factors (15 tested)"
+        ],
+        "outputs": [
+          "binding affinity maps",
+          "TF\u2013DNA structures",
+          "binding kinetics",
+          "molecular simulations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "DNA backbone mechanics (independent of base sequence) contribute to TF recognition",
+        "result": "Confirmed; most positions are permissive, mechanically sensitive sites reshape binding"
+      },
+      {
+        "hypothesis": "Sensitive positions correspond to strain-adapted DNA geometries",
+        "result": "Confirmed; sensitive sites correlate with Hoogsteen conformations and other strained geometries"
+      },
+      {
+        "hypothesis": "TF retention at nicked DNA influences repair-factor accessibility",
+        "result": "Suggested by genomic single-strand break and repair maps; correlation observed but not directly tested"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80771-z": {
+    "category": "Computational Biophysics",
+    "task": "Denoise cryo-EM particle images to improve 3D reconstruction",
+    "key_results": "Improves 3D reconstruction quality on synthetic data (SNR=0.1) and three experimental datasets (EMPIAR-10028, EMPIAR-10219, EMPIAR-10330); enhances 2D class averaging and particle representation",
+    "comments": "Multi-constraint loss design is well-motivated, but broader validation across diverse specimens and imaging conditions is acknowledged as necessary before general application.",
+    "model_io": [
+      {
+        "model": "CryoEDNet (edge-enhanced deep CNN)",
+        "inputs": [
+          "cryo-EM particle images (low SNR)"
+        ],
+        "outputs": [
+          "denoised particle images",
+          "improved 3D reconstructions",
+          "projection orientation estimates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Edge enhancement and detail preservation modules will reduce blurring and fine-detail loss compared to existing algorithms",
+        "result": "Confirmed on experimental datasets; improved image quality and reconstruction outcomes demonstrated"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-79311-0": {
+    "category": "Cell Division/Cycle",
+    "task": "Identify mitotic dependencies in chromosomally unstable cancer cells",
+    "key_results": "SKA complex depletion selectively impairs chromosomally unstable cells during prolonged mitosis; SKA complex and KIF18A exhibit epistasis and both establish vulnerability in aneuploid cancers",
+    "comments": "The mechanistic separation between KIF18A and SKA complex functions despite similar phenotypic outcomes suggests multiple exploitable pathways in chromosomal instability-driven cancers.",
+    "model_io": [
+      {
+        "model": "Chromosomally unstable cancer cells with SKA complex depletion",
+        "inputs": [
+          "SKA complex genetic knockdown",
+          "mitotic checkpoint status"
+        ],
+        "outputs": [
+          "mitotic errors",
+          "loss of cell viability",
+          "prolonged mitosis"
+        ]
+      },
+      {
+        "model": "Epistasis analysis (SKA complex vs KIF18A)",
+        "inputs": [
+          "SKA depletion",
+          "KIF18A inhibition"
+        ],
+        "outputs": [
+          "similar vulnerability phenotypes",
+          "distinct mechanistic pathways"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Chromosomally unstable cells depend on SKA complex for mitotic fidelity",
+        "result": "Confirmed: SKA depletion causes mitotic errors and loss of viability specifically in aneuploid cells"
+      },
+      {
+        "hypothesis": "SKA complex and KIF18A function in the same mitotic pathway",
+        "result": "Refuted: epistatic analysis reveals mechanistically distinct but phenotypically similar roles"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78284-w": {
+    "category": "Development",
+    "task": "Comparative phenotyping of Rs1 exon-1 knockout in rat and mouse XLRS models",
+    "key_results": "Rs1-KO rat showed schisis cavity formation by P14 with rapid photoreceptor degeneration; Rs1-KO mouse exhibited outer nuclear layer thinning and synaptic disorganization with slower progression; both models showed altered retinal pigment epithelium ZO-1 staining patterns",
+    "comments": "Species-specific disease kinetics in genetically identical knockouts highlight the importance of using multiple model organisms, though both recapitulate human XLRS pathology.",
+    "model_io": [
+      {
+        "model": "Rs1 exon-1 knockout rat",
+        "inputs": [
+          "Rs1 gene disruption"
+        ],
+        "outputs": [
+          "schisis cavities (P14)",
+          "photoreceptor degeneration",
+          "outer retinal remodeling",
+          "altered RPE ZO-1 patterns"
+        ]
+      },
+      {
+        "model": "Rs1 exon-1 knockout mouse",
+        "inputs": [
+          "Rs1 gene disruption"
+        ],
+        "outputs": [
+          "outer nuclear layer thinning",
+          "photoreceptor degeneration",
+          "synaptic disorganization",
+          "glial activation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Rs1 is required for retinal synaptic integrity and photoreceptor survival",
+        "result": "Confirmed: both models show photoreceptor degeneration and synaptic disorganization"
+      },
+      {
+        "hypothesis": "Rs1 loss disrupts retinal fluid homeostasis through epithelial barrier dysfunction",
+        "result": "Partially supported: RPE ZO-1 staining altered in both models but tight junction integrity preserved in rat up to P30"
+      }
+    ]
+  },
+  "nature:10.1038/s41392-026-03070-z": {
+    "category": "Single Cell",
+    "task": "Early TKI response prediction in CML using mass cytometry signaling profiles",
+    "key_results": "Single-cell immune/signaling profiles within hours of first dose predicted 12-month BCR::ABL1IS; dasatinib response driven by leukemic burden/pSTAT3 Y705/pERK\u00bd; nilotinib response driven by LSC-like cell signaling (cleaved caspase-3/pCRKL Y207/STAT3); each TKI showed unique kinase specificity signature",
+    "comments": "Remarkable finding that hours-early data predicts 12-month outcomes; drug-specific predictive features mechanistically informative but requires prospective validation.",
+    "model_io": [
+      {
+        "model": "Mass cytometry analysis (day 1 TKI treatment)",
+        "inputs": [
+          "peripheral blood leukocytes from de novo chronic phase CML patients",
+          "dasatinib or nilotinib-treated"
+        ],
+        "outputs": [
+          "phosphoprotein signaling signatures (1\u20133 hours post-dose)",
+          "12-month BCR::ABL1IS predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Early single-cell signaling states predict 12-month TKI response better than bulk measurements",
+        "result": "Confirmed: within-hour signaling profiles correlated with 12-month treatment outcomes; drug-specific signatures emerged"
+      },
+      {
+        "hypothesis": "Dasatinib and nilotinib have distinct immune/signaling predictors reflecting kinase specificity",
+        "result": "Confirmed: dasatinib dominated by immune effector activity (pERK\u00bd); nilotinib by LSC intrinsic signaling; unique profiles per drug"
+      }
+    ]
+  },
+  "nature:10.1038/s41531-026-01602-6": {
+    "category": "Network Biology",
+    "task": "Network-based Parkinson's disease subtyping for progression stratification",
+    "key_results": "DEGAS achieved balanced accuracy 0.91\u20130.93 (MCC 0.61\u20130.78) using graph theory metrics; sRBD-positive patients showed worse motor outcomes, accelerated autonomic dysfunction, higher hallucinations/dyskinesias/depression; basal ganglia-thalamic, temporal-limbic, cerebello-cortical circuits were strongest predictors",
+    "comments": "Graph features substantially outperformed adjacency-only models; external validation required before clinical use.",
+    "model_io": [
+      {
+        "model": "DEGAS (graph theory + classifiers)",
+        "inputs": [
+          "baseline fMRI from 336 early-stage PD patients",
+          "functional connectivity matrices",
+          "sRBD status"
+        ],
+        "outputs": [
+          "PD subtype classification",
+          "three-year motor/autonomic outcomes",
+          "feature importance"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Graph theory metrics encode network-defined PD subtypes better than raw connectivity or topology",
+        "result": "Confirmed: graph-based models (BAcc 0.91\u20130.93, MCC 0.61\u20130.78) outperformed adjacency-only models (BAcc 0.79, MCC 0.52)"
+      },
+      {
+        "hypothesis": "sRBD-positive baseline signature predicts aggressive disease progression",
+        "result": "Confirmed: sRBD-positive group showed significantly worse clinical outcomes across motor and non-motor domains"
+      }
+    ]
+  },
+  "nature:10.1038/s41588-026-02844-z": {
+    "category": "Statistical Methods",
+    "task": "Regularized ensemble polygenic risk prediction using GWAS summary statistics",
+    "key_results": "Framework constructs ensemble PRS from summary statistics alone; consistently outperforms state-of-the-art within and across ancestries; enables integration of newly developed PRS models without individual-level genotype data; scalable for non-European populations with insufficient genomic samples",
+    "comments": "Addresses critical gap in PRS accessibility for populations with limited individual-level genotype data; summary-statistics-only approach democratizes PRS development.",
+    "model_io": [
+      {
+        "model": "Regularized ensemble PRS framework",
+        "inputs": [
+          "GWAS summary statistics",
+          "candidate PRS models"
+        ],
+        "outputs": [
+          "ensemble PRS predictions",
+          "prediction accuracy across ancestries"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Ensemble learning on summary statistics alone achieves PRS accuracy comparable to individual-level approaches",
+        "result": "Confirmed: outperformed state-of-the-art; enables cross-ancestry improvement without individual genotype data"
+      }
+    ]
+  },
+  "nature:10.1038/s41592-026-03263-y": {
+    "category": "Structural Prediction",
+    "task": "Zero-shot spillover denoising for highly multiplexed imaging",
+    "key_results": "SpillOT outperformed existing zero-shot restoration on Imaging Mass Cytometry, cyclic immunofluorescence, and Opal datasets; improved reliability and precision of downstream analyses; revealed previously undetectable immune infiltration patterns in diabetes data",
+    "comments": "Unsupervised optimal-transport approach elegant; practical utility demonstrated across multiple imaging modalities without wet-lab calibration.",
+    "model_io": [
+      {
+        "model": "SpillOT (optimal transport-based denoiser)",
+        "inputs": [
+          "highly multiplexed images (IMC, cyclic IF, Opal)"
+        ],
+        "outputs": [
+          "denoised, spillover-corrected images",
+          "downstream analysis improvements"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Optimal transport theory enables zero-shot spillover correction without representative training data or wet-lab experiments",
+        "result": "Confirmed: SpillOT identified signal-preserving patches unsupervised; improved downstream analyses and detected previously hidden patterns"
+      }
+    ]
+  },
+  "nature:10.1038/s41592-026-03304-6": {
+    "category": "Evolutionary Biology",
+    "task": "Protein foundation model analysis for evolutionary inference without traditional alignments",
+    "key_results": "Transformer-based protein foundation models trained on millions of sequences capture residue-residue dependencies enabling functional constraint, mutational pathogenicity, and evolutionary relationship inference without substitution matrices, phylogenies or MSAs",
+    "comments": "Conceptual synthesis paper articulating pFM evolutionary foundations; streamlines analysis for sequences with few homologs but integration with traditional approaches needs development.",
+    "model_io": [
+      {
+        "model": "Transformer-based protein foundation models (trained on natural sequences)",
+        "inputs": [
+          "individual protein sequences"
+        ],
+        "outputs": [
+          "residue-residue dependencies",
+          "functional constraints",
+          "mutational effects",
+          "evolutionary relationships"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "pFMs infer evolutionary relationships and functional constraints without explicit phylogenetic or alignment information",
+        "result": "Supported: pFMs capture neutral patterns and enable inference from individual sequences; mechanism not dependent on traditional inputs"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-63655-0": {
+    "category": "Genomics",
+    "task": "Iron-responsive dysregulation in idiopathic anemia of hybrid catfish",
+    "key_results": "Microbiome profiling showed weak evidence for bacterial iron-sequestration role; anemic fish upregulated erythropoiesis/iron transport genes (head kidney, liver) but lacked intestinal iron-absorption upregulation and hepatic hepcidin downregulation; dysregulation of host iron metabolism identified as likely mechanism",
+    "comments": "Multiomics integration implicates host iron metabolism dysregulation over microbiome dysfunction; provides molecular targets for further investigation.",
+    "model_io": [
+      {
+        "model": "16S microbiome profiling + transcriptomics (RNA-seq)",
+        "inputs": [
+          "intestinal microbiomes (affected/healthy/raceway fish, water)",
+          "head kidney/liver/intestinal transcriptomes"
+        ],
+        "outputs": [
+          "microbial community composition",
+          "iron metabolism gene expression",
+          "hepcidin regulation status"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Bacterial dysbiosis drives iron sequestration contributing to ICA",
+        "result": "Rejected: microbiome profiling provided weak evidence for bacterial role"
+      },
+      {
+        "hypothesis": "ICA results from dysregulated iron absorption despite erythropoietic demand",
+        "result": "Confirmed: anemic fish showed erythropoiesis/iron transport upregulation but absent intestinal absorption response and hepcidin dysregulation"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80112-0": {
+    "category": "Single Cell",
+    "task": "Ancestry-aware immune profiling of triple-negative breast cancer",
+    "key_results": "26 differentially expressed immune genes identified between WAA and WEA TNBC; NFATC4, CD68, SMAD7 emerged as candidate immune-associated genes from spatial transcriptomics; ancestry-specific immune regulatory programs suggested but require larger validation",
+    "comments": "Small sample sizes (4 cell lines, 6 patient samples) limit definitive conclusions; ancestry-specific findings warrant larger studies given health disparities in TNBC.",
+    "model_io": [
+      {
+        "model": "qPCR + spatial transcriptomics",
+        "inputs": [
+          "TNBC cell lines (WAA/WEA)",
+          "patient samples",
+          "mammary epithelial cells"
+        ],
+        "outputs": [
+          "immune gene expression profiles",
+          "gene localization in tumors",
+          "candidate biomarkers"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Ancestry is associated with distinct immune microenvironment profiles in TNBC",
+        "result": "Supported: 26 genes differentially expressed; NFATC4/CD68/SMAD7 enriched but larger studies required for validation"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80163-3": {
+    "category": "Statistical Methods",
+    "task": "Reference-assisted radiofrequency signal recovery under domain shift for fracture sensing",
+    "key_results": "Same-SNR referencing increased mean macro AUROC from 0.7935 to 0.9725 (difference 0.1790, 99.5% CI 0.1343\u20130.2072); locked thresholds transferred with 82.83% sensitivity and 20.00% specificity",
+    "comments": "Framework is simulation-only without human diagnostic validation; multiple comparisons and threshold-transfer biases complicate generalization claims.",
+    "model_io": [
+      {
+        "model": "LightGBM classifier with feature extraction",
+        "inputs": [
+          "RF transmitter acquisitions from physical configurations"
+        ],
+        "outputs": [
+          "fracture healing classification",
+          "AUROC",
+          "sensitivity",
+          "specificity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Healthy-reference information improves fracture sensing under anatomical domain shift",
+        "result": "Confirmed: same-SNR referencing substantially increased AUROC; cross-SNR referencing performed worse"
+      },
+      {
+        "hypothesis": "Multiple reference samples provide cumulative benefit for early healing detection",
+        "result": "Rejected: second same-SNR reference provided no clear additional benefit"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80198-6": {
+    "category": "Statistical Methods",
+    "task": "Comparative survival modeling for under-five mortality prediction across paradigms",
+    "key_results": "DeepHit achieved C-index 0.977, IBS 0.016, mean AUC 0.987 with ideal calibration (slopes 0.99\u20131.04); external Nepal validation maintained C-index 0.9663 without retraining; reproductive history dominated feature importance over socioeconomic factors",
+    "comments": "DeepHit's superior calibration over ensemble and traditional methods is notable; external validation strengthens transferability claims.",
+    "model_io": [
+      {
+        "model": "Eight survival models: Cox/Lasso/Ridge/ElasticNet, RSF, GBSA, DeepSurv, DeepHit",
+        "inputs": [
+          "13,119 children from BDHS 2022; 15 predictors from two-stage feature selection"
+        ],
+        "outputs": [
+          "time-to-event predictions",
+          "C-index",
+          "IBS",
+          "time-dependent AUC",
+          "calibration slopes"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Deep learning architectures recover non-linear risk architecture better than rigid Cox models",
+        "result": "Confirmed: DeepHit and DeepSurv showed superior discrimination and calibration; pairwise Wilcoxon tests p<0.05 with large effect sizes"
+      },
+      {
+        "hypothesis": "Ensemble methods improve discrimination but suffer calibration bias",
+        "result": "Partially confirmed: RSF achieved highest C-index but severely miscalibrated (slopes 1.42\u20131.45)"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80953-9": {
+    "category": "Statistical Methods",
+    "task": "PD classification from digitized spiral drawings using Markov-based feature selection and stacking",
+    "key_results": "Stacking ensemble cross-validation accuracy 86.46\u00b117.17% (balanced 84.23\u00b120.15%), sensitivity 95.92%, specificity 38.46%; hold-out set (15 files, 2 controls) 95% Wilson CI 79.6\u2013100%; stacking provided no advantage over RBF-SVM; Markov selection no better than all-features baseline",
+    "comments": "Severe class imbalance (2 controls in hold-out set) and small development cohort (62 files) preclude diagnostic ability assessment; generalizability unproven.",
+    "model_io": [
+      {
+        "model": "Stacking ensemble (Decision Tree, RBF-SVM, Random Forest + Logistic Regression meta-learner)",
+        "inputs": [
+          "digitized spiral drawings (6 spatial/image features)",
+          "PD/control labels"
+        ],
+        "outputs": [
+          "PD classification",
+          "accuracy",
+          "sensitivity",
+          "specificity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Stacking ensemble outperforms single classifiers for PD detection from spiral features",
+        "result": "Rejected: stacking did not outperform single RBF-SVM in ablation studies"
+      },
+      {
+        "hypothesis": "Markov-based feature selection improves classification over all-features baseline",
+        "result": "Rejected: Markov selection provided no improvement over using all six features"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80974-4": {
+    "category": "Statistical Methods",
+    "task": "Multi-agent AI for emergency department admission/discharge decisions",
+    "key_results": "Single LM agent superior to SMARTriage AI v2 (AUC 0.821\u20130.823 vs 0.794); apparent accuracy 88.2% but dropped to 65.0% without physician text; heavy optimization bias from development on evaluation cohort (30 cycles, no held-out set)",
+    "comments": "Significant performance degradation without physician summary; development methodology severely compromises generalizability claims; external validation mandatory.",
+    "model_io": [
+      {
+        "model": "SMARTriage AI v1/v2 (multi-agent LM + deterministic rules) vs single LM agent",
+        "inputs": [
+          "patient measurements",
+          "clinical narratives",
+          "contextual risk factors"
+        ],
+        "outputs": [
+          "admission/discharge recommendation",
+          "accuracy",
+          "AUC",
+          "recall"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-agent design with safety gates outperforms single-agent models",
+        "result": "Rejected: redesigned v2 showed worse discrimination (AUC 0.794) than single LM agent (0.821\u20130.823)"
+      },
+      {
+        "hypothesis": "Physician documentation enables higher-accuracy dispositions",
+        "result": "Confirmed: accuracy 97.2% with summary vs 78.2% without; 65.0% without physician text indicates severe documentation dependence"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81016-9": {
+    "category": "Statistical Methods",
+    "task": "Modality-adaptive glaucoma diagnosis with incomplete multimodal data",
+    "key_results": "CGMA-Net achieved AUC 0.997, 97.6% accuracy, 98.9% sensitivity, 94.9% specificity; maintained high discrimination across fundus-only, VF-only, and paired modalities; gated fusion removal caused larger performance loss than removing cross-attention",
+    "comments": "Excellent internal validation but retrospective cohort with participant-level splits; ambiguous cases and variable quality examinations require prospective validation.",
+    "model_io": [
+      {
+        "model": "CGMA-Net (modality-specific encoders + gated adaptive fusion)",
+        "inputs": [
+          "fundus photography",
+          "visual field testing",
+          "modality-availability mask"
+        ],
+        "outputs": [
+          "glaucoma classification",
+          "AUROC",
+          "sensitivity",
+          "specificity",
+          "uncertainty estimates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Gated adaptive fusion prevents absent modalities from degrading classification without imputation",
+        "result": "Confirmed: gated fusion essential; ablation showed larger performance decrease than cross-attention removal"
+      },
+      {
+        "hypothesis": "Learned uncertainty and MC dropout uncertainty are higher for misclassified samples",
+        "result": "Confirmed: both uncertainty measures correlated with classification errors"
+      }
+    ]
+  },
+  "nature:10.1038/s41698-026-01789-0": {
+    "category": "Single Cell",
+    "task": "Single-cell multiomics for subclonal resolution and treatment planning in advanced cancer",
+    "key_results": "Resolved previously undetectable subclonal mutations and immune populations; tracked resistance mechanisms longitudinally; found treatment genes heterogeneously distributed across malignant clusters suggesting combinatorial regimens needed; some genes predicted targetable by bulk RNA-seq found predominantly in normal populations",
+    "comments": "Feasibility study on 25 samples from 17 patients demonstrates proof-of-concept; clinical implementation utility requires prospective validation and larger cohorts.",
+    "model_io": [
+      {
+        "model": "Single-cell multiomic sequencing (25 tumor samples)",
+        "inputs": [
+          "tumor biopsies from BC Cancer Personalised OncoGenomics programme",
+          "longitudinal samples"
+        ],
+        "outputs": [
+          "subclonal mutations",
+          "immune cell populations",
+          "resistance mechanisms",
+          "gene expression heterogeneity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Single-cell profiling resolves therapeutic resistance mechanisms undetectable by bulk sequencing",
+        "result": "Confirmed: identified subclonal mutations, immune infiltration, and heterogeneous treatment-gene distribution"
+      },
+      {
+        "hypothesis": "Targetable genes predicted by bulk RNA-seq may be expressed primarily in non-malignant populations",
+        "result": "Confirmed: found genes presumed targetable predominantly in normal cell populations, not malignant clusters"
+      }
+    ]
+  },
+  "nature:10.1038/s44482-026-00046-2": {
+    "category": "Network Biology",
+    "task": "Explainable spatiotemporal graph learning for localized infectious disease forecasting",
+    "key_results": "STGCN-AG best at 3-day horizon, competitive at longer horizons; adaptive gating identifies when/where model modulates graph representations; offline models outperformed LSTM/trees but showed limited absolute performance degrading at longer horizons; online prequential evaluation showed lag and weaker responsiveness at longer horizons",
+    "comments": "Limited absolute predictive performance and temporal degradation highlight challenges in longer-term localized forecasting; interpretability gains offset by accuracy limitations.",
+    "model_io": [
+      {
+        "model": "STGCN-AG (spatiotemporal graph CNN with adaptive gating) vs LSTM, tree-based, standard graph models",
+        "inputs": [
+          "demographic, socioeconomic, syndromic, epidemiological data",
+          "geographic adjacency graph (Sweden)"
+        ],
+        "outputs": [
+          "region-level COVID-19 forecasts (3/7/14/21-day horizons)",
+          "gating behavior",
+          "feature sensitivity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Adaptive gating mechanism improves spatiotemporal graph forecasting by contextual modulation",
+        "result": "Partially confirmed: STGCN-AG best at 3-day horizon but performance degraded at longer horizons; gating interpretability improved but absolute accuracy remained limited"
+      },
+      {
+        "hypothesis": "Explainable AI analysis of gating/sensitivity improves model interpretability for public health decisions",
+        "result": "Confirmed: adaptive gate identified dimensions, regions, and times of stronger modulation; interpretability enhanced but predictive limitations remain"
+      }
+    ]
+  },
+  "nature:10.1038/s41524-026-02365-7": {
+    "category": "ML Theory",
+    "task": "Spin-crossover metal-organic framework screening via quantile regression tree active learning",
+    "key_results": "Random Forest model trained on 200-sized active-learning subset recovered ~82% of PBE-defined positives from noisy unrelaxed-geometry labels; identified new pSCO-105 collection",
+    "comments": "Data-efficient strategy pragmatically addresses computational bottleneck, but only 82% recovery with two false negatives; negative-control tests confirm chemical meaningfulness but external validation lacking.",
+    "model_io": [
+      {
+        "model": "Quantile Regression Tree-based Active Learning selector",
+        "inputs": [
+          "large chemical space of MOFs",
+          "noisy adiabatic energy differences from unrelaxed geometries"
+        ],
+        "outputs": [
+          "200-sized representative subset"
+        ]
+      },
+      {
+        "model": "Random Forest regressor",
+        "inputs": [
+          "selected MOFs with PBE-computed relaxed-geometry labels"
+        ],
+        "outputs": [
+          "SCO-activity predictions for unlabeled MOFs"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Active learning on noisy unrelaxed data identifies SCO-relevant MOFs as accurately as full DFT screening",
+        "result": "~82% recovery of PBE positives; identified pSCO-105 high-confidence collection; negative-control tests show chemical relevance"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-73889-7": {
+    "category": "ML Theory",
+    "task": "Ontology-grounded nanotoxicity data federation with knowledge graph and conformal prediction for antimicrobial hazard screening",
+    "key_results": "AUROC 0.819 \u00b1 0.020 under 5-fold CV; split conformal prediction achieved marginal coverage 0.955, 0.929, 0.825 against targets 0.95, 0.90, 0.80; material-grouped CV reduced AUROC to 0.609 \u00b1 0.098",
+    "comments": "Rigorous semantic integration and provenance tracking with explicit uncertainty quantification, but severe generalization gap to unseen material classes (AUROC drop from 0.819 to 0.609) indicates fundamental feature-based limitations.",
+    "model_io": [
+      {
+        "model": "Data federation pipeline with eNanoMapper ontology",
+        "inputs": [
+          "6,588 MIC/MBC records from curated repositories and literature"
+        ],
+        "outputs": [
+          "harmonized canonical schema",
+          "knowledge graph (2,279 nodes, 32,940 edges)"
+        ]
+      },
+      {
+        "model": "Gradient-boosted classifier with split conformal prediction",
+        "inputs": [
+          "harmonized nanotoxicity features"
+        ],
+        "outputs": [
+          "antimicrobial hazard class",
+          "conformal prediction set"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Categorical experimental context carries stronger discriminative signal than physicochemical descriptors",
+        "result": "Feature attribution shows experimental context dominance; material-grouped CV stress test reveals poor cross-material generalization (AUROC 0.609 \u00b1 0.098)"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-75415-1": {
+    "category": "ML Theory",
+    "task": "Mental health sentiment analysis on social media using fine-tuned BERT-GRU",
+    "key_results": "Accuracy 96%, precision 87%, recall 82%, F1-score 81%, AUC-ROC 94% on mental health dataset",
+    "comments": "Solid performance combining contextual embeddings with sequential learning, but evaluation limited to single dataset without cross-platform or temporal generalization testing.",
+    "model_io": [
+      {
+        "model": "FBert-GRU (fine-tuned BERT + GRU)",
+        "inputs": [
+          "mental health social media posts"
+        ],
+        "outputs": [
+          "mental health condition classification (depression, anxiety, stress, bipolar, suicidality)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Contextual embeddings plus sequential learning improve mental health signal detection over benchmarks",
+        "result": "F1-score 81%, AUC-ROC 94%; improvements over benchmark models confirmed"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76036-4": {
+    "category": "Algorithms",
+    "task": "Energy-efficient stochastic arithmetic design in quantum-dot cellular automata",
+    "key_results": "PSNR improved from 22.20 dB to 27.87 dB; SSIM improved from 0.4663 to 0.7408 in image denoising",
+    "comments": "Hybrid stochastic encoding trades single-bit simplicity for multi-stream accuracy, demonstrated only in simulation without physical QCA fabrication.",
+    "model_io": [
+      {
+        "model": "QCA-based HSN encoder and arithmetic units",
+        "inputs": [
+          "classical binary numbers"
+        ],
+        "outputs": [
+          "stochastic sub-streams",
+          "arithmetic results"
+        ]
+      },
+      {
+        "model": "QCADesigner simulator",
+        "inputs": [
+          "HSN adder/multiplier designs"
+        ],
+        "outputs": [
+          "functional verification results"
+        ]
+      },
+      {
+        "model": "Image denoising system",
+        "inputs": [
+          "grayscale image with zero-mean Gaussian noise"
+        ],
+        "outputs": [
+          "denoised image",
+          "PSNR",
+          "SSIM metrics"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-79261-z": {
+    "category": "Statistics/Probability",
+    "task": "Resilient UAV formation tracking using adaptive fractional-order terminal sliding mode control",
+    "key_results": "Fractional-order leader achieves 85\u201392% reduction in integrated tracking error (IAE, ITAE); restricts horizontal position errors to \u00b10.01 m and reduces vertical deviation by >80% under 65% mass variation and stochastic disturbances",
+    "comments": "Extensive numerical simulations demonstrate theoretical advantages, but findings are simulation-only without experimental flight validation; practical robustness claims require field testing.",
+    "model_io": [
+      {
+        "model": "Adaptive fractional-order nonsingular fast terminal sliding mode control (AFONFTSMC)",
+        "inputs": [
+          "leader-follower quadrotor architectures",
+          "target helical trajectory",
+          "parametric uncertainties",
+          "stochastic disturbances"
+        ],
+        "outputs": [
+          "position tracking error",
+          "velocity convergence",
+          "control effort"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Fractional-order modeling in leader dynamics enhances multi-agent coordination robustness",
+        "result": "85\u201392% IAE/ITAE reduction; convergence within 0.15 s under nominal conditions; <1.5 s disturbance recovery under severe uncertainty"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79781-8": {
+    "category": "ML Theory",
+    "task": "Bidirectional mapping between crystal structures and Raman spectra using deep learning",
+    "key_results": "Forward model: 53.8% of 509 held-out materials reach cosine similarity \u2265 0.354; Inverse model: MAE of 1.13\u20132.14 \u00c5 for lattice parameters, 92.1% reduced-formula consistency vs. 17.1% retrieval baseline",
+    "comments": "ALIGNN and fine-tuned DiffractGPT show promise but forward prediction captures only qualitative features; inverse model demonstrates substantial improvement over retrieval but requires formula conditioning.",
+    "model_io": [
+      {
+        "model": "ALIGNN (Atomistic Line Graph Neural Network)",
+        "inputs": [
+          "crystal structures from 5,099 Computational Raman Database"
+        ],
+        "outputs": [
+          "predicted 200-bin Raman spectra (50\u20131000 cm\u207b\u00b9)"
+        ]
+      },
+      {
+        "model": "Fine-tuned DiffractGPT with QLoRA on Raman-plus-formula prompts",
+        "inputs": [
+          "Raman spectra and chemical formula"
+        ],
+        "outputs": [
+          "predicted lattice parameters and reduced formula"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "GNN-based forward model predicts qualitative spectral features for unseen materials",
+        "result": "53.8% of held-out materials reach cosine similarity \u2265 0.354; qualitative agreement on 1T VSe\u2082 absent from training"
+      },
+      {
+        "hypothesis": "Fine-tuned LLM inverse model outperforms formula-conditioned retrieval for structure recovery",
+        "result": "92.1% formula consistency vs. 17.1% retrieval baseline; MAE 1.13\u20132.14 \u00c5"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80342-2": {
+    "category": "ML Theory",
+    "task": "Lightweight object detector for imported supermarket products with column and spatial attention",
+    "key_results": "mAP50 91.4%, mAP50-95 75.8% on custom dataset with 2.7M parameters and 5.9 GFLOPs; 358.6 FPS inference speed; public Locount: mAP50 69.2%, mAP50-95 52.8%",
+    "comments": "Effective lightweight design with 7-9% GFLOPs reduction and modest speed gain over YOLO11n baseline; public-dataset generalization shows notable performance drop, suggesting custom-domain bias.",
+    "model_io": [
+      {
+        "model": "SPD-YOLO detector (C3K2-CSSC backbone, C2DA feature processing, Slim-Neck, EfficientHead)",
+        "inputs": [
+          "supermarket product images with vertical arrangements, occlusions, scale variation"
+        ],
+        "outputs": [
+          "bounding box predictions",
+          "class confidence scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Column and spatial attention enhance detection of vertically arranged occluded products",
+        "result": "mAP50 91.4% on custom dataset; outperforms YOLO11n; 69.2% mAP50 on public Locount shows generalization challenges"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80361-z": {
+    "category": "Algorithms",
+    "task": "Electromagnetic analysis of counter-rotating dual-rotor PM-reluctance motors via equivalent magnetic networks",
+    "key_results": "EMN model validated against FEA with close agreement on air-gap flux density, flux linkage, back-EMF, inductance, and electromagnetic torque",
+    "comments": "Distributed permeance formulation and quadrilateral mesh enable computational efficiency, but validation is limited to FEA comparison without experimental validation.",
+    "model_io": [
+      {
+        "model": "Equivalent Magnetic Network (EMN) with distributed permeance formulation",
+        "inputs": [
+          "CRDRSM geometry and material properties"
+        ],
+        "outputs": [
+          "air-gap flux density",
+          "flux linkage",
+          "back-EMF",
+          "inductance",
+          "electromagnetic torque"
+        ]
+      },
+      {
+        "model": "Finite-element analysis (FEA)",
+        "inputs": [
+          "CRDRSM geometry and material properties"
+        ],
+        "outputs": [
+          "reference electromagnetic characteristics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Distributed permeance formulation accurately represents complex magnetic flux paths in CRDRSMs",
+        "result": "EMN predictions show close agreement with FEA results"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80829-y": {
+    "category": "ML Theory",
+    "task": "Rolling bearing fault diagnosis using time-frequency cross-attention network",
+    "key_results": "Accuracy 0.9954, precision 0.9951, recall 0.9948, F1-score 0.9949 on CWRU dataset; cross-load accuracy 0.980 \u00b1 0.036",
+    "comments": "Strong performance on CWRU but cross-load generalization shows modest degradation; attention mechanism design is intuitive but ablation shows SE modules contribute comparably to cross-attention.",
+    "model_io": [
+      {
+        "model": "TFCANet (Time-Frequency Cross-Attention Network)",
+        "inputs": [
+          "raw vibration signals",
+          "FFT spectra"
+        ],
+        "outputs": [
+          "bearing fault classification",
+          "diagnosis confidence"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-head time-frequency cross-attention improves fault feature extraction under noise",
+        "result": "F1-score 0.9949 on original protocol; ablation shows SE removal causes larger performance drop than removing cross-attention in some configurations"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81051-6": {
+    "category": "ML Theory",
+    "task": "Real-time multimodal content moderation for unsafe material detection",
+    "key_results": "Overall detection accuracy of 98.33% across nudity, profanity, gore, violence, and hate speech",
+    "comments": "System combines multiple specialized models (DeepLabV3+, Faster R-CNN, Wav2Vec, BERT) but lacks evaluation on truly adversarial content or adversarial robustness.",
+    "model_io": [
+      {
+        "model": "DeepLabV3+ semantic segmentation + Faster R-CNN object detection",
+        "inputs": [
+          "video frames"
+        ],
+        "outputs": [
+          "visual threat detection (nudity, gore, violence)"
+        ]
+      },
+      {
+        "model": "Wav2Vec 2.0 + CNN for audio analysis",
+        "inputs": [
+          "audio streams"
+        ],
+        "outputs": [
+          "abusive speech, gunshots, screams detection"
+        ]
+      },
+      {
+        "model": "BERT text classifier",
+        "inputs": [
+          "video-related text, comments"
+        ],
+        "outputs": [
+          "toxic and hate speech detection"
+        ]
+      },
+      {
+        "model": "Firefly Optimization hyperparameter tuning",
+        "inputs": [
+          "model architectures"
+        ],
+        "outputs": [
+          "optimized hyperparameters"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multimodal fusion improves detection over single-modality approaches",
+        "result": "98.33% accuracy achieved; direct single-modality comparisons not provided"
+      }
+    ]
+  },
+  "nature:10.1038/s43588-026-01076-9": {
+    "category": "Statistics/Probability",
+    "task": "Data-efficient chemical and material property prediction via cluster-based training set selection",
+    "key_results": "Cluster-based selection consistently outperforms active learning across 100 algorithms and 60 property tasks; theoretically grounded in Gaussian process variance as low-data optimum",
+    "comments": "Survey demonstrates robust counter-intuitive finding favoring space-filling over active learning; theoretical justification via GP variance is elegant but practical performance gap magnitude varies substantially across tasks.",
+    "model_io": [
+      {
+        "model": "100 space-filling and active learning algorithms",
+        "inputs": [
+          "predefined candidate library of chemical/material representations"
+        ],
+        "outputs": [
+          "training set selections of varying sizes"
+        ]
+      },
+      {
+        "model": "Property prediction models (fixed/learned representations)",
+        "inputs": [
+          "selected training sets"
+        ],
+        "outputs": [
+          "prediction accuracy across 60 property tasks"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Cluster-based training set selection outperforms active learning for property prediction from limited data",
+        "result": "Confirmed across 100 algorithms, 60 tasks, multiple representation dimensionalities; theoretical grounding via GP variance in low-data limit"
+      }
+    ]
+  },
+  "nature:10.1038/s41427-026-00686-z": {
+    "category": "Condensed Matter",
+    "task": "Optimize pulsed laser deposition of EuBa2Cu3O7-\u03b4 superconducting films using interpretable decision-tree analysis",
+    "key_results": "Oxygen pressure identified as key parameter; decision-tree model partitions process into high- and low-performance modes; rare-earth oxide precipitate morphology linked to critical current density under magnetic fields",
+    "comments": "Interpretable ML approach effectively reveals non-monotonic process\u2013property relationships; practical guidance for materials synthesis but limited to single system.",
+    "model_io": [
+      {
+        "model": "Decision-tree model with interval splitting and correlation analysis",
+        "inputs": [
+          "PLD processing parameters (oxygen pressure, temperature, etc.)",
+          "experimental film data"
+        ],
+        "outputs": [
+          "performance classification (high/low)",
+          "critical current density (Jc)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Oxygen pressure non-monotonically controls rare-earth oxide precipitate morphology and hence magnetic Jc",
+        "result": "Decision-tree partitions parameter space into distinct performance regimes; electron microscopy confirms morphology differences"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-79523-4": {
+    "category": "Astrophysics/Cosmology",
+    "task": "Characterize superionic behavior and grain-boundary premelting in Fe-rich (Fe,Mg)O at core-mantle boundary conditions",
+    "key_results": "Superior-ionic onset and premelting observed above ~0.9Tm in Fe-rich samples (x > 0.8); elastic softening, enhanced diffusion, and ultra-low viscosity inferred to facilitate core-mantle reactions and ULVZ formation",
+    "comments": "High-pressure/temperature study offers mechanistic explanation for ultra-low velocity zones; implications for core-mantle exchange require integration with geodynamic models.",
+    "model_io": [
+      {
+        "model": "High-pressure phase-behavior studies of (FexMg1-x)O at CMB conditions",
+        "inputs": [
+          "composition (x)",
+          "pressure",
+          "temperature (T/Tm ratio)"
+        ],
+        "outputs": [
+          "elastic properties",
+          "ionic diffusivity",
+          "viscosity",
+          "grain-boundary premelting signature"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Fe-rich (Fe,Mg)O exhibits superionic and premelting phases at CMB temperatures, enabling enhanced transport",
+        "result": "Elastic softening and ultra-low viscosity confirmed above ~0.9Tm in Fe-rich samples"
+      },
+      {
+        "hypothesis": "Low viscosity of Fe-rich periclase-w\u00fcstite facilitates redistribution and ULVZ formation",
+        "result": "Proposed mechanism consistent with layered ULVZ structures and inferred low viscosity"
+      }
+    ]
+  },
+  "nature:10.1038/s41563-026-02779-0": {
+    "category": "Condensed Matter",
+    "task": "Demonstrate exponential configurational complexity in nematic vortex crystals for topological memory storage",
+    "key_results": "Designed broken symmetries in nematic vortex lattices enable configurational entropy exceeding atomic crystals; topological states reconfigurable on demand via laser-induced surgery; multiple distinct free-energy minima identified",
+    "comments": "Novel soft-matter platform for memory/computation with rich symmetry-breaking physics; practical encoding and read-out schemes remain to be developed.",
+    "model_io": [
+      {
+        "model": "Nematic vortex crystal lattice with surface-anchored defect lines",
+        "inputs": [
+          "liquid crystal material",
+          "surface anchoring conditions",
+          "geometric design"
+        ],
+        "outputs": [
+          "vortex crystal configuration",
+          "topological state",
+          "free-energy landscape"
+        ]
+      },
+      {
+        "model": "Laser-induced topological surgery",
+        "inputs": [
+          "laser irradiation pattern"
+        ],
+        "outputs": [
+          "reconfigured topological state"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Designed broken symmetries in nematic vortex crystals generate exponential configurational complexity",
+        "result": "Multiple distinct free-energy minima observed; configurational entropy exceeds atomic crystals"
+      },
+      {
+        "hypothesis": "Topological states can be reconfigured on demand via laser manipulation",
+        "result": "Laser-induced topological surgery successfully reconfigures vortex crystal states"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80774-w": {
+    "category": "Quantum",
+    "task": "Design control of maximal entanglement in coupled giant atoms via bound states in the continuum",
+    "key_results": "Degenerate BIC subspace identified at band centre; connection-length ratio and propagation phase determine Bell-like sector and conditional concurrence; entanglement retention quantified under realistic losses and calibration errors",
+    "comments": "Rigorous analytical framework connecting BIC geometry to entanglement control, though practical implementation in scalable systems remains challenging.",
+    "model_io": [
+      {
+        "model": "Two giant atoms coupled at spatially separated points to coupled-resonator waveguide",
+        "inputs": [
+          "connection lengths",
+          "resonator frequencies",
+          "coupling strengths"
+        ],
+        "outputs": [
+          "spectral conditions for BICs",
+          "atomic concurrence",
+          "emission suppression"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "BICs suppress emission into waveguide through destructive interference while enabling maximal entanglement",
+        "result": "Degenerate BIC subspace established with controlled entanglement sector via geometric parameters"
+      },
+      {
+        "hypothesis": "Entanglement retention depends on photonic dressing and environmental losses",
+        "result": "Concurrence degradation quantified under atomic relaxation, dephasing, and resonator loss"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80838-x": {
+    "category": "Applied Physics",
+    "task": "Assess neutron beam-shaping assembly design for boron neutron capture therapy using D-T source",
+    "key_results": "Epithermal neutron flux 1.1\u00d710\u2079 n cm\u207b\u00b2 s\u207b\u00b9 with beam directionality 0.78; fast-to-epithermal dose ratio 2.4\u00d710\u207b\u00b9\u00b3 Gy\u00b7cm\u00b2/n remains ~20% above IAEA benchmark; AlF\u2083 moderator optimal among tested materials",
+    "comments": "Comprehensive parametric Monte Carlo study; reference design reported but clinical qualification not established and optimization remains incomplete.",
+    "model_io": [
+      {
+        "model": "Monte Carlo neutron transport simulation of multi-layer beam shaping assembly",
+        "inputs": [
+          "D-T neutron source (14.1 MeV)",
+          "moderator material (AlF\u2083, paraffin, D\u2082O, etc.)",
+          "layer thicknesses",
+          "aperture geometry"
+        ],
+        "outputs": [
+          "epithermal neutron flux",
+          "fast-neutron dose per epithermal flux",
+          "beam directionality",
+          "spectral composition"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "AlF\u2083 moderator produces higher epithermal response and lower fast-to-epithermal ratio than alternatives",
+        "result": "AlF\u2083 confirmed optimal; paraffin and light water reduce epithermal component by ~73\u201374%"
+      },
+      {
+        "hypothesis": "Finite source and aperture effects measurably alter beam quality",
+        "result": "1 cm-radius source showed no statistically resolved change; aperture expansion (10\u219224 cm) increased epithermal response"
+      }
+    ]
   }
 }
