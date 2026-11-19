@@ -748176,5 +748176,926 @@
         "result": "Confirmed; architecture choice yields R\u00b2=0.9999; boundary optimum recovery validates pipeline"
       }
     ]
+  },
+  "hf:2611.23994": {
+    "category": "Generative",
+    "task": "Novel view synthesis via noise-space warping",
+    "key_results": "0.84 dB PSNR gain over MetaView on DL3DV hardest bin; 2.1\u00d7 faster; dynamic NVS PSNR improves from 11.58 to 12.35 dB on AnyViewBench",
+    "comments": "Elegant approach leveraging wavelet phase injection to constrain diffusion while maintaining architectural simplicity; overhead-free integration is valuable for deployment.",
+    "model_io": [
+      {
+        "model": "Pretrained diffusion model (video)",
+        "inputs": [
+          "initial noise with injected warped source phase",
+          "target camera view"
+        ],
+        "outputs": [
+          "rendered novel view image"
+        ]
+      },
+      {
+        "model": "Dual-Tree Complex Wavelet Packet Transform (DT-CWPT)",
+        "inputs": [
+          "warped source image"
+        ],
+        "outputs": [
+          "anisotropic phase representation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Injecting warped source into noise phase via wavelets reduces drift in disoccluded regions while maintaining generator flexibility",
+        "result": "Outperforms all baselines on DL3DV; constraint works as intended without architectural overhead"
+      }
+    ]
+  },
+  "hf:2611.23257": {
+    "category": "Agents/RL",
+    "task": "Checkpoint synthesis for reaching deep GUI states in interactive software testing",
+    "key_results": "GUI agents with synthesized checkpoints complete 27.5% of trials vs. 0% without; 98.90% checkpoint replay consistency; hybrid oracle detects 96.25% of controlled visual faults",
+    "comments": "Addresses critical testing bottleneck by combining programmatic and visual oracles; the DeepStateBench dataset with 61 tasks across 10 applications is a valuable contribution, though scalability to even deeper states remains unclear.",
+    "model_io": [
+      {
+        "model": "LLM agent (unrestricted model family)",
+        "inputs": [
+          "natural-language functional test",
+          "source code (read-only)",
+          "GUI screenshots"
+        ],
+        "outputs": [
+          "checkpoint artifact",
+          "per-application hook code"
+        ]
+      },
+      {
+        "model": "Hybrid evaluation oracle",
+        "inputs": [
+          "checkpoint state",
+          "rendered GUI visuals"
+        ],
+        "outputs": [
+          "acceptance verdict (programmatic + visual)"
+        ]
+      },
+      {
+        "model": "VLM ensemble",
+        "inputs": [
+          "rendered screenshots"
+        ],
+        "outputs": [
+          "visual correctness score"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Agent-synthesized checkpoints with per-app hooks enable efficient state reuse across commits without manual hook code",
+        "result": "27.5% trial completion with checkpoints; onboarding agent successfully binds hooks without handwritten code"
+      },
+      {
+        "hypothesis": "Hybrid programmatic-state and visual evaluation detects failures invisible to state alone",
+        "result": "Visual oracle catches 96.25% of controlled faults missed by programmatic checks alone"
+      }
+    ]
+  },
+  "hf:2611.16933": {
+    "category": "Generative",
+    "task": "Mono-to-dual track separation for full-duplex dialogue data",
+    "key_results": "Short-reply retention 0.83 vs. 0.69 (pyannote+DialogueSidon); 4\u20135\u00d7 faster (~230 hours audio/GPU-hour); 98.90% replay consistency over 1,361 checkpoints",
+    "comments": "Well-designed two-stage pipeline (speaker activity + time-domain separation) with evaluation metrics tailored to dialogue requirements; negative results on quiet overlaps are honestly reported.",
+    "model_io": [
+      {
+        "model": "Two-voice activity detector with speaker fingerprint",
+        "inputs": [
+          "mono audio mixture",
+          "speaker identity features (phase-insensitive)"
+        ],
+        "outputs": [
+          "per-speaker activity mask"
+        ]
+      },
+      {
+        "model": "Conditioned time-domain separator",
+        "inputs": [
+          "mono audio",
+          "activity decision from stage 1"
+        ],
+        "outputs": [
+          "per-speaker tracks (sum to input)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Single speaker-fingerprint pass + conditioned separation outperforms multi-stage pipelines (pyannote\u2192DialogueSidon) on short-reply retention",
+        "result": "0.83 vs. 0.69 retention on Open Yap; speed gain (4\u20135\u00d7) confirms efficiency advantage"
+      },
+      {
+        "hypothesis": "Preserving full recording length improves dialogue metrics compared to external pipelines that drop segments",
+        "result": "On overlapping audio, retention rates are similar (0.859 vs. 0.865), but Kezek's completeness advantage shown via leakage/swap metrics"
+      }
+    ]
+  },
+  "nature:10.1038/s42003-026-10848-y": {
+    "category": "Membrane Biophysics",
+    "task": "Identify insulin-independent glucose uptake pathway in skeletal muscle",
+    "key_results": [
+      "Discovery of mSGLT transporter mediating Na+-dependent glucose uptake independent of insulin",
+      "mSGLT localizes to t-tubules with Na,K-ATPase-\u03b12 and MAP17; transports \u03b1MDG but not GLUT4-dependent"
+    ],
+    "comments": "The functional significance during exercise is established, but the molecular identity remains partially ambiguous since muscle lacks full-length Slc5a2 transcript.",
+    "model_io": [
+      {
+        "model": "Mouse skeletal muscle tissue/isolated muscle preparation",
+        "inputs": [
+          "glucose",
+          "\u03b1-methyl-D-glucoside (\u03b1MDG)",
+          "adrenergic stimulation",
+          "Na+ gradient",
+          "SGLT2 inhibitors"
+        ],
+        "outputs": [
+          "glucose uptake rate",
+          "\u03b1MDG uptake rate",
+          "mSGLT localization (t-tubules)",
+          "insulin-independent glucose disposal"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Exercise-induced glucose uptake operates via insulin-independent SGLT-like transporter",
+        "result": "Confirmed: mSGLT activity independent of insulin, requires Na,K-ATPase-\u03b12"
+      },
+      {
+        "hypothesis": "mSGLT shares molecular identity with kidney SGLT2",
+        "result": "Partial: antigenicity overlap and similar substrate specificity, but weak inhibitor sensitivity and absent full-length Slc5a2 transcript suggest muscle isoform"
+      }
+    ]
+  },
+  "nature:10.1038/s41419-026-09296-7": {
+    "category": "Cell Death",
+    "task": "Elucidate PGAM5\u2013LCLAT1\u2013cardiolipin axis in cadmium-induced ferroptosis and MASLD",
+    "key_results": "Cd exposure triggers PGAM5-dependent LCLAT1 S410 dephosphorylation, driving CL oxidation-dependent ferroptosis; PGAM5 inhibition attenuates liver injury in vivo",
+    "comments": "Comprehensive multi-omic integration (transcriptomic, metabolomic, lipidomic) strengthens mechanistic claims, though the initial trigger linking Cd to PGAM5\u2013LCLAT1 interaction remains unclear.",
+    "model_io": [
+      {
+        "model": "Mouse liver Cd exposure model (in vivo)",
+        "inputs": [
+          "cadmium exposure"
+        ],
+        "outputs": [
+          "CL oxidation",
+          "ferroptosis markers",
+          "hepatic lipid accumulation",
+          "liver injury"
+        ]
+      },
+      {
+        "model": "Cd-treated hepatocytes (in vitro)",
+        "inputs": [
+          "cadmium treatment"
+        ],
+        "outputs": [
+          "cardiolipin remodeling",
+          "lipid peroxidation",
+          "ferroptosis"
+        ]
+      },
+      {
+        "model": "PGAM5 and LCLAT1 interaction assay",
+        "inputs": [
+          "cadmium",
+          "PGAM5",
+          "LCLAT1"
+        ],
+        "outputs": [
+          "LCLAT1 S410 dephosphorylation",
+          "LCLAT1 mitochondrial translocation",
+          "CL acyl-chain remodeling"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Cd exposure enhances PGAM5\u2013LCLAT1 interaction to trigger ferroptosis via CL oxidation",
+        "result": "PGAM5 inhibition attenuates CL oxidation, ferroptosis, and MASLD-like liver injury in vitro and in vivo"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80663-2": {
+    "category": "Cell Death",
+    "task": "Protect against doxorubicin-induced cardiotoxicity via manganese SOD mimetic and Nrf2/HO-1 signaling",
+    "key_results": "MnSODm dose-dependently reduced DOX-induced cytotoxicity in H9C2 cells; improved cardiac index and reduced serum biomarkers (CK, LDH) in DOX-treated mice; enhanced antioxidant enzyme activities and increased Nrf2/HO-1 expression",
+    "comments": "Clear mechanistic link to Nrf2/HO-1 pathway, though direct evidence for MnSODm's catalytic conversion of superoxide versus allosteric Nrf2 activation remains to be distinguished.",
+    "model_io": [
+      {
+        "model": "H9C2 rat cardiomyocytes",
+        "inputs": [
+          "doxorubicin",
+          "MnSODm"
+        ],
+        "outputs": [
+          "cell viability",
+          "apoptosis",
+          "oxidative stress",
+          "inflammatory cytokines"
+        ]
+      },
+      {
+        "model": "DOX-induced cardiotoxicity mouse model",
+        "inputs": [
+          "doxorubicin treatment",
+          "MnSODm treatment"
+        ],
+        "outputs": [
+          "cardiac index",
+          "serum CK and LDH",
+          "histopathology",
+          "cardiac fibrosis",
+          "SOD/GPX/catalase activities",
+          "MDA levels"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "MnSODm protects cardiac tissue from DOX injury via Nrf2/HO-1-mediated antioxidant defense",
+        "result": "MnSODm increased Nrf2 and HO-1 expression while reducing Keap1, enhanced antioxidant defenses, and preserved mitochondrial ultrastructure"
+      }
+    ]
+  },
+  "nature:10.1038/s41538-026-01208-5": {
+    "category": "Statistical Methods",
+    "task": "Predict mycotoxin contamination in Irish oat crops using deep learning and transfer learning",
+    "key_results": "TabPFN best performance: RMSE 0.65, R\u00b2 0.86, F1 0.92, AUC 0.98; weather history (90-day pre-harvest) and grain moisture content most important predictors; transfer learning models outperform baseline MLP",
+    "comments": "Strong predictive performance but limited to Irish oats; external validation on other cereals and regions needed.",
+    "model_io": [
+      {
+        "model": "Transfer learning models (TabPFN, TabNet, FT-Transformer) + baseline MLP",
+        "inputs": [
+          "environmental, agronomic, geographical predictors",
+          "weather history (90-day pre-harvest)"
+        ],
+        "outputs": [
+          "mycotoxin contamination levels (regression)",
+          "contamination risk categories (classification)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Transfer learning improves mycotoxin prediction via pre-training on related tabular tasks",
+        "result": "Supported; TabPFN achieves lowest RMSE and highest R\u00b2 and F1 scores"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79913-0": {
+    "category": "Statistical Methods",
+    "task": "Predict residual cancer burden after neoadjuvant therapy in HER2-positive breast cancer using interpretable machine learning",
+    "key_results": "Gradient Boosting Machine AUC 0.796 (independent test); SHAP identified HER2 status, hormone-receptor status, clinical nodal stage as top contributors; LASSO selected 9 predictors; Shiny web application implemented; trastuzumab\u2013pertuzumab vs. pyrotinib showed no significant RCB difference",
+    "comments": "Practical interpretable model but predictive performance insufficient for standalone clinical decision-making; requires prospective validation.",
+    "model_io": [
+      {
+        "model": "Gradient Boosting Machine (GBM)",
+        "inputs": [
+          "LASSO-selected 9 predictors (HER2, HR status, nodal stage, etc.)",
+          "pre-treatment clinical variables"
+        ],
+        "outputs": [
+          "RCB category predictions (favorable vs. poor)",
+          "probability scores"
+        ]
+      },
+      {
+        "model": "SHAP explainability",
+        "inputs": [
+          "GBM predictions"
+        ],
+        "outputs": [
+          "feature importance rankings",
+          "biological validation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Pre-treatment clinical variables and biomarkers predict response to NAT in HER2-positive breast cancer",
+        "result": "Partially supported; GBM AUC 0.796 reasonable but insufficient for clinical deployment without additional biomarkers"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80158-0": {
+    "category": "Statistical Methods",
+    "task": "Stratify COVID-19 severity using machine-learning-integrated molecular analysis of PI3K/AKT/mTOR signaling",
+    "key_results": "Random Forest accuracy: 0.879\u00b10.041 (F1: 0.874\u00b10.045, AUC-ROC: 0.978\u00b10.007); SHAP identified PI3K as top discriminative feature; molecular findings validated: upregulation of IL-6, PI3K, mTOR, AKT1 and downregulation of PTEN in severe cases",
+    "comments": "Strong integration of molecular biology with explainable AI but limited to 83 patients; external validation and mechanistic studies needed.",
+    "model_io": [
+      {
+        "model": "Machine-learning severity classifier (8 algorithms tested)",
+        "inputs": [
+          "RT-qPCR gene expression (83 COVID-19 patients)",
+          "clinical lung involvement grade"
+        ],
+        "outputs": [
+          "disease severity class (mild/moderate/severe)",
+          "probability scores"
+        ]
+      },
+      {
+        "model": "SHAP explainability analysis",
+        "inputs": [
+          "Random Forest predictions"
+        ],
+        "outputs": [
+          "feature importance (SHAP values)",
+          "biological validation of pathway hierarchy"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "PI3K/AKT/mTOR pathway dysregulation drives COVID-19 severity via hyperinflammation",
+        "result": "Supported; molecular and ML-based feature importance converge on pathway hierarchy"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80382-8": {
+    "category": "Other",
+    "task": "Design and validate mRNA vaccine against porcine Getah virus using E2 protein epitopes and molecular dynamics",
+    "key_results": "Getah_Vax structural quality: Ramachandran 94.5%, ERRAT 74.737, z-score -5.38; favorable docking scores and MM-GBSA binding; MD simulation confirms conformational stability; codon optimization CAI 0.9695; immune simulation shows adaptive/innate stimulation; vector cloning successful",
+    "comments": "Comprehensive computational vaccine design but experimental immunogenicity and protection remain unvalidated.",
+    "model_io": [
+      {
+        "model": "Epitope prediction (B-cell and T-cell)",
+        "inputs": [
+          "Getah virus E2 protein sequence"
+        ],
+        "outputs": [
+          "immunogenic epitopes",
+          "non-allergenic, non-toxic candidates"
+        ]
+      },
+      {
+        "model": "Molecular docking + MM-GBSA",
+        "inputs": [
+          "Getah_Vax construct",
+          "TLR receptors"
+        ],
+        "outputs": [
+          "binding affinities",
+          "receptor-ligand energetics"
+        ]
+      },
+      {
+        "model": "MD simulation (100 ns)",
+        "inputs": [
+          "vaccine-TLR complexes"
+        ],
+        "outputs": [
+          "conformational dynamics",
+          "stability trajectories"
+        ]
+      },
+      {
+        "model": "Immune simulation + codon optimization",
+        "inputs": [
+          "vaccine sequence"
+        ],
+        "outputs": [
+          "T-cell response prediction",
+          "codon usage index (CAI)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Engineered Getah_Vax vaccine stimulates adaptive and innate immunity with structural stability",
+        "result": "Supported by computational analyses; experimental validation required"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81582-y": {
+    "category": "Genomics",
+    "task": "Identify DCAF7 downregulation as prognostic biomarker in clear cell renal cell carcinoma",
+    "key_results": "Consistent DCAF7 downregulation across 3 independent cohorts (TCGA, GSE); high DCAF7 protective factor in Cox regression; nomogram predicts 1-, 3-, 5-year overall survival; DCAF7 overexpression inhibits proliferation, migration, invasion in ACHN/OS-RC-2 cells",
+    "comments": "Multi-cohort validation and functional evidence support prognostic role; mechanism of tumor suppression requires further investigation.",
+    "model_io": [
+      {
+        "model": "Gene expression analysis (logistic regression, Cox regression)",
+        "inputs": [
+          "DCAF7 mRNA expression",
+          "clinical outcomes (pathological grade, metastasis status)"
+        ],
+        "outputs": [
+          "disease-free equilibrium",
+          "survival curves",
+          "nomogram predictions"
+        ]
+      },
+      {
+        "model": "Gene Set Enrichment Analysis (GSEA)",
+        "inputs": [
+          "DCAF7-stratified expression data"
+        ],
+        "outputs": [
+          "enriched pathways (Wnt, RTK-CBL-ubiquitination, Hippo signaling)"
+        ]
+      },
+      {
+        "model": "In vitro functional assays",
+        "inputs": [
+          "DCAF7 overexpression in ccRCC cell lines"
+        ],
+        "outputs": [
+          "proliferation rates",
+          "migration/invasion assays"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "DCAF7 acts as tumor suppressor in ccRCC via regulation of Wnt/Hippo signaling",
+        "result": "Supported; downregulation associated with poor prognosis; overexpression inhibits cancer phenotypes"
+      }
+    ]
+  },
+  "nature:10.1038/s41698-026-01786-3": {
+    "category": "Statistical Methods",
+    "task": "Evaluate AI-based resection-cavity segmentation timing effects post-glioma surgery and link to functional outcomes",
+    "key_results": "AI segmentation accurate for chronic cavities; early postoperative segmentations improved via semi-supervised learning and fine-tuning (overcoming domain shift); automated segmentations replicate findings linking surgery-induced network disconnection to worse language fluency; Shiny web app implemented",
+    "comments": "Addresses important clinical need (early post-surgical assessment) with practical AI tool; validation on large dataset (N=1056) but functional outcome linkage requires larger cohorts.",
+    "model_io": [
+      {
+        "model": "AI-based cavity segmentation (domain-shift-resistant)",
+        "inputs": [
+          "early and chronic post-operative glioma MRI scans"
+        ],
+        "outputs": [
+          "resection-cavity segmentations"
+        ]
+      },
+      {
+        "model": "Semi-supervised learning + model fine-tuning",
+        "inputs": [
+          "labeled and unlabeled postoperative MRI"
+        ],
+        "outputs": [
+          "improved segmentation accuracy across scan timings"
+        ]
+      },
+      {
+        "model": "Disconnectomics analysis",
+        "inputs": [
+          "cavity segmentations",
+          "brain connectivity networks"
+        ],
+        "outputs": [
+          "network disconnection severity scores",
+          "language fluency correlation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "AI-driven early cavity delineation enables disconnectomics prediction of language outcome post-glioma surgery",
+        "result": "Supported; semi-supervised learning overcomes domain shift; automated segmentations replicate biological findings"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78735-4": {
+    "category": "Other",
+    "task": "Virtual reality spacecraft simulator for cockpit design evaluation with eye-gaze, EEG, and microgravity calibration",
+    "key_results": "VR simulator calibrated to ISS microgravity data from 2 astronauts; task completion times compared across microgravity and normalgravity; applications: deorbiting, emergency response, robotic-arm operations",
+    "comments": "Novel human-factors integration (eye-gaze, EEG trackers); small astronaut sample (n=2) limits generalization; applications demonstrated but quantitative design-optimization outcomes not reported.",
+    "model_io": [
+      {
+        "model": "VR spacecraft simulator (configurable, immersive)",
+        "inputs": [
+          "microgravity calibration data (ISS)",
+          "astronaut eye-gaze, EEG"
+        ],
+        "outputs": [
+          "task performance metrics (completion time, errors, cognitive load)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "VR simulator calibrated with ISS microgravity data enables human-factor evaluation for cockpit design",
+        "result": "Demonstrated on deorbiting, emergency response, robotic-arm tasks; design-optimization outcomes not quantified"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80329-z": {
+    "category": "Algorithms",
+    "task": "Energy-efficient spiking vision transformer for UAV remote-sensing scene classification",
+    "key_results": "SViT-UAV: ANN-competitive accuracy on WHU-RS19, UC-Merced, AID, NWPU-RESISC45; energy consumption 9.58 mJ; outperforms existing SNN methods",
+    "comments": "Hybrid spiking paradigm (convolutional + transformer + spatio-temporal gating) balances accuracy and energy efficiency; practical for edge deployment.",
+    "model_io": [
+      {
+        "model": "SViT-UAV (spiking Swin Transformer + STGB + convolutional frontend)",
+        "inputs": [
+          "UAV remote-sensing scene images"
+        ],
+        "outputs": [
+          "scene class label"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Spiking vision transformer with spatio-temporal gating achieves ANN-competitive accuracy at fraction of energy cost",
+        "result": "Supported; 9.58 mJ energy consumption vs standard SNN and ANN baselines"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80333-3": {
+    "category": "Algorithms",
+    "task": "RGB image steganography via invertible binary matrix for high-capacity embedding",
+    "key_results": "Embedding capacity: 524,288 (k=2), 786,432 (k=3), 1,048,576 (k=4) bits on 512\u00d7512 image; PSNR>51 dB, SSIM>0.996, IF>0.998, 100% recovery accuracy",
+    "comments": "Matrix-based steganography offers security via private-key inversion; prior lower-triangular-only approach generalized to arbitrary invertible matrices.",
+    "model_io": [
+      {
+        "model": "Invertible binary matrix steganography",
+        "inputs": [
+          "cover image (512\u00d7512 RGB)",
+          "secret message",
+          "invertible matrix private key"
+        ],
+        "outputs": [
+          "stego image with embedded message"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Invertible matrix embedding (vs fixed lower-triangular) maintains embedding capacity and image quality while improving security",
+        "result": "Supported; PSNR>51 dB and SSIM>0.996 across k values; 100% recovery"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80643-6": {
+    "category": "Other",
+    "task": "Safety integrity level determination for multi-initiating-event industrial scenarios via fuzzy risk graph",
+    "key_results": "Fuzzy approach corrected 4 of 13 SIFs: underestimated SIL 2\u21923 in two multi-IE cases (7, 8 IEs); conventional method misallocated SIL",
+    "comments": "Domain-specific industrial validation; fuzzy Mamdani system properly aggregates multi-IE demand rates where qualitative methods collapse.",
+    "model_io": [
+      {
+        "model": "Fuzzy Risk Graph (Mamdani inference)",
+        "inputs": [
+          "probabilistic input intervals (fuzzified)",
+          "multiple independent initiating events",
+          "demand rates"
+        ],
+        "outputs": [
+          "safety integrity level (SIL) allocation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Quantitative fuzzy aggregation of multi-IE demand rates improves SIL discrimination vs conventional qualitative risk graph",
+        "result": "Supported; fuzzy method identified SIL misallocations in 4 safety instrumented functions"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80931-1": {
+    "category": "ML Theory",
+    "task": "Chronic kidney disease screening via hybrid ML (XGBoost, RF, LightGBM stacking) with PCA-autoencoder features",
+    "key_results": "Hold-out AUROC=0.9973, accuracy=0.9875, Brier=0.0146; external test (EventCKD35, n=491) AUROC=0.6786 (predictor and endpoint shift); baseline eGFR AUROC=0.8370",
+    "comments": "Severe external-validation failure reveals predictor leakage and endpoint shift; illustrates critical gap between development and real deployment.",
+    "model_io": [
+      {
+        "model": "HMCKD-Net (logistic stacking: XGBoost, RF, LightGBM)",
+        "inputs": [
+          "preprocessed features (6 PCA + 4 autoencoder components)",
+          "400 development records"
+        ],
+        "outputs": [
+          "CKD classification probability"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "PCA-autoencoder feature compression + logistic stacking achieves superior CKD classification on hold-out",
+        "result": "Supported (AUROC 0.9973); external test fails (AUROC 0.6786) due to predictor/endpoint mismatch and leakage"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81230-5": {
+    "category": "Algorithms",
+    "task": "Ship detection in maritime scenes with enhanced feature extraction and fusion",
+    "key_results": "RSE-YOLOv12: mAP@0.5:0.95 = 0.805 (SeaShips), 0.316 (LEVIR-Ship); +1.6, +8.1 pp over YOLOv12 baseline; 5.2\u20135.4 ms inference",
+    "comments": "Practical speed-accuracy trade-off maintained; architectural innovations (RCSB attention, spatial-perception fusion) address scale variation and small-target detail preservation.",
+    "model_io": [
+      {
+        "model": "RSE-YOLOv12",
+        "inputs": [
+          "maritime scene images"
+        ],
+        "outputs": [
+          "ship detections (bounding boxes, class labels)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Receptive field coordinate attention and spatial-perception fusion improve feature representation under scale variation and clutter",
+        "result": "Supported; mAP improvements on both datasets; millisecond-level inference preserved"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81415-y": {
+    "category": "ML Theory",
+    "task": "H\u2082S sensor response prediction via ANN and RSM with parameter optimization",
+    "key_results": "MLP R\u00b2=0.9897, %AARD=17.33, MSE_validation=0.001061; RBF R\u00b2=0.9894, %AARD=66.20; RSM R\u00b2=0.9821 (quadratic dependency)",
+    "comments": "Data-driven models outperform RSM; MLP significantly better than RBF; dataset 548 points from materials (Fe\u2082O\u2083-Ba\u2080.\u2089\u2089Ce\u2080.\u2080\u2081TiO\u2087\u2081, SnCl\u2082, Fe-600).",
+    "model_io": [
+      {
+        "model": "MLP (49, 29 neurons, tansig, Levenberg\u2013Marquardt)",
+        "inputs": [
+          "temperature (25\u2013275\u00b0C)",
+          "time (6.5\u20134091 s)",
+          "H\u2082S concentration (0.0001\u2013400 ppm)",
+          "surface area (17.11\u2013223.6 m\u00b2/g)"
+        ],
+        "outputs": [
+          "H\u2082S sensor response"
+        ]
+      },
+      {
+        "model": "RBF (198 neurons)",
+        "inputs": [
+          "same parameters"
+        ],
+        "outputs": [
+          "sensor response"
+        ]
+      },
+      {
+        "model": "RSM (quadratic)",
+        "inputs": [
+          "same parameters"
+        ],
+        "outputs": [
+          "sensor response"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "MLP with appropriate hidden-layer configuration outperforms RBF and RSM in H\u2082S sensor response prediction",
+        "result": "Supported; MLP R\u00b2=0.9897 > RBF and RSM"
+      }
+    ]
+  },
+  "nature:10.1038/s41534-026-01412-x": {
+    "category": "Optics/Photonics",
+    "task": "Demonstrate high-key-rate quantum access network using passive state preparation with thermal source",
+    "key_results": "Four quantum network units achieve average end-to-end secret key rate of 12.82 Mbps per QNU under untrusted assumption; passive point-to-multi-point distribution topology mirrors classical optical access",
+    "comments": "Elimination of active quantum-state modulation significantly reduces transmitter complexity; hybrid free-space/fiber channels provide practical pathway toward integrated optical infrastructure.",
+    "model_io": [
+      {
+        "model": "Passive state preparation (PSP) CV-QKD system",
+        "inputs": [
+          "thermal source",
+          "passive optical modulation"
+        ],
+        "outputs": [
+          "quantum states",
+          "continuous-variable quadrature measurements"
+        ]
+      },
+      {
+        "model": "Point-to-multi-point quantum passive optical network (PSP-QPON)",
+        "inputs": [
+          "downstream quantum signals",
+          "four quantum network units (QNUs)"
+        ],
+        "outputs": [
+          "secret key rate per QNU",
+          "end-to-end secure communication"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Fully passive state preparation achieves high-rate quantum access without active modulation",
+        "result": "Confirmed; 12.82 Mbps per QNU in conservative untrusted-node scenario"
+      },
+      {
+        "hypothesis": "PSP-QPON shares passive topology of classical optical access networks",
+        "result": "Confirmed; architecture compatible with existing optical infrastructure for integration"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-71997-y": {
+    "category": "Applied Physics",
+    "task": "Develop low-complexity adaptive transparency framework for hearable devices with spectral and loudness analysis",
+    "key_results": "Proposed system achieves lower peak-to-average ratio, improved transient handling, and smoother loudness trajectories vs. three static baselines; computational cost ~9000 multiply-accumulate operations per hop; informal perceptual evaluation shows promise",
+    "comments": "Proof-of-concept framework demonstrates feasibility on hearable constraints; however, formal psychoacoustic validation and large-scale independent evaluation are explicitly identified as essential prerequisites before broader claims.",
+    "model_io": [
+      {
+        "model": "Adaptive transparency processing pipeline",
+        "inputs": [
+          "environmental audio (real-time streaming)",
+          "acoustic feature extraction (short-time energy, spectral centroid)"
+        ],
+        "outputs": [
+          "classified acoustic frames (harsh/benign)",
+          "filtered audio (band-stop for harshness, low-pass for ambient)",
+          "adaptively adjusted RMS limiter threshold",
+          "output audio stream"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Content-aware filtering (harsh-event detection + selective attenuation) reduces perceptual harshness while preserving ambient awareness",
+        "result": "Supported by limited informal testing; lower peak-to-average ratio and improved transient handling observed"
+      },
+      {
+        "hypothesis": "Statistically driven loudness control via adaptive RMS limiter improves loudness stability",
+        "result": "Supported informally; smoother loudness trajectories vs. static baselines; formal psychoacoustic model validation needed"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-75913-2": {
+    "category": "Optics/Photonics",
+    "task": "Design all-dielectric RGB color filter set for CMOS image sensors without metal or plasmonic loss",
+    "key_results": "Peak transmittances: 83.3% (blue), 83.7% (green), 79.01% (red); FWHM: 70.9, 96.1, 91.6 nm; sRGB gamut coverage 21.6% vs. 14.7% baseline; mean CIEDE2000 of 2.48 over ColorChecker patches",
+    "comments": "Fano-lineshape tuning via leaky guided-mode resonance and spacer coupling effectively optimizes spectral selectivity; CMOS-compatible fabrication pathway proposed using excimer-laser annealing.",
+    "model_io": [
+      {
+        "model": "All-dielectric RGB grating filter set (TiO\u2082 and Poly-Si)",
+        "inputs": [
+          "wavelength",
+          "polarization (TE/TM)",
+          "incident angle (up to 20\u00b0)",
+          "material dispersion"
+        ],
+        "outputs": [
+          "transmittance spectrum",
+          "peak wavelength",
+          "spectral width (FWHM)",
+          "Q-factor"
+        ]
+      },
+      {
+        "model": "Response-surface modeling optimization",
+        "inputs": [
+          "grating geometry parameters",
+          "spacer stack composition"
+        ],
+        "outputs": [
+          "optimal design parameters",
+          "predicted transmittance"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Leaky guided-mode resonance in spacer-tuned design achieves high spectral selectivity without metal loss",
+        "result": "Confirmed; all-dielectric design reaches 83%+ transmittance with narrow FWHM and wide angular tolerance (up to 15\u201320\u00b0)"
+      },
+      {
+        "hypothesis": "TiO\u2082 blue channel avoids silicon absorption while maintaining high transmittance",
+        "result": "Confirmed; 83.3% blue transmittance vs. 79.01% red demonstrates wavelength-dependent optimization"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80243-4": {
+    "category": "Applied Physics",
+    "task": "Investigate NO\u2082 sensing properties of nanocrystalline tetragonal ZrO\u2082 using experimental and first-principles approaches",
+    "key_results": "High NO\u2082 response of 87.5% at 200\u00b0C; rapid response (12 s) and recovery (21 s) times; linear sensitivity 20\u2013160 ppm; optical band gap 3.8 eV (experimental) vs. 4.03 eV (DFT); stable performance over 50 days",
+    "comments": "Excellent agreement between experimental optical properties and DFT predictions validates computational model; adsorption-induced surface electronic modulation drives sensing performance.",
+    "model_io": [
+      {
+        "model": "Nanocrystalline tetragonal ZrO\u2082 thick-film gas sensor",
+        "inputs": [
+          "NO\u2082 concentration (ppm)",
+          "temperature",
+          "sensor material (8\u20139 nm crystallite size)"
+        ],
+        "outputs": [
+          "sensor response (%)",
+          "resistance change",
+          "response/recovery times"
+        ]
+      },
+      {
+        "model": "Density functional theory (DFT) calculations",
+        "inputs": [
+          "tetragonal ZrO\u2082 structure"
+        ],
+        "outputs": [
+          "band gap (indirect)",
+          "density of states",
+          "dielectric function",
+          "absorption coefficient",
+          "optical conductivity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Tetragonal ZrO\u2082 phase exhibits high NO\u2082 sensing response due to adsorption-induced electronic modulation",
+        "result": "Confirmed; 87.5% response with rapid kinetics; electronic modulation validated by DFT"
+      },
+      {
+        "hypothesis": "Computed optical properties agree with experimental UV-visible measurements",
+        "result": "Confirmed; DFT band gap 4.03 eV closely matches experimental 3.8 eV; dielectric function and absorption show substantial UV interband transitions"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81129-1": {
+    "category": "Applied Physics",
+    "task": "Predict irradiation-induced tensile property changes in advanced reactor cladding steels using explainable ML",
+    "key_results": "ANN model MAPE: 6.26\u00b10.47% for UTS, 10.69\u00b10.46% for YS; YS saturation at 5\u201310 dpa; SHAP analysis reveals irradiation temperature has greater influence than dpa on YS",
+    "comments": "ANN selected over XGB for physical consistency and stable irradiation-dependent trends; SHAP interpretability adds actionable material-science insights beyond predictions.",
+    "model_io": [
+      {
+        "model": "Machine learning pipeline (XGB and ANN regressors)",
+        "inputs": [
+          "irradiation dose (dpa)",
+          "irradiation temperature",
+          "steel composition",
+          "test conditions"
+        ],
+        "outputs": [
+          "ultimate tensile strength (UTS)",
+          "yield strength (YS)"
+        ]
+      },
+      {
+        "model": "SHAP explainable AI analysis",
+        "inputs": [
+          "ANN predictions",
+          "feature values"
+        ],
+        "outputs": [
+          "feature importance contributions",
+          "dpa vs. temperature influence quantification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Irradiation-induced YS increase saturates at 5\u201310 dpa in HT9 and Gr.92 (Mod)",
+        "result": "Confirmed; ANN captures saturation behavior with stable physical consistency"
+      },
+      {
+        "hypothesis": "Irradiation temperature has greater influence on predicted YS than dpa",
+        "result": "Confirmed by SHAP; temperature variations drive larger prediction contributions than dpa changes"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81292-5": {
+    "category": "Applied Physics",
+    "task": "Design and control dual-axis solar tracking turntable with optical payload for irradiance measurement",
+    "key_results": "Center-of-mass offset reduced from 18.4 mm to 3.8 mm; RMS optical axis error 1.505\u2033\u20131.539\u2033 under full control across wind speeds; relative irradiance standard deviation 0.0738% with control vs. 4.1047% baseline",
+    "comments": "Sophisticated multi-axis control achieves sub-arcsecond pointing stability; wind disturbance rejection is the primary performance driver.",
+    "model_io": [
+      {
+        "model": "Finite-element model of elevation support",
+        "inputs": [
+          "geometry",
+          "material properties"
+        ],
+        "outputs": [
+          "static response",
+          "natural frequencies",
+          "mode shapes"
+        ]
+      },
+      {
+        "model": "Dual-axis dynamic control system",
+        "inputs": [
+          "gravitational torque",
+          "friction",
+          "backlash",
+          "wind disturbances (3-component)",
+          "tracking commands"
+        ],
+        "outputs": [
+          "optical axis error",
+          "irradiance at receiver plane",
+          "RMS tracking performance"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Design offset reduction lowers eccentric torque and improves structural frequency",
+        "result": "Confirmed; first-mode frequency increased from 25.21 Hz to 33.45 Hz"
+      },
+      {
+        "hypothesis": "Integrated multi-rate control suppresses wind-induced errors below 1.6\u2033",
+        "result": "Confirmed across tested wind speeds with relative irradiance improvement >98%"
+      }
+    ]
   }
 }
