@@ -753570,5 +753570,892 @@
         "result": "Confirmed quantitatively"
       }
     ]
+  },
+  "hf:2611.26627": {
+    "category": "Agents/RL",
+    "task": "Understanding RL post-training in diffusion transformers via activation steering",
+    "key_results": "Fixed steering vectors (0.29M params) recover 90.0-96.3% of RL-tuned model rewards (18.8M params); vectors alone exceed weight-based RL gains on OCR and human preference metrics",
+    "comments": "Demonstrates that most RL improvements are input-independent shifts rather than learned complex transformations, suggesting diffusion models have latent capability that RL merely activates.",
+    "model_io": [
+      {
+        "model": "SD3.5-M (diffusion transformer) + steering vectors",
+        "inputs": [
+          "text prompt",
+          "noise"
+        ],
+        "outputs": [
+          "image"
+        ]
+      },
+      {
+        "model": "RL-tuned checkpoint (LoRA)",
+        "inputs": [
+          "velocity predictions"
+        ],
+        "outputs": [
+          "steering vectors"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "RL gains require learning complex input-dependent transformations",
+        "result": "Refuted: input-independent steering vectors recover most gains"
+      },
+      {
+        "hypothesis": "Online RL with steering vectors alone can exceed weight-based RL",
+        "result": "Confirmed on OCR and PickScore metrics on SD3.5-M"
+      }
+    ]
+  },
+  "hf:2611.21885": {
+    "category": "LLM/Reasoning",
+    "task": "Self-rewriting of language model weights to improve performance without gradients",
+    "key_results": "27B model improves 6.6 points on unseen 490-problem test set; repair of corrupted weights lifts accuracy from 7% to 70% on image benchmarks; ability emerges only at 27B scale in family",
+    "comments": "Remarkable finding that inference and training can blur, though the mechanism (hidden state comparison on success/failure) remains somewhat underspecified and may not generalize to all architectures.",
+    "model_io": [
+      {
+        "model": "27B LLM with self-editing capability",
+        "inputs": [
+          "problem",
+          "graded answers",
+          "own weights"
+        ],
+        "outputs": [
+          "weight edits",
+          "improved predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Language models can diagnose and fix their own failures via weight rewriting",
+        "result": "Confirmed: 27B model edits weights and improves on held-out test sets"
+      },
+      {
+        "hypothesis": "Self-rewriting ability scales with model size",
+        "result": "Confirmed: emerges only at 27B, not at 2B, 4B, or 9B in same family"
+      }
+    ]
+  },
+  "hf:2611.25200": {
+    "category": "Benchmark",
+    "task": "Evaluating simulated shopper forecasts on historical website A/B test outcomes",
+    "key_results": "UX-1 classified 267/318 outcomes correctly (84.0%, 95% CI 79.5-87.6%); 118/126 predicted variant wins actually won (93.7%); Qwen3 Next 80B achieved 61.6%",
+    "comments": "Strong practical validation on real business experiments, though treatment of experiments as independent may underestimate correlation in variant design choices.",
+    "model_io": [
+      {
+        "model": "Squoosh UX-1 (fine-tuned on browsing data)",
+        "inputs": [
+          "website page (role masked)",
+          "variant design"
+        ],
+        "outputs": [
+          "prediction: original win | variant win | inconclusive"
+        ]
+      },
+      {
+        "model": "Qwen3 Next 80B",
+        "inputs": [
+          "website page",
+          "variant design"
+        ],
+        "outputs": [
+          "prediction: original win | variant win | inconclusive"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Simulated shoppers can predict real A/B test outcomes",
+        "result": "Confirmed: UX-1 achieves 84% accuracy vs 61.6% for general LLM"
+      }
+    ]
+  },
+  "hf:2611.23875": {
+    "category": "Systems",
+    "task": "Training optical neural networks via coding agents without gradients or per-device calibration",
+    "key_results": "Outperforms gradient-free methods on classification and image encoding; approaches backprop-through-calibrated-model accuracy at fraction of cost; works from hardware measurements alone",
+    "comments": "Clever repurposing of LLM-as-agent for physical system optimization, but scalability to larger optical networks and robustness to measurement noise remain open questions.",
+    "model_io": [
+      {
+        "model": "Coding agent (LLM) + optical neural network harness",
+        "inputs": [
+          "camera images of optical probes",
+          "hypothesis per request"
+        ],
+        "outputs": [
+          "optical element parameter adjustments",
+          "classification/encoding results"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LLM agents can form physical understanding and train optical networks from measurements alone",
+        "result": "Confirmed: agent reparametrizes with interpretable optical elements tuned on hardware"
+      },
+      {
+        "hypothesis": "Method eliminates need for per-device calibration and gradient computation",
+        "result": "Confirmed: achieves performance approaching calibrated backprop without either"
+      }
+    ]
+  },
+  "hf:2611.15941": {
+    "category": "Vision",
+    "task": "Hierarchical image vectorization to SVG with semantic labels and object-part structure",
+    "key_results": "State-of-the-art on rendering fidelity and structural quality; achieves human-perceived object-part alignment; new evaluation protocol introduced for structural completeness",
+    "comments": "Addresses practical limitation of existing vectorizers (output difficult to manipulate), but complexity of MLLM integration and depth-adaptive simplification may limit scalability.",
+    "model_io": [
+      {
+        "model": "Lang-SVG (segmentation + MLLM + SVG generation)",
+        "inputs": [
+          "raster image"
+        ],
+        "outputs": [
+          "structured SVG with hierarchical tree, semantic labels, parent-child relationships"
+        ]
+      },
+      {
+        "model": "MLLM (multimodal LLM)",
+        "inputs": [
+          "image",
+          "SVG tree context"
+        ],
+        "outputs": [
+          "semantic labels for SVG nodes"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Explicit tree structure with semantic labels improves alignment with human perception",
+        "result": "Confirmed: achieves state-of-the-art on new structural quality metric"
+      },
+      {
+        "hypothesis": "Depth-adaptive simplification and tree pruning reduce redundancy while preserving fidelity",
+        "result": "Confirmed: maintains reconstruction fidelity with simplified structure"
+      }
+    ]
+  },
+  "nature:10.1038/s42003-026-11385-4": {
+    "category": "Mechanobiology",
+    "task": "Measure mechanical strength of SMC protein complexes across species",
+    "key_results": "Fission yeast cohesin and condensin both break at ~20 pN; human cohesin withstands significantly greater forces than fission yeast cohesin",
+    "comments": "Direct force measurements elegantly demonstrate that mechanical robustness is a conserved feature, though the quantitative threshold differences between species suggest functional optimization rather than universal constraint.",
+    "model_io": [
+      {
+        "model": "SMC complex (cohesin/condensin) ring with DNA substrate",
+        "inputs": [
+          "DNA-DNA or DNA-protein complexes",
+          "applied tensile force (pN range)"
+        ],
+        "outputs": [
+          "force at rupture (pN)",
+          "failure location (hinge interface)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Mechanical strength is conserved across SMC family members",
+        "result": "Confirmed: fission yeast cohesin and condensin both withstand ~20 pN"
+      },
+      {
+        "hypothesis": "Mechanical strength is conserved across species",
+        "result": "Partially confirmed: human cohesin is stronger than fission yeast cohesin, suggesting species-specific optimization"
+      }
+    ]
+  },
+  "nature:10.1038/s41388-026-04047-6": {
+    "category": "Cell Signaling",
+    "task": "Investigate SIRT6-mediated copper homeostasis regulation determining cell fate via cuproplasia versus cuproptosis in colorectal cancer",
+    "key_results": "SIRT6 knockout promotes copper-dependent proliferation (cuproplasia) but sensitizes to cuproptosis; SIRT6 epigenetically suppresses SLC31A1 via H3K9/K56 deacetylation, limiting intracellular copper; SIRT6 deacetylates MTF1, promoting metallothionein expression to reduce mitochondrial copper and confer cuproptosis resistance; combined SIRT6 inhibitor OSS_128167 + copper ionophore Elesclomol shows synergistic anti-tumor efficacy in patient-derived xenografts",
+    "comments": "Identifies SIRT6 as master regulator of copper metabolism, revealing high-copper tumor microenvironment as therapeutic vulnerability; combination strategy shows promise, though selectivity for cancer cells and in vivo safety require further optimization.",
+    "model_io": [
+      {
+        "model": "SIRT6 knockout colorectal cancer cells",
+        "inputs": [
+          "SIRT6 deletion",
+          "Copper supplementation"
+        ],
+        "outputs": [
+          "Copper-dependent proliferation rates",
+          "Cuproptosis sensitivity markers"
+        ]
+      },
+      {
+        "model": "Epigenetic regulation analysis",
+        "inputs": [
+          "SIRT6-modified cells",
+          "Copper levels"
+        ],
+        "outputs": [
+          "SLC31A1 H3K9/K56 acetylation",
+          "SLC31A1 mRNA/protein",
+          "Intracellular copper content"
+        ]
+      },
+      {
+        "model": "MTF1 deacetylation and stability",
+        "inputs": [
+          "SIRT6-CTuP interaction",
+          "Ubiquitination assays"
+        ],
+        "outputs": [
+          "MTF1 acetylation status",
+          "Metallothionein (MT1A/MT2A) expression",
+          "Mitochondrial copper load"
+        ]
+      },
+      {
+        "model": "Patient-derived xenograft (PDX) colorectal cancer model",
+        "inputs": [
+          "SIRT6 inhibitor OSS_128167",
+          "Copper ionophore Elesclomol",
+          "Combination treatment"
+        ],
+        "outputs": [
+          "Tumor growth rate",
+          "Synergistic anti-tumor efficacy",
+          "Copper levels in tumor"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "SIRT6 coordinates dual mechanisms to suppress copper-dependent proliferation",
+        "result": "Confirmed: SIRT6 suppresses SLC31A1 (limiting import) and promotes MTF1/metallothionein (chelation)"
+      },
+      {
+        "hypothesis": "SIRT6 inhibition combined with copper ionophore shows synergistic anti-tumor activity",
+        "result": "Supported: OSS_128167 + Elesclomol demonstrates synergistic efficacy in PDX models"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-79409-5": {
+    "category": "Other",
+    "task": "Develop unified computational framework for glycomics and glycoproteomics data interpretation",
+    "key_results": "Glycoverse integrates robust statistics, glycan topology, and biosynthetic logic to parse site-specific glycoforms from mass spectrometry; liver disease case study reveals reduced B4GalT and ST3/6 Gal enzyme activity; mouse tissue study uncovers hierarchical N-glycan maturation patterns",
+    "comments": "A valuable bioinformatics infrastructure tool that enables mechanistic interpretation of glycosylation dysregulation, though validation against orthogonal structural methods remains important.",
+    "model_io": [
+      {
+        "model": "Glycoverse R framework",
+        "inputs": [
+          "Mass spectrometry glycomics/glycoproteomics data",
+          "Liver disease samples",
+          "Mouse tissue samples"
+        ],
+        "outputs": [
+          "Parsed glycoforms",
+          "Site-specific glycan structures",
+          "Biosynthetic pathway activity inferences"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Liver disease involves dysregulation of glycan biosynthetic enzymes",
+        "result": "Confirmed: reduced B4GalT and ST3/6 Gal activities identified"
+      },
+      {
+        "hypothesis": "N-glycan maturation patterns vary hierarchically across tissues and glycoproteins",
+        "result": "Confirmed: distinct patterns observed across tissue types and individual glycosites"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-79754-5": {
+    "category": "Organelles",
+    "task": "Elucidate PINK1 local translation and processing in neuronal mitophagy",
+    "key_results": "PINK1 mRNA relocates to ER-proximal ribosomes upon metabolic untethering from mitochondria; DNAJB6 loss abolishes mitophagy by causing persistent ER/endolysosome-associated PINK1 precursor accumulation",
+    "comments": "Reveals a remarkable compartmental switch in PINK1 synthesis that integrates local metabolic sensing with quality control, though the temporal dynamics of this switch remain incompletely characterized.",
+    "model_io": [
+      {
+        "model": "Live-cell imaging of primary neurons",
+        "inputs": [
+          "Pink1 mRNA",
+          "Mitochondria",
+          "ER",
+          "Endolysosomes",
+          "DNAJB6"
+        ],
+        "outputs": [
+          "Translation site localization",
+          "PINK1 preprotein dynamics",
+          "Mitophagy efficiency"
+        ]
+      },
+      {
+        "model": "DNAJB6 knockout neurons",
+        "inputs": [
+          "DNAJB6-deficient background"
+        ],
+        "outputs": [
+          "PINK1 precursor accumulation",
+          "Mitophagy failure upon damage"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "PINK1 is locally synthesized near mitochondria and endolysosomes",
+        "result": "Confirmed: localization switches from mitochondria to ER-proximal sites"
+      },
+      {
+        "hypothesis": "DNAJB6 is required for PINK1 transit to mitochondria",
+        "result": "Confirmed: DNAJB6 loss causes precursor accumulation and mitophagy failure"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-69638-5": {
+    "category": "Cell Signaling",
+    "task": "Decipher TrkB/PI3K-Akt signaling and macrophage polarization mechanisms in moslosooflavone-mediated diabetic wound healing",
+    "key_results": "Five-gene diagnostic signature (CYP1A1, MAOB, NTRK2, ESR2, KIT) distinguishes diabetic foot ulcers from normal skin; MOS targets CYP1A1, MAOB, NTRK2 with stable binding (\u22125.05 to \u22126.62 kcal/mol); MOS improves high-glucose macrophage viability, suppresses pro-inflammatory cytokines, and promotes M2 polarization via TrkB/PI3K-Akt axis; topical MOS hydrogel accelerates wound closure with increased CD206+ M2 macrophages",
+    "comments": "Integrative computational screening combined with mechanistic validation demonstrates MOS-mediated macrophage reprogramming toward reparative phenotype; TrkB/PI3K-Akt pathway dependency well-established, though selectivity and therapeutic window in clinical diabetic wounds require further evaluation.",
+    "model_io": [
+      {
+        "model": "Transcriptomic integration (WGCNA + machine learning)",
+        "inputs": [
+          "Public DFU datasets (GSE134431, GSE199939)",
+          "Co-expression networks"
+        ],
+        "outputs": [
+          "Five-gene diagnostic signature",
+          "Core DFU-associated targets"
+        ]
+      },
+      {
+        "model": "Molecular docking + MD simulations",
+        "inputs": [
+          "MOS structure",
+          "CYP1A1, MAOB, NTRK2 protein structures"
+        ],
+        "outputs": [
+          "Binding mode predictions",
+          "Binding affinity (\u22125.05 to \u22126.62 kcal/mol)",
+          "Stability metrics"
+        ]
+      },
+      {
+        "model": "High-glucose-stimulated RAW264.7 macrophages",
+        "inputs": [
+          "Moslosooflavone",
+          "TrkB inhibitor K252a",
+          "PI3K inhibitor LY294002"
+        ],
+        "outputs": [
+          "Cell viability (CCK-8)",
+          "Cytokine secretion (ELISA)",
+          "M2 markers (flow cytometry/qPCR)",
+          "pTrkB/pAkt phosphorylation"
+        ]
+      },
+      {
+        "model": "Streptozotocin-induced diabetic mouse wound model",
+        "inputs": [
+          "Topical MOS-loaded Carbopol hydrogel (dose-dependent)"
+        ],
+        "outputs": [
+          "Wound closure rate",
+          "CD206+ M2 macrophage infiltration",
+          "pTrkB in wound F4/80+ cells"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "MOS targets TrkB/PI3K-Akt axis to reprogram macrophages toward M2 phenotype",
+        "result": "Confirmed: pathway inhibitors largely abrogate MOS protective effects"
+      },
+      {
+        "hypothesis": "MOS-mediated macrophage M2 polarization accelerates diabetic wound healing",
+        "result": "Supported: topical MOS hydrogel dose-dependently accelerates closure with increased M2 infiltration"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81339-7": {
+    "category": "Cell Division/Cycle",
+    "task": "Investigate PALMD role in ovarian cancer spheroid integrity and survival under anchorage-independent conditions",
+    "key_results": "PALMD transcript abundance increases in 3D spheroid culture; PALMD protein increases after spheroid attachment; PALMD depletion increases p53/vimentin, disrupts spheroid morphology, and elevates apoptosis readouts; context-dependent responses to knockdown vary between suspension and attached culture",
+    "comments": "Identifies PALMD as a potential regulator of multicellular tumor architecture, though the mechanistic basis for its differential effects in 2D versus 3D and suspension versus attached conditions requires further investigation.",
+    "model_io": [
+      {
+        "model": "Ascites-derived ovarian cancer spheroid culture (OVCSC/MESOV cells)",
+        "inputs": [
+          "2D and 3D culture conditions",
+          "PALMD knockdown (transient and stable)"
+        ],
+        "outputs": [
+          "PALMD transcript abundance (RNA-seq)",
+          "PALMD protein levels",
+          "Spheroid morphology",
+          "p53 and vimentin expression"
+        ]
+      },
+      {
+        "model": "Apoptosis assays",
+        "inputs": [
+          "PALMD-depleted cells in suspension vs. attached"
+        ],
+        "outputs": [
+          "Caspase 3/7 signal",
+          "Annexin V staining",
+          "Cell viability"
+        ]
+      },
+      {
+        "model": "Co-culture with endothelial cells",
+        "inputs": [
+          "PALMD expression",
+          "Endothelial cell contact"
+        ],
+        "outputs": [
+          "PALMD mRNA changes",
+          "Spheroid integrity"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "PALMD expression increases in 3D spheroid conditions",
+        "result": "Confirmed: PALMD transcript higher in 3D culture"
+      },
+      {
+        "hypothesis": "PALMD depletion compromises spheroid integrity and survival",
+        "result": "Supported: disrupted morphology and increased apoptosis upon knockdown"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81793-3": {
+    "category": "Cell Signaling",
+    "task": "Identify JAK2/STAT3 pathway role in Ginsenoside Rg1-mediated angiogenesis after spinal cord injury",
+    "key_results": "GRg1 upregulates VEGF in spinal cord microvascular endothelial cells via JAK2/STAT3; AG490 (JAK2 inhibitor) blocks GRg1-induced VEGF, proliferation, and tube formation; in vivo, GRg1 promotes angioneural repair and motor recovery in both rat and mouse SCI models",
+    "comments": "Network pharmacology effectively predicted the JAK2/STAT3 axis, though the specificity of this pathway versus parallel VEGF-signaling routes in endothelial cells warrants further investigation.",
+    "model_io": [
+      {
+        "model": "Primary spinal cord microvascular endothelial cells (SCMECs) with oxygen-glucose deprivation",
+        "inputs": [
+          "Ginsenoside Rg1",
+          "SCMECs",
+          "JAK2 inhibitor AG490"
+        ],
+        "outputs": [
+          "VEGF expression (Western blot)",
+          "Cell proliferation",
+          "Tube formation capacity"
+        ]
+      },
+      {
+        "model": "Rat/mouse spinal cord injury model",
+        "inputs": [
+          "Doxorubicin-induced SCI",
+          "Intraperitoneal GRg1",
+          "EVs from senescent endothelial cells"
+        ],
+        "outputs": [
+          "VEGF protein levels",
+          "Angiogenesis (immunofluorescence)",
+          "Hindlimb motor function (footprint analysis)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "GRg1 promotes angiogenesis via the JAK2/STAT3 pathway",
+        "result": "Confirmed: pathway inhibition blocks GRg1-induced VEGF and angiogenic responses"
+      },
+      {
+        "hypothesis": "VEGF upregulation correlates with improved neurological recovery post-SCI",
+        "result": "Supported: GRg1 treatment enhances angioneural repair and motor recovery in vivo"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-79229-7": {
+    "category": "Statistical Methods",
+    "task": "Identify low-dimensional spectral structure in stochastic reaction networks via Koopman operator",
+    "key_results": "Dominant spectral modes reveal latent dynamical organization; reduced representations achieve order-of-magnitude computational gains with computable error bounds",
+    "comments": "Elegant framework bridges gap between high-dimensional stochasticity and interpretable reduced models; application to synthetic gene circuits demonstrates utility for systems biology inference.",
+    "model_io": [
+      {
+        "model": "Spectral decomposition via stochastic Koopman operator",
+        "inputs": [
+          "simulated trajectories from stochastic reaction networks"
+        ],
+        "outputs": [
+          "dominant Koopman modes",
+          "reduced low-dimensional representations",
+          "moment evolution",
+          "parameter sensitivities",
+          "error bounds"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Stochastic reaction networks exhibit dominant low-dimensional spectral structure exploitable for model reduction",
+        "result": "Confirmed\u2014spectral analysis reveals organized dynamical modes"
+      },
+      {
+        "hypothesis": "Reduced spectral models enable accurate inference of initial-state distributions from single-cell snapshot data",
+        "result": "Confirmed\u2014framework facilitates inference from population time-course measurements"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80752-2": {
+    "category": "Genomics",
+    "task": "Multi-omics predictive model for early glaucoma diagnosis in high-risk populations",
+    "key_results": "Random Forest achieves AUC 0.863 (training), 0.785 (validation); RNFLT, vCDR, IOP ranked as top predictors",
+    "comments": "Reasonable cross-cohort generalization; SHAP interpretability reveals feature contributions; clinical use requires prospective multicenter validation and integration with ophthalmologic screening protocols.",
+    "model_io": [
+      {
+        "model": "Multi-omics glaucoma prediction (Random Forest + other classifiers)",
+        "inputs": [
+          "342 high-risk individuals",
+          "clinical measures (IOP, vCDR, RNFLT, GCCT)",
+          "multi-omics markers (LTBP2, glucose-6-phosphate)"
+        ],
+        "outputs": [
+          "early glaucoma classification",
+          "risk scores",
+          "feature importance (SHAP)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-omics integration improves early glaucoma prediction over clinical measures alone",
+        "result": "Confirmed\u2014AUC 0.785 achieved; omics features contribute meaningfully to predictions"
+      },
+      {
+        "hypothesis": "RNFLT and structural measures are most predictive of early glaucoma",
+        "result": "Confirmed\u2014RNFLT, vCDR, IOP ranked top-3 by SHAP analysis"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81172-y": {
+    "category": "Statistical Methods",
+    "task": "Named entity recognition for stroke symptoms in Indonesian patient queries",
+    "key_results": "F1 0.78 (exact span), 0.96 (overlapping); XLM-RoBERTa-large + CRF achieves best macro F1 0.792 \u00b1 0.003",
+    "comments": "Inter-annotator agreement of 0.78 suggests the annotation task itself is challenging; CRF consistently improves all encoders, but multilingual pretraining provides no benefit over monolingual when model size is matched.",
+    "model_io": [
+      {
+        "model": "Named entity recognition (NER) benchmark",
+        "inputs": [
+          "1,742 Indonesian patient queries (informal text)"
+        ],
+        "outputs": [
+          "entity spans (Symptom, Diagnosis, Temporal, Risk Factor)",
+          "entity labels",
+          "confidence scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "CRF decoding improves transformer-based NER for informal clinical text",
+        "result": "Confirmed\u2014CRF consistently outperforms linear decoders"
+      },
+      {
+        "hypothesis": "Multilingual pretraining outperforms monolingual for low-resource Indonesian",
+        "result": "Refuted\u2014monolingual XLM-RoBERTa-large performs comparably to multilingual when matched on size"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81586-8": {
+    "category": "Other",
+    "task": "Assess feasibility of combining local and global MRI features for multi-class neurological classification",
+    "key_results": "SpineFusion achieves 94.89% \u00b1 1.09% on cleaned spinal MS dataset; no statistically supported advantage over ConvNeXt-Tiny alone",
+    "comments": "Rigorous evaluation including duplicate auditing and cross-fold analysis; negative result honestly reported, though patient-level validation lacking.",
+    "model_io": [
+      {
+        "model": "SpineFusion (ConvNeXt-Tiny + Swin-T + cross-attention)",
+        "inputs": [
+          "2D MRI slices (spinal MS, brain MS, neurological)"
+        ],
+        "outputs": [
+          "disease classification",
+          "confidence scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Fusion of local and global features improves MRI classification over single-encoder baselines",
+        "result": "Refuted\u2014no statistically significant difference in paired tests"
+      }
+    ]
+  },
+  "nature:10.1038/s41746-026-03382-y": {
+    "category": "Network Biology",
+    "task": "Graph neural networks informed by epidemiological principles for hospital-acquired infection prediction",
+    "key_results": "EIGNN achieves AUC-ROC up to 98.46% on real-world COVID-19 cohort; mechanistically consistent predictions enable transparent infection control guidance",
+    "comments": "Physics-informed neural network approach well-adapted to epidemiological modeling; interpretability via mechanistic components builds clinical trust essential for infection prevention applications.",
+    "model_io": [
+      {
+        "model": "Epidemiology-informed GNN (EIGNN)",
+        "inputs": [
+          "dynamic contact networks (patients, healthcare workers, environments)",
+          "risk factors",
+          "disease states"
+        ],
+        "outputs": [
+          "patient-level state transition predictions",
+          "transmission/recovery rates",
+          "infection risk estimates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "GNNs informed by epidemiological models improve HAI prediction and interpretability",
+        "result": "Confirmed\u2014AUC-ROC 98.46% with mechanistically consistent predictions"
+      },
+      {
+        "hypothesis": "Latent epidemiological states can be inferred from network contact patterns",
+        "result": "Confirmed\u2014model estimates key transmission and recovery rates"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-57701-0": {
+    "category": "Statistics/Probability",
+    "task": "Flexible hybrid lifetime modeling via Gamma-Power Ailamujia distribution under censoring",
+    "key_results": "GPAHD accommodates wide range of hazard shapes; Bayesian MCMC under LINEX loss enables asymmetric decision settings; superior fit on economic growth and polyester fiber datasets vs. standard alternatives",
+    "comments": "Theoretically rich framework with comprehensive inference methods; Monte Carlo demonstrates finite-sample properties under various censoring schemes.",
+    "model_io": [
+      {
+        "model": "Gamma-Power Ailamujia Hybrid Distribution (GPAHD) with Bayesian MCMC",
+        "inputs": [
+          "progressively Type-II censored lifetime data"
+        ],
+        "outputs": [
+          "hazard rate function",
+          "posterior estimates",
+          "credible intervals"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "GPAHD provides competitive fit for complex lifetime data under censoring",
+        "result": "Supported: superior/competitive performance on economic and materials datasets"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78808-4": {
+    "category": "ML Theory",
+    "task": "Marine animal segmentation under camouflage via shape-prior guided progressive decoder",
+    "key_results": "SPMNet on MAS3K achieves 1.6% mIoU improvement, 1.3% F_\u03b2 improvement, 0.6% mean-E improvement over state-of-the-art with 0.1% MAE reduction",
+    "comments": "Novel integration of SAM2 with shape-aware priors and iterative CCS refinement; competitive results across four marine datasets despite challenging underwater conditions.",
+    "model_io": [
+      {
+        "model": "SPMNet (Progressive SAG-CCS Decoder on frozen SAM2 Hiera backbone)",
+        "inputs": [
+          "underwater images"
+        ],
+        "outputs": [
+          "segmentation mask",
+          "boundary continuity",
+          "structural completeness"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Shape-prior guidance improves boundary continuity and structural completeness in camouflaged segmentation",
+        "result": "Supported: state-of-the-art results on four marine datasets"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81101-z": {
+    "category": "Algorithms",
+    "task": "Intermodal terminal site selection via binary logit model and hybrid simulation",
+    "key_results": "Framework identifies three highest-ranked terminal locations (Chukursay, Sergeli, Angren) for operational evaluation; KPIs computed for modal split, journey time, utilization, freight flows",
+    "comments": "Novel hybrid statistical-simulation approach for Uzbekistan infrastructure planning; lacks quantitative performance comparison across candidate sites.",
+    "model_io": [
+      {
+        "model": "Binary logit model (stage 1) + AnyLogic-Python hybrid simulation (stage 2)",
+        "inputs": [
+          "station characteristics",
+          "expert suitability ratings",
+          "operational scenarios"
+        ],
+        "outputs": [
+          "ranked terminal locations",
+          "KPIs (journey time, modal split, utilization, freight flow)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Integrated framework provides evidence-based decision support for intermodal terminal investment",
+        "result": "Demonstrated: framework applied to Tashkent region with operational KPI assessment"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81675-8": {
+    "category": "ML Theory",
+    "task": "Lightweight fault diagnosis via self-supervised learning and knowledge distillation",
+    "key_results": "Student model achieves 0.9963 accuracy on CWRU (vs. 1.0000 for Teacher) with 56% reduction in inference time; SSL pre-training improves accuracy from 0.939 to 0.985 with 10% labels",
+    "comments": "Strong practical contribution to edge computing constraints, though improvements under limited labels show non-uniform benefit across label fractions.",
+    "model_io": [
+      {
+        "model": "Teacher-Student SSL-KD framework",
+        "inputs": [
+          "vibration signals",
+          "STFT",
+          "CWT",
+          "Gramian Angular Field representations"
+        ],
+        "outputs": [
+          "four-class fault diagnosis"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multimodal fusion improves known-fault diagnosis performance",
+        "result": "Supported by 11-configuration ablation study"
+      },
+      {
+        "hypothesis": "Student retains Teacher performance while reducing deployment cost",
+        "result": "Confirmed: 0.9963 vs 1.0000 accuracy with significant latency/size reduction"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81833-y": {
+    "category": "ML Theory",
+    "task": "Robust time series forecasting via median-pi-sigma neural network",
+    "key_results": "Median Pi-Sigma NN achieves lowest average RMSE across FTSE datasets; outperforms MLP, Pi-Sigma, multiplicative neuron, recurrent, GRU, LSTM, dendritic NN baselines; Friedman test confirms superiority",
+    "comments": "Novel hybrid architecture combining median robustness with multiplicative nonlinearity; PSO optimization necessary due to median non-differentiability; financial forecasting application with noise robustness demonstrated.",
+    "model_io": [
+      {
+        "model": "Median-Pi-Sigma NN (median hidden layer + multiplicative neurons + PSO optimization)",
+        "inputs": [
+          "FTSE time series (10 datasets)"
+        ],
+        "outputs": [
+          "one-step-ahead forecast"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Median-based robustness with multiplicative neurons improves financial forecasting",
+        "result": "Supported: lowest average RMSE across datasets; Friedman test p<0.05"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-82024-5": {
+    "category": "ML Theory",
+    "task": "Zero-day jailbreak defense for LLMs via contrastive dual-encoder transformer",
+    "key_results": "AdverSentinel-LLM achieves F1-score 0.967, detection accuracy 97.3%, zero-day detection rate 94.8%; state-of-the-art on AdvBench, JailbreakBench, ToxicChat, PromptSafety-Bench",
+    "comments": "Novel dual-encoder architecture with threat pattern and semantic separation; Dynamic Threat Memory Bank prevents stagnation; cross-model transferability preliminary, matched-prompt evaluation deferred.",
+    "model_io": [
+      {
+        "model": "AdverSentinel-LLM (CDET with PSE + TPE + DTMB + AAGM)",
+        "inputs": [
+          "user prompts"
+        ],
+        "outputs": [
+          "adversarial/benign classification",
+          "detection confidence",
+          "explanation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Contrastive dual-encoder enables zero-day jailbreak generalization",
+        "result": "Supported: 94.8% zero-day detection rate; cross-model transferability preliminary"
+      }
+    ]
+  },
+  "nature:10.1038/s44260-026-00103-0": {
+    "category": "Graph Theory",
+    "task": "Mixed membership community detection in aggregated social networks",
+    "key_results": "Link Fraction Mixed Membership (LFMM) method conserves community membership sums under aggregation; reveals community membership variation across Dutch geographical regions over decade",
+    "comments": "Novel consistency property under aggregation; application to Netherlands population network demonstrates urban hubs as community 'melting pots'.",
+    "model_io": [
+      {
+        "model": "LFMM (Link Fraction Mixed Membership) algorithm",
+        "inputs": [
+          "aggregated social network at multiple resolutions"
+        ],
+        "outputs": [
+          "mixed membership assignments",
+          "community diversity profiles"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LFMM is consistent under aggregation and conserves membership sums",
+        "result": "Supported by theoretical analysis and Netherlands case study"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-75729-0": {
+    "category": "Optics/Photonics",
+    "task": "Thermally tunable multi-stage liquid crystal optical filters with spectral scanning via birefringence dispersion",
+    "key_results": "Single-mode filter thermally tunable 400\u2013593 nm (E44 LC, 366\u2013297 K); line width 12.5\u201318.57 nm; spectral resolution tuned 12.5\u201325 nm (first mode) to 3.12\u20133.20 nm (fourth mode); bandgap widening up to 558% with increased stage thickness",
+    "comments": "Comprehensive Jones matrix analysis with Haller model + Cauchy dispersion enables thermal design; practical application domains (hyperspectral imaging, biomedical diagnostics) well-motivated but no experimental filtering demonstration provided.",
+    "model_io": [
+      {
+        "model": "Liquid crystal multi-stage filter (Jones matrix design)",
+        "inputs": [
+          "LC material (E7, E48, E44, 5CB)",
+          "temperature",
+          "stage thickness",
+          "birefringence \u0394n(T,\u03bb)"
+        ],
+        "outputs": [
+          "transmission spectrum",
+          "center wavelength",
+          "spectral resolution"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Smooth thermal tuning of LC-based filters via temperature-dependent birefringence enables broad spectral scanning with tunable resolution",
+        "result": "Confirmed; E44 filters showed wavelength tuning 2.2\u201321 nm/K and resolution tuning across spectral modes"
+      }
+    ]
+  },
+  "nature:10.1038/s42005-026-02950-8": {
+    "category": "Condensed Matter",
+    "task": "Modeling self-organized fractal network formation via motility-dependent chemotaxis",
+    "key_results": "Phase diagram spanning homogeneous states, sparse/dense networks, compact clusters, and re-entrant homogeneous state; fractal dimensions and coarse-grained continuum theory validate pattern formation mechanism",
+    "comments": "Elegant minimal model bridging active matter and biological self-organization, though applicability to real vasculogenesis requires validation of saturation kinetics and chemical parameters.",
+    "model_io": [
+      {
+        "model": "Agent-based model with chemotactic feedback",
+        "inputs": [
+          "agent position",
+          "deposition rate",
+          "decay rate"
+        ],
+        "outputs": [
+          "chemical concentration field",
+          "morphology (network, cluster, homogeneous)"
+        ]
+      },
+      {
+        "model": "Continuum theory (linear stability analysis)",
+        "inputs": [
+          "deposition/decay rates"
+        ],
+        "outputs": [
+          "pattern formation onset",
+          "re-entrant transition point"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Saturating chemotactic response combined with motility-dependent deposition stabilizes fractal-like architectures",
+        "result": "Confirmed via phase diagram and stability analysis"
+      }
+    ]
   }
 }
