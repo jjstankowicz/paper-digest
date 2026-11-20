@@ -752604,5 +752604,971 @@
         "result": "UV-shielding efficiency increased monotonically with dye concentration; energy gap dropped for doped films vs. neat CS"
       }
     ]
+  },
+  "hf:2611.25567": {
+    "category": "Vision",
+    "task": "Online mistake detection in egocentric procedural videos",
+    "key_results": "Joint model achieves 84.1% F1@0.5 for binary mistake detection (vs. 80.7% modular); 56.4% F1 on slip detection; 93.6% step-segmentation F1@0.5",
+    "comments": "Addresses practical constraint of real-time feedback during task execution; joint modeling outperforms pipeline on error detection despite similar step-segmentation scores.",
+    "model_io": [
+      {
+        "model": "Joint transformer model",
+        "inputs": [
+          "egocentric video frames",
+          "task instructions",
+          "prior predictions"
+        ],
+        "outputs": [
+          "action step classification",
+          "temporal localization",
+          "execution verification (correct/modified/slip/correction/addition)"
+        ]
+      },
+      {
+        "model": "Modular pipeline",
+        "inputs": [
+          "egocentric video frames",
+          "task instructions",
+          "prior predictions"
+        ],
+        "outputs": [
+          "step identification",
+          "temporal localization",
+          "execution verification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Joint model reduces error propagation compared to modular pipeline",
+        "result": "Confirmed: joint model achieves 3.4% higher mistake-detection F1 (84.1% vs 80.7%)"
+      },
+      {
+        "hypothesis": "Instruction-conditioned online detection improves slip detection",
+        "result": "Confirmed: joint model achieves 56.4% F1 vs 37.5% for modular approach"
+      }
+    ]
+  },
+  "hf:2611.26511": {
+    "category": "Generative",
+    "task": "Latent-free 3D object generation from images",
+    "key_results": "Generates meshes with substantially richer local detail; latent-free design removes reconstruction bottleneck; supports generative reconstruction with normal-guided refinement",
+    "comments": "Operates directly on voxel grids rather than latent spaces, eliminating VAE bottleneck but increasing computational requirements; manifold regularization ensures watertight surfaces.",
+    "model_io": [
+      {
+        "model": "Direct3D-V3 (Diffusion Transformer)",
+        "inputs": [
+          "conditioning image",
+          "text description"
+        ],
+        "outputs": [
+          "native SDF voxel grids",
+          "predicted camera parameters",
+          "mesh via Marching Cubes"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Latent-free diffusion in voxel domain produces finer geometric detail than latent-space methods",
+        "result": "Confirmed: meshes with substantially richer local detail; auxiliary camera prediction task improves conditioning alignment"
+      },
+      {
+        "hypothesis": "Implicit manifold regularization prevents non-watertight surfaces",
+        "result": "Confirmed: regularization over neighboring voxels suppresses non-watertight surfaces"
+      }
+    ]
+  },
+  "hf:2611.26450": {
+    "category": "LLM/Reasoning",
+    "task": "Exact multi-digit arithmetic in pretrained LLMs via circuit grafting",
+    "key_results": "99.17% and 100% ALU-prefix accuracy on 6-digit arithmetic (IBM Granite 3B, Alibaba Qwen 4B); outperforms LoRA (42.2%/61.7%) with zero gradient training; 100% boolean circuits",
+    "comments": "Remarkable achievement of deterministic computation in LLM weights without fine-tuning; practical for arithmetic-dependent applications but requires precise layer architecture knowledge.",
+    "model_io": [
+      {
+        "model": "Circuit-grafted LLM (Granite/Qwen with compiled circuits)",
+        "inputs": [
+          "arithmetic expression (tokens)",
+          "boolean/parity inputs"
+        ],
+        "outputs": [
+          "exact arithmetic result (tokens)",
+          "boolean circuit output"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Zero-gradient compilation using analytical mechanisms achieves exact arithmetic without fine-tuning",
+        "result": "Confirmed: 99-100% accuracy on 6-digit arithmetic with <0.06% parameter overhead"
+      },
+      {
+        "hypothesis": "Mellin-GLU quadrature can overcome RMSNorm scaling variability",
+        "result": "Confirmed: achieves >250x dynamic range with IEEE 754 error bounds"
+      },
+      {
+        "hypothesis": "LLM can maintain language competence while executing deterministic circuits inline",
+        "result": "Confirmed: 98-100% mid-sentence resumption demonstrates preserved NL capability"
+      }
+    ]
+  },
+  "hf:2611.26211": {
+    "category": "Generative",
+    "task": "Fast streaming video generation with latent velocity verification",
+    "key_results": "1.63x speedup over target model; NavScore improved from 75.99 (draft) to 85.63; sustained quality over long multi-turn rollouts",
+    "comments": "Novel verification-as-refinement approach elegantly reuses latent velocity information for quality improvement; training-free makes it broadly applicable.",
+    "model_io": [
+      {
+        "model": "SpecWM (target + draft world model pair)",
+        "inputs": [
+          "prior video frames",
+          "control signals"
+        ],
+        "outputs": [
+          "video chunks",
+          "latent velocity field (verification signal)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Target model's latent velocity field can verify and correct draft generations",
+        "result": "Confirmed: refinement improves NavScore by 9.64 points with 1.63x speedup"
+      },
+      {
+        "hypothesis": "One-step vs three-step refinement trades quality for speed with different control improvements",
+        "result": "Confirmed: three-step refinement strengthens camera following and trajectory consistency"
+      }
+    ]
+  },
+  "hf:2611.25179": {
+    "category": "Benchmark",
+    "task": "Auditing success checkers in simulated manipulation benchmarks",
+    "key_results": "61 distinct defects found across 49 tasks (40 phantom successes, 21 silent failures); 183 simulated test cases validated; RoboCasa365 favors incomplete execution acceptance",
+    "comments": "Critical contribution exposing systematic flaws in benchmark evaluation; demonstrates LLM-based program analysis can identify checker-instruction disagreements at scale.",
+    "model_io": [
+      {
+        "model": "SimAudit (LLM + simulation + visual verification pipeline)",
+        "inputs": [
+          "task instructions",
+          "success checker code",
+          "simulation environment"
+        ],
+        "outputs": [
+          "identified checker defects",
+          "multi-view renderings",
+          "defect classification (phantom success/silent failure)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LLM can identify disagreements between success checkers and task instructions",
+        "result": "Confirmed: 183 predicted disagreements validated in simulation with 61 distinct defects"
+      },
+      {
+        "hypothesis": "Visual verification is necessary to validate simulated behavior against instructions",
+        "result": "Confirmed: multi-view rendering validation required to distinguish false positives"
+      }
+    ]
+  },
+  "hf:2611.21053": {
+    "category": "Agents/RL",
+    "task": "Local agentic AI without hallucination using deterministic tool selection",
+    "key_results": "97.0% correct tool selection/declination (vs 95.2% best LLM-agent); 97.0% argument filling; 0% invented content vs 5.5-19.7% for LLM-agents",
+    "comments": "Elegant solution for sensitive biomedical data by eliminating text generation; deterministic compilation trades flexibility for reliability and security.",
+    "model_io": [
+      {
+        "model": "System 1 Agent (deterministic compiler + decision model)",
+        "inputs": [
+          "tool schemas",
+          "natural language request"
+        ],
+        "outputs": [
+          "selected tool (or decline)",
+          "filled arguments"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multiple-choice questions derived from schema prevent hallucinated tool calls",
+        "result": "Confirmed: 97.0% accuracy with zero invented content vs 5.5-19.7% hallucination in LLM agents"
+      },
+      {
+        "hypothesis": "One-pass decision model on schema-derived questions outperforms local LLMs",
+        "result": "Confirmed: 97.0% vs best 95.2% local LLM setting on 1,952 tool requests"
+      }
+    ]
+  },
+  "hf:2611.26540": {
+    "category": "Generative",
+    "task": "Real-time streaming audio-driven avatar video generation",
+    "key_results": "AURA 1.3B: 576p at 20.7 fps (23x faster than bidirectional teacher); AURA 5B: 720p at 9.7 fps (17x faster); quality comparable to TalkVerse",
+    "comments": "Two-stage distillation with rolling KV cache enables true streaming; practical for interactive avatar applications with minimal latency.",
+    "model_io": [
+      {
+        "model": "AURA 1.3B (causal diffusion transformer with KV cache)",
+        "inputs": [
+          "current chunk audio",
+          "rolling context"
+        ],
+        "outputs": [
+          "576p video chunk (20.7 fps)"
+        ]
+      },
+      {
+        "model": "AURA 5B (causal diffusion transformer with KV cache)",
+        "inputs": [
+          "current chunk audio",
+          "rolling context"
+        ],
+        "outputs": [
+          "720p video chunk (9.7 fps)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Causal attention with rolling KV cache enables streaming without multi-second lookahead",
+        "result": "Confirmed: requires only current chunk audio vs bidirectional models"
+      },
+      {
+        "hypothesis": "Distribution Matching Distillation reduces diffusion steps while maintaining quality",
+        "result": "Confirmed: AURA 1.3B achieves TalkVerse-comparable quality at 23x speedup"
+      }
+    ]
+  },
+  "hf:2611.19499": {
+    "category": "LLM/Reasoning",
+    "task": "Analyzing probe vs steering direction preferences in LLMs",
+    "key_results": "Best probing direction \u2260 best steering direction in all 3 models; steering favors mean difference directions; probe transfer retains 81-91% performance vs reduced steering transfer",
+    "comments": "Important empirical finding that mechanistic interpretability operations (probing/steering) optimize for different directions; has implications for circuit-based model understanding.",
+    "model_io": [
+      {
+        "model": "Instruction-tuned LLMs (3 models from different families)",
+        "inputs": [
+          "hidden state direction (parameterized covariance-adjusted discriminant to mean difference)",
+          "probing/steering queries"
+        ],
+        "outputs": [
+          "concept presence (probing)",
+          "behavioral modification (steering)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Best probe direction differs from best steering direction within models",
+        "result": "Confirmed: separation holds in 59/60 layer-model-concept combinations; steering favors mean difference"
+      },
+      {
+        "hypothesis": "Steering directions transfer less reliably across models than probe directions",
+        "result": "Confirmed: probe transfer retains 81-91% performance; steering transfer loses more in 11/12 pairs"
+      },
+      {
+        "hypothesis": "Steering toward 'unknown' increases abstention more on uncertain than confident errors",
+        "result": "Confirmed: 18-44 point abstention increase on uncertain errors vs 2-5 on confident errors"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-79468-8": {
+    "category": "Epigenetics",
+    "task": "Identify molecular mechanisms and regulatory factors controlling lamina-associated domain (LAD) positioning in human genome",
+    "key_results": "Genome-wide siRNA screen identified >100 genes required for LAD perinuclear localization; hnRNPK required for positioning of ~67% of LADs; H3K27me3-enriched LADs (hnRNPK-sensitive) distinct from H3K9me3-enriched LADs (hnRNPK-insensitive)",
+    "comments": "This represents the first systematic imaging-based genetic dissection of LAD positioning, though the mechanistic link between hnRNPK and chromatin targeting remains to be elucidated.",
+    "model_io": [
+      {
+        "model": "Genome-wide imaging-based siRNA screen in human cells",
+        "inputs": [
+          "siRNA library targeting 20,000+ genes"
+        ],
+        "outputs": [
+          "LAD positioning changes",
+          "perinuclear localization"
+        ]
+      },
+      {
+        "model": "hnRNPK knockdown cells",
+        "inputs": [
+          "hnRNPK siRNA"
+        ],
+        "outputs": [
+          "LAD detachment",
+          "transcriptional dysregulation",
+          "heterochromatin state",
+          "lamina components"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "RNA-binding proteins, particularly hnRNPK, regulate LAD positioning at the nuclear periphery",
+        "result": "Confirmed; hnRNPK required for positioning of ~67% of LADs"
+      },
+      {
+        "hypothesis": "LADs comprise epigenetically distinct subclasses governed by distinct regulatory pathways",
+        "result": "Confirmed; H3K27me3-enriched hnRNPK-sensitive LADs distinct from H3K9me3-enriched insensitive LADs"
+      }
+    ]
+  },
+  "nature:10.1038/s41580-026-01042-3": {
+    "category": "Cell Signaling",
+    "task": "Systematically characterize HER receptor dimerization preferences, ligand modulation, and downstream pathway selectivity governing cancer cell signaling and therapeutic resistance",
+    "key_results": "HER receptor dimerization preferences shaped by ligand identity and structural determinants; heterodimerization translates specific receptor\u2013ligand combinations into distinct pathway activation; temporal dynamics and receptor trafficking govern signal output; receptor overexpression, oncogenic mutations, and targeted therapies reconfigure HER interactions to generate ligand-independent signaling and therapeutic resistance",
+    "comments": "This comprehensive Review synthesizes structural and functional mechanisms of HER signaling network regulation; the emerging complexity suggests that combinatorial therapeutic targeting of multiple HER dimers and pathways may be necessary to overcome resistance.",
+    "model_io": [
+      {
+        "model": "HER receptor heterodimerization structural analysis",
+        "inputs": [
+          "ligand identity",
+          "receptor mutational status"
+        ],
+        "outputs": [
+          "dimer preferences",
+          "pairing specificity"
+        ]
+      },
+      {
+        "model": "Ligand-specific pathway activation assays",
+        "inputs": [
+          "HER ligands",
+          "HER dimeric forms"
+        ],
+        "outputs": [
+          "downstream pathway engagement",
+          "signaling output"
+        ]
+      },
+      {
+        "model": "Cancer cell models with receptor overexpression and mutations",
+        "inputs": [
+          "HER overexpression",
+          "oncogenic mutations",
+          "targeted therapies"
+        ],
+        "outputs": [
+          "ligand-independent signaling",
+          "therapeutic resistance",
+          "pathway reactivation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "HER receptor dimerization preferences are determined by ligand identity and structural interactions",
+        "result": "Confirmed; ligand-specific and dimer-specific pathway activation demonstrated"
+      },
+      {
+        "hypothesis": "Receptor overexpression, oncogenic mutations, and targeted therapies reconfigure HER interactions to generate ligand-independent signaling",
+        "result": "Supported; multiple mechanisms identified for therapeutic resistance"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-73628-y": {
+    "category": "Cytoskeleton",
+    "task": "Investigate how LMNA p.S143P mutation impairs nuclear mechanotransduction and links to dilated cardiomyopathy pathogenesis",
+    "key_results": "Patient-derived cardiomyocytes carrying p.S143P showed increased N-terminal and decreased rod-domain lamin A/C epitope accessibility; FRET-based strain sensor revealed relaxed lamin strain state; dysregulated genes enriched for cytoskeleton and mechanosensitive pathways; increased calcium current densities and delayed afterdepolarizations in mutant cardiomyocytes",
+    "comments": "The mechanobiological link between altered lamin conformation and downstream transcriptomic/electrophysiological changes is well-integrated, though the initiating trigger for calcium dysregulation warrants further investigation.",
+    "model_io": [
+      {
+        "model": "Patient-derived cardiomyocytes with p.S143P LMNA mutation",
+        "inputs": [],
+        "outputs": [
+          "lamin A/C epitope accessibility",
+          "lamin strain state",
+          "nuclear mechanics"
+        ]
+      },
+      {
+        "model": "FRET-based fluorescent protein strain sensor",
+        "inputs": [
+          "lamin A/C conformational dynamics"
+        ],
+        "outputs": [
+          "lamin strain state",
+          "mechanotransduction readout"
+        ]
+      },
+      {
+        "model": "Transcriptomic profiling",
+        "inputs": [
+          "patient vs. control cardiomyocytes"
+        ],
+        "outputs": [
+          "gene expression dysregulation",
+          "cytoskeleton pathway genes",
+          "mechanosensitive pathway genes"
+        ]
+      },
+      {
+        "model": "Electrophysiological analysis",
+        "inputs": [
+          "patient vs. control cardiomyocytes"
+        ],
+        "outputs": [
+          "calcium current densities",
+          "delayed afterdepolarizations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "p.S143P LMNA mutation disrupts nuclear lamina organization and shifts lamin into a relaxed strain state",
+        "result": "Confirmed; altered epitope accessibility and relaxed lamin strain observed in patient cardiomyocytes"
+      },
+      {
+        "hypothesis": "Impaired mechanotransduction leads to dysregulation of cytoskeleton and mechanosensitive genes and altered calcium signaling",
+        "result": "Confirmed; transcriptomic dysregulation and increased calcium current densities observed"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-76899-7": {
+    "category": "Cell Death",
+    "task": "Investigate how miR-503 from senescent endothelial cell extracellular vesicles impairs mitophagy and exacerbates heart failure through m6A-dependent MST1 regulation",
+    "key_results": "EVssenescent-derived miR-503 inhibited mitophagy and promoted mitochondrial dysfunction in DOX-treated cardiomyocytes; m6A methylation site identified on MST1 mRNA; miR-503 antagomir partially reversed heart failure progression in rats",
+    "comments": "The m6A-MST1 linkage is novel but requires comprehensive mass spectrometry validation to confirm the specific methylation site and stoichiometry.",
+    "model_io": [
+      {
+        "model": "Rat endothelial cell senescence model",
+        "inputs": [],
+        "outputs": [
+          "EVssenescent with high miR-503"
+        ]
+      },
+      {
+        "model": "Rat DOX-induced heart failure model",
+        "inputs": [
+          "EVssenescent",
+          "EVsmiR-503 antagomir",
+          "DAA",
+          "miR-503 inhibition"
+        ],
+        "outputs": [
+          "cardiac function",
+          "fibrosis",
+          "NT-proBNP",
+          "TOM20",
+          "LC3B"
+        ]
+      },
+      {
+        "model": "DOX-treated H9C2 cardiomyocytes",
+        "inputs": [
+          "EVssenescent",
+          "miR-503",
+          "MST1 m6A modification"
+        ],
+        "outputs": [
+          "mitophagy",
+          "mitochondrial function",
+          "cell viability"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "EVssenescent miR-503 suppresses mitophagy and exacerbates mitochondrial dysfunction in DOX-treated cardiomyocytes",
+        "result": "Confirmed; miR-503 inhibition and mitophagy activation reduced adverse effects"
+      },
+      {
+        "hypothesis": "miR-503 regulates MST1 expression through m6A-dependent mechanisms",
+        "result": "Supported; m6A methylation site on MST1 identified and correlated with miR-503 delivery"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81191-9": {
+    "category": "Apoptosis/Cell Death",
+    "task": "Evaluate kaempferol-loaded niosomes for enhanced apoptosis induction and altered gene expression in lung cancer cells",
+    "key_results": "Kaempferol-loaded niosomes (60\u201387 nm FESEM) produced concentration- and time-dependent cytotoxicity in A549 cells with lower IC\u2085\u2080 than free kaempferol; kaempferol-loaded niosomes increased BAX and P53 mRNA while decreasing BCL2 and MMP2 mRNA; higher apoptotic cell proportion with niosomes vs. free kaempferol",
+    "comments": "The niosome formulation shows promising enhanced cytotoxicity, but cancer selectivity was not established and protein-level validation is required to support mRNA findings.",
+    "model_io": [
+      {
+        "model": "Thin-film hydration method for niosome preparation",
+        "inputs": [
+          "kaempferol"
+        ],
+        "outputs": [
+          "kaempferol-loaded niosomes (60\u201387 nm)"
+        ]
+      },
+      {
+        "model": "A549 human lung adenocarcinoma cells and HLF non-malignant cells",
+        "inputs": [
+          "kaempferol-loaded niosomes",
+          "free kaempferol"
+        ],
+        "outputs": [
+          "cell viability",
+          "apoptosis",
+          "BAX mRNA",
+          "BCL2 mRNA",
+          "P53 mRNA",
+          "MMP2 mRNA",
+          "wound closure"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Kaempferol-loaded niosomes produce greater cytotoxic and apoptosis-associated effects than free kaempferol in A549 cells",
+        "result": "Confirmed; niosomes showed lower IC\u2085\u2080 and higher apoptotic cell proportion"
+      },
+      {
+        "hypothesis": "Kaempferol-loaded niosomes alter pro-apoptotic and anti-apoptotic gene expression in A549 cells",
+        "result": "Confirmed; increased BAX and P53, decreased BCL2 and MMP2 mRNA"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81421-0": {
+    "category": "Cell Signaling",
+    "task": "Identify how geraniol activates endogenous stress-response pathways to mitigate proteotoxicity in neurodegeneration models",
+    "key_results": "Geraniol reduced \u03b1-synuclein-associated fluorescence and locomotor deficits in C. elegans PD models; protective effects dependent on SKN-1/Nrf2 and DAF-16/FOXO transcription factors; hormetic dose-dependent effects observed across multiple aggregation models",
+    "comments": "The hormetic framework is well-characterized, though context-dependent toxicity at higher doses may limit therapeutic translation without careful dosing strategies.",
+    "model_io": [
+      {
+        "model": "C. elegans PD model (\u03b1-synuclein expression)",
+        "inputs": [
+          "geraniol"
+        ],
+        "outputs": [
+          "locomotor activity",
+          "\u03b1-synuclein fluorescence",
+          "dopaminergic neuron integrity"
+        ]
+      },
+      {
+        "model": "C. elegans \u03b2-amyloid and polyglutamine aggregation models",
+        "inputs": [
+          "geraniol"
+        ],
+        "outputs": [
+          "proteotoxicity markers",
+          "autophagy response"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Geraniol enhances cellular responsiveness to autophagy-inducing stimuli through SKN-1/Nrf2 and DAF-16/FOXO",
+        "result": "Confirmed; SKN-1 and DAF-16 required for geraniol-mediated protection"
+      },
+      {
+        "hypothesis": "Geraniol exhibits hormetic effects with concentration-dependent outcomes",
+        "result": "Confirmed; beneficial at lower concentrations, toxic at higher concentrations in \u03b2-amyloid and polyglutamine models"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-78669-5": {
+    "category": "Single Cell",
+    "task": "Statistical validation of RNA velocity embedding quality",
+    "key_results": "Identified strong differences in embedding quality between methods and datasets; mean AUROC range 0.752\u20130.767 across seven methods",
+    "comments": "Critical contribution showing no method statistically outperformed empirical risk minimization, highlighting the importance of rigorous benchmarking in velocity analysis.",
+    "model_io": [
+      {
+        "model": "velotest",
+        "inputs": [
+          "high-dimensional RNA velocity vectors",
+          "2D velocity embeddings"
+        ],
+        "outputs": [
+          "per-cell faithfulness p-values",
+          "embedding quality metrics",
+          "method rankings"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "2D velocity embeddings faithfully represent high-dimensional dynamics",
+        "result": "Substantial quality variation between methods; no clear winner across datasets"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-79392-x": {
+    "category": "Network Biology",
+    "task": "Virus-host association prediction without host genomes",
+    "key_results": "12% improvement in F1-score, 19% improvement in Top-1 accuracy, 27% improvement in AUPR over iPHoP; expanded host coverage from 36.5% to 64.5%",
+    "comments": "Foundation model approach elegantly sidesteps genome availability constraints but relies on taxonomy transfer which may limit novel host discovery.",
+    "model_io": [
+      {
+        "model": "VHSeek",
+        "inputs": [
+          "viral DNA sequences",
+          "viral protein sequences",
+          "known host taxonomies"
+        ],
+        "outputs": [
+          "host-virus associations",
+          "confidence scores",
+          "multi-host hypotheses"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Integrating DNA and protein representations improves virus-host prediction",
+        "result": "Outperformed single-modality baselines and iPHoP significantly"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-79470-0": {
+    "category": "Genomics",
+    "task": "Epigenetic and transcriptional reprogramming of transposable elements under toxicant exposure",
+    "key_results": "351 multi-omic datasets reveal exposure-specific, sex-dependent TE responses; 164 TE-gene chimeric transcripts identified; LINEs associated with metabolic pathways",
+    "comments": "Comprehensive multi-omic integration; exposure-specific and sex-dependent effects highlight complexity but causal mechanisms remain unresolved.",
+    "model_io": [
+      {
+        "model": "Multi-omic integration across seven toxicants",
+        "inputs": [
+          "chromatin accessibility",
+          "gene expression",
+          "early-life exposure status"
+        ],
+        "outputs": [
+          "TE activity changes",
+          "TE-gene associations",
+          "chimeric transcripts"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Environmental toxicants alter chromatin accessibility and expression of transposable elements",
+        "result": "Confirmed; exposure-specific and sex-dependent responses observed"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79757-8": {
+    "category": "Other",
+    "task": "Adversarial evolution framework for intrusion detection system robustness",
+    "key_results": "MutaShield-Net 99.47% detection accuracy, 98.92% F1-score, 99.21% AUC-ROC; 40.4% false positive rate reduction vs FL-WGAN-IDS",
+    "comments": "Novel co-evolutionary approach combining mutation testing with adversarial learning; comprehensive evaluation but dataset bias toward known attack types remains concern.",
+    "model_io": [
+      {
+        "model": "MutaShield-Net (SMOE + CA-GRT + AMFEL)",
+        "inputs": [
+          "network traffic (packet features, semantic embeddings)"
+        ],
+        "outputs": [
+          "attack class probability",
+          "attack type predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Adversarial mutation pressure improves IDS robustness against unseen attacks",
+        "result": "Confirmed; outperforms baseline on CIC-IDS benchmark"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79823-1": {
+    "category": "Other",
+    "task": "Agreement between CDAI and DAS28-CRP disease activity indices with exploratory ML models",
+    "key_results": "CDAI sensitivity 88.1%, specificity 97.2%, ROC-AUC 0.983 for remission/low vs moderate/high; Spearman \u03c1=0.955; 71.9% agreement on four-level categories",
+    "comments": "CDAI practical alternative in resource-constrained settings; ML models internally valid but overlapping predictors with DAS28-CRP; external validation essential.",
+    "model_io": [
+      {
+        "model": "Multiple ML classifiers (SVM, KNN, neural networks) + cross-validation",
+        "inputs": [
+          "CDAI components",
+          "DAS28-CRP components"
+        ],
+        "outputs": [
+          "disease activity category",
+          "risk probability"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "CDAI predicts DAS28-CRP disease activity categories",
+        "result": "Confirmed; strong correlation and good classification performance"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81325-z": {
+    "category": "Structural Prediction",
+    "task": "Dicistroviridae 3C protease substrate specificity characterization",
+    "key_results": "Identified P1 glutamine stabilization as conserved mechanism; P2 and P4\u2032 positions as critical specificity determinants; species-specific substrate selection confirmed",
+    "comments": "Elegant integration of structural modeling and in vitro biochemistry; mechanism conserved but distal interactions enforce strict species-specificity.",
+    "model_io": [
+      {
+        "model": "CrPV 3C protease",
+        "inputs": [
+          "DnaK-based engineered substrates",
+          "protease-substrate complexes"
+        ],
+        "outputs": [
+          "catalytic efficiency",
+          "substrate specificity patterns",
+          "cleavage rates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "\u03b2-ribbon structural variations dictate substrate cross-selectivity",
+        "result": "Confirmed; species-specificity prevents cross-processing within family"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81727-z": {
+    "category": "Statistical Methods",
+    "task": "Multi-seed domain generalization benchmarking for TB detection in chest X-rays",
+    "key_results": "No method significantly outperformed ERM (p=0.59); AUROC range 0.752\u20130.767; AdaMix showed superior calibration (ECE 0.232 vs 0.286\u20130.327)",
+    "comments": "Rigorous multi-seed evaluation (140 runs) exposes instability in reported DG claims; mean sensitivity only 0.55\u20130.60 at unseen sites indicates deployment challenges.",
+    "model_io": [
+      {
+        "model": "Seven domain generalization methods (ERM, MixStyle, CORAL, AdaMix, IRM, GroupDRO, HP-EAR)",
+        "inputs": [
+          "chest radiographs",
+          "TB labels"
+        ],
+        "outputs": [
+          "disease predictions",
+          "AUROC",
+          "calibrated probabilities"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Domain generalization methods improve TB detection across unseen hospitals",
+        "result": "Rejected; no method differed significantly from ERM in paired tests"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-66564-4": {
+    "category": "Other",
+    "task": "Pentacopter drone aerodynamic design and performance comparison with quadcopter via CFD simulation and flight testing",
+    "key_results": "Pentacopter design completed and validated through CFD analysis and experimental flight testing; comparison with quadcopter provided",
+    "comments": "Novel pentacopter configuration represents exploratory design work; quantitative aerodynamic improvements over quadcopter not explicitly stated.",
+    "model_io": [
+      {
+        "model": "Computational Fluid Dynamics (CFD) simulations",
+        "inputs": [
+          "pentacopter 3D geometry",
+          "quadcopter 3D geometry"
+        ],
+        "outputs": [
+          "aerodynamic force predictions",
+          "flow field visualization"
+        ]
+      },
+      {
+        "model": "Flight testing with Pixhawk autopilot and PID controller",
+        "inputs": [
+          "control commands"
+        ],
+        "outputs": [
+          "flight logs",
+          "performance metrics"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Pentacopter configuration improves aerodynamic performance relative to quadcopter",
+        "result": "Partial: design feasible; quantitative improvements not clearly documented"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78647-3": {
+    "category": "Other",
+    "task": "Secondary-data reanalysis and consistency assessment of V\u2013Ti co-doped zircon pigment optical and structural properties",
+    "key_results": "Tetragonality deviation ranges \u22121.197\u00d710\u207b\u2074 to \u22126.847\u00d710\u207b\u2074; recalculated chroma 6.708\u20139.000; hue angle shift indicates yellow-green-to-green transition",
+    "comments": "Reanalysis of archived data only; no new synthesis or causal inference, explicitly designed as auditable integration study rather than discovery.",
+    "model_io": [],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-79853-9": {
+    "category": "Other",
+    "task": "Assessment of finite element model uncertainty in structural stability through deterministic and stochastic analyses",
+    "key_results": "Model factors for global buckling are consistent across beam/shell/solid elements; reliability-based method choice has pronounced effect on design resistance estimation",
+    "comments": "Practical contribution for structural design; limited to cases where local instabilities are prevented, reducing generalizability.",
+    "model_io": [
+      {
+        "model": "Finite element analysis (FEA) with Monte Carlo simulations",
+        "inputs": [
+          "material properties variability",
+          "geometric properties variability"
+        ],
+        "outputs": [
+          "model factors",
+          "design buckling resistance"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Different FE formulations (beam/shell/solid) produce inconsistent model factors",
+        "result": "Refuted: factors generally consistent across approaches"
+      },
+      {
+        "hypothesis": "Reliability-based method choice influences design resistance estimation",
+        "result": "Confirmed: pronounced effect observed"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81013-y": {
+    "category": "Other",
+    "task": "Real-time occupant injury risk mitigation in autonomous vehicles via omni-directional injury risk functions derived from pre-crash variables",
+    "key_results": "Cross-dataset discrimination for severe (MAIS 3+) injuries exceeds AUC > 0.82; framework enables purely kinematic evaluation of steering/braking interventions per sensor update",
+    "comments": "Novel methodology avoids crash-phase simulation for millisecond decision budgets; real-world crash test validates applicability, though population generalization untested.",
+    "model_io": [
+      {
+        "model": "Omni-directional injury risk functions (IRFs) derived via two-stage feature selection",
+        "inputs": [
+          "pre-crash variables at first contact (velocity, angle, mass, etc.)"
+        ],
+        "outputs": [
+          "occupant injury risk predictions (MAIS categories)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Pre-crash-only variables sufficiently predict occupant injury risk across geographies",
+        "result": "Confirmed: AUC > 0.82 for severe injuries cross-dataset; real-world crash test validated"
+      }
+    ]
+  },
+  "nature:10.1038/s41599-026-09482-0": {
+    "category": "Other",
+    "task": "Internet adoption effects on export outcomes for initially less-productive firms via firm-level panel analysis",
+    "key_results": "Internet use positively associated with export outcomes, with larger gains concentrated in export entry and value for initially less-productive firms; shift-share IV estimates consistent with baseline",
+    "comments": "Novel identification via firm internet diffusion wave; mechanism evidence consistent with productivity improvements and reduced fixed-export costs; cross-country generalizability unclear.",
+    "model_io": [
+      {
+        "model": "Panel fixed-effect regression with shift-share IV estimation",
+        "inputs": [
+          "firm internet adoption status",
+          "initial productivity",
+          "firm and year fixed effects"
+        ],
+        "outputs": [
+          "export entry probability",
+          "export value predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Internet adoption narrows export disparities for less-productive firms",
+        "result": "Confirmed: larger export gains concentrated in initially less-productive firms"
+      },
+      {
+        "hypothesis": "Internet adoption operates through productivity and information-friction channels",
+        "result": "Confirmed: mechanism analysis supports these channels"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-79535-0": {
+    "category": "Condensed Matter",
+    "task": "Controlling intertwined electronic orders in two-dimensional FeSe via exfoliation",
+    "key_results": "Exfoliation suppresses nematic order and switches superconducting symmetry from bulk s-wave to d-wave-dominant; angle-dependent Andreev reflection spectroscopy confirms symmetry switch via evolution from zero-energy bound states to coherence peaks",
+    "comments": "Elegant dimensional reduction approach; theoretical modeling supports symmetry assignment but direct phase-sensitive measurement (e.g., ARPES) would strengthen symmetry determination.",
+    "model_io": [
+      {
+        "model": "Pristine FeSe crystals exfoliated to thin flakes",
+        "inputs": [
+          "FeSe bulk material",
+          "exfoliation process"
+        ],
+        "outputs": [
+          "transport data",
+          "Raman spectra",
+          "Andreev reflection spectra",
+          "electron microscopy images"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Dimensional reduction weakens nematic order and switches pairing symmetry",
+        "result": "Confirmed: transport and spectroscopy show nematic suppression; Andreev spectra show d-wave-dominant behavior"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-78989-y": {
+    "category": "Applied Physics",
+    "task": "Compact quantum-inspired speech enhancement for edge devices",
+    "key_results": "QuanTCN-SE achieves PESQ 2.76, STOI 0.94, SI-SNR 20.06 dB with 2.8M parameters; quantum-inspired bottleneck (QIB) improves background noise suppression (CBAK 3.19 vs squeeze-and-excitation 2.45) through interaction with residual path",
+    "comments": "Quantum-inspired module provides inductive bias gain on CBAK but no advantage on standard metrics (PESQ, STOI, SI-SNR); classical squeeze-and-excitation matches core performance, limiting claims of quantum benefit.",
+    "model_io": [
+      {
+        "model": "QuanTCN-SE: strided 2D CNN encoder + 4\u00d7 Quantum-TCN blocks + symmetric decoder",
+        "inputs": [
+          "complex STFT features from noisy speech"
+        ],
+        "outputs": [
+          "complex ratio mask",
+          "enhanced waveform"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Quantum-inspired bottleneck (row-stochastic mixing matrix) improves background noise suppression via interaction with residual path",
+        "result": "Confirmed: CBAK gains 0.74 points vs baseline; neither QIB nor residual path alone achieved improvement"
+      },
+      {
+        "hypothesis": "Quantum-inspired module raises PESQ/STOI/SI-SNR metrics",
+        "result": "Refuted: matched squeeze-and-excitation gate achieved identical scores on these metrics"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-79349-0": {
+    "category": "Gene Regulation",
+    "task": "Identify N-terminal sequence determinants of protein stability in E. coli N-degron pathway",
+    "key_results": "P2 residue identity contributes comparably to P1 in determining stability; identified novel destabilizing motifs with P1 Cys paired with bulky/negatively charged P2-P5 residues; machine learning predictions correlate quantitatively with ClpS binding energies",
+    "comments": "Comprehensive saturation mutagenesis provides unprecedented mechanistic detail, though the correlation between predicted stability and actual ClpS binding suggests data-driven models capture biophysical principles not fully captured by canonical degron rules.",
+    "model_io": [
+      {
+        "model": "Combinatorial mutagenesis and cell sorting with NGS",
+        "inputs": [
+          "N-terminal sequence variants (P1-P5 positions)"
+        ],
+        "outputs": [
+          "Protein stability scores",
+          "Relative abundance counts"
+        ]
+      },
+      {
+        "model": "Machine learning classifier",
+        "inputs": [
+          "N-terminal sequence features",
+          "P1-P5 residue identities"
+        ],
+        "outputs": [
+          "Stability predictions"
+        ]
+      },
+      {
+        "model": "Computational docking (peptides to ClpS)",
+        "inputs": [
+          "N-terminal peptide structures"
+        ],
+        "outputs": [
+          "Predicted binding energies"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "P2 residue identity influences stability comparably to P1",
+        "result": "Confirmed; P2 Pro/Gly are stabilizing, P2 Gln is destabilizing"
+      },
+      {
+        "hypothesis": "Canonical P1 F/L/Y/W/R/K are primary stability determinants",
+        "result": "Partially refuted; non-canonical motifs with P1 Cys + bulky/acidic P2-P5 also destabilizing"
+      },
+      {
+        "hypothesis": "Machine learning predictions correlate with ClpS binding energy",
+        "result": "Confirmed quantitatively"
+      }
+    ]
   }
 }
