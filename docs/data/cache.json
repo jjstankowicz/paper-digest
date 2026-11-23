@@ -759085,5 +759085,527 @@
         "result": "Confirmed: geometry-driven alignment persists in 180-\u03bcm-thick cells; material-dependent polarization direction observed"
       }
     ]
+  },
+  "hf:2611.26954": {
+    "category": "Vision",
+    "task": "Video foresight reasoning\u2014predicting future events from observed video",
+    "key_results": "Improves base models by 14.2 points on open-ended prediction and 15.9 points on closed-ended planning without external supervision",
+    "comments": "Self-distillation approach elegantly leverages unlabeled video pairs, though the foresight score and its lower-bound surrogate warrant ablation studies to isolate their contributions.",
+    "model_io": [
+      {
+        "model": "Vision-language transformer (base unspecified)",
+        "inputs": [
+          "past video clip",
+          "future video clip"
+        ],
+        "outputs": [
+          "foresight prediction",
+          "action/caption"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "On-policy self-distillation without external labels can enable foresight learning",
+        "result": "Confirmed; achieves competitive performance on prediction and planning tasks"
+      },
+      {
+        "hypothesis": "Contrastive privilege advantage focusing on decision-relevant future content outperforms treating all future content equally",
+        "result": "Supported by empirical gains, though direct ablation not explicitly reported"
+      }
+    ]
+  },
+  "hf:2611.27490": {
+    "category": "Vision",
+    "task": "Near-identical instance retrieval on visually similar statues",
+    "key_results": "DINOv2 achieves 93.1% top-1 accuracy on leave-one-out queries; augmented with location weighting reaches 98.7%; learned feature matching improves from 81.8% to 85.5%",
+    "comments": "Novel benchmark using dwarf statues is creative and well-motivated, but the dataset size (306 objects) is modest; location weighting's strong performance raises questions about generalization to unstructured domains.",
+    "model_io": [
+      {
+        "model": "DINOv2 (and other backbones: DINOv3, etc.)",
+        "inputs": [
+          "query photograph"
+        ],
+        "outputs": [
+          "ranked list of matching statue instances"
+        ]
+      },
+      {
+        "model": "Learned local-feature matcher",
+        "inputs": [
+          "query image",
+          "candidate images"
+        ],
+        "outputs": [
+          "similarity scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Frozen pretrained vision models (DINOv2) are effective for near-identical instance retrieval without fine-tuning",
+        "result": "Confirmed; 93.1% top-1 accuracy out-of-the-box"
+      },
+      {
+        "hypothesis": "Geographic proximity filtering improves retrieval more than random subsampling",
+        "result": "Contradicted; random subsampling performs comparably, confirmed by permutation test (p=0.005)"
+      }
+    ]
+  },
+  "hf:2611.23417": {
+    "category": "Generative",
+    "task": "Novel-view generation and scene reconstruction via autoregressive view synthesis",
+    "key_results": "Scales to ~8M scenes; demonstrates consistent camera control, text conditioning, 4D reconstruction, and long-horizon generation across multiple benchmarks",
+    "comments": "Avoiding explicit 3D representation is pragmatic and scalable, but quantitative metrics (PSNR, SSIM, LPIPS) across specific benchmarks are absent from the abstract, limiting assessment of photorealism claims.",
+    "model_io": [
+      {
+        "model": "Bidirectional video diffusion transformer (pretrained) + flow matching",
+        "inputs": [
+          "reference images/videos",
+          "camera path specification or text prompt"
+        ],
+        "outputs": [
+          "video clip of requested scene along camera trajectory"
+        ]
+      },
+      {
+        "model": "Causal autoregressive model (fine-tuned on rollouts)",
+        "inputs": [
+          "bounded active context (retrieved views + generated history)"
+        ],
+        "outputs": [
+          "next video frame/clip with improved photorealism"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Unified in-context interface can handle diverse conditioning modalities (image, video, text, camera path)",
+        "result": "Supported; AVM adapts to multiple input/output settings"
+      },
+      {
+        "hypothesis": "Fine-tuning a causal model on bidirectional model rollouts reduces denoising steps and long-horizon drift",
+        "result": "Claimed but not quantified in abstract; ablation results needed"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-82040-5": {
+    "category": "Development",
+    "task": "Map integrin expression and localization during neonatal mouse digit tip regeneration to elucidate ECM-cell interactions",
+    "key_results": "\u03b12 integrin present at distal stump at 3 dpa coinciding with bone histolysis; \u03b16 downregulated at 3 dpa as MSX1/SOX9 increase; \u03b15 colocalizes with IHH in prehypertrophic chondrocytes at 3 dpa, extends across cartilage by 7 dpa with PTHrP; \u03b1V and MSX2 enriched in presumptive blastema at 7 dpa",
+    "comments": "Provides spatiotemporal mapping of integrin dynamics aligned with endochondral ossification and blastema formation, though functional validation of integrin roles awaits further investigation.",
+    "model_io": [
+      {
+        "model": "Neonatal mouse digit tip amputation",
+        "inputs": [
+          "Age-matched mice",
+          "Amputation at distal phalanx"
+        ],
+        "outputs": [
+          "Regenerating digit at 3, 7, 14 dpa"
+        ]
+      },
+      {
+        "model": "Immunofluorescence microscopy",
+        "inputs": [
+          "Regenerating digit sections",
+          "Integrin antibodies (\u03b12, \u03b15, \u03b16, \u03b1V)",
+          "Endochondral ossification markers (IHH, PTHrP, SOX9, RUNX2)",
+          "Blastema markers (MSX1, MSX2)"
+        ],
+        "outputs": [
+          "Integrin localization patterns",
+          "Colocalization with developmental markers"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "\u03b12 integrin functions in bone resorption and matrix remodeling at amputation site",
+        "result": "Supported by localization: \u03b12 present at distal stump during bone histolysis and retraction at 3 dpa"
+      },
+      {
+        "hypothesis": "\u03b15 integrin supports endochondral ossification in regenerating cartilage",
+        "result": "Supported: \u03b15 colocalizes with IHH at 3 dpa and extends across cartilage with PTHrP at 7 dpa"
+      },
+      {
+        "hypothesis": "\u03b1V integrin participates in blastema formation",
+        "result": "Supported: \u03b1V and MSX2 enriched in presumptive blastema at 7 dpa"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81015-w": {
+    "category": "Other",
+    "task": "Graph-based residual refinement for hierarchical text classification",
+    "key_results": "Framework achieves higher mean classification scores than local-head baseline; competitive performance vs. representative HTC methods",
+    "comments": "Residual connection design (correction terms rather than direct replacement) pragmatically preserves local classifier dominance while injecting hierarchical constraints.",
+    "model_io": [
+      {
+        "model": "Local classifiers + graph refinement",
+        "inputs": [
+          "pretrained text encoder",
+          "hierarchical label graph",
+          "predictions from level-specific classifiers"
+        ],
+        "outputs": [
+          "refined hierarchical class predictions",
+          "structure-aware correction terms"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Hierarchical label structure improves local predictions via graph convolution",
+        "result": "Confirmed: refinement framework outperforms baseline; competitive with global HTC methods"
+      }
+    ]
+  },
+  "nature:10.1038/s41524-026-02402-5": {
+    "category": "ML Theory",
+    "task": "Latent-conditioned language generation from multimodal polymer measurement data",
+    "key_results": "R\u00b2 \u2248 0.9 for selected material-state variables; cross-modal contrastive learning achieves performance comparable to supervised learning without property labels",
+    "comments": "Novel framework bridging measurements and natural-language scientific descriptions; demonstrates feasibility but held-out validation limited to processing conditions rather than external datasets.",
+    "model_io": [
+      {
+        "model": "Latent-conditioned frozen LLM with prefix layers",
+        "inputs": [
+          "infrared spectra",
+          "WAXS profiles",
+          "polarized optical microscopy images"
+        ],
+        "outputs": [
+          "natural-language descriptions of material state with structural/property values"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Cross-modal contrastive learning learns representations comparable to property-guided supervised learning",
+        "result": "Contrastive learning achieved similar performance without explicit property labels during representation learning"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79483-1": {
+    "category": "Algorithms",
+    "task": "Cost-efficient microwave component design via frequency scaling and amplitude correction of low-fidelity models",
+    "key_results": "70% average computational savings vs. baseline; faster than benchmark accelerated algorithms with minor design-quality loss on three microstrip circuits",
+    "comments": "Novel model-correction strategy using splines and anchor points; computational gains substantial but applicability limited to microwave filter/resonator designs tested.",
+    "model_io": [
+      {
+        "model": "Auxiliary low-fidelity EM model with nonlinear frequency mapping and multiplicative amplitude scaling",
+        "inputs": [
+          "target circuit specifications"
+        ],
+        "outputs": [
+          "optimized component parameters"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Nonlinear frequency mapping and amplitude scaling reduce EM simulation cost while maintaining design quality",
+        "result": "Achieved ~70% speedup with minor loss compared to full-wave optimization"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80133-9": {
+    "category": "Algorithms",
+    "task": "Optimization of active and passive IRS-assisted B5G/6G wireless networks under Rician fading",
+    "key_results": "Active IRS sum rate 19.68\u219235 bps/Hz (77.7% gain) weak-link; 19\u219247 bps/Hz (147.4%) strong-link; 66-70 bps/Hz at 40 dBm with 13-8 dB power savings",
+    "comments": "Demonstrates clear numerical advantages of active IRS amplification; lacks analysis of amplification noise effects and practical deployment constraints.",
+    "model_io": [
+      {
+        "model": "Active IRS multi-user system with signal amplification and noise",
+        "inputs": [
+          "transmit power; channel state (Rician fading); number of IRS elements"
+        ],
+        "outputs": [
+          "sum rate; spectral efficiency; energy efficiency"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Active IRS with integrated amplification outperforms passive IRS significantly",
+        "result": "Active IRS achieved 77.7%-147.4% sum-rate gains over passive in weak/strong links"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80657-0": {
+    "category": "Algorithms",
+    "task": "Ancient architectural component detection in heritage images",
+    "key_results": "mAP50 54.1%, mAP50-95 34.1% with 2.8M parameters and 7.7 GFLOPs on custom dataset",
+    "comments": "Combines multiple architectural innovations (DRG, MAFPN, DySample, LQEHead) but evaluation is limited to a single custom dataset without public benchmarking.",
+    "model_io": [
+      {
+        "model": "YOLO11n with C3K2-DRG backbone, MAFPN, DySample, LQEHead",
+        "inputs": [
+          "images of ancient architectural components"
+        ],
+        "outputs": [
+          "bounding boxes with class labels and confidence scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-branch auxiliary features improve multiscale representation",
+        "result": "MAFPN successfully combines low-level and high-level semantic information"
+      },
+      {
+        "hypothesis": "Localization quality estimation reduces low-quality predictions",
+        "result": "LQEHead improves reliability in occluded and boundary-indistinct scenarios"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80842-1": {
+    "category": "ML Theory",
+    "task": "Privacy-preserving longitudinal emotion recognition with federated learning and constrained reinforcement learning",
+    "key_results": "93.6% \u00b1 0.4% affect-recognition accuracy (subject-independent); \u03b5=1.8, \u03b4=10\u207b\u2075 differential privacy; simulated 24-week cohort: 5.7% relative MSE reduction vs. baseline; 0.5 safety violations per 1,000 decisions",
+    "comments": "Sophisticated privacy stack (on-device embedding, federated DP learning, homomorphic retrieval) but improvements modest; simulated validation only, clinical efficacy unestablished.",
+    "model_io": [
+      {
+        "model": "Multimodal Temporal Affect Modelling + Adaptive Therapeutic RL with safety constraints",
+        "inputs": [
+          "longitudinal multimodal physiological signals (DP-obfuscated)"
+        ],
+        "outputs": [
+          "emotion state forecast; intervention recommendation (constrained policy)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Safety-constrained RL policy reduces depressive-trajectory risk vs. rule-based baseline",
+        "result": "Constrained policy: 0.5 violations per 1,000 decisions vs. 10.1 for rule-based"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81216-3": {
+    "category": "Algorithms",
+    "task": "Gas-liquid foam throttling flow prediction through gas lift valves via CFD and empirical equation",
+    "key_results": "VOF\u2013Realisable k\u2013\u03b5 model: pressure drop and flow-rate errors <2%; foam-flow prediction equation MARE 1.0% (experimental deviations \u22121.7% to +5.8%)",
+    "comments": "Practical industrial flow-prediction model validated experimentally; physical insights into foam flow regimes (churn\u2192filamentous\u2192dispersed\u2192mist) valuable for optimization.",
+    "model_io": [
+      {
+        "model": "CFD (VOF\u2013Realisable k\u2013\u03b5) + empirical gas-foam flow-rate equation with Weber number",
+        "inputs": [
+          "orifice diameter (3.2\u20136.4 mm); inlet pressure (5\u201315 MPa); pressure ratio"
+        ],
+        "outputs": [
+          "gas flow rate; pressure drop; foam flow pattern"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "VOF\u2013Realisable k\u2013\u03b5 model accurately simulates gas-foam throttling flow",
+        "result": "Model errors <2% for pressure drop and flow rate"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81387-z": {
+    "category": "Algorithms",
+    "task": "Multidimensional heterogeneous vehicle routing with mixed pickup-delivery on directed networks",
+    "key_results": "Certified optimal on 32 of 48 industrial batches; external comparisons favor established solvers; learned initialization shows no consistent advantage over classical controls",
+    "comments": "Large-scale auditable industrial evaluation (4,290 requests across 320 dates) but lacks evidence of practical savings in cost/emissions; reproducibility strong.",
+    "model_io": [
+      {
+        "model": "ALNS + optional RL-based initialization on directed road network",
+        "inputs": [
+          "customer pickup/delivery locations; 34 vehicle profiles; 7 capacity dimensions; travel distances"
+        ],
+        "outputs": [
+          "optimized routes with distance minimization"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Graph-based RL initialization improves ALNS convergence vs. classical controls",
+        "result": "No consistent advantage of learned initialization observed"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81390-4": {
+    "category": "Number Theory",
+    "task": "Quantitative structure\u2013property relationship (QSPR) for heterocyclic energetic materials friction sensitivity",
+    "key_results": "R\u00b2 = 0.71 (train), 0.79 (test); RMSE = 0.24; CCC = 0.88 on 239 heterocyclic compounds",
+    "comments": "Novel and interpretable QSPR model using simple atomic-count descriptors rather than complex generated features; first dedicated model for heterocyclic energetic compounds.",
+    "model_io": [
+      {
+        "model": "Multiple linear regression with simple molecular descriptors",
+        "inputs": [
+          "C, H, N, O atom counts; reducing friction sensitivity function"
+        ],
+        "outputs": [
+          "log(friction sensitivity)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Simple atomic composition features predict friction sensitivity in heterocyclic energetics",
+        "result": "Model explains 79% test-set variance with interpretable parameters"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-79211-3": {
+    "category": "Quantum",
+    "task": "Control diamond color center charge states via photocatalytic surface oxidation",
+    "key_results": "Nonvolatile tuning of SiV\u2212 charge state through laser-induced H\u2192O surface termination; defect charge cycling identified as source of photogenerated carriers driving redox chemistry",
+    "comments": "Elegant demonstration of photocatalytic control, though mechanism generalization to other color centers requires further validation.",
+    "model_io": [
+      {
+        "model": "Diamond nanopillar with H-terminated surface",
+        "inputs": [
+          "laser photon flux",
+          "photon energy",
+          "surface H-termination"
+        ],
+        "outputs": [
+          "SiV\u2212 photoluminescence",
+          "surface oxidation",
+          "charge state"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Defect charge cycling generates photocurrent driving surface oxidation",
+        "result": "Confirmed via photon-flux and photon-energy analyses"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-73674-6": {
+    "category": "Astrophysics/Cosmology",
+    "task": "Assess cosmic screening impact on weak gravitational lensing via relativistic N-body simulations",
+    "key_results": "Convergence and shear probability distributions agree within 1.1-1.2% RMS; band powers agree within 2.0-5.2%; cross-correlation coefficient declines from 0.99 to 0.66 with redshift (shear)",
+    "comments": "Rigorous controlled comparison quantifies cosmic screening accuracy, though map-level equivalence degrades at high redshift due to neglected second-order terms, limiting high-precision forecasting.",
+    "model_io": [
+      {
+        "model": "Relativistic N-body simulation with weak-field vs screening variants",
+        "inputs": [
+          "initial matter distribution",
+          "cosmological parameters"
+        ],
+        "outputs": [
+          "convergence \u03ba",
+          "reduced shear |g|",
+          "weak-lensing power spectrum"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Cosmic screening linearization introduces <2% statistical error in convergence and shear",
+        "result": "Confirmed for statistical measures; map-level cross-correlation degrades with redshift due to nonlinear second-order term neglect"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80631-w": {
+    "category": "Astrophysics/Cosmology",
+    "task": "Compare spiral morphology with kinematic geometry in galaxies and cyclones",
+    "key_results": "Local correspondence between morphological pitch and kinematic parameter \u03a0E observed in some regions; mean angular mismatch ~4.5\u00b0 in tropical cyclones; no universal proportionality in galaxies",
+    "comments": "Intriguing cross-disciplinary comparison, but departures from kinematic geometry are substantial, suggesting morphology-flow offsets rather than fundamental kinematic control.",
+    "model_io": [
+      {
+        "model": "Kinematic geometry framework with \u03a0E = |ur|/|u\u03b8|",
+        "inputs": [
+          "radial velocity",
+          "azimuthal velocity",
+          "spiral phase"
+        ],
+        "outputs": [
+          "morphological pitch",
+          "tan(iflow)",
+          "kinematic benchmark"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "tan(iflow) = \u03a0E provides universal benchmark for spiral morphology",
+        "result": "Partial confirmation: local correspondence in both galaxies and cyclones, but substantial radius-dependent and storm-dependent departures"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81462-5": {
+    "category": "High Energy/Particle",
+    "task": "Accelerate antimuons via coherent transition radiation from electron-driven target",
+    "key_results": "100 nC 10 GeV electron beam produces antimuons accelerated from 9.7 GeV to 15.7 GeV over 50 mm; total charge 42 fC within 38 mrad",
+    "comments": "Novel all-optical antimuon acceleration scheme integrates production and acceleration, though energy scaling with lower charge (10 nC \u2192 0.7 GeV gain) suggests efficiency challenges.",
+    "model_io": [
+      {
+        "model": "Coherent transition radiation antimuon acceleration in PIC simulation",
+        "inputs": [
+          "electron beam (charge, energy)",
+          "target (Z, thickness)",
+          "target position relative to radiation generation"
+        ],
+        "outputs": [
+          "antimuon energy gain",
+          "antimuon charge",
+          "angular divergence"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Coherent transition radiation efficiently couples to and accelerates produced antimuons",
+        "result": "Confirmed: 100 nC beam yields 6 GeV energy gain; 10 nC yields 0.7 GeV, suggesting charge-dependent efficiency"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81518-6": {
+    "category": "Optics/Photonics",
+    "task": "Engineer quasi-bound states in continuum at PEC-PMC grating interfaces",
+    "key_results": "Symmetry-protected quasi-BICs at \u0393 point; band flipping via grating filling fraction controls accidental quasi-BIC pair evolution; broad high-Q region in momentum space",
+    "comments": "Novel boundary-condition-modulation platform for BIC engineering, though finite radiative losses limit practical Q-factors.",
+    "model_io": [
+      {
+        "model": "PEC-PMC parallel-plate waveguide with periodic grating",
+        "inputs": [
+          "grating period",
+          "filling fraction",
+          "dielectric region width"
+        ],
+        "outputs": [
+          "dispersion relation",
+          "quasi-BIC eigenfrequencies",
+          "quality factor"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Periodic modulation folds surface-wave dispersion into radiation continuum creating symmetry-protected quasi-BICs",
+        "result": "Confirmed; quasi-BICs demonstrated at \u0393 and off-\u0393 points with tunable Q via filling fraction"
+      }
+    ]
+  },
+  "nature:10.1038/s44287-026-00352-0": {
+    "category": "Optics/Photonics",
+    "task": "Review physically implemented nonlinear activation functions for optical neural networks",
+    "key_results": "Optical-electrical, optical-electro-optical, electrical-optical, and all-optical modulation mechanisms enable nonlinearity; in situ training critical for mitigating simulation-reality gap",
+    "comments": "Comprehensive review articulates ONN landscape, though highlighted requirement for femtojoule/operation and ReLU-compatible modulation mechanisms suggests technological maturity gaps.",
+    "model_io": [
+      {
+        "model": "Optical neural network with physical nonlinear activation function",
+        "inputs": [
+          "weighted optical sum",
+          "control signal (electrical/optical)"
+        ],
+        "outputs": [
+          "activated optical signal"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "In situ training with cascaded linear and nonlinear units mitigates hardware simulation-reality gap",
+        "result": "Identified as critical requirement for practical ONN scaling"
+      }
+    ]
   }
 }
