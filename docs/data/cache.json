@@ -765863,5 +765863,1373 @@
         "result": "Laboratory PCE 26.36% maintained in large-area minimodule (22.81% over 54.8 cm\u00b2)"
       }
     ]
+  },
+  "hf:2611.31358": {
+    "category": "Generative",
+    "task": "Agentic visual creation with precise control over text, layout, and structure",
+    "key_results": "Tokenizer improves PSNR from 26.08 to 29.57 dB; GenEval2 Soft-TIFA GM raises from 31.71 to 52.56; competitive with GPT Image 2 and Nano Banana Pro",
+    "comments": "Novel 'Pixel as Code' framework bridges raster and structured representations elegantly, though the breadth across six domains may trade depth for coverage.",
+    "model_io": [
+      {
+        "model": "Nemotron-Labs-Image-Tokenizer",
+        "inputs": [
+          "raster images"
+        ],
+        "outputs": [
+          "discrete visual tokens"
+        ]
+      },
+      {
+        "model": "Nemotron-Labs-Image-30B-A3B",
+        "inputs": [
+          "discrete visual tokens"
+        ],
+        "outputs": [
+          "autoregressive image generation"
+        ]
+      },
+      {
+        "model": "Nemotron-Labs-VisionCode",
+        "inputs": [
+          "images",
+          "text prompts"
+        ],
+        "outputs": [
+          "structured code",
+          "vector graphics",
+          "webpages"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Learned discrete visual tokens improve reconstruction fidelity over Emu3.5",
+        "result": "PSNR improved from 26.08 to 29.57 dB"
+      },
+      {
+        "hypothesis": "Nemotron-native coordination outperforms baseline image generation",
+        "result": "GenEval2 Soft-TIFA GM increased from 31.71 to 52.56"
+      }
+    ]
+  },
+  "hf:2510.22622": {
+    "category": "Benchmark",
+    "task": "Benchmarking multimodal deepfake detection across diverse forgery pipelines",
+    "key_results": "1.2M forged clips across 22 pipelines; training on Mega-MMDF achieves up to 0.0784 AUC gain over alternatives; cross-pipeline generalization is bidirectional and asymmetric",
+    "comments": "Comprehensive scale and pipeline diversity addresses a critical gap, but the finding that composite training doesn't guarantee constituent detection suggests fundamental detection brittleness.",
+    "model_io": [
+      {
+        "model": "10 deepfake detectors (standardized)",
+        "inputs": [
+          "audio-visual clips from 8 datasets"
+        ],
+        "outputs": [
+          "AUC scores",
+          "forgery probability predictions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Large, diverse training data improves deepfake detection",
+        "result": "Mega-MMDF training outperforms alternatives by up to 0.0784 AUC per detector"
+      },
+      {
+        "hypothesis": "Training on composite forgeries enables detection of constituent operations",
+        "result": "Bidirectional and asymmetric generalization observed; composite training does not guarantee constituent detection"
+      },
+      {
+        "hypothesis": "Modality masking and temporal misalignment degrade detection robustness",
+        "result": "Modality masking increases false alarms; temporal misalignment raises false positive rates"
+      }
+    ]
+  },
+  "hf:2611.31977": {
+    "category": "Generative",
+    "task": "Distilling pretrained diffusion transformers into parameter-efficient looped models",
+    "key_results": "Looped student with 37% of teacher parameters matches teacher on GenEval/ImageReward/PickScore/HPSv2.1 with 2\u20134 loops; loop guidance raises metrics from 88.2 to 99.2 on 4-step SD3-medium",
+    "comments": "Clever fixed-point iteration framing enables flexible loop counts at inference without retraining, though the gains diminish significantly below two loops.",
+    "model_io": [
+      {
+        "model": "SD3-medium (pretrained non-looped teacher)",
+        "inputs": [
+          "text prompts"
+        ],
+        "outputs": [
+          "images"
+        ]
+      },
+      {
+        "model": "Distill to Loop (Dooop) looped student",
+        "inputs": [
+          "text prompts"
+        ],
+        "outputs": [
+          "images after variable loop counts"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Distillation toward teacher outputs at each loop converges to teacher performance",
+        "result": "Looped model with 37% parameters matches teacher with 2\u20134 loops"
+      },
+      {
+        "hypothesis": "Loop guidance between outputs of different loop counts improves sample quality",
+        "result": "Average metric increased from 88.2 to 99.2 on 4-step baseline"
+      },
+      {
+        "hypothesis": "ODE solvers along depth dimension enhance generation",
+        "result": "Higher-order solvers applicable to depth dimension"
+      }
+    ]
+  },
+  "hf:2611.31752": {
+    "category": "Systems",
+    "task": "Evaluating split-training privacy defences in language models with rigorous measurement standards",
+    "key_results": "Only 4 of 24 candidate probes qualified; calibrated probes established breaches in 13 configurations; reanalysis mapped 1,522 checks across 122 artifacts",
+    "comments": "Meticulous forensic reanalysis exposes how measurement errors can invalidate privacy claims, but the complexity of admissibility criteria may limit adoption by other practitioners.",
+    "model_io": [
+      {
+        "model": "Split-LLM training configurations",
+        "inputs": [
+          "gradients",
+          "activations"
+        ],
+        "outputs": [
+          "reconstructions",
+          "privacy breach assessments"
+        ]
+      },
+      {
+        "model": "Calibrated attack probes (next-byte, punctuation-property)",
+        "inputs": [
+          "activations"
+        ],
+        "outputs": [
+          "leakage scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Uncalibrated probes produce false negatives in privacy evaluation",
+        "result": "Only 4 of 24 probes qualified; 20 eliminated as invalid measurement"
+      },
+      {
+        "hypothesis": "Calibrated probes can breach quantized configurations despite defence claims",
+        "result": "Calibrated probes breached 7 of 7 cells at 0.097\u20130.112 leakage"
+      },
+      {
+        "hypothesis": "Shared-key orthogonal wrappers protect against passive network attacks",
+        "result": "Wrappers protect passive captures but not from compromised restoring host"
+      }
+    ]
+  },
+  "hf:2611.32816": {
+    "category": "Benchmark",
+    "task": "Standardized benchmarking of geometric foundation models for 3D/4D perception across diverse scenes",
+    "key_results": "418,929 images across 23 datasets; 52 models evaluated; single-image depth near saturation on public benchmarks but not uncontrolled scenes; feed-forward 3D/4D models match or surpass specialists",
+    "comments": "Robust alignment methodology and diverse scene coverage address critical reproducibility gaps, though the finding that alignment can outweigh model differences reveals fundamental benchmark sensitivity.",
+    "model_io": [
+      {
+        "model": "52 geometric foundation models (monocular depth, 3D/4D reconstruction, vision-language)",
+        "inputs": [
+          "monocular images",
+          "video frames"
+        ],
+        "outputs": [
+          "depth maps",
+          "3D reconstructions",
+          "SLAM trajectories"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Single-image depth approaches saturation on public benchmarks",
+        "result": "Near saturation observed on standard datasets but not large uncontrolled scenes"
+      },
+      {
+        "hypothesis": "Feed-forward 3D/4D models outperform monocular specialists through frame consistency",
+        "result": "3D/4D models match or surpass monocular specialists and overtake video depth models"
+      },
+      {
+        "hypothesis": "Robust alignment is critical for fair model comparison",
+        "result": "Fitting depth in wrong space triples error; standard alignment understates failures by 2.6\u00d7"
+      }
+    ]
+  },
+  "hf:2611.32782": {
+    "category": "LLM/Reasoning",
+    "task": "Measuring layer-wise intrinsic dimensionality of FFN intermediate activations to guide efficient parameter allocation",
+    "key_results": "Middle-heavy intrinsic dimensionality profile across 58 LLMs (70M\u201372B); PCA-guided width pruning outperforms uniform width by +2.3 points on Qwen3-8B, +2.5 on Qwen2.5-3B",
+    "comments": "Robust profile across families and languages strongly suggests structural significance, though the modest gains on low-dispersion teachers indicate the signal's strength varies with pretraining.",
+    "model_io": [
+      {
+        "model": "PCA dimensionality analyzer",
+        "inputs": [
+          "FFN down-projection activations from each layer"
+        ],
+        "outputs": [
+          "intrinsic dimensionality per layer",
+          "width allocation"
+        ]
+      },
+      {
+        "model": "Knowledge-distilled student LLM",
+        "inputs": [
+          "text prompts"
+        ],
+        "outputs": [
+          "text completions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "FFN layers have non-uniform intrinsic dimensionality across depth",
+        "result": "Middle-heavy profile found across 58 models spanning 14 families"
+      },
+      {
+        "hypothesis": "PCA-guided width allocation outperforms uniform width under matched budget",
+        "result": "+2.3 points Qwen3-8B, +2.5 Qwen2.5-3B; gap correlates with teacher dispersion (\u03c3_{99})"
+      },
+      {
+        "hypothesis": "Intrinsic dimensionality profile is robust to calibration corpus and fine-tuning",
+        "result": "Profile preserved across English/Chinese and after post-training fine-tuning"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11326-5": {
+    "category": "Synthetic Biology",
+    "task": "Reconstitute human trunk morphogenesis in vitro using synthetic signalling gradients",
+    "key_results": "Transient WNT and BMP gradients generated axially elongating trunk-like structures with neural tube, axial, paraxial, intermediate and lateral mesoderm; BMP geometry controlled mediolateral patterning and bilateral symmetry",
+    "comments": "Elegant demonstration that minimal morphogen gradients can recapitulate complex 3D developmental patterning; remains to be tested whether this platform faithfully recapitulates all aspects of human trunk specification.",
+    "model_io": [
+      {
+        "model": "Human pluripotent stem cell-derived epithelial cysts + synthetic morphogen gradient delivery",
+        "inputs": [
+          "epithelial cysts from hPSCs",
+          "WNT gradient (transient)",
+          "BMP gradient (transient, geometry-controlled)"
+        ],
+        "outputs": [
+          "axially elongating trunk structures",
+          "neural tube",
+          "axial mesoderm",
+          "paraxial mesoderm",
+          "intermediate mesoderm",
+          "lateral plate mesoderm"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Transient WNT and BMP gradients alone are sufficient to drive trunk morphogenesis in human cysts",
+        "result": "Confirmed: gradients generated patterned trunk-like structures with multiple mesodermal compartments"
+      },
+      {
+        "hypothesis": "BMP signal geometry controls mediolateral patterning and bilateral symmetry",
+        "result": "Confirmed: geometry of transient BMP signal exerted lasting control over patterning outcomes"
+      },
+      {
+        "hypothesis": "Induced neuromesodermal and lateral plate mesoderm progenitors act as endogenous signalling centres sustaining morphogenesis",
+        "result": "Confirmed: initial morphogen cues induced progenitor populations that maintained patterning and morphogenesis"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-80080-z": {
+    "category": "Organelles",
+    "task": "Identify MTF5 interaction module for ATP synthase assembly in seed plants",
+    "key_results": "MTF5 loss causes embryo lethality and altered mitochondrial morphology; MTF5 interacts with MTF5P and co-migrates with ATP synthase dimer-associated subunits; conditional complementation rescues embryo phenotype but shows growth defects",
+    "comments": "Novel identification of a plant-specific ATP synthase assembly factor with helical architecture is valuable, though direct functional validation of assembly activity remains incomplete.",
+    "model_io": [
+      {
+        "model": "MTF5 knockout and conditional complementation in Arabidopsis",
+        "inputs": [
+          "MTF5 expression",
+          "developmental stage"
+        ],
+        "outputs": [
+          "embryo viability",
+          "mitochondrial morphology",
+          "growth phenotype"
+        ]
+      },
+      {
+        "model": "Co-immunoprecipitation and size-exclusion chromatography",
+        "inputs": [
+          "MTF5",
+          "MTF5P",
+          "ATP synthase subunits"
+        ],
+        "outputs": [
+          "protein-protein interactions",
+          "complex stoichiometry"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "MTF5 is essential for embryogenesis and mitochondrial biogenesis",
+        "result": "Confirmed: loss causes embryo arrest; conditional complementation partially rescues"
+      },
+      {
+        "hypothesis": "MTF5 functions as interaction module for ATP synthase assembly",
+        "result": "Supported: co-migration with dimer-associated subunits; direct mechanistic evidence pending"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11318-5": {
+    "category": "Development",
+    "task": "Determine context-dependent endothelial response to PIK3CA mutation by differentiation state",
+    "key_results": "PIK3CAH1047R drives clonal expansion of capillary/venous endothelial cells but not mature arterial cells; arterial precursor expression disrupts arterial differentiation and promotes venous features via NR2F2 upregulation; dual mechanism: increased proliferation + venous fate specification",
+    "comments": "Elegant discovery that arterial endothelium is intrinsically resistant to oncogenic PI3K explains clinical paucity of arterial lesions in PIK3CA-driven disease; context-dependent mechanisms suggest therapeutic vulnerability windows.",
+    "model_io": [
+      {
+        "model": "Genetic lineage tracing with endothelial-specific PIK3CAH1047R expression",
+        "inputs": [
+          "PIK3CAH1047R",
+          "endothelial differentiation state",
+          "tissue type"
+        ],
+        "outputs": [
+          "clonal expansion",
+          "arterial vs venous fate",
+          "vascular malformation"
+        ]
+      },
+      {
+        "model": "Ovariectomized mouse with hepatic AGP2 overexpression",
+        "inputs": [
+          "PIK3CAH1047R in arterial precursors"
+        ],
+        "outputs": [
+          "arterial differentiation",
+          "NR2F2 expression",
+          "proliferation rate"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "PIK3CAH1047R effects depend on endothelial differentiation state",
+        "result": "Confirmed: capillary/venous endothelium expansion vs arterial resistance"
+      },
+      {
+        "hypothesis": "PI3K signaling promotes venous fate via NR2F2 upregulation",
+        "result": "Confirmed: arterial precursor expression disrupts differentiation and induces venous features"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81385-1": {
+    "category": "Cell Signaling",
+    "task": "Demonstrate miR-2355-5p suppresses NSCLC progression via HNF4G-SPTBN2 axis",
+    "key_results": "miR-2355-5p reduced in NSCLC; inverse correlation with HNF4G/SPTBN2; miR-2355-5p restoration reduced tumor growth, Ki-67/HNF4G/SPTBN2 staining, and pulmonary metastases in mice",
+    "comments": "Comprehensive mechanistic validation from patient samples through in vivo models is strong; partial rescue of invasive capacity after HNF4G depletion suggests additional compensatory pathways.",
+    "model_io": [
+      {
+        "model": "NSCLC cell lines (A549, H1299) with miR-2355-5p gain/loss-of-function",
+        "inputs": [
+          "miR-2355-5p",
+          "HNF4G siRNA",
+          "SPTBN2 expression"
+        ],
+        "outputs": [
+          "cell proliferation",
+          "migration",
+          "invasion",
+          "HNF4G/SPTBN2 expression"
+        ]
+      },
+      {
+        "model": "Mouse xenograft model",
+        "inputs": [
+          "miR-2355-5p restoration",
+          "HNF4G/SPTBN2 expression"
+        ],
+        "outputs": [
+          "tumor growth",
+          "Ki-67 staining",
+          "pulmonary nodules",
+          "bioluminescence"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "miR-2355-5p directly targets HNF4G 3'UTR",
+        "result": "Confirmed by reporter assays and Ago2-RIP"
+      },
+      {
+        "hypothesis": "HNF4G occupies SPTBN2 promoter and drives transcription",
+        "result": "Confirmed by ChIP-qPCR"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-82051-2": {
+    "category": "Apoptosis/Cell Death",
+    "task": "Elucidate HIF-1\u03b1-mediated LATS1-YAP axis in ischemic stroke neuronal injury",
+    "key_results": "HIF-1\u03b1 suppresses LATS1, reducing YAP phosphorylation; elevated YAP induces disulfidptosis and apoptosis; YAP siRNA-LNP intervention alleviates neurological injury post-stroke",
+    "comments": "The integration of HIF-1\u03b1 signaling with disulfidptosis represents a novel mechanistic link, though in vivo neuroprotection efficacy metrics are not quantified.",
+    "model_io": [
+      {
+        "model": "OGD cell model and MCAO mouse model (AIS simulation)",
+        "inputs": [
+          "ischemia/hypoxia",
+          "HIF-1\u03b1 inhibition",
+          "YAP siRNA-LNPs"
+        ],
+        "outputs": [
+          "HIF-1\u03b1 expression",
+          "LATS1 phosphorylation",
+          "YAP activity",
+          "apoptosis rate",
+          "neurological function"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "HIF-1\u03b1 suppresses LATS1 and activates YAP under ischemia/hypoxia",
+        "result": "Confirmed: pathway activation demonstrated by qPCR, WB, immunofluorescence"
+      },
+      {
+        "hypothesis": "YAP inhibition protects neurons by preventing disulfidptosis and apoptosis",
+        "result": "Confirmed: YAP siRNA-LNP alleviates neuronal injury and promotes recovery"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11287-9": {
+    "category": "Structural Prediction",
+    "task": "Determine licensing mechanisms controlling RNA-guided DNA integration by type I-F3 CAST",
+    "key_results": "Cryo-EM structure reveals conformational licensing via cascade-TniQ, TnsC, and TnsA-TnsB assembly; zero-shot computational TnsA redesign enhanced integration activity ~100-fold without loss of specificity; conserved architectural features across CASTs",
+    "comments": "Elegant structural and computational approach; demonstrates power of protein design for CAST system engineering; establishes general mechanistic framework for RNA-guided transposition.",
+    "model_io": [
+      {
+        "model": "Cryo-EM structural determination + computational protein redesign",
+        "inputs": [
+          "VchCAST holo complex",
+          "TnsA protein design"
+        ],
+        "outputs": [
+          "holo integration complex structure",
+          "redesigned high-activity TnsA"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Conformational licensing via multi-component assembly stabilizes catalytically competent state",
+        "result": "Confirmed: cryo-EM structure reveals licensing conformations; computational redesign validates activity enhancement"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11338-1": {
+    "category": "Other",
+    "task": "Design high-potency dual-target therapeutic peptides via AI-guided approach",
+    "key_results": "ORIDTP platform generated GLP-1R/GCGR co-agonists (lead GA-Dual.R5.S3) inducing substantial weight loss and antidiabetic effects without nausea; PD-1/CTLA-4 co-inhibitors (3 of 15 showed in vivo efficacy, lead IC-Dual.P3 reduced tumor volume 94.2%)",
+    "comments": "Demonstrates generalizability of AI-guided dual-target design; clinical translation requires further validation of safety/efficacy profiles.",
+    "model_io": [
+      {
+        "model": "ORIDTP: single-target knowledge transfer + dual-target reinforcement learning",
+        "inputs": [
+          "target structures/sequences",
+          "single-target peptide libraries"
+        ],
+        "outputs": [
+          "dual-target co-agonist/co-inhibitor peptides"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "ORIDTP enables design of high-potency dual-target peptides with in vivo efficacy",
+        "result": "Confirmed: lead candidates exceeded natural binders; in vivo antidiabetic and antitumor efficacy demonstrated"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-73145-y": {
+    "category": "Statistical Methods",
+    "task": "Optimize energy-efficient routing and disease detection for IoHT via hybrid ML",
+    "key_results": "HGEGA routing: cost 0.0174, outperformed baselines in energy/delay/residual-energy/throughput/PDR; ensemble disease classification: Diabetes 98.01%, Heart 98.83%, Lung Cancer 96.52% accuracy; MCC \u22650.9346",
+    "comments": "Practical dual-objective framework for resource-constrained health monitoring; routing and ML hyperparameter optimization jointly addressed.",
+    "model_io": [
+      {
+        "model": "HGEGA: Golden Eagle + Genetic Algorithm for cluster/routing optimization",
+        "inputs": [
+          "IoHT sensor network topology",
+          "energy constraints",
+          "latency requirements"
+        ],
+        "outputs": [
+          "cluster heads",
+          "optimized routing paths",
+          "minimized energy/latency"
+        ]
+      },
+      {
+        "model": "Heterogeneous ensemble: RF, HistGradientBoosting, SVC, XGBoost, LightGBM",
+        "inputs": [
+          "biosensor measurements (Diabetes, Heart, Lung Cancer datasets)"
+        ],
+        "outputs": [
+          "disease classification",
+          "accuracy, MCC scores"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Joint optimization of routing and disease detection improves IoHT performance",
+        "result": "Confirmed: HGEGA outperformed baselines; ensemble achieved >96% accuracy across diseases"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-80320-8": {
+    "category": "Statistical Methods",
+    "task": "Assess reliability of DR classification under domain shift via uncertainty quantification",
+    "key_results": "In-domain accuracy 83.4% \u00b1 0.2% (QWK 0.895); IDRiD: 42.6% \u00b1 3.3% with epistemic uncertainty +121% \u00b1 14% (AUROC 0.814); DeepDRiD: 48.2% \u00b1 2.4% with minimal shift detection (AUROC 0.544)",
+    "comments": "Demonstrates that epistemic uncertainty effectively flags OOD samples for some but not all external datasets\u2014domain-dependent performance requires per-deployment validation.",
+    "model_io": [
+      {
+        "model": "Evidential Deep Learning (EfficientNet-B0 + dual-attention)",
+        "inputs": [
+          "retinal fundus images"
+        ],
+        "outputs": [
+          "DR classification",
+          "epistemic uncertainty",
+          "aleatoric uncertainty"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Epistemic uncertainty increases under domain shift and separates correct from incorrect predictions",
+        "result": "Partially confirmed: strong signal on IDRiD (AUROC 0.814), weak on DeepDRiD (AUROC 0.544)"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81009-8": {
+    "category": "Statistical Methods",
+    "task": "Compare early vs late radiomics fusion for benign/malignant ovarian tumor classification",
+    "key_results": "Late fusion MRI model: accuracy 0.884, specificity 0.912, PPV 0.700, Brier 0.143; early fusion and single-sequence models misclassified more benign lesions; late fusion AUC 0.797 (not significantly different from T1WI 0.820)",
+    "comments": "Late fusion provides better calibration and fewer false positives despite similar discrimination; decision-level fusion yields interpretable probability rather than improved AUC.",
+    "model_io": [
+      {
+        "model": "Early fusion (radiomics): concatenated features \u2192 logistic regression",
+        "inputs": [
+          "T1WI, T2WI fs, DWI, CE-T1WI sequences (1,197 PyRadiomics features each)"
+        ],
+        "outputs": [
+          "benign/malignant classification"
+        ]
+      },
+      {
+        "model": "Late fusion (radiomics): average four sequence-specific models",
+        "inputs": [
+          "four sequence-specific logistic regression models"
+        ],
+        "outputs": [
+          "benign/malignant probability"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Late fusion improves calibration and reduces false positives vs early fusion and single-sequence models",
+        "result": "Confirmed: late fusion had lowest false-positive count, best Brier score, highest net benefit"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81157-x": {
+    "category": "Other",
+    "task": "Assess Cu(II) complex binding and antiproliferative activity",
+    "key_results": "Complex (3) with phen ligand: docking scores -7.45 kcal/mol (ERK2), -7.89 kcal/mol (NQO2); in vitro MTT assays correlated with docking predictions",
+    "comments": "Modest computational-experimental concordance; standard drug-design pipeline with limited biological validation depth.",
+    "model_io": [
+      {
+        "model": "Molecular docking (ERK2, NQO2 targets)",
+        "inputs": [
+          "Cu(II) complex structures",
+          "receptor PDB structures"
+        ],
+        "outputs": [
+          "binding affinity scores (kcal/mol)"
+        ]
+      },
+      {
+        "model": "MTT cell viability assay",
+        "inputs": [
+          "Cu(II) complexes",
+          "cancer cells"
+        ],
+        "outputs": [
+          "cell viability (antiproliferative effect)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Complex (3) exhibits strongest binding and cytotoxic activity",
+        "result": "Confirmed by docking and MTT assays"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81223-4": {
+    "category": "Genomics",
+    "task": "Characterize plant and soil microbiome diversity via curriculum-integrated research",
+    "key_results": "2,000+ high-school students generated 37,000+ previously uncharacterized full-length 16S rRNA sequences; microbial communities clustered robustly by host species and geographic region",
+    "comments": "Demonstrates successful integration of authentic research into secondary education while generating high-quality microbiome data at scale.",
+    "model_io": [
+      {
+        "model": "High-resolution microbial profiling (16S rRNA amplicon sequencing)",
+        "inputs": [
+          "environmental samples (soil, plants) across diverse habitats"
+        ],
+        "outputs": [
+          "16S rRNA sequences",
+          "microbial community composition"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Microbial community composition shows consistent clustering by host species and geography across student-collected samples",
+        "result": "Confirmed: robust ecological signal observed across independent collections"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81241-2": {
+    "category": "Network Biology",
+    "task": "Pan-cancer analysis of CCDC69 prognostic and immunotherapy predictive value",
+    "key_results": "CCDC69 downregulated at mRNA/protein levels correlating with advanced stage; high expression predicts improved survival across multiple cancer types; strong association with CD8+ T infiltration and immunotherapy response; CCDC69 binds AURKB; overexpression in T cells enhanced LUAD cytotoxicity",
+    "comments": "Multi-omics integration reveals dual immune-modulatory and tumor-suppressive role; AURKB mechanistic link suggests therapeutic targeting opportunity.",
+    "model_io": [
+      {
+        "model": "Multi-omics pan-cancer analysis (TCGA, GTEx, CPTAC, HPA, TISCH)",
+        "inputs": [
+          "33 cancer types",
+          "single-cell data",
+          "immunotherapy cohorts"
+        ],
+        "outputs": [
+          "CCDC69 expression patterns",
+          "prognostic associations",
+          "immune infiltration correlations"
+        ]
+      },
+      {
+        "model": "Functional validation (LUAD cell lines, immunofluorescence, immunohistochemistry)",
+        "inputs": [
+          "LUAD cells with CCDC69 overexpression/knockdown",
+          "CD8+ T cells"
+        ],
+        "outputs": [
+          "proliferation/cell-cycle suppression",
+          "CD8+ cytotoxicity enhancement",
+          "AURKB binding confirmation"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "CCDC69 functions as pan-cancer biomarker with dual immune-modulatory and tumor-suppressive roles",
+        "result": "Confirmed: downregulation links to poor prognosis; high expression associates with CD8+ infiltration and immunotherapy response"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81507-9": {
+    "category": "Evolutionary Biology",
+    "task": "Validate open morphological data reproducibility and reusability across repositories",
+    "key_results": "Harmonized 3,675 metadata records; 7 of 8 morphological tables passed range checks; trilobite brim-height correlated with motion consistency (\u03c1=0.78, p=0.022); temporal associations robust to multiple representation strategies",
+    "comments": "Critical methodological contribution: demonstrates that field-level provenance, automatic checks, and sensitivity analyses are necessary for reproducible morphological data reuse.",
+    "model_io": [
+      {
+        "model": "Validation-aware workflow: metadata harmonization + range checks + ordination",
+        "inputs": [
+          "morphological data from Zenodo, Dryad, GitHub, arXiv (3,675 records)"
+        ],
+        "outputs": [
+          "validated datasets",
+          "summary statistics",
+          "ordination plots"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Automated validation and sensitivity analyses ensure robust reuse of open morphological data",
+        "result": "Confirmed: identified data quality issues and demonstrated necessity of sensitivity checks"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81655-y": {
+    "category": "Statistical Methods",
+    "task": "Compare multi-output ML strategies for predicting co-occurring respiratory symptoms",
+    "key_results": "RF+Chain achieved highest cross-validated F1-Macro (0.765 \u00b1 0.018); BOOMER showed superior calibration (ECE 0.092 vs 0.116); no significant difference on held-out test; iron/silica concentrations dominant predictors in both",
+    "comments": "Demonstrates trade-off between discrimination and calibration; label-dependent/joint modeling approaches outperformed independent binary classifiers in cross-validation but differences not significant on small test set.",
+    "model_io": [
+      {
+        "model": "Random Forest Classifier Chain (RF+Chain)",
+        "inputs": [
+          "occupational exposure data (360 workers)"
+        ],
+        "outputs": [
+          "cough, wheeze, dyspnea, sputum predictions"
+        ]
+      },
+      {
+        "model": "BOOMER (rule-based multi-output boosting)",
+        "inputs": [
+          "occupational exposure data"
+        ],
+        "outputs": [
+          "cough, wheeze, dyspnea, sputum predictions",
+          "calibrated probabilities"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multi-label modeling approaches outperform independent binary classifiers for co-occurring respiratory symptoms",
+        "result": "Partially confirmed: improved cross-validated F1-Macro, but no statistically significant test-set difference"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81677-6": {
+    "category": "Genomics",
+    "task": "Characterize red-light-induced transcriptional reprogramming of specialized metabolites in Eryngium foetidum",
+    "key_results": "High-quality de novo transcriptome: 104,040 transcripts, 92,253 unigenes, 85,550 CDSs (65,323 annotated); 3,279 highly regulated and 1,330 red-light-exclusive CDSs; coordinated upregulation of phenylpropanoid, flavonoid, terpenoid biosynthesis; 2,610 TF-encoding CDSs (bHLH and MYB-related most abundant)",
+    "comments": "Comprehensive transcriptomic resource; identifies TF targets and biosynthetic pathways amenable to metabolic engineering for cultivation improvement.",
+    "model_io": [
+      {
+        "model": "Comparative de novo transcriptome sequencing + KEGG pathway enrichment",
+        "inputs": [
+          "E. foetidum plants exposed to red light vs control"
+        ],
+        "outputs": [
+          "genome-wide transcriptome assembly",
+          "differential expression (3,279 regulated genes)",
+          "TF and pathway annotations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Red light promotes specialized metabolism through coordinated TF and biosynthetic pathway regulation",
+        "result": "Confirmed: identified overexpressed key enzymes and 2,610 TFs across 54 families"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-82410-z": {
+    "category": "Single Cell",
+    "task": "Measure telomere length in immunophenotypically defined leukocyte subsets via multiparametric flow-FISH",
+    "key_results": "Multiparametric flow-FISH RTL correlated with qPCR in sorted T cells (r=0.595, q=0.029) and declined with age in T cells (q=0.008); heterogeneous RTL patterns in CLL CD16\u207b SSClow cells; lower neutrophil/monocyte RTL in myeloid leukemia",
+    "comments": "Proof-of-concept demonstrates feasibility of cell-type-specific TL measurement; small patient cohorts limit conclusions but establish protocol for hematological disorder investigation.",
+    "model_io": [
+      {
+        "model": "Multiparametric flow-FISH with cross-linking (BS3)",
+        "inputs": [
+          "whole blood",
+          "immunophenotypic markers",
+          "telomere probe"
+        ],
+        "outputs": [
+          "relative telomere length (RTL) per leukocyte subset"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Multiparametric flow-FISH enables simultaneous RTL measurement across multiple leukocyte subsets",
+        "result": "Confirmed: feasibility demonstrated with improved marker retention via cross-linking"
+      }
+    ]
+  },
+  "nature:10.1038/s41698-026-01777-4": {
+    "category": "Structural Prediction",
+    "task": "Predict survival and molecular states from collagen architectural disorganization",
+    "key_results": "CoDA-derived stromal features stratified overall and disease-free survival; high-risk status remained prognostic after adjustment (modest discrimination); associated with lineage plasticity, neuroendocrine features, lipid metabolism, and immune modulation; activated mast/basophil signatures enriched in high-risk",
+    "comments": "Novel computational pathology approach on routine H&E captures microenvironment contribution; modest discrimination limits clinical utility without prospective validation.",
+    "model_io": [
+      {
+        "model": "CoDA (collagen disorder architecture): computational pathology on H&E images",
+        "inputs": [
+          "whole-slide H&E images (1,664 HNSCC patients)"
+        ],
+        "outputs": [
+          "collagen disorder score",
+          "risk stratification"
+        ]
+      },
+      {
+        "model": "Transcriptomic profiling + survival analysis",
+        "inputs": [
+          "CoDA-defined risk groups",
+          "RNA-seq data"
+        ],
+        "outputs": [
+          "associated gene programs",
+          "survival associations"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Collagen architectural disorganization stratifies HNSCC survival and associates with specific molecular states",
+        "result": "Confirmed: CoDA-derived features associated with outcome and programs involving lineage plasticity and immune modulation"
+      }
+    ]
+  },
+  "nature:10.1038/s42003-026-11284-8": {
+    "category": "Structural Prediction",
+    "task": "Generate and select diverse protein conformations",
+    "key_results": "AFsample3 improved alternative conformation recovery from 57 to 96 proteins (68% gain); 24% targets modeled better than AlphaFold3, only 3% worse",
+    "comments": "Significant advance in sampling without retraining; demonstrates that post-hoc sampling can substantially improve conformational ensemble diversity.",
+    "model_io": [
+      {
+        "model": "AFsample3 (AlphaFold3-based)",
+        "inputs": [
+          "protein sequence"
+        ],
+        "outputs": [
+          "multiple protein conformations",
+          "conformational ensembles"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Enhanced sampling improves recovery of alternative conformations without network retraining",
+        "result": "Confirmed: 68% gain in proteins with near-experimental accuracy alternative conformations"
+      }
+    ]
+  },
+  "nature:10.1038/s44184-026-00259-6": {
+    "category": "Single Cell",
+    "task": "Normalize therapies and perform aspect-based sentiment analysis of TRD discourse",
+    "key_results": "23,399 therapy mentions (81 unique, normalized); aspect classifier F\u2081=0.800; overall sentiment: 72.1% neutral, 14.8% negative, 13.1% positive; ketamine/esketamine less negative than SSRIs/SNRIs",
+    "comments": "Novel NLP application to real-world patient narratives; caution that Reddit discourse may not represent broader TRD population and synthetic augmentation could introduce bias.",
+    "model_io": [
+      {
+        "model": "LLM-based therapy normalization + transformer classifier (synthetic data augmentation)",
+        "inputs": [
+          "Reddit posts (5059 TRD-mentioning)",
+          "therapy mentions with trade names, misspellings"
+        ],
+        "outputs": [
+          "normalized therapy terms",
+          "aspect-based sentiment (positive/neutral/negative)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Ketamine/esketamine have less negative sentiment profiles than conventional antidepressants in TRD discourse",
+        "result": "Confirmed: comparative sentiment analysis showed reduced negative proportion"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-79572-9": {
+    "category": "Other",
+    "task": "Design and evaluation of directional quantum LDPC codes for superconducting qubit grids",
+    "key_results": "Directional codes compatible with square/hexagonal grids; logical error rate matches rotated toric code at p=10^-3; requires 1/4\u20131/3 fewer physical qubits than toric code for same logical qubits",
+    "comments": "Elegant use of iSWAP gates to measure long-range stabilizers; practical resource advantage for superconducting hardware significant for scaling.",
+    "model_io": [
+      {
+        "model": "Directional codes with iSWAP-based long-range stabilizer measurement",
+        "inputs": [
+          "superconducting qubit grids (square, hexagonal)"
+        ],
+        "outputs": [
+          "logical qubits",
+          "logical error rate",
+          "qubit overhead"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Directional codes reduce physical qubit overhead while matching logical error rates of toric codes",
+        "result": "Confirmed: 1/4\u20131/3 of toric-code qubits required at p=10^-3"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-71511-4": {
+    "category": "Statistics/Probability",
+    "task": "Investigation of organizational role stress and learned helplessness in higher education",
+    "key_results": "Role Erosion identified as predominant stressor; external-specific attributions account for 52.2% of LH variance; LH meaningfully predicts role stress",
+    "comments": "Survey-based study with clear findings but lacks intervention validation; proposed MATLAB model and AI-informed strategies remain conceptual.",
+    "model_io": [
+      {
+        "model": "Standardized stress/helplessness scales analysis",
+        "inputs": [
+          "educator survey responses (ORS, LH scales)"
+        ],
+        "outputs": [
+          "Role Erosion as top stressor",
+          "52.2% variance explained by external-specific attributions"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "LH dimensions, especially external-specific attributions, predict overall organizational role stress",
+        "result": "Confirmed: external-specific attributions explain 52.2% of ORS variance"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-79198-3": {
+    "category": "ML Theory",
+    "task": "Explainable fake news detection combining GNN and BERT with XAI",
+    "key_results": "BERT classifier: 92% accuracy; GNN classifier: 90% accuracy; LIME and SHAP provide local and global explanations",
+    "comments": "Integration of explainability methods is valuable, but marginal performance gain from GNN over BERT suggests relational modeling may not capture critical signals in fake news.",
+    "model_io": [
+      {
+        "model": "BERT classifier",
+        "inputs": [
+          "news articles (tokenized, stopwords removed)"
+        ],
+        "outputs": [
+          "fake/real classification",
+          "92% accuracy"
+        ]
+      },
+      {
+        "model": "GNN classifier with BERT embeddings",
+        "inputs": [
+          "node features (BERT embeddings)",
+          "graph edges (semantic similarities)"
+        ],
+        "outputs": [
+          "fake/real classification",
+          "90% accuracy"
+        ]
+      },
+      {
+        "model": "LIME and SHAP",
+        "inputs": [
+          "individual predictions"
+        ],
+        "outputs": [
+          "local explanations (LIME)",
+          "global feature contributions (SHAP)"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-79961-6": {
+    "category": "ML Theory",
+    "task": "Uncertainty-calibrated hierarchical mixture-of-experts for corporate ESG communication measurement",
+    "key_results": "Macro-F1 0.937\u00b10.005 (entity-grouped); macro-F1 0.881\u00b10.011 (country holdout); QWK 0.816\u00b10.014 for ordinal substance; QACI correlates more strongly with expert assessment than coverage alone",
+    "comments": "Sophisticated hierarchical framework with strong in-domain performance; geographical transfer challenge (macro-F1 drop to 0.881) highlights domain-specificity limitations.",
+    "model_io": [
+      {
+        "model": "ESG-HMoE (hierarchical MoE with ordinal substance module)",
+        "inputs": [
+          "13.846M domain sentences",
+          "5,407 multi-label corpus",
+          "2,568 annual reports"
+        ],
+        "outputs": [
+          "pillar probabilities",
+          "ordinal substance estimates",
+          "firm-level QACI measure"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Disclosure substance explains ESG-rating variation beyond communication coverage alone",
+        "result": "Confirmed: QACI (substance-adjusted) correlates more strongly with blinded expert assessments than coverage"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81119-3": {
+    "category": "ML Theory",
+    "task": "Lightweight self-attention for fine-grained edge image classification",
+    "key_results": "Flowers-WTT: 94.84%\u219297.63% (\u00b10.28\u21920.20%; p<0.001); 0.39% more parameters, 0.67% more FLOPs; 29\u201338\u00d7 cheaper than standard attention",
+    "comments": "Strong results on a small 8-class dataset; generalization to larger fine-grained benchmarks (e.g., CUB, Stanford Cars) not demonstrated.",
+    "model_io": [
+      {
+        "model": "AMS-Net (MobileNetV3-Small + LSSAM modules)",
+        "inputs": [
+          "flower images (Flowers-WTT, 8 classes)"
+        ],
+        "outputs": [
+          "class prediction",
+          "97.63%\u00b10.20% accuracy"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Reduced channel width and pooled keys/values reduce attention cost without hurting performance",
+        "result": "Confirmed: 29\u201338\u00d7 cheaper than standard spatial attention, matches performance of unreduced blocks at 1/31 added FLOPs"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81225-2": {
+    "category": "Topology/Geometry",
+    "task": "Determination of 4D diffeomorphism function and swallowtail catastrophe manifold for chip-branching",
+    "key_results": "Swallowtail catastrophe manifold equation established and verified to predict unit main cutting force and chip-branching occurrence with high accuracy",
+    "comments": "Novel method for determining diffeomorphism functions in catastrophe theory, but limited to a specific manufacturing context; broader applicability unclear.",
+    "model_io": [],
+    "hypotheses": [
+      {
+        "hypothesis": "Composite 4D diffeomorphism enables accurate swallowtail catastrophe prediction for chip-branching",
+        "result": "Confirmed: established equation accurately predicts cutting force and chip-branching state"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81289-0": {
+    "category": "ML Theory",
+    "task": "Dual-pipeline fake news detection via image forgery and text classification fusion",
+    "key_results": "Image forgery (CASIA 2.0 source-disjoint): 91.82%\u00b11.22% accuracy, ROC-AUC 0.973; text meta-ensemble: ISOT 99.86%, GossipCop 85.73%, LIAR 62.83%",
+    "comments": "Solid performance on image forgery, but text results vary widely; LIAR benchmark remains challenging, suggesting domain generalization issues.",
+    "model_io": [
+      {
+        "model": "EfficientNet-B0 + ViT-Small fusion with cross-attention",
+        "inputs": [
+          "ELA-preprocessed images"
+        ],
+        "outputs": [
+          "image forgery classification",
+          "91.82%\u00b11.22% accuracy"
+        ]
+      },
+      {
+        "model": "Meta-ensemble (DeBERTa-v3 + SVM/LogReg)",
+        "inputs": [
+          "text embeddings from DeBERTa-v3"
+        ],
+        "outputs": [
+          "fake/real classification",
+          "99.86% (ISOT), 85.73% (GossipCop), 62.83% (LIAR)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Transformer stream provides most discriminative signal; CNN detects complementary forgeries",
+        "result": "Confirmed by ablation showing ViT-Small dominates while CNNs capture missed artifacts"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81301-7": {
+    "category": "ML Theory",
+    "task": "Semantic framework for evaluating institutional activity alignment with Sustainable Development Goals",
+    "key_results": "Sentence-level embeddings enable quantitative SDG-target alignment; threshold analysis shows stable coverage-strength trade-off; recommendation mechanism identifies unmapped targets",
+    "comments": "Scalable, reproducible automation of SDG mapping; semantic framework assumes embedding space adequately represents alignment but ground-truth SDG contribution verification absent.",
+    "model_io": [
+      {
+        "model": "SDG MetricX (semantic embeddings + similarity analysis + ordinal substance)",
+        "inputs": [
+          "activity descriptions",
+          "169 SDG target statements",
+          "semantic terminology enrichment"
+        ],
+        "outputs": [
+          "target coverage",
+          "SDG coverage",
+          "mapping density",
+          "QACI indicator"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-82125-1": {
+    "category": "ML Theory",
+    "task": "Structure-aware anomaly detection and diagnosis in multivariate IoT sensor streams via causal sparse latent graphs",
+    "key_results": "F1-scores: SWaT 0.892, WADI 0.869, SMD 0.914; fidelity 0.74\u20130.68, explanation-stability 0.89\u20130.86; explanation generation 6.8 ms/window (27.6\u00d7 faster than SHAP)",
+    "comments": "Interpretable dependency structure via sparse acyclic graphs is valuable; learned structure characterized as statistical dependence, not validated causality\u2014appropriate caveat.",
+    "model_io": [
+      {
+        "model": "Recurrent encoder + sparse directed graph + decoder + residual threshold",
+        "inputs": [
+          "multivariate sensor streams (SWaT, WADI, SMD)"
+        ],
+        "outputs": [
+          "anomaly detection",
+          "diagnostic pathway ranking",
+          "latent dependency graph"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Sparse acyclic latent dynamics support accurate anomaly detection and interpretable diagnosis",
+        "result": "Confirmed: F1 0.892\u20130.914 with fidelity 0.68\u20130.74 and explanation-stability 0.86\u20130.89"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-82216-z": {
+    "category": "ML Theory",
+    "task": "Adversarial attacks against depth estimation models in autonomous vehicles using diffusion-guided perturbations",
+    "key_results": "Imperceptible digital perturbations successfully fool Monodepth2, MiDaS, DepthAnythingV2; high visual fidelity maintained; Depth Estimation Error (\u03b5d), Affected Region (Ra), and RMSE demonstrate disruption effectiveness",
+    "comments": "Novel attack methodology combining diffusion models and Grad-CAM; implications for AV robustness significant but no adversarial defense evaluation provided.",
+    "model_io": [
+      {
+        "model": "Diffusion-guided adversarial perturbation generation",
+        "inputs": [
+          "target image",
+          "Grad-CAM maps",
+          "depth models (Monodepth2, MiDaS, DepthAnythingV2)"
+        ],
+        "outputs": [
+          "imperceptible adversarial perturbation",
+          "incorrect depth prediction"
+        ]
+      }
+    ],
+    "hypotheses": []
+  },
+  "nature:10.1038/s41598-026-82378-w": {
+    "category": "Statistics/Probability",
+    "task": "Bayesian shrinkage for basketball lineup performance prediction under data scarcity",
+    "key_results": "Dirichlet-Multinomial posterior outperforms baselines on out-of-sample lineup predictions; largest gains for lineups with few possessions",
+    "comments": "Elegant conjugate-prior approach; uncertainty quantification enables probabilistic lineup comparisons reflecting inherent outcome variability.",
+    "model_io": [
+      {
+        "model": "Dirichlet-Multinomial with player-level prior and opponent strength adjustment",
+        "inputs": [
+          "lineup possession outcomes",
+          "player-level prior ratings",
+          "opponent strength"
+        ],
+        "outputs": [
+          "posterior predictive distribution",
+          "lineup offensive/defensive rating estimates"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Bayesian shrinkage improves predictions for low-possession lineups more than high-possession lineups",
+        "result": "Confirmed: largest gains observed for lineups with few possessions"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11315-8": {
+    "category": "Neural Circuits",
+    "task": "Identify gut-brain circuit controlling sugar ingestion and food intake regulation",
+    "key_results": "IN1s neurons receive excitatory input from enteric sensory neurons detecting gut sugars and provide inhibitory output to enteric motor neurons; IN1 activation suppresses motor neurons, relaxes crop duct, and promotes food transfer into crop during ingestion",
+    "comments": "Elegant demonstration of bidirectional gut-brain communication using Drosophila as a genetically tractable model, though generalizability to mammalian systems requires validation.",
+    "model_io": [
+      {
+        "model": "Drosophila feeding circuit",
+        "inputs": [
+          "sugar in gut lumen",
+          "enteric sensory neuron activity",
+          "IN1 neuron excitatory drive"
+        ],
+        "outputs": [
+          "enteric motor neuron inhibition",
+          "crop duct relaxation",
+          "food transfer rate",
+          "sustained food intake"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Enteric sensory neurons detect sugars in the gut and signal to brain ingestion-control neurons (IN1s)",
+        "result": "Confirmed via functional imaging and connectome analysis showing excitatory synaptic input from sugar-sensing enteric neurons to IN1s"
+      },
+      {
+        "hypothesis": "IN1 neurons inhibit enteric motor neurons to facilitate crop filling during feeding",
+        "result": "Confirmed: IN1 activation suppresses motor neurons, relaxes crop duct, and promotes rapid food transfer into crop"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-79044-0": {
+    "category": "Optics/Photonics",
+    "task": "Scalable photonic computing via hybrid chiplet architecture with 3D integration",
+    "key_results": "Graph solver demonstration; protein residue identification in structural biology networks; achieved beyond-monolithic performance scaling",
+    "comments": "Practical photonic integration strategy decoupling active modulation (thin-film LN) from passive routing (3D laser-written); enables multi-chip heterogeneous assembly.",
+    "model_io": [
+      {
+        "model": "HyPec hybrid photonic chiplet system (lithium niobate + 3D femtosecond-written cores)",
+        "inputs": [
+          "graph topology",
+          "protein structure networks"
+        ],
+        "outputs": [
+          "solution signal",
+          "critical residue identification"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Function disaggregation into modulation and routing chiplets enables scalable photonic computing",
+        "result": "Confirmed via demonstrated graph solver and biological network application"
+      }
+    ]
+  },
+  "nature:10.1038/s41467-026-79427-3": {
+    "category": "Optics/Photonics",
+    "task": "Chip-scale narrow-linewidth optical parametric oscillator design with integrated external cavity",
+    "key_results": "15-fold intrinsic linewidth reduction vs. pump down to 10 Hz; sub-Hz linewidth achieved with erbium-doped waveguide amplifier; operation below Schawlow-Townes limit for single-cavity OPO",
+    "comments": "External cavity feedback on integrated silicon nitride platform elegantly bypasses pump linewidth limitations; enables coherent broadband tunable sources suitable for precision metrology.",
+    "model_io": [
+      {
+        "model": "CW-pumped Kerr nonlinear OPO with integrated SiN external cavity and optional erbium amplifier",
+        "inputs": [
+          "CW pump laser"
+        ],
+        "outputs": [
+          "narrowband coherent signal (10 Hz to <1 Hz linewidth)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Integrated external cavity reduces OPO linewidth below Schawlow-Townes via feedback-enhanced frequency stabilization",
+        "result": "Confirmed: 15-fold reduction with single cavity; sub-Hz with amplifier feedback"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11288-8": {
+    "category": "Condensed Matter",
+    "task": "Investigation of size-dependent charge transport in topological semimetal nanoribbons",
+    "key_results": "NbP nanoribbon resistivity 18 \u00b1 4.1 \u03bc\u03a9\u00b7cm (room temp, ~6 nm width, ~9 nm\u00b2 cross-section); resistivity decreases with decreasing width (opposite to classical metals); lower than conventional metals/semimetals at comparable size",
+    "comments": "Counterintuitive scaling behavior indicates growing surface/edge state contribution despite edge disorder; suggests topological protection or unique band structure effects mitigate classical size-effect resistivity increase.",
+    "model_io": [
+      {
+        "model": "NbP nanoribbon (top-down nanofabrication)",
+        "inputs": [
+          "nanoribbon width",
+          "temperature"
+        ],
+        "outputs": [
+          "resistivity",
+          "transport anisotropy"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Surface and edge states in topological semimetals suppress resistivity growth despite nanoscale dimensions",
+        "result": "Confirmed: resistivity decreases with width, contrary to classical size effect"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11309-6": {
+    "category": "Quantum",
+    "task": "Coherent control of Majorana-based qubits in minimal Kitaev chains",
+    "key_results": "Coherent parity oscillations in poor man's Majoranas; oscillation frequencies match within 5% at sweet spot; frequencies scale systematically with inter-chain coupling",
+    "comments": "Critical step toward utilizing Majorana fermions for topological qubits by demonstrating coherent control in minimal systems lacking full topological protection.",
+    "model_io": [
+      {
+        "model": "Coupled minimal Kitaev chains (quantum dot\u2013superconductor arrays)",
+        "inputs": [
+          "inter-chain coupling",
+          "quantum-dot detunings"
+        ],
+        "outputs": [
+          "parity oscillation frequencies",
+          "rotation axes",
+          "coherence times"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Poor man's Majoranas retain Majorana properties and can be coherently controlled",
+        "result": "Confirmed via time-resolved parity rotations in both even/odd manifolds"
+      }
+    ]
+  },
+  "nature:10.1038/s41586-026-11353-2": {
+    "category": "Quantum",
+    "task": "Quantum-enhanced displacement sensing via Fock-space confocal focusing",
+    "key_results": "19.20 \u00b1 0.20 dB metrological gain beyond standard quantum limit; deterministic preparation of focused probe states with N=500 photons; 21.5 \u00b1 1.1 dB variance reduction",
+    "comments": "Demonstrates practical quantum advantage in metrology by bridging classical optics intuition with quantum state engineering on superconducting platforms.",
+    "model_io": [
+      {
+        "model": "Circuit QED with bosonic mode",
+        "inputs": [
+          "coherent state"
+        ],
+        "outputs": [
+          "Fock-like probe state",
+          "displacement measurement signal"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Confocal lens analogy enables efficient transformation between coherent and Fock-like states",
+        "result": "Confirmed via O(1) depth circuit achieving focused states up to N=500"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-72598-5": {
+    "category": "Optics/Photonics",
+    "task": "Design and optimization of wideband terahertz MIMO antenna using graphene and machine learning",
+    "key_results": "Bandwidth 2.10\u20133.45 THz (1.35 THz wide); radiation efficiency >90%; gain 6.76 dBi; ECC <0.002; DG \u224810 dB; TARC <-10 dB; ML prediction R\u00b2=0.9779",
+    "comments": "Compact 160\u00d7160 \u00b5m graphene MIMO antenna combines wideband performance with machine-learning-assisted parameter optimization; achieves excellent diversity metrics for 6G applications.",
+    "model_io": [
+      {
+        "model": "Graphene THz MIMO antenna array (2.10\u20133.45 THz)",
+        "inputs": [
+          "excitation signal"
+        ],
+        "outputs": [
+          "MIMO radiation patterns",
+          "diversity metrics (ECC, DG, TARC)"
+        ]
+      },
+      {
+        "model": "ML regression model (reflection coefficient prediction)",
+        "inputs": [
+          "antenna design parameters"
+        ],
+        "outputs": [
+          "S-parameter prediction (R\u00b2=0.9779)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "Graphene enables compact wideband THz MIMO with excellent isolation and diversity without decoupling structures",
+        "result": "Confirmed: isolation >-17 dB and ECC<0.002 without decoupling network"
+      },
+      {
+        "hypothesis": "Machine learning accurately predicts antenna performance for design optimization",
+        "result": "Confirmed: R\u00b2=0.9779 regression fit enables efficient parameter sweeping"
+      }
+    ]
+  },
+  "nature:10.1038/s41598-026-81733-1": {
+    "category": "Applied Physics",
+    "task": "Contamination classification of transmission-line insulators via K-means clustering",
+    "key_results": "K-means clustering on 7000 insulator images (K=3); assessment via ESDD, permittivity, leakage current; results compared with conventional monitoring",
+    "comments": "Practical but limited validation; study relies on artificially contaminated insulators and authors acknowledge need for field-aged samples for real-world applicability.",
+    "model_io": [
+      {
+        "model": "K-means classifier (K=3)",
+        "inputs": [
+          "7000 insulator images",
+          "leakage current measurements",
+          "electric field parameters"
+        ],
+        "outputs": [
+          "contamination severity classification (low/medium/high)"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis": "K-means can classify contamination levels using electric and optical features",
+        "result": "Supported for artificial contamination; validation on natural contamination deferred"
+      }
+    ]
   }
 }
